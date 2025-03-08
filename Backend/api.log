@@ -1,0 +1,58 @@
+2025-03-08 09:45:31,901 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-08 09:45:31,901 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-08 09:45:31,901 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-08 09:45:31,917 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0157s
+2025-03-08 09:45:32,227 - mot_api - INFO - Requesting new access token
+2025-03-08 09:45:32,484 - mot_api - INFO - Successfully obtained new access token
+2025-03-08 09:45:32,484 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-03-08 09:45:33,236 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 1.0091s
+2025-03-08 09:45:33,255 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0181s
+2025-03-08 10:32:46,743 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:32:46,747 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:32:46,747 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:32:46,754 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0070s
+2025-03-08 10:32:47,063 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 10:32:48,276 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.2133s
+2025-03-08 10:32:48,276 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:38:16,506 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 10:38:17,435 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.9291s
+2025-03-08 10:39:33,744 - mot_api - INFO - Requesting new access token
+2025-03-08 10:39:34,279 - mot_api - INFO - Successfully obtained new access token
+2025-03-08 10:39:34,282 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.5373s
+2025-03-08 10:44:59,152 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:44:59,471 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 10:45:00,619 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.1502s
+2025-03-08 10:50:15,722 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 10:50:17,408 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.6866s
+2025-03-08 10:53:02,916 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0037s
+2025-03-08 10:55:48,721 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 10:55:49,035 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 10:55:51,815 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 2.7793s
+2025-03-08 10:55:52,951 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0021s
+2025-03-08 10:55:52,959 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0020s
+2025-03-08 11:01:50,099 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-08 11:01:50,102 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0031s
+2025-03-08 11:01:50,102 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-08 11:01:50,109 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0069s
+2025-03-08 11:01:50,419 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-03-08 11:01:51,503 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 1.0845s
+2025-03-08 11:01:51,505 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0082s
+2025-03-08 11:05:53,606 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 11:05:53,606 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 11:05:53,926 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 11:05:54,736 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.8104s
+2025-03-08 11:05:54,736 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 11:08:15,240 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-03-08 11:08:15,240 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-03-08 11:08:15,240 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-03-08 11:08:15,246 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-03-08 11:08:15,551 - mot_api - INFO - Fetching vehicle data for registration: BN54MXJ
+2025-03-08 11:08:16,397 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.8454s
+2025-03-08 11:08:16,406 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0095s

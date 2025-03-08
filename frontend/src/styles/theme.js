@@ -1291,3 +1291,302 @@ export const GovUKLoadingSpinner = styled('div')(({ theme }) => ({
   },
   animation: 'govuk-loading-spinner 1s linear infinite',
 }));
+
+
+
+
+// Styled components for Premium UI elements
+export const PremiumButton = styled(GovUKButton)`
+  background-color: ${COLORS.BLUE};
+  box-shadow: 0 2px 0 #00437e;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  width: auto;
+  font-weight: 700;
+  
+  &:hover {
+    background-color: #003078;
+  }
+
+  @media (min-width: 40.0625em) {
+    width: auto;
+  }
+`;
+
+export const StyledCardElement = styled('div')`
+  border: 2px solid ${COLORS.BLACK};
+  padding: 15px;
+  border-radius: 0;
+  margin-bottom: 20px;
+`;
+
+export const PaymentLabel = styled(GovUKLabel)`
+  margin-bottom: 10px;
+  font-weight: 700;
+`;
+
+export const PremiumHeading = styled(GovUKHeadingS)`
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+
+export const PremiumBanner = styled('div')`
+  background-color: ${COLORS.LIGHT_GREY};
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 5px solid ${COLORS.BLUE};
+  
+  @media (min-width: 40.0625em) {
+    padding: 20px;
+  }
+`;
+
+export const PremiumPrice = styled('span')`
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-left: 5px;
+`;
+
+
+
+
+// Dialog components for Stripe payment
+export const PaymentDialog = styled('div')`
+  ${commonFontStyles}
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: ${props => props.open ? 'flex' : 'none'};
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1300;
+  padding: 20px;
+`;
+
+export const DialogContainer = styled('div')`
+  ${commonFontStyles}
+  background-color: ${COLORS.WHITE};
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border: 5px solid ${COLORS.BLACK};
+  box-shadow: none;
+  
+  @media print {
+    font-family: sans-serif;
+    color: ${COLORS.BLACK};
+  }
+`;
+
+export const DialogTitle = styled('h2')`
+  ${commonFontStyles}
+  color: ${COLORS.BLACK};
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.0416666667;
+  padding: 15px 20px;
+  margin: 0;
+  border-bottom: 1px solid ${COLORS.MID_GREY};
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    font-size: 2.25rem;
+    line-height: 1.1111111111;
+    padding: 20px 30px;
+  }
+  
+  @media print {
+    font-size: 24pt;
+    line-height: 1.05;
+  }
+`;
+
+export const DialogContent = styled('div')`
+  padding: 15px 20px;
+  flex: 1;
+  overflow-y: auto;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    padding: 20px 30px;
+  }
+`;
+
+export const DialogActions = styled('div')`
+  padding: 0 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 15px;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    padding: 0 30px 30px;
+  }
+`;
+
+// Tab components for payment methods
+export const TabsContainer = styled('div')`
+  ${commonFontStyles}
+  border-bottom: 1px solid ${COLORS.MID_GREY};
+  margin-bottom: 20px;
+`;
+
+export const TabsList = styled('div')`
+  display: flex;
+  width: 100%;
+  
+  @media (max-width: ${BREAKPOINTS.MOBILE}) {
+    flex-direction: column;
+  }
+`;
+
+export const TabButton = styled('button')`
+  ${commonFontStyles}
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25;
+  padding: 10px 15px;
+  background: ${props => props.selected ? COLORS.LIGHT_GREY : 'transparent'};
+  border: none;
+  border-bottom: 4px solid ${props => props.selected ? COLORS.BLUE : 'transparent'};
+  flex-grow: 1;
+  text-align: center;
+  cursor: pointer;
+  color: ${COLORS.BLACK};
+  text-transform: none;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+    padding: 15px 20px;
+  }
+  
+  &:hover {
+    background-color: ${COLORS.LIGHT_GREY};
+  }
+  
+  &:focus {
+    outline: 3px solid ${COLORS.YELLOW};
+    outline-offset: 0;
+    background-color: ${COLORS.YELLOW};
+    box-shadow: 0 -2px ${COLORS.YELLOW}, 0 4px ${COLORS.BLACK};
+  }
+`;
+
+export const TabPanel = styled('div')`
+  padding-top: 20px;
+  display: ${props => props.hidden ? 'none' : 'block'};
+`;
+
+// Payment method specific styling
+export const PaymentMethodContainer = styled('div')`
+  margin-bottom: 20px;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    margin-bottom: 30px;
+  }
+`;
+
+export const WalletButtonContainer = styled('div')`
+  margin-top: 15px;
+  margin-bottom: 15px;
+  
+  .StripePaymentRequestButton {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+`;
+
+export const LinkPayButton = styled(GovUKButton)`
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1875;
+  background-color: ${COLORS.BLUE};
+  box-shadow: 0 2px 0 #00437e;
+  margin-right: 0;
+  margin-bottom: 22px;
+  width: 100%;
+  max-width: 300px;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    font-size: 1.1875rem;
+    line-height: 1;
+    margin-right: 10px;
+    margin-bottom: 32px;
+  }
+  
+  &:hover {
+    background-color: #003078;
+  }
+  
+  &:focus {
+    border-color: ${COLORS.YELLOW};
+    outline: 3px solid rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 1px ${COLORS.YELLOW};
+  }
+`;
+
+export const PaymentFormActions = styled('div')`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+  }
+`;
+
+// Add these to enhance the existing payment components
+export const PayButtonPrimary = styled(GovUKButton)`
+  background-color: ${COLORS.GREEN};
+  box-shadow: 0 2px 0 #002d18;
+  width: 100%;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    width: auto;
+  }
+  
+  &:hover {
+    background-color: #005a30;
+  }
+  
+  &:focus {
+    border-color: ${COLORS.YELLOW};
+    outline: 3px solid rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 1px ${COLORS.YELLOW};
+  }
+`;
+
+export const PayButtonSecondary = styled(GovUKButton)`
+  background-color: ${COLORS.MID_GREY};
+  color: ${COLORS.BLACK};
+  box-shadow: 0 2px 0 #505a5f;
+  width: 100%;
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    width: auto;
+  }
+  
+  &:hover {
+    background-color: #a9acae;
+  }
+  
+  &:focus {
+    border-color: ${COLORS.YELLOW};
+    outline: 3px solid rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 1px ${COLORS.YELLOW};
+    color: ${COLORS.BLACK};
+  }
+`;

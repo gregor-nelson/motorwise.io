@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { styled } from '@mui/material';
 import { 
   GovUKContainer,
   GovUKMainWrapper,
@@ -15,21 +14,29 @@ import {
   MOTDueDate,
   GovUKLoadingContainer,
   GovUKLoadingSpinner,
+  PremiumButton,
 } from '../../styles/theme';
-import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import { 
+  PaymentDialog, 
+  SuccessDialog, 
+} from './StripePayment';
+
+// Determine if we're in development or production
+const isDevelopment = 
+  window.location.hostname === 'localhost' || 
+  window.location.hostname === '127.0.0.1';
+
+// Configure API URL based on environment
+const API_BASE_URL = isDevelopment 
+  ? 'http://localhost:8000/api/v1'   // Development - direct to API port
+  : '/api/v1';                       // Production - use relative URL for Nginx proxy 
 
 // Cache for storing vehicle data
 const vehicleCache = {};
 
-// Determine if we're in development or production
-const isDevelopment = window.location.hostname === 'localhost' || 
-                      window.location.hostname === '127.0.0.1';
-
-// Configure API URL based on environment
-const API_BASE_URL = isDevelopment 
-                    ? 'http://localhost:8000/api/v1'   // Development - direct to API port
-                    : '/api/v1';                       // Production - use relative URL for Nginx proxy
+// Configure the stale time in milliseconds (5 minutes)
+const CACHE_STALE_TIME = 5 * 60 * 1000;
 
 const VehicleHeader = ({ registration }) => {
   const [vehicleData, setVehicleData] = useState(null);
@@ -37,8 +44,10 @@ const VehicleHeader = ({ registration }) => {
   const [error, setError] = useState(null);
   const abortControllerRef = useRef(null);
   
-  // Configure the stale time in milliseconds (5 minutes)
-  const CACHE_STALE_TIME = 5 * 60 * 1000;
+  // Payment dialog states
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Not available';
@@ -109,7 +118,8 @@ const VehicleHeader = ({ registration }) => {
 
   // Function to check if cached data is still valid
   const isCacheValid = (cachedTime) => {
-    return (Date.now() - cachedTime) < CACHE_STALE_TIME;
+    const timeDifference = Date.now() - cachedTime;
+    return timeDifference < CACHE_STALE_TIME;
   };
 
   useEffect(() => {
@@ -251,6 +261,36 @@ const VehicleHeader = ({ registration }) => {
     };
   }, [registration, transformVehicleData]);
 
+  // Handle opening the payment dialog
+  const handleOpenPaymentDialog = () => {
+    setPaymentDialogOpen(true);
+  };
+  
+  // Handle closing the payment dialog
+  const handleClosePaymentDialog = () => {
+    setPaymentDialogOpen(false);
+  };
+  
+  // Handle successful payment
+  const handlePaymentSuccess = (paymentIntent) => {
+    setPaymentDialogOpen(false);
+    
+    // Store payment info for the success dialog
+    setPaymentInfo({
+      paymentId: paymentIntent.id,
+      registration: registration,
+      timestamp: Date.now()
+    });
+    
+    // Show success dialog instead of navigating
+    setSuccessDialogOpen(true);
+  };
+  
+  // Handle closing the success dialog
+  const handleCloseSuccessDialog = () => {
+    setSuccessDialogOpen(false);
+  };
+
   return (
     <GovUKContainer>
       <GovUKMainWrapper>
@@ -281,7 +321,14 @@ const VehicleHeader = ({ registration }) => {
                 Check another vehicle
               </GovUKLink>
             </GovUKBody>
-
+            
+            <PremiumButton 
+              onClick={handleOpenPaymentDialog}
+              data-test-id="premium-report-button"
+            >
+              Get Premium Vehicle Report - £19.95
+            </PremiumButton>
+            
             <GovUKGridRow data-test-id="colour-fuel-date-details">
               <GovUKGridColumnOneThird>
                 <DetailCaption>Colour</DetailCaption>
@@ -325,7 +372,10 @@ const VehicleHeader = ({ registration }) => {
               </GovUKGridColumnOneThird>
             </GovUKGridRow>
 
-            <MOTCaption data-test-id="mot-expiry-text">MOT valid until</MOTCaption>
+            <MOTCaption data-test-id="mot-expiry-text">
+              MOT valid until
+            </MOTCaption>
+            
             <MOTDueDate data-test-id="mot-due-date">
               {vehicleData.motDueDate}
             </MOTDueDate>
@@ -333,8 +383,8 @@ const VehicleHeader = ({ registration }) => {
             <GovUKBody>
               <GovUKLink href="https://www.gov.uk/mot-reminder" noVisitedState>
                 Get an MOT reminder
-              </GovUKLink>{' '}
-              by email or text.
+              </GovUKLink>
+              {' '}by email or text.
             </GovUKBody>
 
             <GovUKBody>
@@ -354,8 +404,24 @@ const VehicleHeader = ({ registration }) => {
                 noVisitedState
               >
                 contact DVSA
-              </GovUKLink>.
+              </GovUKLink>
             </GovUKBody>
+            
+            {/* Payment dialog */}
+            <PaymentDialog 
+              open={paymentDialogOpen}
+              onClose={handleClosePaymentDialog}
+              registration={vehicleData.registration}
+              onSuccess={handlePaymentSuccess}
+            />
+            
+            {/* Success dialog */}
+            <SuccessDialog
+              open={successDialogOpen}
+              onClose={handleCloseSuccessDialog}
+              registration={vehicleData.registration}
+              paymentId={paymentInfo?.paymentId}
+            />
           </>
         )}
       </GovUKMainWrapper>

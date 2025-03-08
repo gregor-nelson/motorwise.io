@@ -19,7 +19,8 @@ import {
   GovUKSectionBreak,
   GovUKInsetText,
   GovUKLoadingContainer,
-  GovUKLoadingSpinner
+  GovUKLoadingSpinner,
+  COLORS,
 } from '../../styles/theme';
 
 // Import the new MotDefectDetail component
@@ -27,6 +28,16 @@ import MotDefectDetail from './MotDefectDetail';
 
 // Only import Alert from Material UI
 import Alert from '@mui/material/Alert';
+import { styled } from '@mui/material/styles';
+
+const ClickableDefectItem = styled('div')({
+  cursor: 'pointer',
+  position: 'relative',
+  '&:hover': {
+    color: COLORS.BLUE,
+  }
+});
+
 
 // Cache for storing MOT history data
 const motCache = {};
@@ -335,40 +346,42 @@ const MOTHistoryPage = ({ registration }) => {
                     {(mot.defects || mot.advisories) && (
                       <div>
                         {mot.defects && (
-                          <>
-                            <GovUKCaptionM>Repair immediately (major defects):</GovUKCaptionM>
-                            <GovUKList>
-                              {mot.defects.map((defect, i) => (
-                                <li key={i}>
-                                  <strong>{defect.text}</strong>
-                                  {/* Add the MotDefectDetail component for each defect */}
-                                  <MotDefectDetail 
-                                    defectId={defect.id}
-                                    defectText={defect.text}
-                                    defectCategory={defect.type}
-                                  />
-                                </li>
-                              ))}
-                            </GovUKList>
-                          </>
+                              <>
+                              <GovUKCaptionM>Repair immediately (major defects):</GovUKCaptionM>
+                              <GovUKList>
+                                {mot.defects.map((defect, i) => (
+                                  <li key={i}>
+                                    <ClickableDefectItem>
+                                      <strong>{defect.text}</strong>
+                                      <MotDefectDetail 
+                                        defectId={defect.id}
+                                        defectText={defect.text}
+                                        defectCategory={defect.type}
+                                      />
+                                    </ClickableDefectItem>
+                                  </li>
+                                ))}
+                              </GovUKList>
+                            </>
                         )}
                         {mot.advisories && (
                           <>
-                            <GovUKCaptionM>Monitor and repair if necessary (advisories):</GovUKCaptionM>
-                            <GovUKList>
-                              {mot.advisories.map((advisory, i) => (
-                                <li key={i}>
+                          <GovUKCaptionM>Monitor and repair if necessary (advisories):</GovUKCaptionM>
+                          <GovUKList>
+                            {mot.advisories.map((advisory, i) => (
+                              <li key={i}>
+                                <ClickableDefectItem>
                                   <strong>{advisory.text}</strong>
-                                  {/* Add the MotDefectDetail component for each advisory */}
                                   <MotDefectDetail 
                                     defectId={advisory.id}
                                     defectText={advisory.text}
                                     defectCategory={advisory.type}
                                   />
-                                </li>
-                              ))}
-                            </GovUKList>
-                          </>
+                                </ClickableDefectItem>
+                              </li>
+                            ))}
+                          </GovUKList>
+                        </>
                         )}
                         <GovUKDetails>
                           <GovUKDetailsSummary>

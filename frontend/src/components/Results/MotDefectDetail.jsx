@@ -3,15 +3,14 @@ import {
   GovUKBody,
   GovUKHeadingS,
   GovUKInsetText,
-  GovUKDetails,
-  GovUKDetailsSummary,
-  GovUKDetailsText,
   GovUKLoadingSpinner,
-  GovUKList
+  GovUKList,
+  COLORS
 } from '../../styles/theme';
 
 // Alert component for errors
 import Alert from '@mui/material/Alert';
+import { styled } from '@mui/material/styles';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -24,6 +23,30 @@ const MOT_MANUAL_API_URL = isDevelopment
 
 // Cache for storing MOT manual data
 const manualCache = {};
+
+// Styled components
+const ExpandableContainer = styled('div')(({ expanded }) => ({
+  cursor: 'pointer',
+  padding: '8px 0',
+  borderLeft: expanded ? `5px solid ${COLORS.BLUE}` : 'none',
+  paddingLeft: expanded ? '10px' : '0',
+  transition: 'all 0.2s ease',
+  marginBottom: '10px',
+  '&:hover': {
+    color: COLORS.BLUE,
+    textDecoration: 'underline',
+  },
+}));
+
+const DetailContent = styled('div')({
+  marginTop: '10px',
+  paddingLeft: '5px',
+  color: COLORS.BLACK, // Reset text color for the content
+  '&:hover': {
+    color: COLORS.BLACK, // Prevent hover effect on the details
+    textDecoration: 'none',
+  },
+});
 
 const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
   const [defectDetail, setDefectDetail] = useState(null);
@@ -112,8 +135,11 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
       }
     };
 
-    fetchDefectDetail();
-  }, [defectId, defectText]);
+    // Only fetch if expanded
+    if (expanded) {
+      fetchDefectDetail();
+    }
+  }, [defectId, defectText, expanded]);
 
   // Format defect category for display
   const formatCategory = (category) => {
@@ -134,7 +160,9 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
   };
 
   // Toggle expanded state
-  const toggleExpanded = () => {
+  const toggleExpanded = (e) => {
+    // Prevent click from bubbling up
+    e.stopPropagation();
     setExpanded(!expanded);
   };
 
@@ -144,78 +172,93 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
     return null;
   }
 
+  // Returns the content for the detail - no icon or ID displayed
   return (
-    <GovUKDetails open={expanded} onClick={toggleExpanded}>
-      <GovUKDetailsSummary>
-        MOT Test Manual Reference: {idToUse}
-      </GovUKDetailsSummary>
-      <GovUKDetailsText>
-        {loading && <GovUKLoadingSpinner />}
-        
-        {error && (
-          <Alert severity="warning" style={{ marginBottom: '10px' }}>
-            {error}
-          </Alert>
-        )}
-        
-        {!loading && !error && defectDetail && (
-          <>
-            {defectDetail.path && defectDetail.path.length > 0 && (
-              <GovUKBody>
-                <strong>Manual section:</strong> {defectDetail.path.map(p => p.title).join(' > ')}
-              </GovUKBody>
-            )}
-            
-            {defectDetail.data && defectDetail.data.description && (
-              <GovUKInsetText>
-                {defectDetail.data.description}
-              </GovUKInsetText>
-            )}
-            
-            {defectDetail.data && defectDetail.data.defects && (
-              <>
-                <GovUKHeadingS>Related defects:</GovUKHeadingS>
-                <GovUKList>
-                  {defectDetail.data.defects.map((defect, index) => (
-                    <li key={index}>
-                      <strong>{formatCategory(defect.category)}:</strong> {defect.description}
-                    </li>
+    <ExpandableContainer 
+      expanded={expanded}
+      onClick={toggleExpanded}
+      aria-expanded={expanded}
+      role="button"
+      tabIndex={0}
+      title={`${expanded ? 'Hide' : 'View'} MOT manual reference details`}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          toggleExpanded(e);
+        }
+      }}
+    >
+      {/* The text is being rendered by the parent component */}
+      
+      {/* Show expanded content only when expanded */}
+      {expanded && (
+        <DetailContent onClick={(e) => e.stopPropagation()}>
+          {loading && <GovUKLoadingSpinner />}
+          
+          {error && (
+            <Alert severity="warning" style={{ marginBottom: '10px', textDecoration: 'none' }}>
+              {error}
+            </Alert>
+          )}
+          
+          {!loading && !error && defectDetail && (
+            <>
+              {defectDetail.path && defectDetail.path.length > 0 && (
+                <GovUKBody>
+                  <strong>Manual section:</strong> {defectDetail.path.map(p => p.title).join(' > ')}
+                </GovUKBody>
+              )}
+              
+              {defectDetail.data && defectDetail.data.description && (
+                <GovUKInsetText>
+                  {defectDetail.data.description}
+                </GovUKInsetText>
+              )}
+              
+              {defectDetail.data && defectDetail.data.defects && (
+                <>
+                  <GovUKHeadingS>Related defects:</GovUKHeadingS>
+                  <GovUKList>
+                    {defectDetail.data.defects.map((defect, index) => (
+                      <li key={index}>
+                        <strong>{formatCategory(defect.category)}:</strong> {defect.description}
+                      </li>
+                    ))}
+                  </GovUKList>
+                </>
+              )}
+              
+              {defectDetail.data && defectDetail.data.subItems && (
+                <>
+                  <GovUKHeadingS>Testing procedure:</GovUKHeadingS>
+                  {defectDetail.data.subItems.map((subItem, index) => (
+                    <div key={index}>
+                      <strong>{subItem.title}</strong>
+                      <GovUKBody>{subItem.description}</GovUKBody>
+                    </div>
                   ))}
-                </GovUKList>
-              </>
-            )}
-            
-            {defectDetail.data && defectDetail.data.subItems && (
-              <>
-                <GovUKHeadingS>Testing procedure:</GovUKHeadingS>
-                {defectDetail.data.subItems.map((subItem, index) => (
-                  <div key={index}>
-                    <strong>{subItem.title}</strong>
-                    <GovUKBody>{subItem.description}</GovUKBody>
-                  </div>
+                </>
+              )}
+            </>
+          )}
+          
+          {!loading && !error && defectDetail && defectDetail.matches && (
+            <>
+              <GovUKHeadingS>Multiple matches found:</GovUKHeadingS>
+              <GovUKList>
+                {defectDetail.matches.map((match, index) => (
+                  <li key={index}>
+                    <strong>{match.id}: {match.title}</strong>
+                    {match.data.description && (
+                      <GovUKBody>{match.data.description}</GovUKBody>
+                    )}
+                  </li>
                 ))}
-              </>
-            )}
-          </>
-        )}
-        
-        {!loading && !error && defectDetail && defectDetail.matches && (
-          <>
-            <GovUKHeadingS>Multiple matches found:</GovUKHeadingS>
-            <GovUKList>
-              {defectDetail.matches.map((match, index) => (
-                <li key={index}>
-                  <strong>{match.id}: {match.title}</strong>
-                  {match.data.description && (
-                    <GovUKBody>{match.data.description}</GovUKBody>
-                  )}
-                </li>
-              ))}
-            </GovUKList>
-          </>
-        )}
-      </GovUKDetailsText>
-    </GovUKDetails>
+              </GovUKList>
+            </>
+          )}
+        </DetailContent>
+      )}
+    </ExpandableContainer>
   );
 };
 

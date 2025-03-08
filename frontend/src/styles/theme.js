@@ -1,7 +1,7 @@
 import { styled, css } from '@mui/material/styles';
 
 // Define consistent GOV.UK colors as constants
-const COLORS = {
+export const COLORS = {
   BLACK: '#0b0c0c',
   WHITE: '#ffffff',
   BLUE: '#1d70b8',
@@ -14,21 +14,21 @@ const COLORS = {
 };
 
 // BREAKPOINTS
-const BREAKPOINTS = {
+export const BREAKPOINTS = {
   MOBILE: '40.0625em', // 650px
   TABLET: '48.0625em', // 769px
   DESKTOP: '48.0625em',
 };
 
 // Common styles that can be used across components
-const commonFontStyles = css`
+export const commonFontStyles = css`
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 `;
 
 // Common media queries for consistent typography scaling
-const commonMediaQueries = css`
+export const commonMediaQueries = css`
   @media (min-width: ${BREAKPOINTS.MOBILE}) {
     font-size: 1.1875rem;
     line-height: 1.3157894737;
@@ -36,7 +36,7 @@ const commonMediaQueries = css`
 `;
 
 // Print styles
-const printStyles = css`
+export const printStyles = css`
   @media print {
     font-family: sans-serif;
     color: #000000;
@@ -44,7 +44,7 @@ const printStyles = css`
 `;
 
 // Focus state styling that's used consistently across interactive elements
-const focusStyles = css`
+export const focusStyles = css`
   outline: 3px solid rgba(0, 0, 0, 0);
   background-color: ${COLORS.YELLOW};
   color: ${COLORS.BLACK};
@@ -55,7 +55,7 @@ const focusStyles = css`
 `;
 
 // Common link styling
-const linkStyles = css`
+export const linkStyles = css`
   ${commonFontStyles}
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);

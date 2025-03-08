@@ -2,6 +2,7 @@
 // This file contains all Stripe-related components and logic
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import Dialog from '@mui/material/Dialog';
@@ -24,7 +25,7 @@ import {
 export const isDevelopment = window.location.hostname === 'localhost' || 
                       window.location.hostname === '127.0.0.1';
 
-// Configure API URL based on environment - UPDATED WITH NEW PORT
+// Configure API URL based on environment - UPDATED WITH NEW PORT STRIPE API PORT 8001
 export const PAYMENT_API_BASE_URL = isDevelopment 
                     ? 'http://localhost:8001/api/payment/v1'   // Development - pointing to port 8001
                     : '/api/payment/v1';                       // Production - use relative URL for Nginx proxy
@@ -39,6 +40,7 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +97,7 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent.status === 'succeeded') {
+        // Call onSuccess which will now handle navigation
         onSuccess(result.paymentIntent);
       }
     } catch (err) {
@@ -158,7 +161,18 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
 
 
 // Payment Dialog Component
-export const PaymentDialog = ({ open, onClose, registration, onSuccess }) => {
+export const PaymentDialog = ({ open, onClose, registration }) => {
+  const navigate = useNavigate();
+
+  // This function will be called after successful payment
+  const handlePaymentSuccess = (paymentIntent) => {
+    // Close the payment dialog
+    onClose();
+    
+    // Navigate to the premium report page with the payment ID
+    navigate(`/premium-report/${registration}?paymentId=${paymentIntent.id}`);
+  };
+
   return (
     <Dialog 
       open={open} 
@@ -199,7 +213,7 @@ export const PaymentDialog = ({ open, onClose, registration, onSuccess }) => {
         <Elements stripe={stripePromise}>
           <PaymentForm 
             registration={registration}
-            onSuccess={onSuccess}
+            onSuccess={handlePaymentSuccess}
             onClose={onClose}
           />
         </Elements>
@@ -208,7 +222,7 @@ export const PaymentDialog = ({ open, onClose, registration, onSuccess }) => {
   );
 };
 
-// Success Dialog Component
+// Success Dialog Component - keeping this for reference but it's no longer needed
 export const SuccessDialog = ({ open, onClose, registration, paymentId }) => {
   return (
     <Dialog 

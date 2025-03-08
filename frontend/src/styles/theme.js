@@ -1590,3 +1590,100 @@ export const PayButtonSecondary = styled(GovUKButton)`
     color: ${COLORS.BLACK};
   }
 `;
+
+
+
+
+// Add these new Premium Report styled components to your theme.js file
+// Below the existing styled components, before the export statement
+
+// ======================================================
+// Premium Report Components
+// ======================================================
+export const PremiumBadge = styled('div')`
+  ${commonFontStyles}
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: ${COLORS.BLUE};
+  color: ${COLORS.WHITE};
+  font-weight: 700;
+  margin-bottom: 15px;
+`;
+
+export const ReportSection = styled('div')`
+  margin-bottom: 30px;
+`;
+
+export const ReportTable = styled('table')`
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  
+  & th {
+    ${commonFontStyles}
+    font-weight: 700;
+    padding: 10px;
+    text-align: left;
+    background-color: ${COLORS.LIGHT_GREY};
+    border: 1px solid ${COLORS.MID_GREY};
+  }
+  
+  & td {
+    ${commonFontStyles}
+    padding: 10px;
+    border: 1px solid ${COLORS.MID_GREY};
+    text-align: left;
+  }
+  
+  & tr:nth-child(even) {
+    background-color: ${COLORS.LIGHT_GREY};
+  }
+`;
+
+export const MotHistoryItem = styled('div')`
+  ${commonFontStyles}
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 5px solid ${props => props.result === 'PASS' ? COLORS.GREEN : COLORS.RED};
+  background-color: ${COLORS.LIGHT_GREY};
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    padding: 20px;
+  }
+`;
+
+// Additional components that might be useful for the premium features
+export const PremiumFeatureList = styled(GovUKList)`
+  margin-top: 15px;
+  
+  & > li {
+    margin-bottom: 10px;
+    
+    &:before {
+      content: "✓";
+      color: ${COLORS.GREEN};
+      font-weight: bold;
+      display: inline-block; 
+      width: 1em;
+      margin-left: -1em;
+    }
+  }
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    margin-top: 20px;
+  }
+`;
+
+export const PremiumInfoPanel = styled('div')`
+  ${commonFontStyles}
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 5px solid ${COLORS.BLUE};
+  background-color: ${COLORS.LIGHT_GREY};
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+`;

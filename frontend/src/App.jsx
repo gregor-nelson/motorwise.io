@@ -4,14 +4,13 @@ import Home from "./pages/Home/Home";
 
 const App = () => {
   return (
- 
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Report" element={<PremiumReportPage />} />
-        </Routes>
-      </Router>
-    
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* Add the new dynamic route that includes the registration parameter */}
+        <Route path="/premium-report/:registration" element={<PremiumReportPage />} />
+      </Routes>
+    </Router>
   );
 };
 

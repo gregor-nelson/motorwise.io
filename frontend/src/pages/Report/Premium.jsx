@@ -16,8 +16,13 @@ import {
   DetailCaption,
   DetailHeading,
   GovUKSectionBreak,
+  GovUKList,
+  // Import the styled components from theme
+  PremiumBadge,
+  ReportSection,
+  ReportTable,
+  MotHistoryItem
 } from '../../styles/theme';
-import { styled } from '@mui/material';
 import Alert from '@mui/material/Alert';
 
 // Determine if we're in development or production
@@ -29,63 +34,6 @@ const API_BASE_URL = isDevelopment
                     ? 'http://localhost:8000/api/v1'   // Development - direct to API port
                     : '/api/v1';                       // Production - use relative URL for Nginx proxy
 
-const COLORS = {
-  BLACK: '#0b0c0c',
-  WHITE: '#ffffff',
-  BLUE: '#1d70b8',
-  YELLOW: '#fd0', // Updated to match GOV.UK yellow
-  RED: '#d4351c',
-  GREEN: '#00703c',
-  LIGHT_GREY: '#f3f2f1',
-  MID_GREY: '#b1b4b6',
-  DARK_GREY: '#505a5f',
-};
-// Styled components for Premium Report
-const PremiumBadge = styled('div')`
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: ${COLORS.BLUE};
-  color: ${COLORS.WHITE};
-  font-weight: 700;
-  margin-bottom: 15px;
-`;
-
-const ReportSection = styled('div')`
-  margin-bottom: 30px;
-`;
-
-const ReportTable = styled('table')`
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  
-  & th {
-    font-weight: 700;
-    padding: 10px;
-    text-align: left;
-    background-color: ${COLORS.LIGHT_GREY};
-    border: 1px solid ${COLORS.MID_GREY};
-  }
-  
-  & td {
-    padding: 10px;
-    border: 1px solid ${COLORS.MID_GREY};
-    text-align: left;
-  }
-  
-  & tr:nth-child(even) {
-    background-color: ${COLORS.LIGHT_GREY};
-  }
-`;
-
-const MotHistoryItem = styled('div')`
-  padding: 15px;
-  margin-bottom: 15px;
-  border-left: 5px solid ${props => props.result === 'PASS' ? COLORS.GREEN : COLORS.RED};
-  background-color: ${COLORS.LIGHT_GREY};
-`;
-
 const PremiumReportPage = () => {
   const { registration } = useParams();
   const [searchParams] = useSearchParams();
@@ -96,7 +44,7 @@ const PremiumReportPage = () => {
   const [reportData, setReportData] = useState(null);
   
   useEffect(() => {
-    // Check if payment information exists in sessionStorage
+    // Check if payment information exists
     const checkPaymentAndFetchData = async () => {
       try {
         // This would normally validate the payment on the server
@@ -108,35 +56,47 @@ const PremiumReportPage = () => {
         setLoading(true);
         setError(null);
         
-        // Fetch the premium report data from your API
-        const response = await fetch(
-          `${API_BASE_URL}/premium-report/${registration}?paymentId=${paymentId}`,
-          {
-            headers: {
-              'Accept': 'application/json',
-            },
-            credentials: isDevelopment ? 'include' : 'same-origin',
-            mode: isDevelopment ? 'cors' : 'same-origin'
+        // Only try to fetch from API if not in demo mode
+        // For demo purposes, we'll skip the API call and go straight to mock data
+        const useMockData = true; // Set to false when your API is ready
+
+        if (!useMockData) {
+          // Fetch the premium report data from your API
+          const response = await fetch(
+            `${API_BASE_URL}/premium-report/${registration}?paymentId=${paymentId}`,
+            {
+              headers: {
+                'Accept': 'application/json',
+              },
+              credentials: isDevelopment ? 'include' : 'same-origin',
+              mode: isDevelopment ? 'cors' : 'same-origin'
+            }
+          );
+          
+          if (!response.ok) {
+            let errorMessage = 'Failed to fetch premium report';
+            try {
+              const errorData = await response.json();
+              errorMessage = errorData.message || errorData.detail || errorMessage;
+            } catch (e) {
+              // If parsing JSON fails, use default error message
+            }
+            throw new Error(errorMessage);
           }
-        );
-        
-        if (!response.ok) {
-          let errorMessage = 'Failed to fetch premium report';
-          try {
-            const errorData = await response.json();
-            errorMessage = errorData.message || errorData.detail || errorMessage;
-          } catch (e) {
-            // If parsing JSON fails, use default error message
-          }
-          throw new Error(errorMessage);
+          
+          const data = await response.json();
+          setReportData(data);
+        } else {
+          // For demo, we'll create the mock data here without waiting for API
+          setTimeout(() => {
+            const mockData = createMockData(registration);
+            setReportData(mockData);
+            setLoading(false);
+          }, 1500); // Simulate loading delay
         }
-        
-        const data = await response.json();
-        setReportData(data);
       } catch (err) {
         console.error('Error fetching premium report:', err);
         setError(err.message);
-      } finally {
         setLoading(false);
       }
     };
@@ -144,89 +104,77 @@ const PremiumReportPage = () => {
     checkPaymentAndFetchData();
   }, [registration, paymentId]);
   
-  // For demo purposes, we'll create mock data if the API isn't implemented yet
-  useEffect(() => {
-    // This is only for demonstration purposes - in production, you'd rely on your API
-    if (loading && !error) {
-      // Simulate API delay
-      const timer = setTimeout(() => {
-        // Mock data for demonstration
-        const mockData = {
-          registration: registration,
-          makeModel: 'Ford Focus',
-          colour: 'Red',
-          fuelType: 'Petrol',
-          dateRegistered: '1 January 2018',
-          engineSize: '1998cc',
-          manufactureDate: '15 December 2017',
-          hasOutstandingRecall: 'No',
-          // Premium data
-          previousKeepers: 2,
-          totalMileage: 45000,
-          averageAnnualMileage: 9000,
-          importStatus: 'UK Vehicle',
-          insuranceWriteOff: 'No',
-          vehicleDetails: {
-            transmission: 'Manual',
-            doors: 5,
-            wheelbase: '2648mm',
-            grossWeight: '1900kg',
-            co2Emissions: '135g/km',
-            fuelConsumption: '5.4L/100km',
-            euroEmissionsStandard: 'Euro 6',
-            powerOutput: '125 PS (92 kW)',
-            topSpeed: '125 mph',
-            acceleration: '10.2s (0-60mph)'
-          },
-          motHistory: [
-            {
-              testDate: '15 December 2023',
-              expiryDate: '14 December 2024',
-              result: 'PASS',
-              mileage: 45000,
-              advisories: [
-                'Front brake pad(s) wearing thin',
-                'Nearside Front Tyre worn close to legal limit'
-              ]
-            },
-            {
-              testDate: '10 December 2022',
-              expiryDate: '14 December 2023',
-              result: 'PASS',
-              mileage: 36000,
-              advisories: [
-                'Oil leak, but not excessive'
-              ]
-            },
-            {
-              testDate: '5 December 2021',
-              expiryDate: '14 December 2022',
-              result: 'PASS',
-              mileage: 27000,
-              advisories: []
-            },
-            {
-              testDate: '1 December 2020',
-              expiryDate: '14 December 2021',
-              result: 'FAIL',
-              mileage: 18000,
-              failureReasons: [
-                'Nearside Rear Tyre has a cut in excess of the requirements',
-                'Offside Front Headlamp aim too low'
-              ],
-              retestDate: '8 December 2020',
-              retestResult: 'PASS'
-            }
+  // Helper function to create mock data
+  const createMockData = (reg) => {
+    return {
+      registration: reg,
+      makeModel: 'Ford Focus',
+      colour: 'Red',
+      fuelType: 'Petrol',
+      dateRegistered: '1 January 2018',
+      engineSize: '1998cc',
+      manufactureDate: '15 December 2017',
+      hasOutstandingRecall: 'No',
+      // Premium data
+      previousKeepers: 2,
+      totalMileage: 45000,
+      averageAnnualMileage: 9000,
+      importStatus: 'UK Vehicle',
+      insuranceWriteOff: 'No',
+      vehicleDetails: {
+        transmission: 'Manual',
+        doors: 5,
+        wheelbase: '2648mm',
+        grossWeight: '1900kg',
+        co2Emissions: '135g/km',
+        fuelConsumption: '5.4L/100km',
+        euroEmissionsStandard: 'Euro 6',
+        powerOutput: '125 PS (92 kW)',
+        topSpeed: '125 mph',
+        acceleration: '10.2s (0-60mph)'
+      },
+      motHistory: [
+        {
+          testDate: '15 December 2023',
+          expiryDate: '14 December 2024',
+          result: 'PASS',
+          mileage: 45000,
+          advisories: [
+            'Front brake pad(s) wearing thin',
+            'Nearside Front Tyre worn close to legal limit'
           ]
-        };
-        
-        setReportData(mockData);
-        setLoading(false);
-      }, 2000); // Simulate 2 second load time
-      
-      return () => clearTimeout(timer);
-    }
-  }, [loading, error, registration]);
+        },
+        {
+          testDate: '10 December 2022',
+          expiryDate: '14 December 2023',
+          result: 'PASS',
+          mileage: 36000,
+          advisories: [
+            'Oil leak, but not excessive'
+          ]
+        },
+        {
+          testDate: '5 December 2021',
+          expiryDate: '14 December 2022',
+          result: 'PASS',
+          mileage: 27000,
+          advisories: []
+        },
+        {
+          testDate: '1 December 2020',
+          expiryDate: '14 December 2021',
+          result: 'FAIL',
+          mileage: 18000,
+          failureReasons: [
+            'Nearside Rear Tyre has a cut in excess of the requirements',
+            'Offside Front Headlamp aim too low'
+          ],
+          retestDate: '8 December 2020',
+          retestResult: 'PASS'
+        }
+      ]
+    };
+  };
   
   return (
     <GovUKContainer>
@@ -365,7 +313,9 @@ const PremiumReportPage = () => {
                     </GovUKGridColumnTwoThirds>
                     <GovUKGridColumnOneThird>
                       <DetailCaption>Result</DetailCaption>
-                      <DetailHeading style={{ color: mot.result === 'PASS' ? COLORS.GREEN : COLORS.RED }}>
+                      <DetailHeading style={{ 
+                        color: mot.result === 'PASS' ? '#00703c' : '#d4351c' 
+                      }}>
                         {mot.result}
                       </DetailHeading>
                     </GovUKGridColumnOneThird>
@@ -412,7 +362,9 @@ const PremiumReportPage = () => {
                       </GovUKGridColumnTwoThirds>
                       <GovUKGridColumnOneThird>
                         <DetailCaption>Retest Result</DetailCaption>
-                        <DetailHeading style={{ color: mot.retestResult === 'PASS' ? COLORS.GREEN : COLORS.RED }}>
+                        <DetailHeading style={{ 
+                          color: mot.retestResult === 'PASS' ? '#00703c' : '#d4351c' 
+                        }}>
                           {mot.retestResult}
                         </DetailHeading>
                       </GovUKGridColumnOneThird>

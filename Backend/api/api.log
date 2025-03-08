@@ -1,1 +1,29 @@
 2025-03-08 09:14:58,701 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-03-08 11:16:39,930 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0011s
+2025-03-08 11:16:39,934 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0040s
+2025-03-08 11:16:40,241 - mot_api - INFO - Requesting new access token
+2025-03-08 11:16:41,376 - mot_api - INFO - Successfully obtained new access token
+2025-03-08 11:16:41,376 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-03-08 11:16:42,512 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 2.2712s
+2025-03-08 11:16:42,516 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0055s
+2025-03-08 11:19:54,666 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-03-08 11:19:54,669 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-03-08 11:19:54,676 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0001s
+2025-03-08 11:19:54,680 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0039s
+2025-03-08 11:19:54,986 - mot_api - INFO - Fetching vehicle data for registration: BN54MXJ
+2025-03-08 11:19:58,606 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 3.6198s
+2025-03-08 11:19:58,611 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0052s
+2025-03-08 11:29:48,500 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0018s
+2025-03-08 11:29:48,503 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0036s
+2025-03-08 11:29:48,505 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0056s
+2025-03-08 11:29:48,507 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0076s
+2025-03-08 11:29:48,817 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 11:29:49,764 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.9473s
+2025-03-08 11:29:49,764 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.9473s
+2025-03-08 11:38:17,057 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 11:38:18,492 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.4352s
+2025-03-08 11:38:18,495 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0131s
+2025-03-08 11:45:12,967 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-03-08 11:45:13,285 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 11:45:15,143 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.8588s
+2025-03-08 11:49:29,737 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0023s

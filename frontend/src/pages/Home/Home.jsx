@@ -1,5 +1,5 @@
 import React from 'react';
-import VehicleSearch from './components/Results/vehicleSearch';
+import VehicleSearch from '../../components/Results/vehicleSearch';
 import {
   // Existing components found in theme file
   GovUKSkipLink,
@@ -32,7 +32,7 @@ import {
   GovUKFooterLicenceLogo ,
   GovUKFooterLicenceDescription,
   GovUKFooterCopyrightLogo 
-} from './styles/theme'; // Adjust path as needed
+} from '../../styles/theme'; // Adjust path as needed
 
 // Create styled components for missing elements
 

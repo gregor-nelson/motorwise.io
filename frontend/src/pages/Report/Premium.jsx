@@ -16,7 +16,6 @@ import {
   DetailCaption,
   DetailHeading,
   GovUKSectionBreak,
-  COLORS,
 } from '../../styles/theme';
 import { styled } from '@mui/material';
 import Alert from '@mui/material/Alert';
@@ -30,6 +29,17 @@ const API_BASE_URL = isDevelopment
                     ? 'http://localhost:8000/api/v1'   // Development - direct to API port
                     : '/api/v1';                       // Production - use relative URL for Nginx proxy
 
+const COLORS = {
+  BLACK: '#0b0c0c',
+  WHITE: '#ffffff',
+  BLUE: '#1d70b8',
+  YELLOW: '#fd0', // Updated to match GOV.UK yellow
+  RED: '#d4351c',
+  GREEN: '#00703c',
+  LIGHT_GREY: '#f3f2f1',
+  MID_GREY: '#b1b4b6',
+  DARK_GREY: '#505a5f',
+};
 // Styled components for Premium Report
 const PremiumBadge = styled('div')`
   display: inline-block;

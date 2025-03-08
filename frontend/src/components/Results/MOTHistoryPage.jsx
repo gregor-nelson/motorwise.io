@@ -22,6 +22,9 @@ import {
   GovUKLoadingSpinner
 } from '../../styles/theme';
 
+// Import the new MotDefectDetail component
+import MotDefectDetail from './MotDefectDetail';
+
 // Only import Alert from Material UI
 import Alert from '@mui/material/Alert';
 
@@ -36,6 +39,13 @@ const isDevelopment = window.location.hostname === 'localhost' ||
 const API_BASE_URL = isDevelopment 
                     ? 'http://localhost:8000/api/v1'   // Development - direct to API port
                     : '/api/v1';                       // Production - use relative URL for Nginx proxy
+
+// Helper function to extract defect ID from text
+const extractDefectId = (text) => {
+  // Common pattern: defect ID might appear in the text like "(1.1.13)" or similar
+  const match = /\(?(\d+\.\d+(?:\.\d+)?)\)?/.exec(text);
+  return match ? match[1] : null;
+};
 
 const MOTHistoryPage = ({ registration }) => {
   const [motData, setMotData] = useState(null);
@@ -91,12 +101,20 @@ const MOTHistoryPage = ({ registration }) => {
       // Process defects if any
       const defects = test.defects ? test.defects
         .filter(d => d.type === 'MAJOR' || d.type === 'DANGEROUS')
-        .map(d => `${d.text} (${d.type})`) : [];
+        .map(d => ({
+          text: d.text,
+          type: d.type,
+          id: extractDefectId(d.text)
+        })) : [];
       
       // Process advisories if any
       const advisories = test.defects ? test.defects
         .filter(d => d.type === 'ADVISORY' || d.type === 'MINOR')
-        .map(d => `${d.text} (${d.type})`) : [];
+        .map(d => ({
+          text: d.text,
+          type: d.type,
+          id: extractDefectId(d.text)
+        })) : [];
       
       return {
         date,
@@ -321,7 +339,15 @@ const MOTHistoryPage = ({ registration }) => {
                             <GovUKCaptionM>Repair immediately (major defects):</GovUKCaptionM>
                             <GovUKList>
                               {mot.defects.map((defect, i) => (
-                                <li key={i}><strong>{defect}</strong></li>
+                                <li key={i}>
+                                  <strong>{defect.text}</strong>
+                                  {/* Add the MotDefectDetail component for each defect */}
+                                  <MotDefectDetail 
+                                    defectId={defect.id}
+                                    defectText={defect.text}
+                                    defectCategory={defect.type}
+                                  />
+                                </li>
                               ))}
                             </GovUKList>
                           </>
@@ -331,7 +357,15 @@ const MOTHistoryPage = ({ registration }) => {
                             <GovUKCaptionM>Monitor and repair if necessary (advisories):</GovUKCaptionM>
                             <GovUKList>
                               {mot.advisories.map((advisory, i) => (
-                                <li key={i}><strong>{advisory}</strong></li>
+                                <li key={i}>
+                                  <strong>{advisory.text}</strong>
+                                  {/* Add the MotDefectDetail component for each advisory */}
+                                  <MotDefectDetail 
+                                    defectId={advisory.id}
+                                    defectText={advisory.text}
+                                    defectCategory={advisory.type}
+                                  />
+                                </li>
                               ))}
                             </GovUKList>
                           </>

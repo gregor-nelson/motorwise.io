@@ -27,3 +27,16 @@
 2025-03-08 11:45:13,285 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
 2025-03-08 11:45:15,143 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.8588s
 2025-03-08 11:49:29,737 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0023s
+2025-03-08 11:59:50,444 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0011s
+2025-03-08 11:59:50,446 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0019s
+2025-03-08 11:59:50,450 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0010s
+2025-03-08 11:59:50,451 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0020s
+2025-03-08 11:59:50,760 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-08 11:59:52,571 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.8113s
+2025-03-08 11:59:52,571 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0011s
+2025-03-08 12:02:13,722 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0000s
+2025-03-08 12:02:13,731 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0000s
+2025-03-08 12:02:26,879 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0000s
+2025-03-08 12:02:26,883 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0010s
+2025-03-08 12:02:56,355 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0010s
+2025-03-08 12:02:56,361 - mot_api - INFO - GET /api/v1/premium-report/SB09UKO - 404 - 0.0000s

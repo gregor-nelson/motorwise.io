@@ -28,14 +28,21 @@ import Alert from '@mui/material/Alert';
 // Cache for storing MOT history data
 const motCache = {};
 
+// Determine if we're in development or production
+const isDevelopment = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1';
+
+// Configure API URL based on environment
+const API_BASE_URL = isDevelopment 
+                    ? 'http://localhost:8000/api/v1'   // Development - direct to API port
+                    : '/api/v1';                       // Production - use relative URL for Nginx proxy
+
 const MOTHistoryPage = ({ registration }) => {
   const [motData, setMotData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const abortControllerRef = useRef(null);
 
-  // API endpoint
-  const API_BASE_URL = 'http://localhost:8000/api/v1';
   // Configure the stale time in milliseconds (5 minutes)
   const CACHE_STALE_TIME = 5 * 60 * 1000;
 
@@ -138,6 +145,11 @@ const MOTHistoryPage = ({ registration }) => {
       setError(null);
       
       try {
+        // Log the API request in development mode for debugging
+        if (isDevelopment) {
+          console.log(`Fetching MOT data from: ${API_BASE_URL}/vehicle/registration/${registration}`);
+        }
+        
         const response = await fetch(
           `${API_BASE_URL}/vehicle/registration/${registration}`, 
           {
@@ -145,16 +157,38 @@ const MOTHistoryPage = ({ registration }) => {
             headers: {
               'Accept': 'application/json',
               'Cache-Control': 'no-cache'
-            }
+            },
+            // In development, we need to include CORS credentials
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            // Required for development CORS
+            mode: isDevelopment ? 'cors' : 'same-origin'
           }
         );
         
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.detail?.errorMessage || 'Failed to fetch vehicle data');
+        // Parse JSON response
+        let data;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          throw new Error('Received non-JSON response from server');
         }
         
-        const data = await response.json();
+        if (!response.ok) {
+          // Handle API-specific error format
+          if (data.errorMessage || (data.detail && data.detail.errorMessage)) {
+            throw new Error(data.errorMessage || data.detail.errorMessage);
+          }
+          
+          // Handle standard FastAPI error format
+          if (typeof data.detail === 'string') {
+            throw new Error(data.detail);
+          }
+          
+          // Generic error
+          throw new Error(`Failed to fetch MOT data (Status: ${response.status})`);
+        }
+        
         const transformedData = transformMotData(data);
         
         // Store in cache with timestamp
@@ -179,6 +213,7 @@ const MOTHistoryPage = ({ registration }) => {
       } catch (err) {
         // Don't set error for aborted requests
         if (err.name !== 'AbortError') {
+          console.error('API error:', err);
           setError(err.message || 'An error occurred while fetching MOT data');
         }
       } finally {

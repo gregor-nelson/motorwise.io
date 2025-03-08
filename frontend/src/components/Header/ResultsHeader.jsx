@@ -22,13 +22,21 @@ import Alert from '@mui/material/Alert';
 // Cache for storing vehicle data
 const vehicleCache = {};
 
+// Determine if we're in development or production
+const isDevelopment = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+
+// Configure API URL based on environment
+const API_BASE_URL = isDevelopment 
+                    ? 'http://localhost:8000/api/v1'   // Development - direct to API port
+                    : '/api/v1';                       // Production - use relative URL for Nginx proxy
+
 const VehicleHeader = ({ registration }) => {
   const [vehicleData, setVehicleData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const abortControllerRef = useRef(null);
-
-  const API_BASE_URL = 'http://localhost:8000/api/v1';
+  
   // Configure the stale time in milliseconds (5 minutes)
   const CACHE_STALE_TIME = 5 * 60 * 1000;
 
@@ -99,10 +107,9 @@ const VehicleHeader = ({ registration }) => {
     };
   }, []);
 
-  // Function to check if cached data is still valid (not older than 5 minutes)
+  // Function to check if cached data is still valid
   const isCacheValid = (cachedTime) => {
-    const fiveMinutesInMs = 5 * 60 * 1000;
-    return (Date.now() - cachedTime) < fiveMinutesInMs;
+    return (Date.now() - cachedTime) < CACHE_STALE_TIME;
   };
 
   useEffect(() => {
@@ -133,6 +140,8 @@ const VehicleHeader = ({ registration }) => {
       setError(null);
 
       try {
+        console.log(`Fetching vehicle data from: ${API_BASE_URL}/vehicle/registration/${registration}`);
+        
         const response = await fetch(
           `${API_BASE_URL}/vehicle/registration/${registration}`,
           { 
@@ -140,14 +149,36 @@ const VehicleHeader = ({ registration }) => {
             headers: {
               'Accept': 'application/json',
               'Cache-Control': 'no-cache'
-            }
+            },
+            // In development, we need to include CORS credentials
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            // Required for development CORS
+            mode: isDevelopment ? 'cors' : 'same-origin'
           }
         );
         
-        const data = await response.json();
+        // Parse JSON response
+        let data;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          throw new Error('Received non-JSON response from server');
+        }
         
         if (!response.ok) {
-          throw new Error(data.errorMessage || data.detail?.errorMessage || 'Failed to fetch vehicle data');
+          // Handle API-specific error format
+          if (data.errorMessage || (data.detail && data.detail.errorMessage)) {
+            throw new Error(data.errorMessage || data.detail.errorMessage);
+          }
+          
+          // Handle standard FastAPI error format
+          if (typeof data.detail === 'string') {
+            throw new Error(data.detail);
+          }
+          
+          // Generic error
+          throw new Error(`Failed to fetch vehicle data (Status: ${response.status})`);
         }
         
         const transformedData = transformVehicleData(data);
@@ -173,7 +204,10 @@ const VehicleHeader = ({ registration }) => {
       } catch (err) {
         // Don't set error for aborted requests
         if (err.name !== 'AbortError') {
-          setError(err.message || 'An error occurred while fetching vehicle data');
+          // Improved error messages based on response status
+          const message = err.message || 'An error occurred while fetching vehicle data';
+          console.error('API error:', err);
+          setError(message);
         }
       } finally {
         setLoading(false);

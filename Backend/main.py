@@ -2,9 +2,10 @@ import os
 import requests
 import json
 import time
+import logging
 from functools import lru_cache
 from typing import Dict, Any, Optional, Union, List
-from fastapi import FastAPI, HTTPException, Depends, Query, Response
+from fastapi import FastAPI, HTTPException, Depends, Query, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -13,6 +14,30 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("api.log")
+    ]
+)
+logger = logging.getLogger("mot_api")
+
+# Validate required environment variables
+required_env_vars = [
+    "MOT_CLIENT_ID", 
+    "MOT_CLIENT_SECRET", 
+    "MOT_TENANT_ID", 
+    "MOT_API_KEY"
+]
+
+missing_vars = [var for var in required_env_vars if not os.environ.get(var)]
+if missing_vars:
+    logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
+    raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_vars)}")
+
 # Initialize FastAPI app
 app = FastAPI(
     title="MOT History API Service",
@@ -20,14 +45,38 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Add CORS middleware to allow requests from frontend
+# Add CORS middleware with specific origins
+# In production, restrict this to your actual frontend domain
+CORS_ORIGINS = [
+    "https://check-mot.co.uk",
+    "https://www.check-mot.co.uk",
+    "http://localhost:3000",  
+    "http://localhost:5173",  # Vite dev server default
+    "http://127.0.0.1:5173"   # Also include with IP address
+]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You should restrict this in production
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["X-Cache", "Cache-Control"]
 )
+
+# Add middleware to log requests
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.4f}s")
+    return response
+
+# Cache durations
+TOKEN_CACHE_TTL = 3600 - 300  # Token TTL minus 5 minute buffer
+VEHICLE_CACHE_TTL = 300  # 5 minutes
 
 # In-memory cache for tokens and vehicle data
 TOKEN_CACHE = {
@@ -37,7 +86,6 @@ TOKEN_CACHE = {
 
 # Vehicle data cache with TTL (5 minutes)
 VEHICLE_CACHE = {}
-CACHE_TTL = 300  # seconds (5 minutes)
 
 # Pydantic models for API responses
 class Defect(BaseModel):
@@ -102,6 +150,7 @@ async def get_access_token() -> str:
     tenant_id = os.environ.get("MOT_TENANT_ID")
     
     if not all([client_id, client_secret, tenant_id]):
+        logger.error("Missing authentication configuration")
         raise HTTPException(
             status_code=500,
             detail="Missing authentication configuration. Check environment variables."
@@ -121,17 +170,20 @@ async def get_access_token() -> str:
     }
     
     try:
+        logger.info("Requesting new access token")
         response = requests.post(token_url, data=payload, headers=headers)
         response.raise_for_status()
         token_data = response.json()
         
         # Cache the token with its expiration time
         TOKEN_CACHE["access_token"] = token_data.get("access_token")
-        # Convert expires_in (seconds) to absolute timestamp
-        TOKEN_CACHE["expires_at"] = current_time + token_data.get("expires_in", 3600)
+        # Convert expires_in (seconds) to absolute timestamp, with a safety buffer
+        TOKEN_CACHE["expires_at"] = current_time + token_data.get("expires_in", 3600) - 300
         
+        logger.info("Successfully obtained new access token")
         return TOKEN_CACHE["access_token"]
     except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to authenticate with MOT API: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to authenticate with MOT API: {str(e)}")
 
 # Helper functions
@@ -139,13 +191,15 @@ def is_cache_valid(cache_key):
     """Check if a cache entry is still valid."""
     if cache_key in VEHICLE_CACHE:
         cache_time = VEHICLE_CACHE[cache_key]["timestamp"]
-        return (time.time() - cache_time) < CACHE_TTL
+        return (time.time() - cache_time) < VEHICLE_CACHE_TTL
     return False
 
 async def get_cached_vehicle_data(cache_key):
     """Get vehicle data from cache if available and valid."""
     if is_cache_valid(cache_key):
+        logger.debug(f"Cache hit for {cache_key}")
         return VEHICLE_CACHE[cache_key]["data"]
+    logger.debug(f"Cache miss for {cache_key}")
     return None
 
 def update_vehicle_cache(cache_key, data):
@@ -154,6 +208,7 @@ def update_vehicle_cache(cache_key, data):
         "data": data,
         "timestamp": time.time()
     }
+    logger.debug(f"Updated cache for {cache_key}")
 
 async def get_vehicle_by_registration(registration: str, access_token: str) -> Dict[str, Any]:
     """Get vehicle details from the MOT API using registration number with caching."""
@@ -166,6 +221,7 @@ async def get_vehicle_by_registration(registration: str, access_token: str) -> D
     api_key = os.environ.get("MOT_API_KEY")
     
     if not api_key:
+        logger.error("API key not configured")
         raise HTTPException(status_code=500, detail="API key not configured")
     
     base_url = "https://history.mot.api.gov.uk"
@@ -179,8 +235,9 @@ async def get_vehicle_by_registration(registration: str, access_token: str) -> D
     }
     
     try:
+        logger.info(f"Fetching vehicle data for registration: {registration}")
         session = requests.Session()
-        response = session.get(url, headers=headers)
+        response = session.get(url, headers=headers, timeout=10)  # Add timeout
         response.raise_for_status()
         data = response.json()
         
@@ -190,8 +247,10 @@ async def get_vehicle_by_registration(registration: str, access_token: str) -> D
         return data
     except requests.exceptions.HTTPError as err:
         if err.response.status_code == 404:
+            logger.warning(f"Vehicle not found: {registration}")
             raise HTTPException(status_code=404, detail="Vehicle not found")
         if err.response.status_code == 400:
+            logger.warning(f"Invalid registration format: {registration}")
             raise HTTPException(status_code=400, detail="Invalid registration format")
         
         # Try to extract error details from the API response
@@ -201,6 +260,7 @@ async def get_vehicle_by_registration(registration: str, access_token: str) -> D
             error_message = error_data.get("errorMessage", "No message provided")
             request_id = error_data.get("requestId", "Unknown")
             
+            logger.error(f"MOT API Error: {error_code} - {error_message} - Request ID: {request_id}")
             raise HTTPException(
                 status_code=err.response.status_code,
                 detail={
@@ -211,10 +271,17 @@ async def get_vehicle_by_registration(registration: str, access_token: str) -> D
             )
         except:
             # If we can't parse the error response, raise a generic error
+            logger.error(f"Error accessing MOT API: {str(err)}")
             raise HTTPException(
                 status_code=500,
                 detail=f"Error accessing MOT API: {str(err)}"
             )
+    except requests.exceptions.Timeout:
+        logger.error(f"Timeout while accessing MOT API for registration: {registration}")
+        raise HTTPException(status_code=504, detail="Request to MOT API timed out")
+    except Exception as e:
+        logger.error(f"Unexpected error for registration {registration}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
     """Get vehicle details from the MOT API using VIN with caching."""
@@ -227,6 +294,7 @@ async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
     api_key = os.environ.get("MOT_API_KEY")
     
     if not api_key:
+        logger.error("API key not configured")
         raise HTTPException(status_code=500, detail="API key not configured")
     
     base_url = "https://history.mot.api.gov.uk"
@@ -240,8 +308,9 @@ async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
     }
     
     try:
+        logger.info(f"Fetching vehicle data for VIN: {vin}")
         session = requests.Session()
-        response = session.get(url, headers=headers)
+        response = session.get(url, headers=headers, timeout=10)  # Add timeout
         response.raise_for_status()
         data = response.json()
         
@@ -251,8 +320,10 @@ async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
         return data
     except requests.exceptions.HTTPError as err:
         if err.response.status_code == 404:
+            logger.warning(f"Vehicle not found: {vin}")
             raise HTTPException(status_code=404, detail="Vehicle not found")
         if err.response.status_code == 400:
+            logger.warning(f"Invalid VIN format: {vin}")
             raise HTTPException(status_code=400, detail="Invalid VIN format")
         
         # Try to extract error details from the API response
@@ -262,6 +333,7 @@ async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
             error_message = error_data.get("errorMessage", "No message provided")
             request_id = error_data.get("requestId", "Unknown")
             
+            logger.error(f"MOT API Error: {error_code} - {error_message} - Request ID: {request_id}")
             raise HTTPException(
                 status_code=err.response.status_code,
                 detail={
@@ -272,10 +344,17 @@ async def get_vehicle_by_vin(vin: str, access_token: str) -> Dict[str, Any]:
             )
         except:
             # If we can't parse the error response, raise a generic error
+            logger.error(f"Error accessing MOT API: {str(err)}")
             raise HTTPException(
                 status_code=500,
                 detail=f"Error accessing MOT API: {str(err)}"
             )
+    except requests.exceptions.Timeout:
+        logger.error(f"Timeout while accessing MOT API for VIN: {vin}")
+        raise HTTPException(status_code=504, detail="Request to MOT API timed out")
+    except Exception as e:
+        logger.error(f"Unexpected error for VIN {vin}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 # API routes
 @app.get("/")
@@ -289,6 +368,11 @@ async def root():
             "/api/v1/vehicle/vin/{vin}"
         ]
     }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for monitoring"""
+    return {"status": "healthy", "version": "1.0.0"}
 
 @app.get("/api/v1/vehicle/registration/{registration}", 
          response_model=Union[VehicleWithMot, NewRegVehicle],
@@ -315,11 +399,16 @@ async def get_vehicle_info_by_registration(
     if is_cached:
         # If data was from cache, tell browser it's cached
         response.headers["X-Cache"] = "HIT"
-        response.headers["Cache-Control"] = f"max-age={CACHE_TTL}"
+        response.headers["Cache-Control"] = f"max-age={VEHICLE_CACHE_TTL}"
     else:
         # If data was freshly fetched, set the cache control
         response.headers["X-Cache"] = "MISS"
-        response.headers["Cache-Control"] = f"max-age={CACHE_TTL}"
+        response.headers["Cache-Control"] = f"max-age={VEHICLE_CACHE_TTL}"
+    
+    # Add security headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
     
     return vehicle_data
 
@@ -348,11 +437,16 @@ async def get_vehicle_info_by_vin(
     if is_cached:
         # If data was from cache, tell browser it's cached
         response.headers["X-Cache"] = "HIT"
-        response.headers["Cache-Control"] = f"max-age={CACHE_TTL}"
+        response.headers["Cache-Control"] = f"max-age={VEHICLE_CACHE_TTL}"
     else:
         # If data was freshly fetched, set the cache control
         response.headers["X-Cache"] = "MISS"
-        response.headers["Cache-Control"] = f"max-age={CACHE_TTL}"
+        response.headers["Cache-Control"] = f"max-age={VEHICLE_CACHE_TTL}"
+    
+    # Add security headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
     
     return vehicle_data
 
@@ -366,9 +460,11 @@ async def clear_cache():
         "expires_at": 0,
     }
     VEHICLE_CACHE = {}
+    logger.info("Cache cleared manually")
     return {"status": "success", "message": "Cache cleared successfully"}
 
 # Main entry point for development server
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    # Bind to localhost only for production with Nginx
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=False)

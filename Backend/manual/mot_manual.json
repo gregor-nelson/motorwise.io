@@ -2976,6 +2976,193 @@
 			]
 		  }
 		]
+	  },
+
+	  {
+		"id": "8",
+		"title": "Nuisance",
+		"description": "Noise, exhaust emissions, engine malfunction indicator lamp (MIL) (sometimes called an engine management light or 'EML'), and fluid leak rules and inspection for car and passenger vehicle MOT tests.",
+		"subsections": [
+		  {
+			"id": "8.1",
+			"title": "Noise",
+			"items": [
+			  {
+				"id": "8.1.1",
+				"title": "Noise suppression system",
+				"description": "You must inspect:\n\n- exhaust silencers\n- under-bonnet noise deadening material fitted as original equipment - you do not need to inspect this for Class 3 vehicles\n\nYou must use your judgement to assess exhaust noise:\n\n- during the emissions test for the vehicle\n- rev the engine to around 2,500rpm or half the maximum engine speed if this is lower on vehicles not subject to an emissions test\n\nExhaust noise from the vehicle must not be unreasonably above the noise level you'd expect from a similar vehicle with a standard silencer in average condition.",
+				"defects": [
+				  {
+					"description": "Exhaust noise levels in excess of those permitted",
+					"category": "Major"
+				  },
+				  {
+					"description": "Any part of the noise suppression system: insecure",
+					"category": "Major"
+				  },
+				  {
+					"description": "Any part of the noise suppression system: likely to become detached",
+					"category": "Dangerous"
+				  }
+				]
+			  }
+			]
+		  },
+		  {
+			"id": "8.2",
+			"title": "Exhaust emissions",
+			"items": [
+			  {
+				"id": "8.2.1",
+				"title": "Spark ignition engine emissions",
+				"description": "",
+				"items": [
+				  {
+					"id": "8.2.1.1",
+					"title": "Exhaust emission control equipment",
+					"description": "You only need to check components that are visible and identifiable, such as catalytic converters, oxygen sensors, and exhaust gas recirculation valves.\nYou should reject all vehicles first used on or after 1 September 2002, where original emissions control equipment components are missing, obviously modified or obviously defective.\nVehicles used prior to 1 September 2002 should only be rejected, where a full catalyst test could apply. Use the flowcharts 1, 2 and 3 to decide which emission test is applicable for the vehicle being tested.",
+					"defects": [
+					  {
+						"description": "Emission control equipment fitted by the manufacturer: missing, obviously modified or obviously defective",
+						"category": "Major"
+					  },
+					  {
+						"description": "An induction or exhaust leak that could affect emissions levels",
+						"category": "Major"
+					  }
+					]
+				  },
+				  {
+					"id": "8.2.1.2",
+					"title": "Gaseous emissions",
+					"description": "Engine malfunction indicator lamp (engine management light or 'EML')\nTurn on the ignition and check that the engine malfunction indicator lamp (MIL) illuminates and then goes off. On some vehicles it will be necessary to start the engine before the MIL goes off.\nYou need to inspect MIL fitted to:\n\n- petrol vehicles including hybrids with 4 or more wheels, not more than 8 passenger seats in addition to the driver's seat and first used on or after 1 July 2003\n- petrol vehicles including hybrids with 4 or more wheels, more than 8 passenger seats in addition to the driver's seat and first used on or after 1 July 2008\n- gas and bi-fuel vehicles including hybrids with 4 or more wheels, not more than 8 passenger seats in addition to the driver's seat and first used on or after 1 July 2008\n\nKit cars, amateur built vehicles and American pickups are not required to be fitted with an engine MIL.\nVisual inspection (all vehicles):\nRaise the engine speed to around 2500rpm or half the maximum engine speed if this is lower. Hold the engine speed steady for approximately 20 seconds and allow the engine to return to its natural idle speed.\nOnce the idle speed has stabilised assess the smoke emitted from the tailpipe. If the exhaust is emitting dense blue or clearly visible black smoke then the vehicle will fail the test.\nIn exceptional cases, especially on certain vehicles manufactured before 1960 where emissions of smoke are unavoidable due to the engine design, these vehicles will not fail the test.\nVehicles with two stroke engines also emit smoke that is not avoidable and should not be failed unless the exhaust emits excessive dense blue or clearly visible black smoke during acceleration which would obscure the view of other road users.\nThis test may be done in conjunction with the check of the vehicles noise suppression system Section 8.1.1\nEmissions testing\nYou must inspect vehicles with spark ignition engines first used on or after 1 August 1975.\nYou do not need to check:\n\n- L category vehicles\n- hybrid vehicles - with electric and combustion engines\n- hydrogen fuel cell vehicles\n- two-stroke engines - unless they are subject to a catalyst test\n\nIf an engine has been modified in any way, it still must meet the exhaust emission requirements according to the age of the vehicle.\nFor emissions purposes only you should treat the following as first used before 1 August 1975:\n\n- kit cars and amateur-built vehicles first used before 1 August 1998\n- Wankel rotary-engined vehicles first used before 1 August 1987\n- Q plated vehicles\n\nTo prevent the build-up of fumes, the test should be carried out in a well-ventilated area.\nPersonal imports\nA personal import must be tested according to its date of first use. However, if you're shown a letter from the vehicle manufacturer proving that the engine does not meet British emission standards you must test to the next lower emission standard.\nFor example, a 1995 car first used in Gambia with a letter from the engine manufacturer stating the engine number and showing that the engine cannot meet catalyst emission limits, you must use the non-cat limits of carbon monoxide (CO) 3.5% and hydrocarbons (HC) 1,200ppm.\nVehicles fitted with a different engine\nIf a vehicle first used before 1 September 2002 is fitted with an engine that's older than the vehicle, you must test it to the standards applicable for the engine. The vehicle presenter must have proof of the age of the engine.\nIf a vehicle first used on or after 1 September 2002 is fitted with a different engine, you must test it to the emissions standards for the age of the vehicle.\nFor emission standards on kit cars, read further.\nKit cars\nKit cars and amateur-built vehicles first used on or after 1 August 1998 must have either Single Vehicle Approval (SVA) or Individual Vehicle Approval (IVA).\nYou must test kit cars or amateur built vehicles to the limits in the vehicle's registration document (V5c). If the V5c does not show any limits, you must test it to the limits of the engine fitted at the time of the SVA or IVA test.\nVehicles exempt from emission limits\nSome vehicles may never have been able to meet the MOT limits for CO or HC emissions. The vehicle owner must provide proof of this, such as a letter from the vehicle manufacturer. If the vehicle owner cannot provide proof of this, you must fail the MOT test if the vehicle is not within the emissions limits.\nPassenger cars\nA 'passenger car' is a vehicle that:\n\n- is constructed or adapted to carry passengers\n- has up to 5 passenger seats, excluding the driver's seat\n- has a DGW not exceeding 2,500kg\n- is not a goods vehicle, such as a pick-up or a car-derived van\n\nIf you're not sure if a vehicle is a passenger car, you can confirm it by:\n\n- getting the DGW from the manufacturer's VIN plate\n- checking if the vehicle is listed in section 2 of the current emissions data book\n- checking the owner's handbook or a data book\n\nIf you cannot find proof that the vehicle is a passenger car, you must assume it's not a passenger car.\nSpecialist conversions\nFor emissions purposes, you must treat specialist conversions as if they had not been converted.\nFor example, a motor caravan or ambulance converted from a goods vehicle is still to be treated as not being a passenger car, whereas an ambulance converted to a goods vehicle, or a passenger car with seats added is still to be treated as being a passenger car.\nSimilarly, a vehicle originally built with 6 or more passenger seats, in addition to the driver, which has had seats removed must be still treated as not being a passenger car.\nTesting dual exhaust systems\nA dual exhaust system has 2 separate pipes from the engine manifold to the tailpipes.\nYou need to average the emissions from both tailpipes - even if the system has a balance tube between the separate pipes.\nTo average the emissions, you add both readings together and divide by 2.\nFor example:\n\n- 1st pipe emits 0.3% CO and 200 ppm HC\n- 2nd pipe emits 0.1% CO and 150 ppm HC\n\nIf a vehicle has an exhaust holed to the extent that it will fail its MOT, you should recheck the emissions when the exhaust is repaired even if the vehicle does not leave the testing station. You should tell the vehicle presenter that any emission readings taken with a leaking exhaust might be incorrect.\nVehicles which run on more than one fuel, such as petrol and LPG, should be tested on the fuel they are running on when presented.\nTesting LPG engines\nThe hydrocarbon (HC) emissions on vehicles running on LPG are propane and not hexane. The HC reading obtained must therefore be divided by the 'propane/hexane equivalency factor' (PEF) marked on the gas analyser.\nFor example: If the HC reading = 180 ppm and the PEF marked on the machine is 0.48.\nEmission limits\nUse the flowcharts 1, 2 and 3 to decide which emission test is applicable for the vehicle being tested. Follow the flowcharts and notes carefully as early catalyst equipped vehicles may not need a 'CAT' test.\nSome vehicles give unstable readings due, for example, to their carburettor or fuel injection system design. Before failing a vehicle, make sure that a particular limit has been exceeded constantly for at least 5 seconds.\nSome vehicles give unstable readings. Make sure you test the emissions level for at least 5 seconds.\nChart 1. Emissions limits for vehicles first used on or after 1 August 1975\n*See chart 2 for passenger cars first on or after 1 August 1992\nChart 2. Emissions limits of passenger cars first used on or after 1 August 1992\nChart 3. Emissions limits of non-passenger cars first used on or after 1 August 1992\nNon-catalyst test\nYou must:\n\n- measure the exhaust gas for at least 5 seconds at idle\n- determine the proportion of carbon monoxide (CO)\n- determine the proportion of hydrocarbons (HC) - you do not need to do this for vehicles using compressed natural gas (CNG)\n\nDuring the test, make sure:\n\n- the engine is idling normally - if this is not possible, you can use light throttle pedal pressure\n- the engine is warm\n- any enrichment device, like a choke, is not operating\n- there is not significant electrical loading, such as heated seats or heated rear windows\n\nYou must deduct any residual hydrocarbons from the HC reading. Residual hydrocarbons are those that are picked up by the analyser when it samples clean air.\nIf a vehicle meets the CO requirement at its normal idling speed but fails the HC check, apply light pressure to the throttle and re-check the HC level at a high idle speed of about 2,000rpm. If the HC reading is then 1,200ppm or less, the vehicle will meet both the CO and HC requirements.\nBasic emissions test\nEnsure a daily leak test has been carried out.\nMake sure the engine is hot. If the engine is not hot, raise the engine speed to between 2,000rpm and 3,000rpm until it's up to normal operating temperature.\nYou can tell that the engine is hot from any of the following:\n\n- the temperature gauge\n- the cooling fan has cut in\n- the cooling hoses are hot\n\nTo do the emissions test:\n\n- Make sure the engine is idling normally - to check this use the vehicle tachometer or attach an engine speed measuring device.\n- Do a HC hang-up check to make sure that HC is less than 20ppm.\n- Insert the analyser probe into the exhaust.\n- Raise the engine speed to between 2,500rpm and 3,000rpm and hold it steady.\n- Record the CO, HC and lambda readings.\n- Allow the engine speed to return to idle (between 450rpm and 1,500rpm).\n- Record the CO reading.\n\nTo pass the basic emissions test, the readings must be within all the following limits:\n\n- CO up to 0.2% at fast idle (2,500rpm to 3,000rpm)\n- HC up to 200ppm at fast idle (2,500rpm to 3,000rpm)\n- Lambda between 0.97 and 1.03 at fast idle (2,500rpm to 3,000rpm)\n- CO up to 0.3% at idle (450rpm to 1,500rpm)\n\nIf the vehicle passes the test, the VTS must keep a readily retrievable record for 3 months. The customer must be provided with a printout of the result if one is requested.\nIf the vehicle does not pass the basic emissions test, you need to:\n\n- Enter the vehicle's details into the analyser.\n- Use the testing flow charts to check which test to do next.\n- Carry out either a full catalyst test or a non-catalyst test as appropriate.\n\nFull catalyst test\nUse the flowcharts 1, 2 and 3 within this section to establish which emissions test and limits you must use for the vehicle under test.\nUse the vehicle exhaust emission standards or use the EGA database to find any specific limits for the vehicle.\nYou might need the following details to find the vehicle's exact limits:\n\n- vehicle make\n- vehicle model\n- model code\n- engine code\n- engine size\n- VIN\n\nIf you can find an exact match other than the model or engine code, use the lesser of the vehicle's specific limits or default limits.\nIf you cannot find an exact match, test it to default limits.\nTo carry out the full catalyst test:\n\n- Connect the engine speed and oil temperature measuring devices. If you can measure the engine speed only after removing a cosmetic engine cover, you must remove the cover if it's easily un-clipped and then carry out the speed measurement. If the engine speed cannot be measured, you should use the vehicle tachometer if fitted. Otherwise you can by-pass the engine speed measurement and make an estimate.\n- Check the engine oil temperature. If it's below the minimum vehicle specific requirement, raise the engine speed to between 2,000rpm and 3,000rpm and maintain this speed until the minimum engine oil temperature has been reached. Remove temperature measuring probe and replace dipstick.\n- Engine oil temperature must be measured whenever possible, using the approved device. If in exceptional circumstances the engine oil temperature cannot be measured, check that the temperature gauge indicated that the engine was at its normal operating temperature, the cooling fan had cut in, or the coolant pipes were hot.\n- Perform a HC hang-up check and ensure that HC is less than 20ppm before continuing. Insert the analyser sample probe.\n- If the engine speed is clearly above the vehicle specific limit and it can be easily adjusted, you can adjust it and complete the test - the adjustment is not, however, part of the MOT test.\n- Follow the EGA prompts until the full catalyst test is completed.\n- If the vehicle passes the test, the VTS must keep a readily retrievable record for 3 months. The customer must be provided with a printout of the result if one is requested.\n- If the vehicle fails the emissions test, a copy of the result print out must be given to the customer. The VTS must keep a readily retrievable record of the result for 3 months.\n\n\"Not tested\" or \"Unable to be tested\" must only be used where it becomes apparent during the test that the particular item cannot be tested, and this could not have been identified prior to starting the test. The reason for selecting the failure must be included in the additional information box.",
+					"defects": [
+					  {
+						"description": "Emissions levels exceed the manufacturer's specified limits",
+						"category": "Major"
+					  },
+					  {
+						"description": "Emissions levels exceed default limits",
+						"category": "Major"
+					  },
+					  {
+						"description": "Lambda coefficient outside the default limits or the range specified by the manufacturer",
+						"category": "Major"
+					  },
+					  {
+						"description": "Emissions test unable to be completed",
+						"category": "Major"
+					  },
+					  {
+						"description": "Engine is idling clearly above its normal idle speed",
+						"category": "Major"
+					  },
+					  {
+						"description": "Exhaust emits dense blue or clearly visible black smoke for a continuous period of 5 seconds at idle",
+						"category": "Major"
+					  },
+					  {
+						"description": "Exhaust emits excessive dense blue or clearly visible black smoke during acceleration which would obscure the view of other road users",
+						"category": "Major"
+					  },
+					  {
+						"description": "Engine MIL inoperative or indicating a malfunction",
+						"category": "Major"
+					  }
+					]
+				  }
+				]
+			  },
+			  {
+				"id": "8.2.2",
+				"title": "Compression ignition engine emissions",
+				"description": "",
+				"items": [
+				  {
+					"id": "8.2.2.1",
+					"title": "Exhaust emission control equipment",
+					"description": "You only need to check components that are visible and identifiable, such as diesel oxidation catalysts, diesel particulate filters, exhaust gas recirculation valves and selective catalytic reduction valves.\nIf a diesel particulate filter has clearly been cut open and rewelded, you should reject it unless the vehicle presenter can show evidence that there was a valid reason to cut it open, such as for filter cleaning.",
+					"defects": [
+					  {
+						"description": "Emission control equipment fitted by the manufacturer missing, obviously modified or obviously defective",
+						"category": "Major"
+					  },
+					  {
+						"description": "An induction or exhaust leak that could affect emissions levels",
+						"category": "Major"
+					  },
+					  {
+						"description": "Evidence that the diesel particulate filter has been tampered with",
+						"category": "Major"
+					  }
+					]
+				  },
+				  {
+					"id": "8.2.2.2",
+					"title": "Opacity",
+					"description": "Engine malfunction indicator lamp (engine management light or 'EML')\nTurn on the ignition and check that the engine malfunction indicator lamp (MIL) illuminates and then goes off. On some vehicles it will be necessary to start the engine before the MIL goes off.\nYou need to inspect MIL fitted to diesel vehicles including hybrids with 4 or more wheels and first used on or after 1 July 2008.\nKit cars, amateur built vehicles and American pickups are not required to be fitted with an engine MIL.\nOpacity test\nThis inspection is not for 'L' category vehicles or electric/combustion engine (hybrid) vehicles.\nAn approved diesel smoke meter (DSM) will be needed to perform this inspection on vehicles first used on or after 1 January 1980.\nThe probe on some types of smoke meter must be correctly aligned with the exhaust gas flow. You may have to check the smoke meter manufacturer's instructions.\nDo not do a smoke test if the engine is not in a safe condition. You must make sure it's safe by asking the vehicle presenter and carrying out a brief examination of the engine.\nThe smoke test should not be carried out if:\n\n- there is insufficient oil in the engine\n- the engine oil pressure is too low\n- there is abnormal engine noise\n- the governor has been tampered with\n- the camshaft belt is in an unsatisfactory condition\n\nIf you judge it to be unsafe to conduct the smoke test, you must show the reason for refusing to carry out the test on the VT30 (see item 4h in Introduction).\nOn vehicles first used before 1980 the engine should be at its normal operating temperature. You can check this from the temperature gauge, cooling fan switching on and off or by feeling hot coolant hoses.\nVehicles first used after 1980 vehicles must have an instrumented smoke test and it's important to ensure the engine is at least 80°C or normal operating temperature if lower, before carrying out the test. You should check the engine temperature with an engine oil temperature probe or other approved device.\nIf due to the vehicle design, or where oil temperature measurement is impractical, the engine's normal operating temperature may be checked by other means, such as the operation of the engine cooling fan. It is not normally sufficient to run the engine with the vehicle stationary to warm it up to temperature.\nWhen testing vehicles with automatic transmission you must take care to avoid overheating the transmission system. Do not carry out unnecessary engine acceleration or prolonged high revving of the engine. You may have to check the vehicle manufacturer's instructions.\nIf a vehicle has a dual exhaust system, you must repeat the smoke test and average the emissions from the tailpipes. To average the emissions, you add both readings together and divide by 2.\nFor example:\n\n- first pipe emits smoke level of 1.50m-1\n- second pipe emits smoke level of 1.00m-1\n\nA dual exhaust system has 2 separate pipes from the engine manifold to the tailpipes. Even if there is a balance tube between the separate pipes it's still considered a dual exhaust.\nMaximum engine revs cannot be achieved on some vehicles due to design features. If this is the case, the vehicle must be tested as presented. Such vehicles, as well as some with low emission diesel engines (mainly Euro IV and onwards) may fail to trigger a reading on the DSM.\nIf you cannot get a reading or the DSM shows an error, you must make a manual record to show that the emissions limits were tested and met but the DSM could not register the reading.\nIf you cannot register the results in the meter, write down the following details and keep them for 3 months:\n\n- test station number\n- tester's name\n- date and time\n- test number\n- vehicle type\n- vehicle registration number\n- that the vehicle passed the emissions test\n- no record was produced due to low emissions\n\nTest procedure - vehicles manufactured before 1980\nVehicles manufactured before 1980 only need to be visually inspected for emitted smoke at both idle and during free acceleration.\nHow to test:\n\n- Make sure the engine is at its normal operating temperature - use the temperature gauge, cooling fan cut in or hot coolant hoses to check this.\n- Make sure any oil temperature probe has been removed.\n- Increase the engine speed to around 2,500rpm or half the maximum engine speed - use whichever speed is lower.\n- Keep the engine at this speed for 30 seconds - this should fully purge the inlet and exhaust system.\n- Allow the engine to return to idle.\n- Assess the smoke emitted from the tailpipe.\n- Quickly increase the engine speed to around 2,500rpm or half the maximum engine speed - use whichever speed is lower and assess the smoke emitted from the tailpipe.\n\nTest procedure - vehicles manufactured in or after 1980\nVehicles manufactured in or after 1980 must be tested for exhaust smoke using an approved diesel smoke meter. Make sure you follow the smoke meter manufacturer's instructions.\nWhen testing automatic transmission, you might want to check the vehicle manufacturer's instructions so that you do not overheat the transmission system. Avoid unnecessary engine acceleration or prolonged high revving of the engine.\nBefore the test, check the maximum smoke level limit for the vehicle and enter the required details into the diesel smoke meter.\nThe maximum smoke level limit will be the level displayed on the manufacturer's plate; or where there is no manufacturer's plate information:\nFor vehicles first used before 1 July 2008, the maximum level is:\n\n- 2.5m-1 for a non-turbocharged engine\n- 3.0m-1 for a turbocharged engine\n\nFor vehicles first used between 1 July 2008 and 31 December 2013 the maximum level is 1.5m-1 for all engines.\nFor vehicles first used on or after 1 January 2014 the maximum level is 0.7m-1 for all engines.\nManufacturer's plate means either the VIN plate or a separate plate or sticker, which is likely to be within the engine compartment. The plate or sticker may be marked 24 R followed by a number to indicate the smoke limit (such as 0.24 in the example below). It's usually displayed in a box and often positioned in the bottom right corner of the VIN plate.\nAn example of a manufacturer's plate can be found in Section 2 of the Introduction.\nHow to test:\n\n- Make sure the engine checks are satisfactory.\n- Make sure the engine temperature is above 80 degrees centigrade or at its normal operating temperature whichever is lower.\n- Make sure you've removed any oil temperature probes.\n- Increase the engine speed to around 2,500rpm or half the maximum engine speed - use whichever speed is lower.\n- Keep the engine at this speed for 30 seconds - this should fully purge the inlet and exhaust system.\n- Increase the engine speed slowly to maximum engine revolutions (revs) to check that the governor is working properly\n- Once the engine speed has stabilized or it becomes clear that the governor is not working, release the pedal and allow the engine to return to idle.\n- Stop the engine and prompt the meter to do a zero check.\n- Insert the meter fully and securely in line with the gas flow.\n- Restart the engine.\n- Following the meter prompts, press down the accelerator pedal quickly and continuously so that the engine reaches full fuel position in less than one second.\n- Hold the engine at full fuel position until a release prompt is given and immediately release the accelerator pedal.\n- Allow the engine and any turbochargers to return to idle.\n- After the first acceleration read the smoke level displayed on the meter.\n- If the smoke level is above the limit for the vehicle, carry out 2 further accelerations.\n- If the mean smoke level is still above the limit for the vehicle, carry out further accelerations up to a maximum of 6 in total and read the smoke level display on the meter after each acceleration.\n\nThe vehicle has passed the opacity test if any of the following happens:\n\n- the first acceleration showed that the smoke level was at 60% or less than the limit for the vehicle\n- the mean smoke level from the first 3 readings was at or less than the limit for the vehicle\n- the mean smoke level from any consecutive 3 readings was at or less than the limit for the vehicle\n\nIf the smoke levels from the first acceleration were significantly higher than the limit, you can choose to not complete the test.\nOn vehicles fitted with a diesel particulate filter, also check that no visible smoke is emitted from the exhaust during the metered check.\nIf the vehicle passes the test, the VTS must keep a readily retrievable record for 3 months. The customer must be provided with a printout of the result if one is requested.\nIf the vehicle fails the emissions test, a copy of the result print out must be given to the customer. The VTS must keep a readily retrievable record of the result for 3 months.\nRetesting a vehicle that failed for smoke emissions\nIf you retest a vehicle that failed for smoke emissions exceeding the manufacturer's specified limit using the vehicle plate value, you must retest the vehicle to the same plate value.\nVehicles fitted with a different engine\nIf a vehicle first used before 1 September 2002 is fitted with an engine that's older than the vehicle, you must test it to the standards applicable for the engine. The vehicle presenter must have proof of the age of the engine.\nIf a vehicle first used on or after 1 September 2002 is fitted with a different engine, you must test it to the standards for the age of the vehicle.\nIf an engine has been modified in any way, it still must meet the exhaust opacity requirements according to the age of the vehicle.\nKit cars\nKit cars and amateur built vehicles first used on or after 1 August 1998 must have either Single Vehicle Approval (SVA) or Individual Vehicle Approval (IVA).\nYou must test kit cars or amateur built vehicles to the limits in the vehicle's registration document (V5c). If the V5c does not show any limits, you must test it to the limits of the engine fitted at the time of the SVA or IVA test.\n\"Not tested\" or \"Unable to be tested\" must only be used where it becomes apparent during the test that the particular item cannot be tested, and this could not have been identified prior to starting the test. The reason for selecting the failure must be included in the additional information box.",
+					"defects": [
+					  {
+						"description": "Smoke opacity levels exceed the manufacturer's specified limit",
+						"category": "Major"
+					  },
+					  {
+						"description": "Smoke opacity levels exceed default limit",
+						"category": "Major"
+					  },
+					  {
+						"description": "Exhaust emits excessive smoke or vapour of any colour to an extent likely to obscure the vision of other road users",
+						"category": "Dangerous"
+					  },
+					  {
+						"description": "Exhaust on a vehicle fitted with a diesel particulate filter emits visible smoke of any colour",
+						"category": "Major"
+					  },
+					  {
+						"description": "Emissions test unable to be completed",
+						"category": "Major"
+					  },
+					  {
+						"description": "Emissions test not completed because smoke levels are significantly in excess of the specified limit values",
+						"category": "Major"
+					  },
+					  {
+						"description": "Engine MIL inoperative or indicating a malfunction",
+						"category": "Major"
+					  }
+					]
+				  }
+				]
+			  }
+			]
+		  },
+		  {
+			"id": "8.3",
+			"title": "Not in use",
+			"items": []
+		  },
+		  {
+			"id": "8.4",
+			"title": "Other environmental items",
+			"items": [
+			  {
+				"id": "8.4.1",
+				"title": "Fluid leaks",
+				"description": "You must check for fluid leaks on all vehicles other than Class 3. You should do this with the engine idling.\nA leak of fluids such as engine coolant, screen wash and fluid required for Selective Catalyst Reduction are not reasons for failure.\nYou should fail a vehicle if a fluid leak creates a pool on the floor within 5 minutes that's more than 75mm in diameter or if there are many leaks which collectively leak fluid at the same rate.\nYou can refuse to carry out the test if there's an excessive fluid leak. For details see item 4 in the Introduction of this inspection manual.",
+				"defects": [
+				  {
+					"description": "Fluid: leaking excessively and likely to harm the environment or to pose a safety risk to other road users",
+					"category": "Major"
+				  },
+				  {
+					"description": "Fluid: leaking continuously and likely to pose a serious risk to road safety",
+					"category": "Dangerous"
+				  }
+				]
+			  }
+			]
+		  }
+		]
 	  }
 
 

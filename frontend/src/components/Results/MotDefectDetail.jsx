@@ -33,6 +33,8 @@ const MOT_MANUAL_API_URL = isDevelopment
 // Cache for storing MOT manual data
 const manualCache = {};
 
+
+
 // Styled components that match GOV.UK design system
 const DetailContent = styled('div')(({ theme }) => ({
   marginTop: '15px',

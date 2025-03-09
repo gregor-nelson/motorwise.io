@@ -26,6 +26,7 @@ import MotDefectDetail from './MotDefectDetail';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 
+// Original ClickableDefectItem styling
 const ClickableDefectItem = styled('div')(({ expanded }) => ({
   cursor: 'pointer',
   position: 'relative',
@@ -44,6 +45,66 @@ const ClickableDefectItem = styled('div')(({ expanded }) => ({
     width: '100%',
   },
 }));
+
+// Custom Tooltip components
+const TooltipContainer = styled('div')({
+  position: 'relative',
+  display: 'block',
+  width: '100%',
+});
+
+const TooltipContent = styled('div')(({ visible }) => ({
+  position: 'absolute',
+  bottom: 'calc(100% + 5px)',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  backgroundColor: COLORS.BLACK,
+  color: COLORS.WHITE,
+  padding: '10px 15px',
+  borderRadius: '0',
+  fontSize: '1rem',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  fontWeight: 400,
+  lineHeight: 1.25,
+  zIndex: 100,
+  visibility: visible ? 'visible' : 'hidden',
+  opacity: visible ? 1 : 0,
+  transition: 'opacity 0.2s ease-in-out',
+  
+  // Arrow pointer removed
+}));
+
+// Custom Tooltip component
+const CustomTooltip = ({ children, title }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const showTooltipTimeout = useRef(null);
+  
+  const handleMouseEnter = () => {
+    if (showTooltipTimeout.current) clearTimeout(showTooltipTimeout.current);
+    showTooltipTimeout.current = setTimeout(() => {
+      setIsVisible(true);
+    }, 300); // 300ms delay before showing the tooltip
+  };
+  
+  const handleMouseLeave = () => {
+    if (showTooltipTimeout.current) clearTimeout(showTooltipTimeout.current);
+    setIsVisible(false);
+  };
+  
+  return (
+    <TooltipContainer 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
+    >
+      {children}
+      <TooltipContent visible={isVisible}>
+        {title}
+      </TooltipContent>
+    </TooltipContainer>
+  );
+};
 
 const motCache = {};
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -283,30 +344,31 @@ const MOTHistoryPage = ({ registration }) => {
                                 const defectKey = `${index}-defect-${i}`;
                                 return (
                                   <li key={i}>
-                                    <ClickableDefectItem
-                                      ref={el => defectRefs.current[defectKey] = el} // Assign ref to each item
-                                      expanded={expandedDefects[defectKey]}
-                                      onClick={toggleExpanded(defectKey)}
-                                      aria-expanded={expandedDefects[defectKey] || false}
-                                      role="button"
-                                      tabIndex={0}
-                                      title={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                          e.preventDefault();
-                                          toggleExpanded(defectKey)(e);
-                                        }
-                                      }}
-                                    >
-                                      <strong>{defect.text}</strong>
-                                      <MotDefectDetail 
-                                        defectId={defect.id}
-                                        defectText={defect.text}
-                                        defectCategory={defect.type}
+                                    <CustomTooltip title={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}>
+                                      <ClickableDefectItem
+                                        ref={el => defectRefs.current[defectKey] = el}
                                         expanded={expandedDefects[defectKey]}
-                                        toggleExpanded={toggleExpanded(defectKey)}
-                                      />
-                                    </ClickableDefectItem>
+                                        onClick={toggleExpanded(defectKey)}
+                                        aria-expanded={expandedDefects[defectKey] || false}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyPress={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            toggleExpanded(defectKey)(e);
+                                          }
+                                        }}
+                                      >
+                                        <strong>{defect.text}</strong>
+                                        <MotDefectDetail 
+                                          defectId={defect.id}
+                                          defectText={defect.text}
+                                          defectCategory={defect.type}
+                                          expanded={expandedDefects[defectKey]}
+                                          toggleExpanded={toggleExpanded(defectKey)}
+                                        />
+                                      </ClickableDefectItem>
+                                    </CustomTooltip>
                                   </li>
                                 );
                               })}
@@ -321,30 +383,31 @@ const MOTHistoryPage = ({ registration }) => {
                                 const advisoryKey = `${index}-advisory-${i}`;
                                 return (
                                   <li key={i}>
-                                    <ClickableDefectItem
-                                      ref={el => defectRefs.current[advisoryKey] = el} // Assign ref to each item
-                                      expanded={expandedDefects[advisoryKey]}
-                                      onClick={toggleExpanded(advisoryKey)}
-                                      aria-expanded={expandedDefects[advisoryKey] || false}
-                                      role="button"
-                                      tabIndex={0}
-                                      title={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                          e.preventDefault();
-                                          toggleExpanded(advisoryKey)(e);
-                                        }
-                                      }}
-                                    >
-                                      <strong>{advisory.text}</strong>
-                                      <MotDefectDetail 
-                                        defectId={advisory.id}
-                                        defectText={advisory.text}
-                                        defectCategory={advisory.type}
+                                    <CustomTooltip title={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}>
+                                      <ClickableDefectItem
+                                        ref={el => defectRefs.current[advisoryKey] = el}
                                         expanded={expandedDefects[advisoryKey]}
-                                        toggleExpanded={toggleExpanded(advisoryKey)}
-                                      />
-                                    </ClickableDefectItem>
+                                        onClick={toggleExpanded(advisoryKey)}
+                                        aria-expanded={expandedDefects[advisoryKey] || false}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyPress={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            toggleExpanded(advisoryKey)(e);
+                                          }
+                                        }}
+                                      >
+                                        <strong>{advisory.text}</strong>
+                                        <MotDefectDetail 
+                                          defectId={advisory.id}
+                                          defectText={advisory.text}
+                                          defectCategory={advisory.type}
+                                          expanded={expandedDefects[advisoryKey]}
+                                          toggleExpanded={toggleExpanded(advisoryKey)}
+                                        />
+                                      </ClickableDefectItem>
+                                    </CustomTooltip>
                                   </li>
                                 );
                               })}

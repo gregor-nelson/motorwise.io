@@ -799,8 +799,14 @@ const VehicleMileageInsights = ({ registration, vin }) => {
     // Find upcoming service needs
     const upcomingServices = serviceIntervals.map(service => {
       // Calculate next milestone based on current mileage
-      const nextDueMileage = currentMileage + (service.interval - (currentMileage % service.interval));
-      if (currentMileage % service.interval === 0) nextDueMileage = currentMileage + service.interval;
+      let nextDueMileage;
+      if (currentMileage % service.interval === 0) {
+        // If exactly at an interval point, the next due is one full interval away
+        nextDueMileage = currentMileage + service.interval;
+      } else {
+        // Otherwise, find the next interval point
+        nextDueMileage = currentMileage + (service.interval - (currentMileage % service.interval));
+      }
       
       const milesUntilDue = nextDueMileage - currentMileage;
       const estimatedTimeUntilDue = benchmarks.averageAnnualMileage > 0 ? 

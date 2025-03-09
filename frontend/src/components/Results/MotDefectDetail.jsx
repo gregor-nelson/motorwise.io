@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   GovUKBody,
   GovUKHeadingS,
+  GovUKHeadingM,
   GovUKInsetText,
+  GovUKLoadingContainer,
   GovUKLoadingSpinner,
   GovUKList,
+
+  GovUKBodyS,
+  GovUKDetails,
+  GovUKDetailsSummary,
+  GovUKDetailsText,
+  GovUKSectionBreak,
+  GovUKLink,
   COLORS
 } from '../../styles/theme';
 
@@ -24,35 +33,597 @@ const MOT_MANUAL_API_URL = isDevelopment
 // Cache for storing MOT manual data
 const manualCache = {};
 
-// Styled components
-const ExpandableContainer = styled('div')(({ expanded }) => ({
-  cursor: 'pointer',
-  padding: '8px 0',
-  borderLeft: expanded ? `5px solid ${COLORS.BLUE}` : 'none',
-  paddingLeft: expanded ? '10px' : '0',
-  transition: 'all 0.2s ease',
-  marginBottom: '10px',
-  '&:hover': {
-    color: COLORS.BLUE,
-    textDecoration: 'underline',
+// Styled components that match GOV.UK design system
+const DetailContent = styled('div')(({ theme }) => ({
+  marginTop: '15px',
+  marginBottom: '20px',
+  padding: '0',
+  color: COLORS.BLACK,
+  backgroundColor: COLORS.WHITE,
+  border: `1px solid ${COLORS.MID_GREY}`,
+  borderRadius: '0',
+  
+  '&:focus-within': {
+    outline: `3px solid ${COLORS.YELLOW}`,
+    outlineOffset: '0',
   },
+
+  '@media (min-width: 40.0625em)': {
+    marginBottom: '30px',
+  }
 }));
 
-const DetailContent = styled('div')({
-  marginTop: '10px',
-  paddingLeft: '5px',
-  color: COLORS.BLACK, // Reset text color for the content
-  '&:hover': {
-    color: COLORS.BLACK, // Prevent hover effect on the details
-    textDecoration: 'none',
-  },
+const BreadcrumbPath = styled('div')({
+  padding: '10px 15px',
+  marginBottom: '0',
+  borderBottom: `1px solid ${COLORS.MID_GREY}`,
+  backgroundColor: COLORS.LIGHT_GREY,
+  '& span': {
+    margin: '0 5px',
+    color: COLORS.DARK_GREY,
+  }
 });
 
-const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
-  const [defectDetail, setDefectDetail] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [expanded, setExpanded] = useState(false);
+const DefectContent = styled('div')({
+  padding: '15px',
+  '@media (min-width: 40.0625em)': {
+    padding: '20px',
+  }
+});
+
+const DefectSection = styled('div')({
+  marginBottom: '20px',
+  '@media (min-width: 40.0625em)': {
+    marginBottom: '30px',
+  }
+});
+
+const CategoryTag = styled('span')(({ category }) => {
+  let bgColor = COLORS.BLUE; // Default blue
+  let textColor = COLORS.WHITE;
+  
+  switch(category?.toLowerCase()) {
+    case 'dangerous':
+      bgColor = COLORS.RED; // Red
+      break;
+    case 'major':
+      bgColor = '#f47738'; // Orange
+      break;
+    case 'minor':
+      bgColor = COLORS.GREEN; // Green
+      break;
+    case 'advisory':
+      bgColor = COLORS.DARK_GREY; // Grey
+      break;
+  }
+  
+  return {
+    backgroundColor: bgColor,
+    color: textColor,
+    padding: '2px 8px',
+    borderRadius: '0',
+    fontFamily: '"GDS Transport", arial, sans-serif',
+    fontSize: '0.875rem',
+    fontWeight: 'bold',
+    display: 'inline-block',
+    marginRight: '10px',
+    marginBottom: '5px',
+  };
+});
+
+const DefectItem = styled('li')({
+  marginBottom: '10px',
+  paddingLeft: '0',
+  listStyleType: 'none',
+});
+
+const RelatedDefectsList = styled(GovUKList)({
+  paddingLeft: '0',
+});
+
+
+// Helper function to handle inline text formatting (bold, italic, links, etc.)
+const formatInlineStyles = (text) => {
+  if (!text) return '';
+  
+  // Create a working copy to apply transformations
+  let formattedText = text;
+  let result = [];
+  let lastIndex = 0;
+  
+  try {
+    // Process links [text](url)
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let linkMatch;
+    while ((linkMatch = linkRegex.exec(formattedText)) !== null) {
+      // Add text before this match
+      if (linkMatch.index > lastIndex) {
+        // Process any other formatting in the text before the link
+        const preText = formattedText.substring(lastIndex, linkMatch.index);
+        result.push(processInlineText(preText));
+      }
+      
+      // Add the link
+      const linkText = linkMatch[1];
+      const linkUrl = linkMatch[2];
+      result.push(
+        <GovUKLink href={linkUrl} key={`link-${linkMatch.index}`}>
+          {processInlineText(linkText)}
+        </GovUKLink>
+      );
+      
+      lastIndex = linkMatch.index + linkMatch[0].length;
+    }
+    
+    // Add any remaining text after the last link
+    if (lastIndex < formattedText.length) {
+      const remainingText = formattedText.substring(lastIndex);
+      result.push(processInlineText(remainingText));
+    }
+    
+    // If no links were found, process the entire text for other formatting
+    if (result.length === 0) {
+      result.push(processInlineText(formattedText));
+    }
+    
+    return (result.length === 1 && typeof result[0] === 'string') ? result[0] : <>{result}</>;
+  } catch (error) {
+    console.error('Error in formatInlineStyles:', error);
+    return text;
+  }
+};
+
+// Helper to process inline text formatting (bold, italic, code)
+const processInlineText = (text) => {
+  if (!text) return '';
+  
+  let result = [];
+  let currentText = text;
+  let hasFormatting = false;
+  
+  try {
+    // Process bold text with **text**
+    const boldRegex = /\*\*([^*]+)\*\*/g;
+    currentText = currentText.replace(boldRegex, (match, content) => {
+      hasFormatting = true;
+      result.push(<strong key={`bold-${result.length}`} style={{
+        fontWeight: 700,
+        fontFamily: '"GDS Transport", arial, sans-serif',
+      }}>{content}</strong>);
+      return `###BOLD_PLACEHOLDER_${result.length - 1}###`;
+    });
+    
+    // Process italic text with *text*
+    const italicRegex = /\*([^*]+)\*/g;
+    currentText = currentText.replace(italicRegex, (match, content) => {
+      hasFormatting = true;
+      result.push(<em key={`italic-${result.length}`} style={{
+        fontStyle: 'italic',
+        fontFamily: '"GDS Transport", arial, sans-serif',
+      }}>{content}</em>);
+      return `###ITALIC_PLACEHOLDER_${result.length - 1}###`;
+    });
+    
+    // Process inline code with `code`
+    const codeRegex = /`([^`]+)`/g;
+    currentText = currentText.replace(codeRegex, (match, content) => {
+      hasFormatting = true;
+      result.push(
+        <code key={`code-${result.length}`} style={{ 
+          backgroundColor: COLORS.LIGHT_GREY,
+          padding: '2px 4px',
+          borderRadius: '0',
+          fontFamily: '"GDS Transport", arial, sans-serif',
+          fontSize: '1rem',
+          color: COLORS.BLACK
+        }}>
+          {content}
+        </code>
+      );
+      return `###CODE_PLACEHOLDER_${result.length - 1}###`;
+    });
+    
+    // If we found formatting, rebuild the text with the formatted elements
+    if (hasFormatting) {
+      const parts = [];
+      let lastIndex = 0;
+      
+      // Function to extract placeholder number
+      const getPlaceholderIndex = (placeholder) => {
+        const match = placeholder.match(/###(?:BOLD|ITALIC|CODE)_PLACEHOLDER_(\d+)###/);
+        return match ? parseInt(match[1]) : -1;
+      };
+      
+      // Find all placeholders
+      const placeholderRegex = /###(?:BOLD|ITALIC|CODE)_PLACEHOLDER_\d+###/g;
+      let match;
+      
+      while ((match = placeholderRegex.exec(currentText)) !== null) {
+        // Add text before this placeholder
+        if (match.index > lastIndex) {
+          parts.push(currentText.substring(lastIndex, match.index));
+        }
+        
+        // Add the formatted element
+        const index = getPlaceholderIndex(match[0]);
+        if (index >= 0 && index < result.length) {
+          parts.push(result[index]);
+        }
+        
+        lastIndex = match.index + match[0].length;
+      }
+      
+      // Add any remaining text
+      if (lastIndex < currentText.length) {
+        parts.push(currentText.substring(lastIndex));
+      }
+      
+      return (parts.length === 1 && typeof parts[0] === 'string') ? parts[0] : <>{parts}</>;
+    }
+    
+    // No formatting found, return the original text
+    return currentText;
+  } catch (error) {
+    console.error('Error in processInlineText:', error);
+    return text;
+  }
+};
+
+// Enhanced text formatting function with better markdown-like syntax support
+const formatText = (text) => {
+  if (!text) return null;
+  
+  try {
+    // Split text into paragraphs (separated by one or more blank lines)
+    const paragraphs = text.split(/\n\n+/);
+    
+    return (
+      <div>
+        {paragraphs.map((paragraph, index) => {
+          // Trim paragraph while preserving internal line breaks
+          const trimmedParagraph = paragraph.trim();
+          
+          try {
+            // 1. Process headings (# to ####) - improved heading detection
+            if (/^#{1,4}\s/.test(trimmedParagraph)) {
+              const headingMatch = trimmedParagraph.match(/^(#{1,4})\s+(.*)/);
+              if (headingMatch) {
+                const level = headingMatch[1].length;
+                const headingText = headingMatch[2].trim();
+                
+                // Apply formatting to heading text (bold, italic, etc.)
+                const formattedHeadingText = formatInlineStyles(headingText);
+                
+                switch (level) {
+                  case 1:
+                    return <GovUKHeadingL key={index}>{formattedHeadingText}</GovUKHeadingL>;
+                  case 2:
+                    return <GovUKHeadingM key={index}>{formattedHeadingText}</GovUKHeadingM>;
+                  case 3:
+                    return <GovUKHeadingS key={index}>{formattedHeadingText}</GovUKHeadingS>;
+                  case 4:
+                    // Use a slightly styled version of GovUKBodyS for subsections
+                    return (
+                      <GovUKBodyS 
+                        key={index} 
+                        style={{ 
+                          fontWeight: 'bold', 
+                          marginBottom: '10px', 
+                          marginTop: '15px' 
+                        }}
+                      >
+                        {formattedHeadingText}
+                      </GovUKBodyS>
+                    );
+                  default:
+                    return <GovUKHeadingS key={index}>{formattedHeadingText}</GovUKHeadingS>;
+                }
+              }
+            }
+            
+            // 2. Process code blocks
+            if (trimmedParagraph.startsWith('```') && trimmedParagraph.endsWith('```')) {
+              const codeContent = trimmedParagraph.substring(3, trimmedParagraph.length - 3).trim();
+              
+              // Extract language if specified
+              let language = '';
+              let code = codeContent;
+              
+              const firstLineBreak = codeContent.indexOf('\n');
+              if (firstLineBreak > 0) {
+                language = codeContent.substring(0, firstLineBreak).trim();
+                code = codeContent.substring(firstLineBreak + 1).trim();
+              }
+              
+              return (
+                <div key={index}>
+                  <GovUKInsetText style={{
+                    borderLeftColor: COLORS.BLUE,
+                    backgroundColor: COLORS.LIGHT_GREY,
+                    padding: '15px',
+                    margin: '0 0 20px 0'
+                  }}>
+                    {language && (
+                      <GovUKBodyS style={{
+                        color: COLORS.DARK_GREY,
+                        marginBottom: '10px'
+                      }}>
+                        {language}
+                      </GovUKBodyS>
+                    )}
+                    <pre style={{
+                      fontFamily: '"GDS Transport", arial, sans-serif',
+                      fontSize: '1rem',
+                      margin: 0,
+                      overflowX: 'auto'
+                    }}>
+                      <code>{code}</code>
+                    </pre>
+                  </GovUKInsetText>
+                </div>
+              );
+            }
+            
+            // 3. Process blockquotes/inset text
+            if (/^\s*>\s/.test(trimmedParagraph)) {
+              const content = trimmedParagraph
+                .split('\n')
+                .map(line => line.replace(/^\s*>\s/, '').trim())
+                .join('\n');
+              
+              // Process line breaks and inline formatting inside blockquote
+              const blockquoteLines = content.split('\n');
+              const formattedBlockquote = blockquoteLines.map((line, i) => {
+                const formattedLine = formatInlineStyles(line);
+                return i === 0 ? formattedLine : <React.Fragment key={i}><br />{formattedLine}</React.Fragment>;
+              });
+              
+              return <GovUKInsetText key={index}>{formattedBlockquote}</GovUKInsetText>;
+            }
+            
+            // 4. Process special case: text ending with colon directly followed by a numbered list
+            // E.g., "If wheel play detectors are not available, do the following:1. Jack the front..."
+            const colonNumberedListCheck = /^(.*?:\s*)(\d+\.\s+.*)$/.exec(trimmedParagraph);
+            if (colonNumberedListCheck) {
+              const introText = colonNumberedListCheck[1].trim();
+              // Extract the list part and add a newline character for proper parsing
+              const remainingText = colonNumberedListCheck[2].trim();
+              
+              // Join with a newline for processing
+              const combinedText = introText + '\n' + remainingText;
+              
+              // Split it for processing
+              const combinedLines = combinedText.split('\n');
+              
+              // Find all numbered items in the text
+              const numberedItems = [];
+              let currentItem = '';
+              let currentItemNumber = null;
+              
+              // Helper function to capitalize the first letter of a string
+              const capitalizeFirstLetter = (string) => {
+                if (!string) return '';
+                return string.charAt(0).toUpperCase() + string.slice(1);
+              };
+              
+              // Regex to detect a numbered item start
+              const numberItemRegex = /^(\d+)\.\s+(.*)/;
+              
+              for (let i = 1; i < combinedLines.length; i++) { // Start from 1 to skip intro
+                const line = combinedLines[i];
+                const numberMatch = line.match(numberItemRegex);
+                
+                if (numberMatch) {
+                  // If we already have a current item, save it before starting a new one
+                  if (currentItemNumber !== null) {
+                    numberedItems.push({
+                      number: currentItemNumber,
+                      text: currentItem
+                    });
+                  }
+                  
+                  // Start a new item
+                  currentItemNumber = numberMatch[1];
+                  currentItem = capitalizeFirstLetter(numberMatch[2].trim());
+                } else if (currentItemNumber !== null) {
+                  // Continuation of the current item - add with proper spacing
+                  currentItem += ' ' + line.trim();
+                }
+              }
+              
+              // Add the last item if there is one
+              if (currentItemNumber !== null) {
+                numberedItems.push({
+                  number: currentItemNumber,
+                  text: currentItem
+                });
+              }
+              
+              // Apply inline formatting to intro text and list items
+              const formattedIntroText = formatInlineStyles(introText);
+              
+              return (
+                <React.Fragment key={index}>
+                  <GovUKBody>{formattedIntroText}</GovUKBody>
+                  <GovUKList as="ol" style={{
+                    paddingLeft: '20px',
+                    marginTop: '10px',
+                    listStyleType: 'decimal'
+                  }}>
+                    {numberedItems.map((item, i) => (
+                      <li key={i} style={{ 
+                        marginBottom: '5px',
+                        paddingLeft: '5px'
+                      }}>
+                        {formatInlineStyles(item.text)}
+                      </li>
+                    ))}
+                  </GovUKList>
+                </React.Fragment>
+              );
+            }
+            
+            // 5. Process unordered lists (prioritize "-" format as requested)
+            if (/^\s*[-*•]\s/.test(trimmedParagraph)) {
+              const lines = trimmedParagraph.split('\n');
+              const listItems = [];
+              let currentItem = '';
+              
+              // Helper function to capitalize the first letter of a string
+              const capitalizeFirstLetter = (string) => {
+                if (!string) return '';
+                return string.charAt(0).toUpperCase() + string.slice(1);
+              };
+              
+              lines.forEach((line, i) => {
+                // Look for any bullet point style but prioritize "-"
+                const listItemMatch = line.match(/^\s*[-*•]\s+(.*)/);
+                if (listItemMatch) {
+                  // If we have a current item being built, push it before starting new one
+                  if (currentItem.length > 0) {
+                    listItems.push(currentItem);
+                    currentItem = '';
+                  }
+                  // Capitalize the first letter of each list item
+                  currentItem = capitalizeFirstLetter(listItemMatch[1].trim());
+                } else if (currentItem.length > 0 && line.trim()) {
+                  // This is a continuation of the previous item (non-empty line without a bullet prefix)
+                  currentItem += ' ' + line.trim();
+                }
+              });
+              
+              // Add the last item if there is one
+              if (currentItem.length > 0) {
+                listItems.push(currentItem);
+              }
+              
+              if (listItems.length > 0) {
+                return (
+                  <GovUKList key={index} style={{
+                    paddingLeft: '20px',
+                    listStyleType: 'disc',
+                    marginTop: '0',
+                    marginBottom: '15px',
+                    
+                    '@media (min-width: 40.0625em)': {
+                      marginBottom: '20px'
+                    }
+                  }}>
+                    {listItems.map((item, i) => (
+                      <li key={i} style={{ marginBottom: '5px' }}>{formatInlineStyles(item)}</li>
+                    ))}
+                  </GovUKList>
+                );
+              }
+            }
+            
+            // 6. Check for special content patterns like "Manual section:" (specific to MOT detail)
+            if (/^\*\*Manual section:\*\*/i.test(trimmedParagraph)) {
+              // Extract the path from the manual section line
+              const pathString = trimmedParagraph.replace(/^\*\*Manual section:\*\*/i, '').trim();
+              return (
+                <BreadcrumbPath key={index}>
+                  <GovUKBodyS>
+                    <strong>Manual section:</strong> 
+                    {pathString.split('›').map((p, i) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && <span>›</span>}
+                        {p.trim()}
+                      </React.Fragment>
+                    ))}
+                  </GovUKBodyS>
+                </BreadcrumbPath>
+              );
+            }
+            
+            // 7. Process status tags like "Advisory - Monitor"
+            if (/^(Dangerous|Major|Minor|Advisory)\s+-\s+/i.test(trimmedParagraph)) {
+              const match = trimmedParagraph.match(/^(Dangerous|Major|Minor|Advisory)\s+-\s+(.*)/i);
+              if (match) {
+                const category = match[1];
+                const description = match[2];
+                return (
+                  <div key={index}>
+                    <CategoryTag category={category.toLowerCase()}>
+                      {category} - {description}
+                    </CategoryTag>
+                  </div>
+                );
+              }
+            }
+            
+            // 8. Handle special case: paragraph with a list attached (often after a colon)
+            // E.g., "Wear is excessive if play is more than: * 2mm for..."
+            const lines = trimmedParagraph.split('\n');
+            
+            // Check if this paragraph contains bullet points after a line ending with a colon
+            const colonIndex = lines.findIndex(line => line.trim().endsWith(':'));
+            const hasBulletPoints = lines.some(line => /^\s*[-*•]\s/.test(line));
+            
+            if (colonIndex !== -1 && hasBulletPoints) {
+              // Extract the intro text (before the bullets)
+              const introText = lines.slice(0, colonIndex + 1).join(' ');
+              
+              // Helper function to capitalize the first letter of a string
+              const capitalizeFirstLetter = (string) => {
+                if (!string) return '';
+                return string.charAt(0).toUpperCase() + string.slice(1);
+              };
+              
+              // Extract the bullet points and format them
+              const bulletPoints = lines.slice(colonIndex + 1)
+                .filter(line => /^\s*[-*•]\s/.test(line))
+                .map(line => capitalizeFirstLetter(line.replace(/^\s*[-*•]\s+/, '').trim()));
+              
+              return (
+                <React.Fragment key={index}>
+                  <GovUKBody>{formatInlineStyles(introText)}</GovUKBody>
+                  <GovUKList style={{
+                    paddingLeft: '20px',
+                    listStyleType: 'disc',
+                    marginTop: '10px',
+                    marginBottom: '15px',
+                    
+                    '@media (min-width: 40.0625em)': {
+                      marginBottom: '20px'
+                    }
+                  }}>
+                    {bulletPoints.map((item, i) => (
+                      <li key={i} style={{ marginBottom: '5px' }}>{formatInlineStyles(item)}</li>
+                    ))}
+                  </GovUKList>
+                </React.Fragment>
+              );
+            }
+            
+            // 9. Process regular paragraphs with line breaks
+            // Apply inline formatting to lines
+            const formattedLines = lines.map((line, i) => {
+              const formattedLine = formatInlineStyles(line);
+              return i === 0 ? formattedLine : <React.Fragment key={i}><br />{formattedLine}</React.Fragment>;
+            });
+            
+            return <GovUKBody key={index}>{formattedLines}</GovUKBody>;
+          } catch (innerError) {
+            console.error('Error formatting paragraph:', innerError);
+            return <GovUKBody key={index}>{trimmedParagraph}</GovUKBody>;
+          }
+        })}
+      </div>
+    );
+  } catch (error) {
+    console.error('Error in formatText:', error);
+    return <GovUKBody>{text || ''}</GovUKBody>;
+  }
+};
+
+
+
+
+const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggleExpanded }) => {
+  const [defectDetail, setDefectDetail] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
   // Configure the stale time in milliseconds (1 hour)
   const CACHE_STALE_TIME = 60 * 60 * 1000;
@@ -64,8 +635,8 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
 
   // Extract defect ID from text if not provided explicitly
   const extractDefectId = (text) => {
-    // Common pattern: defect ID might appear in the text like "(1.1.13)" or similar
-    const match = /\(?(\d+\.\d+(?:\.\d+)?)\)?/.exec(text);
+    // Look for patterns like (1.2.3) or just 1.2.3
+    const match = /\(?(\d+(?:\.\d+){1,2})\)?/.exec(text);
     return match ? match[1] : null;
   };
 
@@ -80,11 +651,9 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
     const fetchDefectDetail = async () => {
       const idToUse = getDefectIdToUse();
       if (!idToUse) {
-        // No ID available, nothing to fetch
         return;
       }
 
-      // Check cache first
       const cacheKey = `defect_${idToUse}`;
       const cachedData = manualCache[cacheKey];
       
@@ -97,7 +666,6 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
       setError(null);
       
       try {
-        // Log the API request in development mode
         if (isDevelopment) {
           console.log(`Fetching MOT manual data from: ${MOT_MANUAL_API_URL}/manual/defect/${idToUse}`);
         }
@@ -113,14 +681,12 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
           }
         );
         
-        // Parse JSON response
         const data = await response.json();
         
         if (!response.ok) {
           throw new Error(data.detail || 'Failed to fetch defect details');
         }
         
-        // Store in cache with timestamp
         manualCache[cacheKey] = {
           data: data,
           timestamp: Date.now()
@@ -135,7 +701,6 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
       }
     };
 
-    // Only fetch if expanded
     if (expanded) {
       fetchDefectDetail();
     }
@@ -159,11 +724,39 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
     }
   };
 
-  // Toggle expanded state
-  const toggleExpanded = (e) => {
-    // Prevent click from bubbling up
-    e.stopPropagation();
-    setExpanded(!expanded);
+  // Render the path breadcrumb
+  const renderPath = (path) => {
+    if (!path || path.length === 0) return null;
+    
+    return (
+      <BreadcrumbPath>
+        <GovUKBodyS>
+          <strong>Manual section:</strong> 
+          {path.map((p, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <span>›</span>}
+              {p.title}
+            </React.Fragment>
+          ))}
+        </GovUKBodyS>
+      </BreadcrumbPath>
+    );
+  };
+
+  // Render a single item detail (for direct item matches)
+  const renderItemDetail = (item) => {
+    if (!item) return null;
+    
+    return (
+      <>
+        {item.description && (
+          <DefectSection>
+            <GovUKHeadingS>Description</GovUKHeadingS>
+            {formatText(item.description)}
+          </DefectSection>
+        )}
+      </>
+    );
   };
 
   // If no defect ID could be found or extracted
@@ -172,93 +765,125 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory }) => {
     return null;
   }
 
-  // Returns the content for the detail - no icon or ID displayed
   return (
-    <ExpandableContainer 
-      expanded={expanded}
-      onClick={toggleExpanded}
-      aria-expanded={expanded}
-      role="button"
-      tabIndex={0}
-      title={`${expanded ? 'Hide' : 'View'} MOT manual reference details`}
-      onKeyPress={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          toggleExpanded(e);
-        }
-      }}
-    >
-      {/* The text is being rendered by the parent component */}
-      
-      {/* Show expanded content only when expanded */}
+    <>
       {expanded && (
-        <DetailContent onClick={(e) => e.stopPropagation()}>
-          {loading && <GovUKLoadingSpinner />}
+        <DetailContent>
+          {loading && (
+            <GovUKLoadingContainer>
+              <GovUKLoadingSpinner />
+              <GovUKBody>Loading content from MOT manual...</GovUKBody>
+            </GovUKLoadingContainer>
+          )}
           
           {error && (
-            <Alert severity="warning" style={{ marginBottom: '10px', textDecoration: 'none' }}>
-              {error}
-            </Alert>
+            <GovUKInsetText style={{ margin: '15px', borderLeftColor: COLORS.RED }}>
+              <GovUKBody>{error}</GovUKBody>
+            </GovUKInsetText>
           )}
           
           {!loading && !error && defectDetail && (
             <>
-              {defectDetail.path && defectDetail.path.length > 0 && (
-                <GovUKBody>
-                  <strong>Manual section:</strong> {defectDetail.path.map(p => p.title).join(' > ')}
-                </GovUKBody>
-              )}
+              {/* Render the path */}
+              {renderPath(defectDetail.path)}
               
-              {defectDetail.data && defectDetail.data.description && (
-                <GovUKInsetText>
-                  {defectDetail.data.description}
-                </GovUKInsetText>
-              )}
-              
-              {defectDetail.data && defectDetail.data.defects && (
-                <>
-                  <GovUKHeadingS>Related defects:</GovUKHeadingS>
-                  <GovUKList>
-                    {defectDetail.data.defects.map((defect, index) => (
-                      <li key={index}>
-                        <strong>{formatCategory(defect.category)}:</strong> {defect.description}
-                      </li>
-                    ))}
-                  </GovUKList>
-                </>
-              )}
-              
-              {defectDetail.data && defectDetail.data.subItems && (
-                <>
-                  <GovUKHeadingS>Testing procedure:</GovUKHeadingS>
-                  {defectDetail.data.subItems.map((subItem, index) => (
-                    <div key={index}>
-                      <strong>{subItem.title}</strong>
-                      <GovUKBody>{subItem.description}</GovUKBody>
-                    </div>
-                  ))}
-                </>
-              )}
+              <DefectContent>
+                {/* Show the ID and title */}
+                {defectDetail.data && defectDetail.data.title && (
+                  <GovUKHeadingM>
+                    {defectDetail.id}: {defectDetail.data.title}
+                  </GovUKHeadingM>
+                )}
+                
+                {/* Show category if available */}
+                {defectCategory && (
+                  <CategoryTag category={defectCategory}>
+                    {formatCategory(defectCategory)}
+                  </CategoryTag>
+                )}
+                
+                <GovUKSectionBreak className="govuk-section-break--m govuk-section-break--visible" />
+                
+                {/* Handle different types of data */}
+                {defectDetail.type === 'item' && renderItemDetail(defectDetail.data)}
+                
+                {defectDetail.type === 'subsection' && defectDetail.data && (
+                  <>
+                    {defectDetail.data.description && (
+                      <DefectSection>
+                        <GovUKHeadingS>Description</GovUKHeadingS>
+                        {formatText(defectDetail.data.description)}
+                      </DefectSection>
+                    )}
+                    
+                    {defectDetail.data.items && defectDetail.data.items.length > 0 && (
+                      <DefectSection>
+                        <GovUKHeadingS>Items in this subsection</GovUKHeadingS>
+                        <GovUKList>
+                          {defectDetail.data.items.map((item, index) => (
+                            <li key={index}>
+                              <strong>{item.id}:</strong> {item.title}
+                            </li>
+                          ))}
+                        </GovUKList>
+                      </DefectSection>
+                    )}
+                  </>
+                )}
+                
+                {defectDetail.type === 'section' && defectDetail.data && (
+                  <>
+                    {defectDetail.data.description && (
+                      <DefectSection>
+                        <GovUKHeadingS>Description</GovUKHeadingS>
+                        {formatText(defectDetail.data.description)}
+                      </DefectSection>
+                    )}
+                    
+                    {defectDetail.data.subsections && defectDetail.data.subsections.length > 0 && (
+                      <DefectSection>
+                        <GovUKHeadingS>Subsections</GovUKHeadingS>
+                        <GovUKList>
+                          {defectDetail.data.subsections.map((subsection, index) => (
+                            <li key={index}>
+                              <strong>{subsection.id}:</strong> {subsection.title}
+                            </li>
+                          ))}
+                        </GovUKList>
+                      </DefectSection>
+                    )}
+                  </>
+                )}
+              </DefectContent>
             </>
           )}
           
+          {/* Handle multiple matches case */}
           {!loading && !error && defectDetail && defectDetail.matches && (
-            <>
-              <GovUKHeadingS>Multiple matches found:</GovUKHeadingS>
+            <DefectContent>
+              <GovUKHeadingS>Multiple entries found</GovUKHeadingS>
+              <GovUKBody>Please select a specific entry below:</GovUKBody>
               <GovUKList>
                 {defectDetail.matches.map((match, index) => (
-                  <li key={index}>
-                    <strong>{match.id}: {match.title}</strong>
+                  <DefectItem key={index}>
+                    <GovUKHeadingS>{match.id}: {match.title}</GovUKHeadingS>
                     {match.data.description && (
-                      <GovUKBody>{match.data.description}</GovUKBody>
+                      <GovUKBodyS>
+                        {match.data.description.substring(0, 150) + 
+                          (match.data.description.length > 150 ? '...' : '')}
+                      </GovUKBodyS>
                     )}
-                  </li>
+                    <GovUKLink href={`#defect-${match.id}`}>
+                      View full details
+                    </GovUKLink>
+                  </DefectItem>
                 ))}
               </GovUKList>
-            </>
+            </DefectContent>
           )}
         </DetailContent>
       )}
-    </ExpandableContainer>
+    </>
   );
 };
 

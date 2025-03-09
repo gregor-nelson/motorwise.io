@@ -267,6 +267,30 @@ export const GovUKHeadingS = styled('h4')`
   }
 `;
 
+export const GovUKHeadingM = styled('h3')`
+  ${commonFontStyles}
+  color: ${COLORS.BLACK};
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 15px;
+  
+  ${printStyles}
+  
+  @media (min-width: ${BREAKPOINTS.MOBILE}) {
+    font-size: 1.5rem;
+    line-height: 1.3333333333;
+    margin-bottom: 20px;
+  }
+  
+  @media print {
+    font-size: 18pt;
+    line-height: 1.15;
+  }
+`;
+
 export const GovUKCaptionM = styled('span')`
   ${commonFontStyles}
   font-weight: 400;

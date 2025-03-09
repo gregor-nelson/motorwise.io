@@ -22,38 +22,34 @@ import {
   GovUKLoadingSpinner,
   COLORS,
 } from '../../styles/theme';
-
-// Import the new MotDefectDetail component
 import MotDefectDetail from './MotDefectDetail';
-
-// Only import Alert from Material UI
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 
-const ClickableDefectItem = styled('div')({
+const ClickableDefectItem = styled('div')(({ expanded }) => ({
   cursor: 'pointer',
   position: 'relative',
+  padding: '8px 0',
+  borderLeft: expanded ? `5px solid ${COLORS.BLUE}` : 'none',
+  paddingLeft: expanded ? '10px' : '0',
+  transition: 'all 0.2s ease',
+  marginBottom: '10px',
+  width: '100%',
   '&:hover': {
     color: COLORS.BLUE,
-  }
-});
+    '& strong': {},
+  },
+  '& strong': {
+    display: 'block',
+    width: '100%',
+  },
+}));
 
-
-// Cache for storing MOT history data
 const motCache = {};
+const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE_URL = isDevelopment ? 'http://localhost:8000/api/v1' : '/api/v1';
 
-// Determine if we're in development or production
-const isDevelopment = window.location.hostname === 'localhost' || 
-                       window.location.hostname === '127.0.0.1';
-
-// Configure API URL based on environment
-const API_BASE_URL = isDevelopment 
-                    ? 'http://localhost:8000/api/v1'   // Development - direct to API port
-                    : '/api/v1';                       // Production - use relative URL for Nginx proxy
-
-// Helper function to extract defect ID from text
 const extractDefectId = (text) => {
-  // Common pattern: defect ID might appear in the text like "(1.1.13)" or similar
   const match = /\(?(\d+\.\d+(?:\.\d+)?)\)?/.exec(text);
   return match ? match[1] : null;
 };
@@ -62,70 +58,79 @@ const MOTHistoryPage = ({ registration }) => {
   const [motData, setMotData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [expandedDefects, setExpandedDefects] = useState({});
   const abortControllerRef = useRef(null);
+  const defectRefs = useRef({}); // Refs to track each ClickableDefectItem DOM element
 
-  // Configure the stale time in milliseconds (5 minutes)
   const CACHE_STALE_TIME = 5 * 60 * 1000;
 
-  // Function to format date to UK format (DD Month YYYY)
+  // Toggle expanded state for a specific defect
+  const toggleExpanded = useCallback((defectKey) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setExpandedDefects(prev => ({
+      ...prev,
+      [defectKey]: !prev[defectKey],
+    }));
+  }, []);
+
+  // Close all expanded defects
+  const closeAllDefects = useCallback(() => {
+    setExpandedDefects({});
+  }, []);
+
+  // Handle clicks outside to close expanded defects
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if any defect is expanded
+      const hasExpanded = Object.values(expandedDefects).some(val => val);
+      if (!hasExpanded) return;
+
+      // Check if the click is outside all ClickableDefectItem elements
+      const isOutside = Object.values(defectRefs.current).every(ref => 
+        ref && !ref.contains(event.target)
+      );
+
+      if (isOutside) {
+        closeAllDefects();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [expandedDefects, closeAllDefects]);
+
   const formatDate = useCallback((dateString) => {
     if (!dateString) return 'Not available';
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
+      return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     } catch (e) {
       return 'Invalid date';
     }
   }, []);
 
-  // Function to format mileage
   const formatMileage = useCallback((value, unit) => {
     if (!value) return 'Not recorded';
-    // Add commas for thousands
     const formattedValue = parseInt(value).toLocaleString('en-GB');
     return `${formattedValue} ${unit === 'MI' ? 'miles' : 'km'}`;
   }, []);
 
-  // Function to convert API MOT data to the format expected by this component
   const transformMotData = useCallback((apiData) => {
-    if (!apiData || !apiData.motTests || apiData.motTests.length === 0) {
-      return [];
-    }
-
+    if (!apiData || !apiData.motTests || apiData.motTests.length === 0) return [];
     return apiData.motTests.map(test => {
-      // Determine if this is a pass or fail
       const status = test.testResult === 'PASSED' ? 'PASS' : 'FAIL';
-      
-      // Format the completed date
       const date = formatDate(test.completedDate);
-      
-      // Format the expiry date if available
       const expiry = test.expiryDate ? formatDate(test.expiryDate) : null;
-      
-      // Get the mileage if available
       const mileage = test.odometerResultType === 'READ' ? formatMileage(test.odometerValue, test.odometerUnit) : 'Not recorded';
-      
-      // Process defects if any
       const defects = test.defects ? test.defects
         .filter(d => d.type === 'MAJOR' || d.type === 'DANGEROUS')
-        .map(d => ({
-          text: d.text,
-          type: d.type,
-          id: extractDefectId(d.text)
-        })) : [];
-      
-      // Process advisories if any
+        .map(d => ({ text: d.text, type: d.type, id: extractDefectId(d.text) })) : [];
       const advisories = test.defects ? test.defects
         .filter(d => d.type === 'ADVISORY' || d.type === 'MINOR')
-        .map(d => ({
-          text: d.text,
-          type: d.type,
-          id: extractDefectId(d.text)
-        })) : [];
+        .map(d => ({ text: d.text, type: d.type, id: extractDefectId(d.text) })) : [];
       
       return {
         date,
@@ -140,107 +145,47 @@ const MOTHistoryPage = ({ registration }) => {
     });
   }, [formatDate, formatMileage]);
 
-  // Function to check if cached data is still valid (not older than 5 minutes)
   const isCacheValid = useCallback((cachedTime) => {
     return (Date.now() - cachedTime) < CACHE_STALE_TIME;
-  }, [CACHE_STALE_TIME]);
+  }, []);
 
-  // Fetch MOT data when registration changes or on initial load
   useEffect(() => {
     const fetchMotData = async () => {
       if (!registration) return;
-
-      // Cancel any in-flight requests
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-      
-      // Create a new AbortController for this request
+      if (abortControllerRef.current) abortControllerRef.current.abort();
       abortControllerRef.current = new AbortController();
       
-      // Check cache first
       const cacheKey = `mot_${registration}`;
       const cachedData = motCache[cacheKey];
       
       if (cachedData && isCacheValid(cachedData.timestamp)) {
-        // For cached data, don't show loading indicator
         setMotData(cachedData.data);
         setLoading(false);
         return;
       }
       
-      // Only show loading spinner if we need to fetch from the API
       setLoading(true);
       setError(null);
       
       try {
-        // Log the API request in development mode for debugging
-        if (isDevelopment) {
-          console.log(`Fetching MOT data from: ${API_BASE_URL}/vehicle/registration/${registration}`);
-        }
-        
         const response = await fetch(
-          `${API_BASE_URL}/vehicle/registration/${registration}`, 
+          `${API_BASE_URL}/vehicle/registration/${registration}`,
           {
             signal: abortControllerRef.current.signal,
-            headers: {
-              'Accept': 'application/json',
-              'Cache-Control': 'no-cache'
-            },
-            // In development, we need to include CORS credentials
+            headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' },
             credentials: isDevelopment ? 'include' : 'same-origin',
-            // Required for development CORS
             mode: isDevelopment ? 'cors' : 'same-origin'
           }
         );
         
-        // Parse JSON response
-        let data;
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          data = await response.json();
-        } else {
-          throw new Error('Received non-JSON response from server');
-        }
-        
-        if (!response.ok) {
-          // Handle API-specific error format
-          if (data.errorMessage || (data.detail && data.detail.errorMessage)) {
-            throw new Error(data.errorMessage || data.detail.errorMessage);
-          }
-          
-          // Handle standard FastAPI error format
-          if (typeof data.detail === 'string') {
-            throw new Error(data.detail);
-          }
-          
-          // Generic error
-          throw new Error(`Failed to fetch MOT data (Status: ${response.status})`);
-        }
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.errorMessage || data.detail?.errorMessage || data.detail || `Failed to fetch MOT data (Status: ${response.status})`);
         
         const transformedData = transformMotData(data);
-        
-        // Store in cache with timestamp
-        motCache[cacheKey] = {
-          data: transformedData,
-          timestamp: Date.now(),
-          rawData: data // Store raw data for potential reuse
-        };
-        
-        // Also store in localStorage for persistence between sessions
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            data: transformedData,
-            timestamp: Date.now()
-          }));
-        } catch (storageErr) {
-          // Silently fail - localStorage might be disabled or full
-          console.warn('Failed to store in localStorage:', storageErr);
-        }
-        
+        motCache[cacheKey] = { data: transformedData, timestamp: Date.now(), rawData: data };
+        localStorage.setItem(cacheKey, JSON.stringify({ data: transformedData, timestamp: Date.now() }));
         setMotData(transformedData);
       } catch (err) {
-        // Don't set error for aborted requests
         if (err.name !== 'AbortError') {
           console.error('API error:', err);
           setError(err.message || 'An error occurred while fetching MOT data');
@@ -250,50 +195,35 @@ const MOTHistoryPage = ({ registration }) => {
       }
     };
 
-    // Try to restore from localStorage on initial render
     const tryRestoreFromStorage = () => {
       if (!registration) return false;
-      
-      try {
-        const cacheKey = `mot_${registration}`;
-        const storedData = localStorage.getItem(cacheKey);
-        
-        if (storedData) {
-          const parsedData = JSON.parse(storedData);
-          if (isCacheValid(parsedData.timestamp)) {
-            motCache[cacheKey] = parsedData;
-            setMotData(parsedData.data);
-            // Explicitly ensure loading is false for cached data
-            setLoading(false);
-            return true;
-          }
+      const cacheKey = `mot_${registration}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (isCacheValid(parsedData.timestamp)) {
+          motCache[cacheKey] = parsedData;
+          setMotData(parsedData.data);
+          setLoading(false);
+          return true;
         }
-      } catch (err) {
-        console.warn('Failed to restore from localStorage:', err);
       }
       return false;
     };
 
     const restored = tryRestoreFromStorage();
-    if (!restored) {
-      fetchMotData();
-    }
+    if (!restored) fetchMotData();
 
-    // Cleanup function to abort any in-flight requests when component unmounts
     return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
+      if (abortControllerRef.current) abortControllerRef.current.abort();
     };
   }, [registration, transformMotData, isCacheValid]);
 
   return (
     <GovUKContainer>
       <GovUKMainWrapper>
-        {/* Section heading without accordion */}
         <GovUKHeadingL>MOT history</GovUKHeadingL>
         
-        {/* Content is always displayed */}
         {loading && (
           <GovUKLoadingContainer>
             <GovUKLoadingSpinner />
@@ -346,42 +276,80 @@ const MOTHistoryPage = ({ registration }) => {
                     {(mot.defects || mot.advisories) && (
                       <div>
                         {mot.defects && (
-                              <>
-                              <GovUKCaptionM>Repair immediately (major defects):</GovUKCaptionM>
-                              <GovUKList>
-                                {mot.defects.map((defect, i) => (
+                          <>
+                            <GovUKCaptionM>Repair immediately (major defects):</GovUKCaptionM>
+                            <GovUKList>
+                              {mot.defects.map((defect, i) => {
+                                const defectKey = `${index}-defect-${i}`;
+                                return (
                                   <li key={i}>
-                                    <ClickableDefectItem>
+                                    <ClickableDefectItem
+                                      ref={el => defectRefs.current[defectKey] = el} // Assign ref to each item
+                                      expanded={expandedDefects[defectKey]}
+                                      onClick={toggleExpanded(defectKey)}
+                                      aria-expanded={expandedDefects[defectKey] || false}
+                                      role="button"
+                                      tabIndex={0}
+                                      title={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}
+                                      onKeyPress={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                          e.preventDefault();
+                                          toggleExpanded(defectKey)(e);
+                                        }
+                                      }}
+                                    >
                                       <strong>{defect.text}</strong>
                                       <MotDefectDetail 
                                         defectId={defect.id}
                                         defectText={defect.text}
                                         defectCategory={defect.type}
+                                        expanded={expandedDefects[defectKey]}
+                                        toggleExpanded={toggleExpanded(defectKey)}
                                       />
                                     </ClickableDefectItem>
                                   </li>
-                                ))}
-                              </GovUKList>
-                            </>
+                                );
+                              })}
+                            </GovUKList>
+                          </>
                         )}
                         {mot.advisories && (
                           <>
-                          <GovUKCaptionM>Monitor and repair if necessary (advisories):</GovUKCaptionM>
-                          <GovUKList>
-                            {mot.advisories.map((advisory, i) => (
-                              <li key={i}>
-                                <ClickableDefectItem>
-                                  <strong>{advisory.text}</strong>
-                                  <MotDefectDetail 
-                                    defectId={advisory.id}
-                                    defectText={advisory.text}
-                                    defectCategory={advisory.type}
-                                  />
-                                </ClickableDefectItem>
-                              </li>
-                            ))}
-                          </GovUKList>
-                        </>
+                            <GovUKCaptionM>Monitor and repair if necessary (advisories):</GovUKCaptionM>
+                            <GovUKList>
+                              {mot.advisories.map((advisory, i) => {
+                                const advisoryKey = `${index}-advisory-${i}`;
+                                return (
+                                  <li key={i}>
+                                    <ClickableDefectItem
+                                      ref={el => defectRefs.current[advisoryKey] = el} // Assign ref to each item
+                                      expanded={expandedDefects[advisoryKey]}
+                                      onClick={toggleExpanded(advisoryKey)}
+                                      aria-expanded={expandedDefects[advisoryKey] || false}
+                                      role="button"
+                                      tabIndex={0}
+                                      title={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}
+                                      onKeyPress={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                          e.preventDefault();
+                                          toggleExpanded(advisoryKey)(e);
+                                        }
+                                      }}
+                                    >
+                                      <strong>{advisory.text}</strong>
+                                      <MotDefectDetail 
+                                        defectId={advisory.id}
+                                        defectText={advisory.text}
+                                        defectCategory={advisory.type}
+                                        expanded={expandedDefects[advisoryKey]}
+                                        toggleExpanded={toggleExpanded(advisoryKey)}
+                                      />
+                                    </ClickableDefectItem>
+                                  </li>
+                                );
+                              })}
+                            </GovUKList>
+                          </>
                         )}
                         <GovUKDetails>
                           <GovUKDetailsSummary>

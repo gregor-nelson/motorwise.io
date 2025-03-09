@@ -49,6 +49,38 @@ const VehicleHeader = ({ registration }) => {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
+  // Enhanced formatRegistration function to handle multiple UK plate formats
+  const formatRegistration = (reg) => {
+    if (!reg || typeof reg !== 'string') return 'Not available';
+
+    // Normalize by removing existing spaces and converting to uppercase
+    const normalized = reg.replace(/\s/g, '').toUpperCase();
+
+    // Modern format: 2 letters, 2 numbers, 3 letters (e.g., "SV57GVL" -> "SV57 GVL")
+    if (/^[A-Z]{2}\d{2}[A-Z]{3}$/.test(normalized)) {
+      return `${normalized.slice(0, 4)} ${normalized.slice(4)}`;
+    }
+
+    // Prefix format: 1 letter, 1-3 numbers, 3 letters (e.g., "A123ABC" -> "A123 ABC")
+    if (/^[A-Z]\d{1,3}[A-Z]{3}$/.test(normalized)) {
+      const letterPart = normalized.match(/^[A-Z]/)[0];
+      const numberPart = normalized.match(/\d{1,3}/)[0];
+      const finalLetters = normalized.slice(letterPart.length + numberPart.length);
+      return `${letterPart}${numberPart} ${finalLetters}`;
+    }
+
+    // Suffix format: 3 letters, 1-3 numbers, 1 letter (e.g., "ABC123A" -> "ABC 123A")
+    if (/^[A-Z]{3}\d{1,3}[A-Z]$/.test(normalized)) {
+      const initialLetters = normalized.slice(0, 3);
+      const numberPart = normalized.match(/\d{1,3}/)[0];
+      const finalLetter = normalized.slice(3 + numberPart.length);
+      return `${initialLetters} ${numberPart}${finalLetter}`;
+    }
+
+    // Return unchanged if no known format matches
+    return normalized;
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return 'Not available';
     try {
@@ -66,7 +98,6 @@ const VehicleHeader = ({ registration }) => {
   const transformVehicleData = useCallback((apiData) => {
     if (!apiData) return null;
 
-    // Create safe accessors that won't throw if properties are missing
     const safeGet = (obj, path, defaultValue) => {
       try {
         const result = path.split('.').reduce((o, k) => (o || {})[k], obj);
@@ -76,7 +107,6 @@ const VehicleHeader = ({ registration }) => {
       }
     };
 
-    // Determine the MOT due date using the safest logic
     let motDueDate = 'Not available';
     try {
       if (safeGet(apiData, 'motTests', []).length > 0 && safeGet(apiData, 'motTests.0.expiryDate', null)) {
@@ -88,11 +118,9 @@ const VehicleHeader = ({ registration }) => {
       motDueDate = 'Not available';
     }
 
-    // Process the hasOutstandingRecall field safely
     let recallStatus = 'Not available';
     const recall = safeGet(apiData, 'hasOutstandingRecall', null);
     if (recall !== null) {
-      // Handle different possible formats
       if (typeof recall === 'boolean') {
         recallStatus = recall ? 'Yes' : 'No';
       } else if (typeof recall === 'string') {
@@ -116,7 +144,6 @@ const VehicleHeader = ({ registration }) => {
     };
   }, []);
 
-  // Function to check if cached data is still valid
   const isCacheValid = (cachedTime) => {
     const timeDifference = Date.now() - cachedTime;
     return timeDifference < CACHE_STALE_TIME;
@@ -126,26 +153,21 @@ const VehicleHeader = ({ registration }) => {
     const fetchVehicleData = async () => {
       if (!registration) return;
 
-      // Cancel any in-flight requests
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
       
-      // Create a new AbortController for this request
       abortControllerRef.current = new AbortController();
       
-      // Check cache first
       const cacheKey = `vehicle_${registration}`;
       const cachedData = vehicleCache[cacheKey];
       
       if (cachedData && isCacheValid(cachedData.timestamp)) {
-        // For cached data, don't show loading indicator
         setVehicleData(cachedData.data);
         setLoading(false);
         return;
       }
       
-      // Only show loading spinner if we need to fetch from the API
       setLoading(true);
       setError(null);
 
@@ -160,14 +182,11 @@ const VehicleHeader = ({ registration }) => {
               'Accept': 'application/json',
               'Cache-Control': 'no-cache'
             },
-            // In development, we need to include CORS credentials
             credentials: isDevelopment ? 'include' : 'same-origin',
-            // Required for development CORS
             mode: isDevelopment ? 'cors' : 'same-origin'
           }
         );
         
-        // Parse JSON response
         let data;
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
@@ -177,44 +196,34 @@ const VehicleHeader = ({ registration }) => {
         }
         
         if (!response.ok) {
-          // Handle API-specific error format
           if (data.errorMessage || (data.detail && data.detail.errorMessage)) {
             throw new Error(data.errorMessage || data.detail.errorMessage);
           }
-          
-          // Handle standard FastAPI error format
           if (typeof data.detail === 'string') {
             throw new Error(data.detail);
           }
-          
-          // Generic error
           throw new Error(`Failed to fetch vehicle data (Status: ${response.status})`);
         }
         
         const transformedData = transformVehicleData(data);
         
-        // Store in cache with timestamp
         vehicleCache[cacheKey] = {
           data: transformedData,
           timestamp: Date.now()
         };
         
-        // Also store in localStorage for persistence between sessions
         try {
           localStorage.setItem(cacheKey, JSON.stringify({
             data: transformedData,
             timestamp: Date.now()
           }));
         } catch (storageErr) {
-          // Silently fail - localStorage might be disabled or full
           console.warn('Failed to store in localStorage:', storageErr);
         }
         
         setVehicleData(transformedData);
       } catch (err) {
-        // Don't set error for aborted requests
         if (err.name !== 'AbortError') {
-          // Improved error messages based on response status
           const message = err.message || 'An error occurred while fetching vehicle data';
           console.error('API error:', err);
           setError(message);
@@ -224,7 +233,6 @@ const VehicleHeader = ({ registration }) => {
       }
     };
 
-    // Try to restore from localStorage on initial render
     const tryRestoreFromStorage = () => {
       if (!registration) return;
       
@@ -237,7 +245,6 @@ const VehicleHeader = ({ registration }) => {
           if (isCacheValid(parsedData.timestamp)) {
             vehicleCache[cacheKey] = parsedData;
             setVehicleData(parsedData.data);
-            // Explicitly ensure loading is false for cached data
             setLoading(false);
             return true;
           }
@@ -253,7 +260,6 @@ const VehicleHeader = ({ registration }) => {
       fetchVehicleData();
     }
 
-    // Cleanup function to abort any in-flight requests when component unmounts
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -261,32 +267,24 @@ const VehicleHeader = ({ registration }) => {
     };
   }, [registration, transformVehicleData]);
 
-  // Handle opening the payment dialog
   const handleOpenPaymentDialog = () => {
     setPaymentDialogOpen(true);
   };
   
-  // Handle closing the payment dialog
   const handleClosePaymentDialog = () => {
     setPaymentDialogOpen(false);
   };
   
-  // Handle successful payment
   const handlePaymentSuccess = (paymentIntent) => {
     setPaymentDialogOpen(false);
-    
-    // Store payment info for the success dialog
     setPaymentInfo({
       paymentId: paymentIntent.id,
       registration: registration,
       timestamp: Date.now()
     });
-    
-    // Show success dialog instead of navigating
     setSuccessDialogOpen(true);
   };
   
-  // Handle closing the success dialog
   const handleCloseSuccessDialog = () => {
     setSuccessDialogOpen(false);
   };
@@ -309,7 +307,7 @@ const VehicleHeader = ({ registration }) => {
         {vehicleData && !loading && (
           <>
             <VehicleRegistration data-test-id="vehicle-registration">
-              {vehicleData.registration}
+              {formatRegistration(vehicleData.registration)}
             </VehicleRegistration>
 
             <VehicleHeading data-test-id="vehicle-make-model">
@@ -350,7 +348,6 @@ const VehicleHeader = ({ registration }) => {
               </GovUKGridColumnOneThird>
             </GovUKGridRow>
 
-            {/* New Fields Display */}
             <GovUKGridRow data-test-id="additional-details">
               <GovUKGridColumnOneThird>
                 <DetailCaption>Engine size</DetailCaption>
@@ -407,7 +404,6 @@ const VehicleHeader = ({ registration }) => {
               </GovUKLink>
             </GovUKBody>
             
-            {/* Payment dialog */}
             <PaymentDialog 
               open={paymentDialogOpen}
               onClose={handleClosePaymentDialog}
@@ -415,7 +411,6 @@ const VehicleHeader = ({ registration }) => {
               onSuccess={handlePaymentSuccess}
             />
             
-            {/* Success dialog */}
             <SuccessDialog
               open={successDialogOpen}
               onClose={handleCloseSuccessDialog}

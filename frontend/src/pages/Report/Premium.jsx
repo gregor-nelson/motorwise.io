@@ -25,6 +25,10 @@ import {
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
 
+// Import both components
+import VehicleMileageChart from '../../components/Report/MileageChart'; // The original chart component
+import VehicleMileageInsights from '../../components/Report/MileageInsights'; // The new insights component
+
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
                       window.location.hostname === '127.0.0.1';
@@ -45,135 +49,130 @@ const PremiumReportPage = () => {
   
   useEffect(() => {
     // Check if payment information exists
-    const checkPaymentAndFetchData = async () => {
+    const fetchVehicleData = async () => {
       try {
-        // This would normally validate the payment on the server
-        // Here we're just checking if the payment ID is in the URL
+        // Validate payment ID presence
         if (!paymentId) {
           throw new Error('Invalid payment. Please purchase a premium report to access this page.');
+        }
+        
+        if (!registration) {
+          throw new Error('Vehicle registration is required.');
         }
         
         setLoading(true);
         setError(null);
         
-        // Only try to fetch from API if not in demo mode
-        // For demo purposes, we'll skip the API call and go straight to mock data
-        const useMockData = true; // Set to false when your API is ready
-
-        if (!useMockData) {
-          // Fetch the premium report data from your API
-          const response = await fetch(
-            `${API_BASE_URL}/premium-report/${registration}?paymentId=${paymentId}`,
-            {
-              headers: {
-                'Accept': 'application/json',
-              },
-              credentials: isDevelopment ? 'include' : 'same-origin',
-              mode: isDevelopment ? 'cors' : 'same-origin'
-            }
-          );
-          
-          if (!response.ok) {
-            let errorMessage = 'Failed to fetch premium report';
-            try {
-              const errorData = await response.json();
-              errorMessage = errorData.message || errorData.detail || errorMessage;
-            } catch (e) {
-              // If parsing JSON fails, use default error message
-            }
-            throw new Error(errorMessage);
+        // Fetch vehicle data directly from the API
+        const response = await fetch(
+          `${API_BASE_URL}/vehicle/registration/${registration}`,
+          {
+            headers: {
+              'Accept': 'application/json',
+            },
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            mode: isDevelopment ? 'cors' : 'same-origin'
           }
-          
-          const data = await response.json();
-          setReportData(data);
-        } else {
-          // For demo, we'll create the mock data here without waiting for API
-          setTimeout(() => {
-            const mockData = createMockData(registration);
-            setReportData(mockData);
-            setLoading(false);
-          }, 1500); // Simulate loading delay
+        );
+        
+        if (!response.ok) {
+          let errorMessage = 'Failed to fetch vehicle data';
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.errorMessage || errorData.detail || errorMessage;
+          } catch (e) {
+            // If parsing JSON fails, use default error message
+          }
+          throw new Error(errorMessage);
         }
+        
+        const vehicleData = await response.json();
+        
+        // Process the API response to match the expected format for our components
+        const processedData = processVehicleData(vehicleData, registration);
+        setReportData(processedData);
       } catch (err) {
-        console.error('Error fetching premium report:', err);
+        console.error('Error fetching vehicle data:', err);
         setError(err.message);
+      } finally {
         setLoading(false);
       }
     };
     
-    checkPaymentAndFetchData();
+    fetchVehicleData();
   }, [registration, paymentId]);
   
-  // Helper function to create mock data
-  const createMockData = (reg) => {
+  // Helper function to process the API response into the format we need
+  const processVehicleData = (apiData, reg) => {
+    // Calculate total and average mileage
+    let totalMileage = 0;
+    let averageAnnualMileage = 0;
+    
+    if (apiData.motTests && apiData.motTests.length > 0) {
+      // Sort tests by date (most recent first)
+      const sortedTests = [...apiData.motTests].sort(
+        (a, b) => new Date(b.completedDate) - new Date(a.completedDate)
+      );
+      
+      // Get latest mileage reading
+      const lastTest = sortedTests[0];
+      
+      if (lastTest && lastTest.odometerValue) {
+        totalMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
+      }
+      
+      // Calculate average annual mileage if we have enough data
+      if (sortedTests.length > 1) {
+        const firstTest = sortedTests[sortedTests.length - 1];
+        const lastTest = sortedTests[0];
+        
+        const firstDate = new Date(firstTest.completedDate);
+        const lastDate = new Date(lastTest.completedDate);
+        
+        // Get time difference in years
+        const yearsDiff = (lastDate - firstDate) / (1000 * 60 * 60 * 24 * 365.25);
+        if (yearsDiff > 0.5) { // Only calculate if we have more than 6 months of data
+          const firstMileage = parseInt(String(firstTest.odometerValue).replace(/,/g, ''), 10);
+          const lastMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
+          const mileageDiff = lastMileage - firstMileage;
+          
+          averageAnnualMileage = Math.round(mileageDiff / yearsDiff);
+        }
+      }
+    }
+    
+    // Return structured data format for the UI
     return {
       registration: reg,
-      makeModel: 'Ford Focus',
-      colour: 'Red',
-      fuelType: 'Petrol',
-      dateRegistered: '1 January 2018',
-      engineSize: '1998cc',
-      manufactureDate: '15 December 2017',
-      hasOutstandingRecall: 'No',
+      makeModel: `${apiData.make || 'Unknown'} ${apiData.model || ''}`.trim(),
+      colour: apiData.primaryColour || 'Unknown',
+      fuelType: apiData.fuelType || 'Unknown',
+      dateRegistered: formatDate(apiData.registrationDate || apiData.firstUsedDate),
+      engineSize: apiData.engineSize ? `${apiData.engineSize}cc` : 'Unknown',
+      manufactureDate: formatDate(apiData.manufactureDate),
+      hasOutstandingRecall: apiData.hasOutstandingRecall || 'Unknown',
       // Premium data
-      previousKeepers: 2,
-      totalMileage: 45000,
-      averageAnnualMileage: 9000,
-      importStatus: 'UK Vehicle',
-      insuranceWriteOff: 'No',
-      vehicleDetails: {
-        transmission: 'Manual',
-        doors: 5,
-        wheelbase: '2648mm',
-        grossWeight: '1900kg',
-        co2Emissions: '135g/km',
-        fuelConsumption: '5.4L/100km',
-        euroEmissionsStandard: 'Euro 6',
-        powerOutput: '125 PS (92 kW)',
-        topSpeed: '125 mph',
-        acceleration: '10.2s (0-60mph)'
-      },
-      motHistory: [
-        {
-          testDate: '15 December 2023',
-          expiryDate: '14 December 2024',
-          result: 'PASS',
-          mileage: 45000,
-          advisories: [
-            'Front brake pad(s) wearing thin',
-            'Nearside Front Tyre worn close to legal limit'
-          ]
-        },
-        {
-          testDate: '10 December 2022',
-          expiryDate: '14 December 2023',
-          result: 'PASS',
-          mileage: 36000,
-          advisories: [
-            'Oil leak, but not excessive'
-          ]
-        },
-        {
-          testDate: '5 December 2021',
-          expiryDate: '14 December 2022',
-          result: 'PASS',
-          mileage: 27000,
-          advisories: []
-        },
-        {
-          testDate: '1 December 2020',
-          expiryDate: '14 December 2021',
-          result: 'FAIL',
-          mileage: 18000,
-          failureReasons: [
-            'Nearside Rear Tyre has a cut in excess of the requirements',
-            'Offside Front Headlamp aim too low'
-          ],
-          retestDate: '8 December 2020',
-          retestResult: 'PASS'
-        }
-      ]
+      previousKeepers: 'Data not available', // This may not be available from the API
+      totalMileage,
+      averageAnnualMileage,
+      importStatus: 'UK Vehicle', // This may need to be updated if API provides this info
+      insuranceWriteOff: 'No' // This may need to be updated if API provides this info
     };
+  };
+  
+  // Helper function to format dates
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Unknown';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch (e) {
+      return dateString;
+    }
   };
   
   return (
@@ -247,7 +246,6 @@ const PremiumReportPage = () => {
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
             <ReportSection>
-              <GovUKHeadingL>Premium Information</GovUKHeadingL>
               
               <GovUKGridRow>
                 <GovUKGridColumnOneThird>
@@ -279,100 +277,21 @@ const PremiumReportPage = () => {
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
             <ReportSection>
-              <GovUKHeadingL>Technical Specifications</GovUKHeadingL>
               
-              <ReportTable>
-                <thead>
-                  <tr>
-                    <th>Specification</th>
-                    <th>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(reportData.vehicleDetails).map(([key, value]) => (
-                    <tr key={key}>
-                      <td>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</td>
-                      <td>{value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </ReportTable>
+              {/* The chart component - handles its own loading, error states, and data fetching */}
+              <VehicleMileageChart registration={registration} />
             </ReportSection>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
+            {/* Advanced Mileage Analysis section */}
             <ReportSection>
-              <GovUKHeadingL>MOT History</GovUKHeadingL>
               
-              {reportData.motHistory.map((mot, index) => (
-                <MotHistoryItem key={index} result={mot.result}>
-                  <GovUKGridRow>
-                    <GovUKGridColumnTwoThirds>
-                      <DetailCaption>Test Date</DetailCaption>
-                      <DetailHeading>{mot.testDate}</DetailHeading>
-                    </GovUKGridColumnTwoThirds>
-                    <GovUKGridColumnOneThird>
-                      <DetailCaption>Result</DetailCaption>
-                      <DetailHeading style={{ 
-                        color: mot.result === 'PASS' ? '#00703c' : '#d4351c' 
-                      }}>
-                        {mot.result}
-                      </DetailHeading>
-                    </GovUKGridColumnOneThird>
-                  </GovUKGridRow>
-                  
-                  <GovUKGridRow>
-                    <GovUKGridColumnTwoThirds>
-                      <DetailCaption>Expiry Date</DetailCaption>
-                      <DetailHeading>{mot.expiryDate}</DetailHeading>
-                    </GovUKGridColumnTwoThirds>
-                    <GovUKGridColumnOneThird>
-                      <DetailCaption>Mileage</DetailCaption>
-                      <DetailHeading>{mot.mileage.toLocaleString()} miles</DetailHeading>
-                    </GovUKGridColumnOneThird>
-                  </GovUKGridRow>
-                  
-                  {mot.advisories && mot.advisories.length > 0 && (
-                    <div>
-                      <DetailCaption>Advisories</DetailCaption>
-                      <GovUKList style={{ paddingLeft: '20px' }}>
-                        {mot.advisories.map((advisory, idx) => (
-                          <li key={idx}>{advisory}</li>
-                        ))}
-                      </GovUKList>
-                    </div>
-                  )}
-                  
-                  {mot.failureReasons && mot.failureReasons.length > 0 && (
-                    <div>
-                      <DetailCaption>Failure Reasons</DetailCaption>
-                      <GovUKList style={{ paddingLeft: '20px' }}>
-                        {mot.failureReasons.map((reason, idx) => (
-                          <li key={idx}>{reason}</li>
-                        ))}
-                      </GovUKList>
-                    </div>
-                  )}
-                  
-                  {mot.retestDate && (
-                    <GovUKGridRow>
-                      <GovUKGridColumnTwoThirds>
-                        <DetailCaption>Retest Date</DetailCaption>
-                        <DetailHeading>{mot.retestDate}</DetailHeading>
-                      </GovUKGridColumnTwoThirds>
-                      <GovUKGridColumnOneThird>
-                        <DetailCaption>Retest Result</DetailCaption>
-                        <DetailHeading style={{ 
-                          color: mot.retestResult === 'PASS' ? '#00703c' : '#d4351c' 
-                        }}>
-                          {mot.retestResult}
-                        </DetailHeading>
-                      </GovUKGridColumnOneThird>
-                    </GovUKGridRow>
-                  )}
-                </MotHistoryItem>
-              ))}
+              {/* The insights component - also handles its own loading, error states, and data fetching */}
+              <VehicleMileageInsights registration={registration} />
             </ReportSection>
+            
+
             
             <GovUKBody>
               <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>

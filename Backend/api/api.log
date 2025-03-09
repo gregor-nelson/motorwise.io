@@ -147,3 +147,20 @@
 2025-03-09 11:28:16,365 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
 2025-03-09 11:28:17,050 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.6857s
 2025-03-09 11:28:17,054 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.6892s
+2025-03-09 12:03:01,574 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0007s
+2025-03-09 12:03:01,894 - mot_api - INFO - Requesting new access token
+2025-03-09 12:03:02,176 - mot_api - INFO - Successfully obtained new access token
+2025-03-09 12:03:02,176 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-09 12:03:03,796 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.9019s
+2025-03-09 12:04:58,465 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0011s
+2025-03-09 12:10:10,682 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-03-09 12:10:11,500 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.8203s
+2025-03-09 12:12:15,753 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-09 12:12:15,753 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-09 12:12:15,753 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-03-09 12:12:15,761 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0079s
+2025-03-09 12:12:16,066 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-03-09 12:12:16,676 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.6098s
+2025-03-09 12:12:16,680 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0040s
+2025-03-09 12:20:09,578 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-03-09 12:20:11,020 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 1.4419s

@@ -1,237 +1,286 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { 
+  GovUKContainer, 
+  GovUKMainWrapper,
+  GovUKHeadingXL,
+  GovUKHeadingL,
+  GovUKBody,
+  GovUKLink,
+  GovUKGridRow,
+  GovUKGridColumnTwoThirds,
+  GovUKGridColumnOneThird,
+  GovUKLoadingContainer,
+  GovUKLoadingSpinner,
+  VehicleRegistration,
+  DetailCaption,
+  DetailHeading,
+  GovUKSectionBreak,
+  GovUKList,
+  PremiumBadge,
+  ReportSection,
+  ReportTable
+} from '../../styles/theme';
+import Alert from '@mui/material/Alert';
 
-const VehicleInfo = () => {
-  const [registrationNumber, setRegistrationNumber] = useState('');
-  const [vehicleData, setVehicleData] = useState(null);
-  const [loading, setLoading] = useState(false);
+// Determine if we're in development or production
+const isDevelopment = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+
+// Configure API URL based on environment
+const API_BASE_URL = isDevelopment 
+                    ? 'http://localhost:8004/api'   // Development - direct to API port
+                    : '/api';                       // Production - use relative URL for Nginx proxy
+
+const VehicleInfoGovUK = () => {
+  const { registration } = useParams();
+  const [searchParams] = useSearchParams();
+  
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setVehicleData(null);
-
-    try {
-      const response = await fetch('http://localhost:8004/api/vehicle', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ registrationNumber }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to fetch vehicle data');
+  const [vehicleData, setVehicleData] = useState(null);
+  
+  useEffect(() => {
+    const fetchVehicleData = async () => {
+      try {
+        if (!registration) {
+          throw new Error('Vehicle registration is required.');
+        }
+        
+        setLoading(true);
+        setError(null);
+        
+        // Fetch vehicle data from our FastAPI backend
+        const response = await fetch(`${API_BASE_URL}/vehicle`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ registrationNumber: registration }),
+          credentials: isDevelopment ? 'include' : 'same-origin',
+          mode: isDevelopment ? 'cors' : 'same-origin'
+        });
+        
+        if (!response.ok) {
+          let errorMessage = 'Failed to fetch vehicle data';
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.detail || errorMessage;
+          } catch (e) {
+            // If parsing JSON fails, use default error message
+          }
+          throw new Error(errorMessage);
+        }
+        
+        const data = await response.json();
+        setVehicleData(data);
+      } catch (err) {
+        console.error('Error fetching vehicle data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-
-      const data = await response.json();
-      setVehicleData(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    };
+    
+    fetchVehicleData();
+  }, [registration]);
+  
+  // Helper function to format dates
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not available';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch (e) {
+      return dateString;
     }
   };
-
+  
+  // Helper to manage missing data
+  const formatData = (value, suffix = '') => {
+    if (value === undefined || value === null) return 'Not available';
+    return `${value}${suffix}`;
+  };
+  
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Vehicle Information Service</h1>
-      
-      <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-lg shadow-md mb-8">
-        <div className="mb-4">
-          <label htmlFor="registrationNumber" className="block text-gray-700 font-semibold mb-2">
-            Registration Number:
-          </label>
-          <input
-            id="registrationNumber"
-            type="text"
-            className="w-full p-3 border border-gray-300 rounded-md"
-            value={registrationNumber}
-            onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
-            placeholder="e.g., AB12CDE"
-            required
-          />
-        </div>
-        <button 
-          type="submit" 
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-        >
-          {loading ? 'Searching...' : 'Search'}
-        </button>
-      </form>
-
-      {error && (
-        <div className="bg-red-100 text-red-700 p-4 rounded-md mb-6">
-          Error: {error}
-        </div>
-      )}
-
-      {vehicleData && (
-        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-6">
-            Vehicle Details
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-md shadow-sm">
-              <span className="block text-sm font-semibold text-gray-600">Registration Number</span>
-              <span className="text-lg text-gray-800">{vehicleData.registrationNumber}</span>
-            </div>
+    <GovUKContainer>
+      <GovUKMainWrapper>
+        {loading && (
+          <GovUKLoadingContainer>
+            <GovUKLoadingSpinner />
+            <GovUKBody>Retrieving vehicle information...</GovUKBody>
+          </GovUKLoadingContainer>
+        )}
+        
+        {error && (
+          <Alert severity="error" style={{ marginBottom: '20px' }}>
+            {error}
+          </Alert>
+        )}
+        
+        {vehicleData && !loading && (
+          <>
+            <GovUKHeadingXL>
+              Vehicle Information
+            </GovUKHeadingXL>
             
-            {vehicleData.make && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Make</span>
-                <span className="text-lg text-gray-800">{vehicleData.make}</span>
-              </div>
-            )}
+            <VehicleRegistration data-test-id="vehicle-registration">
+              {vehicleData.registrationNumber}
+            </VehicleRegistration>
             
-            {vehicleData.colour && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Colour</span>
-                <span className="text-lg text-gray-800">{vehicleData.colour}</span>
-              </div>
-            )}
+            <GovUKHeadingL>
+              {vehicleData.make || 'Unknown vehicle'}
+            </GovUKHeadingL>
             
-            {vehicleData.yearOfManufacture && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Year of Manufacture</span>
-                <span className="text-lg text-gray-800">{vehicleData.yearOfManufacture}</span>
-              </div>
-            )}
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {vehicleData.engineCapacity && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Engine Capacity</span>
-                <span className="text-lg text-gray-800">{vehicleData.engineCapacity} cc</span>
-              </div>
-            )}
+            {/* Vehicle Basic Information */}
+            <ReportSection>
+              <GovUKHeadingL>Vehicle Overview</GovUKHeadingL>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Registration Number</DetailCaption>
+                  <DetailHeading>{vehicleData.registrationNumber}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Make</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.make)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Colour</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.colour)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Year of Manufacture</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.yearOfManufacture)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Engine Capacity</DetailCaption>
+                  <DetailHeading>{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Fuel Type</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.fuelType)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+            </ReportSection>
             
-            {vehicleData.fuelType && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Fuel Type</span>
-                <span className="text-lg text-gray-800">{vehicleData.fuelType}</span>
-              </div>
-            )}
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {vehicleData.taxStatus && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Tax Status</span>
-                <span className="text-lg text-gray-800">{vehicleData.taxStatus}</span>
-              </div>
-            )}
+            {/* Vehicle Registration Information */}
+            <ReportSection>
+              <GovUKHeadingL>Registration Details</GovUKHeadingL>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>First Registration</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.monthOfFirstRegistration)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>First DVLA Registration</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.monthOfFirstDvlaRegistration)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Last V5C Issued</DetailCaption>
+                  <DetailHeading>{vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Marked For Export</DetailCaption>
+                  <DetailHeading>{vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Type Approval</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.typeApproval)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Wheel Plan</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.wheelplan)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+            </ReportSection>
             
-            {vehicleData.taxDueDate && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Tax Due Date</span>
-                <span className="text-lg text-gray-800">{vehicleData.taxDueDate}</span>
-              </div>
-            )}
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {vehicleData.motStatus && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">MOT Status</span>
-                <span className="text-lg text-gray-800">{vehicleData.motStatus}</span>
-              </div>
-            )}
+            {/* Tax and MOT Information */}
+            <ReportSection>
+              <GovUKHeadingL>Tax and MOT Status</GovUKHeadingL>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Tax Status</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.taxStatus)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Tax Due Date</DetailCaption>
+                  <DetailHeading>{vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Additional Rate Tax End Date</DetailCaption>
+                  <DetailHeading>{vehicleData.artEndDate ? formatDate(vehicleData.artEndDate) : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>MOT Status</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.motStatus)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>MOT Expiry Date</DetailCaption>
+                  <DetailHeading>{vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Revenue Weight</DetailCaption>
+                  <DetailHeading>{vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+            </ReportSection>
             
-            {vehicleData.motExpiryDate && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">MOT Expiry Date</span>
-                <span className="text-lg text-gray-800">{vehicleData.motExpiryDate}</span>
-              </div>
-            )}
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {vehicleData.co2Emissions !== undefined && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">CO2 Emissions</span>
-                <span className="text-lg text-gray-800">{vehicleData.co2Emissions} g/km</span>
-              </div>
-            )}
-            
-            {vehicleData.monthOfFirstRegistration && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">First Registered</span>
-                <span className="text-lg text-gray-800">{vehicleData.monthOfFirstRegistration}</span>
-              </div>
-            )}
-            
-            {vehicleData.monthOfFirstDvlaRegistration && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">First DVLA Registration</span>
-                <span className="text-lg text-gray-800">{vehicleData.monthOfFirstDvlaRegistration}</span>
-              </div>
-            )}
-            
-            {vehicleData.wheelplan && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Wheel Plan</span>
-                <span className="text-lg text-gray-800">{vehicleData.wheelplan}</span>
-              </div>
-            )}
-            
-            {vehicleData.typeApproval && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Type Approval</span>
-                <span className="text-lg text-gray-800">{vehicleData.typeApproval}</span>
-              </div>
-            )}
-            
-            {vehicleData.revenueWeight && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Revenue Weight</span>
-                <span className="text-lg text-gray-800">{vehicleData.revenueWeight} kg</span>
-              </div>
-            )}
-            
-            {vehicleData.euroStatus && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Euro Status</span>
-                <span className="text-lg text-gray-800">{vehicleData.euroStatus}</span>
-              </div>
-            )}
-            
-            {vehicleData.realDrivingEmissions && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Real Driving Emissions</span>
-                <span className="text-lg text-gray-800">{vehicleData.realDrivingEmissions}</span>
-              </div>
-            )}
-            
-            {vehicleData.dateOfLastV5CIssued && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Last V5C Issued</span>
-                <span className="text-lg text-gray-800">{vehicleData.dateOfLastV5CIssued}</span>
-              </div>
-            )}
-            
-            {vehicleData.markedForExport !== undefined && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Marked for Export</span>
-                <span className="text-lg text-gray-800">{vehicleData.markedForExport ? 'Yes' : 'No'}</span>
-              </div>
-            )}
-            
-            {vehicleData.automatedVehicle !== undefined && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">Automated Vehicle</span>
-                <span className="text-lg text-gray-800">{vehicleData.automatedVehicle ? 'Yes' : 'No'}</span>
-              </div>
-            )}
-            
-            {vehicleData.artEndDate && (
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <span className="block text-sm font-semibold text-gray-600">ART End Date</span>
-                <span className="text-lg text-gray-800">{vehicleData.artEndDate}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+            {/* Emissions Information */}
+            <ReportSection>
+              <GovUKHeadingL>Environmental Information</GovUKHeadingL>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>CO2 Emissions</DetailCaption>
+                  <DetailHeading>{vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Euro Status</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.euroStatus)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Real Driving Emissions</DetailCaption>
+                  <DetailHeading>{formatData(vehicleData.realDrivingEmissions)}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+              
+              <GovUKGridRow>
+                <GovUKGridColumnOneThird>
+                  <DetailCaption>Automated Vehicle</DetailCaption>
+                  <DetailHeading>{vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
+                </GovUKGridColumnOneThird>
+              </GovUKGridRow>
+            </ReportSection>
+          </>
+        )}
+      </GovUKMainWrapper>
+    </GovUKContainer>
   );
 };
 
-export default VehicleInfo;
+export default VehicleInfoGovUK;

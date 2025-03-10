@@ -1,0 +1,7 @@
+2025-03-10 15:37:48,717 - dvla_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-10 15:38:34,631 - dvla_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-10 15:40:52,572 - dvla_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-10 15:42:15,838 - dvla_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-10 15:46:36,161 - dvla_api - INFO - Starting uvicorn server on 127.0.0.1:8004 (reload=True)
+2025-03-10 15:49:48,426 - dvla_api - INFO - Starting uvicorn server on 127.0.0.1:8004 (reload=True)
+2025-03-10 15:49:55,969 - dvla_api - ERROR - Missing required environment variables: DVLA_API_KEY

@@ -19,9 +19,20 @@ import {
   GovUKList,
   PremiumBadge,
   ReportSection,
-  ReportTable
+  ReportTable,
+  MotHistoryItem
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
+
+// Import the DVLA data component
+import DVLAVehicleData from '../../components/Report/DVLA/DVLAVehicleData';
+
+// Import Vehicle Insights component
+import VehicleInsights from '../../components/Report/DVLA/VehicleInsights';
+
+// Import original components
+import VehicleMileageChart from '../../components/Report/MileageChart'; 
+import VehicleMileageInsights from '../../components/Report/MileageInsights';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -29,20 +40,27 @@ const isDevelopment = window.location.hostname === 'localhost' ||
 
 // Configure API URL based on environment
 const API_BASE_URL = isDevelopment 
-                    ? 'http://localhost:8004/api'   // Development - direct to API port
-                    : '/api';                       // Production - use relative URL for Nginx proxy
+                    ? 'http://localhost:8000/api/v1'   // Development - direct to API port
+                    : '/api/v1';                       // Production - use relative URL for Nginx proxy
 
-const VehicleInfoGovUK = () => {
+const PremiumReportPage = () => {
   const { registration } = useParams();
   const [searchParams] = useSearchParams();
+  const paymentId = searchParams.get('paymentId');
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [vehicleData, setVehicleData] = useState(null);
+  const [reportData, setReportData] = useState(null);
   
   useEffect(() => {
+    // Check if payment information exists
     const fetchVehicleData = async () => {
       try {
+        // Validate payment ID presence
+        if (!paymentId) {
+          throw new Error('Invalid payment. Please purchase a premium report to access this page.');
+        }
+        
         if (!registration) {
           throw new Error('Vehicle registration is required.');
         }
@@ -50,31 +68,34 @@ const VehicleInfoGovUK = () => {
         setLoading(true);
         setError(null);
         
-        // Fetch vehicle data from our FastAPI backend
-        const response = await fetch(`${API_BASE_URL}/vehicle`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({ registrationNumber: registration }),
-          credentials: isDevelopment ? 'include' : 'same-origin',
-          mode: isDevelopment ? 'cors' : 'same-origin'
-        });
+        // Fetch vehicle data directly from the API
+        const response = await fetch(
+          `${API_BASE_URL}/vehicle/registration/${registration}`,
+          {
+            headers: {
+              'Accept': 'application/json',
+            },
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            mode: isDevelopment ? 'cors' : 'same-origin'
+          }
+        );
         
         if (!response.ok) {
           let errorMessage = 'Failed to fetch vehicle data';
           try {
             const errorData = await response.json();
-            errorMessage = errorData.detail || errorMessage;
+            errorMessage = errorData.errorMessage || errorData.detail || errorMessage;
           } catch (e) {
             // If parsing JSON fails, use default error message
           }
           throw new Error(errorMessage);
         }
         
-        const data = await response.json();
-        setVehicleData(data);
+        const vehicleData = await response.json();
+        
+        // Process the API response to match the expected format for our components
+        const processedData = processVehicleData(vehicleData, registration);
+        setReportData(processedData);
       } catch (err) {
         console.error('Error fetching vehicle data:', err);
         setError(err.message);
@@ -84,11 +105,69 @@ const VehicleInfoGovUK = () => {
     };
     
     fetchVehicleData();
-  }, [registration]);
+  }, [registration, paymentId]);
+  
+  // Helper function to process the API response into the format we need
+  const processVehicleData = (apiData, reg) => {
+    // Calculate total and average mileage
+    let totalMileage = 0;
+    let averageAnnualMileage = 0;
+    
+    if (apiData.motTests && apiData.motTests.length > 0) {
+      // Sort tests by date (most recent first)
+      const sortedTests = [...apiData.motTests].sort(
+        (a, b) => new Date(b.completedDate) - new Date(a.completedDate)
+      );
+      
+      // Get latest mileage reading
+      const lastTest = sortedTests[0];
+      
+      if (lastTest && lastTest.odometerValue) {
+        totalMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
+      }
+      
+      // Calculate average annual mileage if we have enough data
+      if (sortedTests.length > 1) {
+        const firstTest = sortedTests[sortedTests.length - 1];
+        const lastTest = sortedTests[0];
+        
+        const firstDate = new Date(firstTest.completedDate);
+        const lastDate = new Date(lastTest.completedDate);
+        
+        // Get time difference in years
+        const yearsDiff = (lastDate - firstDate) / (1000 * 60 * 60 * 24 * 365.25);
+        if (yearsDiff > 0.5) { // Only calculate if we have more than 6 months of data
+          const firstMileage = parseInt(String(firstTest.odometerValue).replace(/,/g, ''), 10);
+          const lastMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
+          const mileageDiff = lastMileage - firstMileage;
+          
+          averageAnnualMileage = Math.round(mileageDiff / yearsDiff);
+        }
+      }
+    }
+    
+    // Return structured data format for the UI
+    return {
+      registration: reg,
+      makeModel: `${apiData.make || 'Unknown'} ${apiData.model || ''}`.trim(),
+      colour: apiData.primaryColour || 'Unknown',
+      fuelType: apiData.fuelType || 'Unknown',
+      dateRegistered: formatDate(apiData.registrationDate || apiData.firstUsedDate),
+      engineSize: apiData.engineSize ? `${apiData.engineSize}cc` : 'Unknown',
+      manufactureDate: formatDate(apiData.manufactureDate),
+      hasOutstandingRecall: apiData.hasOutstandingRecall || 'Unknown',
+      // Premium data
+      previousKeepers: 'Data not available', // This may not be available from the API
+      totalMileage,
+      averageAnnualMileage,
+      importStatus: 'UK Vehicle', // This may need to be updated if API provides this info
+      insuranceWriteOff: 'No' // This may need to be updated if API provides this info
+    };
+  };
   
   // Helper function to format dates
   const formatDate = (dateString) => {
-    if (!dateString) return 'Not available';
+    if (!dateString) return 'Unknown';
     try {
       const date = new Date(dateString);
       return date.toLocaleDateString('en-GB', {
@@ -101,19 +180,13 @@ const VehicleInfoGovUK = () => {
     }
   };
   
-  // Helper to manage missing data
-  const formatData = (value, suffix = '') => {
-    if (value === undefined || value === null) return 'Not available';
-    return `${value}${suffix}`;
-  };
-  
   return (
     <GovUKContainer>
       <GovUKMainWrapper>
         {loading && (
           <GovUKLoadingContainer>
             <GovUKLoadingSpinner />
-            <GovUKBody>Retrieving vehicle information...</GovUKBody>
+            <GovUKBody>Generating your premium report...</GovUKBody>
           </GovUKLoadingContainer>
         )}
         
@@ -123,159 +196,54 @@ const VehicleInfoGovUK = () => {
           </Alert>
         )}
         
-        {vehicleData && !loading && (
+        {reportData && !loading && (
           <>
+            <PremiumBadge>PREMIUM REPORT</PremiumBadge>
+            
             <GovUKHeadingXL>
-              Vehicle Information
+              Vehicle Report
             </GovUKHeadingXL>
             
-            <VehicleRegistration data-test-id="vehicle-registration">
-              {vehicleData.registrationNumber}
+            <VehicleRegistration data-test-id="premium-vehicle-registration">
+              {reportData.registration}
             </VehicleRegistration>
             
             <GovUKHeadingL>
-              {vehicleData.make || 'Unknown vehicle'}
+              {reportData.makeModel}
             </GovUKHeadingL>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Vehicle Basic Information */}
+            {/* Use the DVLAVehicleData component to display all vehicle information */}
+            <DVLAVehicleData registration={reportData.registration} />
+            
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+            
             <ReportSection>
-              <GovUKHeadingL>Vehicle Overview</GovUKHeadingL>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Registration Number</DetailCaption>
-                  <DetailHeading>{vehicleData.registrationNumber}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Make</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.make)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Colour</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.colour)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Year of Manufacture</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.yearOfManufacture)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Engine Capacity</DetailCaption>
-                  <DetailHeading>{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Fuel Type</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.fuelType)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
+              {/* Vehicle Insights component - handles its own loading, error states, and data fetching */}
+              <VehicleInsights registration={registration} />
             </ReportSection>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Vehicle Registration Information */}
             <ReportSection>
-              <GovUKHeadingL>Registration Details</GovUKHeadingL>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>First Registration</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.monthOfFirstRegistration)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>First DVLA Registration</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.monthOfFirstDvlaRegistration)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Last V5C Issued</DetailCaption>
-                  <DetailHeading>{vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Marked For Export</DetailCaption>
-                  <DetailHeading>{vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Type Approval</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.typeApproval)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Wheel Plan</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.wheelplan)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
+              {/* The chart component - handles its own loading, error states, and data fetching */}
+              <VehicleMileageChart registration={registration} />
             </ReportSection>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Tax and MOT Information */}
+            {/* Advanced Mileage Analysis section */}
             <ReportSection>
-              <GovUKHeadingL>Tax and MOT Status</GovUKHeadingL>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Tax Status</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.taxStatus)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Tax Due Date</DetailCaption>
-                  <DetailHeading>{vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Additional Rate Tax End Date</DetailCaption>
-                  <DetailHeading>{vehicleData.artEndDate ? formatDate(vehicleData.artEndDate) : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>MOT Status</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.motStatus)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>MOT Expiry Date</DetailCaption>
-                  <DetailHeading>{vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Revenue Weight</DetailCaption>
-                  <DetailHeading>{vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
+              {/* The insights component - also handles its own loading, error states, and data fetching */}
+              <VehicleMileageInsights registration={registration} />
             </ReportSection>
             
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* Emissions Information */}
-            <ReportSection>
-              <GovUKHeadingL>Environmental Information</GovUKHeadingL>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>CO2 Emissions</DetailCaption>
-                  <DetailHeading>{vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Euro Status</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.euroStatus)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Real Driving Emissions</DetailCaption>
-                  <DetailHeading>{formatData(vehicleData.realDrivingEmissions)}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
-              
-              <GovUKGridRow>
-                <GovUKGridColumnOneThird>
-                  <DetailCaption>Automated Vehicle</DetailCaption>
-                  <DetailHeading>{vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
-                </GovUKGridColumnOneThird>
-              </GovUKGridRow>
-            </ReportSection>
+            <GovUKBody>
+              <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
+                Return to basic vehicle details
+              </GovUKLink>
+            </GovUKBody>
           </>
         )}
       </GovUKMainWrapper>
@@ -283,4 +251,4 @@ const VehicleInfoGovUK = () => {
   );
 };
 
-export default VehicleInfoGovUK;
+export default PremiumReportPage;

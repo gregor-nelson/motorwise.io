@@ -1,0 +1,11 @@
+2025-03-10 16:01:35,318 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-10 16:01:35,319 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-10 16:01:45,668 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0000s
+2025-03-10 16:01:45,680 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0117s
+2025-03-10 16:05:16,447 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0021s
+2025-03-10 16:05:16,449 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0034s
+2025-03-10 16:05:19,890 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0010s
+2025-03-10 16:05:19,898 - ves_api - INFO - OPTIONS /api/vehicle - 400 - 0.0010s
+2025-03-10 16:07:42,516 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-10 16:07:42,516 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-10 16:07:42,516 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173']

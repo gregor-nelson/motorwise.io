@@ -276,6 +276,7 @@ const PremiumReportPage = () => {
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
+       
             <ReportSection>
               
               {/* The chart component - handles its own loading, error states, and data fetching */}

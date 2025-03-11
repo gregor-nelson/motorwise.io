@@ -910,6 +910,7 @@ const VehicleMileageChart = ({ registration, vin }) => {
           </GovUKBody>
         </InfoBox>
       )}
+      
     </GovUKContainer>
   );
 };

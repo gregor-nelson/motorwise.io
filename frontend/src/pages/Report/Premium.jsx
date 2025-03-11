@@ -17,10 +17,10 @@ import {
 import Alert from '@mui/material/Alert';
 
 // Import components 
-import DVLAVehicleData from '../../components/Report/DVLA/Header/DVLADataHeader';
-import VehicleInsights from '../../components/Report/DVLA/Insights/VehicleInsights';
-import VehicleMileageChart from '../../components/Report/DVLA/Mileage/MileageChart'; 
-import VehicleMileageInsights from '../../components/Report/DVLA/Mileage/MileageInsights';
+import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader';
+import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
+import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
+import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/Insights/MileageInsights';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 

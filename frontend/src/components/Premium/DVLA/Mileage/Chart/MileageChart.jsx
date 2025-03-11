@@ -8,7 +8,7 @@ import {
   GovUKHeadingS,
   COLORS,
   PremiumInfoPanel
-} from '../../../../styles/theme';
+} from '../../../../../styles/theme';
 import { styled } from '@mui/material/styles';
 
 // Styled components updated to match GOV.UK theme styling

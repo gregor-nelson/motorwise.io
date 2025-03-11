@@ -9,7 +9,7 @@ import {
   COLORS,
   GovUKLoadingSpinner,
   GovUKLoadingContainer
-} from '../../../../styles/theme';
+} from '../../../../../styles/theme';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 

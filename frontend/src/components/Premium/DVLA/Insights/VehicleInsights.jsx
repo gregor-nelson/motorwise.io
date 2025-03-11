@@ -7,7 +7,7 @@ import OwnershipInsightsCalculator from '../Ownership/OwnershipInsightsCalculato
 import StatusInsightsCalculator from '../Status/StatusInsightsCalculator';
 import AgeValueInsightsCalculator from '../Value/AgeValueInsightsCalculator';
 import FuelEfficiencyInsightsCalculator from '../MPG/FuelEfficiencyInsightsCalculator';
-
+import FuelCostCalculator from '../MPG/FuelCostCalculator';
 // Import custom tooltip components
 import {
   GovUKTooltip,
@@ -623,207 +623,222 @@ const VehicleInsights = ({ registration, vin }) => {
               </AgeValuePanel>
             );
 
-          case 'fuelEfficiencyInsights':
-            return insights.fuelEfficiencyInsights && (
-              <FuelEfficiencyPanel key="fuelEfficiency">
-                <HeadingWithTooltip tooltip={tooltips.sectionFuelEfficiency} iconColor="#85994b">
-                  <LocalGasStationIcon /> Fuel Efficiency Insights
-                </HeadingWithTooltip>
-                
-                {insights.fuelEfficiencyInsights.isElectric ? (
-                  <>
-                    <InsightBody>
-                      As an electric vehicle, this car has an estimated efficiency 
-                      of {withTooltip(
-                        <ValueHighlight color="#85994b">
-                          {insights.fuelEfficiencyInsights.estimatedMilesPerKWh} miles per kWh
-                        </ValueHighlight>,
-                        tooltips.evEfficiency
-                      )}, 
-                      costing approximately {withTooltip(
-                        <ValueHighlight color="#85994b">
-                          £{insights.fuelEfficiencyInsights.estimatedCostPerMile} per mile
-                        </ValueHighlight>,
-                        tooltips.evCostPerMile
-                      )} to run.
-                    </InsightBody>
-                    
-                    <InsightTable>
-                      <tbody>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Estimated Range" 
-                            tooltip={tooltips.evRange} 
-                          />
-                          <td>
-                            <MetricDisplay iconColor="#85994b">
-                              <DirectionsCarIcon fontSize="small" />
-                              <MetricValue>
-                                {insights.fuelEfficiencyInsights.estimatedRange}
-                              </MetricValue>
-                            </MetricDisplay>
-                          </td>
-                        </tr>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Battery Capacity" 
-                            tooltip="Estimated based on typical battery size for EVs of this age and model" 
-                          />
-                          <td>{insights.fuelEfficiencyInsights.batteryCapacityEstimate}</td>
-                        </tr>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Annual Savings vs Petrol" 
-                            tooltip={tooltips.evAnnualSavings} 
-                          />
-                          <td>
-                            <MetricDisplay iconColor="#00703c">
-                              <MoneyIcon fontSize="small" />
-                              <MetricValue color="#00703c">
-                                {insights.fuelEfficiencyInsights.annualSavingsVsPetrol}
-                              </MetricValue>
-                            </MetricDisplay>
-                          </td>
-                        </tr>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Annual CO2 Savings" 
-                            tooltip={tooltips.evCO2Savings} 
-                          />
-                          <td>
-                            <MetricDisplay iconColor="#00703c">
-                              <CO2Icon fontSize="small" />
-                              <MetricValue color="#00703c">
-                                {insights.fuelEfficiencyInsights.annualCO2Savings}
-                              </MetricValue>
-                            </MetricDisplay>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </InsightTable>
-                    
-                    <GovUKTooltip title={tooltips.marketTrends} arrow placement="top">
-                      <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
-                        <TrendingUpIcon fontSize="small" /> Market Trends:
-                      </FactorsTitle>
-                    </GovUKTooltip>
-                    <FactorList>
-                      <FactorItem iconColor="#1d70b8">
-                        <InfoIcon fontSize="small" />
-                        <span>{insights.fuelEfficiencyInsights.evMarketGrowthInfo}</span>
-                      </FactorItem>
-                    </FactorList>
-                  </>
-                ) : (
-                  <>
-                    <InsightBody>
-                      Based on this vehicle's specifications, it has an estimated fuel efficiency 
-                      of {withTooltip(
-                        <ValueHighlight color="#85994b">
-                          {insights.fuelEfficiencyInsights.estimatedMPGCombined} MPG
-                        </ValueHighlight>,
-                        tooltips.mpgCombined
-                      )} combined, 
-                      costing approximately {withTooltip(
-                        <ValueHighlight color="#85994b">
-                          £{insights.fuelEfficiencyInsights.costPerMile} per mile
-                        </ValueHighlight>,
-                        tooltips.costPerMile
-                      )} to run.
-                    </InsightBody>
-                    
-                    <InsightTable>
-                      <tbody>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Estimated Urban MPG" 
-                            tooltip={tooltips.mpgUrban} 
-                          />
-                          <td>{insights.fuelEfficiencyInsights.estimatedMPGUrban} MPG</td>
-                        </tr>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Estimated Extra-Urban MPG" 
-                            tooltip={tooltips.mpgExtraUrban} 
-                          />
-                          <td>{insights.fuelEfficiencyInsights.estimatedMPGExtraUrban} MPG</td>
-                        </tr>
-                        <tr>
-                          <CellWithTooltip 
-                            label="Estimated Annual Fuel Cost" 
-                            tooltip={tooltips.annualFuelCost} 
-                          />
-                          <td>
-                            <MetricDisplay iconColor="#85994b">
-                              <MoneyIcon fontSize="small" />
-                              <MetricValue>
-                                £{insights.fuelEfficiencyInsights.annualFuelCost}
-                              </MetricValue>
-                              <MetricLabel>(based on average UK mileage)</MetricLabel>
-                            </MetricDisplay>
-                          </td>
-                        </tr>
-                        {insights.fuelEfficiencyInsights.co2EmissionsGPerKM && (
+            case 'fuelEfficiencyInsights':
+              return insights.fuelEfficiencyInsights && (
+                <FuelEfficiencyPanel key="fuelEfficiency">
+                  <HeadingWithTooltip tooltip={tooltips.sectionFuelEfficiency} iconColor="#85994b">
+                    <LocalGasStationIcon /> Fuel Efficiency Insights
+                  </HeadingWithTooltip>
+                  
+                  {insights.fuelEfficiencyInsights.isElectric ? (
+                    <>
+                      <InsightBody>
+                        As an electric vehicle, this car has an estimated efficiency 
+                        of {withTooltip(
+                          <ValueHighlight color="#85994b">
+                            {insights.fuelEfficiencyInsights.estimatedMilesPerKWh} miles per kWh
+                          </ValueHighlight>,
+                          tooltips.evEfficiency
+                        )}, 
+                        costing approximately {withTooltip(
+                          <ValueHighlight color="#85994b">
+                            £{insights.fuelEfficiencyInsights.estimatedCostPerMile} per mile
+                          </ValueHighlight>,
+                          tooltips.evCostPerMile
+                        )} to run.
+                      </InsightBody>
+                      
+                      <InsightTable>
+                        <tbody>
                           <tr>
                             <CellWithTooltip 
-                              label="CO2 Emissions" 
-                              tooltip={tooltips.co2Emissions} 
+                              label="Estimated Range" 
+                              tooltip={tooltips.evRange} 
                             />
                             <td>
-                              <MetricDisplay iconColor="#28a197">
-                                <CO2Icon fontSize="small" />
+                              <MetricDisplay iconColor="#85994b">
+                                <DirectionsCarIcon fontSize="small" />
                                 <MetricValue>
-                                  {insights.fuelEfficiencyInsights.co2EmissionsGPerKM} g/km
+                                  {insights.fuelEfficiencyInsights.estimatedRange}
                                 </MetricValue>
                               </MetricDisplay>
                             </td>
                           </tr>
-                        )}
-                      </tbody>
-                    </InsightTable>
-                    
-                    {insights.fuelEfficiencyInsights.fuelTypeEfficiencyNote && (
-                      <>
-                        <GovUKTooltip title={tooltips.efficiencyContext} arrow placement="top">
-                          <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
-                            <InfoIcon fontSize="small" /> Efficiency Context:
-                          </FactorsTitle>
-                        </GovUKTooltip>
-                        <FactorList>
-                          <FactorItem iconColor="#1d70b8">
-                            <InfoIcon fontSize="small" />
-                            <span>{insights.fuelEfficiencyInsights.fuelTypeEfficiencyNote}</span>
-                          </FactorItem>
-                        </FactorList>
-                      </>
-                    )}
-                    
-                    {insights.fuelEfficiencyInsights.marketTrends && (
-                      <>
-                        <GovUKTooltip title={tooltips.marketTrends} arrow placement="top">
-                          <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
-                            <TrendingUpIcon fontSize="small" /> Market Trends:
-                          </FactorsTitle>
-                        </GovUKTooltip>
-                        <FactorList>
-                          <FactorItem iconColor="#1d70b8">
-                            <InfoIcon fontSize="small" />
-                            <span>{insights.fuelEfficiencyInsights.marketTrends}</span>
-                          </FactorItem>
-                        </FactorList>
-                      </>
-                    )}
-                  </>
-                )}
-                
-                <GovUKTooltip title={tooltips.fuelEfficiencyNote} arrow placement="top">
-                  <InsightNote style={{ borderBottom: '1px dotted #505a5f', cursor: 'help', display: 'inline-block' }}>
-                    Note: Fuel efficiency estimates are based on UK government data for vehicles of this type, age, and engine size. 
-                    Actual performance may vary based on driving style, maintenance, and conditions.
-                  </InsightNote>
-                </GovUKTooltip>
-              </FuelEfficiencyPanel>
-            );
+                          <tr>
+                            <CellWithTooltip 
+                              label="Battery Capacity" 
+                              tooltip="Estimated based on typical battery size for EVs of this age and model" 
+                            />
+                            <td>{insights.fuelEfficiencyInsights.batteryCapacityEstimate}</td>
+                          </tr>
+                          <tr>
+                            <CellWithTooltip 
+                              label="Annual Savings vs Petrol" 
+                              tooltip={tooltips.evAnnualSavings} 
+                            />
+                            <td>
+                              <MetricDisplay iconColor="#00703c">
+                                <MoneyIcon fontSize="small" />
+                                <MetricValue color="#00703c">
+                                  {insights.fuelEfficiencyInsights.annualSavingsVsPetrol}
+                                </MetricValue>
+                              </MetricDisplay>
+                            </td>
+                          </tr>
+                          <tr>
+                            <CellWithTooltip 
+                              label="Annual CO2 Savings" 
+                              tooltip={tooltips.evCO2Savings} 
+                            />
+                            <td>
+                              <MetricDisplay iconColor="#00703c">
+                                <CO2Icon fontSize="small" />
+                                <MetricValue color="#00703c">
+                                  {insights.fuelEfficiencyInsights.annualCO2Savings}
+                                </MetricValue>
+                              </MetricDisplay>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </InsightTable>
+                      
+                      <GovUKTooltip title={tooltips.marketTrends} arrow placement="top">
+                        <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
+                          <TrendingUpIcon fontSize="small" /> Market Trends:
+                        </FactorsTitle>
+                      </GovUKTooltip>
+                      <FactorList>
+                        <FactorItem iconColor="#1d70b8">
+                          <InfoIcon fontSize="small" />
+                          <span>{insights.fuelEfficiencyInsights.evMarketGrowthInfo}</span>
+                        </FactorItem>
+                      </FactorList>
+                      
+                      {/* Add the new calculator component for EVs without modifying existing code */}
+                      <FuelCostCalculator 
+                        defaultValues={insights.fuelEfficiencyInsights}
+                        fuelType="ELECTRIC"
+                        isElectric={true}
+                      />
+                      
+                    </>
+                  ) : (
+                    <>
+                      <InsightBody>
+                        Based on this vehicle's specifications, it has an estimated fuel efficiency 
+                        of {withTooltip(
+                          <ValueHighlight color="#85994b">
+                            {insights.fuelEfficiencyInsights.estimatedMPGCombined} MPG
+                          </ValueHighlight>,
+                          tooltips.mpgCombined
+                        )} combined, 
+                        costing approximately {withTooltip(
+                          <ValueHighlight color="#85994b">
+                            £{insights.fuelEfficiencyInsights.costPerMile} per mile
+                          </ValueHighlight>,
+                          tooltips.costPerMile
+                        )} to run.
+                      </InsightBody>
+                      
+                      <InsightTable>
+                        <tbody>
+                          <tr>
+                            <CellWithTooltip 
+                              label="Estimated Urban MPG" 
+                              tooltip={tooltips.mpgUrban} 
+                            />
+                            <td>{insights.fuelEfficiencyInsights.estimatedMPGUrban} MPG</td>
+                          </tr>
+                          <tr>
+                            <CellWithTooltip 
+                              label="Estimated Extra-Urban MPG" 
+                              tooltip={tooltips.mpgExtraUrban} 
+                            />
+                            <td>{insights.fuelEfficiencyInsights.estimatedMPGExtraUrban} MPG</td>
+                          </tr>
+                          <tr>
+                            <CellWithTooltip 
+                              label="Estimated Annual Fuel Cost" 
+                              tooltip={tooltips.annualFuelCost} 
+                            />
+                            <td>
+                              <MetricDisplay iconColor="#85994b">
+                                <MoneyIcon fontSize="small" />
+                                <MetricValue>
+                                  £{insights.fuelEfficiencyInsights.annualFuelCost}
+                                </MetricValue>
+                                <MetricLabel>(based on average UK mileage)</MetricLabel>
+                              </MetricDisplay>
+                            </td>
+                          </tr>
+                          {insights.fuelEfficiencyInsights.co2EmissionsGPerKM && (
+                            <tr>
+                              <CellWithTooltip 
+                                label="CO2 Emissions" 
+                                tooltip={tooltips.co2Emissions} 
+                              />
+                              <td>
+                                <MetricDisplay iconColor="#28a197">
+                                  <CO2Icon fontSize="small" />
+                                  <MetricValue>
+                                    {insights.fuelEfficiencyInsights.co2EmissionsGPerKM} g/km
+                                  </MetricValue>
+                                </MetricDisplay>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </InsightTable>
+                      
+                      {insights.fuelEfficiencyInsights.fuelTypeEfficiencyNote && (
+                        <>
+                          <GovUKTooltip title={tooltips.efficiencyContext} arrow placement="top">
+                            <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
+                              <InfoIcon fontSize="small" /> Efficiency Context:
+                            </FactorsTitle>
+                          </GovUKTooltip>
+                          <FactorList>
+                            <FactorItem iconColor="#1d70b8">
+                              <InfoIcon fontSize="small" />
+                              <span>{insights.fuelEfficiencyInsights.fuelTypeEfficiencyNote}</span>
+                            </FactorItem>
+                          </FactorList>
+                        </>
+                      )}
+                      
+                      {insights.fuelEfficiencyInsights.marketTrends && (
+                        <>
+                          <GovUKTooltip title={tooltips.marketTrends} arrow placement="top">
+                            <FactorsTitle color="#1d70b8" style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
+                              <TrendingUpIcon fontSize="small" /> Market Trends:
+                            </FactorsTitle>
+                          </GovUKTooltip>
+                          <FactorList>
+                            <FactorItem iconColor="#1d70b8">
+                              <InfoIcon fontSize="small" />
+                              <span>{insights.fuelEfficiencyInsights.marketTrends}</span>
+                            </FactorItem>
+                          </FactorList>
+                        </>
+                      )}
+                      
+                      {/* Add the new calculator component without modifying existing code */}
+                      <FuelCostCalculator 
+                        defaultValues={insights.fuelEfficiencyInsights}
+                        fuelType={vehicleData.fuelType}
+                        isElectric={false}
+                      />
+                    </>
+                  )}
+                  
+                  <GovUKTooltip title={tooltips.fuelEfficiencyNote} arrow placement="top">
+                    <InsightNote style={{ borderBottom: '1px dotted #505a5f', cursor: 'help', display: 'inline-block' }}>
+                      Note: Fuel efficiency estimates are based on UK government data for vehicles of this type, age, and engine size. 
+                      Actual performance may vary based on driving style, maintenance, and conditions.
+                    </InsightNote>
+                  </GovUKTooltip>
+                </FuelEfficiencyPanel>
+              );
           
           default:
             return null;

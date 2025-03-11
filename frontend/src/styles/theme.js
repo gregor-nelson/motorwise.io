@@ -138,7 +138,7 @@ export const GovUKMainWrapper = styled('main')`
     padding-bottom: 40px;
   }
   
-  &.govuk-main-wrapper--auto-spacing:first-child,
+  &.govuk-main-wrapper--auto-spacing:first-type,
   &.govuk-main-wrapper--l {
     padding-top: 30px;
     
@@ -1660,7 +1660,7 @@ export const ReportTable = styled('table')`
     text-align: left;
   }
   
-  & tr:nth-child(even) {
+  & tr:nth-of-type(even) {
     background-color: ${COLORS.LIGHT_GREY};
   }
 `;

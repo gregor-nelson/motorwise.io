@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { 
+import React, { useState, useEffect, memo, useCallback } from 'react';
+import {
   GovUKHeadingL,
   GovUKGridRow,
   GovUKGridColumnOneThird,
@@ -10,31 +10,42 @@ import {
   DetailHeading,
   ReportSection,
   GovUKSectionBreak
-} from '../../../styles/theme';
+} from '../../../../styles/theme';
 import Alert from '@mui/material/Alert';
 
 // Determine if we're in development or production
-const isDevelopment = window.location.hostname === 'localhost' || 
+const isDevelopment = window.location.hostname === 'localhost' ||
                       window.location.hostname === '127.0.0.1';
 
 // Configure API URL based on environment
-const API_BASE_URL = isDevelopment 
+const API_BASE_URL = isDevelopment
                     ? 'http://localhost:8004/api'   // Development - direct to API port
                     : '/api';                       // Production - use relative URL for Nginx proxy
 
-const DVLAVehicleData = ({ registration }) => {
+// Create a cache outside the component to persist across renders of the *same component instance*
+const vehicleDataCache = new Map();
+
+const DVLAVehicleDataComponent = ({ registration }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
-  
+
   useEffect(() => {
     const fetchVehicleData = async () => {
       if (!registration) return;
-      
+
+      // **Cache Check:** Look in the cache first
+      if (vehicleDataCache.has(registration)) {
+        console.log(`Serving data from cache for registration: ${registration}`); // For debugging
+        setVehicleData(vehicleDataCache.get(registration));
+        setLoading(false); // Still need to set loading to false
+        return; // Exit early, no API call needed
+      }
+
       try {
         setLoading(true);
         setError(null);
-        
+
         // Fetch vehicle data from FastAPI backend
         const response = await fetch(`${API_BASE_URL}/vehicle`, {
           method: 'POST',
@@ -46,14 +57,14 @@ const DVLAVehicleData = ({ registration }) => {
           credentials: isDevelopment ? 'include' : 'same-origin',
           mode: isDevelopment ? 'cors' : 'same-origin'
         });
-        
+
         // Get response data
         const responseData = await response.json();
-        
+
         if (!response.ok) {
           // Extract error message from the new error format
           let errorMessage = 'Failed to fetch DVLA data';
-          
+
           if (responseData.message) {
             // New API format with status/message structure
             errorMessage = responseData.message;
@@ -64,11 +75,15 @@ const DVLAVehicleData = ({ registration }) => {
             // Handle array of errors format
             errorMessage = responseData.errors[0].detail || 'Unknown error';
           }
-          
+
           throw new Error(errorMessage);
         }
-        
+
+        // **Cache Update:** Store the fetched data in the cache
+        vehicleDataCache.set(registration, responseData);
+        console.log(`Data fetched and cached for registration: ${registration}`); // For debugging
         setVehicleData(responseData);
+
       } catch (err) {
         console.error('Error fetching DVLA data:', err);
         setError(err.message);
@@ -76,12 +91,12 @@ const DVLAVehicleData = ({ registration }) => {
         setLoading(false);
       }
     };
-    
+
     fetchVehicleData();
   }, [registration]);
-  
-  // Helper function to format dates
-  const formatDate = (dateString) => {
+
+  // Helper function to format dates - memoized with useCallback
+  const formatDate = useCallback((dateString) => {
     if (!dateString) return 'Not available';
     try {
       const date = new Date(dateString);
@@ -93,14 +108,14 @@ const DVLAVehicleData = ({ registration }) => {
     } catch (e) {
       return dateString;
     }
-  };
-  
-  // Helper to manage missing data
-  const formatData = (value, suffix = '') => {
+  }, []); // Empty dependency array as it doesn't depend on component state
+
+  // Helper to manage missing data - memoized with useCallback
+  const formatData = useCallback((value, suffix = '') => {
     if (value === undefined || value === null) return 'Not available';
     return `${value}${suffix}`;
-  };
-  
+  }, []); // Empty dependency array as it doesn't depend on component state
+
   if (loading) {
     return (
       <ReportSection>
@@ -111,7 +126,7 @@ const DVLAVehicleData = ({ registration }) => {
       </ReportSection>
     );
   }
-  
+
   if (error) {
     return (
       <ReportSection>
@@ -122,16 +137,16 @@ const DVLAVehicleData = ({ registration }) => {
       </ReportSection>
     );
   }
-  
+
   if (!vehicleData) {
     return null;
   }
-  
+
   return (
     <>
       <ReportSection>
         <GovUKHeadingL>Vehicle Overview</GovUKHeadingL>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>Colour</DetailCaption>
@@ -146,7 +161,7 @@ const DVLAVehicleData = ({ registration }) => {
             <DetailHeading>{formatData(vehicleData.monthOfFirstRegistration)}</DetailHeading>
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>Engine size</DetailCaption>
@@ -162,12 +177,12 @@ const DVLAVehicleData = ({ registration }) => {
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
       </ReportSection>
-      
+
       <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-      
+
       <ReportSection>
         <GovUKHeadingL>Vehicle Status</GovUKHeadingL>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>Tax Status</DetailCaption>
@@ -182,7 +197,7 @@ const DVLAVehicleData = ({ registration }) => {
             <DetailHeading>{formatData(vehicleData.motStatus)}</DetailHeading>
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>MOT Expiry Date</DetailCaption>
@@ -198,12 +213,12 @@ const DVLAVehicleData = ({ registration }) => {
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
       </ReportSection>
-      
+
       <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-      
+
       <ReportSection>
         <GovUKHeadingL>Technical Details</GovUKHeadingL>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>CO2 Emissions</DetailCaption>
@@ -218,7 +233,7 @@ const DVLAVehicleData = ({ registration }) => {
             <DetailHeading>{formatData(vehicleData.typeApproval)}</DetailHeading>
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>Wheel Plan</DetailCaption>
@@ -233,7 +248,7 @@ const DVLAVehicleData = ({ registration }) => {
             <DetailHeading>{formatData(vehicleData.realDrivingEmissions)}</DetailHeading>
           </GovUKGridColumnOneThird>
         </GovUKGridRow>
-        
+
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
             <DetailCaption>First DVLA Registration</DetailCaption>
@@ -248,5 +263,7 @@ const DVLAVehicleData = ({ registration }) => {
     </>
   );
 };
+
+const DVLAVehicleData = memo(DVLAVehicleDataComponent); // Wrap the component with React.memo
 
 export default DVLAVehicleData;

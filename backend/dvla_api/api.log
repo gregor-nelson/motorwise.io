@@ -9,3 +9,584 @@
 2025-03-10 16:07:42,516 - ves_api - INFO - Starting server in PRODUCTION mode
 2025-03-10 16:07:42,516 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-03-10 16:07:42,516 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173']
+2025-03-11 06:28:06,371 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-11 06:29:01,415 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-11 06:29:15,990 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-11 06:29:15,990 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-11 06:29:15,990 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173']
+2025-03-11 06:38:52,229 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 06:38:53,349 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 06:38:54,101 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:38:54,106 - ves_api - INFO - POST /api/vehicle - 200 - 1.8881s
+2025-03-11 06:38:54,155 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:38:54,159 - ves_api - INFO - POST /api/vehicle - 200 - 1.9426s
+2025-03-11 06:43:25,277 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:43:25,278 - ves_api - INFO - POST /api/vehicle - 200 - 0.0029s
+2025-03-11 06:43:25,285 - ves_api - INFO - GET /api/v1/vehicle/registration/A5ENK - 404 - 0.0000s
+2025-03-11 06:43:25,293 - ves_api - INFO - GET /api/v1/vehicle/registration/A5ENK - 404 - 0.0010s
+2025-03-11 06:43:25,295 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:43:25,297 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 06:49:13,400 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:49:13,402 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 06:49:21,371 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:49:21,373 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 06:49:21,414 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:49:21,416 - ves_api - INFO - POST /api/vehicle - 200 - 0.0220s
+2025-03-11 06:49:21,433 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:49:21,435 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 06:49:21,450 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:49:21,452 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 06:56:42,881 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:56:42,882 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:56:42,883 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:56:42,884 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:56:42,885 - ves_api - INFO - POST /api/vehicle - 200 - 0.0173s
+2025-03-11 06:56:42,886 - ves_api - INFO - POST /api/vehicle - 200 - 0.0163s
+2025-03-11 06:56:42,886 - ves_api - INFO - POST /api/vehicle - 200 - 0.0163s
+2025-03-11 06:56:42,887 - ves_api - INFO - POST /api/vehicle - 200 - 0.0153s
+2025-03-11 06:59:31,127 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:59:31,129 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:59:31,131 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:59:31,133 - ves_api - INFO - Cache hit for registration number: A5ENK
+2025-03-11 06:59:31,134 - ves_api - INFO - POST /api/vehicle - 200 - 0.0279s
+2025-03-11 06:59:31,136 - ves_api - INFO - POST /api/vehicle - 200 - 0.0259s
+2025-03-11 06:59:31,137 - ves_api - INFO - POST /api/vehicle - 200 - 0.0259s
+2025-03-11 06:59:31,138 - ves_api - INFO - POST /api/vehicle - 200 - 0.0279s
+2025-03-11 06:59:50,136 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 06:59:51,179 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 06:59:51,787 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 06:59:52,586 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 06:59:53,457 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:59:53,461 - ves_api - INFO - POST /api/vehicle - 200 - 3.3317s
+2025-03-11 06:59:53,466 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:59:53,472 - ves_api - INFO - POST /api/vehicle - 200 - 2.2973s
+2025-03-11 06:59:53,498 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:59:53,504 - ves_api - INFO - POST /api/vehicle - 200 - 2.3292s
+2025-03-11 06:59:53,530 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 06:59:53,536 - ves_api - INFO - POST /api/vehicle - 200 - 2.3591s
+2025-03-11 07:12:04,576 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:12:04,577 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:12:04,578 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 07:12:04,578 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 07:12:20,135 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:12:20,136 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 07:12:20,142 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:12:20,143 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 07:15:15,720 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:15:15,721 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:15:15,722 - ves_api - INFO - POST /api/vehicle - 200 - 0.0123s
+2025-03-11 07:15:15,722 - ves_api - INFO - POST /api/vehicle - 200 - 0.0043s
+2025-03-11 07:15:15,729 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:15:15,730 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:15:15,730 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 07:15:15,731 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 07:21:09,648 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:21:09,650 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:21:09,651 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:21:09,652 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 07:21:09,654 - ves_api - INFO - POST /api/vehicle - 200 - 0.0192s
+2025-03-11 07:21:09,655 - ves_api - INFO - POST /api/vehicle - 200 - 0.0183s
+2025-03-11 07:21:09,656 - ves_api - INFO - POST /api/vehicle - 200 - 0.0173s
+2025-03-11 07:21:09,657 - ves_api - INFO - POST /api/vehicle - 200 - 0.0183s
+2025-03-11 07:21:14,719 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 07:21:15,422 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 07:21:16,122 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 07:21:16,741 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 07:21:17,583 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 07:21:17,586 - ves_api - INFO - POST /api/vehicle - 200 - 2.1668s
+2025-03-11 07:21:17,629 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 07:21:17,634 - ves_api - INFO - POST /api/vehicle - 200 - 2.9170s
+2025-03-11 07:21:17,665 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 07:21:17,669 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 07:21:17,673 - ves_api - INFO - POST /api/vehicle - 200 - 2.2545s
+2025-03-11 07:21:17,674 - ves_api - INFO - POST /api/vehicle - 200 - 2.2556s
+2025-03-11 07:26:25,570 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:26:25,572 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:26:25,575 - ves_api - INFO - POST /api/vehicle - 200 - 0.0150s
+2025-03-11 07:26:25,577 - ves_api - INFO - POST /api/vehicle - 200 - 0.0150s
+2025-03-11 07:26:25,630 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:26:25,632 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:26:25,634 - ves_api - INFO - POST /api/vehicle - 200 - 0.0180s
+2025-03-11 07:26:25,636 - ves_api - INFO - POST /api/vehicle - 200 - 0.0199s
+2025-03-11 07:52:45,211 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:52:45,211 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:52:45,211 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:52:45,212 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 07:52:45,212 - ves_api - INFO - POST /api/vehicle - 200 - 0.0052s
+2025-03-11 07:52:45,212 - ves_api - INFO - POST /api/vehicle - 200 - 0.0042s
+2025-03-11 07:52:45,213 - ves_api - INFO - POST /api/vehicle - 200 - 0.0052s
+2025-03-11 07:52:45,213 - ves_api - INFO - POST /api/vehicle - 200 - 0.0055s
+2025-03-11 08:08:46,122 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:08:46,122 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:08:46,122 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:08:46,123 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:08:46,123 - ves_api - INFO - POST /api/vehicle - 200 - 0.0055s
+2025-03-11 08:08:46,124 - ves_api - INFO - POST /api/vehicle - 200 - 0.0054s
+2025-03-11 08:08:46,124 - ves_api - INFO - POST /api/vehicle - 200 - 0.0057s
+2025-03-11 08:08:46,125 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 08:09:43,251 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:09:43,254 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:09:43,263 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:09:43,264 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 08:09:43,272 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:09:43,272 - ves_api - INFO - POST /api/vehicle - 200 - 0.0020s
+2025-03-11 08:09:43,277 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:09:43,278 - ves_api - INFO - POST /api/vehicle - 200 - 0.0010s
+2025-03-11 08:12:03,621 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:03,622 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:03,623 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:12:03,624 - ves_api - INFO - POST /api/vehicle - 200 - 0.0041s
+2025-03-11 08:12:03,627 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:03,628 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:03,628 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 08:12:03,629 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 08:12:19,959 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:19,960 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 08:12:19,973 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:19,974 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:12:19,982 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:19,982 - ves_api - INFO - POST /api/vehicle - 200 - 0.0010s
+2025-03-11 08:12:19,986 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:12:19,986 - ves_api - INFO - POST /api/vehicle - 200 - 0.0010s
+2025-03-11 08:26:51,087 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 08:26:51,528 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 08:26:52,065 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 08:26:52,542 - ves_api - INFO - Processing request for registration number: SV57GVL
+2025-03-11 08:26:53,332 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 08:26:53,333 - ves_api - INFO - POST /api/vehicle - 200 - 2.2479s
+2025-03-11 08:26:53,334 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 08:26:53,336 - ves_api - INFO - POST /api/vehicle - 200 - 2.2500s
+2025-03-11 08:26:53,408 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 08:26:53,410 - ves_api - INFO - POST /api/vehicle - 200 - 1.3477s
+2025-03-11 08:26:53,419 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 08:26:53,421 - ves_api - INFO - POST /api/vehicle - 200 - 1.3587s
+2025-03-11 08:29:13,756 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:29:13,756 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:29:13,756 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:29:13,757 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:29:13,758 - ves_api - INFO - POST /api/vehicle - 200 - 0.0100s
+2025-03-11 08:29:13,758 - ves_api - INFO - POST /api/vehicle - 200 - 0.0100s
+2025-03-11 08:29:13,758 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:29:13,759 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 08:36:27,365 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:36:27,365 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:36:27,365 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:36:27,365 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:36:27,365 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 08:36:27,366 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 08:36:27,366 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 08:36:27,366 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 08:42:24,546 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:42:24,547 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:42:24,548 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:42:24,549 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 08:42:24,556 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:42:24,557 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:42:24,558 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:42:24,558 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:58:34,169 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:58:34,170 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:58:34,170 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:58:34,170 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 08:58:34,171 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:58:34,171 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:58:34,171 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 08:58:34,172 - ves_api - INFO - POST /api/vehicle - 200 - 0.0049s
+2025-03-11 09:01:05,316 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 09:01:05,317 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 09:01:05,317 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 09:01:05,318 - ves_api - INFO - Cache hit for registration number: SV57GVL
+2025-03-11 09:01:05,318 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 09:01:05,318 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 09:01:05,318 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 09:01:05,319 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 09:02:57,995 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 09:02:58,401 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 09:02:58,807 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 09:02:59,213 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 09:03:00,072 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:03:00,074 - ves_api - INFO - POST /api/vehicle - 200 - 2.0804s
+2025-03-11 09:03:00,077 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:03:00,078 - ves_api - INFO - POST /api/vehicle - 200 - 2.0873s
+2025-03-11 09:03:00,092 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:03:00,093 - ves_api - INFO - POST /api/vehicle - 200 - 2.1023s
+2025-03-11 09:03:00,127 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:03:00,128 - ves_api - INFO - POST /api/vehicle - 200 - 2.1372s
+2025-03-11 09:04:45,292 - ves_api - INFO - Processing request for registration number: SV20WRJ
+2025-03-11 09:04:45,701 - ves_api - INFO - Processing request for registration number: SV20WRJ
+2025-03-11 09:04:46,108 - ves_api - INFO - Processing request for registration number: SV20WRJ
+2025-03-11 09:04:46,520 - ves_api - INFO - Processing request for registration number: SV20WRJ
+2025-03-11 09:04:47,204 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:04:47,207 - ves_api - INFO - POST /api/vehicle - 200 - 1.9215s
+2025-03-11 09:04:47,224 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:04:47,226 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:04:47,227 - ves_api - INFO - POST /api/vehicle - 200 - 1.9370s
+2025-03-11 09:04:47,227 - ves_api - INFO - POST /api/vehicle - 200 - 1.9420s
+2025-03-11 09:04:47,342 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:04:47,343 - ves_api - INFO - POST /api/vehicle - 200 - 0.8257s
+2025-03-11 09:15:33,187 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:15:33,189 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 09:15:33,205 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:15:33,206 - ves_api - INFO - POST /api/vehicle - 200 - 0.0170s
+2025-03-11 09:15:33,210 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:15:33,211 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:15:33,212 - ves_api - INFO - POST /api/vehicle - 200 - 0.0100s
+2025-03-11 09:15:33,212 - ves_api - INFO - POST /api/vehicle - 200 - 0.0090s
+2025-03-11 09:40:31,591 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:40:31,592 - ves_api - INFO - POST /api/vehicle - 200 - 0.0030s
+2025-03-11 09:40:31,616 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:40:31,617 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:40:31,617 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 09:40:31,618 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 09:40:31,619 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 09:40:31,619 - ves_api - INFO - POST /api/vehicle - 200 - 0.0059s
+2025-03-11 09:40:51,537 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:40:52,134 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:40:52,664 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:40:53,149 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:41:02,123 - ves_api - WARNING - Network error: . Retrying in 0.5 seconds.
+2025-03-11 09:41:03,042 - ves_api - WARNING - Network error: . Retrying in 0.5 seconds.
+2025-03-11 09:41:03,153 - ves_api - WARNING - Network error: . Retrying in 0.5 seconds.
+2025-03-11 09:41:03,430 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:03,432 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:03,432 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:03,489 - ves_api - INFO - POST /api/vehicle - 404 - 11.9535s
+2025-03-11 09:41:03,971 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:04,410 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:04,410 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:04,412 - ves_api - INFO - POST /api/vehicle - 404 - 11.7506s
+2025-03-11 09:41:04,848 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:04,849 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:04,849 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:04,850 - ves_api - INFO - POST /api/vehicle - 404 - 12.7187s
+2025-03-11 09:41:04,900 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:04,901 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:04,901 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:04,902 - ves_api - INFO - POST /api/vehicle - 404 - 12.2405s
+2025-03-11 09:41:18,727 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:41:19,301 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:41:19,826 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:41:20,311 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 09:41:21,063 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:21,065 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:21,066 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:21,068 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:21,069 - ves_api - INFO - POST /api/vehicle - 404 - 2.3487s
+2025-03-11 09:41:21,070 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:21,070 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:21,072 - ves_api - INFO - POST /api/vehicle - 404 - 2.3517s
+2025-03-11 09:41:21,235 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:21,236 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:21,237 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:21,238 - ves_api - INFO - POST /api/vehicle - 404 - 1.4140s
+2025-03-11 09:41:21,282 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 09:41:21,283 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 09:41:21,284 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 417, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 09:41:21,285 - ves_api - INFO - POST /api/vehicle - 404 - 1.4608s
+2025-03-11 09:41:43,041 - ves_api - INFO - Processing request for registration number: HG06DHZ
+2025-03-11 09:41:43,554 - ves_api - INFO - Processing request for registration number: HG06DHZ
+2025-03-11 09:41:44,029 - ves_api - INFO - Processing request for registration number: HG06DHZ
+2025-03-11 09:41:44,513 - ves_api - INFO - Processing request for registration number: HG06DHZ
+2025-03-11 09:41:45,251 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:41:45,252 - ves_api - INFO - POST /api/vehicle - 200 - 2.2130s
+2025-03-11 09:41:45,371 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:41:45,372 - ves_api - INFO - POST /api/vehicle - 200 - 1.8211s
+2025-03-11 09:41:45,391 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:41:45,392 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 09:41:45,395 - ves_api - INFO - POST /api/vehicle - 200 - 1.8430s
+2025-03-11 09:41:45,395 - ves_api - INFO - POST /api/vehicle - 200 - 1.8440s
+2025-03-11 09:46:27,229 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 09:46:27,230 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 09:46:27,230 - ves_api - INFO - POST /api/vehicle - 200 - 0.0031s
+2025-03-11 09:46:27,230 - ves_api - INFO - POST /api/vehicle - 200 - 0.0031s
+2025-03-11 09:46:27,240 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 09:46:27,241 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 09:46:27,241 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 09:46:27,241 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 10:04:46,887 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:04:46,888 - ves_api - INFO - POST /api/vehicle - 200 - 0.0015s
+2025-03-11 10:04:46,894 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:04:46,894 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:04:46,895 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:04:46,895 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 10:04:46,895 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 10:04:46,896 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 10:06:45,736 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:45,737 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:45,738 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:45,738 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:45,739 - ves_api - INFO - POST /api/vehicle - 200 - 0.0070s
+2025-03-11 10:06:45,739 - ves_api - INFO - POST /api/vehicle - 200 - 0.0059s
+2025-03-11 10:06:45,739 - ves_api - INFO - POST /api/vehicle - 200 - 0.0059s
+2025-03-11 10:06:45,740 - ves_api - INFO - POST /api/vehicle - 200 - 0.0069s
+2025-03-11 10:06:55,482 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:55,493 - ves_api - INFO - POST /api/vehicle - 200 - 0.0169s
+2025-03-11 10:06:55,526 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:55,527 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 10:06:55,531 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:55,532 - ves_api - INFO - POST /api/vehicle - 200 - 0.0020s
+2025-03-11 10:06:55,540 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:06:55,541 - ves_api - INFO - POST /api/vehicle - 200 - 0.0040s
+2025-03-11 10:08:39,756 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:08:39,756 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:08:39,757 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:08:39,757 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:08:39,758 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 10:08:39,758 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 10:08:39,759 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 10:08:39,759 - ves_api - INFO - POST /api/vehicle - 200 - 0.0060s
+2025-03-11 10:08:40,651 - ves_api - INFO - Cache hit for registration number: HG06DHZ
+2025-03-11 10:08:40,652 - ves_api - INFO - POST /api/vehicle - 200 - 0.0050s
+2025-03-11 10:08:40,671 - ves_api - WARNING - Rate limit exceeded for IP: 127.0.0.1
+2025-03-11 10:08:40,678 - ves_api - WARNING - Rate limit exceeded for IP: 127.0.0.1
+2025-03-11 10:08:40,681 - ves_api - WARNING - Rate limit exceeded for IP: 127.0.0.1
+2025-03-11 10:08:56,063 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 10:08:56,688 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 10:08:57,232 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 10:08:57,728 - ves_api - INFO - Processing request for registration number: CN09JEJ
+2025-03-11 10:09:06,683 - ves_api - WARNING - Network error: . Retrying in 0.5 seconds.
+2025-03-11 10:09:07,652 - ves_api - WARNING - Network error: . Retrying in 0.5 seconds.
+2025-03-11 10:09:08,051 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:09:08,052 - ves_api - INFO - POST /api/vehicle - 200 - 11.9908s
+2025-03-11 10:09:08,120 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:09:08,122 - ves_api - INFO - POST /api/vehicle - 200 - 10.8908s
+2025-03-11 10:09:08,126 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:09:08,128 - ves_api - INFO - POST /api/vehicle - 200 - 10.8978s
+2025-03-11 10:09:09,115 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:09:09,116 - ves_api - INFO - POST /api/vehicle - 200 - 12.4306s
+2025-03-11 10:10:15,311 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:10:15,312 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:10:15,313 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:10:15,314 - ves_api - INFO - POST /api/vehicle - 200 - 0.0190s
+2025-03-11 10:10:15,314 - ves_api - INFO - POST /api/vehicle - 200 - 0.0170s
+2025-03-11 10:10:15,315 - ves_api - INFO - POST /api/vehicle - 200 - 0.0110s
+2025-03-11 10:10:15,317 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:10:15,320 - ves_api - INFO - POST /api/vehicle - 200 - 0.0140s
+2025-03-11 10:16:16,359 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:16:16,360 - ves_api - INFO - POST /api/vehicle - 200 - 0.0020s
+2025-03-11 10:16:34,482 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:16:34,482 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:16:34,483 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:16:34,484 - ves_api - INFO - Cache hit for registration number: CN09JEJ
+2025-03-11 10:16:34,484 - ves_api - INFO - POST /api/vehicle - 200 - 0.0100s
+2025-03-11 10:16:34,484 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 10:16:34,485 - ves_api - INFO - POST /api/vehicle - 200 - 0.0090s
+2025-03-11 10:16:34,485 - ves_api - INFO - POST /api/vehicle - 200 - 0.0080s
+2025-03-11 10:20:06,294 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-11 10:20:06,295 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-11 10:20:06,295 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173']
+2025-03-11 10:20:29,664 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 10:20:30,520 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 10:20:31,037 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 10:20:31,560 - ves_api - INFO - Processing request for registration number: YR57XTB
+2025-03-11 10:20:32,451 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 10:20:32,452 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 10:20:32,452 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 10:20:32,452 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 421, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 10:20:32,456 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 10:20:32,457 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 421, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 10:20:32,458 - ves_api - INFO - POST /api/vehicle - 404 - 2.7969s
+2025-03-11 10:20:32,458 - ves_api - INFO - POST /api/vehicle - 404 - 1.9399s
+2025-03-11 10:20:32,555 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 10:20:32,557 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-11 10:20:32,558 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 10:20:32,558 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 421, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 10:20:32,561 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-11 10:20:32,561 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 421, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-11 10:20:32,563 - ves_api - INFO - POST /api/vehicle - 404 - 2.0466s
+2025-03-11 10:20:32,564 - ves_api - INFO - POST /api/vehicle - 404 - 2.0466s
+2025-03-11 10:20:52,331 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 10:20:52,975 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 10:20:53,466 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 10:20:53,958 - ves_api - INFO - Processing request for registration number: A5ENK
+2025-03-11 10:20:54,651 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:20:54,653 - ves_api - INFO - POST /api/vehicle - 200 - 2.3244s
+2025-03-11 10:20:54,686 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:20:54,689 - ves_api - INFO - POST /api/vehicle - 200 - 1.7158s
+2025-03-11 10:20:54,833 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:20:54,834 - ves_api - INFO - POST /api/vehicle - 200 - 1.3699s
+2025-03-11 10:20:54,871 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-11 10:20:54,873 - ves_api - INFO - POST /api/vehicle - 200 - 1.4088s
+2025-03-11 10:29:43,670 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-11 10:29:43,670 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-11 10:29:43,670 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173']

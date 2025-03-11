@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { 
   GovUKContainer, 
   GovUKMainWrapper,
@@ -7,32 +7,20 @@ import {
   GovUKHeadingL,
   GovUKBody,
   GovUKLink,
-  GovUKGridRow,
-  GovUKGridColumnTwoThirds,
-  GovUKGridColumnOneThird,
+  GovUKSectionBreak,
   GovUKLoadingContainer,
   GovUKLoadingSpinner,
-  VehicleRegistration,
-  DetailCaption,
-  DetailHeading,
-  GovUKSectionBreak,
-  GovUKList,
   PremiumBadge,
   ReportSection,
-  ReportTable,
-  MotHistoryItem
+  VehicleRegistration
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
 
-// Import the DVLA data component
-import DVLAVehicleData from '../../components/Report/DVLA/DVLAVehicleData';
-
-// Import Vehicle Insights component
-import VehicleInsights from '../../components/Report/DVLA/VehicleInsights';
-
-// Import original components
-import VehicleMileageChart from '../../components/Report/MileageChart'; 
-import VehicleMileageInsights from '../../components/Report/MileageInsights';
+// Import components 
+import DVLAVehicleData from '../../components/Report/DVLA/Header/DVLADataHeader';
+import VehicleInsights from '../../components/Report/DVLA/Insights/VehicleInsights';
+import VehicleMileageChart from '../../components/Report/DVLA/Mileage/MileageChart'; 
+import VehicleMileageInsights from '../../components/Report/DVLA/Mileage/MileageInsights';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -44,16 +32,18 @@ const API_BASE_URL = isDevelopment
                     : '/api/v1';                       // Production - use relative URL for Nginx proxy
 
 const PremiumReportPage = () => {
+  // Route handling
   const { registration } = useParams();
   const [searchParams] = useSearchParams();
   const paymentId = searchParams.get('paymentId');
   
+  // State variables
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reportData, setReportData] = useState(null);
   
   useEffect(() => {
-    // Check if payment information exists
+    // Check if payment information exists and fetch basic vehicle data
     const fetchVehicleData = async () => {
       try {
         // Validate payment ID presence
@@ -68,7 +58,7 @@ const PremiumReportPage = () => {
         setLoading(true);
         setError(null);
         
-        // Fetch vehicle data directly from the API
+        // Fetch minimal vehicle data for display
         const response = await fetch(
           `${API_BASE_URL}/vehicle/registration/${registration}`,
           {
@@ -93,9 +83,13 @@ const PremiumReportPage = () => {
         
         const vehicleData = await response.json();
         
-        // Process the API response to match the expected format for our components
-        const processedData = processVehicleData(vehicleData, registration);
-        setReportData(processedData);
+        // Create minimal report data with only what's needed
+        setReportData({
+          registration: registration,
+          makeModel: `${vehicleData.make || 'Unknown'} ${vehicleData.model || ''}`.trim(),
+          colour: vehicleData.primaryColour || vehicleData.colour || 'Unknown',
+          vin: vehicleData.vin // Include VIN if needed by child components
+        });
       } catch (err) {
         console.error('Error fetching vehicle data:', err);
         setError(err.message);
@@ -107,148 +101,105 @@ const PremiumReportPage = () => {
     fetchVehicleData();
   }, [registration, paymentId]);
   
-  // Helper function to process the API response into the format we need
-  const processVehicleData = (apiData, reg) => {
-    // Calculate total and average mileage
-    let totalMileage = 0;
-    let averageAnnualMileage = 0;
-    
-    if (apiData.motTests && apiData.motTests.length > 0) {
-      // Sort tests by date (most recent first)
-      const sortedTests = [...apiData.motTests].sort(
-        (a, b) => new Date(b.completedDate) - new Date(a.completedDate)
-      );
-      
-      // Get latest mileage reading
-      const lastTest = sortedTests[0];
-      
-      if (lastTest && lastTest.odometerValue) {
-        totalMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
-      }
-      
-      // Calculate average annual mileage if we have enough data
-      if (sortedTests.length > 1) {
-        const firstTest = sortedTests[sortedTests.length - 1];
-        const lastTest = sortedTests[0];
-        
-        const firstDate = new Date(firstTest.completedDate);
-        const lastDate = new Date(lastTest.completedDate);
-        
-        // Get time difference in years
-        const yearsDiff = (lastDate - firstDate) / (1000 * 60 * 60 * 24 * 365.25);
-        if (yearsDiff > 0.5) { // Only calculate if we have more than 6 months of data
-          const firstMileage = parseInt(String(firstTest.odometerValue).replace(/,/g, ''), 10);
-          const lastMileage = parseInt(String(lastTest.odometerValue).replace(/,/g, ''), 10);
-          const mileageDiff = lastMileage - firstMileage;
-          
-          averageAnnualMileage = Math.round(mileageDiff / yearsDiff);
-        }
-      }
-    }
-    
-    // Return structured data format for the UI
-    return {
-      registration: reg,
-      makeModel: `${apiData.make || 'Unknown'} ${apiData.model || ''}`.trim(),
-      colour: apiData.primaryColour || 'Unknown',
-      fuelType: apiData.fuelType || 'Unknown',
-      dateRegistered: formatDate(apiData.registrationDate || apiData.firstUsedDate),
-      engineSize: apiData.engineSize ? `${apiData.engineSize}cc` : 'Unknown',
-      manufactureDate: formatDate(apiData.manufactureDate),
-      hasOutstandingRecall: apiData.hasOutstandingRecall || 'Unknown',
-      // Premium data
-      previousKeepers: 'Data not available', // This may not be available from the API
-      totalMileage,
-      averageAnnualMileage,
-      importStatus: 'UK Vehicle', // This may need to be updated if API provides this info
-      insuranceWriteOff: 'No' // This may need to be updated if API provides this info
-    };
-  };
-  
-  // Helper function to format dates
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Unknown';
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
-    } catch (e) {
-      return dateString;
-    }
-  };
-  
-  return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
-        {loading && (
+  // Show loading state
+  if (loading) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
           <GovUKLoadingContainer>
             <GovUKLoadingSpinner />
             <GovUKBody>Generating your premium report...</GovUKBody>
           </GovUKLoadingContainer>
-        )}
-        
-        {error && (
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+  
+  // Show error state
+  if (error) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
           <Alert severity="error" style={{ marginBottom: '20px' }}>
             {error}
           </Alert>
-        )}
-        
-        {reportData && !loading && (
-          <>
-            <PremiumBadge>PREMIUM REPORT</PremiumBadge>
-            
-            <GovUKHeadingXL>
-              Vehicle Report
-            </GovUKHeadingXL>
-            
-            <VehicleRegistration data-test-id="premium-vehicle-registration">
-              {reportData.registration}
-            </VehicleRegistration>
-            
-            <GovUKHeadingL>
-              {reportData.makeModel}
-            </GovUKHeadingL>
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* Use the DVLAVehicleData component to display all vehicle information */}
-            <DVLAVehicleData registration={reportData.registration} />
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            <ReportSection>
-              {/* Vehicle Insights component - handles its own loading, error states, and data fetching */}
-              <VehicleInsights registration={registration} />
-            </ReportSection>
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            <ReportSection>
-              {/* The chart component - handles its own loading, error states, and data fetching */}
-              <VehicleMileageChart registration={registration} />
-            </ReportSection>
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* Advanced Mileage Analysis section */}
-            <ReportSection>
-              {/* The insights component - also handles its own loading, error states, and data fetching */}
-              <VehicleMileageInsights registration={registration} />
-            </ReportSection>
-            
-            <GovUKBody>
-              <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
-                Return to basic vehicle details
-              </GovUKLink>
-            </GovUKBody>
-          </>
-        )}
-      </GovUKMainWrapper>
-    </GovUKContainer>
-  );
+          <GovUKBody>
+            <GovUKLink href="/" noVisitedState>
+              Return to homepage
+            </GovUKLink>
+          </GovUKBody>
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+  
+  // Show report when data is loaded
+  if (reportData) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
+          <PremiumBadge>PREMIUM REPORT</PremiumBadge>
+          
+          <GovUKHeadingXL>
+            Vehicle Report
+          </GovUKHeadingXL>
+          
+          <VehicleRegistration data-test-id="premium-vehicle-registration">
+            {reportData.registration}
+          </VehicleRegistration>
+          
+          <GovUKHeadingL>
+            {reportData.makeModel}
+          </GovUKHeadingL>
+          
+          <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+          
+          {/* Pass necessary props to components */}
+          <DVLAVehicleData 
+            registration={reportData.registration} 
+            paymentId={paymentId} 
+          />
+          
+          <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+          
+          <ReportSection>
+            <VehicleInsights 
+              registration={reportData.registration} 
+              vin={reportData.vin}
+              paymentId={paymentId} 
+            />
+          </ReportSection>
+          
+          <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+          
+          <ReportSection>
+            <VehicleMileageChart 
+              registration={reportData.registration} 
+              paymentId={paymentId} 
+            />
+          </ReportSection>
+          
+          <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+          
+          <ReportSection>
+            <VehicleMileageInsights 
+              registration={reportData.registration} 
+              paymentId={paymentId} 
+            />
+          </ReportSection>
+          
+          <GovUKBody>
+            <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
+              Return to basic vehicle details
+            </GovUKLink>
+          </GovUKBody>
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+  
+  // Fallback (should never reach here given the conditions above)
+  return null;
 };
 
 export default PremiumReportPage;

@@ -7,103 +7,148 @@ import {
   focusStyles,
   COLORS,
   BREAKPOINTS,
-  printStyles,
 } from '../../../../../styles/theme';
 
-// Standardize with main theme by referring to COLORS instead of duplicating
-export const GOVUK_COLORS = COLORS;
+// GOV.UK-specific colors aligned with the provided CSS
+const GOVUK_COLORS = {
+  ...COLORS,
+  TEXT_COLOR: '#0b0c0c', // Standard text color
+  LINK_COLOR: '#1d70b8', // Default link color
+  LINK_VISITED: '#4c2c92', // Visited link color
+  LINK_HOVER: '#003078', // Hover link color
+  FOCUS_BG: '#fd0', // Focus background (yellow)
+  FOCUS_TEXT: '#0b0c0c', // Focus text color
+  BORDER_COLOR: '#b1b4b6', // Table and section border color
+  GREY_1: '#f3f2f1', // Light grey background
+  GREY_2: '#505a5f', // Secondary text color
+  RED: '#d4351c', // Error color
+  AMBER: '#f47738', // Warning/period date color
+};
 
-// Standardize on 'em' units to match main theme
-export const mobileMediaQuery = `@media (max-width: ${BREAKPOINTS.MOBILE})`;
-export const desktopMediaQuery = `@media (min-width: ${BREAKPOINTS.MOBILE})`;
+// GOV.UK Breakpoints (converted from rem to px assuming 16px base)
+const GOVUK_BREAKPOINTS = {
+  MOBILE: '320px', // 20rem
+  TABLET: '641px', // 40.0625rem
+  DESKTOP: '769px', // 48.0625rem
+};
 
-// Use commonFontStyles from main theme instead of recreating
-export const themedFont = css`
-  ${commonFontStyles}
+export { GOVUK_COLORS, commonFontStyles, focusStyles };
+export const mobileMediaQuery = `@media (max-width: ${GOVUK_BREAKPOINTS.TABLET})`;
+export const desktopMediaQuery = `@media (min-width: ${GOVUK_BREAKPOINTS.TABLET})`;
+
+// Base font styles aligned with GOV.UK
+export const govukFontStyles = css`
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: ${GOVUK_COLORS.TEXT_COLOR};
+  @media print {
+    font-family: sans-serif;
+    color: #000;
+  }
 `;
 
-// Use focusStyles from main theme 
-export const themedFocus = css`
-  ${focusStyles}
+// GOV.UK focus styles
+export const govukFocusStyles = css`
+  outline: 3px solid transparent;
+  color: ${GOVUK_COLORS.FOCUS_TEXT};
+  background-color: ${GOVUK_COLORS.FOCUS_BG};
+  box-shadow: 0 -2px ${GOVUK_COLORS.FOCUS_BG}, 0 4px ${GOVUK_COLORS.FOCUS_TEXT};
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 `;
 
-// Chart container and controls
-export const ChartContainer = styled('div')(({ theme }) => css`
-  ${commonFontStyles}
-  margin-top: 20px;
-  margin-bottom: 30px;
+// Chart Container
+export const ChartContainer = styled('div')(() => css`
+  ${govukFontStyles}
+  margin-top: 15px;
+  margin-bottom: 20px;
   width: 100%;
   height: 250px;
   position: relative;
-  background-color: ${COLORS.WHITE};
+  background-color: ${GOVUK_COLORS.WHITE};
   padding: 10px 0;
   overflow: hidden;
 
   ${desktopMediaQuery} {
+    margin-top: 20px;
+    margin-bottom: 30px;
     height: 400px;
     padding: 20px 0;
   }
 `);
 
+// Info Box
 export const InfoBox = styled(GovUKInsetText)(() => css`
+  ${govukFontStyles}
   margin-top: 10px;
-  margin-bottom: 20px;
-  ${commonFontStyles}
-`);
-
-export const ControlPanel = styled('div')(() => css`
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: flex-start;
+  margin-bottom: 15px;
 
   ${desktopMediaQuery} {
-    gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
 `);
 
-export const ControlButton = styled('button')(({ active }) => css`
-  ${commonFontStyles}
-  padding: 6px 8px;
-  border: 1px solid ${COLORS.MID_GREY};
-  background-color: ${active ? COLORS.BLUE : COLORS.WHITE};
-  color: ${active ? COLORS.WHITE : COLORS.BLACK};
-  cursor: pointer;
-  font-size: 0.75rem;
-  border-radius: 2px;
-  transition: background-color 0.2s, transform 0.1s;
-  flex: 1 0 calc(50% - 4px);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  
-  &:active {
-    transform: scale(0.98);
+// Control Panel
+export const ControlPanel = styled('div')(() => css`
+  ${govukFontStyles}
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ${desktopMediaQuery} {
+    margin-bottom: 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 15px;
   }
+`);
+
+// Control Button
+export const ControlButton = styled('button')(({ active }) => css`
+  ${govukFontStyles}
+  font-size: 1rem;
+  line-height: 1.25;
+  padding: 5px 10px;
+  border: 1px solid ${GOVUK_COLORS.BORDER_COLOR};
+  background-color: ${active ? GOVUK_COLORS.LINK_COLOR : GOVUK_COLORS.WHITE};
+  color: ${active ? GOVUK_COLORS.WHITE : GOVUK_COLORS.TEXT_COLOR};
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${active ? COLORS.BLUE : COLORS.LIGHT_GREY};
+    background-color: ${active ? GOVUK_COLORS.LINK_HOVER : '#f1f1f1'};
   }
 
   &:focus {
-    ${focusStyles}
+    ${govukFocusStyles}
   }
 
-  @media (min-width: 480px) {
-    flex: 0 1 auto;
-    font-size: 0.75rem;
-    padding: 8px 10px;
+  ${mobileMediaQuery} {
+    width: 100%;
+    margin-bottom: 10px;
   }
-  
+
   ${desktopMediaQuery} {
-    font-size: 0.875rem;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
     padding: 8px 12px;
+  }
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.2;
   }
 `);
 
+// Loading Spinner
 export const LoadingSpinner = styled('div')(() => css`
+  ${govukFontStyles}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,8 +157,8 @@ export const LoadingSpinner = styled('div')(() => css`
     content: "";
     width: 40px;
     height: 40px;
-    border: 5px solid ${COLORS.LIGHT_GREY};
-    border-top: 5px solid ${COLORS.BLUE};
+    border: 5px solid ${GOVUK_COLORS.BORDER_COLOR};
+    border-top: 5px solid ${GOVUK_COLORS.LINK_COLOR};
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -123,226 +168,317 @@ export const LoadingSpinner = styled('div')(() => css`
   }
 `);
 
+// Error Message
 export const ErrorMessage = styled(GovUKInsetText)(() => css`
-  border-left: 5px solid ${COLORS.RED};
-  background-color: ${COLORS.WHITE};
+  ${govukFontStyles}
+  border-left: 5px solid ${GOVUK_COLORS.RED};
+  background-color: ${GOVUK_COLORS.WHITE};
   padding: 15px;
-  ${commonFontStyles}
-`);
-
-// Usage summary styles
-export const UsageSummary = styled('div')(() => css`
-  ${commonFontStyles}
-  background-color: ${COLORS.LIGHT_GREY};
-  padding: 10px;
-  margin-bottom: 15px;
-  border-left: 5px solid ${COLORS.BLUE};
+  margin-bottom: 20px;
 
   ${desktopMediaQuery} {
-    padding: 20px;
     margin-bottom: 30px;
   }
 `);
 
+// Usage Periods Table
+export const UsagePeriodsTable = styled('table')(() => css`
+  ${govukFontStyles}
+  width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-size: 1.1875rem;
+  line-height: 1.3157894737;
+
+  & th {
+    font-weight: 700;
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px solid ${GOVUK_COLORS.BORDER_COLOR};
+    text-align: left;
+    vertical-align: top;
+  }
+
+  & td {
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px solid ${GOVUK_COLORS.BORDER_COLOR};
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+  }
+
+  & td:not(:first-child),
+  & th:not(:first-child) {
+    text-align: right;
+  }
+
+  & td:first-child .period-date {
+    color: ${GOVUK_COLORS.AMBER};
+  }
+
+  & tr:nth-of-type(odd),
+  & tr:nth-of-type(even) {
+    background-color: transparent;
+  }
+
+  & .negative-value {
+    color: ${GOVUK_COLORS.RED};
+    font-weight: 700;
+  }
+
+  ${mobileMediaQuery} {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  ${desktopMediaQuery} {
+    margin-bottom: 30px;
+  }
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+`);
+
+// Table Heading
+export const TableHeading = styled('h2')(() => css`
+  ${govukFontStyles}
+  font-size: 1.6875rem;
+  line-height: 1.1111111111;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+
+  ${desktopMediaQuery} {
+    font-size: 2.25rem;
+    margin-bottom: 30px;
+  }
+
+  @media print {
+    font-size: 24pt;
+    line-height: 1.05;
+  }
+`);
+
+// Usage Summary
+export const UsageSummary = styled('div')(() => css`
+  ${govukFontStyles}
+  background-color: ${GOVUK_COLORS.GREY_1};
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 5px solid ${GOVUK_COLORS.BORDER_COLOR};
+
+  ${desktopMediaQuery} {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media print {
+    background-color: transparent;
+    border-left-width: 1px;
+  }
+`);
+
+// Summary Grid
 export const SummaryGrid = styled('div')(() => css`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  
+
   ${desktopMediaQuery} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
   }
 `);
 
+// Summary Item
 export const SummaryItem = styled('div')(() => css`
-  ${commonFontStyles}
+  ${govukFontStyles}
 `);
 
+// Summary Label
 export const SummaryLabel = styled(GovUKBodyS)(() => css`
+  ${govukFontStyles}
+  font-size: 1rem;
+  line-height: 1.25;
   margin-bottom: 5px;
-  color: ${COLORS.DARK_GREY};
-  ${commonFontStyles}
+  color: ${GOVUK_COLORS.GREY_2};
+
+  ${desktopMediaQuery} {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.2;
+  }
 `);
 
+// Summary Value
 export const SummaryValue = styled('div')(() => css`
-  ${commonFontStyles}
+  ${govukFontStyles}
+  font-size: 1.3125rem;
+  line-height: 1.1904761905;
   font-weight: 700;
-  font-size: 1.25rem;
+
+  ${desktopMediaQuery} {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  @media print {
+    font-size: 18pt;
+    line-height: 1.15;
+  }
 `);
 
-// Pattern card styles - aligned with InsightPanel from theme
+// Pattern Card
 export const PatternCard = styled('div')(({ severity, isClockingAnomaly }) => css`
-  ${commonFontStyles}
-  padding: 10px;
-  margin-bottom: 10px;
-  position: relative;
+  ${govukFontStyles}
+  padding: 15px;
+  margin-bottom: 15px;
   border-left: 5px solid ${
-    isClockingAnomaly ? COLORS.RED :
-    severity === "high" ? COLORS.RED :
-    severity === "medium" ? COLORS.ORANGE || '#f47738' :
-    COLORS.MID_GREY
+    isClockingAnomaly ? GOVUK_COLORS.RED :
+    severity === 'high' ? GOVUK_COLORS.RED :
+    severity === 'medium' ? GOVUK_COLORS.AMBER :
+    GOVUK_COLORS.BORDER_COLOR
   };
-  background-color: ${
-    isClockingAnomaly ? 'rgba(212, 53, 28, 0.1)' :  // Red with transparency
-    COLORS.LIGHT_GREY
-  };
-  
+  background-color: ${GOVUK_COLORS.GREY_1};
+
   ${desktopMediaQuery} {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
-  
-  &:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-bottom: 20px;
   }
 `);
 
+// Pattern Title
 export const PatternTitle = styled('div')(() => css`
-  ${commonFontStyles}
+  ${govukFontStyles}
+  font-size: 1.1875rem;
+  line-height: 1.3157894737;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.25;
   margin-bottom: 5px;
-  
+
   ${desktopMediaQuery} {
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  @media print {
+    font-size: 18pt;
+    line-height: 1.15;
   }
 `);
 
+// Pattern Detail
 export const PatternDetail = styled('div')(() => css`
-  ${commonFontStyles}
-  margin-bottom: 10px;
+  ${govukFontStyles}
   font-size: 1rem;
   line-height: 1.25;
-  
+  margin-bottom: 15px;
+
   ${desktopMediaQuery} {
     font-size: 1.1875rem;
     line-height: 1.3157894737;
   }
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.2;
+  }
 `);
 
+// Pattern Stats
 export const PatternStats = styled('div')(() => css`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 5px;
 `);
 
+// Stat Box
 export const StatBox = styled('div')(({ color }) => css`
-  ${commonFontStyles}
-  display: inline-block;
+  ${govukFontStyles}
   padding: 5px 10px;
-  background-color: ${COLORS.WHITE};
-  border-left: 3px solid ${color || COLORS.MID_GREY};
-  font-size: 0.875rem;
-  
+  background-color: ${GOVUK_COLORS.WHITE};
+  border-left: 3px solid ${color || GOVUK_COLORS.BORDER_COLOR};
+  font-size: 1rem;
+  line-height: 1.25;
+
   ${desktopMediaQuery} {
-    font-size: 1rem;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.2;
   }
 `);
 
-// Warning styles
+// Clocking Warning
 export const ClockingWarning = styled('div')(() => css`
-  background-color: rgba(212, 53, 28, 0.1);
-  border: 2px solid ${COLORS.RED};
+  ${govukFontStyles}
+  border-left: 5px solid ${GOVUK_COLORS.RED};
   padding: 15px;
   margin-bottom: 20px;
+  background-color: ${GOVUK_COLORS.WHITE};
   display: flex;
   align-items: center;
+
+  ${desktopMediaQuery} {
+    padding: 20px;
+  }
 `);
 
+// Warning Icon
 export const WarningIcon = styled('div')(() => css`
-  color: ${COLORS.RED};
-  font-size: 24px;
-  margin-right: 15px;
-  
+  ${govukFontStyles}
+  color: ${GOVUK_COLORS.RED};
+  font-size: 1.5rem;
+  margin-right: 10px;
+
   ${desktopMediaQuery} {
-    font-size: 30px;
+    font-size: 1.875rem;
+    margin-right: 15px;
   }
 `);
 
+// Warning Text
 export const WarningText = styled(GovUKBody)(() => css`
-  color: ${COLORS.RED};
+  ${govukFontStyles}
+  color: ${GOVUK_COLORS.RED};
   font-weight: 700;
-  ${commonFontStyles}
-`);
+  font-size: 1rem;
+  line-height: 1.25;
 
-// Table styles - aligned with ReportTable from theme
-export const UsagePeriodsTable = styled('table')(() => css`
-  ${commonFontStyles}
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  font-size: 0.75rem;
-  
   ${desktopMediaQuery} {
-    font-size: 1rem;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
   }
-  
-  & th {
-    ${commonFontStyles}
-    font-weight: 700;
-    padding: 10px;
-    text-align: left;
-    background-color: ${COLORS.LIGHT_GREY};
-    border: 1px solid ${COLORS.MID_GREY};
-  }
-  
-  & td {
-    ${commonFontStyles}
-    padding: 10px;
-    border: 1px solid ${COLORS.MID_GREY};
-    text-align: left;
-  }
-  
-  // Using nth-of-type instead of nth-child for better SSR compatibility
-  & tr:nth-of-type(even) {
-    background-color: ${COLORS.LIGHT_GREY};
-  }
-  
-  // Handle table overflow on small screens
-  @media (max-width: 500px) {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-scrolling: touch;
-    -ms-autohiding-scrollbar;
+
+  @media print {
+    font-size: 14pt;
+    line-height: 1.2;
   }
 `);
 
-/**
- * Helper function to convert hex color to RGB for transparency
- * Handles undefined, null or invalid inputs safely
- */
+// Hex to RGB helper function (unchanged)
 export function hexToRgb(hex) {
-  // Return a default value if hex is undefined or null
-  if (!hex) {
-    return '0, 0, 0'; // Default to black RGB
-  }
-  
-  // Ensure hex is a string
-  hex = String(hex);
-  
-  // Remove the # if present
-  hex = hex.replace('#', '');
-  
-  // Handle invalid hex values
+  if (!hex) return '0, 0, 0';
+  hex = String(hex).replace('#', '');
   if (!/^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(hex)) {
     console.warn(`Invalid hex color: ${hex}. Using default black.`);
     return '0, 0, 0';
   }
-  
-  // Convert 3-digit hex to 6-digit
   if (hex.length === 3) {
     hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
   }
-  
-  // Parse the hex values
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
-  
   return `${r}, ${g}, ${b}`;
 }

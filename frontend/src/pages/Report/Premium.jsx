@@ -20,7 +20,7 @@ import Alert from '@mui/material/Alert';
 import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader';
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
 import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
-import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/Insights/MileageInsights';
+import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -138,7 +138,7 @@ const PremiumReportPage = () => {
     return (
       <GovUKContainer>
         <GovUKMainWrapper>
-          <PremiumBadge>PREMIUM REPORT</PremiumBadge>
+          <PremiumBadge>PREMIUM</PremiumBadge>
           
           <GovUKHeadingXL>
             Vehicle Report

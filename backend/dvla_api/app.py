@@ -48,7 +48,7 @@ class Config:
 
     # Security settings
     # Get origins from env or use defaults with localhost
-    ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173").split(",")
+    ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,https://check-mot.co.uk,https://www.check-mot.co.uk").split(",")
 
     # Caching settings
     CACHE_TTL = int(os.getenv("CACHE_TTL", "3600"))  # 1 hour by default

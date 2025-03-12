@@ -777,7 +777,6 @@ const VehicleInsights = ({ registration, vin }) => {
                               />
                               <td>
                                 <MetricDisplay iconColor="#28a197">
-                                  <CO2Icon fontSize="small" />
                                   <MetricValue>
                                     {insights.fuelEfficiencyInsights.co2EmissionsGPerKM} g/km
                                   </MetricValue>

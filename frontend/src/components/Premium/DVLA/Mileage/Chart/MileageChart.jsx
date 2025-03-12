@@ -1,290 +1,36 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import {
-  GovUKContainer,
   GovUKHeadingM,
-  GovUKInsetText,
   GovUKBody,
-  GovUKHeadingS,
-  COLORS,
-  PremiumInfoPanel,
-  commonFontStyles,
-  BREAKPOINTS,
-  focusStyles,
-  GovUKBodyS
+  COLORS
 } from '../../../../../styles/theme';
-import { styled, css } from '@mui/material/styles';
 
-// ======================================================
-// Styled Components - Aligned with Theme
-// ======================================================
+// Import styled components
+import {
+  ChartContainer,
+  InfoBox,
+  ControlPanel,
+  ControlButton,
+  LoadingSpinner,
+  ErrorMessage,
+  ClockingWarning,
+  WarningIcon,
+  WarningText,
+  hexToRgb,
+  GOVUK_COLORS
+} from './VehicleMileageChartStyles';
 
-const themedFont = css`
-  ${commonFontStyles}
-`;
+// Import the usage summary component
+import VehicleUsageSummary from './VehicleUsageSummary';
 
-const themedFocus = css`
-  ${focusStyles}
-`;
-
-const mobileMediaQuery = `@media (max-width: ${BREAKPOINTS.MOBILE})`;
-const desktopMediaQuery = `@media (min-width: ${BREAKPOINTS.MOBILE})`;
-
-const ChartContainer = styled('div')(({ theme }) => css`
-  margin-top: 20px;
-  margin-bottom: 30px;
-  width: 100%;
-  height: 250px; // Shorter height on mobile
-  position: relative;
-  background-color: ${COLORS.WHITE};
-  padding: 10px 0;
-  overflow: hidden; // Prevent overflow issues on small screens
-
-  ${desktopMediaQuery} {
-    height: 400px;
-    padding: 20px 0;
-  }
-`);
-
-const InfoBox = styled(GovUKInsetText)(() => css`
-  margin-top: 10px;
-  margin-bottom: 20px;
-`);
-
-const ControlPanel = styled('div')(() => css`
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: flex-start;
-
-  ${desktopMediaQuery} {
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-`);
-
-const ControlButton = styled('button')(({ active }) => css`
-  ${themedFont}
-  padding: 6px 8px;
-  border: 1px solid ${COLORS.MID_GREY};
-  background-color: ${active ? COLORS.BLUE : COLORS.WHITE};
-  color: ${active ? COLORS.WHITE : COLORS.BLACK};
-  cursor: pointer;
-  font-size: 0.75rem;
-  border-radius: 2px; // Subtle radius for touch friendliness
-  transition: background-color 0.2s, transform 0.1s;
-  flex: 1 0 calc(50% - 4px); // Two buttons per row on very small screens
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  
-  &:active {
-    transform: scale(0.98); // Subtle feedback for touch
-  }
-
-  &:hover {
-    background-color: ${active ? COLORS.BLUE : COLORS.LIGHT_GREY};
-  }
-
-  &:focus {
-    ${themedFocus}
-  }
-
-  // Larger screens can fit more buttons in a row
-  @media (min-width: 480px) {
-    flex: 0 1 auto;
-    font-size: 0.75rem;
-    padding: 8px 10px;
-  }
-  
-  ${desktopMediaQuery} {
-    font-size: 0.875rem;
-    padding: 8px 12px;
-  }
-`);
-
-const LoadingSpinner = styled('div')(() => css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  &:after {
-    content: "";
-    width: 40px;
-    height: 40px;
-    border: 5px solid ${COLORS.LIGHT_GREY};
-    border-top: 5px solid ${COLORS.BLUE};
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`);
-
-const ErrorMessage = styled(GovUKInsetText)(() => css`
-  border-left: 5px solid ${COLORS.RED};
-  background-color: ${COLORS.WHITE};
-  padding: 15px;
-`);
-
-const UsageSummary = styled('div')(() => css`
-  ${themedFont}
-  background-color: ${COLORS.LIGHT_GREY};
-  padding: 10px;
-  margin-bottom: 15px;
-  border-left: 5px solid ${COLORS.BLUE};
-
-  ${desktopMediaQuery} {
-    padding: 20px;
-    margin-bottom: 30px;
-  }
-`);
-
-const SummaryGrid = styled('div')(() => css`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  
-  ${desktopMediaQuery} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-  }
-`);
-
-const SummaryItem = styled('div')(() => css`
-  ${themedFont}
-`);
-
-const SummaryLabel = styled(GovUKBodyS)(() => css`
-  margin-bottom: 5px;
-  color: ${COLORS.DARK_GREY};
-`);
-
-const SummaryValue = styled('div')(() => css`
-  ${themedFont}
-  font-weight: 700;
-  font-size: 1.25rem;
-`);
-
-const PatternCard = styled('div')(({ severity }) => css`
-  ${themedFont}
-  padding: 10px;
-  margin-bottom: 10px;
-  border-left: 5px solid ${
-    severity === "high" ? COLORS.RED :
-    severity === "medium" ? "#f47738" :
-    COLORS.MID_GREY
-  };
-  background-color: ${COLORS.LIGHT_GREY};
-  
-  ${desktopMediaQuery} {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
-`);
-
-const PatternTitle = styled('div')(() => css`
-  ${themedFont}
-  font-weight: 700;
-  font-size: 1.125rem;
-  margin-bottom: 5px;
-`);
-
-const PatternDetail = styled('div')(() => css`
-  ${themedFont}
-  margin-bottom: 10px;
-`);
-
-const PatternStats = styled('div')(() => css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`);
-
-const StatBox = styled('div')(({ color }) => css`
-  ${themedFont}
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: ${COLORS.WHITE};
-  border-left: 3px solid ${color || COLORS.MID_GREY};
-  font-size: 0.875rem;
-`);
-
-const UsagePeriodsTable = styled('table')(() => css`
-  ${themedFont}
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  font-size: 0.75rem;
-  
-  ${desktopMediaQuery} {
-    font-size: 1rem;
-  }
-  
-  & th {
-    ${themedFont}
-    font-weight: 700;
-    padding: 8px 5px;
-    text-align: left;
-    background-color: ${COLORS.LIGHT_GREY};
-    border: 1px solid ${COLORS.MID_GREY};
-    
-    ${desktopMediaQuery} {
-      padding: 10px;
-    }
-  }
-  
-  & td {
-    ${themedFont}
-    padding: 8px 5px;
-    border: 1px solid ${COLORS.MID_GREY};
-    text-align: left;
-    
-    ${desktopMediaQuery} {
-      padding: 10px;
-    }
-  }
-  
-  & tr:nth-of-type(even) {
-    background-color: ${COLORS.LIGHT_GREY};
-  }
-  
-  // Handle table overflow on small screens
-  @media (max-width: 500px) {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-  }
-`);
+// Define a constant for orange color if it doesn't exist in theme
+const ORANGE = COLORS.ORANGE || '#f47738';
+const PALE_BLUE = '#5C6BC0'; // Consistent color for annotations
 
 /**
- * Helper function to convert hex color to RGB for transparency
- */
-function hexToRgb(hex) {
-  // Remove the # if present
-  hex = hex.replace('#', '');
-  
-  // Convert 3-digit hex to 6-digit
-  if (hex.length === 3) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  }
-  
-  // Parse the hex values
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-  
-  return `${r}, ${g}, ${b}`;
-}
-
-/**
- * D3-first implementation of the Vehicle Mileage Chart with enhanced mobile responsiveness
- * and touch-friendly tooltips
+ * D3-first implementation of the Vehicle Mileage Chart with enhanced mobile responsiveness,
+ * touch-friendly tooltips, and accurate handling of anomalies and clocked vehicles
  */
 export default function VehicleMileageChart({ registration, vin }) {
   // Chart refs and containers
@@ -501,6 +247,7 @@ export default function VehicleMileageChart({ registration, vin }) {
     const anomalies = findAnomalies(formattedData);
     const inactivityPeriods = findInactivityPeriods(formattedData);
 
+    // Calculate average annual mileage, handling potential negative values properly
     let averageAnnualMileage = null;
     if (formattedData.length >= 2) {
       const firstRecord = formattedData[0];
@@ -522,10 +269,13 @@ export default function VehicleMileageChart({ registration, vin }) {
       anomalies,
       inactivityPeriods,
       averageAnnualMileage,
-      ratesData
+      ratesData,
+      // Add a flag to indicate if vehicle has been clocked
+      hasBeenClocked: anomalies.some(a => a.type === 'decrease')
     });
   }, []);
 
+  // Improved anomaly detection with better handling of negative mileage
   const findAnomalies = useCallback((mileageData) => {
     const anomalyList = [];
     if (mileageData.length < 2) {
@@ -548,22 +298,28 @@ export default function VehicleMileageChart({ registration, vin }) {
       const prevReading = mileageData[i - 1];
       const currentReading = mileageData[i];
 
-      const daysDiff = (currentReading.date.getTime() - prevReading.date.getTime()) / (1000 * 60 * 60 * 24);
+      // Ensure we have at least 1 day difference to avoid division by zero
+      const daysDiff = Math.max(1, (currentReading.date.getTime() - prevReading.date.getTime()) / (1000 * 60 * 60 * 24));
       const mileageDiff = currentReading.mileage - prevReading.mileage;
 
+      // Handle negative mileage (clocking) as high severity anomaly
       if (mileageDiff < 0) {
-        let severity = "high";
+        let severity = "high"; // All mileage decreases are high severity
+        
+        // But we can still categorize for UI purposes
+        let severityDetail = "critical";
         if (Math.abs(mileageDiff) < 1000) {
-          severity = "medium";
+          severityDetail = "major";
         } else if (Math.abs(mileageDiff) < 100) {
-          severity = "low";
+          severityDetail = "minor";
         }
 
         const anomaly = {
           index: i,
           date: currentReading.date,
           type: 'decrease',
-          severity,
+          severity, // Always high for UI
+          severityDetail, // For potential further UI refinement
           message: `Mileage decreased by ${Math.abs(mileageDiff).toLocaleString()} miles from previous reading`,
           details: {
             current: currentReading,
@@ -622,6 +378,7 @@ export default function VehicleMileageChart({ registration, vin }) {
     return anomalyList;
   }, []);
 
+  // Improved inactivity period detection that excludes negative mileage cases
   const findInactivityPeriods = useCallback((mileageData) => {
     const inactivityList = [];
     if (mileageData.length < 2) {
@@ -636,11 +393,14 @@ export default function VehicleMileageChart({ registration, vin }) {
       const prevReading = mileageData[i - 1];
       const currentReading = mileageData[i];
 
-      const daysDiff = (currentReading.date.getTime() - prevReading.date.getTime()) / (1000 * 60 * 60 * 24);
+      const daysDiff = Math.max(1, (currentReading.date.getTime() - prevReading.date.getTime()) / (1000 * 60 * 60 * 24));
+      const mileageDiff = currentReading.mileage - prevReading.mileage;
 
+      // Skip negative mileage entries as these should be classified as anomalies, not inactivity
+      if (mileageDiff < 0) continue;
+      
       if (daysDiff < MIN_INACTIVITY_DAYS) continue;
 
-      const mileageDiff = currentReading.mileage - prevReading.mileage;
       const dailyAverage = mileageDiff / daysDiff;
 
       if (dailyAverage < LOW_ACTIVITY_THRESHOLD) {
@@ -648,7 +408,7 @@ export default function VehicleMileageChart({ registration, vin }) {
         let description;
         let severity = "medium";
 
-        if (dailyAverage <= 0) {
+        if (dailyAverage === 0) {
           description = `Vehicle appears to have been unused for ${monthsDiff} months`;
           severity = "high";
         } else if (dailyAverage < LOW_ACTIVITY_THRESHOLD * 0.5) {
@@ -673,6 +433,7 @@ export default function VehicleMileageChart({ registration, vin }) {
     return inactivityList;
   }, []);
 
+  // Improved mileage rate calculation that handles negative values properly
   const calculateMileageRates = useCallback((mileageData) => {
     const rates = [];
     if (mileageData.length < 2) {
@@ -684,25 +445,26 @@ export default function VehicleMileageChart({ registration, vin }) {
       const currPoint = mileageData[i];
 
       const timeDiffMs = currPoint.date.getTime() - prevPoint.date.getTime();
-      const timeDiffDays = timeDiffMs / (1000 * 60 * 60 * 24);
+      const timeDiffDays = Math.max(1, timeDiffMs / (1000 * 60 * 60 * 24)); // Ensure at least 1 day to avoid division by zero
       const mileageDiff = currPoint.mileage - prevPoint.mileage;
 
-      if (timeDiffDays > 0) {
-        const dailyRate = mileageDiff / timeDiffDays;
-        const annualizedRate = dailyRate * 365;
+      // Calculate rates including for negative mileage, but flag them
+      const dailyRate = mileageDiff / timeDiffDays;
+      const annualizedRate = dailyRate * 365;
+      const isNegative = mileageDiff < 0;
 
-        const rateData = {
-          startDate: prevPoint.date,
-          endDate: currPoint.date,
-          startMileage: prevPoint.mileage,
-          endMileage: currPoint.mileage,
-          periodDays: Math.round(timeDiffDays),
-          dailyRate: dailyRate,
-          annualizedRate: annualizedRate,
-          formattedPeriod: `${prevPoint.formattedDate} to ${currPoint.formattedDate}`
-        };
-        rates.push(rateData);
-      }
+      const rateData = {
+        startDate: prevPoint.date,
+        endDate: currPoint.date,
+        startMileage: prevPoint.mileage,
+        endMileage: currPoint.mileage,
+        periodDays: Math.round(timeDiffDays),
+        dailyRate: dailyRate,
+        annualizedRate: annualizedRate,
+        isNegative: isNegative, // Flag for UI handling
+        formattedPeriod: `${prevPoint.formattedDate} to ${currPoint.formattedDate}`
+      };
+      rates.push(rateData);
     }
     return rates;
   }, []);
@@ -743,15 +505,16 @@ export default function VehicleMileageChart({ registration, vin }) {
       chartData.ratesData.filter(r => r.endDate >= startDate) : [];
 
     return {
+      ...chartData,
       mileageData: filteredMileageData,
       anomalies: filteredAnomalies,
       inactivityPeriods: filteredInactivityPeriods,
-      averageAnnualMileage: chartData.averageAnnualMileage,
       ratesData: filteredRatesData
     };
   }, [chartData, selectedTimeRange]);
 
   // D3 Chart Rendering with mobile and touch enhancements
+  // Enhanced to better handle anomalies and provide accurate tooltips
   const renderChart = useCallback(() => {
     const filteredData = getFilteredData();
     const { mileageData, anomalies, inactivityPeriods } = filteredData;
@@ -774,7 +537,7 @@ export default function VehicleMileageChart({ registration, vin }) {
       .style("border-left", `5px solid ${COLORS.BLUE}`)
       .style("border-radius", "0")
       .style("padding", isMobile ? "10px" : "15px")
-      .style("box-shadow", `0 2px 0 ${COLORS.MID_GREY}`)
+      .style("box-shadow", `0 2px 0 ${COLORS.GREY || COLORS.MID_GREY}`)
       .style("font-family", "'GDS Transport', arial, sans-serif")
       .style("font-size", isMobile ? "0.875rem" : "1rem")
       .style("line-height", "1.25")
@@ -923,16 +686,17 @@ export default function VehicleMileageChart({ registration, vin }) {
     // Draw inactive periods with theme colors
     if (showInactivePeriods) {
       inactivityPeriods.forEach(period => {
+        // Safely use hexToRgb with fallbacks for null/undefined colors
         const fillColor = period.severity === "high" ?
           `rgba(${hexToRgb(COLORS.RED)}, 0.2)` :
           period.severity === "medium" ?
-            "rgba(244, 119, 56, 0.2)" :
+            `rgba(${hexToRgb(ORANGE)}, 0.2)` :
             `rgba(${hexToRgb(COLORS.MID_GREY)}, 0.2)`;
 
         const strokeColor = period.severity === "high" ?
           COLORS.RED :
           period.severity === "medium" ?
-            "#f47738" :
+            ORANGE :
             COLORS.MID_GREY;
 
         chart.append("rect")
@@ -1059,59 +823,63 @@ export default function VehicleMileageChart({ registration, vin }) {
         .attr("d", lineGenerator);
 
       if (mileageData.length > 2) {
-        // Linear regression
-        const xData = mileageData.map(d => d.date.getTime());
-        const yData = mileageData.map(d => d.mileage);
+        // Linear regression - but only if there are no clocking issues
+        const hasClockingIssues = anomalies.some(a => a.type === 'decrease');
+        
+        if (!hasClockingIssues) {
+          const xData = mileageData.map(d => d.date.getTime());
+          const yData = mileageData.map(d => d.mileage);
 
-        const n = xData.length;
-        const sumX = xData.reduce((a, b) => a + b, 0);
-        const sumY = yData.reduce((a, b) => a + b, 0);
-        const sumXY = xData.map((x, i) => x * yData[i]).reduce((a, b) => a + b, 0);
-        const sumXX = xData.map(x => x * x).reduce((a, b) => a + b, 0);
+          const n = xData.length;
+          const sumX = xData.reduce((a, b) => a + b, 0);
+          const sumY = yData.reduce((a, b) => a + b, 0);
+          const sumXY = xData.map((x, i) => x * yData[i]).reduce((a, b) => a + b, 0);
+          const sumXX = xData.map(x => x * x).reduce((a, b) => a + b, 0);
 
-        const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-        const intercept = (sumY - slope * sumX) / n;
+          const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+          const intercept = (sumY - slope * sumX) / n;
 
-        const calcY = x => slope * x + intercept;
+          const calcY = x => slope * x + intercept;
 
-        const firstDate = new Date(Math.min(...xData));
-        const lastDate = new Date(Math.max(...xData));
+          const firstDate = new Date(Math.min(...xData));
+          const lastDate = new Date(Math.max(...xData));
 
-        const extendDays = 60;
-        const extendMs = extendDays * 24 * 60 * 60 * 1000;
+          const extendDays = 60;
+          const extendMs = extendDays * 24 * 60 * 60 * 1000;
 
-        const startDate = new Date(firstDate.getTime() - extendMs);
-        const endDate = new Date(lastDate.getTime() + extendMs);
+          const startDate = new Date(firstDate.getTime() - extendMs);
+          const endDate = new Date(lastDate.getTime() + extendMs);
 
-        const regressionPoints = [
-          { date: startDate, mileage: calcY(startDate.getTime()) },
-          { date: endDate, mileage: calcY(endDate.getTime()) }
-        ];
+          const regressionPoints = [
+            { date: startDate, mileage: calcY(startDate.getTime()) },
+            { date: endDate, mileage: calcY(endDate.getTime()) }
+          ];
 
-        chart.append("path")
-          .datum(regressionPoints)
-          .attr("class", "trendline-linear")
-          .attr("fill", "none")
-          .attr("stroke", "rgba(76, 175, 80, 0.7)")
-          .attr("stroke-width", isMobile ? 1.5 : 2)
-          .attr("d", d3.line()
-            .x(d => xScale(d.date))
-            .y(d => yScale(d.mileage))
-          );
+          chart.append("path")
+            .datum(regressionPoints)
+            .attr("class", "trendline-linear")
+            .attr("fill", "none")
+            .attr("stroke", `rgba(${hexToRgb(COLORS.GREEN)}, 0.7)`)
+            .attr("stroke-width", isMobile ? 1.5 : 2)
+            .attr("d", d3.line()
+              .x(d => xScale(d.date))
+              .y(d => yScale(d.mileage))
+            );
 
-        const avgDailyMileage = slope * (24 * 60 * 60 * 1000);
-        const avgAnnualMileage = avgDailyMileage * 365;
+          const avgDailyMileage = slope * (24 * 60 * 60 * 1000);
+          const avgAnnualMileage = avgDailyMileage * 365;
 
-        // Only show trendline label if there's enough space
-        if (!isMobile || width > 300) {
-          chart.append("text")
-            .attr("class", "trendline-label")
-            .attr("x", width - (isMobile ? 80 : 170))
-            .attr("y", height - (isMobile ? 20 : 60))
-            .attr("font-size", isMobile ? "8px" : "11px")
-            .attr("font-family", "'GDS Transport', arial, sans-serif")
-            .attr("fill", COLORS.GREEN)
-            .text(`Trend: ~${Math.round(avgAnnualMileage).toLocaleString()} miles/year`);
+          // Only show trendline label if there's enough space
+          if (!isMobile || width > 300) {
+            chart.append("text")
+              .attr("class", "trendline-label")
+              .attr("x", width - (isMobile ? 80 : 170))
+              .attr("y", height - (isMobile ? 20 : 60))
+              .attr("font-size", isMobile ? "8px" : "11px")
+              .attr("font-family", "'GDS Transport', arial, sans-serif")
+              .attr("fill", COLORS.GREEN)
+              .text(`Trend: ~${Math.round(avgAnnualMileage).toLocaleString()} miles/year`);
+          }
         }
       }
     }
@@ -1140,6 +908,17 @@ export default function VehicleMileageChart({ registration, vin }) {
       .attr("cy", d => yScale(d.mileage))
       .attr("r", isMobile ? 8 : 7)
       .attr("fill", d => {
+        // Check if this point is part of a clocking anomaly
+        const isClockingPoint = anomalies.some(a => 
+          a.type === 'decrease' && 
+          (a.details.current.date.getTime() === d.date.getTime() || 
+           a.details.previous.date.getTime() === d.date.getTime())
+        );
+        
+        if (isClockingPoint) {
+          return COLORS.RED; // Special color for clocking points
+        }
+        
         if (!d.testResult) return COLORS.RED;
         const result = String(d.testResult).trim().toUpperCase();
         return (result.includes('PASS')) ? COLORS.GREEN : COLORS.RED;
@@ -1147,6 +926,79 @@ export default function VehicleMileageChart({ registration, vin }) {
       .attr("stroke", COLORS.WHITE)
       .attr("stroke-width", isMobile ? 2 : 1.5)
       .style("cursor", "pointer");
+
+    // Generate tooltip content for data points
+    const generatePointTooltip = (d) => {
+      const index = mileageData.findIndex(item => item.date.getTime() === d.date.getTime());
+      const isClockingPoint = anomalies.some(a => 
+        a.type === 'decrease' && 
+        (a.details.current.date.getTime() === d.date.getTime() || 
+         a.details.previous.date.getTime() === d.date.getTime())
+      );
+
+      // Basic info
+      let tooltipContent = `
+        <div style="font-weight: bold;">${d.formattedDate}</div>
+        <div>Mileage: ${d.formattedMileage}</div>
+        ${d.testResult ? `
+          <div>Result: <span style="color: ${d.testResult.includes('PASS') ? COLORS.GREEN : COLORS.RED}; font-weight: bold">
+            ${d.testResult}
+          </span></div>
+        ` : ''}
+      `;
+      
+      // Add previous test info if available
+      if (index > 0) {
+        const prevTest = mileageData[index - 1];
+        // Calculate days between tests accurately
+        const daysBetween = Math.max(1, Math.round((d.date - prevTest.date) / (1000 * 60 * 60 * 24)));
+        const mileageDiff = d.mileage - prevTest.mileage;
+        const dailyAvg = mileageDiff / daysBetween;
+        
+        tooltipContent += `
+          <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+          <div style="font-size: 0.875rem;"><strong>Since last test:</strong> ${daysBetween} days</div>
+        `;
+        
+        // Special handling for clocking (negative mileage)
+        if (mileageDiff < 0) {
+          tooltipContent += `
+            <div style="font-size: 0.875rem; color: ${COLORS.RED}; font-weight: bold;">
+              ⚠️ MILEAGE DECREASE: ${Math.abs(mileageDiff).toLocaleString()} miles
+            </div>
+            <div style="font-size: 0.875rem; color: ${COLORS.RED};">
+              This suggests potential odometer tampering (clocking)
+            </div>
+          `;
+        } else {
+          tooltipContent += `
+            <div style="font-size: 0.875rem;"><strong>Mileage added:</strong> ${mileageDiff.toLocaleString()} miles</div>
+            <div style="font-size: 0.875rem;"><strong>Daily average:</strong> ${Math.round(dailyAvg)} miles/day</div>
+            <div style="font-size: 0.875rem;"><strong>Annual rate:</strong> ${Math.round(dailyAvg * 365).toLocaleString()} miles/year</div>
+          `;
+        }
+      }
+      
+      // Add anomaly info if this point has anomalies
+      const associatedAnomalies = anomalies.filter(a =>
+        a.details.current.date.getTime() === d.date.getTime()
+      );
+      
+      if (associatedAnomalies.length > 0) {
+        tooltipContent += `
+          <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+          <div style="color: ${COLORS.RED}; font-weight: bold;">Anomalies Detected:</div>
+        `;
+        
+        associatedAnomalies.forEach(anomaly => {
+          tooltipContent += `
+            <div style="font-size: 0.875rem; color: ${COLORS.RED};">• ${anomaly.message}</div>
+          `;
+        });
+      }
+      
+      return tooltipContent;
+    };
 
     // Separate event handlers for touch and mouse devices
     if (isTouchDevice) {
@@ -1176,50 +1028,8 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("stroke-width", 3)
             .attr("stroke", COLORS.BLACK);
           
-          // Get associated anomalies
-          const associatedAnomalies = anomalies.filter(a =>
-            a.details.current.date.getTime() === d.date.getTime()
-          );
-          
-          // Build tooltip content
-          let tooltipContent = `
-            <div style="font-weight: bold;">${d.formattedDate}</div>
-            <div>Mileage: ${d.formattedMileage}</div>
-            ${d.testResult ? `
-              <div>Result: <span style="color: ${d.testResult.includes('PASS') ? COLORS.GREEN : COLORS.RED}; font-weight: bold">
-                ${d.testResult}
-              </span></div>
-            ` : ''}
-          `;
-          
-          const index = mileageData.findIndex(item => item.date.getTime() === d.date.getTime());
-          if (index > 0) {
-            const prevTest = mileageData[index - 1];
-            const daysBetween = Math.round((d.date - prevTest.date) / (1000 * 60 * 60 * 24));
-            const mileageDiff = d.mileage - prevTest.mileage;
-            const dailyAvg = mileageDiff / daysBetween;
-            
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="font-size: 0.875rem;"><strong>Since last test:</strong> ${daysBetween} days</div>
-              <div style="font-size: 0.875rem;"><strong>Mileage added:</strong> ${mileageDiff.toLocaleString()} miles</div>
-              <div style="font-size: 0.875rem;"><strong>Daily average:</strong> ${Math.round(dailyAvg)} miles/day</div>
-              <div style="font-size: 0.875rem;"><strong>Annual rate:</strong> ${Math.round(dailyAvg * 365).toLocaleString()} miles/year</div>
-            `;
-          }
-          
-          if (associatedAnomalies.length > 0) {
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="color: ${COLORS.RED}; font-weight: bold;">Anomalies Detected:</div>
-            `;
-            
-            associatedAnomalies.forEach(anomaly => {
-              tooltipContent += `
-                <div style="font-size: 0.875rem; color: ${COLORS.RED};">• ${anomaly.message}</div>
-              `;
-            });
-          }
+          // Generate tooltip content
+          const tooltipContent = generatePointTooltip(d);
           
           // Position tooltip for touch
           const rect = event.target.getBoundingClientRect();
@@ -1243,50 +1053,8 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("stroke-width", 2)
             .attr("stroke", COLORS.BLACK);
           
-          // Get associated anomalies
-          const associatedAnomalies = anomalies.filter(a =>
-            a.details.current.date.getTime() === d.date.getTime()
-          );
-          
-          // Build tooltip content with same structure as touch
-          let tooltipContent = `
-            <div style="font-weight: bold;">${d.formattedDate}</div>
-            <div>Mileage: ${d.formattedMileage}</div>
-            ${d.testResult ? `
-              <div>Result: <span style="color: ${d.testResult.includes('PASS') ? COLORS.GREEN : COLORS.RED}; font-weight: bold">
-                ${d.testResult}
-              </span></div>
-            ` : ''}
-          `;
-          
-          const index = mileageData.findIndex(item => item.date.getTime() === d.date.getTime());
-          if (index > 0) {
-            const prevTest = mileageData[index - 1];
-            const daysBetween = Math.round((d.date - prevTest.date) / (1000 * 60 * 60 * 24));
-            const mileageDiff = d.mileage - prevTest.mileage;
-            const dailyAvg = mileageDiff / daysBetween;
-            
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="font-size: 0.875rem;"><strong>Since last test:</strong> ${daysBetween} days</div>
-              <div style="font-size: 0.875rem;"><strong>Mileage added:</strong> ${mileageDiff.toLocaleString()} miles</div>
-              <div style="font-size: 0.875rem;"><strong>Daily average:</strong> ${Math.round(dailyAvg)} miles/day</div>
-              <div style="font-size: 0.875rem;"><strong>Annual rate:</strong> ${Math.round(dailyAvg * 365).toLocaleString()} miles/year</div>
-            `;
-          }
-          
-          if (associatedAnomalies.length > 0) {
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="color: ${COLORS.RED}; font-weight: bold;">Anomalies Detected:</div>
-            `;
-            
-            associatedAnomalies.forEach(anomaly => {
-              tooltipContent += `
-                <div style="font-size: 0.875rem; color: ${COLORS.RED};">• ${anomaly.message}</div>
-              `;
-            });
-          }
+          // Generate tooltip content
+          const tooltipContent = generatePointTooltip(d);
           
           tooltip
             .html(tooltipContent)
@@ -1328,8 +1096,8 @@ export default function VehicleMileageChart({ registration, vin }) {
               .attr("stroke-width", 3)
               .attr("stroke", COLORS.BLACK);
             
-            // Get associated anomalies and build tooltip (same as mouseover)
-            // ...
+            // Generate tooltip content
+            const tooltipContent = generatePointTooltip(d);
             
             tooltip
               .html(tooltipContent)
@@ -1341,8 +1109,65 @@ export default function VehicleMileageChart({ registration, vin }) {
         });
     }
 
-    // Draw anomalies with touch and theme support
+    // Enhanced anomaly visualization that makes anomalies more prominent
     if (showAnomalies) {
+      // Generate tooltip content for anomaly points
+      const generateAnomalyTooltip = (anomaly) => {
+        let tooltipContent = `
+          <div style="font-weight: bold; ${anomaly.type === 'decrease' ? `color: ${COLORS.RED}` : ''}">
+            ${anomaly.details.current.formattedDate}
+            ${anomaly.type === 'decrease' ? ' - ⚠️ MILEAGE DECREASE DETECTED' : ''}
+          </div>
+          <div>Mileage: ${anomaly.details.current.formattedMileage}</div>
+        `;
+        
+        if (anomaly.type === 'decrease') {
+          tooltipContent += `
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+            <div style="color: ${COLORS.RED}; font-weight: bold">Possible odometer tampering (clocking)</div>
+            <div style="font-size: 0.875rem;">
+              <strong>Previous reading:</strong> ${anomaly.details.previous.formattedMileage} miles
+              (${anomaly.details.previous.formattedDate})
+            </div>
+            <div style="font-size: 0.875rem;">
+              <strong>Decrease amount:</strong> ${Math.abs(anomaly.details.diff).toLocaleString()} miles
+            </div>
+            <div style="font-size: 0.875rem;">
+              <strong>Time between readings:</strong> ${Math.round(anomaly.details.timeBetweenReadings)} days
+            </div>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+            <div style="font-size: 0.875rem;"><strong>Possible causes:</strong></div>
+            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.875rem;">
+              <li>Odometer tampering</li>
+              <li>Data entry error during MOT</li>
+              <li>Instrument cluster replacement</li>
+              <li>Technical fault with odometer</li>
+            </ul>
+          `;
+        } else {
+          tooltipContent += `
+            <div style="color: ${ORANGE}; font-weight: bold">${anomaly.message}</div>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+            <div style="font-size: 0.875rem;"><strong>Previous reading:</strong> ${anomaly.details.previous.formattedMileage} miles (${anomaly.details.previous.formattedDate})</div>
+            <div style="font-size: 0.875rem;"><strong>Increase amount:</strong> ${Math.abs(anomaly.details.diff).toLocaleString()} miles</div>
+            <div style="font-size: 0.875rem;"><strong>Time period:</strong> ${Math.round(anomaly.details.days)} days</div>
+            <div style="font-size: 0.875rem;"><strong>Daily rate:</strong> ${Math.round(anomaly.details.dailyAvg)} miles/day</div>
+            <div style="font-size: 0.875rem;"><strong>Annual equivalent:</strong> ${Math.round(anomaly.details.annualizedMileage).toLocaleString()} miles/year</div>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
+            <div style="font-size: 0.875rem;"><strong>Possible causes:</strong></div>
+            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.875rem;">
+              <li>Incorrect odometer reading at previous test</li>
+              <li>Long-distance/commercial use</li>
+              <li>Multiple drivers sharing vehicle</li>
+              <li>Test entry error</li>
+            </ul>
+          `;
+        }
+        
+        return tooltipContent;
+      };
+
+      // Draw anomaly points
       const anomalyPoints = chart.selectAll(".anomaly")
         .data(anomalies)
         .enter()
@@ -1353,23 +1178,26 @@ export default function VehicleMileageChart({ registration, vin }) {
         .attr("r", isMobile ? 10 : 9)
         .attr("fill", d => {
           if (d.type === "decrease") {
-            return d.severity === "high" ? COLORS.RED :
-              d.severity === "medium" ? "#e53935" : "#ef5350";
+            // Clocking (always red, regardless of severity)
+            return COLORS.RED;
           } else {
-            return d.severity === "high" ? "#f47738" :
-              d.severity === "medium" ? "#ff9800" : "#ffb74d";
+            // Unusual increase (different orange shades based on severity)
+            return d.severity === "high" ? ORANGE :
+              d.severity === "medium" ? ORANGE : 
+              `rgba(${hexToRgb(ORANGE)}, 0.8)`;
           }
         })
         .attr("stroke", COLORS.WHITE)
         .attr("stroke-width", isMobile ? 2 : 1.5)
-        .attr("opacity", d => d.severity === "high" ? 0.95 : d.severity === "medium" ? 0.85 : 0.75)
+        .attr("opacity", d => d.type === "decrease" ? 1 : (d.severity === "high" ? 0.95 : d.severity === "medium" ? 0.85 : 0.75))
         .style("cursor", "pointer");
 
-      // Add touch-specific events for anomalies
+      // Add event handlers for anomaly points
       if (isTouchDevice) {
+        // Touch events for mobile
         anomalyPoints.on("touchstart", function(event, d) {
           event.preventDefault();
-          const isSelected = selectedPoint === d.details.current.date.getTime();
+          const isSelected = selectedPoint === `anomaly-${d.index}`;
           
           // Reset all points
           chart.selectAll(".mileage-point, .anomaly")
@@ -1380,70 +1208,20 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("stroke-width", isMobile ? 2 : 1.5)
             .attr("stroke", COLORS.WHITE);
           
+          // Toggle selection
           if (isSelected) {
             setSelectedPoint(null);
             tooltip.style("visibility", "hidden");
           } else {
-            setSelectedPoint(d.details.current.date.getTime());
+            setSelectedPoint(`anomaly-${d.index}`);
             
             d3.select(this)
               .attr("r", isMobile ? 14 : 12)
               .attr("stroke-width", 3)
               .attr("stroke", COLORS.BLACK);
             
-            // Build tooltip content for anomaly
-            let tooltipContent = `
-              <div>
-                <strong>${d.details.current.formattedDate}</strong>
-              </div>
-              <div>Mileage: ${d.details.current.formattedMileage}</div>
-              <div style="color: ${d.type === 'decrease' ? COLORS.RED : '#f47738'}; font-weight: bold">${d.message}</div>
-            `;              
-            
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="font-size: 0.875rem;"><strong>Previous reading:</strong> ${d.details.previous.formattedMileage} miles (${d.details.previous.formattedDate})</div>
-              <div style="font-size: 0.875rem;"><strong>Time period:</strong> ${Math.round(d.details.timeBetweenReadings)} days</div>
-            `;
-            
-            if (d.type === "spike") {
-              tooltipContent += `
-                <div style="font-size: 0.875rem;"><strong>Daily rate:</strong> ${Math.round(d.details.dailyAvg)} miles/day</div>
-                <div style="font-size: 0.875rem;"><strong>Annual equivalent:</strong> ${Math.round(d.details.annualizedMileage).toLocaleString()} miles/year</div>
-              `;
-            }
-            
-            tooltipContent += `
-              <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ddd;">
-              <div style="font-size: 0.875rem;"><strong>Severity:</strong>
-                <span style="color: ${d.severity === 'high' ? COLORS.RED : d.severity === 'medium' ? '#f47738' : COLORS.GREEN}">
-                  ${d.severity.charAt(0).toUpperCase() + d.severity.slice(1)}
-                </span>
-              </div>
-            `;
-            
-            tooltipContent += `
-              <div style="font-size: 0.875rem;"><strong>Possible causes:</strong></div>
-              <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.875rem;">
-            `;
-            
-            if (d.type === "decrease") {
-              tooltipContent += `
-                <li>Odometer tampering</li>
-                <li>Data entry error during MOT</li>
-                <li>Instrument cluster replacement</li>
-                <li>Technical fault with odometer</li>
-              `;
-            } else {
-              tooltipContent += `
-                <li>Incorrect odometer reading at previous test</li>
-                <li>Long-distance/commercial use</li>
-                <li>Multiple drivers sharing vehicle</li>
-                <li>Test entry error</li>
-              `;
-            }
-            
-            tooltipContent += `</ul>`;
+            // Generate tooltip content
+            const tooltipContent = generateAnomalyTooltip(d);
             
             // Position tooltip for touch
             const rect = event.target.getBoundingClientRect();
@@ -1459,8 +1237,68 @@ export default function VehicleMileageChart({ registration, vin }) {
           }
         });
       } else {
-        // Mouse events for desktop (mouseover/mouseout/click)
-        // ...similar to points, but with anomaly-specific content
+        // Mouse events for desktop
+        anomalyPoints
+          .on("mouseover", function(event, d) {
+            d3.select(this)
+              .attr("r", isMobile ? 12 : 11)
+              .attr("stroke-width", 2)
+              .attr("stroke", COLORS.BLACK);
+            
+            // Generate tooltip content
+            const tooltipContent = generateAnomalyTooltip(d);
+            
+            tooltip
+              .html(tooltipContent)
+              .style("visibility", "visible")
+              .style("left", `${event.pageX}px`)
+              .style("top", `${event.pageY - 10}px`)
+              .style("transform", "translate(-50%, -100%)");
+          })
+          .on("mouseout", function() {
+            if (!selectedPoint || !selectedPoint.startsWith('anomaly-')) {
+              d3.select(this)
+                .attr("r", isMobile ? 10 : 9)
+                .attr("stroke-width", isMobile ? 2 : 1.5)
+                .attr("stroke", COLORS.WHITE);
+              
+              tooltip.style("visibility", "hidden");
+            }
+          })
+          .on("click", function(event, d) {
+            const isSelected = selectedPoint === `anomaly-${d.index}`;
+            
+            // Reset all points
+            chart.selectAll(".mileage-point, .anomaly")
+              .attr("r", function(d) {
+                if (d.type) return isMobile ? 10 : 9;
+                return isMobile ? 8 : 7;
+              })
+              .attr("stroke-width", isMobile ? 2 : 1.5)
+              .attr("stroke", COLORS.WHITE);
+            
+            if (isSelected) {
+              setSelectedPoint(null);
+              tooltip.style("visibility", "hidden");
+            } else {
+              setSelectedPoint(`anomaly-${d.index}`);
+              
+              d3.select(this)
+                .attr("r", isMobile ? 14 : 12)
+                .attr("stroke-width", 3)
+                .attr("stroke", COLORS.BLACK);
+              
+              // Generate tooltip content
+              const tooltipContent = generateAnomalyTooltip(d);
+              
+              tooltip
+                .html(tooltipContent)
+                .style("visibility", "visible")
+                .style("left", `${event.pageX}px`)
+                .style("top", `${event.pageY - 10}px`)
+                .style("transform", "translate(-50%, -100%)");
+            }
+          });
       }
     }
 
@@ -1541,9 +1379,58 @@ export default function VehicleMileageChart({ registration, vin }) {
     selectedTimeRange
   ]);
 
+  // Helper function to format mileage values, handling negative values
+  const formatMileageValue = (value, includeSign = false) => {
+    if (value === null || value === undefined) return 'N/A';
+    
+    const absValue = Math.abs(value);
+    const formattedAbs = absValue.toLocaleString();
+    
+    if (value < 0 && includeSign) {
+      return `-${formattedAbs}`;
+    } else if (value > 0 && includeSign) {
+      return `+${formattedAbs}`;
+    }
+    
+    return formattedAbs;
+  };
+
+  // Check if the vehicle has clocking incidents
+  const hasClockingIncidents = chartData.anomalies?.some(anomaly => anomaly.type === 'decrease') || false;
+  
+  // Calculate total (non-negative) mileage
+  const calculateActualTotalMileage = () => {
+    if (!chartData.mileageData || chartData.mileageData.length < 2) return null;
+    
+    // Instead of simple subtraction, sum all positive increments
+    let totalMileage = 0;
+    for (let i = 1; i < chartData.mileageData.length; i++) {
+      const diff = chartData.mileageData[i].mileage - chartData.mileageData[i-1].mileage;
+      if (diff > 0) totalMileage += diff;
+    }
+    
+    return totalMileage;
+  };
+  
+  const actualTotalMileage = calculateActualTotalMileage();
+
   return (
     <>
       <GovUKHeadingM>Vehicle Mileage History</GovUKHeadingM>
+      
+      {/* Mileage Anomaly Warning Banner - only shown for vehicles with clocking incidents */}
+      {hasClockingIncidents && (
+        <ClockingWarning>
+          <WarningIcon>⚠️</WarningIcon>
+          <div>
+            <WarningText>Mileage Inconsistency Detected</WarningText>
+            <GovUKBody>
+              This vehicle has one or more instances where the recorded mileage has decreased between tests. 
+              This could indicate odometer tampering (clocking), instrument cluster replacement, or MOT data entry errors.
+            </GovUKBody>
+          </div>
+        </ClockingWarning>
+      )}
       
       {/* Mileage Chart Controls */}
       <ControlPanel>
@@ -1618,142 +1505,34 @@ export default function VehicleMileageChart({ registration, vin }) {
         )}
       </ChartContainer>
       
-      {/* Average Annual Mileage */}
-      {chartData.averageAnnualMileage && (
+      {/* Average Annual Mileage - Improved to handle negative values */}
+      {chartData.averageAnnualMileage !== null && (
         <InfoBox>
-          Average annual mileage: <strong>{chartData.averageAnnualMileage.toLocaleString()} miles/year</strong>
-          {chartData.averageAnnualMileage > 10000 ? ' (Above UK average of 8,000 miles/year)' : 
-           chartData.averageAnnualMileage < 6000 ? ' (Below UK average of 8,000 miles/year)' : 
-           ' (Close to UK average of 8,000 miles/year)'}
+          {chartData.averageAnnualMileage < 0 ? (
+            <>
+              <strong style={{color: COLORS.RED}}>⚠️ Negative average annual mileage detected: {chartData.averageAnnualMileage.toLocaleString()} miles/year</strong>
+              <br />
+              This indicates potential odometer tampering or MOT data entry errors.
+            </>
+          ) : (
+            <>
+              Average annual mileage: <strong>{chartData.averageAnnualMileage.toLocaleString()} miles/year</strong>
+              {chartData.averageAnnualMileage > 10000 ? ' (Above UK average of 8,000 miles/year)' : 
+               chartData.averageAnnualMileage < 6000 ? ' (Below UK average of 8,000 miles/year)' : 
+               ' (Close to UK average of 8,000 miles/year)'}
+            </>
+          )}
         </InfoBox>
       )}
       
-      {/* Usage Patterns Content - Now displayed directly below the chart */}
-      {!loading && !error && chartData.ratesData && chartData.ratesData.length > 0 && (
-        <>
-          <GovUKHeadingS>Vehicle Usage Summary</GovUKHeadingS>
-          <UsageSummary>
-            <SummaryGrid>
-              <SummaryItem>
-                <SummaryLabel>Records</SummaryLabel>
-                <SummaryValue>{chartData.mileageData.length}</SummaryValue>
-              </SummaryItem>
-              
-              <SummaryItem>
-                <SummaryLabel>Date Range</SummaryLabel>
-                <SummaryValue>
-                  {chartData.mileageData.length > 0 ? 
-                    `${chartData.mileageData[0].formattedDate} - ${chartData.mileageData[chartData.mileageData.length - 1].formattedDate}` : 
-                    'N/A'}
-                </SummaryValue>
-              </SummaryItem>
-              
-              <SummaryItem>
-                <SummaryLabel>Total Mileage</SummaryLabel>
-                <SummaryValue>
-                  {chartData.mileageData.length > 1 ? 
-                    `${(chartData.mileageData[chartData.mileageData.length - 1].mileage - chartData.mileageData[0].mileage).toLocaleString()} mi` : 
-                    'N/A'}
-                </SummaryValue>
-              </SummaryItem>
-              
-              <SummaryItem>
-                <SummaryLabel>Average Annual</SummaryLabel>
-                <SummaryValue>
-                  {chartData.averageAnnualMileage ? 
-                    `${chartData.averageAnnualMileage.toLocaleString()} mi/year` : 
-                    'N/A'}
-                </SummaryValue>
-              </SummaryItem>
-            </SummaryGrid>
-          </UsageSummary>
-          
-          {chartData.anomalies.length > 0 && (
-            <>
-              <GovUKHeadingS>Detected Anomalies ({chartData.anomalies.length})</GovUKHeadingS>
-              {chartData.anomalies.map((anomaly, index) => (
-                <PatternCard 
-                  key={`anomaly-${index}`} 
-                  severity={anomaly.severity}
-                >
-                  <PatternTitle>{anomaly.details.current.formattedDate} - {anomaly.type === 'decrease' ? 'Mileage Decrease' : 'Unusual Increase'}</PatternTitle>
-                  <PatternDetail>{anomaly.message}</PatternDetail>
-                  <PatternStats>
-                    <StatBox color={anomaly.type === 'decrease' ? COLORS.RED : '#f47738'}>
-                      {anomaly.type === 'decrease' ? 
-                        `${Math.abs(anomaly.details.diff).toLocaleString()} mi decrease` : 
-                        `${Math.round(anomaly.details.dailyAvg)} mi/day`}
-                    </StatBox>
-                    <StatBox>
-                      Period: {Math.round(anomaly.details.timeBetweenReadings)} days
-                    </StatBox>
-                    {anomaly.type === 'spike' && (
-                      <StatBox color="#5C6BC0">
-                        {Math.round(anomaly.details.annualizedMileage).toLocaleString()} mi/year
-                      </StatBox>
-                    )}
-                  </PatternStats>
-                </PatternCard>
-              ))}
-            </>
-          )}
-          
-          {chartData.inactivityPeriods.length > 0 && (
-            <>
-              <GovUKHeadingS>Inactivity Periods ({chartData.inactivityPeriods.length})</GovUKHeadingS>
-              {chartData.inactivityPeriods.map((period, index) => (
-                <PatternCard 
-                  key={`inactive-${index}`} 
-                  severity={period.severity}
-                >
-                  <PatternTitle>
-                    {period.start.formattedDate} to {period.end.formattedDate} ({Math.round(period.days)} days)
-                  </PatternTitle>
-                  <PatternDetail>{period.description}</PatternDetail>
-                  <PatternStats>
-                    <StatBox>
-                      Mileage: {period.start.formattedMileage} → {period.end.formattedMileage}
-                    </StatBox>
-                    <StatBox color={
-                      period.dailyAverage <= 0 ? COLORS.RED : 
-                      period.dailyAverage < 5 ? '#f47738' : 
-                      COLORS.GREEN
-                    }>
-                      {Math.round(period.dailyAverage * 10) / 10} mi/day
-                    </StatBox>
-                    <StatBox color="#5C6BC0">
-                      {Math.round(period.dailyAverage * 365).toLocaleString()} mi/year
-                    </StatBox>
-                  </PatternStats>
-                </PatternCard>
-              ))}
-            </>
-          )}
-          
-          <GovUKHeadingS>Usage Periods</GovUKHeadingS>
-          <UsagePeriodsTable>
-            <thead>
-              <tr>
-                <th>Period</th>
-                <th>Days</th>
-                <th>Mileage Added</th>
-                <th>Daily Rate</th>
-                <th>Annual Rate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {chartData.ratesData.map((period, index) => (
-                <tr key={`period-${index}`}>
-                  <td>{period.formattedPeriod}</td>
-                  <td>{period.periodDays}</td>
-                  <td>{(period.endMileage - period.startMileage).toLocaleString()}</td>
-                  <td>{Math.round(period.dailyRate)} mi/day</td>
-                  <td>{Math.round(period.annualizedRate).toLocaleString()} mi/year</td>
-                </tr>
-              ))}
-            </tbody>
-          </UsagePeriodsTable>
-        </>
+      {/* Vehicle Usage Summary Component */}
+      {!loading && !error && chartData.mileageData && chartData.mileageData.length > 0 && (
+        <VehicleUsageSummary 
+          chartData={chartData}
+          formatMileageValue={formatMileageValue}
+          hasClockingIncidents={hasClockingIncidents}
+          actualTotalMileage={actualTotalMileage}
+        />
       )}
     </>
   );

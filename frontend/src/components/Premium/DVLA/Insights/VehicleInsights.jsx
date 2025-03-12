@@ -29,6 +29,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import MoneyIcon from '@mui/icons-material/Money';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import CO2Icon from '@mui/icons-material/CO2';
 
 // Import styled components
 import {
@@ -691,6 +692,7 @@ const VehicleInsights = ({ registration, vin }) => {
                             />
                             <td>
                               <MetricDisplay iconColor="#00703c">
+                                <CO2Icon fontSize="small" />
                                 <MetricValue color="#00703c">
                                   {insights.fuelEfficiencyInsights.annualCO2Savings}
                                 </MetricValue>
@@ -777,6 +779,7 @@ const VehicleInsights = ({ registration, vin }) => {
                               />
                               <td>
                                 <MetricDisplay iconColor="#28a197">
+                                  <CO2Icon fontSize="small" />
                                   <MetricValue>
                                     {insights.fuelEfficiencyInsights.co2EmissionsGPerKM} g/km
                                   </MetricValue>

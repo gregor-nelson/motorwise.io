@@ -1058,3 +1058,519 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-03-11 20:35:13,836 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51261 - Status: 200 - Process Time: 0.0299s
 2025-03-11 20:35:13,837 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51262 - Status: 200 - Process Time: 0.0279s
 2025-03-11 20:35:13,838 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51260 - Status: 200 - Process Time: 0.0110s
+2025-03-12 09:52:19,050 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-03-12 09:57:39,735 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-03-12 09:57:39,735 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-03-12 09:57:39,735 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-03-12 10:00:33,021 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 10:00:33,662 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 10:00:33,977 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 10:00:34,241 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 10:00:35,070 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:35,070 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:35,070 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:35,070 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:35,070 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 10:00:35,070 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 10:00:35,070 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 10:00:35,070 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 10:00:35,070 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58680 - Status: 200 - Process Time: 2.0487s
+2025-03-12 10:00:35,070 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58677 - Status: 200 - Process Time: 2.0487s
+2025-03-12 10:00:35,070 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58678 - Status: 200 - Process Time: 2.0487s
+2025-03-12 10:00:35,070 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58679 - Status: 200 - Process Time: 2.0487s
+2025-03-12 10:00:46,647 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 10:00:46,963 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 10:00:47,310 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 10:00:47,582 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 10:00:48,018 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:48,018 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 10:00:48,018 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58681 - Status: 200 - Process Time: 1.3703s
+2025-03-12 10:00:48,161 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:48,170 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 10:00:48,170 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58708 - Status: 200 - Process Time: 1.2070s
+2025-03-12 10:00:48,238 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:48,238 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 10:00:48,238 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58709 - Status: 200 - Process Time: 1.2751s
+2025-03-12 10:00:48,364 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 10:00:48,364 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 10:00:48,364 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58710 - Status: 200 - Process Time: 0.7813s
+2025-03-12 10:54:38,554 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 10:54:38,554 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 10:54:38,554 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62306 - Status: 200 - Process Time: 0.0011s
+2025-03-12 10:54:38,554 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62307 - Status: 200 - Process Time: 0.0011s
+2025-03-12 10:54:38,563 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 10:54:38,563 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 10:54:38,563 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62308 - Status: 200 - Process Time: 0.0000s
+2025-03-12 10:54:38,563 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62309 - Status: 200 - Process Time: 0.0000s
+2025-03-12 11:02:52,040 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 11:02:52,346 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 11:02:52,678 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 11:02:52,930 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 11:02:53,543 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:02:53,543 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 11:02:53,543 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62705 - Status: 200 - Process Time: 1.5131s
+2025-03-12 11:02:53,559 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:02:53,559 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 11:02:53,559 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62704 - Status: 200 - Process Time: 1.5286s
+2025-03-12 11:02:53,587 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:02:53,587 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 11:02:53,587 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62702 - Status: 200 - Process Time: 1.5565s
+2025-03-12 11:02:53,617 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:02:53,619 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 11:02:53,619 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:62703 - Status: 200 - Process Time: 1.5889s
+2025-03-12 11:11:46,838 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:11:46,838 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63125 - Status: 200 - Process Time: 0.0155s
+2025-03-12 11:11:46,838 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:11:46,838 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63126 - Status: 200 - Process Time: 0.0000s
+2025-03-12 11:11:46,853 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:11:46,853 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:11:46,857 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63128 - Status: 200 - Process Time: 0.0194s
+2025-03-12 11:11:46,857 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63127 - Status: 200 - Process Time: 0.0194s
+2025-03-12 11:14:13,592 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:14:13,592 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63314 - Status: 200 - Process Time: 0.0000s
+2025-03-12 11:14:13,592 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:14:13,592 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63315 - Status: 200 - Process Time: 0.0000s
+2025-03-12 11:22:59,190 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:22:59,190 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63622 - Status: 200 - Process Time: 0.0035s
+2025-03-12 11:22:59,208 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:22:59,208 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:22:59,210 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63622 - Status: 200 - Process Time: 0.0076s
+2025-03-12 11:22:59,211 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63623 - Status: 200 - Process Time: 0.0084s
+2025-03-12 11:22:59,221 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:22:59,221 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63624 - Status: 200 - Process Time: 0.0029s
+2025-03-12 11:30:17,324 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:30:17,324 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:30:17,324 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:30:17,324 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64100 - Status: 200 - Process Time: 0.0143s
+2025-03-12 11:30:17,324 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64102 - Status: 200 - Process Time: 0.0056s
+2025-03-12 11:30:17,324 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64101 - Status: 200 - Process Time: 0.0143s
+2025-03-12 11:30:17,350 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:30:17,350 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64103 - Status: 200 - Process Time: 0.0255s
+2025-03-12 11:31:39,350 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:39,350 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64213 - Status: 200 - Process Time: 0.0013s
+2025-03-12 11:31:39,350 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:39,360 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64214 - Status: 200 - Process Time: 0.0106s
+2025-03-12 11:31:39,371 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:39,373 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:39,374 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64216 - Status: 200 - Process Time: 0.0074s
+2025-03-12 11:31:39,376 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64215 - Status: 200 - Process Time: 0.0089s
+2025-03-12 11:31:55,922 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:55,927 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64217 - Status: 200 - Process Time: 0.0282s
+2025-03-12 11:31:55,945 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:55,948 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64217 - Status: 200 - Process Time: 0.0045s
+2025-03-12 11:31:55,978 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:55,979 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64217 - Status: 200 - Process Time: 0.0066s
+2025-03-12 11:31:55,993 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:31:55,993 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64217 - Status: 200 - Process Time: 0.0015s
+2025-03-12 11:35:35,001 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:35:35,002 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:35:35,002 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:35:35,003 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:35:35,004 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64508 - Status: 200 - Process Time: 0.0096s
+2025-03-12 11:35:35,005 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64509 - Status: 200 - Process Time: 0.0096s
+2025-03-12 11:35:35,005 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64510 - Status: 200 - Process Time: 0.0086s
+2025-03-12 11:35:35,006 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64511 - Status: 200 - Process Time: 0.0096s
+2025-03-12 11:43:18,805 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:43:18,807 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:43:18,807 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64796 - Status: 200 - Process Time: 0.0109s
+2025-03-12 11:43:18,809 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:43:18,809 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64797 - Status: 200 - Process Time: 0.0134s
+2025-03-12 11:43:18,810 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 11:43:18,810 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64798 - Status: 200 - Process Time: 0.0141s
+2025-03-12 11:43:18,810 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64799 - Status: 200 - Process Time: 0.0141s
+2025-03-12 11:43:31,595 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 11:43:32,140 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 11:43:32,758 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 11:43:33,283 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 11:43:34,062 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:43:34,062 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:43:34,073 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 11:43:34,073 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 11:43:34,073 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64800 - Status: 200 - Process Time: 2.4809s
+2025-03-12 11:43:34,073 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64827 - Status: 200 - Process Time: 1.9329s
+2025-03-12 11:43:34,212 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:43:34,214 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 11:43:34,215 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64831 - Status: 200 - Process Time: 1.4565s
+2025-03-12 11:43:34,223 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 11:43:34,225 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 11:43:34,226 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64830 - Status: 200 - Process Time: 1.4675s
+2025-03-12 11:53:20,318 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 11:53:20,318 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 11:53:20,318 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 11:53:20,318 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 11:53:20,318 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:65252 - Status: 200 - Process Time: 0.0150s
+2025-03-12 11:53:20,318 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:65253 - Status: 200 - Process Time: 0.0137s
+2025-03-12 11:53:20,318 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:65255 - Status: 200 - Process Time: 0.0000s
+2025-03-12 11:53:20,318 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:65254 - Status: 200 - Process Time: 0.0000s
+2025-03-12 12:10:04,305 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:10:04,305 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:10:04,305 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:10:04,305 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:10:04,305 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:49977 - Status: 200 - Process Time: 0.0000s
+2025-03-12 12:10:04,305 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:49980 - Status: 200 - Process Time: 0.0000s
+2025-03-12 12:10:04,305 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:49978 - Status: 200 - Process Time: 0.0000s
+2025-03-12 12:10:04,305 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:49979 - Status: 200 - Process Time: 0.0000s
+2025-03-12 12:14:39,297 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:14:39,299 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:14:39,300 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50345 - Status: 200 - Process Time: 0.0107s
+2025-03-12 12:14:39,300 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50346 - Status: 200 - Process Time: 0.0087s
+2025-03-12 12:14:39,300 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:14:39,300 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:14:39,305 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50348 - Status: 200 - Process Time: 0.0125s
+2025-03-12 12:14:39,308 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50347 - Status: 200 - Process Time: 0.0144s
+2025-03-12 12:15:14,473 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:14,476 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50352 - Status: 200 - Process Time: 0.0051s
+2025-03-12 12:15:14,484 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:14,485 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50352 - Status: 200 - Process Time: 0.0030s
+2025-03-12 12:15:27,757 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:27,758 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50401 - Status: 200 - Process Time: 0.0057s
+2025-03-12 12:15:27,766 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:27,767 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50401 - Status: 200 - Process Time: 0.0021s
+2025-03-12 12:15:27,774 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:27,774 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50401 - Status: 200 - Process Time: 0.0020s
+2025-03-12 12:15:27,781 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:15:27,782 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50401 - Status: 200 - Process Time: 0.0023s
+2025-03-12 12:20:44,886 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:44,887 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50765 - Status: 200 - Process Time: 0.0035s
+2025-03-12 12:20:44,898 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:44,898 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:44,898 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50766 - Status: 200 - Process Time: 0.0071s
+2025-03-12 12:20:44,902 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50767 - Status: 200 - Process Time: 0.0089s
+2025-03-12 12:20:44,905 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:44,907 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50765 - Status: 200 - Process Time: 0.0095s
+2025-03-12 12:20:46,197 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:46,197 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50765 - Status: 200 - Process Time: 0.0027s
+2025-03-12 12:20:46,211 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:20:46,212 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50765 - Status: 200 - Process Time: 0.0030s
+2025-03-12 12:21:39,858 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:21:39,898 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50768 - Status: 200 - Process Time: 0.0425s
+2025-03-12 12:21:39,908 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:21:39,914 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50769 - Status: 200 - Process Time: 0.0118s
+2025-03-12 12:21:39,937 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:21:39,939 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:21:39,939 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50769 - Status: 200 - Process Time: 0.0088s
+2025-03-12 12:21:39,940 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50768 - Status: 200 - Process Time: 0.0088s
+2025-03-12 12:22:09,202 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:09,203 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:09,204 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:09,204 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:09,205 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50895 - Status: 200 - Process Time: 0.0094s
+2025-03-12 12:22:09,205 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50896 - Status: 200 - Process Time: 0.0100s
+2025-03-12 12:22:09,205 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50897 - Status: 200 - Process Time: 0.0093s
+2025-03-12 12:22:09,206 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50898 - Status: 200 - Process Time: 0.0103s
+2025-03-12 12:22:18,889 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:18,890 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50899 - Status: 200 - Process Time: 0.0035s
+2025-03-12 12:22:18,898 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:18,898 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50899 - Status: 200 - Process Time: 0.0016s
+2025-03-12 12:22:22,362 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:22,362 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:22,362 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50899 - Status: 200 - Process Time: 0.0127s
+2025-03-12 12:22:22,362 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50932 - Status: 200 - Process Time: 0.0090s
+2025-03-12 12:22:22,385 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:22,385 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:22:22,385 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50899 - Status: 200 - Process Time: 0.0032s
+2025-03-12 12:22:22,387 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50932 - Status: 200 - Process Time: 0.0048s
+2025-03-12 12:26:19,902 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:26:19,904 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51340 - Status: 200 - Process Time: 0.0028s
+2025-03-12 12:26:19,912 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:26:19,913 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51341 - Status: 200 - Process Time: 0.0067s
+2025-03-12 12:26:19,915 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:26:19,917 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:26:19,917 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51342 - Status: 200 - Process Time: 0.0071s
+2025-03-12 12:26:19,918 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51343 - Status: 200 - Process Time: 0.0070s
+2025-03-12 12:29:10,085 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:29:10,087 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:29:10,087 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51503 - Status: 200 - Process Time: 0.0052s
+2025-03-12 12:29:10,089 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51504 - Status: 200 - Process Time: 0.0060s
+2025-03-12 12:29:10,097 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:29:10,099 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:29:10,100 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51506 - Status: 200 - Process Time: 0.0065s
+2025-03-12 12:29:10,101 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51505 - Status: 200 - Process Time: 0.0075s
+2025-03-12 12:31:40,000 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:31:40,000 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51670 - Status: 200 - Process Time: 0.0039s
+2025-03-12 12:31:40,005 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:31:40,007 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51671 - Status: 200 - Process Time: 0.0088s
+2025-03-12 12:31:40,012 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:31:40,012 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 12:31:40,012 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51672 - Status: 200 - Process Time: 0.0073s
+2025-03-12 12:31:40,014 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51673 - Status: 200 - Process Time: 0.0074s
+2025-03-12 12:32:03,005 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 12:32:03,468 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 12:32:03,954 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 12:32:04,455 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 12:32:05,179 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:32:05,179 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 12:32:05,182 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51674 - Status: 200 - Process Time: 2.1863s
+2025-03-12 12:32:05,185 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:32:05,187 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 12:32:05,188 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51714 - Status: 200 - Process Time: 1.7202s
+2025-03-12 12:32:05,277 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:32:05,278 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 12:32:05,280 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51716 - Status: 200 - Process Time: 1.8113s
+2025-03-12 12:32:05,294 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:32:05,296 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 12:32:05,296 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51719 - Status: 200 - Process Time: 0.8405s
+2025-03-12 12:34:00,404 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 12:34:00,812 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 12:34:01,229 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 12:34:01,639 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 12:34:02,452 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:34:02,452 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 12:34:02,452 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51857 - Status: 200 - Process Time: 2.0530s
+2025-03-12 12:34:02,480 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:34:02,481 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 12:34:02,482 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51854 - Status: 200 - Process Time: 2.0924s
+2025-03-12 12:34:02,605 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:34:02,607 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 12:34:02,607 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51856 - Status: 200 - Process Time: 2.2083s
+2025-03-12 12:34:02,645 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 12:34:02,647 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 12:34:02,647 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51855 - Status: 200 - Process Time: 2.2516s
+2025-03-12 12:35:19,773 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 12:35:19,776 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52042 - Status: 200 - Process Time: 0.0174s
+2025-03-12 12:35:19,779 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 12:35:19,781 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52043 - Status: 200 - Process Time: 0.0184s
+2025-03-12 12:35:19,784 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 12:35:19,785 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 12:35:19,786 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52044 - Status: 200 - Process Time: 0.0123s
+2025-03-12 12:35:19,786 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52045 - Status: 200 - Process Time: 0.0104s
+2025-03-12 12:55:23,004 - ves_api - INFO - Cache HIT for VRN: HG06DHZ
+2025-03-12 12:55:23,004 - ves_api - INFO - Cache HIT for VRN: HG06DHZ
+2025-03-12 12:55:23,004 - ves_api - INFO - Cache HIT for VRN: HG06DHZ
+2025-03-12 12:55:23,004 - ves_api - INFO - Cache HIT for VRN: HG06DHZ
+2025-03-12 12:55:23,004 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52818 - Status: 200 - Process Time: 0.0075s
+2025-03-12 12:55:23,004 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52820 - Status: 200 - Process Time: 0.0075s
+2025-03-12 12:55:23,011 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52821 - Status: 200 - Process Time: 0.0146s
+2025-03-12 12:55:23,011 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52819 - Status: 200 - Process Time: 0.0146s
+2025-03-12 14:31:07,322 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 14:31:07,840 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 14:31:08,358 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 14:31:08,872 - ves_api - INFO - Cache MISS for VRN: HG06DHZ. Fetching from DVLA API.
+2025-03-12 14:31:09,789 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:31:09,789 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 14:31:09,797 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50275 - Status: 200 - Process Time: 2.4852s
+2025-03-12 14:31:09,800 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:31:09,800 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 14:31:09,804 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50272 - Status: 200 - Process Time: 2.4997s
+2025-03-12 14:31:09,825 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:31:09,825 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 14:31:09,825 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50274 - Status: 200 - Process Time: 2.5132s
+2025-03-12 14:31:09,923 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:31:09,925 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: HG06DHZ
+2025-03-12 14:31:09,925 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50273 - Status: 200 - Process Time: 2.6130s
+2025-03-12 14:37:44,619 - ves_api - INFO - Cache MISS for VRN: SV20WRJ. Fetching from DVLA API.
+2025-03-12 14:37:45,124 - ves_api - INFO - Cache MISS for VRN: SV20WRJ. Fetching from DVLA API.
+2025-03-12 14:37:45,584 - ves_api - INFO - Cache MISS for VRN: SV20WRJ. Fetching from DVLA API.
+2025-03-12 14:37:46,122 - ves_api - INFO - Cache MISS for VRN: SV20WRJ. Fetching from DVLA API.
+2025-03-12 14:37:47,030 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:37:47,031 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV20WRJ
+2025-03-12 14:37:47,032 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50624 - Status: 200 - Process Time: 2.4192s
+2025-03-12 14:37:47,040 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:37:47,042 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV20WRJ
+2025-03-12 14:37:47,044 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50623 - Status: 200 - Process Time: 2.4304s
+2025-03-12 14:37:47,048 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:37:47,050 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV20WRJ
+2025-03-12 14:37:47,051 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50621 - Status: 200 - Process Time: 2.4472s
+2025-03-12 14:37:47,135 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:37:47,138 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV20WRJ
+2025-03-12 14:37:47,139 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50622 - Status: 200 - Process Time: 2.5345s
+2025-03-12 14:46:31,536 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 14:46:31,536 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 14:46:31,536 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 14:46:31,541 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51070 - Status: 200 - Process Time: 0.0205s
+2025-03-12 14:46:31,541 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51071 - Status: 200 - Process Time: 0.0207s
+2025-03-12 14:46:31,541 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51072 - Status: 200 - Process Time: 0.0105s
+2025-03-12 14:46:31,541 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 14:46:31,541 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51073 - Status: 200 - Process Time: 0.0105s
+2025-03-12 14:46:46,306 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 14:46:46,805 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 14:46:47,304 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 14:46:47,801 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-03-12 14:46:48,654 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:46:48,655 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 14:46:48,657 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51103 - Status: 200 - Process Time: 1.8510s
+2025-03-12 14:46:48,669 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:46:48,671 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 14:46:48,672 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51104 - Status: 200 - Process Time: 1.8665s
+2025-03-12 14:46:48,750 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:46:48,752 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 14:46:48,753 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51074 - Status: 200 - Process Time: 2.4616s
+2025-03-12 14:46:48,757 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:46:48,758 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-03-12 14:46:48,759 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51101 - Status: 200 - Process Time: 1.9534s
+2025-03-12 14:49:27,261 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 14:49:27,825 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 14:49:28,361 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 14:49:28,915 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-03-12 14:49:29,808 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:49:29,808 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 14:49:29,808 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51256 - Status: 200 - Process Time: 2.5507s
+2025-03-12 14:49:29,853 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:49:29,855 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 14:49:29,856 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51255 - Status: 200 - Process Time: 2.5994s
+2025-03-12 14:49:29,866 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:49:29,867 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 14:49:29,867 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51254 - Status: 200 - Process Time: 2.6214s
+2025-03-12 14:49:29,958 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 14:49:29,959 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-03-12 14:49:29,961 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:51253 - Status: 200 - Process Time: 2.7168s
+2025-03-12 15:11:25,930 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:11:25,931 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52109 - Status: 200 - Process Time: 0.0036s
+2025-03-12 15:11:25,956 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:11:25,957 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:11:25,958 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:11:25,958 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52110 - Status: 200 - Process Time: 0.0215s
+2025-03-12 15:11:25,959 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52111 - Status: 200 - Process Time: 0.0215s
+2025-03-12 15:11:25,960 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52112 - Status: 200 - Process Time: 0.0083s
+2025-03-12 15:15:45,273 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:15:45,273 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:15:45,273 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52305 - Status: 200 - Process Time: 0.0000s
+2025-03-12 15:15:45,281 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52306 - Status: 200 - Process Time: 0.0078s
+2025-03-12 15:15:45,291 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:15:45,291 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:15:45,291 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52308 - Status: 200 - Process Time: 0.0101s
+2025-03-12 15:15:45,292 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52307 - Status: 200 - Process Time: 0.0111s
+2025-03-12 15:16:48,777 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:16:48,778 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:16:48,780 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:16:48,781 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:16:48,782 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52379 - Status: 200 - Process Time: 0.0117s
+2025-03-12 15:16:48,782 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52381 - Status: 200 - Process Time: 0.0106s
+2025-03-12 15:16:48,783 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52382 - Status: 200 - Process Time: 0.0106s
+2025-03-12 15:16:48,784 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52380 - Status: 200 - Process Time: 0.0116s
+2025-03-12 15:27:08,688 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:08,690 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52799 - Status: 200 - Process Time: 0.0035s
+2025-03-12 15:27:08,705 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:08,705 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:08,707 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:08,708 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52800 - Status: 200 - Process Time: 0.0113s
+2025-03-12 15:27:08,708 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52801 - Status: 200 - Process Time: 0.0102s
+2025-03-12 15:27:08,708 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52802 - Status: 200 - Process Time: 0.0102s
+2025-03-12 15:27:48,828 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:48,833 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52803 - Status: 200 - Process Time: 0.0084s
+2025-03-12 15:27:48,849 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:48,851 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52803 - Status: 200 - Process Time: 0.0068s
+2025-03-12 15:27:48,859 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:48,862 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52803 - Status: 200 - Process Time: 0.0046s
+2025-03-12 15:27:48,870 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-03-12 15:27:48,871 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52803 - Status: 200 - Process Time: 0.0026s
+2025-03-12 15:27:57,034 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 15:27:57,036 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 15:27:57,037 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52856 - Status: 200 - Process Time: 0.0179s
+2025-03-12 15:27:57,041 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52857 - Status: 200 - Process Time: 0.0215s
+2025-03-12 15:27:57,056 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 15:27:57,059 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52858 - Status: 200 - Process Time: 0.0236s
+2025-03-12 15:27:57,065 - ves_api - INFO - Cache HIT for VRN: SV20WRJ
+2025-03-12 15:27:57,066 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52856 - Status: 200 - Process Time: 0.0071s
+2025-03-12 15:29:47,730 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 15:29:47,730 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 15:29:47,738 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 15:29:47,738 - ves_api - INFO - Cache HIT for VRN: A5ENK
+2025-03-12 15:29:47,740 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52936 - Status: 200 - Process Time: 0.0158s
+2025-03-12 15:29:47,740 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52939 - Status: 200 - Process Time: 0.0129s
+2025-03-12 15:29:47,740 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52937 - Status: 200 - Process Time: 0.0129s
+2025-03-12 15:29:47,740 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52938 - Status: 200 - Process Time: 0.0129s
+2025-03-12 15:30:57,150 - ves_api - INFO - Cache MISS for VRN: YR57XTB. Fetching from DVLA API.
+2025-03-12 15:30:57,600 - ves_api - INFO - Cache MISS for VRN: YR57XTB. Fetching from DVLA API.
+2025-03-12 15:30:58,050 - ves_api - INFO - Cache MISS for VRN: YR57XTB. Fetching from DVLA API.
+2025-03-12 15:30:58,652 - ves_api - INFO - Cache MISS for VRN: YR57XTB. Fetching from DVLA API.
+2025-03-12 15:30:59,381 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-12 15:30:59,381 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-12 15:30:59,381 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 438, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-12 15:30:59,402 - ves_api - WARNING - Request: POST /api/vehicle from 127.0.0.1:53007 - Status: 404 - Process Time: 2.2520s
+2025-03-12 15:30:59,410 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-12 15:30:59,412 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-12 15:30:59,412 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 438, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-12 15:30:59,412 - ves_api - WARNING - Request: POST /api/vehicle from 127.0.0.1:53005 - Status: 404 - Process Time: 2.2661s
+2025-03-12 15:30:59,412 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-12 15:30:59,412 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-12 15:30:59,412 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 438, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-12 15:30:59,422 - ves_api - WARNING - Request: POST /api/vehicle from 127.0.0.1:53006 - Status: 404 - Process Time: 2.2763s
+2025-03-12 15:30:59,500 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 404 Not Found"
+2025-03-12 15:30:59,505 - ves_api - INFO - Vehicle not found for VRN YR57XTB
+2025-03-12 15:30:59,505 - ves_api - ERROR - HTTPException: Vehicle not found
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\MotCheck-UK\backend\dvla_api\app.py", line 438, in get_vehicle_info
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 404: Vehicle not found
+2025-03-12 15:30:59,507 - ves_api - WARNING - Request: POST /api/vehicle from 127.0.0.1:53008 - Status: 404 - Process Time: 1.4573s
+2025-03-12 15:31:05,700 - ves_api - INFO - Cache MISS for VRN: SV57GVL. Fetching from DVLA API.
+2025-03-12 15:31:06,170 - ves_api - INFO - Cache MISS for VRN: SV57GVL. Fetching from DVLA API.
+2025-03-12 15:31:06,620 - ves_api - INFO - Cache MISS for VRN: SV57GVL. Fetching from DVLA API.
+2025-03-12 15:31:07,061 - ves_api - INFO - Cache MISS for VRN: SV57GVL. Fetching from DVLA API.
+2025-03-12 15:31:07,774 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 15:31:07,775 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV57GVL
+2025-03-12 15:31:07,776 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53009 - Status: 200 - Process Time: 2.0764s
+2025-03-12 15:31:07,860 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 15:31:07,860 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV57GVL
+2025-03-12 15:31:07,860 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53031 - Status: 200 - Process Time: 1.6941s
+2025-03-12 15:31:07,874 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 15:31:07,875 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV57GVL
+2025-03-12 15:31:07,877 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53029 - Status: 200 - Process Time: 1.7109s
+2025-03-12 15:31:07,892 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-03-12 15:31:07,894 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: SV57GVL
+2025-03-12 15:31:07,895 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53030 - Status: 200 - Process Time: 1.7288s
+2025-03-12 15:31:31,173 - ves_api - INFO - Cache HIT for VRN: SV57GVL
+2025-03-12 15:31:31,188 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53075 - Status: 200 - Process Time: 0.0188s
+2025-03-12 15:31:31,193 - ves_api - INFO - Cache HIT for VRN: SV57GVL
+2025-03-12 15:31:31,193 - ves_api - INFO - Cache HIT for VRN: SV57GVL
+2025-03-12 15:31:31,193 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53077 - Status: 200 - Process Time: 0.0064s
+2025-03-12 15:31:31,193 - ves_api - INFO - Cache HIT for VRN: SV57GVL
+2025-03-12 15:31:31,193 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53076 - Status: 200 - Process Time: 0.0053s
+2025-03-12 15:31:31,199 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53078 - Status: 200 - Process Time: 0.0088s

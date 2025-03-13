@@ -1,14 +1,14 @@
-// Fix ORANGE color definition by adding fallback
-const ORANGE = COLORS.YELLOW || COLORS.ORANGE || '#f47738';
-
-import { useEffect, useCallback, useRef, useState} from 'react';
+// Properly define ORANGE color using theme constants
+import { useEffect, useCallback, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import {
   GovUKHeadingM,
-  COLORS
+  COLORS,
+  commonFontStyles,
+  BREAKPOINTS
 } from '../../../../../styles/theme';
 
-// Import styled components
+// Import styled components with improved styling
 import {
   ChartContainer,
   InfoBox,
@@ -19,6 +19,9 @@ import {
   hexToRgb,
   GOVUK_COLORS
 } from './VehicleMileageChartStyles';
+
+// Define ORANGE properly using the theme colors
+const ORANGE = COLORS.YELLOW || '#fd0'; // Using proper GOV.UK yellow from theme
 
 /**
  * Optimized D3-first implementation of the Vehicle Mileage Chart
@@ -57,35 +60,41 @@ export default function VehicleMileageChart({ registration, vin }) {
   // Define margin at component level so it's accessible to all functions
   const margin = {
     top: isMobile ? 20 : 40,
-    right: isMobile ? 10 : 50,
+    right: isMobile ? 15 : 50,
     bottom: isMobile ? 30 : 40,
-    left: isMobile ? 35 : 40 // Need enough space for axis labels
+    left: isMobile ? 40 : 50 // Increased left margin for better axis labels visibility
   };
   
   // Handle viewport changes
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 650);
+      setIsMobile(window.innerWidth < parseInt(BREAKPOINTS.MOBILE, 10));
     };
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Add global styles for mobile tooltips
+  // Add global styles for mobile tooltips with theme styling
   useEffect(() => {
     if (!document.getElementById('mobile-tooltip-styles')) {
       const styleElement = document.createElement('style');
       styleElement.id = 'mobile-tooltip-styles';
       styleElement.textContent = `
-        @media (max-width: 650px) {
+        @media (max-width: ${BREAKPOINTS.MOBILE}) {
           .d3-tooltip {
             max-width: 80vw !important;
-            padding: 10px !important;
+            padding: 15px !important;
             font-size: 0.875rem !important;
+            font-family: "GDS Transport", arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
           }
           .d3-tooltip hr {
-            margin: 5px 0 !important;
+            margin: 10px 0 !important;
+            border: 0 !important;
+            height: 1px !important;
+            background-color: ${COLORS.MID_GREY} !important;
           }
         }
       `;
@@ -360,8 +369,6 @@ export default function VehicleMileageChart({ registration, vin }) {
     });
   }, []);
 
-  // Keep all the other functions from the enhanced version
-
   // Improved anomaly detection with better handling of negative mileage
   const findAnomalies = useCallback((mileageData) => {
     const anomalyList = [];
@@ -623,7 +630,7 @@ export default function VehicleMileageChart({ registration, vin }) {
     };
   }, [chartData, selectedTimeRange]);
 
-  // Create tooltip - separated from main rendering function
+  // Create tooltip - separated from main rendering function with improved styling
   const createTooltip = useCallback(() => {
     d3.selectAll(".d3-tooltip").remove();
     
@@ -635,24 +642,26 @@ export default function VehicleMileageChart({ registration, vin }) {
       .style("background-color", COLORS.WHITE)
       .style("border-left", `5px solid ${COLORS.BLUE}`)
       .style("border-radius", "0")
-      .style("padding", isMobile ? "10px" : "15px")
-      .style("box-shadow", `0 2px 0 ${COLORS.GREY || COLORS.MID_GREY}`)
+      .style("padding", isMobile ? "15px" : "20px")
+      .style("box-shadow", `0 4px 0 ${COLORS.MID_GREY}`)
       .style("font-family", "'GDS Transport', arial, sans-serif")
       .style("font-size", isMobile ? "0.875rem" : "1rem")
-      .style("line-height", "1.25")
+      .style("line-height", "1.5")
       .style("font-weight", "400")
       .style("color", COLORS.BLACK)
       .style("pointer-events", "none")
-      .style("z-index", 10)
-      .style("max-width", isMobile ? "calc(100vw - 40px)" : "300px")
-      .style("word-break", "break-word");
+      .style("z-index", 100)
+      .style("max-width", isMobile ? "calc(100vw - 40px)" : "350px")
+      .style("word-break", "break-word")
+      .style("-webkit-font-smoothing", "antialiased")
+      .style("-moz-osx-font-smoothing", "grayscale");
     
-    // Add close button for mobile tooltips
+    // Add close button for mobile tooltips with GOV.UK styling
     if (isMobile) {
       tooltip.append("div")
         .style("position", "absolute")
-        .style("top", "5px")
-        .style("right", "5px")
+        .style("top", "10px")
+        .style("right", "10px")
         .style("width", "24px")
         .style("height", "24px")
         .style("cursor", "pointer")
@@ -664,6 +673,7 @@ export default function VehicleMileageChart({ registration, vin }) {
         .style("font-size", "16px")
         .style("line-height", "1")
         .style("font-weight", "bold")
+        .style("color", COLORS.BLACK)
         .text("×")
         .on("click", () => {
           tooltip.style("visibility", "hidden");
@@ -703,7 +713,9 @@ export default function VehicleMileageChart({ registration, vin }) {
       .attr("preserveAspectRatio", "xMidYMid meet")
       .attr("role", "img") // Accessibility improvement
       .attr("aria-label", "Vehicle mileage history chart showing readings over time")
-      .style("font-family", "'GDS Transport', arial, sans-serif"); // Apply GOV.UK font
+      .style("font-family", "'GDS Transport', arial, sans-serif")
+      .style("-webkit-font-smoothing", "antialiased")
+      .style("-moz-osx-font-smoothing", "grayscale");
     
     // Create chart group with margin
     const chart = svg.append("g")
@@ -711,9 +723,6 @@ export default function VehicleMileageChart({ registration, vin }) {
     
     return { svg, chart, containerWidth, containerHeight, width, height };
   }, [isMobile, margin]);
-
-  // Rest of the functions and component code remain the same...
-  // Include all the other functions from the enhanced version
 
   // D3 Chart Rendering with mobile and touch enhancements - refactored into smaller functions
   const renderChart = useCallback(() => {
@@ -768,82 +777,85 @@ export default function VehicleMileageChart({ registration, vin }) {
       .range([height, 0])
       .nice();
     
-    // Draw axes and grid
+    // Draw axes and grid with GOV.UK styling
     // Draw x-axis
     chart.append("g")
       .attr("class", "x-axis")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(xScale)
-        .ticks(isMobile ? 3 : 6) // Fewer ticks on mobile
-        .tickFormat(d3.timeFormat(isMobile ? "%m/%y" : "%m/%Y"))) // Shorter format on mobile
+        .ticks(isMobile ? 4 : 6) // Fewer ticks on mobile
+        .tickFormat(d3.timeFormat(isMobile ? "%b '%y" : "%b %Y"))) // Improved format
       .selectAll("text")
       .style("text-anchor", "middle")
-      .style("font-size", isMobile ? "9px" : "11px") // Smaller font on mobile
+      .style("font-size", isMobile ? "10px" : "12px") // Adjusted for GOV.UK style
       .style("font-family", "'GDS Transport', arial, sans-serif")
-      .style("color", COLORS.DARK_GREY)
+      .style("color", COLORS.BLACK)
+      .style("font-weight", "400")
       .attr("dy", "1em");
 
-    // Draw y-axis
+    // Draw y-axis with GOV.UK styling
     chart.append("g")
       .attr("class", "y-axis")
       .call(d3.axisLeft(yScale)
-        .ticks(isMobile ? 4 : 6) // Fewer ticks on mobile
+        .ticks(isMobile ? 5 : 6) // Fewer ticks on mobile
         .tickFormat(d => d3.format(",")(d)))
       .selectAll("text")
-      .style("font-size", isMobile ? "9px" : "11px")
+      .style("font-size", isMobile ? "10px" : "12px")
       .style("font-family", "'GDS Transport', arial, sans-serif")
-      .style("color", COLORS.DARK_GREY);
+      .style("color", COLORS.BLACK)
+      .style("font-weight", "400");
 
     // Style axis lines
     chart.selectAll(".domain, .tick line")
       .style("stroke", COLORS.MID_GREY)
       .style("stroke-width", 1);
 
-    // Add y-axis label (smaller on mobile)
+    // Add y-axis label with GOV.UK styling
     chart.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -margin.left + (isMobile ? 8 : 0))
+      .attr("y", -margin.left + (isMobile ? 10 : 15))
       .attr("x", -height / 2)
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .style("font-size", isMobile ? "9px" : "11px")
+      .style("font-size", isMobile ? "10px" : "12px")
       .style("font-family", "'GDS Transport', arial, sans-serif")
-      .style("color", COLORS.DARK_GREY)
+      .style("font-weight", "700")
+      .style("color", COLORS.BLACK)
       .text("Mileage");
 
-    // Add grid with theme colors
+    // Add grid with theme colors - more subtle styling
     chart.append("g")
       .attr("class", "grid")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(xScale)
-        .ticks(isMobile ? 3 : 6)
+        .ticks(isMobile ? 4 : 6)
         .tickSize(-height)
         .tickFormat(""))
       .selectAll("line")
-      .style("stroke", COLORS.MID_GREY)
-      .style("stroke-opacity", 0.3);
+      .style("stroke", COLORS.LIGHT_GREY)
+      .style("stroke-opacity", 0.5);
 
     chart.append("g")
       .attr("class", "grid")
       .call(d3.axisLeft(yScale)
-        .ticks(isMobile ? 4 : 6)
+        .ticks(isMobile ? 5 : 6)
         .tickSize(-width)
         .tickFormat(""))
       .selectAll("line")
-      .style("stroke", COLORS.MID_GREY)
-      .style("stroke-opacity", 0.3);
+      .style("stroke", COLORS.LIGHT_GREY)
+      .style("stroke-opacity", 0.5);
 
     chart.selectAll(".domain").style("stroke", COLORS.MID_GREY).style("stroke-opacity", 0.5);
     
-    // Draw inactive periods if enabled
+    // Draw inactive periods if enabled - with improved styling
     if (showInactivePeriods) {
       inactivityPeriods.forEach(period => {
         // Safely use hexToRgb with fallbacks for null/undefined colors
         const fillColor = period.severity === "high" ?
-          `rgba(${hexToRgb(COLORS.RED)}, 0.2)` :
+          `rgba(${hexToRgb(COLORS.RED)}, 0.15)` :
           period.severity === "medium" ?
-            `rgba(${hexToRgb(ORANGE)}, 0.2)` :
-            `rgba(${hexToRgb(COLORS.MID_GREY)}, 0.2)`;
+            `rgba(${hexToRgb(ORANGE)}, 0.15)` :
+            `rgba(${hexToRgb(COLORS.MID_GREY)}, 0.15)`;
 
         const strokeColor = period.severity === "high" ?
           COLORS.RED :
@@ -860,7 +872,7 @@ export default function VehicleMileageChart({ registration, vin }) {
           .attr("fill", fillColor)
           .attr("stroke", strokeColor)
           .attr("stroke-width", 1)
-          .attr("stroke-dasharray", "4,4")
+          .attr("stroke-dasharray", "5,5")
           .style("pointer-events", "all")
           .attr("tabindex", 0) // Accessibility improvement
           .attr("role", "button") // Accessibility improvement
@@ -870,11 +882,12 @@ export default function VehicleMileageChart({ registration, vin }) {
             
             tooltip
               .html(`
-                <div style="font-weight: bold; margin-bottom: 4px">Inactive Period</div>
-                <div>From: ${period.start.formattedDate}</div>
-                <div>To: ${period.end.formattedDate}</div>
-                <div>Mileage: ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
-                <div style="margin-top: 4px; color: ${COLORS.DARK_GREY}">${period.description}</div>
+                <div style="font-weight: 700; margin-bottom: 8px; font-size: ${isMobile ? '16px' : '18px'};">Inactive Period</div>
+                <div style="margin-bottom: 3px;"><strong>From:</strong> ${period.start.formattedDate}</div>
+                <div style="margin-bottom: 3px;"><strong>To:</strong> ${period.end.formattedDate}</div>
+                <div style="margin-bottom: 8px;"><strong>Mileage:</strong> ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
+                <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+                <div style="margin-top: 8px; color: ${COLORS.BLACK}; font-size: 0.9rem;">${period.description}</div>
               `)
               .style("visibility", "visible")
               .style("left", `${event.pageX}px`)
@@ -923,11 +936,12 @@ export default function VehicleMileageChart({ registration, vin }) {
               
               tooltip
                 .html(`
-                  <div style="font-weight: bold; margin-bottom: 4px">Inactive Period</div>
-                  <div>From: ${period.start.formattedDate}</div>
-                  <div>To: ${period.end.formattedDate}</div>
-                  <div>Mileage: ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
-                  <div style="margin-top: 4px; color: ${COLORS.DARK_GREY}">${period.description}</div>
+                  <div style="font-weight: 700; margin-bottom: 8px; font-size: ${isMobile ? '16px' : '18px'};">Inactive Period</div>
+                  <div style="margin-bottom: 3px;"><strong>From:</strong> ${period.start.formattedDate}</div>
+                  <div style="margin-bottom: 3px;"><strong>To:</strong> ${period.end.formattedDate}</div>
+                  <div style="margin-bottom: 8px;"><strong>Mileage:</strong> ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
+                  <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+                  <div style="margin-top: 8px; color: ${COLORS.BLACK}; font-size: 0.9rem;">${period.description}</div>
                 `)
                 .style("visibility", "visible")
                 .style("left", `${rect.left + rect.width/2 + scrollLeft}px`)
@@ -952,11 +966,12 @@ export default function VehicleMileageChart({ registration, vin }) {
             } else {
               tooltip
                 .html(`
-                  <div style="font-weight: bold; margin-bottom: 4px">Inactive Period</div>
-                  <div>From: ${period.start.formattedDate}</div>
-                  <div>To: ${period.end.formattedDate}</div>
-                  <div>Mileage: ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
-                  <div style="margin-top: 4px; color: ${COLORS.DARK_GREY}">${period.description}</div>
+                  <div style="font-weight: 700; margin-bottom: 8px; font-size: ${isMobile ? '16px' : '18px'};">Inactive Period</div>
+                  <div style="margin-bottom: 3px;"><strong>From:</strong> ${period.start.formattedDate}</div>
+                  <div style="margin-bottom: 3px;"><strong>To:</strong> ${period.end.formattedDate}</div>
+                  <div style="margin-bottom: 8px;"><strong>Mileage:</strong> ${period.start.formattedMileage} → ${period.end.formattedMileage}</div>
+                  <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+                  <div style="margin-top: 8px; color: ${COLORS.BLACK}; font-size: 0.9rem;">${period.description}</div>
                 `)
                 .style("visibility", "visible")
                 .style("left", `${event.pageX}px`)
@@ -968,7 +983,7 @@ export default function VehicleMileageChart({ registration, vin }) {
       });
     }
     
-    // Draw trendline if enabled
+    // Draw trendline if enabled - with improved styling
     if (showTrendline) {
       if (mileageData.length > 1) {
         const lineGenerator = d3.line()
@@ -981,7 +996,7 @@ export default function VehicleMileageChart({ registration, vin }) {
           .attr("class", "trendline-smooth")
           .attr("fill", "none")
           .attr("stroke", COLORS.GREEN)
-          .attr("stroke-width", isMobile ? 1.5 : 2)
+          .attr("stroke-width", isMobile ? 1.5 : 2.5)
           .attr("stroke-dasharray", "5,5")
           .attr("d", lineGenerator);
 
@@ -1022,8 +1037,8 @@ export default function VehicleMileageChart({ registration, vin }) {
               .datum(regressionPoints)
               .attr("class", "trendline-linear")
               .attr("fill", "none")
-              .attr("stroke", `rgba(${hexToRgb(COLORS.GREEN)}, 0.7)`)
-              .attr("stroke-width", isMobile ? 1.5 : 2)
+              .attr("stroke", `rgba(${hexToRgb(COLORS.GREEN)}, 0.8)`)
+              .attr("stroke-width", isMobile ? 2 : 3)
               .attr("d", d3.line()
                 .x(d => xScale(d.date))
                 .y(d => yScale(d.mileage))
@@ -1038,7 +1053,7 @@ export default function VehicleMileageChart({ registration, vin }) {
                 .attr("class", "trendline-label")
                 .attr("x", width - (isMobile ? 80 : 170))
                 .attr("y", height - (isMobile ? 20 : 60))
-                .attr("font-size", isMobile ? "8px" : "11px")
+                .attr("font-size", isMobile ? "10px" : "14px")
                 .attr("font-family", "'GDS Transport', arial, sans-serif")
                 .attr("fill", COLORS.GREEN)
                 .attr("font-weight", "700") // Match GOV.UK bold text
@@ -1049,13 +1064,13 @@ export default function VehicleMileageChart({ registration, vin }) {
       }
     }
     
-    // Draw main mileage line with theme colors
+    // Draw main mileage line with GOV.UK theme colors
     chart.append("path")
       .datum(mileageData)
       .attr("class", "mileage-line")
       .attr("fill", "none")
       .attr("stroke", COLORS.BLUE)
-      .attr("stroke-width", isMobile ? 2 : 3)
+      .attr("stroke-width", isMobile ? 2.5 : 3.5)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .attr("d", d3.line()
@@ -1063,7 +1078,7 @@ export default function VehicleMileageChart({ registration, vin }) {
         .y(d => yScale(d.mileage))
         .curve(d3.curveMonotoneX));
 
-    // Draw mileage points with a more consistent, professional look
+    // Draw mileage points with a more consistent, professional GOV.UK look
     mileageData.forEach(d => {
       const isPassing = d.testResult && d.testResult.includes('PASS');
       const x = xScale(d.date);
@@ -1073,8 +1088,8 @@ export default function VehicleMileageChart({ registration, vin }) {
       const adjustedY = y + (d.verticalOffset || 0);
       
       // Use consistent size and shape for all data points
-      // Just vary the colors and stroke width to indicate status
-      const radius = isMobile ? 7 : 6;
+      // Use GOV.UK colors and styling
+      const radius = isMobile ? 7 : 9;
       
       // Create a consistent circular point for all data
       chart.append("circle")
@@ -1084,15 +1099,15 @@ export default function VehicleMileageChart({ registration, vin }) {
         .attr("cy", adjustedY)
         .attr("r", radius)
         .attr("fill", d.isClockingPoint ? COLORS.RED : (isPassing ? COLORS.GREEN : COLORS.RED))
-        .attr("fill-opacity", 0.9)
+        .attr("fill-opacity", 1)
         .attr("stroke", COLORS.WHITE)
-        .attr("stroke-width", isMobile ? 1.5 : 1)
+        .attr("stroke-width", isMobile ? 1.5 : 2)
         .style("cursor", "pointer")
         .attr("tabindex", 0)
         .attr("role", "button")
         .attr("aria-label", `${isPassing ? 'PASS' : 'FAIL'}: Mileage reading: ${d.formattedMileage} on ${d.formattedDate}`);
       
-      // For failed tests, add a subtle ring around the point instead of a diamond
+      // For failed tests, add a subtle ring around the point
       if (!isPassing) {
         chart.append("circle")
           .datum(d)
@@ -1103,9 +1118,9 @@ export default function VehicleMileageChart({ registration, vin }) {
           .attr("fill", "none")
           .attr("stroke", COLORS.RED)
           .attr("stroke-width", 1.5)
-          .attr("stroke-opacity", 0.7);
+          .attr("stroke-opacity", 0.8);
         
-        // Add a small indicator text (F) but more subtle than before
+        // Add a small indicator text (FAIL) but more subtle than before
         if (!isMobile) {
           chart.append("text")
             .attr("class", "fail-indicator")
@@ -1114,23 +1129,23 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("text-anchor", "middle")
             .attr("font-family", "'GDS Transport', arial, sans-serif")
             .attr("font-size", "10px")
-            .attr("font-weight", "bold")
+            .attr("font-weight", "700")
             .attr("fill", COLORS.RED)
             .text("FAIL");
         }
       }
     });
     
-    // Generate tooltip content for data points
+    // Generate tooltip content for data points with GOV.UK styling
     const generatePointTooltip = (d) => {
       const index = mileageData.findIndex(item => item.date.getTime() === d.date.getTime());
 
-      // Basic info
+      // Basic info - styled with GOV.UK typography
       let tooltipContent = `
-        <div style="font-weight: bold;">${d.formattedDate}</div>
-        <div>Mileage: ${d.formattedMileage}</div>
+        <div style="font-weight: 700; margin-bottom: 8px; font-size: ${isMobile ? '16px' : '18px'};">${d.formattedDate}</div>
+        <div style="margin-bottom: 5px;"><strong>Mileage:</strong> ${d.formattedMileage}</div>
         ${d.testResult ? `
-          <div>Result: <span style="color: ${d.testResult.includes('PASS') ? COLORS.GREEN : COLORS.RED}; font-weight: bold">
+          <div style="margin-bottom: 5px;"><strong>Result:</strong> <span style="color: ${d.testResult.includes('PASS') ? COLORS.GREEN : COLORS.RED}; font-weight: 700">
             ${d.testResult}
           </span></div>
         ` : ''}
@@ -1145,25 +1160,25 @@ export default function VehicleMileageChart({ registration, vin }) {
         const dailyAvg = mileageDiff / daysBetween;
         
         tooltipContent += `
-          <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-          <div style="font-size: 0.875rem;"><strong>Since last test:</strong> ${daysBetween} days</div>
+          <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+          <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Since last test:</strong> ${daysBetween} days</div>
         `;
         
         // Special handling for clocking (negative mileage)
         if (mileageDiff < 0) {
           tooltipContent += `
-            <div style="font-size: 0.875rem; color: ${COLORS.RED}; font-weight: bold;">
+            <div style="font-size: 0.95rem; color: ${COLORS.RED}; font-weight: 700; margin-bottom: 5px;">
               ⚠️ MILEAGE DECREASE: ${Math.abs(mileageDiff).toLocaleString()} miles
             </div>
-            <div style="font-size: 0.875rem; color: ${COLORS.RED};">
+            <div style="font-size: 0.95rem; color: ${COLORS.RED}; margin-bottom: 5px;">
               This suggests potential odometer tampering (clocking)
             </div>
           `;
         } else {
           tooltipContent += `
-            <div style="font-size: 0.875rem;"><strong>Mileage added:</strong> ${mileageDiff.toLocaleString()} miles</div>
-            <div style="font-size: 0.875rem;"><strong>Daily average:</strong> ${Math.round(dailyAvg)} miles/day</div>
-            <div style="font-size: 0.875rem;"><strong>Annual rate:</strong> ${Math.round(dailyAvg * 365).toLocaleString()} miles/year</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Mileage added:</strong> ${mileageDiff.toLocaleString()} miles</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Daily average:</strong> ${Math.round(dailyAvg)} miles/day</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Annual rate:</strong> ${Math.round(dailyAvg * 365).toLocaleString()} miles/year</div>
           `;
         }
       }
@@ -1178,13 +1193,13 @@ export default function VehicleMileageChart({ registration, vin }) {
       
       if (associatedAnomalies && associatedAnomalies.length > 0) {
         tooltipContent += `
-          <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-          <div style="color: ${COLORS.RED}; font-weight: bold;">Anomalies Detected:</div>
+          <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+          <div style="color: ${COLORS.RED}; font-weight: 700; margin-bottom: 5px;">Anomalies Detected:</div>
         `;
         
         associatedAnomalies.forEach(anomaly => {
           tooltipContent += `
-            <div style="font-size: 0.875rem; color: ${COLORS.RED};">• ${anomaly.message}</div>
+            <div style="font-size: 0.95rem; color: ${COLORS.RED}; margin-bottom: 3px;">• ${anomaly.message}</div>
           `;
         });
       }
@@ -1204,12 +1219,12 @@ export default function VehicleMileageChart({ registration, vin }) {
         
         // Reset all points styling
         chart.selectAll(".mileage-point")
-          .attr("stroke-width", isMobile ? 2 : 1.5)
+          .attr("stroke-width", isMobile ? 1.5 : 2)
           .attr("stroke", COLORS.WHITE);
           
         chart.selectAll(".mileage-point.mileage-fail")
           .attr("stroke-width", 2)
-          .attr("stroke", "black");
+          .attr("stroke", COLORS.WHITE);
         
         // Toggle selection
         if (isSelected) {
@@ -1234,7 +1249,7 @@ export default function VehicleMileageChart({ registration, vin }) {
             .html(tooltipContent)
             .style("visibility", "visible")
             .style("left", `${rect.left + rect.width/2 + scrollLeft}px`)
-            .style("top", `${rect.top + scrollTop - 10}px`)
+            .style("top", `${rect.top + scrollTop - 15}px`)
             .style("transform", "translate(-50%, -100%)");
         }
       });
@@ -1248,10 +1263,10 @@ export default function VehicleMileageChart({ registration, vin }) {
           if (isFail) {
             d3.select(this)
               .attr("stroke-width", 3)
-              .attr("stroke", "#000");
+              .attr("stroke", COLORS.BLACK);
           } else {
             d3.select(this)
-              .attr("stroke-width", 2)
+              .attr("stroke-width", 3)
               .attr("stroke", COLORS.BLACK);
           }
           
@@ -1262,21 +1277,21 @@ export default function VehicleMileageChart({ registration, vin }) {
             .html(tooltipContent)
             .style("visibility", "visible")
             .style("left", `${event.pageX}px`)
-            .style("top", `${event.pageY - 10}px`)
+            .style("top", `${event.pageY - 15}px`)
             .style("transform", "translate(-50%, -100%)");
         })
-        .on("mouseout", function(d) {
+        .on("mouseout", function() {
           if (!selectedPoint) {
-            // Special handling for fail diamonds
+            // Reset styling
             const isFail = d3.select(this).classed("mileage-fail");
             
             if (isFail) {
               d3.select(this)
                 .attr("stroke-width", 2)
-                .attr("stroke", "black");
+                .attr("stroke", COLORS.WHITE);
             } else {
               d3.select(this)
-                .attr("stroke-width", isMobile ? 2 : 1.5)
+                .attr("stroke-width", isMobile ? 1.5 : 2)
                 .attr("stroke", COLORS.WHITE);
             }
             
@@ -1295,12 +1310,12 @@ export default function VehicleMileageChart({ registration, vin }) {
           
           // Reset all points styling
           chart.selectAll(".mileage-point.mileage-pass")
-            .attr("stroke-width", isMobile ? 2 : 1.5)
+            .attr("stroke-width", isMobile ? 1.5 : 2)
             .attr("stroke", COLORS.WHITE);
             
           chart.selectAll(".mileage-point.mileage-fail")
             .attr("stroke-width", 2)
-            .attr("stroke", "black");
+            .attr("stroke", COLORS.WHITE);
           
           if (isSelected) {
             setSelectedPoint(null);
@@ -1308,18 +1323,12 @@ export default function VehicleMileageChart({ registration, vin }) {
           } else {
             setSelectedPoint(d.date.getTime());
             
-            // Special handling for fail diamonds
+            // Special handling for fails
             const isFail = d3.select(this).classed("mileage-fail");
             
-            if (isFail) {
-              d3.select(this)
-                .attr("stroke-width", 3)
-                .attr("stroke", "#000");
-            } else {
-              d3.select(this)
-                .attr("stroke-width", 3)
-                .attr("stroke", COLORS.BLACK);
-            }
+            d3.select(this)
+              .attr("stroke-width", 3)
+              .attr("stroke", COLORS.BLACK);
             
             // Generate tooltip content
             const tooltipContent = generatePointTooltip(d);
@@ -1328,63 +1337,63 @@ export default function VehicleMileageChart({ registration, vin }) {
               .html(tooltipContent)
               .style("visibility", "visible")
               .style("left", `${event.pageX}px`)
-              .style("top", `${event.pageY - 10}px`)
+              .style("top", `${event.pageY - 15}px`)
               .style("transform", "translate(-50%, -100%)");
           }
         });
     }
     
-    // Draw anomalies if enabled
+    // Draw anomalies if enabled - with improved GOV.UK styling
     if (showAnomalies) {
       // Generate tooltip content for anomaly points
       const generateAnomalyTooltip = (anomaly) => {
         let tooltipContent = `
-          <div style="font-weight: bold; ${anomaly.type === 'decrease' ? `color: ${COLORS.RED}` : ''}">
+          <div style="font-weight: 700; margin-bottom: 8px; font-size: ${isMobile ? '16px' : '18px'}; ${anomaly.type === 'decrease' ? `color: ${COLORS.RED}` : ''}">
             ${anomaly.details.current.formattedDate}
             ${anomaly.type === 'decrease' ? ' - ⚠️ MILEAGE DECREASE DETECTED' : ''}
           </div>
-          <div>Mileage: ${anomaly.details.current.formattedMileage}</div>
+          <div style="margin-bottom: 5px;"><strong>Mileage:</strong> ${anomaly.details.current.formattedMileage}</div>
         `;
         
         if (anomaly.type === 'decrease') {
           tooltipContent += `
-            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-            <div style="color: ${COLORS.RED}; font-weight: bold">Possible odometer tampering (clocking)</div>
-            <div style="font-size: 0.875rem;">
+            <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+            <div style="color: ${COLORS.RED}; font-weight: 700; margin-bottom: 5px;">Possible odometer tampering (clocking)</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;">
               <strong>Previous reading:</strong> ${anomaly.details.previous.formattedMileage} miles
               (${anomaly.details.previous.formattedDate})
             </div>
-            <div style="font-size: 0.875rem;">
+            <div style="font-size: 0.95rem; margin-bottom: 5px;">
               <strong>Decrease amount:</strong> ${Math.abs(anomaly.details.diff).toLocaleString()} miles
             </div>
-            <div style="font-size: 0.875rem;">
+            <div style="font-size: 0.95rem; margin-bottom: 5px;">
               <strong>Time between readings:</strong> ${Math.round(anomaly.details.timeBetweenReadings)} days
             </div>
-            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-            <div style="font-size: 0.875rem;"><strong>Possible causes:</strong></div>
-            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.875rem;">
-              <li>Odometer tampering</li>
-              <li>Data entry error during MOT</li>
-              <li>Instrument cluster replacement</li>
-              <li>Technical fault with odometer</li>
+            <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Possible causes:</strong></div>
+            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.95rem;">
+              <li style="margin-bottom: 3px;">Odometer tampering</li>
+              <li style="margin-bottom: 3px;">Data entry error during MOT</li>
+              <li style="margin-bottom: 3px;">Instrument cluster replacement</li>
+              <li style="margin-bottom: 3px;">Technical fault with odometer</li>
             </ul>
           `;
         } else {
           tooltipContent += `
-            <div style="color: ${ORANGE}; font-weight: bold">${anomaly.message}</div>
-            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-            <div style="font-size: 0.875rem;"><strong>Previous reading:</strong> ${anomaly.details.previous.formattedMileage} miles (${anomaly.details.previous.formattedDate})</div>
-            <div style="font-size: 0.875rem;"><strong>Increase amount:</strong> ${Math.abs(anomaly.details.diff).toLocaleString()} miles</div>
-            <div style="font-size: 0.875rem;"><strong>Time period:</strong> ${Math.round(anomaly.details.days)} days</div>
-            <div style="font-size: 0.875rem;"><strong>Daily rate:</strong> ${Math.round(anomaly.details.dailyAvg)} miles/day</div>
-            <div style="font-size: 0.875rem;"><strong>Annual equivalent:</strong> ${Math.round(anomaly.details.annualizedMileage).toLocaleString()} miles/year</div>
-            <hr style="margin: 8px 0; border: 0; border-top: 1px solid ${COLORS.MID_GREY};">
-            <div style="font-size: 0.875rem;"><strong>Possible causes:</strong></div>
-            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.875rem;">
-              <li>Incorrect odometer reading at previous test</li>
-              <li>Long-distance/commercial use</li>
-              <li>Multiple drivers sharing vehicle</li>
-              <li>Test entry error</li>
+            <div style="color: ${ORANGE}; font-weight: 700; margin-bottom: 5px;">${anomaly.message}</div>
+            <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Previous reading:</strong> ${anomaly.details.previous.formattedMileage} miles (${anomaly.details.previous.formattedDate})</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Increase amount:</strong> ${Math.abs(anomaly.details.diff).toLocaleString()} miles</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Time period:</strong> ${Math.round(anomaly.details.days)} days</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Daily rate:</strong> ${Math.round(anomaly.details.dailyAvg)} miles/day</div>
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Annual equivalent:</strong> ${Math.round(anomaly.details.annualizedMileage).toLocaleString()} miles/year</div>
+            <hr style="border: 0; height: 1px; background-color: ${COLORS.MID_GREY}; margin: 10px 0;">
+            <div style="font-size: 0.95rem; margin-bottom: 5px;"><strong>Possible causes:</strong></div>
+            <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 0.95rem;">
+              <li style="margin-bottom: 3px;">Incorrect odometer reading at previous test</li>
+              <li style="margin-bottom: 3px;">Long-distance/commercial use</li>
+              <li style="margin-bottom: 3px;">Multiple drivers sharing vehicle</li>
+              <li style="margin-bottom: 3px;">Test entry error</li>
             </ul>
           `;
         }
@@ -1392,15 +1401,14 @@ export default function VehicleMileageChart({ registration, vin }) {
         return tooltipContent;
       };
 
-      // Draw anomalies with a more professional, consistent approach
+      // Draw anomalies with a more professional, consistent GOV.UK approach
       anomalies.forEach(d => {
         const x = xScale(d.details.current.date);
         const y = yScale(d.details.current.mileage);
         
-        const radius = isMobile ? 8 : 7;
+        const radius = isMobile ? 8 : 10;
         
-        // Use circles with consistent styling for anomalies too
-        // Add visual distinction with color and border style
+        // Use circles with consistent styling for anomalies with GOV.UK theme colors
         if (d.type === "decrease") {
           // For clocking (decrease), use red with a dashed border
           chart.append("circle")
@@ -1430,7 +1438,7 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("stroke-dasharray", "3,3");
             
         } else {
-          // For spikes, use orange/yellow
+          // For spikes, use GOV.UK yellow/orange
           chart.append("circle")
             .datum(d)
             .attr("class", "anomaly anomaly-spike")
@@ -1457,7 +1465,7 @@ export default function VehicleMileageChart({ registration, vin }) {
             .attr("fill", "none")
             .attr("stroke", ORANGE)
             .attr("stroke-width", 1.5)
-            .attr("stroke-opacity", 0.7);
+            .attr("stroke-opacity", 0.8);
         }
       });
       
@@ -1472,7 +1480,7 @@ export default function VehicleMileageChart({ registration, vin }) {
           
           // Reset all points
           chart.selectAll(".mileage-point, .anomaly")
-            .attr("stroke-width", isMobile ? 2 : 1.5)
+            .attr("stroke-width", isMobile ? 1.5 : 2)
             .attr("stroke", COLORS.WHITE);
           
           // Toggle selection
@@ -1498,7 +1506,7 @@ export default function VehicleMileageChart({ registration, vin }) {
               .html(tooltipContent)
               .style("visibility", "visible")
               .style("left", `${rect.left + rect.width/2 + scrollLeft}px`)
-              .style("top", `${rect.top + scrollTop - 10}px`)
+              .style("top", `${rect.top + scrollTop - 15}px`)
               .style("transform", "translate(-50%, -100%)");
           }
         });
@@ -1507,7 +1515,7 @@ export default function VehicleMileageChart({ registration, vin }) {
         anomalyElements
           .on("mouseover", function(event, d) {
             d3.select(this)
-              .attr("stroke-width", 2)
+              .attr("stroke-width", 3)
               .attr("stroke", COLORS.BLACK);
             
             // Generate tooltip content
@@ -1517,13 +1525,13 @@ export default function VehicleMileageChart({ registration, vin }) {
               .html(tooltipContent)
               .style("visibility", "visible")
               .style("left", `${event.pageX}px`)
-              .style("top", `${event.pageY - 10}px`)
+              .style("top", `${event.pageY - 15}px`)
               .style("transform", "translate(-50%, -100%)");
           })
           .on("mouseout", function() {
             if (!selectedPoint || !selectedPoint.startsWith('anomaly-')) {
               d3.select(this)
-                .attr("stroke-width", isMobile ? 2 : 1.5)
+                .attr("stroke-width", isMobile ? 1.5 : 2)
                 .attr("stroke", COLORS.WHITE);
               
               tooltip.style("visibility", "hidden");
@@ -1541,7 +1549,7 @@ export default function VehicleMileageChart({ registration, vin }) {
             
             // Reset all points
             chart.selectAll(".mileage-point, .anomaly")
-              .attr("stroke-width", isMobile ? 2 : 1.5)
+              .attr("stroke-width", isMobile ? 1.5 : 2)
               .attr("stroke", COLORS.WHITE);
             
             if (isSelected) {
@@ -1561,7 +1569,7 @@ export default function VehicleMileageChart({ registration, vin }) {
                 .html(tooltipContent)
                 .style("visibility", "visible")
                 .style("left", `${event.pageX}px`)
-                .style("top", `${event.pageY - 10}px`)
+                .style("top", `${event.pageY - 15}px`)
                 .style("transform", "translate(-50%, -100%)");
             }
           });
@@ -1583,13 +1591,13 @@ export default function VehicleMileageChart({ registration, vin }) {
         
         if (selectedPoint) {
           chart.selectAll(".mileage-point, .anomaly")
-            .attr("stroke-width", isMobile ? 2 : 1.5)
+            .attr("stroke-width", isMobile ? 1.5 : 2)
             .attr("stroke", COLORS.WHITE);
           
           // Reset fail diamonds to their default style
           chart.selectAll(".mileage-point.mileage-fail")
             .attr("stroke-width", 2)
-            .attr("stroke", "black");
+            .attr("stroke", COLORS.WHITE);
 
           setSelectedPoint(null);
           tooltip.style("visibility", "hidden");
@@ -1605,8 +1613,8 @@ export default function VehicleMileageChart({ registration, vin }) {
         .attr("text-anchor", "middle")
         .attr("fill", COLORS.RED)
         .attr("font-family", "'GDS Transport', arial, sans-serif")
-        .style("font-size", "14px")
-        .style("font-weight", "bold")
+        .style("font-size", "16px")
+        .style("font-weight", "700")
         .text("Limited data: Analysis may not be comprehensive");
     }
 

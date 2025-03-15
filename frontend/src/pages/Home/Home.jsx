@@ -47,7 +47,7 @@ function Home() {
           <GovUKHeaderLogo>
             <GovUKHeaderLink href="#" isHomepage>
               <GovUKHeaderLogotype>
-                <GovUKHeaderLogotypeText>GOV.UK</GovUKHeaderLogotypeText>
+                <GovUKHeaderLogotypeText>Mot Check.UK</GovUKHeaderLogotypeText>
               </GovUKHeaderLogotype>
             </GovUKHeaderLink>
           </GovUKHeaderLogo>
@@ -95,7 +95,7 @@ function Home() {
               </GovUKFooterInlineList>
               
               <GovUKFooterMetaCustom>
-                Built by the <GovUKFooterLink href="#">Driver & Vehicle Standards Agency</GovUKFooterLink>
+                Information provided by the <GovUKFooterLink href="#">Driver & Vehicle Standards Agency</GovUKFooterLink>
               </GovUKFooterMetaCustom>
               
               <GovUKFooterLicenceLogo
@@ -116,7 +116,7 @@ function Home() {
               </GovUKFooterLicenceDescription>
             </GovUKFooterMetaItem>
             <GovUKFooterMetaItem>
-              <GovUKFooterCopyrightLogo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</GovUKFooterCopyrightLogo>
+              <GovUKFooterCopyrightLogo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">©  2025</GovUKFooterCopyrightLogo>
             </GovUKFooterMetaItem>
           </GovUKFooterMeta>
         </GovUKContainer>

@@ -6,7 +6,7 @@ import {
   GovUKBodyS, 
   GovUKList,
   PremiumInfoPanel,
-  COLORS 
+  COLORS,
 } from '../../../../../../styles/theme';
 
 // GOV.UK Breakpoints (converted to px for media queries)
@@ -16,24 +16,6 @@ const GOVUK_BREAKPOINTS = {
   DESKTOP: '769px',
 };
 
-// GOV.UK Colors 
-const GOVUK_COLORS = {
-  ...COLORS,
-  TEXT: '#0b0c0c',
-  LINK: '#1d70b8',
-  LINK_VISITED: '#4c2c92',
-  LINK_HOVER: '#003078',
-  GREY: '#b1b4b6',
-  DARK_GREY: '#505a5f',
-  LIGHT_GREY: '#f3f2f1',
-  BLUE: '#1d70b8',
-  PURPLE: '#4c2c92',
-  GREEN: '#00703c',
-  RED: '#d4351c',
-  YELLOW: '#fd0',
-  ORANGE: '#f47738',
-  TURQUOISE: '#28a197',
-};
 
 // Media query helpers
 export const mobileMediaQuery = `@media (max-width: ${GOVUK_BREAKPOINTS.TABLET})`;
@@ -44,7 +26,7 @@ export const govukFontStyles = css`
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: ${GOVUK_COLORS.TEXT};
+  color: ${COLORS.TEXT};
   @media print {
     font-family: sans-serif;
     color: #000;
@@ -77,7 +59,7 @@ export const MileageInsightsHeader = styled('div')(() => css`
 export const MileageBadge = styled('div')(() => css`
   display: inline-block;
   padding: 5px 10px;
-  background-color: ${GOVUK_COLORS.BLUE};
+  background-color: ${COLORS.BLUE};
   color: #ffffff;
   font-family: "GDS Transport", arial, sans-serif;
   font-weight: 700;
@@ -101,7 +83,7 @@ export const MileageInsightsTitle = styled(GovUKHeadingM)(() => css`
 export const MileageInsightsDescription = styled(GovUKBodyS)(() => css`
   margin-bottom: 25px;
   font-family: "GDS Transport", arial, sans-serif;
-  color: ${GOVUK_COLORS.DARK_GREY};
+  color: ${COLORS.DARK_GREY};
 `);
 
 // Enhanced panel styling with customizable left border
@@ -109,10 +91,10 @@ export const MileagePanel = styled(PremiumInfoPanel, {
   shouldForwardProp: prop => prop !== 'borderColor',
 })(({ borderColor }) => css`
   ${govukFontStyles}
-  border-left: 5px solid ${borderColor || GOVUK_COLORS.BLUE};
+  border-left: 5px solid ${borderColor || COLORS.BLUE};
   padding: 15px;
   margin-bottom: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
+  background-color: ${COLORS.LIGHT_GREY};
 
   ${desktopMediaQuery} {
     padding: 20px;
@@ -134,8 +116,8 @@ export const MileageInsightPanel = styled('div', {
   shouldForwardProp: prop => prop !== 'borderColor',
 })(({ borderColor }) => css`
   padding: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
-  border-left: 5px solid ${borderColor || GOVUK_COLORS.BLUE};
+  background-color: ${COLORS.LIGHT_GREY};
+  border-left: 5px solid ${borderColor || COLORS.BLUE};
   position: relative;
   transition: box-shadow 0.3s ease;
 
@@ -169,7 +151,7 @@ export const MileageSectionHeading = styled(GovUKHeadingS, {
 
   & svg {
     margin-right: 10px;
-    color: ${iconColor || GOVUK_COLORS.BLUE};
+    color: ${iconColor || COLORS.BLUE};
   }
 `);
 
@@ -189,7 +171,7 @@ export const MileageTable = styled('table')(() => css`
     font-weight: 700;
     padding: 10px 20px 10px 0;
     text-align: left;
-    border-bottom: 1px solid ${GOVUK_COLORS.GREY};
+    border-bottom: 1px solid ${COLORS.GREY};
     font-size: 1rem;
 
     ${desktopMediaQuery} {
@@ -203,7 +185,7 @@ export const MileageTable = styled('table')(() => css`
 
   & td {
     padding: 10px 20px 10px 0;
-    border-bottom: 1px solid ${GOVUK_COLORS.GREY};
+    border-bottom: 1px solid ${COLORS.GREY};
     font-size: 1rem;
 
     ${desktopMediaQuery} {
@@ -224,9 +206,9 @@ export const RiskScoreDisplay = styled('div', {
   align-items: center;
   padding: 15px;
   border: 2px solid ${
-    riskCategory === 'Low' ? GOVUK_COLORS.GREEN : 
-    riskCategory === 'Medium' ? GOVUK_COLORS.ORANGE : 
-    GOVUK_COLORS.RED
+    riskCategory === 'Low' ? COLORS.GREEN : 
+    riskCategory === 'Medium' ? COLORS.ORANGE : 
+    COLORS.RED
   };
   margin-bottom: 20px;
   background-color: rgba(243, 242, 241, 0.5);
@@ -240,9 +222,9 @@ export const RiskScoreCircle = styled('div', {
   height: 70px;
   border-radius: 50%;
   background-color: ${
-    riskCategory === 'Low' ? GOVUK_COLORS.GREEN : 
-    riskCategory === 'Medium' ? GOVUK_COLORS.ORANGE : 
-    GOVUK_COLORS.RED
+    riskCategory === 'Low' ? COLORS.GREEN : 
+    riskCategory === 'Medium' ? COLORS.ORANGE : 
+    COLORS.RED
   };
   color: #ffffff;
   display: flex;
@@ -266,9 +248,9 @@ export const RiskCategory = styled(GovUKHeadingS, {
 })(({ riskCategory }) => css`
   margin-bottom: 5px;
   color: ${
-    riskCategory === 'Low' ? GOVUK_COLORS.GREEN : 
-    riskCategory === 'Medium' ? GOVUK_COLORS.ORANGE : 
-    GOVUK_COLORS.RED
+    riskCategory === 'Low' ? COLORS.GREEN : 
+    riskCategory === 'Medium' ? COLORS.ORANGE : 
+    COLORS.RED
   };
   font-family: "GDS Transport", arial, sans-serif;
   font-weight: 700;
@@ -287,8 +269,8 @@ export const FactorsHeading = styled(GovUKHeadingS, {
   ${govukFontStyles}
   font-size: 1.1rem;
   margin-bottom: 10px;
-  color: ${color || GOVUK_COLORS.BLACK};
-  border-bottom: 2px solid ${color || GOVUK_COLORS.BLACK};
+  color: ${color || COLORS.BLACK};
+  border-bottom: 2px solid ${color || COLORS.BLACK};
   padding-bottom: 5px;
   font-weight: 700;
   display: flex;
@@ -317,7 +299,7 @@ export const FactorItem = styled('li', {
   align-items: flex-start;
   margin-bottom: 8px;
   padding-left: 8px;
-  border-left: 3px solid ${borderColor || GOVUK_COLORS.BLUE};
+  border-left: 3px solid ${borderColor || COLORS.BLUE};
   font-size: 1rem;
   line-height: 1.25;
 
@@ -335,7 +317,7 @@ export const FactorItem = styled('li', {
     margin-right: 10px;
     margin-top: 2px;
     min-width: 20px;
-    color: ${iconColor || borderColor || GOVUK_COLORS.BLUE};
+    color: ${iconColor || borderColor || COLORS.BLUE};
   }
 `);
 
@@ -352,7 +334,7 @@ export const ValueDisplay = styled('span', {
 export const FooterNote = styled(GovUKBodyS)(() => css`
   ${govukFontStyles}
   text-align: center;
-  color: ${GOVUK_COLORS.DARK_GREY};
+  color: ${COLORS.DARK_GREY};
   margin-top: 20px;
   font-size: 0.875rem;
   
@@ -367,8 +349,8 @@ export const LoadingContainer = styled('div')(() => css`
   text-align: center;
   padding: 30px 0;
   margin: 20px 0;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
-  border-left: 5px solid ${GOVUK_COLORS.BLUE};
+  background-color: ${COLORS.LIGHT_GREY};
+  border-left: 5px solid ${COLORS.BLUE};
 `);
 
 // Error container
@@ -376,7 +358,7 @@ export const ErrorContainer = styled('div')(() => css`
   ${govukFontStyles}
   padding: 20px;
   background-color: rgba(212, 53, 28, 0.1);
-  border-left: 5px solid ${GOVUK_COLORS.RED};
+  border-left: 5px solid ${COLORS.RED};
   margin-bottom: 20px;
 `);
 
@@ -384,8 +366,8 @@ export const ErrorContainer = styled('div')(() => css`
 export const EmptyContainer = styled('div')(() => css`
   ${govukFontStyles}
   padding: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
-  border-left: 5px solid ${GOVUK_COLORS.DARK_GREY};
+  background-color: ${COLORS.LIGHT_GREY};
+  border-left: 5px solid ${COLORS.DARK_GREY};
   margin-bottom: 20px;
 `);
 

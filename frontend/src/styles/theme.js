@@ -2,17 +2,42 @@ import { styled, css } from '@mui/material/styles';
 
 // Define consistent GOV.UK colors as constants
 export const COLORS = {
-  BLACK: '#0b0c0c',
-  WHITE: '#ffffff',
-  BLUE: '#1d70b8',
-  YELLOW: '#fd0', // Updated to match GOV.UK yellow
-  RED: '#d4351c',
-  GREEN: '#00703c',
+  // Core colors
+  BLACK: '#0b0c0c',        // Default text, shadows
+  WHITE: '#ffffff',        // Content background, inverse text
+  BLUE: '#1d70b8',         // Default link color
+  YELLOW: '#fd0',          // Focus/highlight (#ffdd00)
+  RED: '#d4351c',          // Error text, warning button
+  GREEN: '#00703c',        // Default button background
   LIGHT_GREY: '#f3f2f1',
   MID_GREY: '#b1b4b6',
-  DARK_GREY: '#505a5f',
-};
+  DARK_GREY: '#505a5f',     
 
+  // Text-specific
+  TEXT: '#0b0c0c',         // Matches BLACK
+  PRINT_TEXT: '#000',      // Pure black for print media
+
+  // Link-specific
+  LINK: '#1d70b8',         // Matches BLUE
+  LINK_VISITED: '#4c2c92', // Visited link, matches PURPLE
+  LINK_HOVER: '#003078',   // Hover link
+
+  // Button-specific shades
+  GREEN_HOVER: '#005a30',  // Button hover green
+  GREEN_DARK: '#002d18',   // Button shadow green
+  LIGHT_GREY_HOVER: '#dbdad9', // Secondary button hover
+  MID_GREY_DARK: '#929191',    // Secondary button shadow
+  RED_HOVER: '#aa2a16',    // Warning button hover
+  RED_DARK: '#55150b',     // Warning button shadow
+  INVERSE_BLUE_HOVER: '#e8f1f8', // Inverse button hover
+  INVERSE_BLUE_DARK: '#144e81',  // Inverse button shadow
+
+  // Navigation-specific
+  NAV_TOGGLE: '#1a65a6',   // Service navigation toggle color
+
+  // Additional colors
+  PURPLE: '#4c2c92',       // Matches LINK_VISITED
+};
 // BREAKPOINTS
 export const BREAKPOINTS = {
   MOBILE: '40.0625em', // 650px
@@ -797,7 +822,7 @@ export const GovUKInsetText = styled('div')`
   margin-top: 20px;
   margin-bottom: 20px;
   clear: both;
-  border-left: 10px solid ${COLORS.MID_GREY};
+  border-left: 5px solid ${COLORS.MID_GREY};
   
   ${printStyles}
   
@@ -845,7 +870,7 @@ export const GovUKHeader = styled('header')`
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1;
-  border-bottom: 10px solid ${COLORS.WHITE};
+  border-bottom: 5px solid ${COLORS.WHITE};
   color: ${COLORS.WHITE};
   background: ${COLORS.BLACK};
   
@@ -859,7 +884,7 @@ export const GovUKHeaderContainer = styled('div')`
   position: relative;
   margin-bottom: -10px;
   padding-top: 10px;
-  border-bottom: 10px solid ${COLORS.BLUE};
+  border-bottom: 5px solid ${COLORS.BLUE};
   
   &::after {
     content: "";

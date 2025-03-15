@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Black background (matches UK gov style) -->
+  <rect width="32" height="32" fill="#0b0c0c"/>
+  <!-- Shield shape (symbol of authority and trust) -->
+  <path fill="#ffffff" d="M16 6c-4 0-8 4-8 8v10c0 2 2 4 8 4s8-2 8-4V14c0-4-4-8-8-8z"/>
+  <!-- Car silhouette inside shield -->
+  <path fill="#0b0c0c" d="M10 16h12v4H10zM11 14h10l1 2h-12z"/>
+  <!-- Wheels -->
+  <circle cx="12" cy="20" r="1.5" fill="#ffffff"/>
+  <circle cx="20" cy="20" r="1.5" fill="#ffffff"/>
+  <!-- Accent "M" for MOT (subtle red for authority) -->
+  <path fill="#d81a1a" d="M14 8h1l2 3h-2l-1-3zm3 0h1l1 3h-2z"/>
+</svg>

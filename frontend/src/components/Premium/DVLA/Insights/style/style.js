@@ -8,7 +8,7 @@ import {
 } from '../../../../../styles/theme';
 
 // Use the consistent GOV.UK colors from the main theme
-const GOVUK_COLORS = COLORS;
+export const GOVUK_COLORS = COLORS;
 
 // Media query helpers aligned with main theme
 const mobileMediaQuery = `@media (max-width: 40.0625em)`;
@@ -63,7 +63,7 @@ export const StatusPanel = styled(InsightPanel)(() => css`
 `);
 
 export const EmissionsPanel = styled(InsightPanel)(() => css`
-  border-left-color: ${GOVUK_COLORS.TURQUOISE || '#28a197'};
+  border-left-color: ${GOVUK_COLORS.BLUE || '#28a197'};
 `);
 
 export const FuelEfficiencyPanel = styled(InsightPanel)(() => css`

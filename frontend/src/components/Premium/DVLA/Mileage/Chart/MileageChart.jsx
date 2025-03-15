@@ -10,6 +10,7 @@ import {
   GovUKCaptionM,
   GovUKBody,
   GovUKInsetText,
+  COLORS
 } from '../../../../../styles/theme';
 
 // Import the custom tooltip component

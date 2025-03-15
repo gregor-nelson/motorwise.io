@@ -10,6 +10,7 @@ import React from 'react';
  * 
  * Updated with accurate commercial vehicle tax calculations (April 2024)
  * Includes Direct Debit rates and motorcycle/tricycle tax support
+ * Improved historic vehicle, special tax class, and exemption handling
  */
 const EmissionsInsightsCalculator = (vehicleData) => {
   // Extract basic emissions data
@@ -27,7 +28,8 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   const isCommercial = vehicleCategory === "light goods vehicle" || 
                        vehicleCategory === "heavy goods vehicle N2" || 
                        vehicleCategory === "heavy goods vehicle N3";
-  const inferredTaxClass = vehicleData.taxClass || (isCommercial ? "light goods" : "private car");
+  const normalizedTaxClass = normalizeTaxClass(vehicleData.taxClass);
+  const inferredTaxClass = normalizedTaxClass || (isCommercial ? "light goods" : "private car");
   
   // Check if explicitly RDE2 compliant (if available in data)
   // This is important for diesel tax rates
@@ -197,9 +199,68 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     }
   }
   
-  // Determine if vehicle qualifies for the flat fee (vehicles registered after April 2017)
+  // Check for special exemption categories
+  let hasSpecialExemption = false;
+  
+  // NHS vehicles
+  if (normalizedTaxClass === 'national health service') {
+    annualTaxCost = "£0 (NHS Vehicle - Exempt)";
+    annualTaxCostDirectDebit = "£0 (NHS Vehicle - Exempt)";
+    firstYearTaxCost = "£0 (NHS Vehicle - Exempt)";
+    taxBand = "NHS Vehicle";
+    taxNotes.push("Vehicle is exempt from vehicle tax as a National Health Service vehicle.");
+    hasSpecialExemption = true;
+  }
+  
+  // Crown vehicles
+  else if (normalizedTaxClass === 'crown') {
+    annualTaxCost = "£0 (Crown Vehicle - Exempt)";
+    annualTaxCostDirectDebit = "£0 (Crown Vehicle - Exempt)";
+    firstYearTaxCost = "£0 (Crown Vehicle - Exempt)";
+    taxBand = "Crown Vehicle";
+    taxNotes.push("Vehicle is exempt from vehicle tax as a Crown vehicle used solely for official purposes.");
+    hasSpecialExemption = true;
+  }
+  
+  // Emergency vehicles
+  else if (normalizedTaxClass === 'emergency vehicle' || 
+          vehicleData.bodyType?.toLowerCase().includes('ambulance') || 
+          vehicleData.bodyType?.toLowerCase().includes('fire') ||
+          vehicleData.bodyType?.toLowerCase().includes('police')) {
+    annualTaxCost = "£0 (Emergency Vehicle - Exempt)";
+    annualTaxCostDirectDebit = "£0 (Emergency Vehicle - Exempt)";
+    firstYearTaxCost = "£0 (Emergency Vehicle - Exempt)";
+    taxBand = "Emergency Vehicle";
+    taxNotes.push("Vehicle is exempt from vehicle tax as an emergency vehicle.");
+    hasSpecialExemption = true;
+  }
+  
+  // Disabled vehicles
+  else if (normalizedTaxClass === 'disabled') {
+    annualTaxCost = "£0 (Disabled Vehicle - Exempt)";
+    annualTaxCostDirectDebit = "£0 (Disabled Vehicle - Exempt)";
+    firstYearTaxCost = "£0 (Disabled Vehicle - Exempt)";
+    taxBand = "Disabled Vehicle";
+    taxNotes.push("Vehicle is exempt from vehicle tax under the Disabled tax class.");
+    hasSpecialExemption = true;
+  }
+  
+  // Check for historic vehicle tax exemption (40+ years old)
+  else if (isHistoricVehicle(vehicleData, 'tax')) {
+    annualTaxCost = "£0 (Historic Vehicle - Exempt)";
+    annualTaxCostDirectDebit = "£0 (Historic Vehicle - Exempt)";
+    firstYearTaxCost = "£0 (Historic Vehicle - Exempt)";
+    taxBand = "Historic Vehicle";
+    taxNotes.push("Vehicle qualifies for historic vehicle tax exemption (40+ years old).");
+    taxNotes.push("To claim this exemption, the vehicle must be registered in the 'Historic Vehicle' tax class with the DVLA.");
+    hasSpecialExemption = true;
+  }
+  
+  // Skip other tax calculations if the vehicle has a special exemption
   let registrationDateObj = null;
-  if (registrationDate || makeYear) {
+  if (hasSpecialExemption) {
+    // Prevent further tax calculations by not initializing registrationDateObj
+  } else if (registrationDate || makeYear) {
     const regParts = registrationDate ? registrationDate.split('-') : [];
     const regYear = regParts.length >= 1 ? parseInt(regParts[0]) : makeYear; // Robust parsing
     const regMonth = regParts.length >= 2 ? parseInt(regParts[1]) : 1; // Default to January if missing
@@ -207,8 +268,15 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     // Handle Motorcycles and Tricycles
     if (vehicleCategory === "motorcycle or moped") {
       const cc = parseInt(engineSize) || 0;
-      if (revenueWeight <= 450) {
-        if (inferredTaxClass === "tricycle" || vehicleData.taxClass?.toLowerCase() === "tc50") {
+      
+      // Check for electric motorcycles first - they're exempt since April 2001
+      if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
+        annualTaxCost = "£0 (Electric Motorcycle - Exempt)";
+        annualTaxCostDirectDebit = "£0 (Electric Motorcycle - Exempt)";
+        taxBand = "N/A (Electric Motorcycle)";
+        taxNotes.push("Electric motorcycles and tricycles are exempt from vehicle tax since April 2001");
+      } else if (revenueWeight <= 450) {
+        if (inferredTaxClass === "tricycle" || normalizedTaxClass === "tricycle") {
           if (cc <= 150) {
             annualTaxCost = "£25";
             annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
@@ -256,11 +324,13 @@ const EmissionsInsightsCalculator = (vehicleData) => {
         taxBand = "N/A (Pre-2001 Goods)";
         taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
       } else if (regYear >= 2003 && regYear <= 2006 && effectiveEuroStatus === "Euro 4") {
+        // Euro 4 Light Goods Vehicles registered between 1 March 2003 and 31 December 2006
         annualTaxCost = "£140";
         annualTaxCostDirectDebit = "£147 (12 monthly installments)";
         taxBand = "N/A (Euro 4 Light Goods)";
         taxNotes.push("Taxed as Euro 4 compliant light goods vehicle (tax class 36)");
-      } else if (regYear >= 2009 && regYear <= 2010 && effectiveEuroStatus === "Euro 5") {
+      } else if (regYear >= 2009 && regYear <= 2010 && effectiveEuroStatus === "Euro 5" && fuelType.toUpperCase().includes("DIESEL")) {
+        // Euro 5 Light Goods Vehicles registered between 1 January 2009 and 31 December 2010 (diesel only)
         annualTaxCost = "£140";
         annualTaxCostDirectDebit = "£147 (12 monthly installments)";
         taxBand = "N/A (Euro 5 Light Goods)";
@@ -533,10 +603,10 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   }
 
   // Determine Scottish LEZ compliance based on the regulations
-  const isScottishLEZCompliant = determineScottishLEZCompliance(fuelType, effectiveEuroStatus, vehicleCategory);
+  const isScottishLEZCompliant = determineScottishLEZCompliance(fuelType, effectiveEuroStatus, vehicleCategory, vehicleData);
   
   // Determine ULEZ compliance for other UK zones
-  const isULEZCompliant = determineULEZCompliance(fuelType, makeYear, effectiveEuroStatus);
+  const isULEZCompliant = determineULEZCompliance(fuelType, makeYear, effectiveEuroStatus, vehicleData);
   
   // Determine clean air zone status
   let ukCleanAirZoneStatus = isULEZCompliant ? "Compliant" : "Non-Compliant";
@@ -545,7 +615,9 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   // Set impact message
   let cleanAirZoneImpact = "No charges in UK or Scottish Clean Air/Low Emission Zones";
   
-  if (!isScottishLEZCompliant && !isULEZCompliant) {
+  if (isHistoricVehicle(vehicleData, 'lez')) {
+    cleanAirZoneImpact = "Vehicle is exempt from ULEZ and LEZ charges as a historic vehicle (30+ years old)";
+  } else if (!isScottishLEZCompliant && !isULEZCompliant) {
     cleanAirZoneImpact = "Vehicle is not compliant with UK ULEZ and Scottish LEZ standards";
   } else if (!isScottishLEZCompliant) {
     cleanAirZoneImpact = "Vehicle is not compliant with Scottish LEZ standards";
@@ -566,6 +638,9 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   // Add specific information about Euro standard pollutant limits if available
   let pollutantLimits = getPollutantLimits(fuelType, effectiveEuroStatus, effectiveEuroSubcategory);
   
+  // Check for MOT exemption (40+ years old)
+  const isMotExempt = isHistoricVehicle(vehicleData, 'tax'); // Uses same rule as tax (40+ years)
+  
   // Return the comprehensive emissions insights
   return {
     co2Emissions: effectiveCO2,
@@ -578,6 +653,8 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     annualTaxCostDirectDebit, // Added for Direct Debit
     firstYearTaxCost,
     taxNotes,
+    isHistoricVehicle: isHistoricVehicle(vehicleData, 'tax'),
+    isMotExempt,
     
     // UK ULEZ Information
     ukCleanAirZoneStatus,
@@ -600,6 +677,107 @@ const EmissionsInsightsCalculator = (vehicleData) => {
 };
 
 /**
+ * Helper function to normalize tax class codes to standard formats
+ * Maps DVLA tax class codes to their proper categories
+ */
+const normalizeTaxClass = (taxClass) => {
+  if (!taxClass) return null;
+  
+  const taxClassLower = taxClass.toLowerCase();
+  
+  // Official tax class code mappings
+  const taxClassMap = {
+    // Private/Light Goods
+    'tc11': 'private/light goods',
+    
+    // Cars by fuel type
+    'tc01': 'petrol car',
+    'tc02': 'diesel car',
+    'tc03': 'alternative fuel car',
+    
+    // Light goods
+    'tc39': 'light goods vehicle',
+    'tc36': 'euro 4/5 light goods vehicle',
+    
+    // Motorcycles
+    'tc17': 'motorcycle',
+    'tc50': 'tricycle',
+    
+    // Other common codes
+    'tc40': 'crown',
+    'tc34': 'disabled',
+    'tc85': 'exempt',
+    'tc37': 'emergency vehicle',
+    'tc35': 'historic vehicle'
+  };
+  
+  // Check for exact match with tax class code
+  if (taxClassMap[taxClassLower]) {
+    return taxClassMap[taxClassLower];
+  }
+  
+  // Check for partial text match
+  if (taxClassLower.includes('historic')) return 'historic vehicle';
+  if (taxClassLower.includes('disabled')) return 'disabled';
+  if (taxClassLower.includes('emergency')) return 'emergency vehicle';
+  if (taxClassLower.includes('motorcycle') || taxClassLower.includes('moped')) return 'motorcycle';
+  if (taxClassLower.includes('tricycle')) return 'tricycle';
+  if (taxClassLower.includes('goods')) return 'light goods vehicle';
+  if (taxClassLower.includes('diesel')) return 'diesel car';
+  if (taxClassLower.includes('petrol')) return 'petrol car';
+  if (taxClassLower.includes('alternative') || taxClassLower.includes('hybrid')) return 'alternative fuel car';
+  if (taxClassLower.includes('crown')) return 'crown';
+  if (taxClassLower.includes('nhs')) return 'national health service';
+  
+  // Default
+  return taxClassLower;
+};
+
+/**
+ * Helper function to determine if a vehicle qualifies for historic status
+ * Takes into account different age thresholds for different purposes
+ */
+const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
+  const currentYear = new Date().getFullYear();
+  const yearOfManufacture = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
+  
+  if (!yearOfManufacture) return false;
+  
+  // For tax purposes, vehicles 40+ years old are exempt (rolling from April 1st each year)
+  if (purposeType === 'tax') {
+    const cutoffYear = currentYear - 40;
+    
+    // Check base historic status
+    const isHistoric = yearOfManufacture <= cutoffYear;
+    
+    // Exceptions: buses and goods vehicles used commercially are not exempt
+    if (isHistoric) {
+      const vehicleCategory = determineVehicleCategory(vehicleData);
+      const isCommercialGoods = (vehicleCategory === "light goods vehicle" || 
+                                vehicleCategory === "heavy goods vehicle N2" || 
+                                vehicleCategory === "heavy goods vehicle N3") && 
+                                !vehicleData.privateUse;
+      const isBus = vehicleCategory === "bus or coach" || vehicleCategory === "minibus";
+      
+      // Not exempt if a commercial goods vehicle or bus
+      if (isCommercialGoods || isBus) {
+        return false;
+      }
+    }
+    
+    return isHistoric;
+  }
+  
+  // For ULEZ/LEZ purposes, vehicles 30+ years old that are in original state are exempt
+  if (purposeType === 'lez' || purposeType === 'ulez') {
+    const cutoffYear = currentYear - 30;
+    return yearOfManufacture <= cutoffYear;
+  }
+  
+  return false;
+};
+
+/**
  * Determines the vehicle category based on weight and tax class
  * Make/model agnostic approach to categorizing vehicles
  * Refined to prevent misclassification of passenger vehicles as goods
@@ -617,7 +795,7 @@ const determineVehicleCategory = (vehicleData) => {
     return "light goods vehicle";
   }
   
-  // Revenue weight alone isn’t enough; check body type and tax class explicitly
+  // Revenue weight alone isn't enough; check body type and tax class explicitly
   if (revenueWeight > 0 && revenueWeight <= 3500 && 
       (bodyType.toLowerCase().includes('van') || taxClass === "light goods vehicle" || taxClass === "tc39")) {
     return "light goods vehicle";
@@ -674,7 +852,12 @@ const determineVehicleCategory = (vehicleData) => {
  * Determines if a vehicle is compliant with Scottish LEZ standards
  * Based on the Low Emission Zones (Scotland) Regulations 2021
  */
-const determineScottishLEZCompliance = (fuelType, euroStatus, vehicleCategory) => {
+const determineScottishLEZCompliance = (fuelType, euroStatus, vehicleCategory, vehicleData) => {
+  // Check for historic vehicle exemption first (vehicles over 30 years old)
+  if (vehicleData && isHistoricVehicle(vehicleData, 'lez')) {
+    return true; // Historic vehicles are exempt from Scottish LEZ restrictions
+  }
+  
   if (!fuelType || !euroStatus) return false;
   
   const fuelTypeLower = fuelType.toLowerCase();
@@ -752,7 +935,12 @@ const determineScottishLEZCompliance = (fuelType, euroStatus, vehicleCategory) =
 /**
  * ULEZ compliance for London and other UK zones
  */
-const determineULEZCompliance = (fuelType, makeYear, euroStatus) => {
+const determineULEZCompliance = (fuelType, makeYear, euroStatus, vehicleData) => {
+  // Check for historic vehicle exemption first (vehicles over 30 years old)
+  if (vehicleData && isHistoricVehicle(vehicleData, 'ulez')) {
+    return true; // Historic vehicles are exempt from ULEZ restrictions
+  }
+  
   if (!fuelType || !makeYear) return false;
   
   const fuelTypeLower = fuelType.toLowerCase();
@@ -832,11 +1020,11 @@ const getScottishLEZExemptions = (vehicleData) => {
     });
   }
   
-  // Historic vehicles
-  if (vehicleData.yearOfManufacture && parseInt(vehicleData.yearOfManufacture) <= (new Date().getFullYear() - 30)) {
+  // Historic vehicles (using our helper function for consistency)
+  if (isHistoricVehicle(vehicleData, 'lez')) {
     exemptions.push({
       type: "Historic Vehicle Exemption",
-      description: "Vehicles over 30 years old that are preserved in their original state are exempt"
+      description: "Vehicles over 30 years old that are preserved in their original state are exempt from LEZ restrictions"
     });
   }
   

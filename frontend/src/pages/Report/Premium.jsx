@@ -31,19 +31,35 @@ const API_BASE_URL = isDevelopment
                     ? 'http://localhost:8000/api/v1'   // Development - direct to API port
                     : '/api/v1';                       // Production - use relative URL for Nginx proxy
 
+// Special payment IDs for free reports
+const FREE_CLASSIC_PAYMENT_ID = 'free-classic-vehicle';
+const FREE_MODERN_PAYMENT_ID = 'free-modern-vehicle';
+
 const PremiumReportPage = () => {
   // Route handling
   const { registration } = useParams();
   const [searchParams] = useSearchParams();
   const paymentId = searchParams.get('paymentId');
+  const navigate = useNavigate();
   
   // State variables
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reportData, setReportData] = useState(null);
   const [motData, setMotData] = useState(null);
+  const [isFreeReport, setIsFreeReport] = useState(false);
+  const [reportType, setReportType] = useState(null); // 'classic' or 'modern'
   
   useEffect(() => {
+    // Check if this is a free report
+    if (paymentId === FREE_CLASSIC_PAYMENT_ID) {
+      setIsFreeReport(true);
+      setReportType('classic');
+    } else if (paymentId === FREE_MODERN_PAYMENT_ID) {
+      setIsFreeReport(true);
+      setReportType('modern');
+    }
+
     // Check if payment information exists and fetch basic vehicle data
     const fetchVehicleData = async () => {
       try {
@@ -59,9 +75,14 @@ const PremiumReportPage = () => {
         setLoading(true);
         setError(null);
         
+        // For free reports, we don't need to validate the payment ID on the server
+        const endpointUrl = isFreeReport
+          ? `${API_BASE_URL}/vehicle/registration/${registration}`
+          : `${API_BASE_URL}/vehicle/registration/${registration}?paymentId=${paymentId}`;
+        
         // Fetch vehicle data for the report
         const response = await fetch(
-          `${API_BASE_URL}/vehicle/registration/${registration}?paymentId=${paymentId}`,
+          endpointUrl,
           {
             headers: {
               'Accept': 'application/json',
@@ -89,7 +110,9 @@ const PremiumReportPage = () => {
           registration: registration,
           makeModel: `${vehicleData.make || 'Unknown'} ${vehicleData.model || ''}`.trim(),
           colour: vehicleData.primaryColour || vehicleData.colour || 'Unknown',
-          vin: vehicleData.vin // Include VIN if needed by child components
+          vin: vehicleData.vin, // Include VIN if needed by child components
+          isFreeReport: isFreeReport,
+          reportType: reportType
         });
         
         // Transform MOT data for the mileage chart
@@ -106,7 +129,7 @@ const PremiumReportPage = () => {
     };
     
     fetchVehicleData();
-  }, [registration, paymentId]);
+  }, [registration, paymentId, isFreeReport, reportType]);
   
   // Transform the API response to match the expected motData format for the chart
   const transformMotData = (apiData) => {
@@ -168,7 +191,9 @@ const PremiumReportPage = () => {
     return (
       <GovUKContainer>
         <GovUKMainWrapper>
-          <PremiumBadge>PREMIUM</PremiumBadge>
+          <PremiumBadge>
+            {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
+          </PremiumBadge>
           
           <GovUKHeadingXL>
             Vehicle Report
@@ -182,9 +207,17 @@ const PremiumReportPage = () => {
             {reportData.makeModel}
           </GovUKHeadingL>
           
+          {reportData.isFreeReport && (
+            <Alert severity="info" style={{ marginTop: '16px', marginBottom: '20px' }}>
+              {reportData.reportType === 'classic' 
+                ? "Enhanced vehicle information is provided at no cost for vehicles registered before 1996."
+                : "Enhanced vehicle information is provided at no cost for vehicles registered from 2018 onwards."}
+            </Alert>
+          )}
+          
           <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
           
-          {/* Pass necessary props to components */}
+          {/* Pass necessary props to components, including paymentId which is used for API calls */}
           <DVLAVehicleData 
             registration={reportData.registration} 
             paymentId={paymentId} 

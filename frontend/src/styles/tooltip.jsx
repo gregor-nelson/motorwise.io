@@ -2,20 +2,7 @@ import React from 'react';
 import { styled, css } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
-// Updated colors to match the chart tooltip's style
-const COLORS = {
-  TEXT: '#0b0c0c',
-  BLACK: '#0b0c0c',
-  WHITE: '#ffffff',
-  BLUE: '#1d70b8', // For the left border
-  MID_GREY: '#b1b4b6',
-  LIGHT_GREY: '#f3f2f1',
-  DARK_GREY: '#505a5f',
-  YELLOW: '#fd0',
-  RED: '#d4351c',
-  GREEN: '#00703c',
-};
-
+import { COLORS } from './theme';
 // Tooltip theme constants to match chart tooltip exactly
 export const TOOLTIP_CONSTANTS = {
   BORDER_WIDTH: '4px',

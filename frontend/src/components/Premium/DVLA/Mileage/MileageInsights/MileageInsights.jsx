@@ -798,19 +798,19 @@ const VehicleMileageInsights = ({ registration, vin }) => {
         <MileageInsightSection>
           <HeadingWithTooltip 
             tooltip="Analysis of how the vehicle has been used over time based on mileage records" 
-            iconColor={COLORS.TURQUOISE}
+            iconColor={COLORS.BLUE}
           >
             <GovUKHeadingM>
             Usage Pattern Analysis
             </GovUKHeadingM>
           </HeadingWithTooltip>
           
-          <MileageInsightPanel borderColor={COLORS.TURQUOISE}>
+          <MileageInsightPanel borderColor={COLORS.BLUE}>
             <GovUKBody>
-              This vehicle shows a <ValueDisplay color={COLORS.TURQUOISE}>
+              This vehicle shows a <ValueDisplay color={COLORS.BLUE}>
                 {insights.usagePatterns.usagePattern}
               </ValueDisplay> usage pattern 
-              with an average of <ValueDisplay color={COLORS.TURQUOISE}>
+              with an average of <ValueDisplay color={COLORS.BLUE}>
                 {insights.usagePatterns.averageAnnualRate.toLocaleString()} miles per year
               </ValueDisplay>.
               {hasClockingIssues && insights.usagePatterns.dataQuality === "adjusted" && (
@@ -955,7 +955,7 @@ const VehicleMileageInsights = ({ registration, vin }) => {
             }
           >
            <GovUKHeadingM>
-           History Risk Assessment
+            History Risk Assessment
             </GovUKHeadingM> 
           </HeadingWithTooltip>
           

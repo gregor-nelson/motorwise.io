@@ -17,10 +17,13 @@ import {
   PremiumButton,
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
+
+// Import the refactored dialog components
 import { 
   PaymentDialog, 
-  SuccessDialog, 
-} from './StripePayment';
+  FreeReportDialog,
+  SuccessDialog 
+} from './Dialog/PremiumDialog';
 
 // Determine if we're in development or production
 const isDevelopment = 
@@ -38,16 +41,22 @@ const vehicleCache = {};
 // Configure the stale time in milliseconds (5 minutes)
 const CACHE_STALE_TIME = 5 * 60 * 1000;
 
+  // Constants for free report eligibility
+  const CLASSIC_VEHICLE_YEAR_THRESHOLD = 1996; // Vehicles older than this get free reports
+  const MODERN_VEHICLE_YEAR_THRESHOLD = 2018;  // Vehicles newer than or equal to this get free reports
+
 const VehicleHeader = ({ registration }) => {
   const [vehicleData, setVehicleData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const abortControllerRef = useRef(null);
   
-  // Payment dialog states
+  // Dialog states
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
+  const [freeReportDialogOpen, setFreeReportDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [paymentInfo, setPaymentInfo] = useState(null);
+  const [reportType, setReportType] = useState('classic'); // Default to classic
 
   // Enhanced formatRegistration function to handle multiple UK plate formats
   const formatRegistration = (reg) => {
@@ -92,6 +101,69 @@ const VehicleHeader = ({ registration }) => {
       });
     } catch (e) {
       return 'Invalid date';
+    }
+  };
+
+  // Function to check if a vehicle qualifies for a free premium report
+  const isEligibleForFreeReport = (vehicleData) => {
+    if (!vehicleData) return false;
+
+    // Try to determine the vehicle's year
+    let vehicleYear = null;
+    try {
+      // Try manufacture date first
+      if (vehicleData.manufactureDate) {
+        vehicleYear = new Date(vehicleData.manufactureDate).getFullYear();
+      }
+      // If not available, try registration date
+      else if (vehicleData.registrationDate) {
+        vehicleYear = new Date(vehicleData.registrationDate).getFullYear();
+      }
+      // If not available, try firstUsedDate
+      else if (vehicleData.firstUsedDate) {
+        vehicleYear = new Date(vehicleData.firstUsedDate).getFullYear();
+      }
+      
+      // If we can't determine the year, default to paid report
+      if (vehicleYear === null) return false;
+      
+      // Check if it's an older vehicle (classic) or a newer vehicle (limited history)
+      return vehicleYear < CLASSIC_VEHICLE_YEAR_THRESHOLD || vehicleYear >= MODERN_VEHICLE_YEAR_THRESHOLD;
+    } catch (e) {
+      console.warn('Error determining vehicle age:', e);
+      return false;
+    }
+  };
+  
+  // Function to determine type of free report (classic or modern)
+  const getFreeReportType = (vehicleData) => {
+    if (!vehicleData) return null;
+    
+    try {
+      let vehicleYear = null;
+      
+      // Determine vehicle year using the same logic as above
+      if (vehicleData.manufactureDate) {
+        vehicleYear = new Date(vehicleData.manufactureDate).getFullYear();
+      } else if (vehicleData.registrationDate) {
+        vehicleYear = new Date(vehicleData.registrationDate).getFullYear();
+      } else if (vehicleData.firstUsedDate) {
+        vehicleYear = new Date(vehicleData.firstUsedDate).getFullYear();
+      }
+      
+      if (vehicleYear === null) return null;
+      
+      // Return the type of free report
+      if (vehicleYear < CLASSIC_VEHICLE_YEAR_THRESHOLD) {
+        return 'classic';
+      } else if (vehicleYear >= MODERN_VEHICLE_YEAR_THRESHOLD) {
+        return 'modern';
+      }
+      
+      return null;
+    } catch (e) {
+      console.warn('Error determining vehicle report type:', e);
+      return null;
     }
   };
 
@@ -140,6 +212,8 @@ const VehicleHeader = ({ registration }) => {
       motDueDate: motDueDate,
       engineSize: safeGet(apiData, 'engineSize', 'Not available'),
       manufactureDate: formatDate(safeGet(apiData, 'manufactureDate', null)),
+      registrationDate: safeGet(apiData, 'registrationDate', null),
+      firstUsedDate: safeGet(apiData, 'firstUsedDate', null),
       hasOutstandingRecall: recallStatus,
     };
   }, []);
@@ -267,12 +341,29 @@ const VehicleHeader = ({ registration }) => {
     };
   }, [registration, transformVehicleData]);
 
-  const handleOpenPaymentDialog = () => {
-    setPaymentDialogOpen(true);
+  // Enhanced premium button click handler that checks vehicle eligibility
+  const handlePremiumButtonClick = () => {
+    if (vehicleData && isEligibleForFreeReport(vehicleData)) {
+      // Get the type of free report (classic or modern)
+      const reportType = getFreeReportType(vehicleData);
+      
+      // Show the free report dialog with the appropriate type
+      setFreeReportDialogOpen(true);
+      
+      // Store the report type in state to pass to the dialog
+      setReportType(reportType);
+    } else {
+      // For vehicles between thresholds, show the payment dialog
+      setPaymentDialogOpen(true);
+    }
   };
   
   const handleClosePaymentDialog = () => {
     setPaymentDialogOpen(false);
+  };
+  
+  const handleCloseFreeReportDialog = () => {
+    setFreeReportDialogOpen(false);
   };
   
   const handlePaymentSuccess = (paymentIntent) => {
@@ -321,10 +412,12 @@ const VehicleHeader = ({ registration }) => {
             </GovUKBody>
             
             <PremiumButton 
-              onClick={handleOpenPaymentDialog}
+              onClick={handlePremiumButtonClick}
               data-test-id="premium-report-button"
             >
-              Get Premium Vehicle Report - £19.95
+              {isEligibleForFreeReport(vehicleData) 
+                ? "View Enhanced Vehicle Report" 
+                : "Get Premium Vehicle Report - £19.95"}
             </PremiumButton>
             
             <GovUKGridRow data-test-id="colour-fuel-date-details">
@@ -404,17 +497,27 @@ const VehicleHeader = ({ registration }) => {
               </GovUKLink>
             </GovUKBody>
             
+            {/* Payment Dialog for non-classic vehicles */}
             <PaymentDialog 
               open={paymentDialogOpen}
               onClose={handleClosePaymentDialog}
-              registration={vehicleData.registration}
+              registration={vehicleData?.registration}
               onSuccess={handlePaymentSuccess}
             />
             
+            {/* Free Report Dialog for classic/newer vehicles */}
+            <FreeReportDialog
+              open={freeReportDialogOpen}
+              onClose={handleCloseFreeReportDialog}
+              registration={vehicleData?.registration}
+              reportType={reportType}
+            />
+            
+            {/* Success Dialog shown after payment */}
             <SuccessDialog
               open={successDialogOpen}
               onClose={handleCloseSuccessDialog}
-              registration={vehicleData.registration}
+              registration={vehicleData?.registration}
               paymentId={paymentInfo?.paymentId}
             />
           </>

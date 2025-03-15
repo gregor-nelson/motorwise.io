@@ -1,8 +1,9 @@
 import React from 'react';
+import analyzeRegistrationRegion from './RegistrationAreaCodes';
 
 /**
- * OwnershipInsightsCalculator
- * Calculates ownership insights based on V5C and registration data
+ * Enhanced OwnershipInsightsCalculator
+ * Calculates ownership insights with enhanced regional analysis
  * 
  * @param {Object} vehicleData - The vehicle data object
  * @returns {Object|null} - Ownership insights or null if insufficient data
@@ -81,6 +82,67 @@ const OwnershipInsightsCalculator = (vehicleData) => {
     positiveFactors.push("Stable ownership period suggests the vehicle has been well-cared for");
   }
   
+  // Analyze registration region and integrate environmental features
+  let regionInfo = null;
+  let environmentalInsights = null;
+  
+  if (vehicleData.registrationNumber) {
+    regionInfo = analyzeRegistrationRegion(vehicleData.registrationNumber);
+    
+    // Process standard regional factors
+    if (regionInfo && regionInfo.regionalFactors) {
+      regionInfo.regionalFactors.forEach(factor => {
+        // Check if the factor indicates a risk
+        if (factor.includes("salt-related corrosion") || 
+            factor.includes("extreme weather") ||
+            factor.includes("variable surfaces")) {
+          riskFactors.push(factor);
+        } 
+        // Otherwise, it's just an informational factor
+        else {
+          // Add to positive factors if it's potentially benign
+          if (factor.includes("urban area")) {
+            // Urban driving might indicate more frequent servicing
+            positiveFactors.push("Vehicle likely driven in urban environment with better access to maintenance services");
+          }
+        }
+      });
+    }
+    
+    // Add environmental insights if available
+    if (regionInfo.environmentalInsights) {
+      environmentalInsights = regionInfo.environmentalInsights;
+      
+      // Add flood risk factors
+      if (environmentalInsights.floodRisk.riskLevel === "High") {
+        riskFactors.push(`High flood risk area - ${environmentalInsights.floodRisk.details}`);
+      } else if (environmentalInsights.floodRisk.riskLevel === "Medium") {
+        riskFactors.push(`Medium flood risk area - ${environmentalInsights.floodRisk.details}`);
+      }
+      
+      // Add air quality factors
+      if (environmentalInsights.airQuality.qualityLevel === "Poor") {
+        riskFactors.push(`Poor air quality impact - ${environmentalInsights.airQuality.catalyticConverterImpact}`);
+      } else if (environmentalInsights.airQuality.qualityLevel === "Good") {
+        positiveFactors.push(`Good air quality - ${environmentalInsights.airQuality.catalyticConverterImpact}`);
+      }
+      
+      // Add road salt usage factors
+      if (environmentalInsights.roadSaltUsage.usageLevel === "Heavy") {
+        riskFactors.push(`Heavy road salt exposure - ${environmentalInsights.roadSaltUsage.details}`);
+      } else if (environmentalInsights.roadSaltUsage.usageLevel === "Light") {
+        positiveFactors.push(`Low road salt exposure - ${environmentalInsights.roadSaltUsage.details}`);
+      }
+      
+      // Add accident blackspot factors
+      if (environmentalInsights.accidentRisk.riskLevel === "High") {
+        riskFactors.push(`High accident risk area - ${environmentalInsights.accidentRisk.details}`);
+      } else if (environmentalInsights.accidentRisk.riskLevel === "Low") {
+        positiveFactors.push(`Low accident risk area - ${environmentalInsights.accidentRisk.details}`);
+      }
+    }
+  }
+  
   return {
     v5cDate,
     yearsWithCurrentOwner,
@@ -88,7 +150,15 @@ const OwnershipInsightsCalculator = (vehicleData) => {
     ownershipRiskLevel,
     regGapYears,
     riskFactors,
-    positiveFactors
+    positiveFactors,
+    // Include region information if available
+    ...(regionInfo && {
+      registrationRegion: regionInfo.registrationRegion,
+      registrationArea: regionInfo.registrationArea,
+      memoryTag: regionInfo.memoryTag,
+    }),
+    // Include environmental insights if available
+    ...(environmentalInsights && { environmentalInsights })
   };
 };
 

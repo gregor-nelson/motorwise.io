@@ -22,6 +22,11 @@ import {
   GovUKLoadingSpinner,
   COLORS,
 } from '../../styles/theme';
+// Import the tooltip components from the separate tooltip file
+import {
+  useTooltip,
+  ValueWithTooltip,
+} from '../../styles/tooltip';
 import MotDefectDetail from './MotDefectDetail';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
@@ -46,66 +51,6 @@ const ClickableDefectItem = styled('div')(({ expanded }) => ({
   },
 }));
 
-// Custom Tooltip components
-const TooltipContainer = styled('div')({
-  position: 'relative',
-  display: 'block',
-  width: '100%',
-});
-
-const TooltipContent = styled('div')(({ visible }) => ({
-  position: 'absolute',
-  bottom: 'calc(100% + 5px)',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  backgroundColor: COLORS.BLACK,
-  color: COLORS.WHITE,
-  padding: '10px 15px',
-  borderRadius: '0',
-  fontSize: '1rem',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  fontWeight: 400,
-  lineHeight: 1.25,
-  zIndex: 100,
-  visibility: visible ? 'visible' : 'hidden',
-  opacity: visible ? 1 : 0,
-  transition: 'opacity 0.2s ease-in-out',
-  
-  // Arrow pointer removed
-}));
-
-// Custom Tooltip component
-const CustomTooltip = ({ children, title }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const showTooltipTimeout = useRef(null);
-  
-  const handleMouseEnter = () => {
-    if (showTooltipTimeout.current) clearTimeout(showTooltipTimeout.current);
-    showTooltipTimeout.current = setTimeout(() => {
-      setIsVisible(true);
-    }, 300); // 300ms delay before showing the tooltip
-  };
-  
-  const handleMouseLeave = () => {
-    if (showTooltipTimeout.current) clearTimeout(showTooltipTimeout.current);
-    setIsVisible(false);
-  };
-  
-  return (
-    <TooltipContainer 
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocus={handleMouseEnter}
-      onBlur={handleMouseLeave}
-    >
-      {children}
-      <TooltipContent visible={isVisible}>
-        {title}
-      </TooltipContent>
-    </TooltipContainer>
-  );
-};
-
 const motCache = {};
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const API_BASE_URL = isDevelopment ? 'http://localhost:8000/api/v1' : '/api/v1';
@@ -116,6 +61,9 @@ const extractDefectId = (text) => {
 };
 
 const MOTHistoryPage = ({ registration }) => {
+  // Use the system-wide tooltip hook
+  const { withTooltip } = useTooltip();
+  
   const [motData, setMotData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -344,7 +292,11 @@ const MOTHistoryPage = ({ registration }) => {
                                 const defectKey = `${index}-defect-${i}`;
                                 return (
                                   <li key={i}>
-                                    <CustomTooltip title={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}>
+                                    {/* Replace CustomTooltip with ValueWithTooltip */}
+                                    <ValueWithTooltip 
+                                      tooltip={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}
+                                      placement="top"
+                                    >
                                       <ClickableDefectItem
                                         ref={el => defectRefs.current[defectKey] = el}
                                         expanded={expandedDefects[defectKey]}
@@ -368,7 +320,7 @@ const MOTHistoryPage = ({ registration }) => {
                                           toggleExpanded={toggleExpanded(defectKey)}
                                         />
                                       </ClickableDefectItem>
-                                    </CustomTooltip>
+                                    </ValueWithTooltip>
                                   </li>
                                 );
                               })}
@@ -383,7 +335,11 @@ const MOTHistoryPage = ({ registration }) => {
                                 const advisoryKey = `${index}-advisory-${i}`;
                                 return (
                                   <li key={i}>
-                                    <CustomTooltip title={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}>
+                                    {/* Replace CustomTooltip with ValueWithTooltip */}
+                                    <ValueWithTooltip 
+                                      tooltip={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}
+                                      placement="top"
+                                    >
                                       <ClickableDefectItem
                                         ref={el => defectRefs.current[advisoryKey] = el}
                                         expanded={expandedDefects[advisoryKey]}
@@ -407,7 +363,7 @@ const MOTHistoryPage = ({ registration }) => {
                                           toggleExpanded={toggleExpanded(advisoryKey)}
                                         />
                                       </ClickableDefectItem>
-                                    </CustomTooltip>
+                                    </ValueWithTooltip>
                                   </li>
                                 );
                               })}

@@ -9,7 +9,8 @@ import {
   DetailCaption,
   DetailHeading,
   ReportSection,
-  GovUKSectionBreak
+  GovUKSectionBreak,
+  GovUKHeadingM
 } from '../../../../styles/theme';
 import Alert from '@mui/material/Alert';
 
@@ -181,7 +182,6 @@ const DVLAVehicleDataComponent = ({ registration }) => {
       <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
 
       <ReportSection>
-        <GovUKHeadingL>Vehicle Status</GovUKHeadingL>
 
         <GovUKGridRow>
           <GovUKGridColumnOneThird>
@@ -217,7 +217,6 @@ const DVLAVehicleDataComponent = ({ registration }) => {
       <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
 
       <ReportSection>
-        <GovUKHeadingL>Technical Details</GovUKHeadingL>
 
         <GovUKGridRow>
           <GovUKGridColumnOneThird>

@@ -533,8 +533,7 @@ const VehicleMileageInsights = ({ registration, vin }) => {
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
-          <GovUKHeadingM>Vehicle Mileage Insights</GovUKHeadingM>
-          <MileageBadge>Premium</MileageBadge>
+          <GovUKHeadingM> Mileage Insights</GovUKHeadingM>
         </SectionTitleContainer>
         
         <ErrorContainer>
@@ -555,8 +554,7 @@ const VehicleMileageInsights = ({ registration, vin }) => {
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
-          <GovUKHeadingM>Vehicle Mileage Insights</GovUKHeadingM>
-          <MileageBadge>Premium</MileageBadge>
+          <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
         </SectionTitleContainer>
         
         <EmptyContainer>
@@ -574,8 +572,7 @@ const VehicleMileageInsights = ({ registration, vin }) => {
   return (
     <MileageInsightsContainer>
       <SectionTitleContainer>
-        <GovUKHeadingM>Vehicle Mileage Insights</GovUKHeadingM>
-        <MileageBadge>Premium</MileageBadge>
+        <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
       </SectionTitleContainer>
       
       <GovUKBodyS style={{ marginBottom: '20px', color: COLORS.DARK_GREY }}>
@@ -666,7 +663,10 @@ const VehicleMileageInsights = ({ registration, vin }) => {
       {insights.benchmarks && (
         <MileageInsightSection>
           <HeadingWithTooltip tooltip={mileageTooltips.sectionBenchmarks} iconColor={COLORS.BLUE}>
-            <SpeedIcon /> Mileage Benchmark Analysis
+            <GovUKHeadingM>
+            Benchmark Analysis
+
+            </GovUKHeadingM>
           </HeadingWithTooltip>
           
           <MileageInsightPanel borderColor={COLORS.BLUE}>
@@ -800,7 +800,9 @@ const VehicleMileageInsights = ({ registration, vin }) => {
             tooltip="Analysis of how the vehicle has been used over time based on mileage records" 
             iconColor={COLORS.TURQUOISE}
           >
-            <TimelineIcon /> Usage Pattern Analysis
+            <GovUKHeadingM>
+            Usage Pattern Analysis
+            </GovUKHeadingM>
           </HeadingWithTooltip>
           
           <MileageInsightPanel borderColor={COLORS.TURQUOISE}>
@@ -952,7 +954,9 @@ const VehicleMileageInsights = ({ registration, vin }) => {
               COLORS.RED
             }
           >
-            <AssessmentIcon /> Mileage History Risk Assessment
+           <GovUKHeadingM>
+           History Risk Assessment
+            </GovUKHeadingM> 
           </HeadingWithTooltip>
           
           <MileageInsightPanel borderColor={

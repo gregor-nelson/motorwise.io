@@ -6,8 +6,10 @@ import {
   COLORS 
 } from '../../../../../styles/theme';
 import { styled, css } from '@mui/material/styles';
+import WarningIcon from '@mui/icons-material/Warning';
+import InfoIcon from '@mui/icons-material/Info';
 
-// Helper function to convert hex to rgb values (moved to the top for use in styled components)
+// Helper function to convert hex to rgb values
 const hexToRgb = (hex) => {
   if (!hex) return '0,0,0';
   
@@ -26,28 +28,23 @@ const WarningBanner = styled('div')(({ theme }) => css`
   border-left: 5px solid ${COLORS.RED};
   padding: 20px;
   margin-bottom: 20px;
-  display: flex;
-  align-items: flex-start;
-`);
-
-const WarningIcon = styled('div')(({ theme }) => css`
-  font-size: 2rem;
-  margin-right: 15px;
-  line-height: 1;
 `);
 
 const WarningTitle = styled(GovUKHeadingS)(({ theme }) => css`
   color: ${COLORS.RED};
   margin-bottom: 10px;
   margin-top: 0;
-`);
-
-const WarningContent = styled('div')(({ theme }) => css`
-  flex: 1;
+  display: flex;
+  align-items: center;
+  
+  & svg {
+    margin-right: 10px;
+  }
 `);
 
 const WarningRow = styled('div')(({ theme }) => css`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 15px;
   padding-top: 10px;
@@ -56,12 +53,20 @@ const WarningRow = styled('div')(({ theme }) => css`
 
 const WarningColumn = styled('div')(({ theme }) => css`
   flex: 1;
+  min-width: 200px;
   padding-right: 10px;
+  margin-bottom: 10px;
+`);
+
+const WarningValue = styled('span')(({ theme }) => css`
+  color: ${COLORS.RED};
+  font-weight: bold;
 `);
 
 /**
  * MileageClockingWarning Component
  * Displays a warning banner for vehicles with detected clocking
+ * Styled to match GOV.UK design patterns and integrate with main insights
  */
 const MileageClockingWarning = ({ anomalies, mileageStats }) => {
   if (!anomalies || anomalies.length === 0 || !anomalies.some(a => a.type === 'decrease')) {
@@ -82,43 +87,46 @@ const MileageClockingWarning = ({ anomalies, mileageStats }) => {
 
   return (
     <WarningBanner>
-      <WarningIcon role="img" aria-label="Warning">⚠️</WarningIcon>
-      <WarningContent>
-        <WarningTitle>Mileage Inconsistency Detected</WarningTitle>
-        <GovUKBody>
-          This vehicle has {anomalies.filter(a => a.type === 'decrease').length > 1 ? 
-            `${anomalies.filter(a => a.type === 'decrease').length} instances` : 
-            'an instance'} where the recorded mileage has decreased between MOT tests. 
-          This could indicate odometer tampering (clocking), instrument cluster replacement, or MOT data entry errors.
-        </GovUKBody>
+      <WarningTitle>
+        <WarningIcon /> Mileage Inconsistency Detected
+      </WarningTitle>
+      
+      <GovUKBody>
+        This vehicle has {anomalies.filter(a => a.type === 'decrease').length > 1 ? 
+          `${anomalies.filter(a => a.type === 'decrease').length} instances` : 
+          'an instance'} where the recorded mileage has decreased between MOT tests. 
+        This could indicate odometer tampering (clocking), instrument cluster replacement, or MOT data entry errors.
+      </GovUKBody>
 
-        <WarningRow>
+      <WarningRow>
+        <WarningColumn>
+          <GovUKBodyS><strong>Total Mileage Discrepancy:</strong></GovUKBodyS>
+          <GovUKBody>
+            <WarningValue>{totalClocking.toLocaleString()} miles</WarningValue>
+          </GovUKBody>
+        </WarningColumn>
+        
+        <WarningColumn>
+          <GovUKBodyS><strong>Largest Single Discrepancy:</strong></GovUKBodyS>
+          <GovUKBody>
+            <WarningValue>{largestClocking.toLocaleString()} miles</WarningValue>
+          </GovUKBody>
+        </WarningColumn>
+        
+        {mileageStats && mileageStats.adjustedValues && (
           <WarningColumn>
-            <GovUKBodyS><strong>Total Mileage Discrepancy:</strong></GovUKBodyS>
-            <GovUKBody style={{ color: COLORS.RED, fontWeight: 'bold' }}>
-              {totalClocking.toLocaleString()} miles
+            <GovUKBodyS><strong>Adjusted Annual Mileage:</strong></GovUKBodyS>
+            <GovUKBody style={{ fontWeight: 'bold' }}>
+              {mileageStats.averageAnnualMileage?.toLocaleString() || 'Unknown'} miles/year
             </GovUKBody>
           </WarningColumn>
-          <WarningColumn>
-            <GovUKBodyS><strong>Largest Single Discrepancy:</strong></GovUKBodyS>
-            <GovUKBody style={{ color: COLORS.RED, fontWeight: 'bold' }}>
-              {largestClocking.toLocaleString()} miles
-            </GovUKBody>
-          </WarningColumn>
-          {mileageStats && mileageStats.adjustedValues && (
-            <WarningColumn>
-              <GovUKBodyS><strong>Adjusted Annual Mileage:</strong></GovUKBodyS>
-              <GovUKBody style={{ fontWeight: 'bold' }}>
-                {mileageStats.averageAnnualMileage?.toLocaleString() || 'Unknown'} miles/year
-              </GovUKBody>
-            </WarningColumn>
-          )}
-        </WarningRow>
+        )}
+      </WarningRow>
 
-        <GovUKBodyS style={{ marginTop: '10px', color: COLORS.DARK_GREY }}>
-          <strong>Legal note:</strong> Selling a vehicle with incorrect mileage is illegal under the Consumer Protection from Unfair Trading Regulations.
-        </GovUKBodyS>
-      </WarningContent>
+      <GovUKBodyS style={{ marginTop: '10px', color: COLORS.DARK_GREY, display: 'flex', alignItems: 'center' }}>
+        <InfoIcon fontSize="small" style={{ marginRight: '5px' }} />
+        <strong>Legal note:</strong> Selling a vehicle with incorrect mileage is illegal under the Consumer Protection from Unfair Trading Regulations.
+      </GovUKBodyS>
     </WarningBanner>
   );
 };

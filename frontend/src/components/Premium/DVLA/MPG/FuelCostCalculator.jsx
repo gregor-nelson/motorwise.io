@@ -4,8 +4,6 @@ import { GovUKTooltip } from '../../../../styles/tooltip';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import SpeedIcon from '@mui/icons-material/Speed';
-import MoneyIcon from '@mui/icons-material/Money';
-import CalculateIcon from '@mui/icons-material/Calculate';
 
 // Material UI styled components to match GOV.UK styling
 const CalculatorContainer = styled('div')(({ theme }) => ({
@@ -53,7 +51,6 @@ const InputLabel = styled('label')(({ theme }) => ({
   fontWeight: 600,
   marginBottom: '5px',
   cursor: 'pointer',
-  display: 'flex',
   alignItems: 'center',
   gap: '8px'
 }));
@@ -190,7 +187,7 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
   return (
     <CalculatorContainer>
       <CalculatorTitle>
-        <CalculateIcon /> Personalized Fuel Cost Calculator
+        Personalized Fuel Cost Calculator
       </CalculatorTitle>
       <CalculatorDescription>
         Customize the values below to calculate your own estimated annual fuel costs.
@@ -258,7 +255,7 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
       
       <ResultsContainer>
         <ResultTitle>
-          <MoneyIcon /> Your Estimated Fuel Costs
+        Your Estimated Fuel Costs
         </ResultTitle>
         <ResultValue>£{Math.round(annualCost).toLocaleString()}</ResultValue>
         <ResultDetails>

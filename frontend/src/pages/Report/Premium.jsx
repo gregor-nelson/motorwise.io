@@ -41,6 +41,7 @@ const PremiumReportPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reportData, setReportData] = useState(null);
+  const [motData, setMotData] = useState(null);
   
   useEffect(() => {
     // Check if payment information exists and fetch basic vehicle data
@@ -58,9 +59,9 @@ const PremiumReportPage = () => {
         setLoading(true);
         setError(null);
         
-        // Fetch minimal vehicle data for display
+        // Fetch vehicle data for the report
         const response = await fetch(
-          `${API_BASE_URL}/vehicle/registration/${registration}`,
+          `${API_BASE_URL}/vehicle/registration/${registration}?paymentId=${paymentId}`,
           {
             headers: {
               'Accept': 'application/json',
@@ -83,13 +84,19 @@ const PremiumReportPage = () => {
         
         const vehicleData = await response.json();
         
-        // Create minimal report data with only what's needed
+        // Create report data
         setReportData({
           registration: registration,
           makeModel: `${vehicleData.make || 'Unknown'} ${vehicleData.model || ''}`.trim(),
           colour: vehicleData.primaryColour || vehicleData.colour || 'Unknown',
           vin: vehicleData.vin // Include VIN if needed by child components
         });
+        
+        // Transform MOT data for the mileage chart
+        if (vehicleData.motTests && vehicleData.motTests.length > 0) {
+          const transformedMotData = transformMotData(vehicleData);
+          setMotData(transformedMotData);
+        }
       } catch (err) {
         console.error('Error fetching vehicle data:', err);
         setError(err.message);
@@ -100,6 +107,29 @@ const PremiumReportPage = () => {
     
     fetchVehicleData();
   }, [registration, paymentId]);
+  
+  // Transform the API response to match the expected motData format for the chart
+  const transformMotData = (apiData) => {
+    if (!apiData || !apiData.motTests || apiData.motTests.length === 0) return [];
+    
+    return apiData.motTests.map(test => {
+      const testDate = new Date(test.completedDate);
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      const formattedDate = testDate.toLocaleDateString('en-GB', options);
+      
+      return {
+        date: formattedDate,
+        status: test.testResult === 'PASSED' ? 'PASS' : 'FAIL',
+        mileage: test.odometerResultType === 'READ' 
+          ? `${parseInt(test.odometerValue).toLocaleString('en-GB')} ${test.odometerUnit === 'MI' ? 'miles' : 'km'}`
+          : 'Not recorded',
+        testNumber: test.motTestNumber || 'Not available',
+        expiry: test.expiryDate 
+          ? new Date(test.expiryDate).toLocaleDateString('en-GB', options)
+          : null
+      };
+    });
+  };
   
   // Show loading state
   if (loading) {
@@ -173,10 +203,8 @@ const PremiumReportPage = () => {
           <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
           
           <ReportSection>
-            <VehicleMileageChart 
-              registration={reportData.registration} 
-              paymentId={paymentId} 
-            />
+            {/* Pass the transformed MOT data directly to the chart component */}
+            <VehicleMileageChart motData={motData} />
           </ReportSection>
           
           <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />

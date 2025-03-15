@@ -7,6 +7,9 @@ import React from 'react';
  * 
  * Incorporates Scottish Low Emission Zones (Emission Standards, Exemptions and Enforcement)
  * (Scotland) Regulations 2021 requirements
+ * 
+ * Updated with accurate commercial vehicle tax calculations (April 2024)
+ * Includes Direct Debit rates and motorcycle/tricycle tax support
  */
 const EmissionsInsightsCalculator = (vehicleData) => {
   // Extract basic emissions data
@@ -15,14 +18,22 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   const fuelType = vehicleData.fuelType || "Unknown";
   const engineSize = vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : null;
   const makeYear = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
-  const vehicleCategory = determineVehicleCategory(vehicleData);
-  const isCommercial = vehicleData.taxClass?.toLowerCase().includes('goods') || false;
   const registrationDate = vehicleData.monthOfFirstRegistration || null;
+  const taxStatus = vehicleData.taxStatus || null;
+  const revenueWeight = vehicleData.revenueWeight || null;
+  
+  // Vehicle categorization
+  const vehicleCategory = determineVehicleCategory(vehicleData);
+  const isCommercial = vehicleCategory === "light goods vehicle" || 
+                       vehicleCategory === "heavy goods vehicle N2" || 
+                       vehicleCategory === "heavy goods vehicle N3";
+  const inferredTaxClass = vehicleData.taxClass || (isCommercial ? "light goods" : "private car");
   
   // Check if explicitly RDE2 compliant (if available in data)
   // This is important for diesel tax rates
   const isDieselRDE2 = fuelType?.toUpperCase().includes("DIESEL") && 
-                       vehicleData.rdeCompliance === 'RDE2';
+                      (vehicleData.rdeCompliance === 'RDE2' || 
+                      (makeYear >= 2019 && (euroStatus === "Euro 6" || euroStatus?.includes("Euro 6"))));
   
   // Initialize variables
   let estimatedCO2 = null;
@@ -35,7 +46,7 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     isEstimated = true;
     
     // Simple heuristic for estimating CO2 emissions based on fuel type, year and engine size
-    const engineSizeCC = parseInt(engineSize);
+    const engineSizeCC = parseInt(engineSize) || 0;
     
     if (fuelType.toUpperCase().includes("DIESEL")) {
       if (makeYear < 2010) {
@@ -53,6 +64,8 @@ const EmissionsInsightsCalculator = (vehicleData) => {
       } else {
         estimatedCO2 = Math.round(engineSizeCC * 0.075 + 60);
       }
+    } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
+      estimatedCO2 = 0; // Electric vehicles emit 0 g/km
     }
   }
   
@@ -160,6 +173,7 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   // Get the appropriate Euro status (actual or estimated)
   const effectiveEuroStatus = euroStatus || estimatedEuroStatus;
   const effectiveEuroSubcategory = euroStatus ? null : estimatedEuroSubcategory;
+  const effectiveCO2 = co2Emissions || estimatedCO2 || 0;
   
   // Added information about Euro 7 brake particulate standards
   let brakeParticulateInfo = null;
@@ -170,236 +184,351 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   // Determine tax band and cost based on CO2 emissions and registration date
   let taxBand = "Unknown";
   let annualTaxCost = "Unknown";
+  let annualTaxCostDirectDebit = "Unknown"; // Added for Direct Debit
   let firstYearTaxCost = "Unknown";
   let taxNotes = [];
   
+  // Note current tax status if available
+  if (taxStatus) {
+    if (taxStatus.toLowerCase() === "untaxed") {
+      taxNotes.push("Vehicle is currently untaxed per DVLA records.");
+    } else if (taxStatus.toLowerCase() === "taxed") {
+      taxNotes.push("Vehicle is currently taxed per DVLA records.");
+    }
+  }
+  
   // Determine if vehicle qualifies for the flat fee (vehicles registered after April 2017)
   let registrationDateObj = null;
-  if (registrationDate) {
-    const regParts = registrationDate.split('-');
-    if (regParts.length === 2) {
-      const regYear = parseInt(regParts[0]);
-      const regMonth = parseInt(regParts[1]);
-      
-      if (regYear > 2017 || (regYear === 2017 && regMonth >= 4)) {
-        // Post-April 2017 regime - updated to 2024 DVLA rates
-        const effectiveCO2 = co2Emissions || estimatedCO2 || 0;
-        
-        if (fuelType.toUpperCase().includes("DIESEL") && !isDieselRDE2) {
-          // Diesel cars not meeting RDE2 standards pay higher rates
-          // Standard rate from second licence onwards: £190
-          annualTaxCost = "£190 per year";
-          
-          // First year rate depends on CO2 - updated to April 2024 rates
-          if (effectiveCO2 === 0) {
-            firstYearTaxCost = "£0";
-          } else if (effectiveCO2 <= 50) {
-            firstYearTaxCost = "£30";
-          } else if (effectiveCO2 <= 75) {
-            firstYearTaxCost = "£135";
-          } else if (effectiveCO2 <= 90) {
-            firstYearTaxCost = "£175";
-          } else if (effectiveCO2 <= 100) {
-            firstYearTaxCost = "£195";
-          } else if (effectiveCO2 <= 110) {
-            firstYearTaxCost = "£220";
-          } else if (effectiveCO2 <= 130) {
-            firstYearTaxCost = "£270";
-          } else if (effectiveCO2 <= 150) {
-            firstYearTaxCost = "£680";
-          } else if (effectiveCO2 <= 170) {
-            firstYearTaxCost = "£1,095";
-          } else if (effectiveCO2 <= 190) {
-            firstYearTaxCost = "£1,650";
-          } else if (effectiveCO2 <= 225) {
-            firstYearTaxCost = "£2,340";
-          } else if (effectiveCO2 <= 255) {
-            firstYearTaxCost = "£2,745";
-          } else {
-            firstYearTaxCost = "£2,745";
-          }
-          
-          taxNotes.push("Vehicle is taxed at the higher diesel rate as it does not meet RDE2 standards.");
-        } else if (fuelType.toUpperCase().includes("DIESEL") || fuelType.toUpperCase().includes("PETROL")) {
-          // Petrol cars and diesel cars meeting RDE2 standards
-          // Standard rate from second licence onwards: £190
-          annualTaxCost = "£190 per year";
-          
-          // First year rate depends on CO2 - updated to April 2024 rates
-          if (effectiveCO2 === 0) {
-            firstYearTaxCost = "£0";
-          } else if (effectiveCO2 <= 50) {
-            firstYearTaxCost = "£10";
-          } else if (effectiveCO2 <= 75) {
-            firstYearTaxCost = "£30";
-          } else if (effectiveCO2 <= 90) {
-            firstYearTaxCost = "£135";
-          } else if (effectiveCO2 <= 100) {
-            firstYearTaxCost = "£175";
-          } else if (effectiveCO2 <= 110) {
-            firstYearTaxCost = "£195";
-          } else if (effectiveCO2 <= 130) {
-            firstYearTaxCost = "£220";
-          } else if (effectiveCO2 <= 150) {
-            firstYearTaxCost = "£270";
-          } else if (effectiveCO2 <= 170) {
-            firstYearTaxCost = "£680";
-          } else if (effectiveCO2 <= 190) {
-            firstYearTaxCost = "£1,095";
-          } else if (effectiveCO2 <= 225) {
-            firstYearTaxCost = "£1,650";
-          } else if (effectiveCO2 <= 255) {
-            firstYearTaxCost = "£2,340";
-          } else {
-            firstYearTaxCost = "£2,745";
-          }
-          
-          if (isDieselRDE2) {
-            taxNotes.push("Vehicle is taxed at the standard rate as it meets RDE2 standards.");
-          }
-        } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-          // Electric vehicles - zero tax until April 2025
-          annualTaxCost = "£0 (zero-emission vehicles exempt until April 2025)";
-          firstYearTaxCost = "£0";
-          taxNotes.push("From April 2025, zero-emission vehicles will be subject to standard rate vehicle tax.");
-        } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
-          // Alternative fuel vehicles (including hybrids) - updated to April 2024 rates
-          annualTaxCost = "£180 per year";
-          
-          // First year rate for alternative fuel vehicles depends on CO2
-          if (effectiveCO2 === 0) {
-            firstYearTaxCost = "£0";
-          } else if (effectiveCO2 <= 50) {
-            firstYearTaxCost = "£0";
-          } else if (effectiveCO2 <= 75) {
-            firstYearTaxCost = "£20";
-          } else if (effectiveCO2 <= 90) {
-            firstYearTaxCost = "£125";
-          } else if (effectiveCO2 <= 100) {
-            firstYearTaxCost = "£165";
-          } else if (effectiveCO2 <= 110) {
-            firstYearTaxCost = "£185";
-          } else if (effectiveCO2 <= 130) {
-            firstYearTaxCost = "£210";
-          } else if (effectiveCO2 <= 150) {
-            firstYearTaxCost = "£260";
-          } else if (effectiveCO2 <= 170) {
-            firstYearTaxCost = "£670";
-          } else if (effectiveCO2 <= 190) {
-            firstYearTaxCost = "£1,085";
-          } else if (effectiveCO2 <= 225) {
-            firstYearTaxCost = "£1,640";
-          } else if (effectiveCO2 <= 255) {
-            firstYearTaxCost = "£2,330";
-          } else {
-            firstYearTaxCost = "£2,735";
-          }
-        }
-        
-        // Additional rate for expensive vehicles
-        if (vehicleData.listPrice && vehicleData.listPrice > 40000) {
-          if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-            taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 will apply for 5 years from the second licence, but currently suspended for zero emission vehicles until April 2025.");
-          } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
-            annualTaxCost = "£590 per year for 5 years from second licence, then £180";
-            taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
-          } else {
-            annualTaxCost = "£600 per year for 5 years from second licence, then £190";
-            taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
-          }
-        }
-      } else {
-        // Pre-April 2017 - Based on CO2 emissions
-        // Updated to match April 2024 rates
-        const effectiveCO2 = co2Emissions || estimatedCO2 || 0;
-        
-        if (fuelType.toUpperCase().includes("ALTERNATIVE") || 
-            fuelType.toUpperCase().includes("HYBRID")) {
-          // Alternative fuel rates
-          if (effectiveCO2 <= 100) {
-            taxBand = "A";
-            annualTaxCost = "£0";
-          } else if (effectiveCO2 <= 110) {
-            taxBand = "B";
-            annualTaxCost = "£10";
-          } else if (effectiveCO2 <= 120) {
-            taxBand = "C";
+  if (registrationDate || makeYear) {
+    const regParts = registrationDate ? registrationDate.split('-') : [];
+    const regYear = regParts.length >= 1 ? parseInt(regParts[0]) : makeYear; // Robust parsing
+    const regMonth = regParts.length >= 2 ? parseInt(regParts[1]) : 1; // Default to January if missing
+    
+    // Handle Motorcycles and Tricycles
+    if (vehicleCategory === "motorcycle or moped") {
+      const cc = parseInt(engineSize) || 0;
+      if (revenueWeight <= 450) {
+        if (inferredTaxClass === "tricycle" || vehicleData.taxClass?.toLowerCase() === "tc50") {
+          if (cc <= 150) {
             annualTaxCost = "£25";
-          } else if (effectiveCO2 <= 130) {
-            taxBand = "D";
-            annualTaxCost = "£150";
-          } else if (effectiveCO2 <= 140) {
-            taxBand = "E";
-            annualTaxCost = "£180";
-          } else if (effectiveCO2 <= 150) {
-            taxBand = "F";
-            annualTaxCost = "£200";
-          } else if (effectiveCO2 <= 165) {
-            taxBand = "G";
-            annualTaxCost = "£245";
-          } else if (effectiveCO2 <= 175) {
-            taxBand = "H";
-            annualTaxCost = "£295";
-          } else if (effectiveCO2 <= 185) {
-            taxBand = "I";
-            annualTaxCost = "£325";
-          } else if (effectiveCO2 <= 200) {
-            taxBand = "J";
-            annualTaxCost = "£375";
-          } else if (effectiveCO2 <= 225) {
-            taxBand = "K";
-            annualTaxCost = "£405";
-          } else if (effectiveCO2 <= 255) {
-            taxBand = "L";
-            annualTaxCost = "£700";
+            annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
+            taxBand = "N/A (Tricycle ≤150cc)";
           } else {
-            taxBand = "M";
-            annualTaxCost = "£725";
+            annualTaxCost = "£117";
+            annualTaxCostDirectDebit = "£122.85 (12 monthly installments)";
+            taxBand = "N/A (Tricycle >150cc)";
           }
+        } else { // Motorcycle (tax class 17)
+          if (cc <= 150) {
+            annualTaxCost = "£25";
+            annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
+            taxBand = "N/A (Motorcycle ≤150cc)";
+          } else if (cc <= 400) {
+            annualTaxCost = "£55";
+            annualTaxCostDirectDebit = "£57.75 (12 monthly installments)";
+            taxBand = "N/A (Motorcycle 151-400cc)";
+          } else if (cc <= 600) {
+            annualTaxCost = "£84";
+            annualTaxCostDirectDebit = "£88.20 (12 monthly installments)";
+            taxBand = "N/A (Motorcycle 401-600cc)";
+          } else {
+            annualTaxCost = "£117";
+            annualTaxCostDirectDebit = "£122.85 (12 monthly installments)";
+            taxBand = "N/A (Motorcycle >600cc)";
+          }
+        }
+        taxNotes.push("Motorcycles/tricycles over 450kg are taxed as private/light goods vehicles.");
+      } else {
+        // Treat as private/light goods if over 450kg
+        const cc = parseInt(engineSize) || 0;
+        annualTaxCost = cc <= 1549 ? "£210" : "£345";
+        annualTaxCostDirectDebit = cc <= 1549 ? "£220.50 (12 monthly installments)" : "£362.25 (12 monthly installments)";
+        taxBand = "N/A (Pre-2001 Goods)";
+        taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
+      }
+    }
+    // Handle Light Goods Vehicles and Vans
+    else if (inferredTaxClass.includes("goods") && (!revenueWeight || revenueWeight <= 3500)) {
+      if (regYear < 2001) { // Pre-2001 Private/Light Goods (tax class 11)
+        const cc = parseInt(engineSize) || 0;
+        annualTaxCost = cc <= 1549 ? "£210" : "£345";
+        annualTaxCostDirectDebit = cc <= 1549 ? "£220.50 (12 monthly installments)" : "£362.25 (12 monthly installments)";
+        taxBand = "N/A (Pre-2001 Goods)";
+        taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
+      } else if (regYear >= 2003 && regYear <= 2006 && effectiveEuroStatus === "Euro 4") {
+        annualTaxCost = "£140";
+        annualTaxCostDirectDebit = "£147 (12 monthly installments)";
+        taxBand = "N/A (Euro 4 Light Goods)";
+        taxNotes.push("Taxed as Euro 4 compliant light goods vehicle (tax class 36)");
+      } else if (regYear >= 2009 && regYear <= 2010 && effectiveEuroStatus === "Euro 5") {
+        annualTaxCost = "£140";
+        annualTaxCostDirectDebit = "£147 (12 monthly installments)";
+        taxBand = "N/A (Euro 5 Light Goods)";
+        taxNotes.push("Taxed as Euro 5 compliant light goods vehicle (tax class 36)");
+      } else { // Standard Light Goods (tax class 39, post-2001)
+        annualTaxCost = "£335";
+        annualTaxCostDirectDebit = "£351.75 (12 monthly installments)";
+        taxBand = "N/A (Light Goods Vehicle)";
+        taxNotes.push("Taxed as a light goods vehicle (tax class 39)");
+      }
+    } else if (regYear > 2017 || (regYear === 2017 && regMonth >= 4)) {
+      // Post-April 2017 regime - updated to 2024 DVLA rates
+      
+      if (fuelType.toUpperCase().includes("DIESEL") && !isDieselRDE2) {
+        // Diesel cars not meeting RDE2 standards pay higher rates
+        // Standard rate from second licence onwards: £190
+        annualTaxCost = "£190 per year";
+        annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
+        
+        // First year rate depends on CO2 - updated to April 2024 rates
+        if (effectiveCO2 === 0) {
+          firstYearTaxCost = "£0";
+        } else if (effectiveCO2 <= 50) {
+          firstYearTaxCost = "£30";
+        } else if (effectiveCO2 <= 75) {
+          firstYearTaxCost = "£135";
+        } else if (effectiveCO2 <= 90) {
+          firstYearTaxCost = "£175";
+        } else if (effectiveCO2 <= 100) {
+          firstYearTaxCost = "£195";
+        } else if (effectiveCO2 <= 110) {
+          firstYearTaxCost = "£220";
+        } else if (effectiveCO2 <= 130) {
+          firstYearTaxCost = "£270";
+        } else if (effectiveCO2 <= 150) {
+          firstYearTaxCost = "£680";
+        } else if (effectiveCO2 <= 170) {
+          firstYearTaxCost = "£1,095";
+        } else if (effectiveCO2 <= 190) {
+          firstYearTaxCost = "£1,650";
+        } else if (effectiveCO2 <= 225) {
+          firstYearTaxCost = "£2,340";
+        } else if (effectiveCO2 <= 255) {
+          firstYearTaxCost = "£2,745";
         } else {
-          // Standard petrol and diesel rates
-          if (effectiveCO2 <= 100) {
-            taxBand = "A";
-            annualTaxCost = "£0";
-          } else if (effectiveCO2 <= 110) {
-            taxBand = "B";
-            annualTaxCost = "£20";
-          } else if (effectiveCO2 <= 120) {
-            taxBand = "C";
-            annualTaxCost = "£35";
-          } else if (effectiveCO2 <= 130) {
-            taxBand = "D";
-            annualTaxCost = "£160";
-          } else if (effectiveCO2 <= 140) {
-            taxBand = "E";
-            annualTaxCost = "£190";
-          } else if (effectiveCO2 <= 150) {
-            taxBand = "F";
-            annualTaxCost = "£210";
-          } else if (effectiveCO2 <= 165) {
-            taxBand = "G";
-            annualTaxCost = "£255";
-          } else if (effectiveCO2 <= 175) {
-            taxBand = "H";
-            annualTaxCost = "£305";
-          } else if (effectiveCO2 <= 185) {
-            taxBand = "I";
-            annualTaxCost = "£335";
-          } else if (effectiveCO2 <= 200) {
-            taxBand = "J";
-            annualTaxCost = "£385";
-          } else if (effectiveCO2 <= 225) {
-            taxBand = "K";
-            annualTaxCost = "£415";
-          } else if (effectiveCO2 <= 255) {
-            taxBand = "L";
-            annualTaxCost = "£710";
-          } else {
-            taxBand = "M";
-            annualTaxCost = "£735";
-          }
+          firstYearTaxCost = "£2,745";
+        }
+        
+        taxNotes.push("Vehicle is taxed at the higher diesel rate as it does not meet RDE2 standards.");
+      } else if (fuelType.toUpperCase().includes("DIESEL") || fuelType.toUpperCase().includes("PETROL")) {
+        // Petrol cars and diesel cars meeting RDE2 standards
+        // Standard rate from second licence onwards: £190
+        annualTaxCost = "£190 per year";
+        annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
+        
+        // First year rate depends on CO2 - updated to April 2024 rates
+        if (effectiveCO2 === 0) {
+          firstYearTaxCost = "£0";
+        } else if (effectiveCO2 <= 50) {
+          firstYearTaxCost = "£10";
+        } else if (effectiveCO2 <= 75) {
+          firstYearTaxCost = "£30";
+        } else if (effectiveCO2 <= 90) {
+          firstYearTaxCost = "£135";
+        } else if (effectiveCO2 <= 100) {
+          firstYearTaxCost = "£175";
+        } else if (effectiveCO2 <= 110) {
+          firstYearTaxCost = "£195";
+        } else if (effectiveCO2 <= 130) {
+          firstYearTaxCost = "£220";
+        } else if (effectiveCO2 <= 150) {
+          firstYearTaxCost = "£270";
+        } else if (effectiveCO2 <= 170) {
+          firstYearTaxCost = "£680";
+        } else if (effectiveCO2 <= 190) {
+          firstYearTaxCost = "£1,095";
+        } else if (effectiveCO2 <= 225) {
+          firstYearTaxCost = "£1,650";
+        } else if (effectiveCO2 <= 255) {
+          firstYearTaxCost = "£2,340";
+        } else {
+          firstYearTaxCost = "£2,745";
+        }
+        
+        if (isDieselRDE2) {
+          taxNotes.push("Vehicle is taxed at the standard rate as it meets RDE2 standards.");
+        }
+      } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
+        // Electric vehicles - zero tax until April 2025
+        annualTaxCost = "£0 (zero-emission vehicles exempt until April 2025)";
+        annualTaxCostDirectDebit = "£0 (zero-emission vehicles exempt until April 2025)";
+        firstYearTaxCost = "£0";
+        taxNotes.push("From April 2025, zero-emission vehicles will be subject to standard rate vehicle tax.");
+      } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
+        // Alternative fuel vehicles (including hybrids) - updated to April 2024 rates
+        annualTaxCost = "£180 per year";
+        annualTaxCostDirectDebit = "£189 (12 monthly installments)";
+        
+        // First year rate for alternative fuel vehicles depends on CO2
+        if (effectiveCO2 === 0) {
+          firstYearTaxCost = "£0";
+        } else if (effectiveCO2 <= 50) {
+          firstYearTaxCost = "£0";
+        } else if (effectiveCO2 <= 75) {
+          firstYearTaxCost = "£20";
+        } else if (effectiveCO2 <= 90) {
+          firstYearTaxCost = "£125";
+        } else if (effectiveCO2 <= 100) {
+          firstYearTaxCost = "£165";
+        } else if (effectiveCO2 <= 110) {
+          firstYearTaxCost = "£185";
+        } else if (effectiveCO2 <= 130) {
+          firstYearTaxCost = "£210";
+        } else if (effectiveCO2 <= 150) {
+          firstYearTaxCost = "£260";
+        } else if (effectiveCO2 <= 170) {
+          firstYearTaxCost = "£670";
+        } else if (effectiveCO2 <= 190) {
+          firstYearTaxCost = "£1,085";
+        } else if (effectiveCO2 <= 225) {
+          firstYearTaxCost = "£1,640";
+        } else if (effectiveCO2 <= 255) {
+          firstYearTaxCost = "£2,330";
+        } else {
+          firstYearTaxCost = "£2,735";
         }
       }
+      
+      // Additional rate for expensive vehicles
+      if (vehicleData.listPrice && vehicleData.listPrice > 40000) {
+        if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
+          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 will apply for 5 years from the second licence, but currently suspended for zero emission vehicles until April 2025.");
+        } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
+          annualTaxCost = "£590 per year for 5 years from second licence, then £180";
+          annualTaxCostDirectDebit = "£619.50 (12 monthly installments) for 5 years from second licence, then £189";
+          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
+        } else {
+          annualTaxCost = "£600 per year for 5 years from second licence, then £190";
+          annualTaxCostDirectDebit = "£630 (12 monthly installments) for 5 years from second licence, then £199.50";
+          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
+        }
+      }
+    } else {
+      // Pre-April 2017 - Based on CO2 emissions
+      // Updated to match April 2024 rates
+      
+      if (fuelType.toUpperCase().includes("ALTERNATIVE") || 
+          fuelType.toUpperCase().includes("HYBRID")) {
+        // Alternative fuel rates
+        if (effectiveCO2 <= 100) {
+          taxBand = "A";
+          annualTaxCost = "£0";
+          annualTaxCostDirectDebit = "£0";
+        } else if (effectiveCO2 <= 110) {
+          taxBand = "B";
+          annualTaxCost = "£10";
+          annualTaxCostDirectDebit = "£10.50 (12 monthly installments)";
+        } else if (effectiveCO2 <= 120) {
+          taxBand = "C";
+          annualTaxCost = "£25";
+          annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 130) {
+          taxBand = "D";
+          annualTaxCost = "£150";
+          annualTaxCostDirectDebit = "£157.50 (12 monthly installments)";
+        } else if (effectiveCO2 <= 140) {
+          taxBand = "E";
+          annualTaxCost = "£180";
+          annualTaxCostDirectDebit = "£189 (12 monthly installments)";
+        } else if (effectiveCO2 <= 150) {
+          taxBand = "F";
+          annualTaxCost = "£200";
+          annualTaxCostDirectDebit = "£210 (12 monthly installments)";
+        } else if (effectiveCO2 <= 165) {
+          taxBand = "G";
+          annualTaxCost = "£245";
+          annualTaxCostDirectDebit = "£257.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 175) {
+          taxBand = "H";
+          annualTaxCost = "£295";
+          annualTaxCostDirectDebit = "£309.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 185) {
+          taxBand = "I";
+          annualTaxCost = "£325";
+          annualTaxCostDirectDebit = "£341.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 200) {
+          taxBand = "J";
+          annualTaxCost = "£375";
+          annualTaxCostDirectDebit = "£393.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 225) {
+          taxBand = "K";
+          annualTaxCost = "£405";
+          annualTaxCostDirectDebit = "£425.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 255) {
+          taxBand = "L";
+          annualTaxCost = "£700";
+          annualTaxCostDirectDebit = "£735 (12 monthly installments)";
+        } else {
+          taxBand = "M";
+          annualTaxCost = "£725";
+          annualTaxCostDirectDebit = "£761.25 (12 monthly installments)";
+        }
+      } else {
+        // Standard petrol and diesel rates
+        if (effectiveCO2 <= 100) {
+          taxBand = "A";
+          annualTaxCost = "£0";
+          annualTaxCostDirectDebit = "£0";
+        } else if (effectiveCO2 <= 110) {
+          taxBand = "B";
+          annualTaxCost = "£20";
+          annualTaxCostDirectDebit = "£21 (12 monthly installments)";
+        } else if (effectiveCO2 <= 120) {
+          taxBand = "C";
+          annualTaxCost = "£35";
+          annualTaxCostDirectDebit = "£36.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 130) {
+          taxBand = "D";
+          annualTaxCost = "£160";
+          annualTaxCostDirectDebit = "£168 (12 monthly installments)";
+        } else if (effectiveCO2 <= 140) {
+          taxBand = "E";
+          annualTaxCost = "£190";
+          annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
+        } else if (effectiveCO2 <= 150) {
+          taxBand = "F";
+          annualTaxCost = "£210";
+          annualTaxCostDirectDebit = "£220.50 (12 monthly installments)";
+        } else if (effectiveCO2 <= 165) {
+          taxBand = "G";
+          annualTaxCost = "£255";
+          annualTaxCostDirectDebit = "£267.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 175) {
+          taxBand = "H";
+          annualTaxCost = "£305";
+          annualTaxCostDirectDebit = "£320.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 185) {
+          taxBand = "I";
+          annualTaxCost = "£335";
+          annualTaxCostDirectDebit = "£351.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 200) {
+          taxBand = "J";
+          annualTaxCost = "£385";
+          annualTaxCostDirectDebit = "£404.25 (12 monthly installments)";
+        } else if (effectiveCO2 <= 225) {
+          taxBand = "K";
+          annualTaxCost = "£415";
+          annualTaxCostDirectDebit = "£435.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 255) {
+          taxBand = "L";
+          annualTaxCost = "£710";
+          annualTaxCostDirectDebit = "£745.50 (12 monthly installments)";
+        } else {
+          taxBand = "M";
+          annualTaxCost = "£735";
+          annualTaxCostDirectDebit = "£771.75 (12 monthly installments)";
+        }
+      }
+    }
+  }
+
+  // Add estimation note if applicable
+  if (isEstimated) {
+    if (estimatedCO2 && !co2Emissions) {
+      taxNotes.push("CO2 emissions estimated based on vehicle specifications.");
+    }
+    if (estimatedEuroStatus && !euroStatus) {
+      taxNotes.push("Euro status estimated based on vehicle age.");
     }
   }
 
@@ -439,13 +568,14 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   
   // Return the comprehensive emissions insights
   return {
-    co2Emissions: co2Emissions || estimatedCO2,
+    co2Emissions: effectiveCO2,
     euroStatus: effectiveEuroStatus,
     euroSubcategory: effectiveEuroSubcategory,
     rde2Compliant: isDieselRDE2,
     isEstimated,
     taxBand,
     annualTaxCost,
+    annualTaxCostDirectDebit, // Added for Direct Debit
     firstYearTaxCost,
     taxNotes,
     
@@ -470,12 +600,34 @@ const EmissionsInsightsCalculator = (vehicleData) => {
 };
 
 /**
- * Determines the vehicle category based on the Scottish LEZ regulations
+ * Determines the vehicle category based on weight and tax class
+ * Make/model agnostic approach to categorizing vehicles
+ * Refined to prevent misclassification of passenger vehicles as goods
  */
 const determineVehicleCategory = (vehicleData) => {
   const bodyType = vehicleData.bodyType || "";
   const seats = vehicleData.seats ? parseInt(vehicleData.seats) : 0;
   const weight = vehicleData.weight ? parseInt(vehicleData.weight) : 0;
+  const revenueWeight = vehicleData.revenueWeight || 0;
+  const taxClass = vehicleData.taxClass?.toLowerCase() || "";
+  
+  // Explicit LGV indicators
+  if ((taxClass === "light goods vehicle" || taxClass === "lgv" || taxClass === "tc39") && 
+      (bodyType.toLowerCase().includes('van') || bodyType.toLowerCase().includes('pickup'))) {
+    return "light goods vehicle";
+  }
+  
+  // Revenue weight alone isn’t enough; check body type and tax class explicitly
+  if (revenueWeight > 0 && revenueWeight <= 3500 && 
+      (bodyType.toLowerCase().includes('van') || taxClass === "light goods vehicle" || taxClass === "tc39")) {
+    return "light goods vehicle";
+  }
+  
+  // Default to passenger vehicle unless explicitly a goods vehicle
+  if (seats >= 4 && !bodyType.toLowerCase().includes('van') && 
+      !taxClass.includes('goods')) {
+    return "light passenger vehicle";
+  }
   
   // Scottish LEZ regulations use these categories
   if (bodyType.toLowerCase().includes("motorcycle") || 
@@ -512,10 +664,6 @@ const determineVehicleCategory = (vehicleData) => {
   
   if (weight > 3500 && weight <= 12000 && !bodyType.toLowerCase().includes("passenger")) {
     return "heavy goods vehicle N2";
-  }
-  
-  if (weight <= 3500 && !bodyType.toLowerCase().includes("passenger")) {
-    return "light goods vehicle";
   }
   
   // Default to light passenger vehicle (M1)

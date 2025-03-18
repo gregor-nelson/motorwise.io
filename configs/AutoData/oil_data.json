@@ -1,0 +1,64 @@
+[
+  {
+    "vehicle_id": "HON13364",
+    "engine_capacity": "3.2 litres",
+    "capacity_description": "Engine with filter(s)",
+    "tightening_torques": [
+      {
+        "description": "Sump drain bolt",
+        "value": "44 Nm"
+      }
+    ],
+    "engine_oils": [
+      {
+        "temperature": "All temperatures",
+        "grades": [
+          "0W-20",
+          "0W-30",
+          "0W-40"
+        ],
+        "classifications": [
+          "SL/A1, A3, A5"
+        ]
+      },
+      {
+        "temperature": "All temperatures",
+        "grades": [
+          "5W-20",
+          "5W-30",
+          "5W-40"
+        ],
+        "classifications": [
+          "SL/A1, A3, A5"
+        ]
+      },
+      {
+        "temperature": "-20\u00b0C \u2192 ",
+        "grades": [
+          "10W-30",
+          "10W-40"
+        ],
+        "classifications": [
+          "SL/A1, A3, A5"
+        ]
+      },
+      {
+        "temperature": "-15\u00b0C \u2192 ",
+        "grades": [
+          "15W-40"
+        ],
+        "classifications": [
+          "SL/A1, A3, A5"
+        ]
+      }
+    ]
+  },
+  {
+    "vehicle_id": "HON13365",
+    "error": "No data retrieved"
+  },
+  {
+    "vehicle_id": "HON13366",
+    "error": "No data retrieved"
+  }
+]

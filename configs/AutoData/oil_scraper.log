@@ -1,0 +1,1273 @@
+2025-03-13 10:30:25,058 [INFO] Starting oil data scraping script
+2025-03-13 10:30:25,058 [INFO] Validating authentication tokens
+2025-03-13 10:30:25,058 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:30:25,058 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:30:25,058 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:30:25,058 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:30:25,074 [DEBUG] id_token is valid
+2025-03-13 10:30:25,074 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:30:25,074 [INFO] Starting cookie refresh via login
+2025-03-13 10:30:25,074 [INFO] ====== WebDriver manager ======
+2025-03-13 10:30:26,502 [INFO] Get LATEST chromedriver version for google-chrome
+2025-03-13 10:30:26,502 [DEBUG] Starting new HTTPS connection (1): chromedriver.storage.googleapis.com:443
+2025-03-13 10:30:26,862 [DEBUG] https://chromedriver.storage.googleapis.com:443 "GET /LATEST_RELEASE HTTP/1.1" 200 13
+2025-03-13 10:30:26,862 [INFO] About to download new driver from https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip
+2025-03-13 10:30:26,862 [DEBUG] Starting new HTTPS connection (1): chromedriver.storage.googleapis.com:443
+2025-03-13 10:30:27,190 [DEBUG] https://chromedriver.storage.googleapis.com:443 "GET /114.0.5735.90/chromedriver_win32.zip HTTP/1.1" 200 6603303
+2025-03-13 10:30:27,190 [INFO] Driver downloading response is 200
+2025-03-13 10:30:29,507 [INFO] Get LATEST chromedriver version for google-chrome
+2025-03-13 10:30:29,507 [DEBUG] Starting new HTTPS connection (1): chromedriver.storage.googleapis.com:443
+2025-03-13 10:30:29,837 [DEBUG] https://chromedriver.storage.googleapis.com:443 "GET /LATEST_RELEASE HTTP/1.1" 200 13
+2025-03-13 10:30:30,683 [INFO] Get LATEST chromedriver version for google-chrome
+2025-03-13 10:30:30,683 [DEBUG] Starting new HTTPS connection (1): chromedriver.storage.googleapis.com:443
+2025-03-13 10:30:31,012 [DEBUG] https://chromedriver.storage.googleapis.com:443 "GET /LATEST_RELEASE HTTP/1.1" 200 13
+2025-03-13 10:30:31,750 [INFO] Driver has been saved in cache [C:\Users\gregor.nelson\.wdm\drivers\chromedriver\win64\114.0.5735.90]
+2025-03-13 10:30:31,750 [DEBUG] Skipping Selenium Manager; path to chrome driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\chromedriver\win64\114.0.5735.90\chromedriver.exe
+2025-03-13 10:30:31,812 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\chromedriver\win64\114.0.5735.90\chromedriver.exe` in a child process with pid: 21044 using 0 to output -3
+2025-03-13 10:30:32,329 [DEBUG] POST http://localhost:53539/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'goog:chromeOptions': {'extensions': [], 'args': ['--headless']}}}}
+2025-03-13 10:30:32,329 [DEBUG] Starting new HTTP connection (1): localhost:53539
+2025-03-13 10:30:32,344 [DEBUG] http://localhost:53539 "POST /session HTTP/1.1" 500 0
+2025-03-13 10:30:32,344 [DEBUG] Remote response: status=500 | data={"value":{"error":"unknown error","message":"unknown error: cannot find Chrome binary","stacktrace":"Backtrace:\n\tGetHandleVerifier [0x007AA813+48355]\n\t(No symbol) [0x0073C4B1]\n\t(No symbol) [0x00645358]\n\t(No symbol) [0x00661A9E]\n\t(No symbol) [0x00660579]\n\t(No symbol) [0x00690C55]\n\t(No symbol) [0x0069093C]\n\t(No symbol) [0x0068A536]\n\t(No symbol) [0x006682DC]\n\t(No symbol) [0x006693DD]\n\tGetHandleVerifier [0x00A0AABD+2539405]\n\tGetHandleVerifier [0x00A4A78F+2800735]\n\tGetHandleVerifier [0x00A4456C+2775612]\n\tGetHandleVerifier [0x008351E0+616112]\n\t(No symbol) [0x00745F8C]\n\t(No symbol) [0x00742328]\n\t(No symbol) [0x0074240B]\n\t(No symbol) [0x00734FF7]\n\tBaseThreadInitThunk [0x76D07BA9+25]\n\tRtlInitializeExceptionChain [0x76FBC28B+107]\n\tRtlClearBits [0x76FBC20F+191]\n"}} | headers=HTTPHeaderDict({'Content-Length': '807', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:30:32,344 [DEBUG] Finished Request
+2025-03-13 10:35:32,209 [INFO] Starting oil data scraping script
+2025-03-13 10:35:32,209 [INFO] Validating authentication tokens
+2025-03-13 10:35:32,209 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:35:32,209 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:35:32,209 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:35:32,209 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:35:32,209 [DEBUG] id_token is valid
+2025-03-13 10:35:32,209 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:35:32,209 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 10:35:32,209 [INFO] ====== WebDriver manager ======
+2025-03-13 10:35:33,727 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:35:33,743 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:35:45,303 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:35:45,321 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:35:45,321 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:35:45,321 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:35:45,756 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:35:45,756 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:35:45,756 [INFO] There is no [win64] edgedriver "134.0.3124.66" for browser edge "134.0.3124" in cache
+2025-03-13 10:35:45,756 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:35:45,756 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:35:46,180 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:35:46,180 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:35:46,180 [INFO] About to download new driver from https://msedgedriver.azureedge.net/134.0.3124.66/edgedriver_win64.zip
+2025-03-13 10:35:46,180 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:35:46,726 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /134.0.3124.66/edgedriver_win64.zip HTTP/1.1" 200 10709828
+2025-03-13 10:35:46,726 [INFO] Driver downloading response is 200
+2025-03-13 10:35:59,344 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:35:59,344 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:36:11,041 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:36:11,041 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:36:11,332 [INFO] Driver has been saved in cache [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66]
+2025-03-13 10:36:11,335 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 10:36:13,672 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 12880 using 0 to output -3
+2025-03-13 10:36:14,175 [DEBUG] POST http://localhost:53737/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': ['--headless']}}}}
+2025-03-13 10:36:14,175 [DEBUG] Starting new HTTP connection (1): localhost:53737
+2025-03-13 10:36:15,179 [DEBUG] http://localhost:53737 "POST /session HTTP/1.1" 200 0
+2025-03-13 10:36:15,179 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:53741"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir12880_651491238"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"b8342a4585241152243d51465497c600"}} | headers=HTTPHeaderDict({'Content-Length': '860', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:15,179 [DEBUG] Finished Request
+2025-03-13 10:36:15,194 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:36:15,194 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 10:36:29,347 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/url HTTP/1.1" 200 0
+2025-03-13 10:36:29,348 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:29,348 [DEBUG] Finished Request
+2025-03-13 10:36:31,350 [DEBUG] Login page loaded
+2025-03-13 10:36:31,350 [DEBUG] Entering username: gnelson5545
+2025-03-13 10:36:31,350 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 10:36:31,364 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element HTTP/1.1" 200 0
+2025-03-13 10:36:31,364 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:31,365 [DEBUG] Finished Request
+2025-03-13 10:36:31,365 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 10:36:31,453 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.3/value HTTP/1.1" 200 0
+2025-03-13 10:36:31,453 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:31,453 [DEBUG] Finished Request
+2025-03-13 10:36:31,454 [DEBUG] Entering password
+2025-03-13 10:36:31,454 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 10:36:31,468 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element HTTP/1.1" 200 0
+2025-03-13 10:36:31,469 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:31,469 [DEBUG] Finished Request
+2025-03-13 10:36:31,470 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 10:36:31,535 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.4/value HTTP/1.1" 200 0
+2025-03-13 10:36:31,535 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:31,536 [DEBUG] Finished Request
+2025-03-13 10:36:31,536 [DEBUG] Submitting login form
+2025-03-13 10:36:31,536 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 10:36:31,547 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element HTTP/1.1" 200 0
+2025-03-13 10:36:31,548 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:31,548 [DEBUG] Finished Request
+2025-03-13 10:36:31,548 [DEBUG] POST http://localhost:53737/session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.7/click {}
+2025-03-13 10:36:34,607 [DEBUG] http://localhost:53737 "POST /session/b8342a4585241152243d51465497c600/element/f.888D9611F186C8BC13DCD59A81B24ED1.d.DE42A74D89CA5D95E434E186C35E5B68.e.7/click HTTP/1.1" 200 0
+2025-03-13 10:36:34,608 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:34,608 [DEBUG] Finished Request
+2025-03-13 10:36:34,609 [DEBUG] Waiting for redirect
+2025-03-13 10:36:39,610 [DEBUG] GET http://localhost:53737/session/b8342a4585241152243d51465497c600/url {}
+2025-03-13 10:36:39,620 [DEBUG] http://localhost:53737 "GET /session/b8342a4585241152243d51465497c600/url HTTP/1.1" 200 0
+2025-03-13 10:36:39,621 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:39,622 [DEBUG] Finished Request
+2025-03-13 10:36:39,622 [DEBUG] Current URL after login: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:36:39,623 [DEBUG] Extracting cookies from browser
+2025-03-13 10:36:39,623 [DEBUG] GET http://localhost:53737/session/b8342a4585241152243d51465497c600/cookie {}
+2025-03-13 10:36:39,632 [DEBUG] http://localhost:53737 "GET /session/b8342a4585241152243d51465497c600/cookie HTTP/1.1" 200 0
+2025-03-13 10:36:39,637 [DEBUG] Remote response: status=200 | data={"value":[{"domain":".workshop.autodata-group.com","expiry":1743862193,"httpOnly":true,"name":"SESSd965b47fdd2684807fd560c91c3e21b6","path":"/","sameSite":"Lax","secure":true,"value":"VFrldttpb52bdqxo_6T-0YJYRKnOGLZ1lNdnTUwdvGc"},{"domain":"workshop.autodata-group.com","expiry":1741862793,"httpOnly":false,"name":"X9J619KTIDTk-ipGFwdnlFLUR0JTE5Zt0y3M2Wtl3hw","path":"/","sameSite":"Lax","secure":true,"value":"3737255"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_i_3130392E3130392E3135312E313530","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":".autodata-group.com","expiry":1741876592,"httpOnly":true,"name":"id_token","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0MTg3NjU5MX0.VJT16BnuNQ6Ygf8U5KiGw9RgquR1XRxuSxv5ENycjpY"},{"domain":".autodata-group.com","expiry":1741876592,"httpOnly":true,"name":"adat","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDE4NzY1OTF9.S6Ig7OxmS2RwLlFMJEO8uU77tAEg-qfbPifhBa-cLi4"},{"domain":"workshop.autodata-group.com","httpOnly":false,"name":"has_js","path":"/","sameSite":"Lax","secure":false,"value":"1"}]} | headers=HTTPHeaderDict({'Content-Length': '1424', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:39,638 [DEBUG] Finished Request
+2025-03-13 10:36:39,638 [DEBUG] Cookie SESSd965b47fdd2684807fd560c91c3e21b6 expires at 2025-04-05 14:09:53+00:00
+2025-03-13 10:36:39,639 [DEBUG] Cookie X9J619KTIDTk-ipGFwdnlFLUR0JTE5Zt0y3M2Wtl3hw expires at 2025-03-13 10:46:33+00:00
+2025-03-13 10:36:39,639 [DEBUG] Cookie id_token expires at 2025-03-13 14:36:32+00:00
+2025-03-13 10:36:39,640 [DEBUG] Cookie adat expires at 2025-03-13 14:36:32+00:00
+2025-03-13 10:36:39,640 [ERROR] Missing required cookies: access_token
+2025-03-13 10:36:39,641 [DEBUG] DELETE http://localhost:53737/session/b8342a4585241152243d51465497c600 {}
+2025-03-13 10:36:39,833 [DEBUG] http://localhost:53737 "DELETE /session/b8342a4585241152243d51465497c600 HTTP/1.1" 200 0
+2025-03-13 10:36:39,834 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:36:39,834 [DEBUG] Finished Request
+2025-03-13 10:36:41,960 [DEBUG] Selenium driver closed
+2025-03-13 10:36:41,961 [ERROR] Failed to initialize cookies, exiting
+2025-03-13 10:42:43,175 [INFO] Starting oil data scraping script
+2025-03-13 10:42:43,175 [INFO] Validating authentication tokens
+2025-03-13 10:42:43,175 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:42:43,175 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:42:43,175 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:42:43,175 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:42:43,175 [DEBUG] id_token is valid
+2025-03-13 10:42:43,175 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:42:43,175 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 10:42:43,175 [INFO] ====== WebDriver manager ======
+2025-03-13 10:42:44,796 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:42:44,796 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:42:45,359 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:42:45,359 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:42:45,359 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:42:45,359 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:42:45,782 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:42:45,782 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:42:45,806 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 10:42:45,806 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 10:42:47,697 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 23940 using 0 to output -3
+2025-03-13 10:42:48,214 [DEBUG] POST http://localhost:53984/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 10:42:48,214 [DEBUG] Starting new HTTP connection (1): localhost:53984
+2025-03-13 10:42:49,011 [DEBUG] http://localhost:53984 "POST /session HTTP/1.1" 200 0
+2025-03-13 10:42:49,011 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:53988"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir23940_1765595282"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"020bee3072d6203958fcda9eed8beeef"}} | headers=HTTPHeaderDict({'Content-Length': '861', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:42:49,018 [DEBUG] Finished Request
+2025-03-13 10:42:49,018 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:42:49,018 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 10:43:03,313 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:03,313 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:03,314 [DEBUG] Finished Request
+2025-03-13 10:43:05,316 [DEBUG] Login page loaded
+2025-03-13 10:43:05,316 [DEBUG] Entering username: gnelson5545
+2025-03-13 10:43:05,316 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 10:43:05,325 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element HTTP/1.1" 200 0
+2025-03-13 10:43:05,325 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:05,325 [DEBUG] Finished Request
+2025-03-13 10:43:05,325 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 10:43:05,429 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.3/value HTTP/1.1" 200 0
+2025-03-13 10:43:05,429 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:05,429 [DEBUG] Finished Request
+2025-03-13 10:43:05,429 [DEBUG] Entering password
+2025-03-13 10:43:05,429 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 10:43:05,445 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element HTTP/1.1" 200 0
+2025-03-13 10:43:05,447 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:05,447 [DEBUG] Finished Request
+2025-03-13 10:43:05,447 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 10:43:05,530 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.4/value HTTP/1.1" 200 0
+2025-03-13 10:43:05,530 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:05,530 [DEBUG] Finished Request
+2025-03-13 10:43:05,530 [DEBUG] Submitting login form
+2025-03-13 10:43:05,530 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 10:43:05,548 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element HTTP/1.1" 200 0
+2025-03-13 10:43:05,548 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:05,549 [DEBUG] Finished Request
+2025-03-13 10:43:05,549 [DEBUG] POST http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.7/click {}
+2025-03-13 10:43:08,370 [DEBUG] http://localhost:53984 "POST /session/020bee3072d6203958fcda9eed8beeef/element/f.7649D2E1356E599027B6E56E983159F6.d.B932EB89394F70A4F8079AA2E478FE5E.e.7/click HTTP/1.1" 200 0
+2025-03-13 10:43:08,370 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:08,371 [DEBUG] Finished Request
+2025-03-13 10:43:08,371 [DEBUG] Waiting for redirect
+2025-03-13 10:43:08,372 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:08,383 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:08,384 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:08,386 [DEBUG] Finished Request
+2025-03-13 10:43:08,886 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:08,888 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:08,888 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:08,888 [DEBUG] Finished Request
+2025-03-13 10:43:09,399 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:09,410 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:09,410 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:09,411 [DEBUG] Finished Request
+2025-03-13 10:43:09,912 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:09,921 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:09,921 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:09,923 [DEBUG] Finished Request
+2025-03-13 10:43:10,423 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:10,431 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:10,431 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:10,431 [DEBUG] Finished Request
+2025-03-13 10:43:10,935 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:10,935 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 200 0
+2025-03-13 10:43:10,935 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:10,935 [DEBUG] Finished Request
+2025-03-13 10:43:11,447 [DEBUG] GET http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef/url {}
+2025-03-13 10:43:11,447 [DEBUG] http://localhost:53984 "GET /session/020bee3072d6203958fcda9eed8beeef/url HTTP/1.1" 404 0
+2025-03-13 10:43:11,447 [DEBUG] Remote response: status=404 | data={"value":{"error":"invalid session id","message":"invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=134.0.3124.66)","stacktrace":"\tGetHandleVerifier [0x00007FF73983A7C5+20677]\n\tsimdutf::get_active_implementation [0x00007FF739796F70+492640]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]\n\t(No symbol) [0x00007FF73957B8B0]\n\t(No symbol) [0x00007FF73959A32A]\n\t(No symbol) [0x00007FF7395FE0E6]\n\t(No symbol) [0x00007FF7396156CD]\n\t(No symbol) [0x00007FF7395F81C3]\n\t(No symbol) [0x00007FF7395CCC36]\n\t(No symbol) [0x00007FF7395CC0C4]\n\t(No symbol) [0x00007FF7395CCA63]\n\t(No symbol) [0x00007FF7396B58DD]\n\t(No symbol) [0x00007FF7396C1D42]\n\t(No symbol) [0x00007FF7396BA703]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]\n\tsimdutf::get_active_implementation [0x00007FF7397A46A1+547729]\n\tsimdutf::get_active_implementation [0x00007FF73979D954+519748]\n\tsimdutf::get_active_implementation [0x00007FF73979DA99+520073]\n\tsimdutf::get_active_implementation [0x00007FF73978F646+461622]\n\tBaseThreadInitThunk [0x00007FFC9839259D+29]\n\tRtlUserThreadStart [0x00007FFC995AAF38+40]\n"}} | headers=HTTPHeaderDict({'Content-Length': '1284', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:11,447 [DEBUG] Finished Request
+2025-03-13 10:43:11,451 [ERROR] Error refreshing cookies: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 82, in refresh_cookies
+    WebDriverWait(driver, 15).until(
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 83, in <lambda>
+    lambda d: d.current_url != LOGIN_URL,
+              ^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 560, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+
+2025-03-13 10:43:11,451 [DEBUG] DELETE http://localhost:53984/session/020bee3072d6203958fcda9eed8beeef {}
+2025-03-13 10:43:11,540 [DEBUG] http://localhost:53984 "DELETE /session/020bee3072d6203958fcda9eed8beeef HTTP/1.1" 200 0
+2025-03-13 10:43:11,540 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:11,556 [DEBUG] Finished Request
+2025-03-13 10:43:18,553 [INFO] Starting oil data scraping script
+2025-03-13 10:43:18,553 [INFO] Validating authentication tokens
+2025-03-13 10:43:18,553 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:43:18,553 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:43:18,553 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:43:18,553 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:43:18,553 [DEBUG] id_token is valid
+2025-03-13 10:43:18,553 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:43:18,553 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 10:43:18,553 [INFO] ====== WebDriver manager ======
+2025-03-13 10:43:20,217 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:43:20,217 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:43:20,657 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:43:20,657 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:43:20,672 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:43:20,672 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:43:21,142 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:43:21,142 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:43:21,142 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 10:43:21,142 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 10:43:21,173 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 22916 using 0 to output -3
+2025-03-13 10:43:21,681 [DEBUG] POST http://localhost:54057/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 10:43:21,683 [DEBUG] Starting new HTTP connection (1): localhost:54057
+2025-03-13 10:43:22,730 [DEBUG] http://localhost:54057 "POST /session HTTP/1.1" 200 0
+2025-03-13 10:43:22,730 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:54061"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir22916_1506858044"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"f555a6ae007c060b0ddeb6139fab224a"}} | headers=HTTPHeaderDict({'Content-Length': '861', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:22,730 [DEBUG] Finished Request
+2025-03-13 10:43:22,736 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:43:22,736 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 10:43:38,132 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:38,133 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:38,133 [DEBUG] Finished Request
+2025-03-13 10:43:40,135 [DEBUG] Login page loaded
+2025-03-13 10:43:40,135 [DEBUG] Entering username: gnelson5545
+2025-03-13 10:43:40,135 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 10:43:40,151 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element HTTP/1.1" 200 0
+2025-03-13 10:43:40,151 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:40,151 [DEBUG] Finished Request
+2025-03-13 10:43:40,151 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 10:43:40,231 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.3/value HTTP/1.1" 200 0
+2025-03-13 10:43:40,232 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:40,233 [DEBUG] Finished Request
+2025-03-13 10:43:40,233 [DEBUG] Entering password
+2025-03-13 10:43:40,233 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 10:43:40,249 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element HTTP/1.1" 200 0
+2025-03-13 10:43:40,249 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:40,250 [DEBUG] Finished Request
+2025-03-13 10:43:40,250 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 10:43:40,326 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.4/value HTTP/1.1" 200 0
+2025-03-13 10:43:40,328 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:40,328 [DEBUG] Finished Request
+2025-03-13 10:43:40,328 [DEBUG] Submitting login form
+2025-03-13 10:43:40,329 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 10:43:40,341 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element HTTP/1.1" 200 0
+2025-03-13 10:43:40,342 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:40,342 [DEBUG] Finished Request
+2025-03-13 10:43:40,343 [DEBUG] POST http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.7/click {}
+2025-03-13 10:43:43,733 [DEBUG] http://localhost:54057 "POST /session/f555a6ae007c060b0ddeb6139fab224a/element/f.97F8516936EA5FE65A92B3E2B546822F.d.0DAFB8C2D5D73306E40EAFB362E16FFF.e.7/click HTTP/1.1" 200 0
+2025-03-13 10:43:43,734 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:43,734 [DEBUG] Finished Request
+2025-03-13 10:43:43,734 [DEBUG] Waiting for redirect
+2025-03-13 10:43:43,735 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:43,749 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:43,750 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:43,750 [DEBUG] Finished Request
+2025-03-13 10:43:44,252 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:44,252 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:44,252 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:44,252 [DEBUG] Finished Request
+2025-03-13 10:43:44,762 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:44,766 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:44,766 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:44,766 [DEBUG] Finished Request
+2025-03-13 10:43:45,273 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:45,276 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:45,276 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:45,276 [DEBUG] Finished Request
+2025-03-13 10:43:45,782 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:45,785 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:45,785 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:45,785 [DEBUG] Finished Request
+2025-03-13 10:43:46,292 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:46,303 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:46,303 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:46,304 [DEBUG] Finished Request
+2025-03-13 10:43:46,804 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:46,828 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:46,828 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:46,828 [DEBUG] Finished Request
+2025-03-13 10:43:47,332 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:47,333 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:47,333 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:47,333 [DEBUG] Finished Request
+2025-03-13 10:43:47,842 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:47,851 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:47,852 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:47,852 [DEBUG] Finished Request
+2025-03-13 10:43:48,354 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:48,364 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:48,365 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:48,365 [DEBUG] Finished Request
+2025-03-13 10:43:48,866 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:48,872 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:48,872 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:48,872 [DEBUG] Finished Request
+2025-03-13 10:43:49,374 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:49,382 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:49,382 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:49,382 [DEBUG] Finished Request
+2025-03-13 10:43:49,883 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:49,890 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:49,891 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:49,891 [DEBUG] Finished Request
+2025-03-13 10:43:50,392 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:50,402 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:50,403 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:50,403 [DEBUG] Finished Request
+2025-03-13 10:43:50,904 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:50,913 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:50,914 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:50,914 [DEBUG] Finished Request
+2025-03-13 10:43:51,415 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:51,421 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:51,422 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:51,422 [DEBUG] Finished Request
+2025-03-13 10:43:51,923 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:51,933 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 200 0
+2025-03-13 10:43:51,934 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:51,935 [DEBUG] Finished Request
+2025-03-13 10:43:52,436 [DEBUG] GET http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a/url {}
+2025-03-13 10:43:52,473 [DEBUG] http://localhost:54057 "GET /session/f555a6ae007c060b0ddeb6139fab224a/url HTTP/1.1" 404 0
+2025-03-13 10:43:52,475 [DEBUG] Remote response: status=404 | data={"value":{"error":"invalid session id","message":"invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=134.0.3124.66)","stacktrace":"\tGetHandleVerifier [0x00007FF73983A7C5+20677]\n\tsimdutf::get_active_implementation [0x00007FF739796F70+492640]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]\n\t(No symbol) [0x00007FF73957B8B0]\n\t(No symbol) [0x00007FF73959A32A]\n\t(No symbol) [0x00007FF7395FE0E6]\n\t(No symbol) [0x00007FF7396156CD]\n\t(No symbol) [0x00007FF7395F81C3]\n\t(No symbol) [0x00007FF7395CCC36]\n\t(No symbol) [0x00007FF7395CC0C4]\n\t(No symbol) [0x00007FF7395CCA63]\n\t(No symbol) [0x00007FF7396B58DD]\n\t(No symbol) [0x00007FF7396C1D42]\n\t(No symbol) [0x00007FF7396BA703]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]\n\tsimdutf::get_active_implementation [0x00007FF7397A46A1+547729]\n\tsimdutf::get_active_implementation [0x00007FF73979D954+519748]\n\tsimdutf::get_active_implementation [0x00007FF73979DA99+520073]\n\tsimdutf::get_active_implementation [0x00007FF73978F646+461622]\n\tBaseThreadInitThunk [0x00007FFC9839259D+29]\n\tRtlUserThreadStart [0x00007FFC995AAF38+40]\n"}} | headers=HTTPHeaderDict({'Content-Length': '1284', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:52,475 [DEBUG] Finished Request
+2025-03-13 10:43:52,477 [ERROR] Error refreshing cookies: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 82, in refresh_cookies
+    WebDriverWait(driver, 15).until(
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 83, in <lambda>
+    lambda d: d.current_url != LOGIN_URL,
+              ^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 560, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+
+2025-03-13 10:43:52,481 [DEBUG] DELETE http://localhost:54057/session/f555a6ae007c060b0ddeb6139fab224a {}
+2025-03-13 10:43:52,605 [DEBUG] http://localhost:54057 "DELETE /session/f555a6ae007c060b0ddeb6139fab224a HTTP/1.1" 200 0
+2025-03-13 10:43:52,606 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:43:52,606 [DEBUG] Finished Request
+2025-03-13 10:43:54,626 [DEBUG] Selenium driver closed
+2025-03-13 10:43:54,626 [ERROR] Failed to initialize cookies, exiting
+2025-03-13 10:44:37,331 [INFO] Starting oil data scraping script
+2025-03-13 10:44:37,331 [INFO] Validating authentication tokens
+2025-03-13 10:44:37,331 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:44:37,331 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:44:37,331 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:44:37,331 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:44:37,331 [DEBUG] id_token is valid
+2025-03-13 10:44:37,331 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:44:37,331 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 10:44:37,331 [INFO] ====== WebDriver manager ======
+2025-03-13 10:44:38,836 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:44:38,851 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:44:50,431 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:44:50,431 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:44:50,431 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:44:50,431 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:44:50,855 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:44:50,855 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:44:50,870 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 10:44:50,870 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 10:44:50,870 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 18700 using 0 to output -3
+2025-03-13 10:44:51,387 [DEBUG] POST http://localhost:54193/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 10:44:51,387 [DEBUG] Starting new HTTP connection (1): localhost:54193
+2025-03-13 10:44:52,146 [DEBUG] http://localhost:54193 "POST /session HTTP/1.1" 200 0
+2025-03-13 10:44:52,146 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:54197"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir18700_151003644"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"d6068e225e2109424e785c82a4852434"}} | headers=HTTPHeaderDict({'Content-Length': '860', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:52,146 [DEBUG] Finished Request
+2025-03-13 10:44:52,146 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:44:52,146 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 10:44:55,004 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/url HTTP/1.1" 200 0
+2025-03-13 10:44:55,004 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:55,004 [DEBUG] Finished Request
+2025-03-13 10:44:57,005 [DEBUG] Login page loaded
+2025-03-13 10:44:57,005 [DEBUG] Entering username: gnelson5545
+2025-03-13 10:44:57,005 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 10:44:57,022 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element HTTP/1.1" 200 0
+2025-03-13 10:44:57,023 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,023 [DEBUG] Finished Request
+2025-03-13 10:44:57,024 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 10:44:57,120 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.3/value HTTP/1.1" 200 0
+2025-03-13 10:44:57,120 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,120 [DEBUG] Finished Request
+2025-03-13 10:44:57,120 [DEBUG] Entering password
+2025-03-13 10:44:57,120 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 10:44:57,136 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element HTTP/1.1" 200 0
+2025-03-13 10:44:57,136 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,136 [DEBUG] Finished Request
+2025-03-13 10:44:57,137 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 10:44:57,201 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.4/value HTTP/1.1" 200 0
+2025-03-13 10:44:57,201 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,201 [DEBUG] Finished Request
+2025-03-13 10:44:57,201 [DEBUG] Submitting login form
+2025-03-13 10:44:57,201 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 10:44:57,201 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element HTTP/1.1" 200 0
+2025-03-13 10:44:57,201 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,201 [DEBUG] Finished Request
+2025-03-13 10:44:57,201 [DEBUG] POST http://localhost:54193/session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.7/click {}
+2025-03-13 10:44:57,265 [DEBUG] http://localhost:54193 "POST /session/d6068e225e2109424e785c82a4852434/element/f.9941E916E293DDF5CE3BD5032C696680.d.E05AE70FEAD50032A2C267BB625E3801.e.7/click HTTP/1.1" 200 0
+2025-03-13 10:44:57,265 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:44:57,265 [DEBUG] Finished Request
+2025-03-13 10:44:57,265 [DEBUG] Waiting for redirect
+2025-03-13 10:44:57,265 [DEBUG] GET http://localhost:54193/session/d6068e225e2109424e785c82a4852434/url {}
+2025-03-13 10:45:00,573 [DEBUG] http://localhost:54193 "GET /session/d6068e225e2109424e785c82a4852434/url HTTP/1.1" 200 0
+2025-03-13 10:45:00,574 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/node"} | headers=HTTPHeaderDict({'Content-Length': '52', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:45:00,574 [DEBUG] Finished Request
+2025-03-13 10:45:00,574 [DEBUG] GET http://localhost:54193/session/d6068e225e2109424e785c82a4852434/url {}
+2025-03-13 10:45:00,583 [DEBUG] http://localhost:54193 "GET /session/d6068e225e2109424e785c82a4852434/url HTTP/1.1" 200 0
+2025-03-13 10:45:00,583 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/node"} | headers=HTTPHeaderDict({'Content-Length': '52', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:45:00,584 [DEBUG] Finished Request
+2025-03-13 10:45:00,584 [DEBUG] Current URL after login: https://workshop.autodata-group.com/node
+2025-03-13 10:45:00,584 [DEBUG] Extracting cookies from browser
+2025-03-13 10:45:00,585 [DEBUG] GET http://localhost:54193/session/d6068e225e2109424e785c82a4852434/cookie {}
+2025-03-13 10:45:00,591 [DEBUG] http://localhost:54193 "GET /session/d6068e225e2109424e785c82a4852434/cookie HTTP/1.1" 200 0
+2025-03-13 10:45:00,591 [DEBUG] Remote response: status=200 | data={"value":[{"domain":".autodata-group.com","expiry":1741877099,"httpOnly":false,"name":"id_token","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0MTg3NzA5OH0.CroXE99WZKDPMlF_vb58lSPbfpn3K_yb8KXm4n5V8Xk"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_i_3130392E3130392E3135312E313530","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_u_676E656C736F6E35353435","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_g_373931393931","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":".workshop.autodata-group.com","expiry":1743862698,"httpOnly":true,"name":"SESSd965b47fdd2684807fd560c91c3e21b6","path":"/","sameSite":"Lax","secure":true,"value":"RvKFB99vvGGp0WV-i3HQFwKUBTtoVQm6gTJnrbKB88Q"},{"domain":".autodata-group.com","expiry":1741877098,"httpOnly":true,"name":"adat","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDE4NzcwOTd9.gwcxeOcUDGl3hiOdVHkQK_eDo-x1gY7p1642TiJyT9g"},{"domain":".autodata-group.com","expiry":1741863299,"httpOnly":true,"name":"access_token","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ25lbHNvbjU1NDUiLCJyb2xlcyI6WzgsMTIsMl0sImlzcyI6IndvcmtzaG9wIiwiZXhwIjoxNzQxODYzMjk4fQ.PpHrBr2KCSNXN7iXXLn0WiShXHdatsnLItYeLRewYxM"},{"domain":"workshop.autodata-group.com","httpOnly":false,"name":"has_js","path":"/","sameSite":"Lax","secure":false,"value":"1"}]} | headers=HTTPHeaderDict({'Content-Length': '1851', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:45:00,592 [DEBUG] Finished Request
+2025-03-13 10:45:00,592 [DEBUG] Cookie id_token expires at 2025-03-13 14:44:59+00:00
+2025-03-13 10:45:00,592 [DEBUG] Cookie SESSd965b47fdd2684807fd560c91c3e21b6 expires at 2025-04-05 14:18:18+00:00
+2025-03-13 10:45:00,592 [DEBUG] Cookie adat expires at 2025-03-13 14:44:58+00:00
+2025-03-13 10:45:00,592 [DEBUG] Cookie access_token expires at 2025-03-13 10:54:59+00:00
+2025-03-13 10:45:00,592 [INFO] Cookies refreshed successfully
+2025-03-13 10:45:00,592 [DEBUG] New cookies: {
+  "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0MTg3NzA5OH0.CroXE99WZKDPMlF_vb58lSPbfpn3K_yb8KXm4n5V8Xk",
+  "ad_web_i_3130392E3130392E3135312E313530": "0",
+  "ad_web_u_676E656C736F6E35353435": "0",
+  "ad_web_g_373931393931": "0",
+  "SESSd965b47fdd2684807fd560c91c3e21b6": "RvKFB99vvGGp0WV-i3HQFwKUBTtoVQm6gTJnrbKB88Q",
+  "adat": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDE4NzcwOTd9.gwcxeOcUDGl3hiOdVHkQK_eDo-x1gY7p1642TiJyT9g",
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ25lbHNvbjU1NDUiLCJyb2xlcyI6WzgsMTIsMl0sImlzcyI6IndvcmtzaG9wIiwiZXhwIjoxNzQxODYzMjk4fQ.PpHrBr2KCSNXN7iXXLn0WiShXHdatsnLItYeLRewYxM",
+  "has_js": "1"
+}
+2025-03-13 10:45:00,594 [DEBUG] DELETE http://localhost:54193/session/d6068e225e2109424e785c82a4852434 {}
+2025-03-13 10:45:00,692 [DEBUG] http://localhost:54193 "DELETE /session/d6068e225e2109424e785c82a4852434 HTTP/1.1" 200 0
+2025-03-13 10:45:00,698 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:45:00,698 [DEBUG] Finished Request
+2025-03-13 10:45:02,816 [DEBUG] Selenium driver closed
+2025-03-13 10:57:05,031 [INFO] Starting oil data scraping script
+2025-03-13 10:57:05,031 [INFO] Validating authentication tokens
+2025-03-13 10:57:05,031 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:57:05,031 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 10:57:05,031 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 10:57:05,031 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 10:57:05,031 [DEBUG] id_token is valid
+2025-03-13 10:57:05,031 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 10:57:05,031 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 10:57:05,031 [INFO] ====== WebDriver manager ======
+2025-03-13 10:57:06,550 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:57:06,550 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:57:18,146 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:57:18,146 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:57:18,146 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 10:57:18,146 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 10:57:18,585 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 10:57:18,585 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 10:57:18,585 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 10:57:18,585 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 10:57:18,605 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 6312 using 0 to output -3
+2025-03-13 10:57:19,132 [DEBUG] POST http://localhost:54598/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 10:57:19,132 [DEBUG] Starting new HTTP connection (1): localhost:54598
+2025-03-13 10:57:19,896 [DEBUG] http://localhost:54598 "POST /session HTTP/1.1" 200 0
+2025-03-13 10:57:19,896 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:54602"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir6312_692822056"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"2506965dffe7f95b40c5533b1bc98246"}} | headers=HTTPHeaderDict({'Content-Length': '859', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:19,896 [DEBUG] Finished Request
+2025-03-13 10:57:19,898 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 10:57:19,898 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 10:57:22,717 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:22,717 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:22,718 [DEBUG] Finished Request
+2025-03-13 10:57:24,719 [DEBUG] Login page loaded
+2025-03-13 10:57:24,719 [DEBUG] Entering username: gnelson5545
+2025-03-13 10:57:24,719 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 10:57:24,735 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element HTTP/1.1" 200 0
+2025-03-13 10:57:24,738 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:24,738 [DEBUG] Finished Request
+2025-03-13 10:57:24,738 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.4/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 10:57:24,833 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.4/value HTTP/1.1" 200 0
+2025-03-13 10:57:24,834 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:24,834 [DEBUG] Finished Request
+2025-03-13 10:57:24,834 [DEBUG] Entering password
+2025-03-13 10:57:24,835 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 10:57:24,847 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element HTTP/1.1" 200 0
+2025-03-13 10:57:24,848 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.5"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:24,848 [DEBUG] Finished Request
+2025-03-13 10:57:24,849 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.5/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 10:57:24,917 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.5/value HTTP/1.1" 200 0
+2025-03-13 10:57:24,917 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:24,917 [DEBUG] Finished Request
+2025-03-13 10:57:24,917 [DEBUG] Submitting login form
+2025-03-13 10:57:24,917 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 10:57:24,917 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element HTTP/1.1" 200 0
+2025-03-13 10:57:24,930 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.8"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:24,930 [DEBUG] Finished Request
+2025-03-13 10:57:24,930 [DEBUG] POST http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.8/click {}
+2025-03-13 10:57:28,297 [DEBUG] http://localhost:54598 "POST /session/2506965dffe7f95b40c5533b1bc98246/element/f.0A1036FB985A84C390DA46078519C107.d.18FA5AE4BC1EBA1150ACBB7C0B7C6AA3.e.8/click HTTP/1.1" 200 0
+2025-03-13 10:57:28,298 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:28,298 [DEBUG] Finished Request
+2025-03-13 10:57:28,298 [DEBUG] Waiting for redirect
+2025-03-13 10:57:28,299 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:28,311 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:28,312 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:28,312 [DEBUG] Finished Request
+2025-03-13 10:57:28,813 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:28,818 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:28,818 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:28,818 [DEBUG] Finished Request
+2025-03-13 10:57:29,328 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:29,338 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:29,338 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:29,339 [DEBUG] Finished Request
+2025-03-13 10:57:29,840 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:29,846 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:29,846 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:29,846 [DEBUG] Finished Request
+2025-03-13 10:57:30,347 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:30,358 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:30,358 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:30,358 [DEBUG] Finished Request
+2025-03-13 10:57:30,862 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:30,871 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:30,871 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:30,871 [DEBUG] Finished Request
+2025-03-13 10:57:31,379 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:31,396 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:31,398 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:31,398 [DEBUG] Finished Request
+2025-03-13 10:57:31,899 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:31,909 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 200 0
+2025-03-13 10:57:31,909 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:31,910 [DEBUG] Finished Request
+2025-03-13 10:57:32,411 [DEBUG] GET http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246/url {}
+2025-03-13 10:57:32,514 [DEBUG] http://localhost:54598 "GET /session/2506965dffe7f95b40c5533b1bc98246/url HTTP/1.1" 404 0
+2025-03-13 10:57:32,514 [DEBUG] Remote response: status=404 | data={"value":{"error":"invalid session id","message":"invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=134.0.3124.66)","stacktrace":"\tGetHandleVerifier [0x00007FF73983A7C5+20677]\n\tsimdutf::get_active_implementation [0x00007FF739796F70+492640]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]\n\t(No symbol) [0x00007FF73957B8B0]\n\t(No symbol) [0x00007FF73959A32A]\n\t(No symbol) [0x00007FF7395FE0E6]\n\t(No symbol) [0x00007FF7396156CD]\n\t(No symbol) [0x00007FF7395F81C3]\n\t(No symbol) [0x00007FF7395CCC36]\n\t(No symbol) [0x00007FF7395CC0C4]\n\t(No symbol) [0x00007FF7395CCA63]\n\t(No symbol) [0x00007FF7396B58DD]\n\t(No symbol) [0x00007FF7396C1D42]\n\t(No symbol) [0x00007FF7396BA703]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]\n\tsimdutf::get_active_implementation [0x00007FF7397A46A1+547729]\n\tsimdutf::get_active_implementation [0x00007FF73979D954+519748]\n\tsimdutf::get_active_implementation [0x00007FF73979DA99+520073]\n\tsimdutf::get_active_implementation [0x00007FF73978F646+461622]\n\tBaseThreadInitThunk [0x00007FFC9839259D+29]\n\tRtlUserThreadStart [0x00007FFC995AAF38+40]\n"}} | headers=HTTPHeaderDict({'Content-Length': '1284', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:32,514 [DEBUG] Finished Request
+2025-03-13 10:57:32,514 [ERROR] Error refreshing cookies: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 81, in refresh_cookies
+    WebDriverWait(driver, 15).until(
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 82, in <lambda>
+    lambda d: d.current_url != LOGIN_URL,
+              ^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 560, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+
+2025-03-13 10:57:32,529 [DEBUG] DELETE http://localhost:54598/session/2506965dffe7f95b40c5533b1bc98246 {}
+2025-03-13 10:57:32,623 [DEBUG] http://localhost:54598 "DELETE /session/2506965dffe7f95b40c5533b1bc98246 HTTP/1.1" 200 0
+2025-03-13 10:57:32,623 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 10:57:32,623 [DEBUG] Finished Request
+2025-03-13 11:07:34,538 [INFO] Starting oil data scraping script
+2025-03-13 11:07:34,538 [INFO] Validating authentication tokens
+2025-03-13 11:07:34,538 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:07:34,538 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:07:34,538 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 11:07:34,538 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 11:07:34,538 [DEBUG] id_token is valid
+2025-03-13 11:07:34,538 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 11:07:34,538 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 11:07:34,538 [INFO] ====== WebDriver manager ======
+2025-03-13 11:07:36,337 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:07:36,339 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:07:47,958 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:07:47,958 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:07:47,958 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:07:47,958 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:07:48,383 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:07:48,384 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:07:48,387 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 11:07:48,389 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 11:07:48,398 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 23748 using 0 to output -3
+2025-03-13 11:07:48,934 [DEBUG] POST http://localhost:54960/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 11:07:48,935 [DEBUG] Starting new HTTP connection (1): localhost:54960
+2025-03-13 11:07:49,777 [DEBUG] http://localhost:54960 "POST /session HTTP/1.1" 200 0
+2025-03-13 11:07:49,779 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:54963"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir23748_1393854719"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"42ef7c8f7026de7c1103d549f1a66ebb"}} | headers=HTTPHeaderDict({'Content-Length': '861', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:49,782 [DEBUG] Finished Request
+2025-03-13 11:07:49,784 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 11:07:49,784 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 11:07:52,607 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:52,608 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:52,608 [DEBUG] Finished Request
+2025-03-13 11:07:54,609 [DEBUG] Login page loaded
+2025-03-13 11:07:54,609 [DEBUG] Entering username: gnelson5545
+2025-03-13 11:07:54,609 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 11:07:54,625 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element HTTP/1.1" 200 0
+2025-03-13 11:07:54,626 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:54,626 [DEBUG] Finished Request
+2025-03-13 11:07:54,627 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 11:07:54,730 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.3/value HTTP/1.1" 200 0
+2025-03-13 11:07:54,730 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:54,731 [DEBUG] Finished Request
+2025-03-13 11:07:54,731 [DEBUG] Entering password
+2025-03-13 11:07:54,731 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 11:07:54,745 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element HTTP/1.1" 200 0
+2025-03-13 11:07:54,746 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:54,746 [DEBUG] Finished Request
+2025-03-13 11:07:54,746 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 11:07:54,828 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.4/value HTTP/1.1" 200 0
+2025-03-13 11:07:54,828 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:54,829 [DEBUG] Finished Request
+2025-03-13 11:07:54,829 [DEBUG] Submitting login form
+2025-03-13 11:07:54,829 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 11:07:54,842 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element HTTP/1.1" 200 0
+2025-03-13 11:07:54,842 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:54,842 [DEBUG] Finished Request
+2025-03-13 11:07:54,843 [DEBUG] POST http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.7/click {}
+2025-03-13 11:07:57,488 [DEBUG] http://localhost:54960 "POST /session/42ef7c8f7026de7c1103d549f1a66ebb/element/f.5B3C0942B60044F5468A33E8103E45A4.d.9252855C45C077F4E109123270A08327.e.7/click HTTP/1.1" 200 0
+2025-03-13 11:07:57,489 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:57,490 [DEBUG] Finished Request
+2025-03-13 11:07:57,490 [DEBUG] Waiting for redirect
+2025-03-13 11:07:57,490 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:07:57,500 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:57,501 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:57,501 [DEBUG] Finished Request
+2025-03-13 11:07:58,002 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:07:58,005 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:58,005 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:58,005 [DEBUG] Finished Request
+2025-03-13 11:07:58,515 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:07:58,662 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:58,665 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:58,665 [DEBUG] Finished Request
+2025-03-13 11:07:59,168 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:07:59,174 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:59,174 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:59,174 [DEBUG] Finished Request
+2025-03-13 11:07:59,675 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:07:59,682 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:07:59,683 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:07:59,683 [DEBUG] Finished Request
+2025-03-13 11:08:00,183 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:00,190 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:00,192 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:00,192 [DEBUG] Finished Request
+2025-03-13 11:08:00,692 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:00,700 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:00,701 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:00,702 [DEBUG] Finished Request
+2025-03-13 11:08:01,203 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:01,213 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:01,214 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:01,214 [DEBUG] Finished Request
+2025-03-13 11:08:01,715 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:01,723 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:01,724 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:01,724 [DEBUG] Finished Request
+2025-03-13 11:08:02,225 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:02,235 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:02,236 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:02,236 [DEBUG] Finished Request
+2025-03-13 11:08:02,737 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:02,744 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:02,745 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:02,745 [DEBUG] Finished Request
+2025-03-13 11:08:03,247 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:03,255 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:03,255 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:03,255 [DEBUG] Finished Request
+2025-03-13 11:08:03,757 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:03,764 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:03,765 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:03,765 [DEBUG] Finished Request
+2025-03-13 11:08:04,267 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:04,276 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:04,276 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:04,277 [DEBUG] Finished Request
+2025-03-13 11:08:04,778 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:04,785 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:04,785 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:04,786 [DEBUG] Finished Request
+2025-03-13 11:08:05,287 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:05,296 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:05,296 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:05,297 [DEBUG] Finished Request
+2025-03-13 11:08:05,797 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:05,805 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:05,806 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:05,806 [DEBUG] Finished Request
+2025-03-13 11:08:06,307 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:06,315 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:06,315 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:06,316 [DEBUG] Finished Request
+2025-03-13 11:08:06,817 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:06,825 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:06,825 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:06,826 [DEBUG] Finished Request
+2025-03-13 11:08:07,327 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:07,336 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:07,336 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:07,336 [DEBUG] Finished Request
+2025-03-13 11:08:07,837 [DEBUG] GET http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb/url {}
+2025-03-13 11:08:07,845 [DEBUG] http://localhost:54960 "GET /session/42ef7c8f7026de7c1103d549f1a66ebb/url HTTP/1.1" 200 0
+2025-03-13 11:08:07,846 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:08:07,846 [DEBUG] Finished Request
+2025-03-13 11:08:08,246 [DEBUG] DELETE http://localhost:54960/session/42ef7c8f7026de7c1103d549f1a66ebb {}
+2025-03-13 11:08:08,247 [DEBUG] Resetting dropped connection: localhost
+2025-03-13 11:58:50,637 [INFO] Starting oil data scraping script
+2025-03-13 11:58:50,637 [INFO] Validating authentication tokens
+2025-03-13 11:58:50,637 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:58:50,637 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:58:50,637 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 11:58:50,637 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 11:58:50,637 [DEBUG] id_token is valid
+2025-03-13 11:58:50,637 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 11:58:50,637 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 11:58:50,652 [INFO] ====== WebDriver manager ======
+2025-03-13 11:58:52,904 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:58:52,909 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:59:04,500 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:59:04,500 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:59:04,500 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:59:04,515 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:59:04,956 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:59:04,957 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:59:04,959 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 11:59:04,959 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 11:59:05,220 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 20040 using 0 to output -3
+2025-03-13 11:59:05,733 [DEBUG] POST http://localhost:56058/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 11:59:05,734 [DEBUG] Starting new HTTP connection (1): localhost:56058
+2025-03-13 11:59:06,561 [DEBUG] http://localhost:56058 "POST /session HTTP/1.1" 200 0
+2025-03-13 11:59:06,562 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:56061"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir20040_1840381384"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"4c6a255552972c6e199506765387d37b"}} | headers=HTTPHeaderDict({'Content-Length': '861', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:06,562 [DEBUG] Finished Request
+2025-03-13 11:59:06,562 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 11:59:06,563 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 11:59:09,437 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:09,437 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:09,437 [DEBUG] Finished Request
+2025-03-13 11:59:11,438 [DEBUG] Login page loaded
+2025-03-13 11:59:11,438 [DEBUG] Entering username: gnelson5545
+2025-03-13 11:59:11,438 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 11:59:11,455 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element HTTP/1.1" 200 0
+2025-03-13 11:59:11,455 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:11,455 [DEBUG] Finished Request
+2025-03-13 11:59:11,456 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 11:59:11,550 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.3/value HTTP/1.1" 200 0
+2025-03-13 11:59:11,551 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:11,551 [DEBUG] Finished Request
+2025-03-13 11:59:11,551 [DEBUG] Entering password
+2025-03-13 11:59:11,552 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 11:59:11,565 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element HTTP/1.1" 200 0
+2025-03-13 11:59:11,566 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:11,566 [DEBUG] Finished Request
+2025-03-13 11:59:11,566 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 11:59:11,627 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.4/value HTTP/1.1" 200 0
+2025-03-13 11:59:11,628 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:11,628 [DEBUG] Finished Request
+2025-03-13 11:59:11,628 [DEBUG] Submitting login form
+2025-03-13 11:59:11,629 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 11:59:11,640 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element HTTP/1.1" 200 0
+2025-03-13 11:59:11,641 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:11,641 [DEBUG] Finished Request
+2025-03-13 11:59:11,641 [DEBUG] POST http://localhost:56058/session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.7/click {}
+2025-03-13 11:59:14,246 [DEBUG] http://localhost:56058 "POST /session/4c6a255552972c6e199506765387d37b/element/f.166486FA34E6266D62266510AE71DF43.d.5576B70008A803782DD3C22B73E3D0EE.e.7/click HTTP/1.1" 200 0
+2025-03-13 11:59:14,246 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:14,247 [DEBUG] Finished Request
+2025-03-13 11:59:14,248 [DEBUG] Waiting for redirect
+2025-03-13 11:59:14,248 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:14,257 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:14,258 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:14,258 [DEBUG] Finished Request
+2025-03-13 11:59:14,759 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:14,770 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:14,770 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:14,771 [DEBUG] Finished Request
+2025-03-13 11:59:15,272 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:15,283 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:15,284 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:15,284 [DEBUG] Finished Request
+2025-03-13 11:59:15,785 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:15,798 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:15,798 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:15,799 [DEBUG] Finished Request
+2025-03-13 11:59:16,300 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:16,309 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:16,309 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:16,309 [DEBUG] Finished Request
+2025-03-13 11:59:16,810 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:16,819 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:16,820 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:16,820 [DEBUG] Finished Request
+2025-03-13 11:59:17,322 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:17,334 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:17,335 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:17,335 [DEBUG] Finished Request
+2025-03-13 11:59:17,836 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:17,847 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:17,847 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:17,847 [DEBUG] Finished Request
+2025-03-13 11:59:18,349 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:18,359 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 200 0
+2025-03-13 11:59:18,359 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/login?destination=node"} | headers=HTTPHeaderDict({'Content-Length': '70', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:18,359 [DEBUG] Finished Request
+2025-03-13 11:59:18,860 [DEBUG] GET http://localhost:56058/session/4c6a255552972c6e199506765387d37b/url {}
+2025-03-13 11:59:18,862 [DEBUG] http://localhost:56058 "GET /session/4c6a255552972c6e199506765387d37b/url HTTP/1.1" 404 0
+2025-03-13 11:59:18,863 [DEBUG] Remote response: status=404 | data={"value":{"error":"invalid session id","message":"invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=134.0.3124.66)","stacktrace":"\tGetHandleVerifier [0x00007FF73983A7C5+20677]\n\tsimdutf::get_active_implementation [0x00007FF739796F70+492640]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]\n\t(No symbol) [0x00007FF73957B8B0]\n\t(No symbol) [0x00007FF73959A32A]\n\t(No symbol) [0x00007FF7395FE0E6]\n\t(No symbol) [0x00007FF7396156CD]\n\t(No symbol) [0x00007FF7395F81C3]\n\t(No symbol) [0x00007FF7395CCC36]\n\t(No symbol) [0x00007FF7395CC0C4]\n\t(No symbol) [0x00007FF7395CCA63]\n\t(No symbol) [0x00007FF7396B58DD]\n\t(No symbol) [0x00007FF7396C1D42]\n\t(No symbol) [0x00007FF7396BA703]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]\n\tsimdutf::get_active_implementation [0x00007FF7397A46A1+547729]\n\tsimdutf::get_active_implementation [0x00007FF73979D954+519748]\n\tsimdutf::get_active_implementation [0x00007FF73979DA99+520073]\n\tsimdutf::get_active_implementation [0x00007FF73978F646+461622]\n\tBaseThreadInitThunk [0x00007FFC9839259D+29]\n\tRtlUserThreadStart [0x00007FFC995AAF38+40]\n"}} | headers=HTTPHeaderDict({'Content-Length': '1284', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:18,863 [DEBUG] Finished Request
+2025-03-13 11:59:18,864 [ERROR] Error refreshing cookies: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+Traceback (most recent call last):
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 81, in refresh_cookies
+    WebDriverWait(driver, 15).until(
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\Downloads\Dev\Python\AutoData\main.py", line 82, in <lambda>
+    lambda d: d.current_url != LOGIN_URL,
+              ^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 560, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\gregor.nelson\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: MicrosoftEdge=134.0.3124.66)
+Stacktrace:
+	GetHandleVerifier [0x00007FF73983A7C5+20677]
+	simdutf::get_active_implementation [0x00007FF739796F70+492640]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF739A8DC7A+1807418]
+	(No symbol) [0x00007FF73957B8B0]
+	(No symbol) [0x00007FF73959A32A]
+	(No symbol) [0x00007FF7395FE0E6]
+	(No symbol) [0x00007FF7396156CD]
+	(No symbol) [0x00007FF7395F81C3]
+	(No symbol) [0x00007FF7395CCC36]
+	(No symbol) [0x00007FF7395CC0C4]
+	(No symbol) [0x00007FF7395CCA63]
+	(No symbol) [0x00007FF7396B58DD]
+	(No symbol) [0x00007FF7396C1D42]
+	(No symbol) [0x00007FF7396BA703]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF7399147CA+262026]
+	simdutf::get_active_implementation [0x00007FF7397A46A1+547729]
+	simdutf::get_active_implementation [0x00007FF73979D954+519748]
+	simdutf::get_active_implementation [0x00007FF73979DA99+520073]
+	simdutf::get_active_implementation [0x00007FF73978F646+461622]
+	BaseThreadInitThunk [0x00007FFC9839259D+29]
+	RtlUserThreadStart [0x00007FFC995AAF38+40]
+
+2025-03-13 11:59:18,868 [DEBUG] DELETE http://localhost:56058/session/4c6a255552972c6e199506765387d37b {}
+2025-03-13 11:59:18,987 [DEBUG] http://localhost:56058 "DELETE /session/4c6a255552972c6e199506765387d37b HTTP/1.1" 200 0
+2025-03-13 11:59:18,987 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:18,987 [DEBUG] Finished Request
+2025-03-13 11:59:20,995 [DEBUG] Selenium driver closed
+2025-03-13 11:59:20,995 [ERROR] Failed to initialize cookies, exiting
+2025-03-13 11:59:51,920 [INFO] Starting oil data scraping script
+2025-03-13 11:59:51,920 [INFO] Validating authentication tokens
+2025-03-13 11:59:51,920 [DEBUG] Checking expiry for access_token, browser expiry: 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:59:51,920 [WARNING] access_token browser cookie expired on 2025-03-13 10:17:03.143000+00:00
+2025-03-13 11:59:51,920 [DEBUG] Checking expiry for id_token, browser expiry: 2025-03-13 14:07:03.143000+00:00
+2025-03-13 11:59:51,920 [DEBUG] id_token JWT expiry: 2025-03-13 14:07:02+00:00
+2025-03-13 11:59:51,920 [DEBUG] id_token is valid
+2025-03-13 11:59:51,920 [INFO] One or more tokens invalid or expired, refreshing cookies
+2025-03-13 11:59:51,920 [INFO] Starting cookie refresh via login with Microsoft Edge
+2025-03-13 11:59:51,920 [INFO] ====== WebDriver manager ======
+2025-03-13 11:59:53,528 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:59:53,532 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:59:54,007 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:59:54,008 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:59:54,010 [INFO] Get LATEST edgedriver version for Edge 134.0.3124
+2025-03-13 11:59:54,011 [DEBUG] Starting new HTTPS connection (1): msedgedriver.azureedge.net:443
+2025-03-13 11:59:54,445 [DEBUG] https://msedgedriver.azureedge.net:443 "GET /LATEST_RELEASE_134_WINDOWS HTTP/1.1" 200 32
+2025-03-13 11:59:54,445 [DEBUG] Encoding detection: utf_16 is most likely the one as we detected a BOM or SIG within the beginning of the sequence.
+2025-03-13 11:59:54,448 [INFO] Driver [C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe] found in cache
+2025-03-13 11:59:54,450 [DEBUG] Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe
+2025-03-13 11:59:54,461 [DEBUG] Started executable: `C:\Users\gregor.nelson\.wdm\drivers\edgedriver\win64\134.0.3124.66\msedgedriver.exe` in a child process with pid: 6300 using 0 to output -3
+2025-03-13 11:59:54,975 [DEBUG] POST http://localhost:56115/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'MicrosoftEdge', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'ms:edgeOptions': {'extensions': [], 'args': []}}}}
+2025-03-13 11:59:54,975 [DEBUG] Starting new HTTP connection (1): localhost:56115
+2025-03-13 11:59:55,755 [DEBUG] http://localhost:56115 "POST /session HTTP/1.1" 200 0
+2025-03-13 11:59:55,755 [DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"MicrosoftEdge","browserVersion":"134.0.3124.66","fedcm:accounts":true,"ms:edgeOptions":{"debuggerAddress":"localhost:56118"},"msedge":{"msedgedriverVersion":"134.0.3124.66 (9500a467f05636fabb83010b863a2b2b4c039d3b)","userDataDir":"C:\\Users\\GREGOR~1.NEL\\AppData\\Local\\Temp\\scoped_dir6300_281353368"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"621e223b7cdb41c0e5e8022a9f4dd97e"}} | headers=HTTPHeaderDict({'Content-Length': '859', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:55,756 [DEBUG] Finished Request
+2025-03-13 11:59:55,756 [DEBUG] Navigating to login URL: https://workshop.autodata-group.com/login?destination=node
+2025-03-13 11:59:55,756 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/url {'url': 'https://workshop.autodata-group.com/login?destination=node'}
+2025-03-13 11:59:59,133 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/url HTTP/1.1" 200 0
+2025-03-13 11:59:59,133 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 11:59:59,134 [DEBUG] Finished Request
+2025-03-13 12:00:01,135 [DEBUG] Login page loaded
+2025-03-13 12:00:01,135 [DEBUG] Entering username: gnelson5545
+2025-03-13 12:00:01,135 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element {'using': 'css selector', 'value': '[id="edit-name"]'}
+2025-03-13 12:00:01,139 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element HTTP/1.1" 200 0
+2025-03-13 12:00:01,139 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.3"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:01,139 [DEBUG] Finished Request
+2025-03-13 12:00:01,139 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.3/value {'text': 'gnelson5545', 'value': ['g', 'n', 'e', 'l', 's', 'o', 'n', '5', '5', '4', '5']}
+2025-03-13 12:00:01,235 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.3/value HTTP/1.1" 200 0
+2025-03-13 12:00:01,236 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:01,237 [DEBUG] Finished Request
+2025-03-13 12:00:01,237 [DEBUG] Entering password
+2025-03-13 12:00:01,237 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element {'using': 'css selector', 'value': '[id="edit-pass"]'}
+2025-03-13 12:00:01,252 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element HTTP/1.1" 200 0
+2025-03-13 12:00:01,253 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.4"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:01,254 [DEBUG] Finished Request
+2025-03-13 12:00:01,255 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.4/value {'text': 'Lesmurdie12££$$', 'value': ['L', 'e', 's', 'm', 'u', 'r', 'd', 'i', 'e', '1', '2', '£', '£', '$', '$']}
+2025-03-13 12:00:01,327 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.4/value HTTP/1.1" 200 0
+2025-03-13 12:00:01,327 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:01,332 [DEBUG] Finished Request
+2025-03-13 12:00:01,333 [DEBUG] Submitting login form
+2025-03-13 12:00:01,333 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element {'using': 'css selector', 'value': '[id="edit-submit"]'}
+2025-03-13 12:00:01,347 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element HTTP/1.1" 200 0
+2025-03-13 12:00:01,348 [DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:01,348 [DEBUG] Finished Request
+2025-03-13 12:00:01,349 [DEBUG] POST http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.7/click {}
+2025-03-13 12:00:04,661 [DEBUG] http://localhost:56115 "POST /session/621e223b7cdb41c0e5e8022a9f4dd97e/element/f.6FA08E6C681860E9D3E8C9C1FC920741.d.5C741D61050479437B528765FC87FCE9.e.7/click HTTP/1.1" 200 0
+2025-03-13 12:00:04,661 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:04,662 [DEBUG] Finished Request
+2025-03-13 12:00:04,662 [DEBUG] Waiting for redirect
+2025-03-13 12:00:04,662 [DEBUG] GET http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/url {}
+2025-03-13 12:00:04,677 [DEBUG] http://localhost:56115 "GET /session/621e223b7cdb41c0e5e8022a9f4dd97e/url HTTP/1.1" 200 0
+2025-03-13 12:00:04,678 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/node"} | headers=HTTPHeaderDict({'Content-Length': '52', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:04,678 [DEBUG] Finished Request
+2025-03-13 12:00:04,679 [DEBUG] GET http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/url {}
+2025-03-13 12:00:04,686 [DEBUG] http://localhost:56115 "GET /session/621e223b7cdb41c0e5e8022a9f4dd97e/url HTTP/1.1" 200 0
+2025-03-13 12:00:04,687 [DEBUG] Remote response: status=200 | data={"value":"https://workshop.autodata-group.com/node"} | headers=HTTPHeaderDict({'Content-Length': '52', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:04,687 [DEBUG] Finished Request
+2025-03-13 12:00:04,687 [DEBUG] Current URL after login: https://workshop.autodata-group.com/node
+2025-03-13 12:00:04,688 [DEBUG] Extracting cookies from browser
+2025-03-13 12:00:04,688 [DEBUG] GET http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e/cookie {}
+2025-03-13 12:00:04,690 [DEBUG] http://localhost:56115 "GET /session/621e223b7cdb41c0e5e8022a9f4dd97e/cookie HTTP/1.1" 200 0
+2025-03-13 12:00:04,690 [DEBUG] Remote response: status=200 | data={"value":[{"domain":".autodata-group.com","expiry":1741881603,"httpOnly":false,"name":"id_token","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0MTg4MTYwMn0.rCM3YvVl6ef52brpCjFGhMbhwePTkrEoFIGfBRnuCY8"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_i_3130392E3130392E3135312E313530","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_u_676E656C736F6E35353435","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":"workshop.autodata-group.com","httpOnly":true,"name":"ad_web_g_373931393931","path":"/","sameSite":"Lax","secure":true,"value":"0"},{"domain":".workshop.autodata-group.com","expiry":1743867202,"httpOnly":true,"name":"SESSd965b47fdd2684807fd560c91c3e21b6","path":"/","sameSite":"Lax","secure":true,"value":"s5mfQfCAe3eSRvOa7UxaUYoXGd3nY8L_wsM8OaWBEHg"},{"domain":".autodata-group.com","expiry":1741881602,"httpOnly":true,"name":"adat","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDE4ODE2MDF9.34zg99Rvhr7eolVtgPgDPS4khlPaXpyfR6zlDFlc1dw"},{"domain":".autodata-group.com","expiry":1741867803,"httpOnly":true,"name":"access_token","path":"/","sameSite":"Lax","secure":true,"value":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ25lbHNvbjU1NDUiLCJyb2xlcyI6WzgsMTIsMl0sImlzcyI6IndvcmtzaG9wIiwiZXhwIjoxNzQxODY3ODAyfQ.z4A-5nKATlDAe0ul-vLXfeuUgq5HjOIo0iXKStO9URU"},{"domain":"workshop.autodata-group.com","httpOnly":false,"name":"has_js","path":"/","sameSite":"Lax","secure":false,"value":"1"}]} | headers=HTTPHeaderDict({'Content-Length': '1851', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:04,690 [DEBUG] Finished Request
+2025-03-13 12:00:04,690 [DEBUG] Cookie id_token expires at 2025-03-13 16:00:03+00:00
+2025-03-13 12:00:04,690 [DEBUG] Cookie SESSd965b47fdd2684807fd560c91c3e21b6 expires at 2025-04-05 15:33:22+00:00
+2025-03-13 12:00:04,690 [DEBUG] Cookie adat expires at 2025-03-13 16:00:02+00:00
+2025-03-13 12:00:04,690 [DEBUG] Cookie access_token expires at 2025-03-13 12:10:03+00:00
+2025-03-13 12:00:04,690 [INFO] Cookies refreshed successfully
+2025-03-13 12:00:04,690 [DEBUG] New cookies: {
+  "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0MTg4MTYwMn0.rCM3YvVl6ef52brpCjFGhMbhwePTkrEoFIGfBRnuCY8",
+  "ad_web_i_3130392E3130392E3135312E313530": "0",
+  "ad_web_u_676E656C736F6E35353435": "0",
+  "ad_web_g_373931393931": "0",
+  "SESSd965b47fdd2684807fd560c91c3e21b6": "s5mfQfCAe3eSRvOa7UxaUYoXGd3nY8L_wsM8OaWBEHg",
+  "adat": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDE4ODE2MDF9.34zg99Rvhr7eolVtgPgDPS4khlPaXpyfR6zlDFlc1dw",
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ25lbHNvbjU1NDUiLCJyb2xlcyI6WzgsMTIsMl0sImlzcyI6IndvcmtzaG9wIiwiZXhwIjoxNzQxODY3ODAyfQ.z4A-5nKATlDAe0ul-vLXfeuUgq5HjOIo0iXKStO9URU",
+  "has_js": "1"
+}
+2025-03-13 12:00:04,690 [DEBUG] DELETE http://localhost:56115/session/621e223b7cdb41c0e5e8022a9f4dd97e {}
+2025-03-13 12:00:04,899 [DEBUG] http://localhost:56115 "DELETE /session/621e223b7cdb41c0e5e8022a9f4dd97e HTTP/1.1" 200 0
+2025-03-13 12:00:04,899 [DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-03-13 12:00:04,900 [DEBUG] Finished Request
+2025-03-13 12:00:07,021 [DEBUG] Selenium driver closed
+2025-03-13 12:00:07,021 [DEBUG] Prompting for starting HON ID
+2025-03-13 12:00:10,536 [DEBUG] Received start_id: 13364
+2025-03-13 12:00:10,536 [DEBUG] Prompting for ending HON ID
+2025-03-13 12:00:13,635 [DEBUG] Received end_id: 13366
+2025-03-13 12:00:13,635 [INFO] Scraping oil data for 3 vehicles: HON13364 to HON13366
+2025-03-13 12:00:13,635 [INFO] Processing HON13364
+2025-03-13 12:00:13,635 [DEBUG] Fetching data for HON13364 from https://workshop.autodata-group.com/w2/api/engine-oil/HON13364 with params {'v': 'c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c', 'language': 'en-gb'}
+2025-03-13 12:00:13,635 [DEBUG] Using cookies: {
+  "id_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "ad_web_i_3130392E3130392E3135312E313530": "0...",
+  "ad_web_u_676E656C736F6E35353435": "0...",
+  "ad_web_g_373931393931": "0...",
+  "SESSd965b47fdd2684807fd560c91c3e21b6": "s5mfQfCAe3eSRvOa7Uxa...",
+  "adat": "eyJ0eXAiOiJKV1QiLCJh...",
+  "access_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "has_js": "1..."
+}
+2025-03-13 12:00:13,635 [DEBUG] Starting new HTTPS connection (1): workshop.autodata-group.com:443
+2025-03-13 12:00:14,699 [DEBUG] https://workshop.autodata-group.com:443 "GET /w2/api/engine-oil/HON13364?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb HTTP/1.1" 200 None
+2025-03-13 12:00:14,721 [INFO] Successfully fetched data for HON13364
+2025-03-13 12:00:14,721 [DEBUG] Extracted data for HON13364: {
+  "vehicle_id": "HON13364",
+  "engine_capacity": "3.2 litres",
+  "capacity_description": "Engine with filter(s)",
+  "tightening_torques": [
+    {
+      "description": "Sump drain bolt",
+      "value": "44 Nm"
+    }
+  ],
+  "engine_oils": [
+    {
+      "temperature": "All temperatures",
+      "grades": [
+        "0W-20",
+        "0W-30",
+        "0W-40"
+      ],
+      "classifications": [
+        "SL/A1, A3, A5"
+      ]
+    },
+    {
+      "temperature": "All temperatures",
+      "grades": [
+        "5W-20",
+        "5W-30",
+        "5W-40"
+      ],
+      "classifications": [
+        "SL/A1, A3, A5"
+      ]
+    },
+    {
+      "temperature": "-20\u00b0C \u2192 ",
+      "grades": [
+        "10W-30",
+        "10W-40"
+      ],
+      "classifications": [
+        "SL/A1, A3, A5"
+      ]
+    },
+    {
+      "temperature": "-15\u00b0C \u2192 ",
+      "grades": [
+        "15W-40"
+      ],
+      "classifications": [
+        "SL/A1, A3, A5"
+      ]
+    }
+  ]
+}
+2025-03-13 12:00:14,721 [INFO] Success: HON13364 - Capacity: 3.2 litres
+2025-03-13 12:00:15,725 [INFO] Processing HON13365
+2025-03-13 12:00:15,725 [DEBUG] Fetching data for HON13365 from https://workshop.autodata-group.com/w2/api/engine-oil/HON13365 with params {'v': 'c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c', 'language': 'en-gb'}
+2025-03-13 12:00:15,725 [DEBUG] Using cookies: {
+  "id_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "ad_web_i_3130392E3130392E3135312E313530": "0...",
+  "ad_web_u_676E656C736F6E35353435": "0...",
+  "ad_web_g_373931393931": "0...",
+  "SESSd965b47fdd2684807fd560c91c3e21b6": "s5mfQfCAe3eSRvOa7Uxa...",
+  "adat": "eyJ0eXAiOiJKV1QiLCJh...",
+  "access_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "has_js": "1..."
+}
+2025-03-13 12:00:15,725 [DEBUG] Starting new HTTPS connection (1): workshop.autodata-group.com:443
+2025-03-13 12:00:27,636 [DEBUG] https://workshop.autodata-group.com:443 "GET /w2/api/engine-oil/HON13365?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb HTTP/1.1" 404 None
+2025-03-13 12:00:27,636 [ERROR] Error fetching HON13365: 404 Client Error: Not Found for url: https://workshop.autodata-group.com/w2/api/engine-oil/HON13365?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb
+2025-03-13 12:00:27,636 [WARNING] No data retrieved for HON13365
+2025-03-13 12:00:28,645 [INFO] Processing HON13366
+2025-03-13 12:00:28,645 [DEBUG] Fetching data for HON13366 from https://workshop.autodata-group.com/w2/api/engine-oil/HON13366 with params {'v': 'c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c', 'language': 'en-gb'}
+2025-03-13 12:00:28,645 [DEBUG] Using cookies: {
+  "id_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "ad_web_i_3130392E3130392E3135312E313530": "0...",
+  "ad_web_u_676E656C736F6E35353435": "0...",
+  "ad_web_g_373931393931": "0...",
+  "SESSd965b47fdd2684807fd560c91c3e21b6": "s5mfQfCAe3eSRvOa7Uxa...",
+  "adat": "eyJ0eXAiOiJKV1QiLCJh...",
+  "access_token": "eyJ0eXAiOiJKV1QiLCJh...",
+  "has_js": "1..."
+}
+2025-03-13 12:00:28,645 [DEBUG] Starting new HTTPS connection (1): workshop.autodata-group.com:443
+2025-03-13 12:00:29,530 [DEBUG] https://workshop.autodata-group.com:443 "GET /w2/api/engine-oil/HON13366?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb HTTP/1.1" 404 None
+2025-03-13 12:00:29,530 [ERROR] Error fetching HON13366: 404 Client Error: Not Found for url: https://workshop.autodata-group.com/w2/api/engine-oil/HON13366?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb
+2025-03-13 12:00:29,530 [WARNING] No data retrieved for HON13366
+2025-03-13 12:00:30,536 [INFO] Saving 3 records to oil_data.json
+2025-03-13 12:00:30,536 [INFO] Data successfully saved to oil_data.json
+2025-03-13 12:00:30,536 [INFO] Scraping completed

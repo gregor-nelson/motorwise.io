@@ -22,7 +22,11 @@ import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
 import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
-import PDFGenerator from './PDF/PdfGenerator'; // 
+import PDFGenerator from './PDF/PdfGenerator'; //
+import VehicleDataPage from '../../components/AutoData/DataTabs';
+import TechnicalSpecificationsPage from '../../components/AutoData/TechnicalSpecificationsPage';
+import RepairTimesPage from '../../components/AutoData/LabourTimes';
+import AutoDataSection from '../../components/AutoData/DataTabs';
 
 // Configurations 
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -361,13 +365,19 @@ const PremiumReportPage = () => {
               />
             </div>
           </div>
-          
+<ReportSection>
+
+  <AutoDataSection />
+</ReportSection>
+
+
           <GovUKBody>
             <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
               Return to basic vehicle details
             </GovUKLink>
           </GovUKBody>
         </GovUKMainWrapper>
+
       </GovUKContainer>
     );
   }

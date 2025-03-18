@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   GovUKHeadingM,
   GovUKLoadingSpinner,
@@ -45,7 +45,7 @@ const API_BASE_URL = isDevelopment
  * Enhanced VehicleInsights Component with GOV.UK styling
  * Displays advanced analytics for vehicle data aligned with GOV.UK design system
  */
-const VehicleInsights = ({ registration, vin }) => {
+const VehicleInsights = ({ registration, vin, paymentId, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
@@ -56,7 +56,26 @@ const VehicleInsights = ({ registration, vin }) => {
     fuelEfficiencyInsights: null
   });
   const [availableInsights, setAvailableInsights] = useState([]);
-
+  
+  // Use a ref to track if data has been sent to parent
+  const hasNotifiedParent = useRef(false);
+  
+  // Effect to handle data loading and parent notification
+  useEffect(() => {
+    if (vehicleData && availableInsights.length > 0 && insights && 
+        onDataLoad && typeof onDataLoad === 'function' && !hasNotifiedParent.current) {
+      // Call the parent callback with the processed data - only once
+      onDataLoad({
+        vehicleData,
+        availableInsights,
+        insights
+      });
+      
+      // Mark as notified to prevent repeated callbacks
+      hasNotifiedParent.current = true;
+    }
+  }, [vehicleData, availableInsights, insights, onDataLoad]);
+  
   // Fetch necessary data when component mounts
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +86,9 @@ const VehicleInsights = ({ registration, vin }) => {
 
         setLoading(true);
         setError(null);
+        
+        // Reset notification flag on new data fetch
+        hasNotifiedParent.current = false;
         
         // The API expects a POST request with registrationNumber
         const requestBody = {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   GovUKBody,
   GovUKBodyS,
@@ -183,7 +183,7 @@ const MileageBenchmarksCalculator = (mileageData, vehicleInfo, mileageStats) => 
  * Displays premium analytics for vehicle mileage data
  * Styled to match GOV.UK design patterns and VehicleInsights component
  */
-const VehicleMileageInsights = ({ registration, vin }) => {
+const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mileageData, setMileageData] = useState([]);
@@ -196,6 +196,42 @@ const VehicleMileageInsights = ({ registration, vin }) => {
     usagePatterns: null,
     riskAssessment: null
   });
+
+  // Use a ref to track if data has been sent to parent
+  const hasNotifiedParent = useRef(false);
+  
+  // Effect to handle data loading and parent notification
+  useEffect(() => {
+    // Only notify the parent once when we have meaningful data to share
+    // and only if we haven't already notified them
+    if (onDataLoad && typeof onDataLoad === 'function' && 
+        mileageData && mileageData.length > 0 && 
+        !hasNotifiedParent.current) {
+      
+      console.log("Mileage insights notifying parent with data");
+      
+      // Call the parent callback with the processed data
+      onDataLoad({
+        mileageData,
+        anomalies,
+        inactivityPeriods,
+        vehicleInfo,
+        mileageStats,
+        insights
+      });
+      
+      // Mark as notified to prevent repeated callbacks
+      hasNotifiedParent.current = true;
+    }
+  }, [
+    mileageData, 
+    anomalies, 
+    inactivityPeriods, 
+    vehicleInfo, 
+    mileageStats, 
+    insights, 
+    onDataLoad
+  ]);
   
   // Use tooltip hooks
   const { withTooltip } = useTooltip();
@@ -210,6 +246,9 @@ const VehicleMileageInsights = ({ registration, vin }) => {
 
         setLoading(true);
         setError(null);
+        
+        // Reset notification flag on new data fetch
+        hasNotifiedParent.current = false;
 
         // Use real API data instead of mock data
         const useMockData = false;
@@ -665,7 +704,6 @@ const VehicleMileageInsights = ({ registration, vin }) => {
           <HeadingWithTooltip tooltip={mileageTooltips.sectionBenchmarks} iconColor={COLORS.BLUE}>
             <GovUKHeadingM>
             Benchmark Analysis
-
             </GovUKHeadingM>
           </HeadingWithTooltip>
           

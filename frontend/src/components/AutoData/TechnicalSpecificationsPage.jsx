@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   GovUKContainer,
   GovUKMainWrapper,
@@ -7,14 +7,15 @@ import {
   GovUKBody,
   GovUKLoadingContainer,
   GovUKLoadingSpinner,
+  PremiumInfoPanel,
   BREAKPOINTS,
+  COLORS
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Paper from '@mui/material/Paper';
 
 // Import Material-UI icons
 import InfoIcon from '@mui/icons-material/Info';
@@ -23,27 +24,15 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import BrakesFrontIcon from '@mui/icons-material/Build'; // Using Build as a substitute for brakes
 import WarningIcon from '@mui/icons-material/Warning';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import SpeedIcon from '@mui/icons-material/Speed';
 
-// Import styled components
+// Import API client
+import techSpecsApi from './api/TechSpecsApiClient';
 
-
-// Define GOV.UK colors
-const GOV_UK_COLORS = {
-  BLUE: '#1d70b8',
-  BLACK: '#0b0c0c',
-  WHITE: '#ffffff',
-  YELLOW: '#ffdd00',
-  RED: '#d4351c',
-  GREEN: '#00703c',
-  LIGHT_GREY: '#f3f2f1',
-  MID_GREY: '#b1b4b6',
-  DARK_GREY: '#505a5f',
-  FOCUS: '#ffdd00'
-};
-
+// Styled components
 // Specification table styling
 const SpecificationTable = styled('table')(({ theme }) => ({
   marginBottom: '20px',
@@ -56,23 +45,23 @@ const SpecificationTable = styled('table')(({ theme }) => ({
     fontWeight: 700,
     padding: '10px 20px 10px 0',
     textAlign: 'left',
-    borderBottom: `1px solid ${GOV_UK_COLORS.MID_GREY}`,
-    color: GOV_UK_COLORS.BLACK,
+    borderBottom: `1px solid ${COLORS.MID_GREY}`,
+    color: COLORS.BLACK,
   },
   
   '& td': {
     width: '60%',
     padding: '10px 20px 10px 0',
-    borderBottom: `1px solid ${GOV_UK_COLORS.MID_GREY}`,
-    color: GOV_UK_COLORS.BLACK,
+    borderBottom: `1px solid ${COLORS.MID_GREY}`,
+    color: COLORS.BLACK,
   },
 
   '& tr:last-child th, & tr:last-child td': {
-    borderBottom: `2px solid ${GOV_UK_COLORS.BLACK}`,
+    borderBottom: `2px solid ${COLORS.BLACK}`,
   },
 
   '& tr:first-child th, & tr:first-child td': {
-    borderTop: `2px solid ${GOV_UK_COLORS.BLACK}`,
+    borderTop: `2px solid ${COLORS.BLACK}`,
   }
 }));
 
@@ -83,15 +72,15 @@ const TabPanel = styled(Box)(({ theme }) => ({
 
 // Styled Tabs
 const StyledTabs = styled(Tabs)(({ theme }) => ({
-  borderBottom: `1px solid ${GOV_UK_COLORS.MID_GREY}`,
+  borderBottom: `1px solid ${COLORS.MID_GREY}`,
   
   '& .MuiTabs-indicator': {
-    backgroundColor: GOV_UK_COLORS.BLUE,
+    backgroundColor: COLORS.BLUE,
     height: '5px',
   },
   
   '& .MuiTabs-flexContainer': {
-    borderBottom: `2px solid ${GOV_UK_COLORS.MID_GREY}`,
+    borderBottom: `2px solid ${COLORS.MID_GREY}`,
   }
 }));
 
@@ -100,23 +89,23 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   fontWeight: 700,
   fontSize: '16px',
-  color: GOV_UK_COLORS.BLACK,
+  color: COLORS.BLACK,
   padding: '15px 20px',
   minHeight: '60px',
   
   '&.Mui-selected': {
-    color: GOV_UK_COLORS.BLUE,
-    backgroundColor: GOV_UK_COLORS.LIGHT_GREY,
+    color: COLORS.BLUE,
+    backgroundColor: COLORS.LIGHT_GREY,
   },
   
   '&:hover': {
-    color: GOV_UK_COLORS.BLUE,
-    backgroundColor: GOV_UK_COLORS.LIGHT_GREY,
+    color: COLORS.BLUE,
+    backgroundColor: COLORS.LIGHT_GREY,
     opacity: 0.9,
   },
   
   '&:focus': {
-    outline: `3px solid ${GOV_UK_COLORS.FOCUS}`,
+    outline: `3px solid ${COLORS.FOCUS}`,
     outlineOffset: 0,
   }
 }));
@@ -126,12 +115,12 @@ const SectionHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   marginBottom: '20px',
-  borderBottom: `2px solid ${GOV_UK_COLORS.BLUE}`,
+  borderBottom: `2px solid ${COLORS.BLUE}`,
   paddingBottom: '10px',
   
   '& svg': {
     marginRight: '10px',
-    color: GOV_UK_COLORS.BLUE,
+    color: COLORS.BLUE,
   }
 }));
 
@@ -146,28 +135,30 @@ const SectionContainer = styled(Box)(({ theme }) => ({
 
 // Warning panel
 const WarningPanel = styled(Box)(({ theme }) => ({
-  backgroundColor: GOV_UK_COLORS.LIGHT_GREY,
+  backgroundColor: COLORS.LIGHT_GREY,
   padding: '15px',
   marginBottom: '20px',
-  borderLeft: `5px solid ${GOV_UK_COLORS.RED}`,
+  borderLeft: `5px solid ${COLORS.RED}`,
+  display: 'flex',
   
   '& svg': {
-    marginRight: '10px',
-    color: GOV_UK_COLORS.RED,
-    verticalAlign: 'middle',
+    marginRight: '15px',
+    marginTop: '3px',
+    color: COLORS.RED,
+    flexShrink: 0,
   }
 }));
 
 // Info panel
 const InfoPanel = styled(Box)(({ theme }) => ({
-  backgroundColor: GOV_UK_COLORS.LIGHT_GREY,
+  backgroundColor: COLORS.LIGHT_GREY,
   padding: '15px',
   marginBottom: '20px',
-  borderLeft: `5px solid ${GOV_UK_COLORS.BLUE}`,
+  borderLeft: `5px solid ${COLORS.BLUE}`,
   
   '& svg': {
     marginRight: '10px',
-    color: GOV_UK_COLORS.BLUE,
+    color: COLORS.BLUE,
     verticalAlign: 'middle',
   }
 }));
@@ -175,7 +166,7 @@ const InfoPanel = styled(Box)(({ theme }) => ({
 // Highlight value
 const StyledValueHighlight = styled('span')(({ theme }) => ({
   fontWeight: 700,
-  color: GOV_UK_COLORS.BLUE,
+  color: COLORS.BLUE,
 }));
 
 // Styled fact list
@@ -194,7 +185,7 @@ const StyledFactorItem = styled('li')(({ theme }) => ({
   '& svg': {
     marginRight: '10px',
     marginTop: '3px',
-    color: GOV_UK_COLORS.BLUE,
+    color: COLORS.BLUE,
     flexShrink: 0,
   },
   
@@ -205,18 +196,121 @@ const StyledFactorItem = styled('li')(({ theme }) => ({
 
 // Footer note
 const StyledFooterNote = styled(Box)(({ theme }) => ({
-  backgroundColor: GOV_UK_COLORS.LIGHT_GREY,
+  backgroundColor: COLORS.LIGHT_GREY,
   padding: '15px',
   marginTop: '30px',
-  borderTop: `5px solid ${GOV_UK_COLORS.BLUE}`,
+  borderTop: `5px solid ${COLORS.BLUE}`,
   fontSize: '16px',
   
   '& svg': {
     marginRight: '10px',
-    color: GOV_UK_COLORS.BLUE,
+    color: COLORS.BLUE,
     verticalAlign: 'middle',
   }
 }));
+
+// Fuel type badge
+const FuelTypeBadge = styled(Box)(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  backgroundColor: COLORS.BLUE,
+  color: COLORS.WHITE,
+  padding: '5px 10px',
+  borderRadius: '4px',
+  marginTop: '10px',
+  marginBottom: '15px',
+  fontWeight: 600,
+  
+  '& svg': {
+    marginRight: '5px',
+  }
+}));
+
+// Extract year from various possible date fields in vehicleData
+const extractVehicleYear = (vehicleData) => {
+  if (!vehicleData) return null;
+  
+  // First check if we already have a year field
+  if (vehicleData.year && typeof vehicleData.year === 'number') {
+    return vehicleData.year;
+  }
+  
+  // Try different date fields that might contain year information
+  const dateFields = [
+    'manufactureDate',
+    'yearOfManufacture',
+    'registrationDate',
+    'firstRegisteredDate',
+    'firstRegistrationDate'
+  ];
+  
+  for (const field of dateFields) {
+    if (vehicleData[field]) {
+      // If it's a string, try to extract a 4-digit year
+      if (typeof vehicleData[field] === 'string') {
+        const yearMatch = /(\d{4})/.exec(vehicleData[field]);
+        if (yearMatch) {
+          return parseInt(yearMatch[1], 10);
+        }
+      }
+      
+      // If it's a number in a reasonable year range
+      if (typeof vehicleData[field] === 'number' && 
+          vehicleData[field] > 1900 && 
+          vehicleData[field] < 2100) {
+        return vehicleData[field];
+      }
+    }
+  }
+  
+  return null;
+};
+
+// Determine fuel type from vehicle data if not explicitly provided
+const determineFuelType = (vehicleData) => {
+  if (!vehicleData) return null;
+  
+  // First check for explicit fuel type
+  if (vehicleData.fuelType) {
+    const normalizedFuelType = vehicleData.fuelType.toLowerCase().trim();
+    
+    // Map common variations
+    if (['gasoline', 'unleaded', 'gas'].includes(normalizedFuelType)) {
+      return 'petrol';
+    } else if (['gasoil', 'derv'].includes(normalizedFuelType)) {
+      return 'diesel';
+    }
+    
+    return normalizedFuelType;
+  }
+  
+  // Look for clues in model name
+  const model = (vehicleData.model || '').toLowerCase();
+  if (/tdi|cdi|hdi|dci|crdi|d4d|jtd|tdci/.test(model)) {
+    return 'diesel';
+  }
+  
+  // Check variant for fuel type indicators
+  const variant = (vehicleData.variant || '').toLowerCase();
+  if (/diesel|tdi|cdi|hdi|dci|crdi/.test(variant)) {
+    return 'diesel';
+  }
+  if (/petrol|tsi|gti|vti|mpi/.test(variant)) {
+    return 'petrol';
+  }
+  
+  // Check engine size - rough heuristic
+  const engineSize = parseInt(vehicleData.engineCapacity || 0, 10);
+  if (engineSize > 0) {
+    // In the UK, diesel engines usually don't come in really small displacements
+    if (engineSize < 1000) {
+      return 'petrol';
+    }
+  }
+  
+  // Return null if we can't determine
+  return null;
+};
 
 // Tab Panel function component
 function CustomTabPanel(props) {
@@ -243,247 +337,183 @@ function a11yProps(index) {
   };
 }
 
-const TechnicalSpecificationsPage = ({ vehicleData = null, loading = false, error = null }) => {
-  // Tab state
+const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoading = false, error: initialError = null, onDataLoad }) => {
+  // States
   const [tabValue, setTabValue] = useState(0);
+  const [techSpecsData, setTechSpecsData] = useState(null);
+  const [loading, setLoading] = useState(initialLoading || true);
+  const [error, setError] = useState(initialError);
+  const [matchConfidence, setMatchConfidence] = useState('none');
 
-  const handleTabChange = (event, newValue) => {
+  // Extract year from vehicle data - memoized
+  const vehicleYear = useMemo(() => {
+    return vehicleData ? extractVehicleYear(vehicleData) : null;
+  }, [vehicleData]);
+
+  // Extract and normalize fuel type - memoized
+  const vehicleFuelType = useMemo(() => {
+    return vehicleData ? determineFuelType(vehicleData) : null;
+  }, [vehicleData]);
+
+  // Memoized tab change handler
+  const handleTabChange = useCallback((event, newValue) => {
     setTabValue(newValue);
-  };
+  }, []);
 
-  // Use default test data if no data is provided
-  const testData = {
-    vehicleIdentification: {
-      title: 'Vehicle Identification',
-      make: 'Honda',
-      model: 'CR-V',
-      modelType: 'N22A2/2.2 (07-12)',
-      engineDetails: [
-        { label: 'No. of cylinders', value: '4/DOHC', unit: 'Type' },
-        { label: 'Capacity', value: '2204', unit: 'cc' },
-        { label: 'Compression ratio', value: '16.7', unit: ':1' },
-        { label: 'Fuel system', value: 'Bosch', unit: 'Make' },
-        { label: 'Fuel system', value: 'EDC 16 C', unit: 'Type' },
-      ]
-    },
-    injectionSystem: {
-      title: 'Injection System',
-      details: [
-        { label: 'Air metering', value: 'Mass', unit: 'Type' },
-        { label: 'Fuel/injection pump assembly', value: 'Bosch', unit: 'Make' },
-        { label: 'Pump type', value: 'Common rail', unit: '' },
-        { label: 'Injection sequence', value: '1-3-4-2', unit: '' },
-      ]
-    },
-    tuningEmissions: {
-      title: 'Tuning & Emissions',
-      details: [
-        { label: 'Idle speed', value: '835±65', unit: 'rpm' },
-        { label: 'Oil temperature', value: '80', unit: '°C' },
-        { label: 'Idle speed - for smoke test', value: '770-900', unit: 'rpm' },
-        { label: 'Governed speed range - for smoke test', value: '4200-4500', unit: 'rpm' },
-        { label: 'Maximum time at governed speed', value: '1.5', unit: 'secs' },
-        { label: 'Test mode', value: 'B', unit: 'A/B' },
-        { label: 'Probe type', value: '1', unit: '1/2' },
-        { label: 'Conditioning', value: '/3000', unit: 'Accelerations/m' },
-        { label: 'Smoke opacity - homologation value', value: '2,50 (66)', unit: 'm-1 (%)' },
-      ]
-    },
-    startingCharging: {
-      title: 'Starting & Charging',
-      details: [
-        { label: 'Battery', value: '12 (70)', unit: 'V/RC(Ah)' },
-        { label: 'Alternator output', value: '105/13,5/-', unit: 'A/V/rpm' },
-      ]
-    },
-    serviceChecks: {
-      title: 'Service Checks & Adjustments',
-      details: [
-        { label: 'Valve clearance - INLET', value: 'Hydraulic', unit: 'mm' },
-        { label: 'Valve clearance - EXHAUST', value: 'Hydraulic', unit: 'mm' },
-        { label: 'Compression pressure', value: '24,0 Min', unit: 'bar' },
-        { label: 'Oil pressure', value: '4,1/3000', unit: 'bar/rpm' },
-        { label: 'Radiator cap', value: '1,12-1,46', unit: 'bar' },
-        { label: 'Thermostat opens', value: '76-80', unit: '°C' },
-      ]
-    },
-    lubricants: {
-      title: 'Lubricants & Capacities',
-      engineOil: {
-        title: 'Engine oil options',
-        details: [
-          { label: 'Ambient temperature range', value: 'All temperatures', unit: '' },
-          { label: 'Engine oil grade', value: '0W-30 Synthetic', unit: 'SAE' },
-          { label: 'Engine oil classification', value: '/A5, B5', unit: 'API/ACEA' },
-          { label: 'Engine with filter(s)', value: '5,9', unit: 'litres' },
-        ],
-        notes: [
-          'With diesel particulate filter (DPF) = C2, C3',
-          'Low ash engine oil MUST be used to ensure long service life of diesel particulate filter (DPF).'
-        ]
-      },
-      otherLubricants: {
-        title: 'Other Lubricants & Capacities',
-        details: [
-          { label: 'Manual transmission oil grade', value: 'Honda MTF', unit: 'SAE' },
-          { label: 'Manual transmission', value: '2,5', unit: 'litres' },
-          { label: 'Differential oil grade - rear', value: '08293-99902HE', unit: 'SAE' },
-          { label: 'Differential rear', value: '1,2', unit: 'litres' },
-          { label: 'Coolant', value: 'Honda all season type 2', unit: 'Type' },
-          { label: 'Cooling system - total capacity', value: '7,1', unit: 'litres' },
-          { label: 'Brake fluid', value: 'DOT 3/4', unit: 'Type' },
-          { label: 'Power steering fluid', value: 'Honda ultra PSF-II', unit: 'Type' },
-          { label: 'Power steering fluid', value: '0,9', unit: 'litres' },
-        ]
-      }
-    },
-    tighteningTorques: {
-      title: 'Tightening Torques',
-      cylinderHead: {
-        title: 'Cylinder Head Instructions',
-        instructions: [
-          'Lubricate threads and between bolt and integral washer.',
-          'Tighten in the following stages:'
-        ],
-        usedBolts: [
-          '1. 49 Nm',
-          '2. 100°',
-          '3. 100°',
-          '4. Slacken off',
-          '5. 49 Nm',
-          '6. 90°',
-          '7. 90°',
-          '8. 90°'
-        ],
-        newBolts: [
-          '1. 49 Nm',
-          '2. 100°',
-          '3. 100°',
-          '4. Slacken off',
-          '5. 49 Nm',
-          '6. 110°',
-          '7. 100°',
-          '8. 100°'
-        ]
-      },
-      otherTorques: {
-        title: 'Other Engine Tightening Torques',
-        details: [
-          { label: 'Main bearings', value: 'No', unit: 'Renew bolts/nuts' },
-          { label: 'Main bearings', value: '29 Nm', unit: 'Stage 1' },
-          { label: 'Main bearings', value: '58°', unit: 'Stage 2' },
-          { label: 'Big end bearings', value: 'Yes', unit: 'Renew bolts/nuts' },
-          { label: 'Big end bearings', value: '20 Nm', unit: 'Stage 1' },
-          { label: 'Big end bearings', value: '90°', unit: 'Stage 2' },
-          { label: 'Oil pump to cylinder block', value: '44 Nm', unit: '' },
-          { label: 'Sump bolts', value: '12 Nm', unit: '' },
-          { label: 'Sump drain bolt', value: '39 Nm', unit: '' },
-          { label: 'Flywheel/driveplate', value: '118 Nm', unit: '' },
-          { label: 'Clutch pressure plate', value: '25 Nm', unit: '' },
-          { label: 'Crankshaft pulley/damper centre bolt', value: '29 Nm+90°', unit: '' },
-          { label: 'Camshaft carrier/cap', value: '12 Nm M8=22 Nm', unit: '' },
-          { label: 'Camshaft/rocker cover', value: '12 Nm', unit: '' },
-          { label: 'Inlet manifold to cylinder head', value: '22 Nm', unit: '' },
-          { label: 'Exhaust manifold to cylinder head', value: '44 Nm', unit: '' },
-          { label: 'Exhaust downpipe to manifold', value: '33 Nm', unit: '' },
-          { label: 'Water pump', value: '12 Nm', unit: '' },
-          { label: 'Injector/clamp', value: '5 Nm+90°', unit: '' },
-          { label: 'Injector pipe unions', value: '27 Nm', unit: '' },
-          { label: 'Fuel/injection pump mounting', value: '22 Nm', unit: '' },
-          { label: 'Glow plugs', value: '18 Nm', unit: '' },
-          { label: 'Crankshaft position (CKP) sensor/engine speed (RPM) sensor', value: '12 Nm', unit: '' },
-          { label: 'Camshaft position (CMP) sensor', value: '12 Nm', unit: '' },
-          { label: 'Engine oil pressure switch', value: '18 Nm', unit: '' },
-          { label: 'Oil filter', value: '25 Nm', unit: '' },
-          { label: 'Engine upper cover', value: '12 Nm', unit: '' },
-        ],
-        notes: [
-          'New bolt = 34 Nm + 90°',
-          'Use new nuts.'
-        ]
-      },
-      chassisTorques: {
-        title: 'Chassis Tightening Torques',
-        details: [
-          { label: 'Front hub', value: '328 Nm', unit: '' },
-          { label: 'Rear hub', value: '245 Nm', unit: '' },
-          { label: 'Rear hub - wheel bearing housing bolts', value: '98 Nm', unit: '' },
-          { label: 'Steering wheel', value: '39 Nm', unit: '' },
-          { label: 'Steering rack/box mounting', value: '71 Nm', unit: '' },
-          { label: 'Steering track rod end', value: '54 Nm', unit: '' },
-          { label: 'Brake disc to hub', value: '10 Nm', unit: 'Front' },
-          { label: 'Brake caliper to carrier', value: '30 Nm', unit: 'Front' },
-          { label: 'Brake caliper/carrier to hub', value: '137 Nm', unit: 'Front' },
-          { label: 'Brake disc to hub', value: '10 Nm', unit: 'Rear' },
-          { label: 'Brake caliper to carrier', value: '30 Nm', unit: 'Rear' },
-          { label: 'Brake caliper/carrier to hub', value: '108 Nm', unit: 'Rear' },
-          { label: 'ABS sensor', value: '10 Nm', unit: 'Front' },
-          { label: 'ABS sensor', value: '10 Nm', unit: 'Rear' },
-          { label: 'Road wheels', value: '108 Nm', unit: '' },
-        ],
-        notes: [
-          'Use new nut.',
-          'Lubricate mating surfaces of nut.'
-        ]
-      }
-    },
-    brakeDiscDrum: {
-      title: 'Brake Disc & Drum Dimensions',
-      details: [
-        { label: 'Minimum disc thickness for replacement - ventilated', value: '26 mm', unit: 'Front' },
-        { label: 'Minimum disc thickness for replacement', value: '8,0 mm', unit: 'Rear' },
-        { label: 'Disc thickness variation', value: '0,015 mm', unit: 'Front' },
-        { label: 'Disc thickness variation', value: '0,015 mm', unit: 'Rear' },
-        { label: 'Disc runout', value: '0,04 mm', unit: 'Front' },
-        { label: 'Disc runout', value: '0,04 mm', unit: 'Rear' },
-        { label: 'Minimum pad thickness', value: '2 mm', unit: 'Front' },
-        { label: 'Minimum pad thickness', value: '2 mm', unit: 'Rear' },
-        { label: 'Maximum drum diameter for replacement', value: '201 mm', unit: 'Rear' },
-        { label: 'Minimum shoe thickness', value: '1 mm', unit: 'Rear' },
-        { label: 'Parking brake travel', value: '6-7', unit: 'No. of notches' },
-      ]
-    },
-    airConditioning: {
-      title: 'Air Conditioning',
-      details: [
-        { label: 'No. of AC service connectors', value: '2', unit: '' },
-        { label: 'Air conditioning restrictor type', value: 'Expansion valve', unit: '' },
-        { label: 'Compressor clutch/magnetic coupling', value: 'Yes', unit: '' },
-        { label: 'Compressor variable displacement solenoid', value: 'No', unit: '' },
-        { label: 'Air conditioning refrigerant', value: 'R134a', unit: 'Type' },
-        { label: 'Air conditioning refrigerant quantity', value: '465±25', unit: 'grams' },
-        { label: 'Air conditioning oil group', value: 'PAG', unit: '' },
-        { label: 'Air conditioning oil', value: 'SP10', unit: 'Type' },
-        { label: 'Air conditioning oil quantity', value: '185±5', unit: 'cm³' },
-        { label: 'Air conditioning oil viscosity', value: '46', unit: 'ISO' },
-      ]
-    }
-  };
-
-  // Use the provided vehicle data or fall back to test data
-  const data = vehicleData || testData;
+  // Data fetching effect - enhanced with fuel type support
+  useEffect(() => {
+    // Don't do anything if no vehicle data
+    if (!vehicleData) return;
+    
+    // Cancel flag for cleanup
+    let isMounted = true;
+    
+    const fetchTechSpecs = async () => {
+      try {
+        setLoading(true);
+        setError(null);
   
+        const make = vehicleData.make;
+        const model = vehicleData.model || vehicleData.vehicleModel;
+  
+        if (!make || !model) {
+          throw new Error("Vehicle make and model required");
+        }
+        
+        console.log(`Fetching tech specs for ${make} ${model} (Year: ${vehicleYear}, Fuel: ${vehicleFuelType})`);
+        
+        // Use the API client for data fetching with fuel type
+        const data = await techSpecsApi.lookupTechSpecs({
+          make,
+          model,
+          year: vehicleYear,
+          fuelType: vehicleFuelType
+        });
+        
+        // Only update state if component is still mounted
+        if (isMounted) {
+          setTechSpecsData(data);
+          // Get match confidence from API client's _matchConfidence property
+          setMatchConfidence(data._matchConfidence || (data.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
+          
+          // Call onDataLoad with the new data
+          if (onDataLoad) onDataLoad(data);
+        }
+      } catch (err) {
+        if (isMounted) {
+          // Don't log AbortError (happens during normal cleanup)
+          if (err.name !== 'AbortError') {
+            console.error("Error fetching technical specifications:", err);
+            setError(err.message || "Failed to load technical specifications");
+          }
+          setMatchConfidence('none');
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+  
+    fetchTechSpecs();
+    
+    // Cleanup function to prevent state updates if component unmounts
+    return () => {
+      isMounted = false;
+      // Cancel any pending requests
+      techSpecsApi.cancelAllRequests();
+    };
+    
+  }, [vehicleData?.make, vehicleData?.model, vehicleYear, vehicleFuelType, onDataLoad]);
+
+  // Memoized match warning component - enhanced with fuel type
+  const MatchWarning = useMemo(() => {
+    if (!techSpecsData || !vehicleData) return null;
+    
+    const { vehicleIdentification } = techSpecsData;
+    
+    if (matchConfidence === 'fuzzy' && vehicleIdentification?.matchedTo) {
+      // Get matched vehicle year range for display
+      const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
+        ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
+            vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
+              ? 'present' 
+              : vehicleIdentification.matchedTo.yearRange.endYear
+          })`
+        : '';
+      
+      // Get matched fuel type info
+      const matchedFuelType = vehicleIdentification.matchedTo.fuelType && 
+                             vehicleIdentification.matchedTo.fuelType !== 'unknown'
+        ? ` - ${vehicleIdentification.matchedTo.fuelType.charAt(0).toUpperCase() + 
+             vehicleIdentification.matchedTo.fuelType.slice(1)} Engine`
+        : '';
+      
+      // Get requested vehicle year for display
+      const year = extractVehicleYear(vehicleData);
+      const requestedYear = year ? ` (${year})` : '';
+      
+      // Get requested fuel type for display
+      const requestedFuelType = vehicleFuelType 
+        ? ` - ${vehicleFuelType.charAt(0).toUpperCase() + vehicleFuelType.slice(1)} Engine`
+        : '';
+      
+      return (
+        <WarningPanel>
+          <WarningIcon />
+          <div>
+            <GovUKHeadingS>Approximate Match</GovUKHeadingS>
+            <GovUKBody>
+              We don't have exact data for your <strong>{vehicleIdentification.make} {vehicleIdentification.model}{requestedYear}{requestedFuelType}</strong>. 
+              The specifications shown are based on <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model}{matchedYearInfo}{matchedFuelType}</strong>, 
+              which is the closest match to your vehicle.
+            </GovUKBody>
+          </div>
+        </WarningPanel>
+      );
+    } else if (matchConfidence === 'year-match' && vehicleIdentification?.matchedTo) {
+      // It's the right year range but not exact model variant
+      return (
+        <PremiumInfoPanel>
+          <InfoIcon style={{ marginRight: '15px', marginTop: '3px', flexShrink: 0, color: COLORS.BLUE }} />
+          <div>
+            <GovUKHeadingS>Compatible Model Match</GovUKHeadingS>
+            <GovUKBody>
+              The specifications shown are for <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model} {vehicleIdentification.matchedTo.modelType}</strong>, 
+              which is compatible with your specific vehicle variant.
+            </GovUKBody>
+          </div>
+        </PremiumInfoPanel>
+      );
+    }
+    return null;
+  }, [techSpecsData, vehicleData, matchConfidence, vehicleFuelType]);
+
   // Helper function to render a specification table
-  const renderSpecTable = (items) => (
-    <SpecificationTable>
-      <tbody>
-        {items.map((item, index) => (
-          <tr key={index}>
-            <th scope="row">
-              {item.label}
-            </th>
-            <td>
-              <strong>{item.value}</strong> {item.unit && <span>{item.unit}</span>}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </SpecificationTable>
-  );
+  const renderSpecTable = useCallback((items) => {
+    if (!items || items.length === 0) return null;
+    
+    return (
+      <SpecificationTable>
+        <tbody>
+          {items.map((item, index) => (
+            <tr key={index}>
+              <th scope="row">
+                {item.label || item.name}
+              </th>
+              <td>
+                <StyledValueHighlight>{item.value}</StyledValueHighlight> {item.unit && <span>{item.unit}</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </SpecificationTable>
+    );
+  }, []);
 
   // Helper function to render notes as styled factor items
-  const renderNotes = (notes) => (
-    notes && notes.length > 0 && (
+  const renderNotes = useCallback((notes) => {
+    if (!notes || notes.length === 0) return null;
+    
+    return (
       <InfoPanel>
         <GovUKHeadingS>
           <InfoIcon fontSize="small" /> Important notes
@@ -497,244 +527,374 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading = false, erro
           ))}
         </StyledFactorList>
       </InfoPanel>
-    )
-  );
+    );
+  }, []);
 
-  // Define tab structure
-  const tabs = [
-    { 
-      label: "Engine Details", 
-      sections: [
-        {
-          title: data.vehicleIdentification.title,
-          icon: <InfoIcon />,
-          content: (
-            <>
-              <GovUKBody>
-                Key specifications for this <StyledValueHighlight>{data.vehicleIdentification.make} {data.vehicleIdentification.model}</StyledValueHighlight> engine.
-              </GovUKBody>
-              {renderSpecTable(data.vehicleIdentification.engineDetails)}
-            </>
-          )
-        },
-        {
-          title: data.injectionSystem.title,
-          icon: <LocalGasStationIcon />,
-          content: renderSpecTable(data.injectionSystem.details)
-        },
-        {
-          title: data.tuningEmissions.title,
-          icon: <SettingsIcon />,
-          content: (
-            <>
-              <GovUKBody>
-                These specifications are important for emissions testing and engine tuning operations.
-              </GovUKBody>
-              {renderSpecTable(data.tuningEmissions.details)}
-            </>
-          )
-        },
-        {
-          title: data.startingCharging.title,
-          icon: <BatteryChargingFullIcon />,
-          content: renderSpecTable(data.startingCharging.details)
-        }
-      ]
-    },
-    {
-      label: "Service Information",
-      sections: [
-        {
-          title: data.serviceChecks.title,
-          icon: <SettingsIcon />,
-          content: (
-            <>
-              <GovUKBody>
-                Reference values for maintenance and diagnostics.
-              </GovUKBody>
-              {renderSpecTable(data.serviceChecks.details)}
-            </>
-          )
-        },
-        {
-          title: data.lubricants.title,
-          icon: <OilBarrelIcon />,
-          content: (
-            <>
+  // Memoized tabs configuration based on available data
+  const tabs = useMemo(() => {
+    if (!techSpecsData) return [];
+    
+    const tabsConfig = [];
+    
+    // Engine Details Tab
+    const engineSections = [];
+    
+    if (techSpecsData.vehicleIdentification) {
+      engineSections.push({
+        title: "Vehicle Identification",
+        icon: <DirectionsCarIcon />,
+        content: techSpecsData.vehicleIdentification.engineDetails && (
+          <>
+            <GovUKBody>
+              Key specifications for this <StyledValueHighlight>{techSpecsData.vehicleIdentification.make} {techSpecsData.vehicleIdentification.model}</StyledValueHighlight> engine.
+            </GovUKBody>
+            {renderSpecTable(techSpecsData.vehicleIdentification.engineDetails)}
+          </>
+        )
+      });
+    }
+    
+    if (techSpecsData.injectionSystem) {
+      engineSections.push({
+        title: "Injection System",
+        icon: <LocalGasStationIcon />,
+        content: renderSpecTable(techSpecsData.injectionSystem.specifications || techSpecsData.injectionSystem.details)
+      });
+    }
+    
+    if (techSpecsData.tuningEmissions) {
+      engineSections.push({
+        title: "Tuning & Emissions",
+        icon: <SettingsIcon />,
+        content: (
+          <>
+            <GovUKBody>
+              These specifications are important for emissions testing and engine tuning operations.
+            </GovUKBody>
+            {renderSpecTable(techSpecsData.tuningEmissions.specifications || techSpecsData.tuningEmissions.details)}
+          </>
+        )
+      });
+    }
+    
+    if (techSpecsData.spark_plugs) {
+      engineSections.push({
+        title: "Spark Plugs",
+        icon: <BuildIcon />,
+        content: renderSpecTable(techSpecsData.spark_plugs.specifications || techSpecsData.spark_plugs.details)
+      });
+    }
+    
+    if (techSpecsData.fuel_system) {
+      engineSections.push({
+        title: "Fuel System",
+        icon: <LocalGasStationIcon />,
+        content: renderSpecTable(techSpecsData.fuel_system.specifications || techSpecsData.fuel_system.details)
+      });
+    }
+    
+    if (techSpecsData.startingCharging) {
+      engineSections.push({
+        title: "Starting & Charging",
+        icon: <BatteryChargingFullIcon />,
+        content: renderSpecTable(techSpecsData.startingCharging.specifications || techSpecsData.startingCharging.details)
+      });
+    }
+    
+    if (engineSections.length > 0) {
+      tabsConfig.push({
+        label: "Engine Details",
+        icon: <SettingsIcon />,
+        sections: engineSections
+      });
+    }
+    
+    // Service Information Tab
+    const serviceSections = [];
+    
+    if (techSpecsData.serviceChecks) {
+      serviceSections.push({
+        title: "Service Checks & Adjustments",
+        icon: <SpeedIcon />,
+        content: (
+          <>
+            <GovUKBody>
+              Reference values for maintenance and diagnostics.
+            </GovUKBody>
+            {renderSpecTable(techSpecsData.serviceChecks.specifications || techSpecsData.serviceChecks.details)}
+          </>
+        )
+      });
+    }
+    
+    if (techSpecsData.lubricantsCapacities) {
+      serviceSections.push({
+        title: "Lubricants & Capacities",
+        icon: <OilBarrelIcon />,
+        content: (
+          <>
+            {techSpecsData.lubricantsCapacities.engine_oil_options && (
               <Box mb={4}>
                 <GovUKHeadingS>
-                  {data.lubricants.engineOil.title}
+                  Engine Oil Options
                 </GovUKHeadingS>
-                {renderSpecTable(data.lubricants.engineOil.details)}
-                {renderNotes(data.lubricants.engineOil.notes)}
+                {renderSpecTable(techSpecsData.lubricantsCapacities.engine_oil_options.specifications || 
+                                 techSpecsData.lubricantsCapacities.engine_oil_options.details)}
               </Box>
-              
-              <Box>
-                <GovUKHeadingS>
-                  {data.lubricants.otherLubricants.title}
-                </GovUKHeadingS>
-                {renderSpecTable(data.lubricants.otherLubricants.details)}
-              </Box>
-            </>
-          )
-        }
-      ]
-    },
-    {
-      label: "Torque Specifications",
-      sections: [
-        {
-          title: data.tighteningTorques.cylinderHead.title,
+            )}
+            
+            <Box>
+              <GovUKHeadingS>
+                Other Lubricants & Capacities
+              </GovUKHeadingS>
+              {renderSpecTable(techSpecsData.lubricantsCapacities.specifications || 
+                               techSpecsData.lubricantsCapacities.details)}
+            </Box>
+          </>
+        )
+      });
+    }
+    
+    if (serviceSections.length > 0) {
+      tabsConfig.push({
+        label: "Service Information",
+        icon: <BuildIcon />,
+        sections: serviceSections
+      });
+    }
+    
+    // Torque Specifications Tab
+    const torqueSections = [];
+    
+    if (techSpecsData.tighteningTorques) {
+      if (techSpecsData.tighteningTorques.cylinder_head_instructions) {
+        torqueSections.push({
+          title: "Cylinder Head Instructions",
           icon: <BuildIcon />,
           content: (
             <>
               <GovUKBody>
-                {data.tighteningTorques.cylinderHead.instructions.map((instruction, index) => (
+                {techSpecsData.tighteningTorques.cylinder_head_instructions.map((instruction, index) => (
                   <p key={index}>{instruction}</p>
                 ))}
               </GovUKBody>
               
-              <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={3} mb={4}>
-                <Box flex={1}>
-                  <GovUKHeadingS>
-                    Used bolts
-                  </GovUKHeadingS>
-                  <StyledFactorList>
-                    {data.tighteningTorques.cylinderHead.usedBolts.map((step, index) => (
-                      <StyledFactorItem key={index}>
-                        <BuildIcon fontSize="small" />
-                        <span>{step}</span>
-                      </StyledFactorItem>
-                    ))}
-                  </StyledFactorList>
+              {techSpecsData.tighteningTorques.cylinder_head_torques && (
+                <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={3} mb={4}>
+                  <Box flex={1}>
+                    <GovUKHeadingS>Tightening sequence</GovUKHeadingS>
+                    <StyledFactorList>
+                      {techSpecsData.tighteningTorques.cylinder_head_torques.map((step, index) => (
+                        <StyledFactorItem key={index}>
+                          <BuildIcon fontSize="small" />
+                          <span>{step}</span>
+                        </StyledFactorItem>
+                      ))}
+                    </StyledFactorList>
+                  </Box>
                 </Box>
-                
-                <Box flex={1}>
-                  <GovUKHeadingS>
-                    New bolts
-                  </GovUKHeadingS>
-                  <StyledFactorList>
-                    {data.tighteningTorques.cylinderHead.newBolts.map((step, index) => (
-                      <StyledFactorItem key={index}>
-                        <BuildIcon fontSize="small" />
-                        <span>{step}</span>
-                      </StyledFactorItem>
-                    ))}
-                  </StyledFactorList>
-                </Box>
-              </Box>
+              )}
             </>
           )
-        },
-        {
-          title: data.tighteningTorques.otherTorques.title,
+        });
+      }
+      
+      if (techSpecsData.tighteningTorques.engine_torques) {
+        torqueSections.push({
+          title: "Engine Tightening Torques",
           icon: <BuildIcon />,
           content: (
             <>
-              {renderSpecTable(data.tighteningTorques.otherTorques.details)}
-              {renderNotes(data.tighteningTorques.otherTorques.notes)}
+              {renderSpecTable(techSpecsData.tighteningTorques.engine_torques)}
+              {techSpecsData.tighteningTorques.engine_notes && renderNotes(techSpecsData.tighteningTorques.engine_notes)}
             </>
           )
-        },
-        {
-          title: data.tighteningTorques.chassisTorques.title,
+        });
+      }
+      
+      if (techSpecsData.tighteningTorques.chassis_tightening_torques) {
+        torqueSections.push({
+          title: "Chassis Tightening Torques",
           icon: <BuildIcon />,
           content: (
             <>
-              {renderSpecTable(data.tighteningTorques.chassisTorques.details)}
-              {renderNotes(data.tighteningTorques.chassisTorques.notes)}
+              {renderSpecTable(techSpecsData.tighteningTorques.chassis_tightening_torques)}
+              {techSpecsData.tighteningTorques.chassis_notes && renderNotes(techSpecsData.tighteningTorques.chassis_notes)}
             </>
           )
-        }
-      ]
-    },
-    {
-      label: "Brakes & A/C",
-      sections: [
-        {
-          title: data.brakeDiscDrum.title,
-          icon: <BrakesFrontIcon />,
-          content: (
-            <>
-              <GovUKBody>
-                Reference measurements for brake component service and replacement.
-              </GovUKBody>
-              {renderSpecTable(data.brakeDiscDrum.details)}
-            </>
-          )
-        },
-        {
-          title: data.airConditioning.title,
-          icon: <AcUnitIcon />,
-          content: renderSpecTable(data.airConditioning.details)
-        }
-      ]
+        });
+      }
     }
-  ];
+    
+    if (torqueSections.length > 0) {
+      tabsConfig.push({
+        label: "Torque Specifications",
+        icon: <BuildIcon />,
+        sections: torqueSections
+      });
+    }
+    
+    // Brakes & A/C Tab
+    const otherSections = [];
+    
+    if (techSpecsData.brakeDimensions) {
+      otherSections.push({
+        title: "Brake Disc & Drum Dimensions",
+        icon: <BuildIcon />,
+        content: (
+          <>
+            <GovUKBody>
+              Reference measurements for brake component service and replacement.
+            </GovUKBody>
+            {renderSpecTable(techSpecsData.brakeDimensions.specifications || techSpecsData.brakeDimensions.details)}
+          </>
+        )
+      });
+    }
+    
+    if (techSpecsData.airConditioning) {
+      otherSections.push({
+        title: "Air Conditioning",
+        icon: <AcUnitIcon />,
+        content: renderSpecTable(techSpecsData.airConditioning.specifications || techSpecsData.airConditioning.details)
+      });
+    }
+    
+    if (otherSections.length > 0) {
+      tabsConfig.push({
+        label: "Brakes & A/C",
+        icon: <AcUnitIcon />,
+        sections: otherSections
+      });
+    }
+    
+    return tabsConfig.filter(tab => tab.sections.length > 0);
+  }, [techSpecsData, renderSpecTable, renderNotes]);
 
   // Last updated date
-  const lastUpdated = "15 March 2025";
+  const lastUpdated = useMemo(() => {
+    // You could fetch this from the API or set a default
+    return "March 2025";
+  }, []);
 
-  return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
-     
-        
-        {/* Loading state */}
-        {loading && (
+  // Loading state
+  if (loading) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
           <GovUKLoadingContainer>
             <GovUKLoadingSpinner />
             <GovUKBody>Loading technical specifications...</GovUKBody>
           </GovUKLoadingContainer>
-        )}
-        
-        {/* Error state */}
-        {error && (
-          <Alert severity="error" style={{ marginBottom: '20px', borderRadius: 0 }}>
-            {error}
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
+          <Alert 
+            severity="error" 
+            icon={<WarningIcon />}
+            style={{ 
+              marginBottom: '20px', 
+              borderRadius: 0, 
+              borderLeft: `5px solid ${COLORS.RED}`,
+              padding: '20px'
+            }}
+          >
+            <GovUKHeadingS>There was a problem</GovUKHeadingS>
+            <GovUKBody>{error}</GovUKBody>
           </Alert>
-        )}
-        
-        {/* Main content */}
-        {!loading && !error && data && (
-          <Box>
-          
-            
-            {/* Important notice */}
-            <WarningPanel>
-              <GovUKBody fontWeight={700}>
-                <WarningIcon /> Important
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+
+  // No data state
+  if (!techSpecsData) {
+    return (
+      <GovUKContainer>
+        <GovUKMainWrapper>
+          <PremiumInfoPanel>
+            <InfoIcon style={{ marginRight: '15px', marginTop: '3px', flexShrink: 0, color: COLORS.BLUE }} />
+            <div>
+              <GovUKHeadingS>No specifications available</GovUKHeadingS>
+              <GovUKBody>
+                We don't currently have technical specifications for this vehicle. This could be because the vehicle is too new, too old, or a rare model.
               </GovUKBody>
+            </div>
+          </PremiumInfoPanel>
+        </GovUKMainWrapper>
+      </GovUKContainer>
+    );
+  }
+
+  // Extract display info from vehicle identification
+  const { vehicleIdentification } = techSpecsData;
+  const displayMake = vehicleIdentification.make;
+  const displayModel = vehicleIdentification.model;
+  const displayModelType = vehicleIdentification.modelType || '';
+  
+  // Extract fuel type for display
+  const displayFuelType = vehicleIdentification.matchedTo?.fuelType || vehicleIdentification.fuelType || vehicleFuelType;
+
+  return (
+    <GovUKContainer>
+      <GovUKMainWrapper>
+        {/* Main content */}
+        <Box>
+          {/* Match warning - memoized component */}
+          {MatchWarning}
+          
+          {/* Important notice */}
+          <WarningPanel>
+            <WarningIcon />
+            <div>
+              <GovUKHeadingS>Important</GovUKHeadingS>
               <GovUKBody>
                 These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
               </GovUKBody>
-            </WarningPanel>
-            
-            {/* Tabs Navigation */}
-            <Box>
-              <StyledTabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="technical specifications tabs"
-                variant="scrollable"
-                scrollButtons="auto"
-              >
-                {tabs.map((tab, index) => (
-                  <StyledTab 
-                    key={index}
-                    label={tab.label} 
-                    icon={tab.icon} 
-                    iconPosition="start"
-                    {...a11yProps(index)} 
-                  />
-                ))}
-              </StyledTabs>
+            </div>
+          </WarningPanel>
+          
+          {/* Display fuel type */}
+          {displayFuelType && displayFuelType !== 'unknown' && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: 2, marginBottom: 2 }}>
+              <FuelTypeBadge>
+                <LocalGasStationIcon fontSize="small" />
+                {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
+              </FuelTypeBadge>
             </Box>
-            
-            {/* Tab Content */}
-            {tabs.map((tab, tabIndex) => (
-              <CustomTabPanel key={tabIndex} value={tabValue} index={tabIndex}>
-                {tab.sections.map((section, sectionIndex) => (
+          )}
+          
+          {/* Tabs Navigation */}
+          <Box>
+            <StyledTabs 
+              value={tabValue} 
+              onChange={handleTabChange} 
+              aria-label="technical specifications tabs"
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              {tabs.map((tab, index) => (
+                <StyledTab 
+                  key={index}
+                  label={tab.label} 
+                  {...a11yProps(index)} 
+                />
+              ))}
+            </StyledTabs>
+          </Box>
+          
+          {/* Tab Content */}
+          {tabs.map((tab, tabIndex) => (
+            <CustomTabPanel key={tabIndex} value={tabValue} index={tabIndex}>
+              {tab.sections.map((section, sectionIndex) => (
+                section.content && (
                   <SectionContainer key={sectionIndex}>
                     <SectionHeader>
                       {section.icon}
@@ -742,19 +902,19 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading = false, erro
                     </SectionHeader>
                     {section.content}
                   </SectionContainer>
-                ))}
-              </CustomTabPanel>
-            ))}
-            
-            {/* Footer Note */}
-            <StyledFooterNote>
-              <InfoIcon fontSize="small" /> Technical specifications sourced from Autodata. Crown copyright material is reproduced with the permission of the Controller of HMSO and the Queen's Printer for Scotland.
-            </StyledFooterNote>
-          </Box>
-        )}
+                )
+              ))}
+            </CustomTabPanel>
+          ))}
+          
+          {/* Footer Note */}
+          <StyledFooterNote>
+            <InfoIcon fontSize="small" /> Technical specifications sourced from industry standard databases. Last updated: {lastUpdated}
+          </StyledFooterNote>
+        </Box>
       </GovUKMainWrapper>
     </GovUKContainer>
   );
 };
 
-export default TechnicalSpecificationsPage;
+export default React.memo(TechnicalSpecificationsPage);

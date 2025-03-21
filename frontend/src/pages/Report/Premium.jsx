@@ -22,11 +22,9 @@ import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
 import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
-import PDFGenerator from './PDF/PdfGenerator'; //
-import VehicleDataPage from '../../components/AutoData/DataTabs';
-import TechnicalSpecificationsPage from '../../components/AutoData/TechnicalSpecificationsPage';
-import RepairTimesPage from '../../components/AutoData/LabourTimes';
+import PDFGenerator from './PDF/PdfGenerator';
 import AutoDataSection from '../../components/AutoData/DataTabs';
+import RepairCalculator from '../../components/AutoData/RepairTimes/RateCalc';
 
 // Configurations 
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -48,6 +46,7 @@ const PremiumReportPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reportData, setReportData] = useState(null);
+  const [fullVehicleData, setFullVehicleData] = useState(null); // Added for full vehicle data
   const [motData, setMotData] = useState(null);
   const [isFreeReport, setIsFreeReport] = useState(false);
   const [reportType, setReportType] = useState(null);
@@ -67,7 +66,6 @@ const PremiumReportPage = () => {
   
   // Effect for loading data
   useEffect(() => {
-    // Check if this is a free report
     if (paymentId === FREE_CLASSIC_PAYMENT_ID) {
       setIsFreeReport(true);
       setReportType('classic');
@@ -76,7 +74,6 @@ const PremiumReportPage = () => {
       setReportType('modern');
     }
 
-    // Fetch vehicle data
     const fetchVehicleData = async () => {
       try {
         if (!paymentId) {
@@ -90,37 +87,31 @@ const PremiumReportPage = () => {
         setLoading(true);
         setError(null);
         
-        // For free reports, we don't need to validate the payment ID on the server
         const endpointUrl = isFreeReport
           ? `${API_BASE_URL}/vehicle/registration/${registration}`
           : `${API_BASE_URL}/vehicle/registration/${registration}?paymentId=${paymentId}`;
         
-        // Fetch vehicle data for the report
-        const response = await fetch(
-          endpointUrl,
-          {
-            headers: {
-              'Accept': 'application/json',
-            },
-            credentials: isDevelopment ? 'include' : 'same-origin',
-            mode: isDevelopment ? 'cors' : 'same-origin'
-          }
-        );
+        const response = await fetch(endpointUrl, {
+          headers: {
+            'Accept': 'application/json',
+          },
+          credentials: isDevelopment ? 'include' : 'same-origin',
+          mode: isDevelopment ? 'cors' : 'same-origin',
+        });
         
         if (!response.ok) {
           let errorMessage = 'Failed to fetch vehicle data';
           try {
             const errorData = await response.json();
             errorMessage = errorData.errorMessage || errorData.detail || errorMessage;
-          } catch (e) {
-            // If parsing JSON fails, use default error message
-          }
+          } catch (e) {}
           throw new Error(errorMessage);
         }
         
         const vehicleData = await response.json();
         
-        // Create report data
+        setFullVehicleData(vehicleData);
+        
         setReportData({
           registration: registration,
           makeModel: `${vehicleData.make || 'Unknown'} ${vehicleData.model || ''}`.trim(),
@@ -128,7 +119,6 @@ const PremiumReportPage = () => {
           vin: vehicleData.vin,
           isFreeReport: isFreeReport,
           reportType: reportType,
-          // Additional data for PDF generation
           engineSize: vehicleData.engineCapacity,
           fuelType: vehicleData.fuelType,
           manufactureDate: vehicleData.manufactureDate,
@@ -136,24 +126,22 @@ const PremiumReportPage = () => {
           taxStatus: vehicleData.taxStatus,
           taxDueDate: vehicleData.taxDueDate,
           motStatus: vehicleData.motStatus,
-          motExpiry: vehicleData.motExpiryDate
+          motExpiry: vehicleData.motExpiryDate,
         });
         
-        // Transform MOT data for the mileage chart
         if (vehicleData.motTests && vehicleData.motTests.length > 0) {
           const transformedMotData = transformMotData(vehicleData);
           setMotData(transformedMotData);
         }
 
-        // Mock insights data (same as original)
         setInsightsData({
           currentStatus: {
             driveabilityStatus: "Not Road Legal",
             motExpires: "20 March 2017 (Expired)",
             riskLevel: "High",
             riskFactors: [
-              "MOT has expired - vehicle cannot legally be driven on public roads except to a pre-booked MOT test"
-            ]
+              "MOT has expired - vehicle cannot legally be driven on public roads except to a pre-booked MOT test",
+            ],
           },
           // ... rest of insights data
         });
@@ -169,7 +157,7 @@ const PremiumReportPage = () => {
     fetchVehicleData();
   }, [registration, paymentId, isFreeReport, reportType]);
   
-  // Transform MOT data function
+  // Transform MOT data function (unchanged)
   const transformMotData = (apiData) => {
     if (!apiData || !apiData.motTests || apiData.motTests.length === 0) return [];
     
@@ -180,8 +168,8 @@ const PremiumReportPage = () => {
       
       return {
         date: formattedDate,
-        testDate: formattedDate, // For PDF report
-        testResult: test.testResult === 'PASSED' ? 'PASS' : 'FAIL', // For PDF report
+        testDate: formattedDate,
+        testResult: test.testResult === 'PASSED' ? 'PASS' : 'FAIL',
         status: test.testResult === 'PASSED' ? 'PASS' : 'FAIL',
         mileage: test.odometerResultType === 'READ' 
           ? parseInt(test.odometerValue).toLocaleString('en-GB')
@@ -190,19 +178,17 @@ const PremiumReportPage = () => {
         expiry: test.expiryDate 
           ? new Date(test.expiryDate).toLocaleDateString('en-GB', options)
           : null,
-        expiryDate: test.expiryDate  // For PDF report
+        expiryDate: test.expiryDate 
           ? new Date(test.expiryDate).toLocaleDateString('en-GB', options)
           : null,
         rawMileage: test.odometerResultType === 'READ' ? parseInt(test.odometerValue) : null,
-        rawDate: test.completedDate
+        rawDate: test.completedDate,
       };
     });
   };
 
-  // Collect data from child components - using useCallback to prevent recreation on every render
-  // This function gets called by the VehicleInsights component
+  // Callback functions (unchanged)
   const handleVehicleInsightsData = useCallback((data) => {
-    // Only update if not already loaded or data is different
     if (!vehicleInsightsLoaded.current || JSON.stringify(data) !== JSON.stringify(vehicleInsightsData)) {
       console.log("Received vehicle insights data:", data);
       setVehicleInsightsData(data);
@@ -210,9 +196,7 @@ const PremiumReportPage = () => {
     }
   }, [vehicleInsightsData]);
   
-  // This function gets called by the VehicleMileageInsights component
   const handleMileageInsightsData = useCallback((data) => {
-    // Only update if not already loaded or data is different
     if (!mileageInsightsLoaded.current || JSON.stringify(data) !== JSON.stringify(mileageInsightsData)) {
       console.log("Received mileage insights data:", data);
       setMileageInsightsData(data);
@@ -220,24 +204,21 @@ const PremiumReportPage = () => {
     }
   }, [mileageInsightsData]);
   
-  // Check when all data is ready for PDF generation
+  // PDF data readiness (unchanged)
   useEffect(() => {
     if (reportData && motData) {
-      // Basic data is ready - allow PDF generation with core data
       setPdfDataReady(true);
-      
       if (insightsData && vehicleInsightsData && mileageInsightsData) {
         console.log("All PDF data including insights is ready");
       } else {
         console.log("Basic PDF data is ready, some insights may be missing");
-        // We still allow PDF generation with partial data
       }
     } else {
       setPdfDataReady(false);
     }
   }, [reportData, insightsData, motData, vehicleInsightsData, mileageInsightsData]);
   
-  // Show loading state
+  // Loading state (unchanged)
   if (loading) {
     return (
       <GovUKContainer>
@@ -251,7 +232,7 @@ const PremiumReportPage = () => {
     );
   }
   
-  // Show error state
+  // Error state (unchanged)
   if (error) {
     return (
       <GovUKContainer>
@@ -269,56 +250,45 @@ const PremiumReportPage = () => {
     );
   }
   
-  // Show report when data is loaded
+  // Render report
   if (reportData) {
     return (
       <GovUKContainer>
         <GovUKMainWrapper>
-          {/* Download button above the report */}
           <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-          <PDFGenerator
-            reportData={reportData}
-            motData={motData}
-            insightsData={insightsData}
-            vehicleInsightsData={vehicleInsightsData}
-            mileageInsightsData={mileageInsightsData}
-            buttonText="Download PDF Report"
-            buttonStyle={{
-              padding: '10px 20px',
-              backgroundColor: COLORS.GREEN,
-              color: COLORS.WHITE,
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-            }}
-            buttonClassName="pdf-download-button"  // Optional: add if you want to style with CSS
-          />
+            <PDFGenerator
+              reportData={reportData}
+              motData={motData}
+              insightsData={insightsData}
+              vehicleInsightsData={vehicleInsightsData}
+              mileageInsightsData={mileageInsightsData}
+              buttonText="Download PDF Report"
+              buttonStyle={{
+                padding: '10px 20px',
+                backgroundColor: COLORS.GREEN,
+                color: COLORS.WHITE,
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+              }}
+              buttonClassName="pdf-download-button"
+            />
           </div>
           
-          {/* Report container - with ref */}
           <div ref={reportContainerRef}>
-            {/* Report header */}
             <div className="report-section">
               <PremiumBadge>
                 {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
               </PremiumBadge>
-              
-              <GovUKHeadingXL>
-                Vehicle Report
-              </GovUKHeadingXL>
-              
+              <GovUKHeadingXL>Vehicle Report</GovUKHeadingXL>
               <VehicleRegistration data-test-id="premium-vehicle-registration">
                 {reportData.registration}
               </VehicleRegistration>
-              
-              <GovUKHeadingL>
-                {reportData.makeModel}
-              </GovUKHeadingL>
-              
+              <GovUKHeadingL>{reportData.makeModel}</GovUKHeadingL>
               {reportData.isFreeReport && (
                 <Alert severity="info" style={{ marginTop: '16px', marginBottom: '20px' }}>
-                  {reportData.reportType === 'classic' 
+                  {reportData.reportType === 'classic'
                     ? "Enhanced vehicle information is provided at no cost for vehicles registered before 1996."
                     : "Enhanced vehicle information is provided at no cost for vehicles registered from 2018 onwards."}
                 </Alert>
@@ -327,20 +297,15 @@ const PremiumReportPage = () => {
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Vehicle Data Section */}
             <div className="report-section">
-              <DVLAVehicleData 
-                registration={reportData.registration} 
-                paymentId={paymentId} 
-              />
+              <DVLAVehicleData registration={reportData.registration} paymentId={paymentId} />
             </div>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Insights Section - ADDED onDataLoad callback with memoized function */}
             <div className="report-section">
-              <VehicleInsights 
-                registration={reportData.registration} 
+              <VehicleInsights
+                registration={reportData.registration}
                 vin={reportData.vin}
                 paymentId={paymentId}
                 onDataLoad={handleVehicleInsightsData}
@@ -349,40 +314,44 @@ const PremiumReportPage = () => {
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Mileage Chart Section */}
             <div className="report-section">
               <VehicleMileageChart motData={motData} />
             </div>
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
-            {/* Mileage Insights Section - ADDED onDataLoad callback with memoized function */}
             <div className="report-section">
-              <VehicleMileageInsights 
-                registration={reportData.registration} 
+              <VehicleMileageInsights
+                registration={reportData.registration}
                 paymentId={paymentId}
                 onDataLoad={handleMileageInsightsData}
               />
             </div>
+            
+            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+            
+           
+            
+            <ReportSection>
+              <AutoDataSection
+                vehicleData={fullVehicleData}
+                loading={loading}
+                error={error}
+                registration={registration}
+              />
+            </ReportSection>
           </div>
-<ReportSection>
-
-  <AutoDataSection />
-</ReportSection>
-
-
+          
           <GovUKBody>
             <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
               Return to basic vehicle details
             </GovUKLink>
           </GovUKBody>
         </GovUKMainWrapper>
-
       </GovUKContainer>
     );
   }
   
-  // Fallback (should never reach here given the conditions above)
   return null;
 };
 

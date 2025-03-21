@@ -1,0 +1,1094 @@
+{
+  "vehicleIdentification": {
+    "title": "Vehicle Identification - Ford Fiesta (YYJE/1 ('17))",
+    "make": "Ford",
+    "model": "Fiesta",
+    "modelType": "YYJE/1 ('17)"
+  },
+  "engineData": {
+    "engineAssembly": {
+      "title": "Engine Assembly",
+      "details": [
+        {
+          "label": "Remove and Install - Engine only",
+          "value": "6.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Full exchange engine",
+          "value": "10.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Short exchange engine",
+          "value": "15.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Mounting - front (of engine bay)",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Mounting - rear (of engine bay)",
+          "value": "1.10",
+          "unit": "hours"
+        }
+      ]
+    },
+    "cylinderHead": {
+      "title": "Cylinder Head",
+      "details": [
+        {
+          "label": "Check - Compression test",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshaft/valve cover & gasket",
+          "value": "1.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Check - Valve clearances",
+          "value": "1.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Check and Adjust - Valve clearances",
+          "value": "8.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Cylinder head gasket - Remove and Install - Mounting - left (of engine bay) - Remove and Install - Camshaft/valve cover & gasket - Check and Adjust - Valve clearances - Remove and Install - Camshafts (both/all) - Remove and Install - Camshaft drive belt - Remove and Install - Variable timing control unit (both) - Remove and Install - Crankshaft front oil seal - Remove and Install - Crankshaft pulley - Renew - Engine oil & filter - Remove and Install - Turbocharger oil feed pipe - Remove and Install - Turbocharger oil return pipe - Remove and Install - Auxiliary drive belt - Remove and Install - Auxiliary drive belt tensioner - Remove and Install - Ignition coil (both/all) - Remove and Install - Air filter assembly - Remove and Install - Intake manifold - Remove and Install - Injectors (all) - Remove and Install - Throttle body - Remove and Install - Fuel rail - Remove and Install - High pressure fuel pump (direct injection) - Remove and Install - Turbocharger - Drain and Refill - Coolant/antifreeze - Remove and Install - Water pump - Disconnect - Exhaust - front/downpipe(s) - Check and Adjust - Gear linkage - Disconnect - Gear linkage - Disconnect - Battery - Remove and Install - Alternator - Remove and Install - Starter motor - pre-engaged - Remove and Install - Scuttle panel - Partially remove - AC compressor - Remove and Install - Front bumper - complete",
+          "value": "11.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Strip and Rebuild - Cylinder head - transfer components - Remove and Install - Mounting - left (of engine bay) - Remove and Install - Camshaft/valve cover & gasket - Check and Adjust - Valve clearances - Remove and Install - Valves (all) including lapping - Remove and Install - Valve stem oil seals (all) - Remove and Install - Camshafts (both/all) - Remove and Install - Camshaft drive belt - Remove and Install - Variable timing control unit (both) - Remove and Install - Crankshaft front oil seal - Remove and Install - Crankshaft pulley - Renew - Engine oil & filter - Remove and Install - Turbocharger oil feed pipe - Remove and Install - Turbocharger oil return pipe - Remove and Install - Auxiliary drive belt - Remove and Install - Auxiliary drive belt tensioner - Remove and Install - Ignition coil (both/all) - Remove and Install - Air filter assembly - Remove and Install - Intake manifold - Remove and Install - Injectors (all) - Remove and Install - Throttle body - Remove and Install - Fuel rail - Remove and Install - High pressure fuel pump (direct injection) - Remove and Install - Turbocharger - Drain and Refill - Coolant/antifreeze - Remove and Install - Water pump - Disconnect - Exhaust - front/downpipe(s) - Check and Adjust - Gear linkage - Disconnect - Gear linkage - Disconnect - Battery - Remove and Install - Alternator - Remove and Install - Starter motor - pre-engaged - Remove and Install - Scuttle panel - Partially remove - AC compressor - Remove and Install - Front bumper - complete",
+          "value": "11.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Valves (all) including lapping",
+          "value": "13.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Valve stem oil seals (all)",
+          "value": "10.00",
+          "unit": "hours"
+        }
+      ]
+    },
+    "camshaftDrive": {
+      "title": "Camshaft & Drive Gear",
+      "details": [
+        {
+          "label": "Remove and Install - Camshaft(s) - left",
+          "value": "8.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshaft(s) - right",
+          "value": "8.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshafts (both/all)",
+          "value": "9.00",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshaft followers/Hydraulic tappets (all)",
+          "value": "9.00",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshaft drive belt - Remove and Install - Mounting - left (of engine bay) - Remove and Install - Camshaft/valve cover & gasket - Remove and Install - Crankshaft front oil seal - Remove and Install - Crankshaft pulley - Renew - Engine oil & filter - Remove and Install - Auxiliary drive belt - Remove and Install - Auxiliary drive belt tensioner - Remove and Install - Air filter assembly - Remove and Install - Throttle body - Drain and Refill - Coolant/antifreeze - Remove and Install - Water pump - Check and Adjust - Gear linkage - Disconnect - Gear linkage - Disconnect - Battery - Remove and Install - Alternator - Remove and Install - Starter motor - pre-engaged - Partially remove - AC compressor - Remove and Install - Front bumper - complete",
+          "value": "7.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Camshaft drive belt tensioner - Remove and Install - Mounting - left (of engine bay) - Remove and Install - Camshaft/valve cover & gasket - Remove and Install - Camshaft drive belt - Remove and Install - Crankshaft front oil seal - Remove and Install - Crankshaft pulley - Renew - Engine oil & filter - Remove and Install - Auxiliary drive belt - Remove and Install - Auxiliary drive belt tensioner - Remove and Install - Air filter assembly - Remove and Install - Throttle body - Drain and Refill - Coolant/antifreeze - Remove and Install - Water pump - Check and Adjust - Gear linkage - Disconnect - Gear linkage - Disconnect - Battery - Remove and Install - Alternator - Remove and Install - Starter motor - pre-engaged - Partially remove - AC compressor - Remove and Install - Front bumper - complete",
+          "value": "7.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Variable timing control unit",
+          "value": "7.80",
+          "unit": "hours"
+        }
+      ]
+    },
+    "crankshaft": {
+      "title": "Crankshaft & Pistons",
+      "details": [
+        {
+          "label": "Remove and Install - Crankshaft front oil seal",
+          "value": "2.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Crankshaft rear oil seal",
+          "value": "8.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Crankshaft pulley",
+          "value": "2.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "lubrication": {
+      "title": "Lubrication",
+      "details": [
+        {
+          "label": "Renew - Engine oil",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Renew - Engine oil & filter",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Check - Oil pressure",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Oil pressure relief valve",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Oil sump pan",
+          "value": "2.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Oil pump",
+          "value": "2.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Oil cooler",
+          "value": "1.10",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Turbocharger oil feed pipe",
+          "value": "1.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Turbocharger oil return pipe",
+          "value": "1.50",
+          "unit": "hours"
+        }
+      ]
+    },
+    "auxiliaryDrive": {
+      "title": "Auxiliary Drive",
+      "details": [
+        {
+          "label": "Remove and Install - Auxiliary drive belt",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Auxiliary drive belt tensioner",
+          "value": "0.50",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "fuelManagement": {},
+  "cooling": {
+    "radiator": {
+      "title": "Radiator, Fan & Intercooler",
+      "details": [
+        {
+          "label": "Drain and Refill - Coolant/antifreeze",
+          "value": "1.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Check - Pressure test system",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Cooling fan",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Radiator - Remove and Install - Air filter assembly - Drain and Refill - Coolant/antifreeze - Remove and Install - Cooling fan - Remove and Install - Radiator cowling - Disconnect - Radiator top hose - Disconnect - Radiator bottom hose - Disconnect - Battery - Remove and Install - Front bumper - complete",
+          "value": "2.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Radiator cowling",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Thermostat",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Thermostat housing",
+          "value": "2.00",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Intercooler",
+          "value": "1.30",
+          "unit": "hours"
+        }
+      ]
+    },
+    "pumpDrive": {
+      "title": "Pump & Drive",
+      "details": [
+        {
+          "label": "Remove and Install - Water pump - Remove and Install - Auxiliary drive belt - Drain and Refill - Coolant/antifreeze - Remove and Install - Water pump pulley - Remove and Install - Front bumper - complete",
+          "value": "1.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Electric water pump",
+          "value": "1.70",
+          "unit": "hours"
+        }
+      ]
+    },
+    "headerTank": {
+      "title": "Header Tank & Hoses",
+      "details": [
+        {
+          "label": "Remove and Install - Header/expansion tank",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Radiator top hose",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Radiator bottom hose",
+          "value": "1.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Hose - to intercooler",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Hose - from intercooler",
+          "value": "0.30",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "exhaust": {
+    "manifold": {
+      "title": "Manifold, Pipes & Silencers",
+      "details": [
+        {
+          "label": "Remove and Install - Manifold to downpipe gasket",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Pipe - rear/tail/silencer",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Complete exhaust system",
+          "value": "0.90",
+          "unit": "hours"
+        }
+      ]
+    },
+    "exhaustGas": {
+      "title": "Exhaust Gas Aftertreatment",
+      "details": [
+        {
+          "label": "Remove and Install - Catalytic converter",
+          "value": "1.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Lambda sensor",
+          "value": "0.40",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "drivetrain": {},
+  "brakes": {
+    "brakingSystem": {
+      "title": "Braking System Hydraulics",
+      "details": [
+        {
+          "label": "Bleed - Hydraulic system",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Drain and Refill - Hydraulic system",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Fluid reservoir (separate)",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Master cylinder RHD",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Master cylinder LHD",
+          "value": "1.00",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear wheel cylinder (one) - Remove and Install - Wheel - Bleed - Hydraulic system - Disconnect - Rear brake hose(s) - Check and Adjust - Rear brakes shoes - Remove and Install - Rear brake drum - Check and Adjust - Parking brake freeplay - Carry out - Vehicle software updates (charge time taken)",
+          "value": "0.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front brake caliper (one) - Remove and Install - Wheel - Bleed - Hydraulic system - Disconnect - Front brake hose(s) - Carry out - Vehicle software updates (charge time taken)",
+          "value": "0.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front brake caliper (both) - Remove and Install - Wheels - (both) - Bleed - Hydraulic system - Disconnect - Front brake hose(s) - Carry out - Vehicle software updates (charge time taken)",
+          "value": "0.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front brake hose (one) - Remove and Install - Wheel - Bleed - Hydraulic system - Carry out - Vehicle software updates (charge time taken)",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear brake hose (one) - Remove and Install - Wheel - Bleed - Hydraulic system - Carry out - Vehicle software updates (charge time taken)",
+          "value": "0.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "footbrakes": {
+      "title": "Footbrakes",
+      "details": [
+        {
+          "label": "Remove and Install - Front brake pads (all) - Remove and Install - Wheels - (both) - Partially remove - Front brake caliper(s)",
+          "value": "0.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front brake pads (all) - wheels removed - Partially remove - Front brake caliper(s)",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear brakes shoes (all) - Remove and Install - Wheels - (both) - Check and Adjust - Rear brakes shoes - Remove and Install - Rear brake drum (both) - Check and Adjust - Parking brake freeplay",
+          "value": "1.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear brakes shoes (all) - drums/hubs removed - Check and Adjust - Rear brakes shoes - Check and Adjust - Parking brake freeplay",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front brake disc (both) - including pads - Remove and Install - Wheels - (both) - Partially remove - Front brake caliper(s)",
+          "value": "0.90",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear brake drum (both) - Remove and Install - Wheels - (both) - Check and Adjust - Parking brake freeplay",
+          "value": "0.80",
+          "unit": "hours"
+        }
+      ]
+    },
+    "brakePedal": {
+      "title": "Brake Pedal & Servo",
+      "details": [
+        {
+          "label": "Remove and Install - Pedal - RHD",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Pedal - LHD",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Servo - RHD",
+          "value": "2.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Servo - LHD",
+          "value": "1.20",
+          "unit": "hours"
+        }
+      ]
+    },
+    "absSystems": {
+      "title": "ABS or ABS/ESP",
+      "details": [
+        {
+          "label": "Remove and Install - ECU",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Pedal travel sensor",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wheel sensor - front (one)",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wheel sensor - rear (one)",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Motor & pump - RHD",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Motor & pump - LHD",
+          "value": "1.70",
+          "unit": "hours"
+        }
+      ]
+    },
+    "parkingBrake": {
+      "title": "Parking Brake",
+      "details": [
+        {
+          "label": "Check and Adjust - Parking brake freeplay",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Parking brake lever",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Parking brake cable - primary/single",
+          "value": "1.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Parking brake cable - secondary",
+          "value": "1.10",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Parking brake cables - (both) equal length",
+          "value": "1.30",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "climate": {
+    "heating": {
+      "title": "Heating & Ventilation System",
+      "details": [
+        {
+          "label": "Remove and Install - Heater hose - from engine",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Heater hose - to engine",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Heater blower motor",
+          "value": "5.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Heater blower motor - LHD",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Heater blower control module/resistor - front",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Cabin filter",
+          "value": "0.40",
+          "unit": "hours"
+        }
+      ]
+    },
+    "airConditioning": {
+      "title": "Air Conditioning",
+      "details": [
+        {
+          "label": "Check and Adjust - System leak test",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Check and Adjust - System evacuation/recharging",
+          "value": "1.10",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Accumulator/drier",
+          "value": "2.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Expansion valve to compressor line",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Compressor to condenser line",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Condenser to evaporator line",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Compressor",
+          "value": "1.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Expansion valve - front",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Condenser",
+          "value": "3.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Air conditioning control panel",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Switch - high/triple pressure",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Ambient temperature sensor",
+          "value": "0.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Temperature sensor - front",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Sun light sensor",
+          "value": "0.20",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "electrical": {
+    "batteryCables": {
+      "title": "Battery & Cables",
+      "details": [
+        {
+          "label": "Remove and Install - Battery - Disconnect - Battery",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Cable to body earth",
+          "value": "0.30",
+          "unit": "hours"
+        }
+      ]
+    },
+    "chargingSystem": {
+      "title": "Charging System",
+      "details": [
+        {
+          "label": "Remove and Install - Alternator",
+          "value": "1.00",
+          "unit": "hours"
+        }
+      ]
+    },
+    "startingSystem": {
+      "title": "Starting System",
+      "details": [
+        {
+          "label": "Remove and Install - Starter motor - pre-engaged - Remove and Install - Air filter assembly - Check and Adjust - Gear linkage - Disconnect - Gear linkage - Disconnect - Battery",
+          "value": "0.90",
+          "unit": "hours"
+        }
+      ]
+    },
+    "bulbsLeds": {
+      "title": "Bulbs & LEDs",
+      "details": [
+        {
+          "label": "Remove and Install - Headlamp bulb",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Fog lamp bulb, front",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Direction indicator lamp bulb, front",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Stop/tail lamp bulb",
+          "value": "0.30",
+          "unit": "hours"
+        }
+      ]
+    },
+    "frontLamps": {
+      "title": "Front Lamps",
+      "details": [
+        {
+          "label": "Check and Adjust - Headlamp alignment",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Headlamp - one",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Headlamp - (both)",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Fog lamp - one",
+          "value": "0.50",
+          "unit": "hours"
+        }
+      ]
+    },
+    "rearLamps": {
+      "title": "Rear Lamps",
+      "details": [
+        {
+          "label": "Remove and Install - Rear combination lamp assembly",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - High mounted brake lamp",
+          "value": "0.40",
+          "unit": "hours"
+        }
+      ]
+    },
+    "switches": {
+      "title": "Switches",
+      "details": [
+        {
+          "label": "Remove and Install - Starter/ignition switch",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Main lighting switch",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Hazard warning lights switch",
+          "value": "0.50",
+          "unit": "hours"
+        }
+      ]
+    },
+    "instruments": {
+      "title": "Instruments",
+      "details": [
+        {
+          "label": "Remove and Install - Instrument panel",
+          "value": "0.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "sensors": {
+      "title": "Transducers, Sensors & Transmitters",
+      "details": [
+        {
+          "label": "Remove and Install - Horn",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Oil pressure transmitter",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Fuel level sensor",
+          "value": "1.10",
+          "unit": "hours"
+        }
+      ]
+    },
+    "motors": {
+      "title": "Motors",
+      "details": [
+        {
+          "label": "Remove and Install - Front wiper motor",
+          "value": "0.70",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear wiper motor",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front washer motor",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front window lift motor",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear door window lift motor",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Sunroof motor",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Sunroof motor - 5 door",
+          "value": "1.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front central locking solenoid/actuator",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear central locking solenoid/actuator",
+          "value": "0.40",
+          "unit": "hours"
+        }
+      ]
+    },
+    "audioUnits": {
+      "title": "Control & Audio Units",
+      "details": [
+        {
+          "label": "Remove and Install - Radio/cassette unit",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Roof aerial/antenna - 3 door",
+          "value": "1.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Roof aerial/antenna - 5 door",
+          "value": "1.70",
+          "unit": "hours"
+        }
+      ]
+    },
+    "wipers": {
+      "title": "Windscreen Wipers/Washers",
+      "details": [
+        {
+          "label": "Remove and Install - Wiper blade",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wiper blade - both",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wiper arm",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wiper linkage",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Washer jet - one",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Washer reservoir",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Washer hose",
+          "value": "0.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "rearScreenWipers": {
+      "title": "Rear Screen Wipers/Washers",
+      "details": [
+        {
+          "label": "Remove and Install - Wiper blade",
+          "value": "0.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Wiper arm",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Washer jet",
+          "value": "0.30",
+          "unit": "hours"
+        }
+      ]
+    }
+  },
+  "body": {
+    "frontBumper": {
+      "title": "Front Bumper/Spoiler",
+      "details": [
+        {
+          "label": "Remove and Install - Front bumper - complete",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Bumper grill",
+          "value": "0.80",
+          "unit": "hours"
+        }
+      ]
+    },
+    "bonnet": {
+      "title": "Bonnet",
+      "details": [
+        {
+          "label": "Remove and Install - Bonnet release cable",
+          "value": "1.20",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Bonnet release handle",
+          "value": "0.40",
+          "unit": "hours"
+        }
+      ]
+    },
+    "windscreen": {
+      "title": "Windscreen",
+      "details": [
+        {
+          "label": "Remove and Replace - Windscreen",
+          "value": "1.70",
+          "unit": "hours"
+        }
+      ]
+    },
+    "frontDoor": {
+      "title": "Front Door",
+      "details": [
+        {
+          "label": "Remove and Install - Door window",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Window winder mechanism",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Lock barrel",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Door mirror - one",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Mirror glass and support",
+          "value": "0.30",
+          "unit": "hours"
+        }
+      ]
+    },
+    "interiorSeats": {
+      "title": "Interior/Seats/Seatbelts",
+      "details": [
+        {
+          "label": "Remove and Replace - Airbag - driver",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Airbag - passenger",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Side airbag - front (one)",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Airbag curtain - one",
+          "value": "1.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Airbag (Deployed) - driver",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Airbag control module",
+          "value": "0.80",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Replace - Airbag spiral cable/slip ring (clock spring)",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front seat belt - 3 door",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Front seat belt - 5 door",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Seat belt buckle - front",
+          "value": "0.40",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear seat belt - outer",
+          "value": "0.50",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Rear seat belt - centre",
+          "value": "0.60",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Seat belt buckle - rear outer",
+          "value": "0.30",
+          "unit": "hours"
+        },
+        {
+          "label": "Remove and Install - Seat belt buckle - rear centre",
+          "value": "0.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "rearBumper": {
+      "title": "Rear Bumper",
+      "details": [
+        {
+          "label": "Remove and Install - Rear bumper - complete",
+          "value": "0.60",
+          "unit": "hours"
+        }
+      ]
+    },
+    "rearWing": {
+      "title": "Rear wing",
+      "details": [
+        {
+          "label": "Remove and Install - Rear window - fixed",
+          "value": "0.90",
+          "unit": "hours"
+        }
+      ]
+    },
+    "rearScreen": {
+      "title": "Rear screen",
+      "details": [
+        {
+          "label": "Remove and Replace - Rear screen",
+          "value": "1.40",
+          "unit": "hours"
+        }
+      ]
+    }
+  }
+}

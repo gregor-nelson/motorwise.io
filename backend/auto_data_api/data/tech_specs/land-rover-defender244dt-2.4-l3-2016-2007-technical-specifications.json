@@ -1,0 +1,286 @@
+{
+  "vehicleIdentification": {
+    "title": "Vehicle Identification - Land Rover Defender244DT/2.4 (L316)",
+    "make": "Land",
+    "model": "Rover Defender244DT/2.4 2007",
+    "modelType": "L316 2007"
+  },
+  "injectionSystem": {
+    "specifications": [
+      {
+        "name": "Air metering",
+        "unit": "Type",
+        "value": "Mass/MAP"
+      },
+      {
+        "name": "Pump type",
+        "unit": "Common",
+        "value": "rail"
+      },
+      {
+        "name": "Injection sequence",
+        "value": "1-3-4-2"
+      },
+      {
+        "name": "Engine coolant temperature (ECT) sensor",
+        "unit": "Ohm/\u00b0C",
+        "value": "3800/80"
+      }
+    ]
+  },
+  "tuningEmissions": {
+    "specifications": [
+      {
+        "name": "Idle speed",
+        "unit": "rpm",
+        "value": "900\u00b150"
+      },
+      {
+        "name": "Smoke opacity - EU limit",
+        "unit": "m-1",
+        "value": "(%) 1,50 (47)"
+      }
+    ]
+  },
+  "startingCharging": {
+    "specifications": [
+      {
+        "name": "Battery",
+        "unit": "V/RC(Ah)",
+        "value": "12"
+      },
+      {
+        "name": "Alternator output",
+        "unit": "A/V/rpm",
+        "value": "85-150/13,6-14,4/3000"
+      }
+    ]
+  },
+  "serviceChecks": {
+    "specifications": [
+      {
+        "name": "Valve clearance - INLET",
+        "unit": "mm",
+        "value": "Hydraulic"
+      },
+      {
+        "name": "Valve clearance - EXHAUST",
+        "unit": "mm",
+        "value": "Hydraulic"
+      },
+      {
+        "name": "Oil pressure",
+        "unit": "bar/rpm",
+        "value": "2,0/2000 Min"
+      },
+      {
+        "name": "Radiator cap",
+        "unit": "bar",
+        "value": "1,00"
+      },
+      {
+        "name": "Thermostat opens",
+        "unit": "\u00b0C",
+        "value": "82"
+      }
+    ]
+  },
+  "lubricantsCapacities": {
+    "specifications": [
+      {
+        "name": "Manual transmission oil grade",
+        "unit": "SAE",
+        "value": "75W-90 Synthetic"
+      },
+      {
+        "name": "Manual transmission oil classification",
+        "value": "WSD-M2C200-C"
+      },
+      {
+        "name": "Manual transmission",
+        "unit": "litres",
+        "value": "2,2"
+      },
+      {
+        "name": "Differential oil grade - front",
+        "unit": "SAE",
+        "value": "90W"
+      },
+      {
+        "name": "Differential front/AT",
+        "unit": "litres",
+        "value": "1,7"
+      },
+      {
+        "name": "Differential oil grade - rear",
+        "unit": "SAE",
+        "value": "90W"
+      },
+      {
+        "name": "Transfer box oil grade",
+        "unit": "SAE",
+        "value": "75W-90"
+      },
+      {
+        "name": "Transfer box oil classification",
+        "value": "GL-4/5"
+      },
+      {
+        "name": "Transfer box",
+        "unit": "litres",
+        "value": "2,3"
+      },
+      {
+        "name": "Cooling system - total capacity",
+        "unit": "litres",
+        "value": "10,0"
+      },
+      {
+        "name": "Brake fluid",
+        "unit": "Type",
+        "value": "DOT 4"
+      }
+    ],
+    "engine_oil_options": {
+      "specifications": [
+        {
+          "name": "Ambient temperature range",
+          "unit": "All",
+          "value": "temperatures"
+        },
+        {
+          "name": "Engine oil grade",
+          "unit": "SAE",
+          "value": "5W-30"
+        },
+        {
+          "name": "Engine oil classification",
+          "unit": "OEM",
+          "value": "WSS-M2C913-B"
+        },
+        {
+          "name": "Engine with filter(s)",
+          "unit": "litres",
+          "value": "7,0\nSUB"
+        }
+      ]
+    }
+  },
+  "tighteningTorques": {
+    "chassis_tightening_torques": [
+      {
+        "name": "Steering wheel",
+        "value": "43 Nm"
+      },
+      {
+        "name": "Steering rack/box mounting",
+        "value": "80 Nm"
+      },
+      {
+        "name": "Steering track rod end",
+        "value": "40 Nm"
+      },
+      {
+        "name": "Steering box drop arm",
+        "value": "175 Nm"
+      },
+      {
+        "name": "Brake caliper/carrier to hub",
+        "unit": "Front",
+        "value": "82 Nm"
+      },
+      {
+        "name": "Brake caliper/carrier to hub",
+        "unit": "Rear",
+        "value": "82 Nm"
+      }
+    ]
+  },
+  "cylinder_head": {
+    "specifications": []
+  },
+  "brakeDimensions": {
+    "specifications": [
+      {
+        "name": "Minimum disc thickness for replacement - solid",
+        "unit": "Front",
+        "value": "12,1 mm"
+      },
+      {
+        "name": "Minimum disc thickness for replacement - ventilated",
+        "unit": "Front",
+        "value": "22 mm"
+      },
+      {
+        "name": "Disc runout",
+        "unit": "Front",
+        "value": "0,15 mm"
+      },
+      {
+        "name": "Disc runout",
+        "unit": "Rear",
+        "value": "0,15 mm"
+      },
+      {
+        "name": "Minimum pad thickness",
+        "unit": "Front",
+        "value": "3 mm"
+      },
+      {
+        "name": "Minimum pad thickness",
+        "unit": "Rear",
+        "value": "3 mm"
+      }
+    ]
+  },
+  "airConditioning": {
+    "specifications": [
+      {
+        "name": "No. of AC service connectors",
+        "value": "2"
+      },
+      {
+        "name": "Air conditioning restrictor type",
+        "unit": "Expansion",
+        "value": "valve"
+      },
+      {
+        "name": "Compressor clutch/magnetic coupling",
+        "value": "Yes"
+      },
+      {
+        "name": "Compressor variable displacement solenoid",
+        "value": "No"
+      },
+      {
+        "name": "Air conditioning refrigerant",
+        "unit": "Type",
+        "value": "R134a"
+      },
+      {
+        "name": "Air conditioning refrigerant quantity",
+        "unit": "grams",
+        "value": "600\u00b125"
+      },
+      {
+        "name": "Air conditioning oil group",
+        "value": "PAG"
+      },
+      {
+        "name": "Air conditioning oil",
+        "unit": "Type",
+        "value": "SP10"
+      },
+      {
+        "name": "Air conditioning oil quantity",
+        "unit": "cm\u00b3",
+        "value": "130"
+      },
+      {
+        "name": "Air conditioning oil viscosity",
+        "unit": "ISO",
+        "value": "46"
+      }
+    ]
+  }
+}

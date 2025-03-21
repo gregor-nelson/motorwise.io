@@ -1,0 +1,1255 @@
+2025-03-20 20:37:53,823 - vehicle_data_api - INFO - Found 0 vehicle labour time data files
+2025-03-20 20:37:53,825 - vehicle_data_api - INFO - Found 0 vehicle technical specification files
+2025-03-20 20:37:53,825 - vehicle_data_api - INFO - Built index with 0 vehicles
+2025-03-20 20:37:53,826 - vehicle_data_api - INFO - API started successfully with 0 repair time records and 0 technical specification records
+2025-03-20 20:38:39,075 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-20 20:38:39,078 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-20 20:38:39,080 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-20 20:38:39,082 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-20 20:38:39,083 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-20 20:38:39,083 - vehicle_data_api - INFO - Found 0 vehicle technical specification files
+2025-03-20 20:38:39,084 - vehicle_data_api - INFO - Built index with 4 vehicles
+2025-03-20 20:38:39,084 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 0 technical specification records
+2025-03-20 20:41:10,421 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-20 20:41:10,424 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-20 20:41:10,425 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-20 20:41:10,426 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-20 20:41:10,428 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-20 20:41:10,428 - vehicle_data_api - INFO - Found 1 vehicle technical specification files
+2025-03-20 20:41:10,444 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 L316 2007-2016
+2025-03-20 20:41:10,445 - vehicle_data_api - INFO - Built index with 5 vehicles
+2025-03-20 20:41:10,445 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 11 technical specification records
+2025-03-20 20:48:11,757 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,757 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,758 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,759 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,759 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,760 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:11,761 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-20 20:48:16,712 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,714 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,714 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,715 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,716 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,716 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,718 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-03-20 20:48:16,726 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,727 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,730 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,730 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,731 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,731 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:16,733 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0140s
+2025-03-20 20:48:19,859 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:19,860 - vehicle_data_api - INFO - Looking up repair times for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:19,861 - vehicle_data_api - INFO - Direct year match found with key: land_rover_defender_2007
+2025-03-20 20:48:19,869 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0170s
+2025-03-20 20:48:19,875 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:19,886 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0170s
+2025-03-20 20:48:21,806 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,808 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,810 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,812 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,815 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,816 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,818 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0170s
+2025-03-20 20:48:21,841 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,842 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,846 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,848 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,850 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,851 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:48:21,853 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0230s
+2025-03-20 20:49:13,168 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-20 20:49:13,170 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-20 20:49:13,172 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-20 20:49:13,173 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-20 20:49:13,174 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-20 20:49:13,175 - vehicle_data_api - INFO - Found 1 vehicle technical specification files
+2025-03-20 20:49:13,176 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 L316 2007-2016
+2025-03-20 20:49:13,177 - vehicle_data_api - INFO - Built index with 5 vehicles
+2025-03-20 20:49:13,177 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 11 technical specification records
+2025-03-20 20:49:47,940 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,962 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,964 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,966 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,966 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,967 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,969 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,970 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,970 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,970 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,971 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,971 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:49:47,972 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0390s
+2025-03-20 20:49:47,973 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0380s
+2025-03-20 20:50:25,969 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-20 20:50:25,972 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-20 20:50:25,973 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-20 20:50:25,974 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-20 20:50:25,975 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-20 20:50:25,976 - vehicle_data_api - INFO - Found 1 vehicle technical specification files
+2025-03-20 20:50:25,995 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007
+2025-03-20 20:50:25,995 - vehicle_data_api - INFO - Built index with 4 vehicles
+2025-03-20 20:50:25,996 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 2 technical specification records
+2025-03-20 20:50:29,728 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:29,729 - vehicle_data_api - INFO - Looking up repair times for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:29,730 - vehicle_data_api - INFO - Direct year match found with key: land_rover_defender_2007
+2025-03-20 20:50:29,744 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:29,756 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0390s
+2025-03-20 20:50:29,761 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0420s
+2025-03-20 20:50:36,482 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,487 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,490 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,491 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,492 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,493 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,496 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0240s
+2025-03-20 20:50:36,517 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,519 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,520 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,521 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,522 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,523 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:36,525 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0168s
+2025-03-20 20:50:40,475 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,487 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,488 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,490 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,490 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,498 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,499 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0270s
+2025-03-20 20:50:40,539 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,550 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,551 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,551 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,552 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,553 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:40,557 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0210s
+2025-03-20 20:50:44,672 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:44,678 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s
+2025-03-20 20:50:44,680 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:44,684 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0140s
+2025-03-20 20:50:51,496 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,497 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,498 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,499 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,500 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,501 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,503 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,505 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,505 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,506 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,507 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,508 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 20:50:51,509 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0203s
+2025-03-20 20:50:51,512 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0202s
+2025-03-20 21:15:34,780 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,780 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,781 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,781 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,782 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,782 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,784 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,785 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,786 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,786 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,786 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,787 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:34,788 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0110s
+2025-03-20 21:15:34,788 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-20 21:15:36,173 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:36,186 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0190s
+2025-03-20 21:15:36,189 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-20 21:15:36,204 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0330s
+2025-03-21 06:28:45,394 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 06:28:45,406 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 06:28:45,416 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 06:28:45,428 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 06:28:45,442 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 06:28:45,442 - vehicle_data_api - INFO - Found 1 vehicle technical specification files
+2025-03-21 06:28:45,452 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007
+2025-03-21 06:28:45,453 - vehicle_data_api - INFO - Built index with 4 vehicles
+2025-03-21 06:28:45,453 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 2 technical specification records
+2025-03-21 06:29:23,162 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,163 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,163 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,163 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,163 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,164 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,165 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:29:23,168 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,169 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,169 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,169 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,170 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,170 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:23,170 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-03-21 06:29:37,134 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,134 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,134 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,135 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,135 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,135 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,136 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:29:37,141 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,141 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,142 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,142 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,142 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,143 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:37,143 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-03-21 06:29:38,098 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,098 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,099 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,099 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,100 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,100 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,101 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,101 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,102 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,102 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,103 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,103 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,103 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0067s
+2025-03-21 06:29:38,103 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0057s
+2025-03-21 06:29:38,605 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,605 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,605 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,607 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,608 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,608 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,608 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:29:38,609 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,610 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,611 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,611 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,611 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,611 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-03-21 06:29:38,612 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0074s
+2025-03-21 06:29:46,831 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,831 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,832 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,832 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,832 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,832 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,833 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-03-21 06:29:46,838 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,839 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,839 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,839 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,839 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,839 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:29:46,840 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0020s
+2025-03-21 06:32:44,905 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 06:32:44,907 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 06:32:44,908 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 06:32:44,908 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 06:32:44,909 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 06:32:44,910 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 06:32:44,920 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12
+2025-03-21 06:32:44,921 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007
+2025-03-21 06:32:44,921 - vehicle_data_api - INFO - Built index with 5 vehicles
+2025-03-21 06:32:44,922 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 3 technical specification records
+2025-03-21 06:32:50,633 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,634 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,634 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,634 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,634 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,635 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,636 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:32:50,640 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,641 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,641 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,642 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,642 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,643 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:32:50,644 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-03-21 06:32:54,524 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,525 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,525 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,526 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,526 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,527 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:32:54,528 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,529 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:32:54,537 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,538 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,539 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,539 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,540 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,540 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:32:54,540 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:54,541 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 06:32:57,278 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,278 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,278 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,278 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,279 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,280 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,281 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 06:32:57,283 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,283 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,283 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,283 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,284 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,284 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,284 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 06:32:57,777 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,778 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,778 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,779 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,779 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,780 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:32:57,780 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,781 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:32:57,782 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,782 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,782 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,782 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,783 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,783 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:32:57,783 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:32:57,784 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:33:01,349 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,349 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,350 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,350 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,351 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,352 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:33:01,352 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,353 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:33:01,361 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,363 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,364 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,365 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,365 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,366 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:33:01,366 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:33:01,367 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-03-21 06:38:08,257 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 06:38:08,259 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 06:38:08,260 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 06:38:08,260 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 06:38:08,261 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 06:38:08,262 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 06:38:08,262 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12
+2025-03-21 06:38:08,263 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007
+2025-03-21 06:38:08,263 - vehicle_data_api - INFO - Built index with 5 vehicles
+2025-03-21 06:38:08,263 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 3 technical specification records
+2025-03-21 06:38:15,163 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,164 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,164 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,164 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,165 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,165 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:38:15,165 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,167 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 06:38:15,171 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,171 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,172 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,173 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,173 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,174 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:38:15,174 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:38:15,176 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 06:55:08,716 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,716 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,717 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,717 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,717 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,718 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,718 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,718 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,719 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,719 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,719 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,720 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:08,720 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:08,720 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:12,366 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,366 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,366 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,367 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,367 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,367 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:55:12,367 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,368 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,368 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,368 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,369 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,369 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,369 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:55:12,369 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:12,370 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:12,371 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:42,813 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,813 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,814 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,815 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,816 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,816 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,817 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:55:42,822 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,823 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,823 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,823 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,823 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,824 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:42,824 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-03-21 06:55:44,944 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,944 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,945 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,945 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,946 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,946 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:55:44,946 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,947 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,947 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,947 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,948 - vehicle_data_api - INFO - No good match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,948 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,948 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2']
+2025-03-21 06:55:44,948 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009)
+2025-03-21 06:55:44,948 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:44,949 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 06:55:50,931 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,931 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,932 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,932 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,933 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,933 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,935 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 06:55:50,941 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,941 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,941 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,941 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,942 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,942 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:50,943 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-03-21 06:55:53,771 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:53,772 - vehicle_data_api - INFO - Looking up repair times for: LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:53,772 - vehicle_data_api - INFO - Direct year match found with key: land_rover_defender_2007
+2025-03-21 06:55:53,775 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-03-21 06:55:53,778 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0080s
+2025-03-21 06:55:53,779 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s
+2025-03-21 06:59:33,516 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 06:59:33,518 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 06:59:33,519 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 06:59:33,520 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 06:59:33,521 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 06:59:33,521 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 06:59:33,522 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-03-21 06:59:33,522 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-03-21 06:59:33,523 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-03-21 06:59:33,523 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-03-21 06:59:33,524 - vehicle_data_api - INFO - Built index with 7 vehicles, including fuel type and base model information
+2025-03-21 06:59:33,524 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 12 technical specification records
+2025-03-21 07:03:00,591 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,592 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,593 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,593 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:03:00,594 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:03:00,595 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:00,598 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:03:00,599 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:00,599 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,600 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:00,601 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:03:00,605 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0240s
+2025-03-21 07:03:00,609 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,610 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,610 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,611 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:03:00,611 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:03:00,611 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:00,612 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:03:00,612 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:00,613 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:00,613 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:00,614 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:03:00,616 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0290s
+2025-03-21 07:03:04,179 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,181 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,182 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,182 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:03:04,183 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:04,185 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:03:04,185 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:04,186 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,187 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,189 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0204s
+2025-03-21 07:03:04,191 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,192 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,193 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,194 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:03:04,195 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:04,197 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:03:04,198 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:04,199 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,200 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:03:04,204 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0314s
+2025-03-21 07:03:05,748 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,750 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,751 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,752 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:03:05,752 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:03:05,754 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:05,755 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:03:05,756 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:05,757 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,758 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:05,758 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:03:05,760 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0190s
+2025-03-21 07:03:05,764 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,766 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,767 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,768 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:03:05,770 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:03:05,771 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:03:05,772 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:03:05,773 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:05,774 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:03:05,774 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:03:05,775 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:03:05,779 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0340s
+2025-03-21 07:04:09,755 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,759 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,760 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,762 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:04:09,763 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:04:09,764 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:09,779 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:04:09,810 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:09,812 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,813 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:09,813 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:04:09,816 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0640s
+2025-03-21 07:04:09,825 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,826 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,827 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,827 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:04:09,828 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:04:09,828 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:09,829 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:04:09,830 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:09,830 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:09,831 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:09,831 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:04:09,833 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0150s
+2025-03-21 07:04:22,700 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,701 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,703 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,703 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:04:22,704 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:22,705 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:04:22,706 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:22,707 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,707 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,708 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0130s
+2025-03-21 07:04:22,725 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,726 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,727 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,728 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:04:22,728 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:22,729 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:04:22,730 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:22,731 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,734 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:04:22,736 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0160s
+2025-03-21 07:04:24,705 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,707 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,708 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,709 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:04:24,710 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:04:24,711 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:24,712 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:04:24,713 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:24,714 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,715 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:24,716 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:04:24,719 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0210s
+2025-03-21 07:04:24,726 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,727 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,728 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,729 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:04:24,730 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:04:24,731 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:04:24,732 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:04:24,734 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:24,735 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:04:24,736 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:04:24,737 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:04:24,740 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0210s
+2025-03-21 07:05:12,713 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,714 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,714 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,715 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:12,715 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:12,716 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:12,716 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:12,716 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,717 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,718 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,718 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,719 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,719 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:12,719 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:12,720 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:12,720 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:12,721 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,721 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:12,721 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 07:05:12,722 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 07:05:13,952 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,952 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,953 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,954 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:13,954 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:13,955 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:13,956 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:13,956 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:13,957 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,957 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:13,958 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:13,959 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0110s
+2025-03-21 07:05:13,963 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,963 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,964 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,964 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:13,964 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:13,965 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:13,966 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:13,966 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:13,967 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:13,967 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:13,968 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:13,969 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 07:05:14,886 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,887 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,888 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,889 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:14,890 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:14,892 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:14,893 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:14,894 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,895 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,898 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0180s
+2025-03-21 07:05:14,913 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,914 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,916 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,918 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:14,920 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:14,922 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:14,923 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:14,923 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,925 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:14,926 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0250s
+2025-03-21 07:05:15,656 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,656 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,657 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,657 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:15,658 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:15,658 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:15,659 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:15,659 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:15,660 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,660 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:15,660 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:15,662 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-03-21 07:05:15,665 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,666 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,666 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,667 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:15,668 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:15,669 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:15,670 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:15,670 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:15,671 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:15,671 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:15,672 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:15,672 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 07:05:16,438 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,439 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,439 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,439 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:16,440 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:16,440 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:16,440 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:16,440 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,440 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,441 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 07:05:16,443 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,443 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,443 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,445 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:05:16,445 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:16,445 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:05:16,446 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:16,446 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,446 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:05:16,447 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-03-21 07:05:17,026 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,026 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,027 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,027 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:17,028 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:17,028 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:17,029 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:17,029 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:17,029 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,030 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:17,030 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:17,031 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 07:05:17,037 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,037 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,038 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,038 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:05:17,038 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:05:17,039 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:05:17,040 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:05:17,040 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:17,041 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:05:17,043 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:05:17,044 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:05:17,044 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-03-21 07:06:02,600 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:02,614 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:02,614 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:02,615 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:06:02,616 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:06:02,617 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:02,625 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:06:02,626 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:02,627 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:02,630 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:02,632 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:06:02,636 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0390s
+2025-03-21 07:06:08,510 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,512 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,514 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,515 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:06:08,516 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:06:08,517 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:08,518 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:06:08,518 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:08,519 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,524 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:08,525 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:06:08,527 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,532 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,532 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,533 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:06:08,533 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:06:08,534 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:08,535 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:06:08,538 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:08,539 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:08,539 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:08,540 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:06:08,541 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0360s
+2025-03-21 07:06:08,543 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0350s
+2025-03-21 07:06:12,677 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,677 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,677 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,678 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:06:12,678 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:12,678 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:06:12,679 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:12,679 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,679 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,680 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 07:06:12,683 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,684 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,684 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,685 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:06:12,685 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:12,686 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:06:12,686 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:12,687 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,687 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:06:12,688 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 07:06:13,349 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,350 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,351 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,352 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:06:13,353 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:06:13,355 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:13,357 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:06:13,358 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:13,359 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,360 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:13,361 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:06:13,363 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0170s
+2025-03-21 07:06:13,381 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,382 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,384 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,384 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:06:13,385 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:06:13,388 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:06:13,389 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:06:13,391 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:13,391 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:06:13,392 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:06:13,393 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:06:13,395 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0260s
+2025-03-21 07:10:19,180 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:19,181 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:19,181 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:19,182 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:19,182 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:19,183 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:19,184 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:19,184 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:19,185 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:19,185 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:19,185 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:19,186 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-03-21 07:10:25,658 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,659 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,660 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,661 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:25,662 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:25,664 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:25,665 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:25,666 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:25,666 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,667 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:25,667 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:25,669 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0310s
+2025-03-21 07:10:25,680 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,680 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,681 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,681 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:25,682 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:25,682 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:25,683 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:25,684 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:25,684 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:25,685 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:25,685 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:25,686 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-03-21 07:10:29,622 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,623 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,623 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,623 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:10:29,624 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:29,624 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:10:29,624 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:29,625 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,625 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,626 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 07:10:29,627 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,628 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,628 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,628 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 07:10:29,629 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:29,629 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 07:10:29,629 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:29,630 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,630 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 07:10:29,631 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 07:10:30,663 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,665 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,666 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,668 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:30,669 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:30,671 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:30,673 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:30,675 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:30,679 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,680 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:30,681 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:30,685 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0270s
+2025-03-21 07:10:30,704 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,708 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,709 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,710 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:30,712 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:30,713 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:30,714 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:30,715 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:30,716 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:30,717 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:30,718 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:30,720 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0310s
+2025-03-21 07:10:38,817 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 07:10:38,820 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 07:10:38,822 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 07:10:38,823 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 07:10:38,824 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 07:10:38,825 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 07:10:38,826 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-03-21 07:10:38,827 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-03-21 07:10:38,828 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-03-21 07:10:38,828 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-03-21 07:10:38,829 - vehicle_data_api - INFO - Built index with 7 vehicles, including fuel type and base model information
+2025-03-21 07:10:38,830 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 12 technical specification records
+2025-03-21 07:10:43,565 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,566 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,568 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,569 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:43,569 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:43,570 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:43,572 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:43,572 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:43,573 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,573 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:43,574 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:43,575 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0160s
+2025-03-21 07:10:43,587 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,588 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,588 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,589 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 07:10:43,589 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 07:10:43,590 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 07:10:43,591 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 07:10:43,591 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:43,592 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 07:10:43,592 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 07:10:43,593 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 07:10:43,596 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-03-21 09:05:36,309 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,310 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,313 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,314 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:05:36,317 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:05:36,317 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:05:36,318 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:05:36,319 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:05:36,320 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,321 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:05:36,321 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:05:36,322 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0160s
+2025-03-21 09:05:36,331 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,331 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,332 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,332 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:05:36,332 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:05:36,333 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:05:36,333 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:05:36,333 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:05:36,334 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:05:36,334 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:05:36,335 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:05:36,336 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 09:06:59,333 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,334 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,334 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,335 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:06:59,336 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:06:59,336 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:06:59,337 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:06:59,346 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:06:59,347 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,348 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:06:59,348 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:06:59,349 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,350 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,350 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,351 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:06:59,351 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:06:59,351 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:06:59,352 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:06:59,352 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:06:59,353 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:06:59,353 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:06:59,353 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:06:59,354 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0250s
+2025-03-21 09:06:59,355 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0240s
+2025-03-21 09:17:38,899 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,900 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,900 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,900 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 09:17:38,901 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:17:38,901 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 09:17:38,902 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:17:38,902 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,902 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,903 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,903 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,904 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,904 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 09:17:38,904 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:17:38,904 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 09:17:38,905 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:17:38,905 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,905 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 09:17:38,906 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 09:17:38,907 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 09:25:02,110 - vehicle_data_api - INFO - Found 4 vehicle labour time data files - no_request_id
+2025-03-21 09:25:02,113 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17) - no_request_id
+2025-03-21 09:25:02,114 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16) - no_request_id
+2025-03-21 09:25:02,114 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15) - no_request_id
+2025-03-21 09:25:02,115 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14) - no_request_id
+2025-03-21 09:25:02,116 - vehicle_data_api - INFO - Found 2 vehicle technical specification files - no_request_id
+2025-03-21 09:25:02,116 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol - no_request_id
+2025-03-21 09:25:02,117 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol) - no_request_id
+2025-03-21 09:25:02,117 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown - no_request_id
+2025-03-21 09:25:02,118 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown) - no_request_id
+2025-03-21 09:25:02,119 - vehicle_data_api - INFO - Built index with 7 vehicles, including fuel type and base model information - no_request_id
+2025-03-21 09:25:02,119 - vehicle_data_api - INFO - API started successfully with 44 repair time records and 12 technical specification records - no_request_id
+2025-03-21 09:25:13,736 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - ebde771f-ac39-42fc-a5c8-8027ff38833e
+2025-03-21 09:25:13,737 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,739 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,740 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,740 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,740 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,741 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,741 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,741 - vehicle_data_api - INFO - Top 2 matching candidates: - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,742 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,742 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,742 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,742 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,743 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,743 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,743 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,743 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,744 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,745 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,745 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,745 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,745 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,746 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,746 - vehicle_data_api - INFO - Top 2 matching candidates: - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,746 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,746 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,747 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,747 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,747 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,747 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,747 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,748 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,748 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0115s - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:13,748 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0105s - dedcd6b1-58a9-49d0-ada8-be454f1c39e1
+2025-03-21 09:25:29,841 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,843 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,845 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,846 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,846 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,846 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,847 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,847 - vehicle_data_api - INFO - Top 2 matching candidates: - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,847 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,848 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,848 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,848 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,849 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,850 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,850 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,851 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,853 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0120s - 077c2491-fc7d-4590-8eab-817bc3d4beb1
+2025-03-21 09:25:29,870 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,874 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,875 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,875 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,876 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,876 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,877 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,878 - vehicle_data_api - INFO - Top 2 matching candidates: - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,878 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,878 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,879 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,879 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,879 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,879 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,879 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,880 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:29,880 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0100s - ddaf82bd-2323-4846-9c0b-5899c76eaa31
+2025-03-21 09:25:38,279 - vehicle_data_api - INFO - Request started: POST /api/v1/repair-times-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - 09d00589-01cb-44a3-868d-c68ced7432c6
+2025-03-21 09:25:38,280 - vehicle_data_api - INFO - Request started: POST /api/v1/repair-times-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,282 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times [req:None] - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,283 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,284 - vehicle_data_api - WARNING - DetailedHTTPException: No repair time data found for HONDA CR-V (year: 2009) (code: REPAIR_TIMES_NOT_FOUND) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,284 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,285 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,285 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,285 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times [req:None] - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,285 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,285 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,286 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,286 - vehicle_data_api - WARNING - DetailedHTTPException: No repair time data found for HONDA CR-V (year: 2009) (code: REPAIR_TIMES_NOT_FOUND) - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,286 - vehicle_data_api - WARNING - Request completed: POST /api/v1/repair-times-lookup - Status: 404 - Time: 0.0076s - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:38,287 - vehicle_data_api - WARNING - Request completed: POST /api/v1/repair-times-lookup - Status: 404 - Time: 0.0076s - 43b75ccd-18fd-4dee-94ab-84253e92cc05
+2025-03-21 09:25:39,110 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - bbc3db54-994f-42ce-a804-77dd563002ce
+2025-03-21 09:25:39,114 - vehicle_data_api - INFO - Request started: POST /api/v1/tech-specs-lookup from 127.0.0.1 - UA: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,115 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,115 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,115 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,116 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,116 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,117 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,117 - vehicle_data_api - INFO - Top 2 matching candidates: - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,117 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,118 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,118 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,118 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,118 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,119 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,119 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,119 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,120 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0100s - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,123 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,123 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,123 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,124 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs [req:None] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,124 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda' - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,124 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,125 - vehicle_data_api - INFO - Top 2 matching candidates: - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,125 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,125 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.59 - Quality: none - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,125 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,125 - vehicle_data_api - INFO - Best candidate rejected: Score 0.59 below threshold 0.60 - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,126 - vehicle_data_api - INFO - Similar keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,126 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,126 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol'] - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,127 - vehicle_data_api - WARNING - DetailedHTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel) (code: TECH_SPECS_NOT_FOUND) - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:25:39,128 - vehicle_data_api - WARNING - Request completed: POST /api/v1/tech-specs-lookup - Status: 404 - Time: 0.0154s - 5799b44b-f996-4a80-ae32-a024bbd0b39b
+2025-03-21 09:35:58,320 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 09:35:58,322 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 09:35:58,323 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 09:35:58,323 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 09:35:58,324 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 09:35:58,325 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 09:35:58,325 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-03-21 09:35:58,326 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-03-21 09:35:58,326 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-03-21 09:35:58,327 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-03-21 09:35:58,327 - vehicle_data_api - INFO - Built index with 7 vehicles, including fuel type and base model information
+2025-03-21 09:35:58,328 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 12 technical specification records
+2025-03-21 09:36:16,894 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,894 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,894 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,894 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:16,894 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:16,895 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:16,896 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:16,896 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:16,896 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,897 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:16,897 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:16,897 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 09:36:16,903 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,906 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,906 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,907 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:16,907 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:16,908 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:16,908 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:16,908 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:16,909 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:16,909 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:16,910 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:16,911 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-03-21 09:36:22,327 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,328 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,334 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,335 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 09:36:22,335 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:22,335 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 09:36:22,335 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:22,336 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,336 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,336 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0150s
+2025-03-21 09:36:22,345 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,346 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,346 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,347 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=None, Type=repair_times
+2025-03-21 09:36:22,347 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:22,347 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: None)
+2025-03-21 09:36:22,348 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:22,348 - vehicle_data_api - WARNING - No repair time match found for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,349 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CR-V (year: 2009)
+2025-03-21 09:36:22,349 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-03-21 09:36:23,453 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,453 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,454 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,454 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:23,455 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:23,456 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:23,457 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:23,457 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:23,457 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,458 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:23,458 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:23,459 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-03-21 09:36:23,462 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,462 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,463 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,463 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:23,463 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:23,464 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:23,464 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:23,464 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:23,465 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:23,465 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:23,465 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:23,465 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-03-21 09:36:37,267 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 09:36:37,269 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 09:36:37,270 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 09:36:37,271 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 09:36:37,272 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 09:36:37,273 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 09:36:37,273 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-03-21 09:36:37,274 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-03-21 09:36:37,274 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-03-21 09:36:37,275 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-03-21 09:36:37,276 - vehicle_data_api - INFO - Built index with 7 vehicles, including fuel type and base model information
+2025-03-21 09:36:37,276 - vehicle_data_api - INFO - API started successfully with 51 repair time records and 12 technical specification records
+2025-03-21 09:36:53,386 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,386 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,387 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,387 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:53,387 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:53,388 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:53,391 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:53,391 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:53,391 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,392 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:53,392 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:53,393 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 09:36:53,402 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,403 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,403 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,405 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:36:53,407 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:36:53,407 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-03-21 09:36:53,408 - vehicle_data_api - INFO - No good match found for HONDA CR-V (Year: 2009, Fuel: diesel)
+2025-03-21 09:36:53,408 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:53,409 - vehicle_data_api - WARNING - No tech specs match found for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:36:53,409 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-vr20a2', 'honda_cr-vr20a2/2_petrol', 'honda_cr-vr20a2_petrol']
+2025-03-21 09:36:53,410 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for HONDA CR-V (year: 2009) (fuel type: diesel)
+2025-03-21 09:36:53,410 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-03-21 09:54:37,463 - vehicle_data_api - INFO - Found 4 vehicle labour time data files
+2025-03-21 09:54:37,466 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-03-21 09:54:37,467 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-03-21 09:54:37,468 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-03-21 09:54:37,468 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-03-21 09:54:37,471 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-03-21 09:54:37,472 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-03-21 09:54:37,472 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-03-21 09:54:37,473 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-03-21 09:54:37,473 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-03-21 09:54:37,474 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-03-21 09:54:37,475 - vehicle_data_api - INFO - API started successfully with 91 repair time records and 15 technical specification records
+2025-03-21 09:54:56,919 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:54:56,976 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:54:56,979 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:54:56,979 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-03-21 09:54:56,992 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-03-21 09:54:56,993 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-03-21 09:54:57,150 - vehicle_data_api - INFO - #1: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-03-21 09:54:57,166 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-03-21 09:54:57,166 - vehicle_data_api - INFO - Lowered threshold to 0.39999999999999997 due to good model and year match despite fuel type difference
+2025-03-21 09:54:57,167 - vehicle_data_api - INFO - Selected match: Honda CR-VR20A2/2 (None-present) Fuel: petrol with score: 0.67
+2025-03-21 09:54:57,183 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-VR20A2/2 petrol
+2025-03-21 09:54:57,212 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.2989s
+2025-03-21 09:54:57,248 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-03-21 09:54:57,262 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0275s

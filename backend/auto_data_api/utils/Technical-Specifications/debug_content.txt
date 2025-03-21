@@ -1,0 +1,127 @@
+Vehicle Information: Technical specificationsVehicle details:Honda CR-VN22A2/2.2 (07-12)
+
+**Air conditioning**
+**Brake disc and drum dimensions**
+**Tightening torques**
+**Lubricants and capacities**
+**Service checks and adjustments**
+**Starting and charging**
+**Tuning and emissions**
+**Injection system**
+**Vehicle identification**
+No. of cylinders	Type	4/DOHC
+Capacity	cc	2204
+Compression ratio	:1	16,7
+Fuel system	Make	Bosch
+Fuel system	Type	EDC 16 C
+**Injection system**
+Air metering	Type	Mass
+Fuel/injection pump assembly	Make	Bosch
+Pump type		Common rail
+Injection sequence		1-3-4-2
+**Tuning and emissions**
+Idle speed	rpm	835±65
+Oil temperature	°C	80
+Idle speed - for smoke test	rpm	770-900
+Governed speed range - for smoke test	rpm	4200-4500
+Maximum time at governed speed	secs	1,5
+Test mode	A/B	B
+Probe type	1/2	1
+Conditioning	Accelerations/rpm	/3000
+Smoke opacity - homologation value	m-1 (%)	2,50 (66)
+**Starting and charging**
+Battery	V/RC(Ah)	12 (70)
+Alternator output	A/V/rpm	105/13,5/-
+**Service checks and adjustments**
+Valve clearance - INLET	mm	Hydraulic
+Valve clearance - EXHAUST	mm	Hydraulic
+Compression pressure	bar	24,0 Min
+Oil pressure	bar/rpm	4,1/3000
+Radiator cap	bar	1,12-1,46
+Thermostat opens	°C	76-80
+**Engine oil options**
+Ambient temperature range		All temperatures
+Engine oil grade	SAE	0W-30 Synthetic
+Engine oil classification	
+Engine with filter(s)	litres	5,9
+**Other lubricants and capacities**
+Manual transmission oil grade	SAE	Honda MTF
+Manual transmission	litres	2,5
+Differential oil grade - rear	SAE	08293-99902HE
+Differential rear	litres	1,2
+Coolant	Type	Honda all season type 2
+Cooling system - total capacity	litres	7,1
+Brake fluid	Type	DOT 3/4
+Power steering fluid	Type	Honda ultra PSF-II
+Power steering fluid	litres	0,9
+**Tightening torques**
+Cylinder head instructions	
+
+**Other engine tightening torques**
+Main bearings	Renew bolts/nuts	No
+Main bearings	Stage 1	29 Nm
+Main bearings	Stage 2	58°
+Big end bearings	Renew bolts/nuts	Yes
+Big end bearings	
+Big end bearings	Stage 2	90°
+Oil pump to cylinder block		44 Nm
+Sump bolts		12 Nm
+Sump drain bolt		39 Nm
+Flywheel/driveplate		118 Nm
+Clutch pressure plate		25 Nm
+Crankshaft pulley/damper centre bolt	
+Camshaft sprocket/gear	
+Camshaft carrier/cap		12 Nm M8=22 Nm
+Camshaft/rocker cover		12 Nm
+Inlet manifold to cylinder head		22 Nm
+Exhaust manifold to cylinder head	
+Exhaust downpipe to manifold		33 Nm
+Water pump		12 Nm
+Injector/clamp		5 Nm+90°
+Injector pipe unions	
+Fuel/injection pump mounting		22 Nm
+Glow plugs		18 Nm
+Crankshaft position (CKP) sensor/engine speed (RPM) sensor		12 Nm
+Camshaft position (CMP) sensor		12 Nm
+Engine oil pressure switch		18 Nm
+Oil filter		25 Nm
+Engine upper cover		12 Nm
+**Chassis tightening torques**
+Front hub	
+Rear hub	
+Rear hub - wheel bearing housing bolts		98 Nm
+Steering wheel		39 Nm
+Steering rack/box mounting		71 Nm
+Steering track rod end		54 Nm
+Brake disc to hub	Front	10 Nm
+Brake caliper to carrier	Front	30 Nm
+Brake caliper/carrier to hub	Front	137 Nm
+Brake disc to hub	Rear	10 Nm
+Brake caliper to carrier	Rear	30 Nm
+Brake caliper/carrier to hub	Rear	108 Nm
+ABS sensor	Front	10 Nm
+ABS sensor	Rear	10 Nm
+Road wheels		108 Nm
+**Brake disc and drum dimensions**
+Minimum disc thickness for replacement - ventilated	Front	26 mm
+Minimum disc thickness for replacement	Rear	8,0 mm
+Disc thickness variation	Front	0,015 mm
+Disc thickness variation	Rear	0,015 mm
+Disc runout	Front	0,04 mm
+Disc runout	Rear	0,04 mm
+Minimum pad thickness	Front	2 mm
+Minimum pad thickness	Rear	2 mm
+Maximum drum diameter for replacement	Rear	201 mm
+Minimum shoe thickness	Rear	1 mm
+Parking brake travel	No. of notches	6-7
+**Air conditioning**
+No. of AC service connectors		2
+Air conditioning restrictor type		Expansion valve
+Compressor clutch/magnetic coupling		Yes
+Compressor variable displacement solenoid		No
+Air conditioning refrigerant	Type	R134a
+Air conditioning refrigerant quantity	grams	465±25
+Air conditioning oil group		PAG
+Air conditioning oil	Type	SP10
+Air conditioning oil quantity	cm³	185±5
+Air conditioning oil viscosity	ISO	46

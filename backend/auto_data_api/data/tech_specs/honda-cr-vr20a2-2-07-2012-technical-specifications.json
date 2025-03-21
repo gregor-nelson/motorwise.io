@@ -1,0 +1,447 @@
+{
+  "vehicleIdentification": {
+    "title": "Vehicle Identification - Honda CR-VR20A2/2 (07-12)",
+    "make": "Honda",
+    "model": "CR-VR20A2/2",
+    "modelType": "07-12"
+  },
+  "ignition_system": {
+    "specifications": [
+      {
+        "name": "Ignition coil supply voltage",
+        "unit": "+",
+        "value": "with ballast   V 12,0"
+      }
+    ]
+  },
+  "tuningEmissions": {
+    "specifications": [
+      {
+        "name": "Ignition timing - basic  BTDC",
+        "unit": "\u00b0Engine/rpm",
+        "value": "8\u00b12/650 Not adjustable"
+      },
+      {
+        "name": "Ignition timing - alternative",
+        "unit": "\u00b0Engine/rpm",
+        "value": "AT=8\u00b12/680 Not adjustable"
+      },
+      {
+        "name": "Ignition advance checks",
+        "unit": "\u00b0Engine/rpm",
+        "value": "ECM Controlled"
+      },
+      {
+        "name": "Idle speed",
+        "unit": "rpm",
+        "value": "650\u00b150 Not adjustable"
+      },
+      {
+        "name": "Idle speed - alternative",
+        "unit": "rpm",
+        "value": "AT=680\u00b150 Not adjustable"
+      },
+      {
+        "name": "Oil temperature",
+        "unit": "\u00b0C",
+        "value": "90"
+      },
+      {
+        "name": "CO level at idle speed - tailpipe",
+        "unit": "Vol.",
+        "value": "% CO 0,2 Max Not adjustable"
+      },
+      {
+        "name": "HC level at idle speed",
+        "unit": "ppm",
+        "value": "100"
+      },
+      {
+        "name": "CO2 level at idle speed",
+        "unit": "Vol.",
+        "value": "% CO2 14,5-16"
+      },
+      {
+        "name": "O2 level at idle speed",
+        "unit": "Vol.",
+        "value": "% O2 0,1-0,5"
+      },
+      {
+        "name": "Increased idle speed for CO test",
+        "unit": "rpm",
+        "value": "2300-2700"
+      },
+      {
+        "name": "CO content at increased idle speed",
+        "unit": "Vol.",
+        "value": "% 0,2"
+      },
+      {
+        "name": "Lambda at increased idle",
+        "unit": "\u03bb",
+        "value": "0,97-1,03"
+      }
+    ]
+  },
+  "spark_plugs": {
+    "specifications": [
+      {
+        "name": "Spark plugs",
+        "unit": "Original",
+        "value": "equipment Denso"
+      },
+      {
+        "name": "Spark plug",
+        "unit": "Type",
+        "value": "SKJ20DR-M11S"
+      },
+      {
+        "name": "Electrode gap",
+        "unit": "mm",
+        "value": "1,0-1,1"
+      },
+      {
+        "name": "Spark plugs",
+        "unit": "Make",
+        "value": "NGK"
+      },
+      {
+        "name": "Spark plug",
+        "unit": "Type",
+        "value": "IZFR6K11S"
+      },
+      {
+        "name": "Electrode gap",
+        "unit": "mm",
+        "value": "1,0-1,1"
+      }
+    ]
+  },
+  "fuel_system": {
+    "specifications": [
+      {
+        "name": "System pressure",
+        "unit": "bar",
+        "value": "3,8-4,3"
+      },
+      {
+        "name": "Injector",
+        "unit": "Ohm",
+        "value": "10,0-13,0"
+      }
+    ]
+  },
+  "serviceChecks": {
+    "specifications": [
+      {
+        "name": "Valve clearance - INLET",
+        "unit": "mm",
+        "value": "0,18-0,22 cold"
+      },
+      {
+        "name": "Valve clearance - EXHAUST",
+        "unit": "mm",
+        "value": "0,23-0,27 cold"
+      },
+      {
+        "name": "Compression pressure",
+        "unit": "bar",
+        "value": "8,8 Min"
+      },
+      {
+        "name": "Oil pressure",
+        "unit": "bar/rpm",
+        "value": "3,4/3000"
+      },
+      {
+        "name": "Radiator cap",
+        "unit": "bar",
+        "value": "0,93-1,23"
+      },
+      {
+        "name": "Thermostat opens",
+        "unit": "\u00b0C",
+        "value": "80-84"
+      }
+    ]
+  },
+  "lubricantsCapacities": {
+    "specifications": [
+      {
+        "name": "Manual transmission",
+        "unit": "litres",
+        "value": "2,1 4x4=2,2"
+      },
+      {
+        "name": "Automatic transmission fluid",
+        "unit": "Type",
+        "value": "Honda ATF-Z1"
+      },
+      {
+        "name": "Differential oil grade - rear",
+        "unit": "SAE",
+        "value": "08293-99902HE"
+      },
+      {
+        "name": "Differential rear",
+        "unit": "litres",
+        "value": "1,2"
+      },
+      {
+        "name": "Cooling system - total capacity",
+        "unit": "litres",
+        "value": "6,2 AT=6,1"
+      },
+      {
+        "name": "Brake fluid",
+        "unit": "Type",
+        "value": "DOT 3/4"
+      }
+    ],
+    "engine_oil_options": {
+      "specifications": [
+        {
+          "name": "Ambient temperature range",
+          "unit": "All",
+          "value": "temperatures"
+        },
+        {
+          "name": "Engine oil grade",
+          "unit": "SAE",
+          "value": "0W-20, 0W-30 Synthetic"
+        },
+        {
+          "name": "Engine oil classification",
+          "unit": "API/ACEA",
+          "value": "SJ/A1, A3, A5"
+        },
+        {
+          "name": "Ambient temperature range",
+          "unit": "All",
+          "value": "temperatures"
+        },
+        {
+          "name": "Engine oil grade",
+          "unit": "SAE",
+          "value": "0W-40 Synthetic"
+        },
+        {
+          "name": "Engine oil classification",
+          "unit": "API/ACEA",
+          "value": "SJ/A1, A3, A5"
+        },
+        {
+          "name": "Ambient temperature range",
+          "unit": "All",
+          "value": "temperatures"
+        },
+        {
+          "name": "Engine oil grade",
+          "unit": "SAE",
+          "value": "5W-30, 5W-40 Synthetic"
+        },
+        {
+          "name": "Engine oil classification",
+          "unit": "API/ACEA",
+          "value": "SJ/A1, A3, A5"
+        },
+        {
+          "name": "Ambient temperature range",
+          "value": "-20\u00b0C\u279e"
+        },
+        {
+          "name": "Engine oil grade",
+          "unit": "SAE",
+          "value": "10W-30, 10W-40 Synthetic"
+        },
+        {
+          "name": "Engine oil classification",
+          "unit": "API/ACEA",
+          "value": "SJ/A1, A3, A5"
+        },
+        {
+          "name": "Engine with filter(s)",
+          "unit": "litres",
+          "value": "3,7\nSUB"
+        }
+      ]
+    }
+  },
+  "tighteningTorques": {
+    "chassis_tightening_torques": [
+      {
+        "name": "Rear hub - wheel bearing housing bolts",
+        "value": "98 Nm"
+      },
+      {
+        "name": "Steering wheel",
+        "value": "39 Nm"
+      },
+      {
+        "name": "Steering rack/box mounting",
+        "value": "71 Nm"
+      },
+      {
+        "name": "Steering track rod end",
+        "value": "54 Nm"
+      },
+      {
+        "name": "Brake disc to hub",
+        "unit": "Front",
+        "value": "10 Nm"
+      },
+      {
+        "name": "Brake caliper/carrier to hub",
+        "unit": "Front",
+        "value": "137 Nm"
+      },
+      {
+        "name": "Brake disc to hub",
+        "unit": "Rear",
+        "value": "10 Nm"
+      },
+      {
+        "name": "Brake caliper/carrier to hub",
+        "unit": "Rear",
+        "value": "108 Nm"
+      },
+      {
+        "name": "ABS sensor",
+        "unit": "Front",
+        "value": "10 Nm"
+      },
+      {
+        "name": "ABS sensor",
+        "unit": "Rear",
+        "value": "10 Nm"
+      },
+      {
+        "name": "Road wheels",
+        "value": "108 Nm"
+      }
+    ]
+  },
+  "startingCharging": {
+    "specifications": [
+      {
+        "name": "Battery",
+        "unit": "V/RC(Ah)",
+        "value": "12 (45)"
+      },
+      {
+        "name": "Maximum cranking amps",
+        "unit": "A",
+        "value": "90"
+      },
+      {
+        "name": "Alternator output",
+        "unit": "A/V/rpm",
+        "value": "105/13,5/2000"
+      }
+    ]
+  },
+  "brakeDimensions": {
+    "specifications": [
+      {
+        "name": "Minimum disc thickness for replacement - ventilated",
+        "unit": "Front",
+        "value": "26 mm"
+      },
+      {
+        "name": "Disc thickness variation",
+        "unit": "Front",
+        "value": "0,015 mm"
+      },
+      {
+        "name": "Disc thickness variation",
+        "unit": "Rear",
+        "value": "0,015 mm"
+      },
+      {
+        "name": "Disc runout",
+        "unit": "Front",
+        "value": "0,04 mm"
+      },
+      {
+        "name": "Disc runout",
+        "unit": "Rear",
+        "value": "0,04 mm"
+      },
+      {
+        "name": "Maximum drum diameter for replacement",
+        "unit": "Rear",
+        "value": "201 mm"
+      },
+      {
+        "name": "Minimum pad thickness",
+        "unit": "Front",
+        "value": "1,6 mm"
+      },
+      {
+        "name": "Minimum pad thickness",
+        "unit": "Rear",
+        "value": "1,6 mm"
+      },
+      {
+        "name": "Minimum shoe thickness",
+        "unit": "Rear",
+        "value": "1 mm"
+      },
+      {
+        "name": "Parking brake travel",
+        "unit": "No.",
+        "value": "of notches 5-7"
+      }
+    ]
+  },
+  "airConditioning": {
+    "specifications": [
+      {
+        "name": "No. of AC service connectors",
+        "value": "2"
+      },
+      {
+        "name": "Air conditioning restrictor type",
+        "unit": "Expansion",
+        "value": "valve"
+      },
+      {
+        "name": "Compressor clutch/magnetic coupling",
+        "value": "Yes"
+      },
+      {
+        "name": "Compressor variable displacement solenoid",
+        "value": "No"
+      },
+      {
+        "name": "Air conditioning refrigerant",
+        "unit": "Type",
+        "value": "R134a"
+      },
+      {
+        "name": "Air conditioning refrigerant quantity",
+        "unit": "grams",
+        "value": "465\u00b125"
+      },
+      {
+        "name": "Air conditioning oil group",
+        "value": "PAG"
+      },
+      {
+        "name": "Air conditioning oil",
+        "unit": "Type",
+        "value": "SP10"
+      },
+      {
+        "name": "Air conditioning oil quantity",
+        "unit": "cm\u00b3",
+        "value": "185\u00b15"
+      },
+      {
+        "name": "Air conditioning oil viscosity",
+        "unit": "ISO",
+        "value": "46"
+      }
+    ]
+  }
+}

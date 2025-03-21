@@ -1,0 +1,180 @@
+VEHICLE INFORMATION:
+Technical specificationsVehicle details:Honda CR-VR20A2/2 (07-12)
+
+SECTION: Vehicle identification
+No. of cylinders: Type 4/OHC
+Capacity (Fiscal): cc 1998
+Compression ratio: :1 10,5
+Suitable for unleaded petrol:  Yes
+Minimum octane rating: RON 95
+Ignition system: Make Honda
+Ignition system: Type PGM-FI
+Ignition system: Description Map-DI
+Trigger location:  Cam/Crankshaft
+Fuel system: Make Honda
+Fuel system: Type PGM-FI
+Fuel system: Description MFI-s
+Air metering: Type MAP
+Combined ignition and fuel ECM:  Yes
+Diagnostic socket:  Yes
+
+SECTION: Ignition system
+SUBSECTION: Ignition system
+Ignition coil supply voltage: + with ballast   V 12,0
+Firing order: 
+NOTE: ViewFig75573
+
+SECTION: Tuning and emissions
+SUBSECTION: Tuning and emissions
+Ignition timing - basic  BTDC: °Engine/rpm 8±2/650 Not adjustable
+Ignition timing - alternative: °Engine/rpm AT=8±2/680 Not adjustable
+Ignition advance checks: °Engine/rpm ECM Controlled
+Idle speed: rpm 650±50 Not adjustable
+Idle speed - alternative: rpm AT=680±50 Not adjustable
+Oil temperature: °C 90
+CO level at idle speed - tailpipe: Vol. % CO 0,2 Max Not adjustable
+HC level at idle speed: ppm 100
+CO2 level at idle speed: Vol. % CO2 14,5-16
+O2 level at idle speed: Vol. % O2 0,1-0,5
+Increased idle speed for CO test: rpm 2300-2700
+CO content at increased idle speed: Vol. % 0,2
+Lambda at increased idle: λ 0,97-1,03
+
+SECTION: Spark plugs
+SUBSECTION: Spark plugs
+Spark plugs: Original equipment Denso
+Spark plug: Type SKJ20DR-M11S
+Electrode gap: mm 1,0-1,1
+Spark plugs: Make NGK
+Spark plug: Type IZFR6K11S
+Electrode gap: mm 1,0-1,1
+
+SECTION: Fuel system
+SUBSECTION: Fuel system
+System pressure: bar 3,8-4,3
+Injector: Ohm 10,0-13,0
+
+SECTION: Service checks and adjustments
+SUBSECTION: Service checks and adjustments
+Valve clearance - INLET: mm 0,18-0,22 cold
+Valve clearance - EXHAUST: mm 0,23-0,27 cold
+Compression pressure: bar 8,8 Min
+Oil pressure: bar/rpm 3,4/3000
+Radiator cap: bar 0,93-1,23
+Thermostat opens: °C 80-84
+
+SECTION: Lubricants and capacities
+SUBSECTION: Engine oil options
+Ambient temperature range:  All temperatures
+Engine oil grade: SAE 0W-20, 0W-30 Synthetic
+Engine oil classification: API/ACEA SJ/A1, A3, A5
+Ambient temperature range:  All temperatures
+Engine oil grade: SAE 0W-40 Synthetic
+Engine oil classification: API/ACEA SJ/A1, A3, A5
+Ambient temperature range:  All temperatures
+Engine oil grade: SAE 5W-30, 5W-40 Synthetic
+Engine oil classification: API/ACEA SJ/A1, A3, A5
+Ambient temperature range:  -20°C➞
+Engine oil grade: SAE 10W-30, 10W-40 Synthetic
+Engine oil classification: API/ACEA SJ/A1, A3, A5
+Engine with filter(s): litres 3,7
+SUBSECTION: Other lubricants and capacities
+Manual transmission oil grade: 
+NOTE: Gearbox oil gradeUse Honda MTF.
+Manual transmission: litres 2,1 4x4=2,2
+Automatic transmission fluid: Type Honda ATF-Z1
+Automatic transmission (drain & refill): 
+NOTE: Automatic transmission - drain and refillFill transmission with specified amount.Start engine. Run engine to normal operating temperature.Switch OFF engine. Within 60-90 seconds check ATF level and top up if necessary.
+Automatic transmission (dry fill): 
+NOTE: Automatic transmission - drain and refillFill transmission with specified amount.Start engine. Run engine to normal operating temperature.Switch OFF engine. Within 60-90 seconds check ATF level and top up if necessary.
+Differential oil grade - rear: SAE 08293-99902HE
+Differential rear: litres 1,2
+Cooling system - total capacity: litres 6,2 AT=6,1
+Brake fluid: Type DOT 3/4
+
+SECTION: Tightening torques
+SUBSECTION: Tightening torques
+Cylinder head instructions: 
+NOTE: Cylinder headLubricate threads and between bolt and washer.Tighten bolts in the following stages:40 Nm90°90°New bolts: Tighten a further 60°fig28984ViewFig109212ViewView more informationfig28984
+SUBSECTION: Other engine tightening torques
+Main bearings: Renew bolts/nuts No
+Main bearings: Stage 1 25 Nm
+Main bearings: Stage 2 57°
+Big end bearings: 
+NOTE: Big end bearingsRenew bolts if diameter difference between A and B exceeds 0,1 mm.fig28983ViewView more informationfig28983
+Big end bearings: Stage 1 20 Nm
+Big end bearings: Stage 2 90°
+Sump bolts:  18 Nm
+Sump drain bolt:  38 Nm
+Flywheel/driveplate: 
+NOTE: Flywheel/driveplateFlywheel:30 Nm60 Nm103 NmDriveplate:30 Nm74 Nm
+Clutch pressure plate:  26 Nm
+Crankshaft pulley/damper centre bolt:  69 Nm+90°
+Camshaft sprocket/gear:  56 Nm
+Camshaft/rocker cover:  10 Nm
+Inlet manifold to cylinder head:  24 Nm
+Exhaust downpipe to manifold: 
+NOTE: Use new nuts.
+Water pump:  12 Nm
+Spark plugs:  25 Nm
+Crankshaft position (CKP) sensor/engine speed (RPM) sensor:  12 Nm
+Camshaft position (CMP) sensor:  12 Nm
+Engine coolant temperature (ECT) sensor:  12 Nm
+Lambda sensor (Oxygen):  44 Nm
+Knock sensor (KS):  31 Nm
+Engine oil pressure switch:  22 Nm
+SUBSECTION: Chassis tightening torques
+Front hub: 
+NOTE: Use new nut. Lubricate mating surfaces of nut.
+Rear hub: 
+NOTE: Use new nut. Lubricate mating surfaces of nut.
+Rear hub - wheel bearing housing bolts:  98 Nm
+Steering wheel:  39 Nm
+Steering rack/box mounting:  71 Nm
+Steering track rod end:  54 Nm
+Brake disc to hub: Front 10 Nm
+Brake caliper to carrier: 
+NOTE: Brake caliper to carrierBosch caliper = 30 Nm
+Brake caliper/carrier to hub: Front 137 Nm
+Brake disc to hub: Rear 10 Nm
+Brake caliper to carrier: 
+NOTE: Brake caliper to carrierBosch caliper = 30 Nm
+Brake caliper/carrier to hub: Rear 108 Nm
+ABS sensor: Front 10 Nm
+ABS sensor: Rear 10 Nm
+Road wheels:  108 Nm
+
+SECTION: Starting and charging
+SUBSECTION: Starting and charging
+Battery: V/RC(Ah) 12 (45)
+Maximum cranking amps: A 90
+Alternator output: A/V/rpm 105/13,5/2000
+
+SECTION: Brake disc and drum dimensions
+SUBSECTION: Brake disc and drum dimensions
+Minimum disc thickness for replacement - ventilated: Front 26 mm
+Minimum disc thickness for replacement: 
+NOTE: Minimum disc thickness - rearBosch caliper = 8 mm
+Disc thickness variation: Front 0,015 mm
+Disc thickness variation: Rear 0,015 mm
+Disc runout: Front 0,04 mm
+Disc runout: Rear 0,04 mm
+Maximum drum diameter for replacement: Rear 201 mm
+Minimum pad thickness: Front 1,6 mm
+Minimum pad thickness: Rear 1,6 mm
+Minimum shoe thickness: Rear 1 mm
+Parking brake travel: No. of notches 5-7
+
+SECTION: Air conditioning
+SUBSECTION: Air conditioning
+No. of AC service connectors:  2
+Air conditioning restrictor type:  Expansion valve
+Compressor clutch/magnetic coupling:  Yes
+Compressor variable displacement solenoid:  No
+Air conditioning refrigerant: Type R134a
+Air conditioning refrigerant quantity: grams 465±25
+Air conditioning oil group:  PAG
+Air conditioning oil: Type SP10
+Air conditioning oil quantity: cm³ 185±5
+Air conditioning oil viscosity: ISO 46
+

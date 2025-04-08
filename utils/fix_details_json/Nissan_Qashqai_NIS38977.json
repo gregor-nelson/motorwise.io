@@ -1,0 +1,221 @@
+{
+  "vehicle_id": "NIS38977",
+  "vehicle_info": {
+    "manufacturer": "Nissan",
+    "model": "Qashqai",
+    "engine_code": "646"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Nissan Qashqai",
+    "make": "Nissan",
+    "model": "Qashqai",
+    "engine_info": "K9K 646/1.5 (J11) (14-21)"
+  },
+  "categories": {
+    "Body": [
+      {
+        "id": "2",
+        "title": "Intermittent self-activation of alarm system siren.",
+        "href": "/w1/known-fixes/NIS38977/2?title=Intermittent%20self-activation%20of%20alarm%20system%20siren."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "1",
+        "title": "Radio interference on FM wave band.",
+        "href": "/w1/known-fixes/NIS38977/1?title=Radio%20interference%20on%20FM%20wave%20band."
+      },
+      {
+        "id": "1",
+        "title": "Audio unit volume fluctuates on FM wave band.",
+        "href": "/w1/known-fixes/NIS38977/1?title=Audio%20unit%20volume%20fluctuates%20on%20FM%20wave%20band."
+      },
+      {
+        "id": "2",
+        "title": "Intermittent self-activation of alarm system siren.",
+        "href": "/w1/known-fixes/NIS38977/2?title=Intermittent%20self-activation%20of%20alarm%20system%20siren."
+      },
+      {
+        "id": "3",
+        "title": "Engine overheating.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20overheating."
+      },
+      {
+        "id": "3",
+        "title": "Engine coolant blower motor(s) not working.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20coolant%20blower%20motor%28s%29%20not%20working."
+      },
+      {
+        "id": "3",
+        "title": "Engine coolant blower motor(s) run continuously.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20coolant%20blower%20motor%28s%29%20run%20continuously."
+      }
+    ],
+    "Engine cooling": [
+      {
+        "id": "3",
+        "title": "Engine overheating.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20overheating."
+      },
+      {
+        "id": "3",
+        "title": "Engine coolant blower motor(s) not working.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20coolant%20blower%20motor%28s%29%20not%20working."
+      },
+      {
+        "id": "3",
+        "title": "Engine coolant blower motor(s) run continuously.",
+        "href": "/w1/known-fixes/NIS38977/3?title=Engine%20coolant%20blower%20motor%28s%29%20run%20continuously."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "cea03362-7d4d-4a0a-8dde-0b4a18e96447",
+      "title": "Audio unit volume fluctuates on FM wave band.",
+      "affected_vehicles": [
+        "All models with Visteon audio unit."
+      ],
+      "problems": [
+        "Audio unit volume fluctuates on FM wave band.",
+        "Radio interference on FM wave band."
+      ],
+      "causes": [
+        "Audio unit software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program audio unit with modified software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "12d0c832-6255-4915-85ca-39ac6958e529",
+      "title": "Engine coolant blower motor(s) not working.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "48bd19bd-f200-4829-9468-528220e6b425",
+      "title": "Engine coolant blower motor(s) run continuously.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "24fdda80-9106-42ee-8fea-7d7ce820dd5a",
+      "title": "Engine overheating.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b3fcefb8-861e-4f5f-b30e-c56fa69ab053",
+      "title": "Intermittent self-activation of alarm system siren.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Intermittent self-activation of alarm system siren."
+      ],
+      "causes": [
+        "Unsatisfactory design of alarm system in car movement sensor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Alarm system in car movement sensor",
+            "part_number": "28436 4EA0B",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found:Remove interior lamps assembly.Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "Remove interior lamps assembly.",
+          "Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "Remove interior lamps assembly.",
+          "Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "ViewView more informationFig.1234930"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7621a291-bcf9-4a2f-b76e-f32aaf8a164d",
+      "title": "Radio interference on FM wave band.",
+      "affected_vehicles": [
+        "All models with Visteon audio unit."
+      ],
+      "problems": [
+        "Audio unit volume fluctuates on FM wave band.",
+        "Radio interference on FM wave band."
+      ],
+      "causes": [
+        "Audio unit software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program audio unit with modified software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    }
+  ]
+}

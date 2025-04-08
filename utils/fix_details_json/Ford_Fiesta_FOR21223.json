@@ -1,0 +1,611 @@
+{
+  "vehicle_id": "FOR21223",
+  "vehicle_info": {
+    "manufacturer": "Ford",
+    "model": "Fiesta",
+    "engine_code": "SPJA"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Ford Fiesta",
+    "make": "Ford",
+    "model": "Fiesta",
+    "engine_info": "SPJA/1.4 ('08)"
+  },
+  "categories": {
+    "AC/Heating": [
+      {
+        "id": "3",
+        "title": "Long interior heating warm up period in cold conditions.",
+        "href": "/w1/known-fixes/FOR21223/3?title=Long%20interior%20heating%20warm%20up%20period%20in%20cold%20conditions."
+      },
+      {
+        "id": "3",
+        "title": "Erratic idle.",
+        "href": "/w1/known-fixes/FOR21223/3?title=Erratic%20idle."
+      }
+    ],
+    "Body": [
+      {
+        "id": "1",
+        "title": "Horn operates by itself especially when turning steering wheel.",
+        "href": "/w1/known-fixes/FOR21223/1?title=Horn%20operates%20by%20itself%20especially%20when%20turning%20steering%20wheel."
+      },
+      {
+        "id": "2",
+        "title": "Unable to release bonnet.",
+        "href": "/w1/known-fixes/FOR21223/2?title=Unable%20to%20release%20bonnet."
+      },
+      {
+        "id": "4",
+        "title": "Squeaking noise when clutch pedal depressed.",
+        "href": "/w1/known-fixes/FOR21223/4?title=Squeaking%20noise%20when%20clutch%20pedal%20depressed."
+      },
+      {
+        "id": "6",
+        "title": "Repeated failure of headlamp bulbs.",
+        "href": "/w1/known-fixes/FOR21223/6?title=Repeated%20failure%20of%20headlamp%20bulbs."
+      },
+      {
+        "id": "8",
+        "title": "Door(s) will not unlock when using remote control in very cold conditions.",
+        "href": "/w1/known-fixes/FOR21223/8?title=Door%28s%29%20will%20not%20unlock%20when%20using%20remote%20control%20in%20very%20cold%20conditions."
+      },
+      {
+        "id": "9",
+        "title": "Fuel filler flap release mechanism operates but fuel filler flap remains closed.",
+        "href": "/w1/known-fixes/FOR21223/9?title=Fuel%20filler%20flap%20release%20mechanism%20operates%20but%20fuel%20filler%20flap%20remains%20closed."
+      },
+      {
+        "id": "12",
+        "title": "Tailgate opens when starting engine.",
+        "href": "/w1/known-fixes/FOR21223/12?title=Tailgate%20opens%20when%20starting%20engine."
+      },
+      {
+        "id": "12",
+        "title": "Tailgate opens while driving.",
+        "href": "/w1/known-fixes/FOR21223/12?title=Tailgate%20opens%20while%20driving."
+      }
+    ],
+    "Clutch": [
+      {
+        "id": "4",
+        "title": "Squeaking noise when clutch pedal depressed.",
+        "href": "/w1/known-fixes/FOR21223/4?title=Squeaking%20noise%20when%20clutch%20pedal%20depressed."
+      }
+    ],
+    "Drivetrain": [
+      {
+        "id": "7",
+        "title": "Oil leak from transmission.",
+        "href": "/w1/known-fixes/FOR21223/7?title=Oil%20leak%20from%20transmission."
+      },
+      {
+        "id": "10",
+        "title": "Grinding noise from front of vehicle while driving.",
+        "href": "/w1/known-fixes/FOR21223/10?title=Grinding%20noise%20from%20front%20of%20vehicle%20while%20driving."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "1",
+        "title": "Horn operates by itself especially when turning steering wheel.",
+        "href": "/w1/known-fixes/FOR21223/1?title=Horn%20operates%20by%20itself%20especially%20when%20turning%20steering%20wheel."
+      },
+      {
+        "id": "3",
+        "title": "Long interior heating warm up period in cold conditions.",
+        "href": "/w1/known-fixes/FOR21223/3?title=Long%20interior%20heating%20warm%20up%20period%20in%20cold%20conditions."
+      },
+      {
+        "id": "3",
+        "title": "Erratic idle.",
+        "href": "/w1/known-fixes/FOR21223/3?title=Erratic%20idle."
+      },
+      {
+        "id": "6",
+        "title": "Repeated failure of headlamp bulbs.",
+        "href": "/w1/known-fixes/FOR21223/6?title=Repeated%20failure%20of%20headlamp%20bulbs."
+      },
+      {
+        "id": "8",
+        "title": "Door(s) will not unlock when using remote control in very cold conditions.",
+        "href": "/w1/known-fixes/FOR21223/8?title=Door%28s%29%20will%20not%20unlock%20when%20using%20remote%20control%20in%20very%20cold%20conditions."
+      },
+      {
+        "id": "11",
+        "title": "Rain sensor unable to control wipers.",
+        "href": "/w1/known-fixes/FOR21223/11?title=Rain%20sensor%20unable%20to%20control%20wipers."
+      },
+      {
+        "id": "12",
+        "title": "Tailgate opens when starting engine.",
+        "href": "/w1/known-fixes/FOR21223/12?title=Tailgate%20opens%20when%20starting%20engine."
+      },
+      {
+        "id": "12",
+        "title": "Tailgate opens while driving.",
+        "href": "/w1/known-fixes/FOR21223/12?title=Tailgate%20opens%20while%20driving."
+      }
+    ],
+    "Engine cooling": [
+      {
+        "id": "13",
+        "title": "Engine coolant contaminated with engine oil.",
+        "href": "/w1/known-fixes/FOR21223/13?title=Engine%20coolant%20contaminated%20with%20engine%20oil."
+      }
+    ],
+    "Engine mechanical": [
+      {
+        "id": "13",
+        "title": "Engine coolant contaminated with engine oil.",
+        "href": "/w1/known-fixes/FOR21223/13?title=Engine%20coolant%20contaminated%20with%20engine%20oil."
+      }
+    ],
+    "Fuel system": [
+      {
+        "id": "9",
+        "title": "Fuel filler flap release mechanism operates but fuel filler flap remains closed.",
+        "href": "/w1/known-fixes/FOR21223/9?title=Fuel%20filler%20flap%20release%20mechanism%20operates%20but%20fuel%20filler%20flap%20remains%20closed."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "4",
+        "title": "Squeaking noise when clutch pedal depressed.",
+        "href": "/w1/known-fixes/FOR21223/4?title=Squeaking%20noise%20when%20clutch%20pedal%20depressed."
+      },
+      {
+        "id": "5",
+        "title": "Knocking noise from steering column when steering wheel turned.",
+        "href": "/w1/known-fixes/FOR21223/5?title=Knocking%20noise%20from%20steering%20column%20when%20steering%20wheel%20turned."
+      },
+      {
+        "id": "10",
+        "title": "Grinding noise from front of vehicle while driving.",
+        "href": "/w1/known-fixes/FOR21223/10?title=Grinding%20noise%20from%20front%20of%20vehicle%20while%20driving."
+      }
+    ],
+    "Steering": [
+      {
+        "id": "1",
+        "title": "Horn operates by itself especially when turning steering wheel.",
+        "href": "/w1/known-fixes/FOR21223/1?title=Horn%20operates%20by%20itself%20especially%20when%20turning%20steering%20wheel."
+      },
+      {
+        "id": "5",
+        "title": "Knocking noise from steering column when steering wheel turned.",
+        "href": "/w1/known-fixes/FOR21223/5?title=Knocking%20noise%20from%20steering%20column%20when%20steering%20wheel%20turned."
+      }
+    ],
+    "Transmission": [
+      {
+        "id": "7",
+        "title": "Oil leak from transmission.",
+        "href": "/w1/known-fixes/FOR21223/7?title=Oil%20leak%20from%20transmission."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "fcef4258-b9b2-4434-8186-d4f0d83aeb70",
+      "title": "Door(s) will not unlock when using remote control in very cold conditions.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Door(s) will not unlock when using remote control in very cold conditions."
+      ],
+      "causes": [
+        "Door lock mechanism frozen due to water ingress."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Aerosol grease",
+            "part_number": "1 470 997",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove retaining screw from door lock mechanism Fig.130308.1.",
+          "Dry out door lock mechanism.",
+          "Apply aerosol grease to door lock mechanism for 2 seconds.",
+          "Refit retaining screw to door lock mechanism Fig.130308.1.",
+          "Repeat procedure for remaining doors.",
+          "ViewView more informationFig.130308"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "5d97b465-0fda-4dce-ab09-141c4fbc33d4",
+      "title": "Engine coolant contaminated with engine oil.",
+      "affected_vehicles": [
+        "All models with 1,4 petrol engine."
+      ],
+      "problems": [
+        "Engine coolant contaminated with engine oil."
+      ],
+      "causes": [
+        "Heat exchanger failure due to corrosion."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Replace heat exchanger."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d27ef169-6bc3-4873-b536-3107e69334b9",
+      "title": "Erratic idle.",
+      "affected_vehicles": [
+        "All models with 1,4/1,6 Diesel engines and auxiliary heater, →03/10."
+      ],
+      "problems": [
+        "Erratic idle.",
+        "Long interior heating warm up period in cold conditions."
+      ],
+      "causes": [
+        "Auxiliary heater relay 2 faulty or missing.",
+        "Instrument panel software fault."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Auxiliary heater relay",
+            "part_number": "1 425 754",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Check auxiliary heater relay 2 has been installed in engine bay fuse box/relay plate 3.",
+          "Check auxiliary heater relay for correct operation. Replace if necessary.",
+          "Fit modified instrument panel."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "a0139de2-d5d1-40a9-8d81-1fd1878a0e63",
+      "title": "Fuel filler flap release mechanism operates but fuel filler flap remains closed.",
+      "affected_vehicles": [
+        "All models, →12/09."
+      ],
+      "problems": [
+        "Fuel filler flap release mechanism operates but fuel filler flap remains closed."
+      ],
+      "causes": [
+        "Fuel filler flap moulding lug sticking on fuel filler flap opening surround."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove fuel filler flap moulding lug Fig.130307.1.",
+          "ViewView more informationFig.130307"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "fe7090d2-2317-4fdc-970c-4558bfbb120a",
+      "title": "Grinding noise from front of vehicle while driving.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Grinding noise from front of vehicle while driving."
+      ],
+      "causes": [
+        "Worn intermediate driveshaft support bearing."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new intermediate driveshaft support bearing Fig.130310.",
+          "Replace intermediate driveshaft support bearing bracket and nuts.",
+          "ViewView more informationFig.130310"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f3c5d63a-6fdb-4da9-b2ad-1c87cc16e05e",
+      "title": "Horn operates by itself especially when turning steering wheel.",
+      "affected_vehicles": [
+        "All models, →09/09."
+      ],
+      "problems": [
+        "Horn operates by itself especially when turning steering wheel."
+      ],
+      "causes": [
+        "Horn wiring chafes on driver's airbag module causing short circuit."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove driver's airbag module. Remove steering wheel.",
+          "Apply insulation tape to horn wiring and connector."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7919cea5-1d4b-4a81-92f6-8a35678df97b",
+      "title": "Knocking noise from steering column when steering wheel turned.",
+      "affected_vehicles": [
+        "All models, →08/11."
+      ],
+      "problems": [
+        "Knocking noise from steering column when steering wheel turned."
+      ],
+      "causes": [
+        "Dry contact surfaces on the steering column lower shaft sliding joint."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Aerosol grease",
+            "part_number": "1 321 554, or 1 525 807",
+            "quantity": "1"
+          },
+          {
+            "name": "Pinch bolt",
+            "part_number": "Refer to manufacturer",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Mark alignment of steering column lower shaft to steering rack.",
+          "Detach steering column lower shaft from steering rack.",
+          "Apply grease to steering column lower shaft at sliding joint.",
+          "Slide steering column lower shaft in and out 10 times.",
+          "Refit steering column lower shaft. Fit new steering column pinch bolt. Tightening torque: 34 Nm."
+        ]
+      },
+      "notes": [
+        "Note: DO NOT exceed 60 mm of travel when sliding steering column lower shaft in and out."
+      ]
+    },
+    {
+      "id": "032c8019-991e-4daa-8ee0-26d6bae1dd05",
+      "title": "Long interior heating warm up period in cold conditions.",
+      "affected_vehicles": [
+        "All models with 1,4/1,6 Diesel engines and auxiliary heater, →03/10."
+      ],
+      "problems": [
+        "Erratic idle.",
+        "Long interior heating warm up period in cold conditions."
+      ],
+      "causes": [
+        "Auxiliary heater relay 2 faulty or missing.",
+        "Instrument panel software fault."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Auxiliary heater relay",
+            "part_number": "1 425 754",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Check auxiliary heater relay 2 has been installed in engine bay fuse box/relay plate 3.",
+          "Check auxiliary heater relay for correct operation. Replace if necessary.",
+          "Fit modified instrument panel."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "edf2365d-bd74-4c60-8714-fad13f6138c0",
+      "title": "Oil leak from transmission.",
+      "affected_vehicles": [
+        "All models with 5-speed MT."
+      ],
+      "problems": [
+        "Oil leak from transmission."
+      ],
+      "causes": [
+        "RH driveshaft not fitted correctly causing damage to driveshaft oil seal."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Driveshaft oil seal",
+            "part_number": "1 712 552",
+            "quantity": "1"
+          },
+          {
+            "name": "Intermediate driveshaft support bearing bracket",
+            "part_number": "1 038 216",
+            "quantity": "1"
+          },
+          {
+            "name": "Intermediate driveshaft support bearing bracket nut",
+            "part_number": "1 404 957",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Fit new driveshaft oil seal.",
+          "Ensure driveshaft is pushed into transmission as far as possible.",
+          "Replace intermediate driveshaft support bearing bracket and nuts."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "112e9883-5f62-4aa7-8547-b1c39ad41b21",
+      "title": "Rain sensor unable to control wipers.",
+      "affected_vehicles": [
+        "All models with rain sensor."
+      ],
+      "problems": [
+        "Rain sensor unable to control wipers."
+      ],
+      "causes": [
+        "Rain sensor function inoperative due to rain sensor mounting plate detached from windscreen."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Adhesive",
+            "part_number": "1 633 780",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove rain sensor from mounting plate.",
+          "Thoroughly clean rain sensor mounting plate.",
+          "Thoroughly clean windscreen.",
+          "Apply adhesive to area indicated Fig.1173343.1.",
+          "Fit rain sensor mounting plate to windscreen.",
+          "Wait at least 5 hours for adhesive to dry before refitting rain sensor.",
+          "ViewView more informationFig.1173343"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "5534380d-22e5-418d-98e3-9d643c396d75",
+      "title": "Repeated failure of headlamp bulbs.",
+      "affected_vehicles": [
+        "All models with halogen headlamps."
+      ],
+      "problems": [
+        "Repeated failure of headlamp bulbs."
+      ],
+      "causes": [
+        "Headlamp bulb supply voltage surge."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Resistor fitting kit (except Focus)",
+            "part_number": "1 715 479",
+            "quantity": "2"
+          },
+          {
+            "name": "Resistor fitting kit (Focus)",
+            "part_number": "1 758 231",
+            "quantity": "2"
+          },
+          {
+            "name": "Headlamp bulb",
+            "part_number": "Refer to manufacturer",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Install resistor fitting kit between headlamp bulb wiring harness connector and headlamp bulb."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "906af88e-6498-42af-bc40-96913755fa4f",
+      "title": "Squeaking noise when clutch pedal depressed.",
+      "affected_vehicles": [
+        "All models with 5-speed MT."
+      ],
+      "problems": [
+        "Squeaking noise when clutch pedal depressed."
+      ],
+      "causes": [
+        "Insufficient lubrication of clutch pedal return spring."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Grease",
+            "part_number": "1 256 262",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Apply grease to clutch pedal return spring.",
+          "Fully depress and release clutch pedal approximately 30 times."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "25a89ae7-6fb3-4c21-8bde-9bb97d3f9878",
+      "title": "Tailgate opens when starting engine.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Tailgate opens when starting engine.",
+        "Tailgate opens while driving."
+      ],
+      "causes": [
+        "Water ingress into tailgate release switch causing short circuit.",
+        "Tailgate misaligned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new tailgate release switch.",
+          "Check and adjust tailgate alignment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "920fdab9-3a10-4a16-8098-3f5a4b48df3c",
+      "title": "Tailgate opens while driving.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Tailgate opens when starting engine.",
+        "Tailgate opens while driving."
+      ],
+      "causes": [
+        "Water ingress into tailgate release switch causing short circuit.",
+        "Tailgate misaligned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new tailgate release switch.",
+          "Check and adjust tailgate alignment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "edcaabcf-1885-45d1-8de6-6bbb3245b609",
+      "title": "Unable to release bonnet.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Unable to release bonnet."
+      ],
+      "causes": [
+        "Bonnet release cable not located correctly in bonnet release lever mounting."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Retaining clip",
+            "part_number": "1 459 634",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Refit bonnet release cable in bonnet release lever mounting.",
+          "Fit retaining clip on bonnet release lever mounting to prevent lateral movement of bonnet release cable."
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

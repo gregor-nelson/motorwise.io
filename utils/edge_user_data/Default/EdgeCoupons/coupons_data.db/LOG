@@ -1,0 +1,11 @@
+2025/03/25-18:39:50.206 17ec Reusing MANIFEST C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\utils\edge_user_data\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/03/25-18:39:50.212 17ec Recovering log #47
+2025/03/25-18:39:50.225 17ec Level-0 table #50: started
+2025/03/25-18:39:50.253 17ec Level-0 table #50: 670816 bytes OK
+2025/03/25-18:39:50.254 17ec Recovering log #50
+2025/03/25-18:39:50.255 17ec Reusing old log C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\utils\edge_user_data\Default\EdgeCoupons/coupons_data.db/000050.log 
+2025/03/25-18:39:50.258 17ec Delete type=0 #47
+2025/03/25-18:39:50.258 17ec Delete type=2 #51
+2025/03/25-18:39:50.301 37dc Level-0 table #52: started
+2025/03/25-18:39:50.309 37dc Level-0 table #52: 670816 bytes OK
+2025/03/25-18:39:50.311 37dc Delete type=0 #50

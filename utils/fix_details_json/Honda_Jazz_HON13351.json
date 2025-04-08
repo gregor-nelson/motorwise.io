@@ -1,0 +1,552 @@
+{
+  "vehicle_id": "HON13351",
+  "vehicle_info": {
+    "manufacturer": "Honda",
+    "model": "Jazz",
+    "engine_code": "L12A1"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Honda Jazz",
+    "make": "Honda",
+    "model": "Jazz",
+    "engine_info": "L12A1/1.2 (01-08)"
+  },
+  "categories": {
+    "ABS/Brakes": [
+      {
+        "id": "6",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON13351/6?title=Front%20brake%20judder."
+      }
+    ],
+    "Body": [
+      {
+        "id": "3",
+        "title": "Water ingress into spare wheel well.",
+        "href": "/w1/known-fixes/HON13351/3?title=Water%20ingress%20into%20spare%20wheel%20well."
+      },
+      {
+        "id": "4",
+        "title": "Water ingress into footwells.",
+        "href": "/w1/known-fixes/HON13351/4?title=Water%20ingress%20into%20footwells."
+      },
+      {
+        "id": "4",
+        "title": "Carpet wet.",
+        "href": "/w1/known-fixes/HON13351/4?title=Carpet%20wet."
+      },
+      {
+        "id": "5",
+        "title": "Creaking/rattling noise from rear seat back rests whilst driving.",
+        "href": "/w1/known-fixes/HON13351/5?title=Creaking%2Frattling%20noise%20from%20rear%20seat%20back%20rests%20whilst%20driving."
+      },
+      {
+        "id": "8",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "8",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      }
+    ],
+    "Driveability": [
+      {
+        "id": "1",
+        "title": "Poor engine performance.",
+        "href": "/w1/known-fixes/HON13351/1?title=Poor%20engine%20performance."
+      },
+      {
+        "id": "1",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON13351/1?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "1",
+        "title": "Trouble codes stored in engine control module (ECM) fault memory: 22-4.",
+        "href": "/w1/known-fixes/HON13351/1?title=Trouble%20codes%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%2022-4."
+      },
+      {
+        "id": "6",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON13351/6?title=Front%20brake%20judder."
+      },
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON13351/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "9",
+        "title": "Trouble code stored in engine control module (ECM) fault memory: P0403.",
+        "href": "/w1/known-fixes/HON13351/9?title=Trouble%20code%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%20P0403."
+      },
+      {
+        "id": "10",
+        "title": "Juddering when gently accelerating.",
+        "href": "/w1/known-fixes/HON13351/10?title=Juddering%20when%20gently%20accelerating."
+      }
+    ],
+    "Engine management": [
+      {
+        "id": "1",
+        "title": "Poor engine performance.",
+        "href": "/w1/known-fixes/HON13351/1?title=Poor%20engine%20performance."
+      },
+      {
+        "id": "1",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON13351/1?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "1",
+        "title": "Trouble codes stored in engine control module (ECM) fault memory: 22-4.",
+        "href": "/w1/known-fixes/HON13351/1?title=Trouble%20codes%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%2022-4."
+      },
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON13351/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "9",
+        "title": "Trouble code stored in engine control module (ECM) fault memory: P0403.",
+        "href": "/w1/known-fixes/HON13351/9?title=Trouble%20code%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%20P0403."
+      }
+    ],
+    "Engine mechanical": [
+      {
+        "id": "2",
+        "title": "Erratic idle.",
+        "href": "/w1/known-fixes/HON13351/2?title=Erratic%20idle."
+      }
+    ],
+    "Fuel system": [
+      {
+        "id": "8",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "8",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "2",
+        "title": "Erratic idle.",
+        "href": "/w1/known-fixes/HON13351/2?title=Erratic%20idle."
+      },
+      {
+        "id": "5",
+        "title": "Creaking/rattling noise from rear seat back rests whilst driving.",
+        "href": "/w1/known-fixes/HON13351/5?title=Creaking%2Frattling%20noise%20from%20rear%20seat%20back%20rests%20whilst%20driving."
+      },
+      {
+        "id": "6",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON13351/6?title=Front%20brake%20judder."
+      },
+      {
+        "id": "7",
+        "title": "Knocking noise from front wheel when pulling away.",
+        "href": "/w1/known-fixes/HON13351/7?title=Knocking%20noise%20from%20front%20wheel%20when%20pulling%20away."
+      },
+      {
+        "id": "8",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "8",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON13351/8?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      }
+    ],
+    "Transmission": [
+      {
+        "id": "10",
+        "title": "Juddering when gently accelerating.",
+        "href": "/w1/known-fixes/HON13351/10?title=Juddering%20when%20gently%20accelerating."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "174909e7-58ae-41ba-86b5-9fe1339599ff",
+      "title": "Carpet wet.",
+      "affected_vehicles": [
+        "All models, 2002-05."
+      ],
+      "problems": [
+        "Carpet wet.",
+        "Water ingress into footwells."
+      ],
+      "causes": [
+        "Water ingress through front or rear door sound proofing."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove front and rear inner door panels.",
+          "Check front and rear door sound proofing.",
+          "Fit new door soundproofing seal or reseal door soundproofing."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "c3b85cb4-edab-4a8b-8d81-6b2c8f4bc198",
+      "title": "Creaking/rattling noise from rear seat back rests whilst driving.",
+      "affected_vehicles": [
+        "VIN →LUCGE2***83204111.",
+        "VIN →LUCGE3***83209835.",
+        "VIN →LUCGE2***83204111.",
+        "VIN →LUCGE3***83209835."
+      ],
+      "problems": [
+        "Creaking/rattling noise from rear seat back rests whilst driving."
+      ],
+      "causes": [
+        "Faulty rear seat back rest latches."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Rear seat back rest latch - LH (graphite black)",
+            "part_number": "82620-SAA-G01ZA",
+            "quantity": "1"
+          },
+          {
+            "name": "Rear seat back rest latch - LH (titanium)",
+            "part_number": "82620-SAA-G01ZB",
+            "quantity": "1"
+          },
+          {
+            "name": "Rear seat back rest latch - RH (graphite black)",
+            "part_number": "82220-SAA-G01ZA",
+            "quantity": "1"
+          },
+          {
+            "name": "Rear seat back rest latch - RH (titanium)",
+            "part_number": "82220-SAA-G01ZB",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Replace rear seat back rest latches."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "faa7137e-607f-4f11-8bc6-5a8867bd1193",
+      "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+      "affected_vehicles": [
+        "VIN →JHMGD1***6S238498.",
+        "VIN →JHMGD5***6S210985.",
+        "VIN →JHMGD1***6S238498.",
+        "VIN →JHMGD5***6S210985."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Trouble code stored in engine control module (ECM) fault memory: P0403."
+      ],
+      "causes": [
+        "Exhaust gas recirculation (EGR) valve stuck open/closed due to water ingress."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "EGR valve",
+            "part_number": "18011-PWA-050",
+            "quantity": "1"
+          },
+          {
+            "name": "EGR valve gasket",
+            "part_number": "18715-PB2-000",
+            "quantity": "1"
+          },
+          {
+            "name": "Bolt",
+            "part_number": "95701-08025-08",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Fit modified EGR valve."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "62535cdf-cb4e-425e-ba7a-03fa5b723e07",
+      "title": "Erratic idle.",
+      "affected_vehicles": [
+        "All models, 2002-03."
+      ],
+      "problems": [
+        "Erratic idle."
+      ],
+      "causes": [
+        "Crankcase breather valve worn."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Replace crankcase breather valve."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "0d1d6705-ed33-4eff-8e40-ca57c97d60ae",
+      "title": "Front brake judder.",
+      "affected_vehicles": [
+        "All models, 2005-08."
+      ],
+      "problems": [
+        "Front brake judder."
+      ],
+      "causes": [
+        "Excessive front brake disc runout."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check front brake disc runout is less than 0,04 mm. Reface or replace front brake discs as necessary.",
+          "Check front brake disc thickness variation is less than 0,015 mm. Reface or replace front brake discs as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "273efef0-c196-49fb-94b9-a6fb2779bb1e",
+      "title": "Juddering when gently accelerating.",
+      "affected_vehicles": [
+        "All models with continuously variable transmission (CVT)."
+      ],
+      "problems": [
+        "Juddering when gently accelerating."
+      ],
+      "causes": [
+        "Transmission internal parts slipping due to inferior quality transmission oil."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Renew transmission oil."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "80eae114-bfcd-4b62-8658-383f15d5851a",
+      "title": "Knocking noise from front wheel when pulling away.",
+      "affected_vehicles": [
+        "All models, 1982-05."
+      ],
+      "problems": [
+        "Knocking noise from front wheel when pulling away."
+      ],
+      "causes": [
+        "Contact between driveshaft and front wheel bearing."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Clean driveshaft and wheel bearing contact surfaces Fig.119091.1.",
+          "Apply grease to contact surfaces of driveshaft and wheel bearing Fig.119091.1.",
+          "ViewView more informationFig.119091"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "40a8c01a-5dc7-429c-b576-8060a71a2f59",
+      "title": "Poor engine performance.",
+      "affected_vehicles": [
+        "All models with VTEC engine."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Poor engine performance.",
+        "Trouble codes stored in engine control module (ECM) fault memory: 22-4."
+      ],
+      "causes": [
+        "Engine oil level incorrect.",
+        "Oil supply pressure to variable valve timing (VVT) system too low."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Top up engine oil to correct level."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "e5f4efff-acb4-4e39-aed0-60c805abc813",
+      "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Splashing noise heard from instrument panel when accelerating and braking.",
+        "Splashing noise heard from under front seats when accelerating and braking."
+      ],
+      "causes": [
+        "Fuel movement in fuel tank. More pronounced due to fuel tank positioned under front seats."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "No action required. Normal operational characteristic."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "4e8057b9-772e-4483-aa47-535414889a8e",
+      "title": "Splashing noise heard from under front seats when accelerating and braking.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Splashing noise heard from instrument panel when accelerating and braking.",
+        "Splashing noise heard from under front seats when accelerating and braking."
+      ],
+      "causes": [
+        "Fuel movement in fuel tank. More pronounced due to fuel tank positioned under front seats."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "No action required. Normal operational characteristic."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "4eb291bb-114d-4ba8-a059-f04a4e9d07b7",
+      "title": "Trouble codes stored in engine control module (ECM) fault memory: 22-4.",
+      "affected_vehicles": [
+        "All models with VTEC engine."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Poor engine performance.",
+        "Trouble codes stored in engine control module (ECM) fault memory: 22-4."
+      ],
+      "causes": [
+        "Engine oil level incorrect.",
+        "Oil supply pressure to variable valve timing (VVT) system too low."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Top up engine oil to correct level."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "41d0467c-68ec-4bf9-960a-21a541e2d3ef",
+      "title": "Trouble code stored in engine control module (ECM) fault memory: P0403.",
+      "affected_vehicles": [
+        "VIN →JHMGD1***6S238498.",
+        "VIN →JHMGD5***6S210985.",
+        "VIN →JHMGD1***6S238498.",
+        "VIN →JHMGD5***6S210985."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Trouble code stored in engine control module (ECM) fault memory: P0403."
+      ],
+      "causes": [
+        "Exhaust gas recirculation (EGR) valve stuck open/closed due to water ingress."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "EGR valve",
+            "part_number": "18011-PWA-050",
+            "quantity": "1"
+          },
+          {
+            "name": "EGR valve gasket",
+            "part_number": "18715-PB2-000",
+            "quantity": "1"
+          },
+          {
+            "name": "Bolt",
+            "part_number": "95701-08025-08",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Fit modified EGR valve."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "54b07393-6379-4f60-9e5b-376d9b423574",
+      "title": "Water ingress into footwells.",
+      "affected_vehicles": [
+        "All models, 2002-05."
+      ],
+      "problems": [
+        "Carpet wet.",
+        "Water ingress into footwells."
+      ],
+      "causes": [
+        "Water ingress through front or rear door sound proofing."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove front and rear inner door panels.",
+          "Check front and rear door sound proofing.",
+          "Fit new door soundproofing seal or reseal door soundproofing."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b59c1a80-28cb-43a9-b52b-6263ba25cd1c",
+      "title": "Water ingress into spare wheel well.",
+      "affected_vehicles": [
+        "All models, 2002-05."
+      ],
+      "problems": [
+        "Water ingress into spare wheel well."
+      ],
+      "causes": [
+        "Bodywork sealant hardens and cracks Fig.115525.1."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Sealant (Sikaflex 221)",
+            "part_number": "07SIKAFLEX221HE",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out water test to roof channel/tailgate area to confirm fault.",
+          "Clean area around roof channel/tailgate.",
+          "Apply 2 - 3 mm bead of sealant to affected area Fig.115525.1.",
+          "Repeat procedure for opposite side.",
+          "Apply paint to sealant to match body colour.",
+          "ViewView more informationFig.115525"
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

@@ -2,38 +2,49 @@ import React from 'react';
 import { styled, css } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
-import { COLORS } from './theme';
-// Tooltip theme constants to match chart tooltip exactly
+// Import theme constants to ensure consistency
+import { 
+  COLORS, 
+  SPACING, 
+  FONT_SIZES, 
+  LINE_HEIGHTS, 
+  BREAKPOINTS,
+  commonFontStyles,
+  focusStyles,
+  respondTo
+} from './theme';
+
+// Align tooltip constants with theme
 export const TOOLTIP_CONSTANTS = {
   BORDER_WIDTH: '4px',
-  FONT_FAMILY: '"GDS Transport", arial, sans-serif',
+  FONT_FAMILY: '"GDS Transport", arial, sans-serif', // This matches the theme
   BORDER_RADIUS: '0',
   PADDING: {
-    DESKTOP: '15px',
-    MOBILE: '12px'
+    DESKTOP: SPACING.M,
+    MOBILE: SPACING.S
   },
   FONT_SIZE: {
-    DESKTOP: '0.9rem',
-    MOBILE: '0.8rem',
+    DESKTOP: FONT_SIZES.S,
+    MOBILE: FONT_SIZES.XS,
     TITLE: {
-      DESKTOP: '16px',
-      MOBILE: '14px'
+      DESKTOP: FONT_SIZES.M,
+      MOBILE: FONT_SIZES.S
     },
     SECTION_TITLE: {
-      DESKTOP: '14px',
-      MOBILE: '13px'
+      DESKTOP: FONT_SIZES.S,
+      MOBILE: FONT_SIZES.XS
     },
     CONTENT: {
-      DESKTOP: '0.9rem',
-      MOBILE: '0.8rem'
+      DESKTOP: FONT_SIZES.S,
+      MOBILE: FONT_SIZES.XS
     },
     NOTE: {
-      DESKTOP: '0.85rem',
-      MOBILE: '0.8rem'
+      DESKTOP: FONT_SIZES.XS,
+      MOBILE: FONT_SIZES.XS
     },
     BULLET: {
-      DESKTOP: '0.85rem',
-      MOBILE: '0.8rem'
+      DESKTOP: FONT_SIZES.XS,
+      MOBILE: FONT_SIZES.XS
     }
   },
   WIDTH: {
@@ -47,75 +58,49 @@ export const TOOLTIP_CONSTANTS = {
   },
   DIVIDER: {
     HEIGHT: '1px',
-    MARGIN: '8px 0'
+    MARGIN: `${SPACING.XS} 0`
   },
   SPACING: {
-    TITLE_MARGIN: '6px',
-    ROW_MARGIN: '4px',
-    SECTION_MARGIN: '10px'
+    TITLE_MARGIN: SPACING.XS,
+    ROW_MARGIN: SPACING.XS,
+    SECTION_MARGIN: SPACING.S
   },
   GRID: {
     LABEL_WIDTH: '40%',
     VALUE_WIDTH: '60%',
-    GAP: '8px'  // Increased from 4px to match chart tooltip
+    GAP: SPACING.XS
   }
 };
 
-// GOV.UK Breakpoints
-const GOVUK_BREAKPOINTS = {
-  TABLET: '641px',
-};
+// Use theme breakpoints instead of custom ones
+const desktopMediaQuery = `@media (min-width: ${BREAKPOINTS.MOBILE})`;
+const mobileMediaQuery = `@media (max-width: ${BREAKPOINTS.MOBILE})`;
 
-// Media query helpers - updated to match chart tooltip implementation
-const desktopMediaQuery = `@media (min-width: ${GOVUK_BREAKPOINTS.TABLET})`;
-const mobileMediaQuery = `@media (max-width: ${GOVUK_BREAKPOINTS.TABLET})`;
-
-// GOV.UK font styles
-const govukFontStyles = css`
-  font-family: ${TOOLTIP_CONSTANTS.FONT_FAMILY};
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: ${COLORS.TEXT};
-  @media print {
-    font-family: sans-serif;
-    color: #000;
-  }
-`;
-
-// GOV.UK focus styles
-const govukFocusStyles = css`
-  outline: 3px solid transparent;
-  color: ${COLORS.TEXT};
-  background-color: ${COLORS.YELLOW};
-  box-shadow: 0 -2px ${COLORS.YELLOW}, 0 4px ${COLORS.TEXT};
-  text-decoration: none;
-`;
-
-// Updated GOV.UK Tooltip Component to match chart tooltip style exactly
+// Updated GOV.UK Tooltip Component to match theme
 export const GovUKTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    ...govukFontStyles.styles,
+    ...commonFontStyles.styles,
     backgroundColor: COLORS.WHITE,
-    color: COLORS.TEXT,
+    color: COLORS.BLACK,
     fontWeight: 400,
     borderLeft: `${TOOLTIP_CONSTANTS.BORDER_WIDTH} solid ${COLORS.BLUE}`,
     borderRadius: TOOLTIP_CONSTANTS.BORDER_RADIUS,
     boxShadow: TOOLTIP_CONSTANTS.SHADOWS.DEFAULT,
     padding: TOOLTIP_CONSTANTS.PADDING.DESKTOP,
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.DESKTOP,
-    lineHeight: '1.4',
+    lineHeight: LINE_HEIGHTS.S,
     width: TOOLTIP_CONSTANTS.WIDTH.OPTIMAL,
     minWidth: TOOLTIP_CONSTANTS.WIDTH.MIN,
     maxWidth: TOOLTIP_CONSTANTS.WIDTH.MAX_DESKTOP,
     wordBreak: 'break-word',
-    WebkitFontSmoothing: 'antialiased', // Added to match chart tooltip
-    MozOsxFontSmoothing: 'grayscale',   // Added to match chart tooltip
+    WebkitFontSmoothing: 'antialiased',
+    MozOsxFontSmoothing: 'grayscale',
     [mobileMediaQuery]: {
       padding: TOOLTIP_CONSTANTS.PADDING.MOBILE,
       fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.MOBILE,
-      width: 'auto', // Changed to 'auto' for mobile to match chart tooltip
+      width: 'auto',
       minWidth: TOOLTIP_CONSTANTS.WIDTH.MIN,
       maxWidth: TOOLTIP_CONSTANTS.WIDTH.MAX_MOBILE
     },
@@ -129,9 +114,9 @@ export const GovUKTooltip = styled(({ className, ...props }) => (
   }
 }));
 
-// Tooltip Target - maintained functionality with updated styling
+// Tooltip Target with theme-aligned styling
 export const TooltipTarget = styled('span')(({ underlineStyle = 'dotted' }) => ({
-  ...govukFontStyles.styles,
+  ...commonFontStyles.styles,
   borderBottom:
     underlineStyle === 'none'
       ? 'none'
@@ -140,34 +125,34 @@ export const TooltipTarget = styled('span')(({ underlineStyle = 'dotted' }) => (
   position: 'relative',
   display: 'inline',
   '&:hover': {
-    borderBottomColor: COLORS.TEXT,
+    borderBottomColor: COLORS.BLACK,
     textDecoration: 'underline',
   },
   '&:focus': {
-    ...govukFocusStyles.styles,
+    ...focusStyles.styles,
   },
 }));
 
-// Tooltip Cell - maintained functionality with updated styling
+// Tooltip Cell with theme-aligned styling
 export const TooltipCell = styled('td')(() => ({
-  ...govukFontStyles.styles,
+  ...commonFontStyles.styles,
   '&:first-of-type': {
     fontWeight: 700,
     borderBottom: `1px dotted ${COLORS.DARK_GREY}`,
     cursor: 'pointer',
     '&:hover': {
-      borderBottomColor: COLORS.TEXT,
+      borderBottomColor: COLORS.BLACK,
       textDecoration: 'underline',
     },
     '&:focus': {
-      ...govukFocusStyles.styles,
+      ...focusStyles.styles,
     },
   },
 }));
 
-// Tooltip Heading - maintained functionality with updated styling
+// Tooltip Heading with theme-aligned styling
 export const TooltipHeading = styled('span')(() => ({
-  ...govukFontStyles.styles,
+  ...commonFontStyles.styles,
   cursor: 'pointer',
   display: 'inline-flex',
   alignItems: 'center',
@@ -180,10 +165,10 @@ export const TooltipHeading = styled('span')(() => ({
     textDecoration: 'underline',
   },
   '&:focus': {
-    ...govukFocusStyles.styles,
+    ...focusStyles.styles,
   },
   '& .info-icon': {
-    marginLeft: '8px',
+    marginLeft: SPACING.XS,
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.DESKTOP,
     opacity: 0.7,
     color: 'inherit',
@@ -194,7 +179,7 @@ export const TooltipHeading = styled('span')(() => ({
   },
 }));
 
-// Components from chart tooltip - Using exact same definitions
+// Components from chart tooltip - Using theme constants
 export const TooltipTitle = styled('div')({
   fontWeight: '700',
   marginBottom: TOOLTIP_CONSTANTS.SPACING.TITLE_MARGIN,
@@ -212,7 +197,7 @@ export const TooltipRow = styled('div')({
   columnGap: TOOLTIP_CONSTANTS.GRID.GAP,
   rowGap: '2px',
   alignItems: 'baseline',
-  width: '100%',  // Ensure it takes full width
+  width: '100%',
   [mobileMediaQuery]: {
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.MOBILE
   }
@@ -220,13 +205,13 @@ export const TooltipRow = styled('div')({
 
 export const TooltipLabel = styled('span')({
   fontWeight: 'bold',
-  minWidth: '100px',  // Ensure minimum width for labels
-  paddingRight: '4px'
+  minWidth: '100px',
+  paddingRight: SPACING.XS
 });
 
 export const TooltipValue = styled('span')({
   textAlign: 'left',
-  minWidth: '120px',  // Ensure minimum width for values
+  minWidth: '120px',
   wordWrap: 'break-word'
 });
 
@@ -235,7 +220,7 @@ export const TooltipDivider = styled('hr')({
   height: TOOLTIP_CONSTANTS.DIVIDER.HEIGHT,
   backgroundColor: COLORS.MID_GREY,
   margin: TOOLTIP_CONSTANTS.DIVIDER.MARGIN,
-  width: '100%'  // Ensure full width
+  width: '100%'
 });
 
 export const TooltipWarningText = styled('div')({
@@ -243,7 +228,7 @@ export const TooltipWarningText = styled('div')({
   color: COLORS.RED,
   fontWeight: '700',
   marginBottom: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN,
-  width: '100%',  // Ensure full width
+  width: '100%',
   [mobileMediaQuery]: {
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.MOBILE
   }
@@ -253,7 +238,7 @@ export const TooltipSectionTitle = styled('div')({
   fontWeight: '700',
   marginBottom: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN,
   fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.DESKTOP,
-  width: '100%',  // Ensure full width
+  width: '100%',
   [mobileMediaQuery]: {
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.MOBILE
   }
@@ -262,18 +247,18 @@ export const TooltipSectionTitle = styled('div')({
 export const TooltipNote = styled('div')({
   fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.NOTE.DESKTOP,
   color: COLORS.BLACK,
-  marginTop: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN + 2,
-  width: '100%',  // Ensure full width
+  marginTop: parseInt(TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN) + 2,
+  width: '100%',
   [mobileMediaQuery]: {
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.NOTE.MOBILE
   }
 });
 
 export const TooltipBulletList = styled('ul')({
-  margin: '3px 0 0 14px',
+  margin: `${SPACING.XS} 0 0 14px`,
   padding: 0,
   fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.BULLET.DESKTOP,
-  width: '100%',  // Ensure full width
+  width: '100%',
   [mobileMediaQuery]: {
     fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.BULLET.MOBILE
   }
@@ -281,22 +266,22 @@ export const TooltipBulletList = styled('ul')({
 
 export const TooltipBulletItem = styled('li')({
   marginBottom: '2px',
-  paddingRight: '8px'
+  paddingRight: SPACING.XS
 });
 
-// Badge component from chart tooltip for status indicators
+// Badge component aligned with theme colors
 export const Badge = styled('span')(({ color }) => ({
   display: 'inline-block',
-  padding: '1px 6px',
+  padding: `1px ${SPACING.XS}`,
   borderRadius: '2px',
   backgroundColor: color,
   color: COLORS.WHITE,
   fontSize: '11px',
   fontWeight: 'bold',
-  marginLeft: '4px'
+  marginLeft: SPACING.XS
 }));
 
-// Helper functions from chart-specific tooltip
+// Helper functions with theme colors
 export const getTestResultColor = (status) => {
   return status && status.includes('PASS') ? COLORS.GREEN : COLORS.RED;
 };
@@ -327,7 +312,7 @@ export const calculateMileageRates = (currentDate, previousDate, currentMileage,
   };
 };
 
-// Original hooks and helper components with updated styling to match chart tooltip
+// Helper components with theme-aligned styling
 export const useTooltip = () => {
   const withTooltip = (text, tooltipText, options = {}) => {
     const { placement = 'top', underlineStyle = 'dotted' } = options;
@@ -339,7 +324,7 @@ export const useTooltip = () => {
           </div>
         }
         placement={placement}
-        arrow={false} // Explicitly set to false to match chart tooltip
+        arrow={false}
       >
         <TooltipTarget underlineStyle={underlineStyle}>{text}</TooltipTarget>
       </GovUKTooltip>
@@ -348,7 +333,7 @@ export const useTooltip = () => {
   return { withTooltip };
 };
 
-// Enhanced helper component for value tooltips with more flexibility
+// Enhanced helper component for value tooltips
 export const ValueWithTooltip = ({ 
   children,
   tooltip,
@@ -376,7 +361,7 @@ export const ValueWithTooltip = ({
       </div>
     }
     placement={placement}
-    arrow={false} // Explicitly set to false to match chart tooltip
+    arrow={false}
   >
     <TooltipTarget>{children}</TooltipTarget>
   </GovUKTooltip>
@@ -403,7 +388,7 @@ export const CellWithTooltip = ({
       </div>
     }
     placement={placement}
-    arrow={false} // Explicitly set to false to match chart tooltip
+    arrow={false}
   >
     <TooltipCell>{label}</TooltipCell>
   </GovUKTooltip>
@@ -438,7 +423,7 @@ export const HeadingWithTooltip = ({
       </div>
     }
     placement={placement}
-    arrow={false} // Explicitly set to false to match chart tooltip
+    arrow={false}
   >
     <TooltipHeading style={{ color: iconColor }}>
       {children}
@@ -446,7 +431,7 @@ export const HeadingWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Enhanced tooltip content wrapper for complex tooltips
+// Enhanced tooltip content wrapper
 export const ComplexTooltipContent = ({ 
   title, 
   rows = [], 
@@ -510,7 +495,7 @@ export const EnhancedTooltip = ({
   <GovUKTooltip
     title={<ComplexTooltipContent {...content} />}
     placement={placement}
-    arrow={false} // Explicitly set to false to match chart tooltip
+    arrow={false}
   >
     <TooltipTarget underlineStyle={underlineStyle}>{children}</TooltipTarget>
   </GovUKTooltip>

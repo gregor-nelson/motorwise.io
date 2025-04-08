@@ -1,0 +1,163 @@
+{
+  "vehicle_id": "NIS44372",
+  "vehicle_info": {
+    "manufacturer": "Nissan",
+    "model": "Qashqai",
+    "engine_code": "MR20DD"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Nissan Qashqai",
+    "make": "Nissan",
+    "model": "Qashqai",
+    "engine_info": "MR20DD/2 (J11) (14-21)"
+  },
+  "categories": {
+    "Body": [
+      {
+        "id": "1",
+        "title": "Intermittent self-activation of alarm system siren.",
+        "href": "/w1/known-fixes/NIS44372/1?title=Intermittent%20self-activation%20of%20alarm%20system%20siren."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "1",
+        "title": "Intermittent self-activation of alarm system siren.",
+        "href": "/w1/known-fixes/NIS44372/1?title=Intermittent%20self-activation%20of%20alarm%20system%20siren."
+      },
+      {
+        "id": "2",
+        "title": "Engine overheating.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20overheating."
+      },
+      {
+        "id": "2",
+        "title": "Engine coolant blower motor(s) not working.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20coolant%20blower%20motor%28s%29%20not%20working."
+      },
+      {
+        "id": "2",
+        "title": "Engine coolant blower motor(s) run continuously.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20coolant%20blower%20motor%28s%29%20run%20continuously."
+      }
+    ],
+    "Engine cooling": [
+      {
+        "id": "2",
+        "title": "Engine overheating.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20overheating."
+      },
+      {
+        "id": "2",
+        "title": "Engine coolant blower motor(s) not working.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20coolant%20blower%20motor%28s%29%20not%20working."
+      },
+      {
+        "id": "2",
+        "title": "Engine coolant blower motor(s) run continuously.",
+        "href": "/w1/known-fixes/NIS44372/2?title=Engine%20coolant%20blower%20motor%28s%29%20run%20continuously."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "047e8b07-251a-4e11-9b4f-a80ddf835e5a",
+      "title": "Engine coolant blower motor(s) not working.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "c461ad99-79b9-4b6b-9ae9-0ff5e6f3c83b",
+      "title": "Engine coolant blower motor(s) run continuously.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "44b515dd-6dfb-4c80-a6e6-55a01118d369",
+      "title": "Engine overheating.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Engine coolant blower motor(s) not working.",
+        "Engine coolant blower motor(s) run continuously.",
+        "Engine overheating."
+      ],
+      "causes": [
+        "Faulty capacitor in engine coolant blower motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit modified engine coolant blower motor(s)."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "711d8f9f-268a-4b44-a3bc-71573884db4a",
+      "title": "Intermittent self-activation of alarm system siren.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Intermittent self-activation of alarm system siren."
+      ],
+      "causes": [
+        "Unsatisfactory design of alarm system in car movement sensor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Alarm system in car movement sensor",
+            "part_number": "28436 4EA0B",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found:Remove interior lamps assembly.Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "Remove interior lamps assembly.",
+          "Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "Remove interior lamps assembly.",
+          "Fit new alarm system in car movement sensor Fig.1234930.1.",
+          "ViewView more informationFig.1234930"
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

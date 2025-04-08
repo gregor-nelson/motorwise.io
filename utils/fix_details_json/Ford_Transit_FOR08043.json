@@ -1,0 +1,216 @@
+{
+  "vehicle_id": "FOR08043",
+  "vehicle_info": {
+    "manufacturer": "Ford",
+    "model": "Transit",
+    "engine_code": "4EB"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Ford Transit",
+    "make": "Ford",
+    "model": "Transit",
+    "engine_info": "4EB/2.5 ('95)"
+  },
+  "categories": {
+    "ABS/Brakes": [
+      {
+        "id": "1",
+        "title": "When brakes are first applied after the vehicle has stood for long periods, the rear brakes may lock up.",
+        "href": "/w1/known-fixes/FOR08043/1?title=When%20brakes%20are%20first%20applied%20after%20the%20vehicle%20has%20stood%20for%20long%20periods%2C%20the%20rear%20brakes%20may%20lock%20up."
+      }
+    ],
+    "Drivetrain": [
+      {
+        "id": "4",
+        "title": "Noise and vibration through vehicle when driving.",
+        "href": "/w1/known-fixes/FOR08043/4?title=Noise%20and%20vibration%20through%20vehicle%20when%20driving."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "4",
+        "title": "Noise and vibration through vehicle when driving.",
+        "href": "/w1/known-fixes/FOR08043/4?title=Noise%20and%20vibration%20through%20vehicle%20when%20driving."
+      }
+    ],
+    "Steering": [
+      {
+        "id": "3",
+        "title": "Steering heavy. Excessive noise from power steering pump.",
+        "href": "/w1/known-fixes/FOR08043/3?title=Steering%20heavy.%20Excessive%20noise%20from%20power%20steering%20pump."
+      }
+    ],
+    "Transmission": [
+      {
+        "id": "2",
+        "title": "Delayed 3rd-4th gear shift or does not change into 4th gear.",
+        "href": "/w1/known-fixes/FOR08043/2?title=Delayed%203rd-4th%20gear%20shift%20or%20does%20not%20change%20into%204th%20gear."
+      },
+      {
+        "id": "4",
+        "title": "Noise and vibration through vehicle when driving.",
+        "href": "/w1/known-fixes/FOR08043/4?title=Noise%20and%20vibration%20through%20vehicle%20when%20driving."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "9c990452-8610-4d4b-8630-31b587a06d7a",
+      "title": "Delayed 3rd-4th gear shift or does not change into 4th gear.",
+      "affected_vehicles": [
+        "All models with A4LD automatic transmission, →07/00 (build code: YD)."
+      ],
+      "problems": [
+        "Delayed 3rd-4th gear shift or does not change into 4th gear."
+      ],
+      "causes": [
+        "Excessive wear or burning of the overdrive band caused by operating pressure too low."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Front servo piston",
+            "part_number": "1 024 140",
+            "quantity": "1"
+          },
+          {
+            "name": "Servo cover",
+            "part_number": "1 023 674",
+            "quantity": "1"
+          },
+          {
+            "name": "O/D brake band",
+            "part_number": "6 156 132",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Completely dismantle and clean automatic transmission.",
+          "Replace the overdrive brake band.",
+          "Fit modified front servo piston and servo cover."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d1bca482-ae72-4afa-94c1-2b812840d1f5",
+      "title": "Noise and vibration through vehicle when driving.",
+      "affected_vehicles": [
+        "All RWD models with manual transmission, →2012."
+      ],
+      "problems": [
+        "Noise and vibration through vehicle when driving."
+      ],
+      "causes": [
+        "Faulty propeller shaft centre bearing."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Propeller shaft centre bearing (→05/09/07)",
+            "part_number": "4 104 708",
+            "quantity": "1"
+          },
+          {
+            "name": "Propeller shaft centre bearing (06/09/07→)",
+            "part_number": "1 510 905",
+            "quantity": "1"
+          },
+          {
+            "name": "Grease",
+            "part_number": "1 776 432",
+            "quantity": "As required"
+          },
+          {
+            "name": "Spring washer",
+            "part_number": "Refer to manufacturer",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Remove propeller shaft.",
+          "Separate propeller shaft at propeller shaft joint yoke.",
+          "Fit new propeller shaft centre bearing.",
+          "Apply a light coating of grease to propeller shaft splines.",
+          "Reassemble propeller shaft."
+        ]
+      },
+      "notes": [
+        "Note: Mark alignment of propeller shaft to propeller shaft joint yoke."
+      ]
+    },
+    {
+      "id": "d9b1277a-341d-447b-ba99-2a325f0bf269",
+      "title": "Steering heavy. Excessive noise from power steering pump.",
+      "affected_vehicles": [
+        "All models with power steering."
+      ],
+      "problems": [
+        "Steering heavy. Excessive noise from power steering pump."
+      ],
+      "causes": [
+        "Power steering pump pivot bolt damaged.",
+        "Power steering pump bracket bolts loose or sheared."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Pivot bolt",
+            "part_number": "6 149 078",
+            "quantity": "As required"
+          },
+          {
+            "name": "Bracket bolts",
+            "part_number": "6 160 457",
+            "quantity": "As required"
+          },
+          {
+            "name": "Flange headed bolt",
+            "part_number": "6 129 192",
+            "quantity": "As required"
+          },
+          {
+            "name": "0,5 mm washer",
+            "part_number": "1 031 370",
+            "quantity": "As required"
+          }
+        ],
+        "steps": [
+          "Replace or tighten bolts as necessary.",
+          "Check clearance between power steering pump bracket and cradle Fig.102161. Clearance: 0,5 mm max.",
+          "If required: Reduce clearance using 0,5 mm washers.",
+          "ViewView more informationFig.102161"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "3538fb49-54e2-460b-b5b7-93b378a30e11",
+      "title": "When brakes are first applied after the vehicle has stood for long periods, the rear brakes may lock up.",
+      "affected_vehicles": [
+        "All models with RWD 1992-01, with FWD 2000-04, fitted with 10 inch or 11 inch rear brake drums."
+      ],
+      "problems": [
+        "When brakes are first applied after the vehicle has stood for long periods, the rear brakes may lock up."
+      ],
+      "causes": [
+        "Corrosion and oxidation between linings and brake drums."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check the brake load proportioning valve adjustment. Refer to manufacturer's specification.",
+          "Remove rear brake drums and leading shoes.",
+          "Chamfer lining material (10 inch brake drum) Fig.101357.",
+          "Chamfer lining material (11 inch brake drum) Fig.101358.",
+          "ViewView more informationFig.101357",
+          "ViewView more informationFig.101358",
+          "ViewView more informationFig.101357",
+          "ViewView more informationFig.101358"
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

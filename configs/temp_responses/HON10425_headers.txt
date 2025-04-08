@@ -1,8 +1,0 @@
-HTTP/1.1 302 Moved Temporarily
-Server: nginx
-Date: Wed, 19 Mar 2025 00:10:54 GMT
-Content-Type: text/html
-Content-Length: 138
-Connection: keep-alive
-Location: https://workshop.autodata-group.com?referer=/w2/api/tyres/HON10425?v=c475fc2fee6cb3aa12c5a3c966dbcd39dfe4659c&language=en-gb
-

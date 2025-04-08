@@ -1,0 +1,1494 @@
+{
+  "vehicle_id": "HON25013",
+  "vehicle_info": {
+    "manufacturer": "Honda",
+    "model": "Civic",
+    "engine_code": "R16A2"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Honda Civic",
+    "make": "Honda",
+    "model": "Civic",
+    "engine_info": "R16A2/1.6 (06-12)"
+  },
+  "categories": {
+    "ABS/Brakes": [
+      {
+        "id": "3",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON25013/3?title=Front%20brake%20judder."
+      },
+      {
+        "id": "4",
+        "title": "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine.",
+        "href": "/w1/known-fixes/HON25013/4?title=ABS%20warning%20lamp%2C%20brake%20system%20warning%20lamp%20and%20handbrake%20ON%20warning%20lamp%20illuminate%20when%20starting%20engine."
+      },
+      {
+        "id": "6",
+        "title": "Trouble code stored: U0122.",
+        "href": "/w1/known-fixes/HON25013/6?title=Trouble%20code%20stored%3A%20U0122."
+      },
+      {
+        "id": "6",
+        "title": "Possible CAN data bus trouble codes stored.",
+        "href": "/w1/known-fixes/HON25013/6?title=Possible%20CAN%20data%20bus%20trouble%20codes%20stored."
+      }
+    ],
+    "AC/Heating": [
+      {
+        "id": "26",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON25013/26?title=Battery%20discharged."
+      },
+      {
+        "id": "26",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON25013/26?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      }
+    ],
+    "Body": [
+      {
+        "id": "17",
+        "title": "Retractable door mirror not working correctly.",
+        "href": "/w1/known-fixes/HON25013/17?title=Retractable%20door%20mirror%20not%20working%20correctly."
+      },
+      {
+        "id": "18",
+        "title": "Front doors difficult to open from outside.",
+        "href": "/w1/known-fixes/HON25013/18?title=Front%20doors%20difficult%20to%20open%20from%20outside."
+      },
+      {
+        "id": "18",
+        "title": "Front doors will not open from outside.",
+        "href": "/w1/known-fixes/HON25013/18?title=Front%20doors%20will%20not%20open%20from%20outside."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "21",
+        "title": "Retractable door mirrors inoperative or slow to fold in.",
+        "href": "/w1/known-fixes/HON25013/21?title=Retractable%20door%20mirrors%20inoperative%20or%20slow%20to%20fold%20in."
+      },
+      {
+        "id": "24",
+        "title": "Pop-up headlamp washers not retracting.",
+        "href": "/w1/known-fixes/HON25013/24?title=Pop-up%20headlamp%20washers%20not%20retracting."
+      },
+      {
+        "id": "28",
+        "title": "Fuel filler flap will not open.",
+        "href": "/w1/known-fixes/HON25013/28?title=Fuel%20filler%20flap%20will%20not%20open."
+      }
+    ],
+    "Clutch": [
+      {
+        "id": "8",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON25013/8?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "13",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON25013/13?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      }
+    ],
+    "Driveability": [
+      {
+        "id": "1",
+        "title": "Gears difficult to engage.",
+        "href": "/w1/known-fixes/HON25013/1?title=Gears%20difficult%20to%20engage."
+      },
+      {
+        "id": "1",
+        "title": "Poor gear selection.",
+        "href": "/w1/known-fixes/HON25013/1?title=Poor%20gear%20selection."
+      },
+      {
+        "id": "1",
+        "title": "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919.",
+        "href": "/w1/known-fixes/HON25013/1?title=Possible%20auto%20shift%20manual%20%28ASM%29%20transmission%20trouble%20codes%20stored%3A%20P0909%2C%20P0919."
+      },
+      {
+        "id": "3",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON25013/3?title=Front%20brake%20judder."
+      },
+      {
+        "id": "5",
+        "title": "Electronic stability program (ESP) warning lamp flashes during normal driving.",
+        "href": "/w1/known-fixes/HON25013/5?title=Electronic%20stability%20program%20%28ESP%29%20warning%20lamp%20flashes%20during%20normal%20driving."
+      },
+      {
+        "id": "7",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON25013/7?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "7",
+        "title": "Possible trouble codes stored: P2A00, P0135, P1172.",
+        "href": "/w1/known-fixes/HON25013/7?title=Possible%20trouble%20codes%20stored%3A%20P2A00%2C%20P0135%2C%20P1172."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) warning lamp illuminated.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) inoperative.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20inoperative."
+      },
+      {
+        "id": "22",
+        "title": "Engine malfunction indicator lamp (MIL) illuminates immediately after starting engine.",
+        "href": "/w1/known-fixes/HON25013/22?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminates%20immediately%20after%20starting%20engine."
+      },
+      {
+        "id": "22",
+        "title": "Trouble codes stored in engine control module (ECM) fault memory: P1683, P1684.",
+        "href": "/w1/known-fixes/HON25013/22?title=Trouble%20codes%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%20P1683%2C%20P1684."
+      }
+    ],
+    "Drivetrain": [
+      {
+        "id": "1",
+        "title": "Gears difficult to engage.",
+        "href": "/w1/known-fixes/HON25013/1?title=Gears%20difficult%20to%20engage."
+      },
+      {
+        "id": "1",
+        "title": "Poor gear selection.",
+        "href": "/w1/known-fixes/HON25013/1?title=Poor%20gear%20selection."
+      },
+      {
+        "id": "1",
+        "title": "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919.",
+        "href": "/w1/known-fixes/HON25013/1?title=Possible%20auto%20shift%20manual%20%28ASM%29%20transmission%20trouble%20codes%20stored%3A%20P0909%2C%20P0919."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "4",
+        "title": "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine.",
+        "href": "/w1/known-fixes/HON25013/4?title=ABS%20warning%20lamp%2C%20brake%20system%20warning%20lamp%20and%20handbrake%20ON%20warning%20lamp%20illuminate%20when%20starting%20engine."
+      },
+      {
+        "id": "9",
+        "title": "Battery discharging.",
+        "href": "/w1/known-fixes/HON25013/9?title=Battery%20discharging."
+      },
+      {
+        "id": "9",
+        "title": "Engine oil level warning lamp illuminated even though engine oil level correct.",
+        "href": "/w1/known-fixes/HON25013/9?title=Engine%20oil%20level%20warning%20lamp%20illuminated%20even%20though%20engine%20oil%20level%20correct."
+      },
+      {
+        "id": "9",
+        "title": "Trouble code stored: P250B.",
+        "href": "/w1/known-fixes/HON25013/9?title=Trouble%20code%20stored%3A%20P250B."
+      },
+      {
+        "id": "10",
+        "title": "Battery discharging.",
+        "href": "/w1/known-fixes/HON25013/10?title=Battery%20discharging."
+      },
+      {
+        "id": "11",
+        "title": "Interior lamp permanently illuminated.",
+        "href": "/w1/known-fixes/HON25013/11?title=Interior%20lamp%20permanently%20illuminated."
+      },
+      {
+        "id": "11",
+        "title": "Battery discharging.",
+        "href": "/w1/known-fixes/HON25013/11?title=Battery%20discharging."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) warning lamp illuminated.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) inoperative.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20inoperative."
+      },
+      {
+        "id": "14",
+        "title": "Battery discharging.",
+        "href": "/w1/known-fixes/HON25013/14?title=Battery%20discharging."
+      },
+      {
+        "id": "17",
+        "title": "Retractable door mirror not working correctly.",
+        "href": "/w1/known-fixes/HON25013/17?title=Retractable%20door%20mirror%20not%20working%20correctly."
+      },
+      {
+        "id": "21",
+        "title": "Retractable door mirrors inoperative or slow to fold in.",
+        "href": "/w1/known-fixes/HON25013/21?title=Retractable%20door%20mirrors%20inoperative%20or%20slow%20to%20fold%20in."
+      },
+      {
+        "id": "24",
+        "title": "Pop-up headlamp washers not retracting.",
+        "href": "/w1/known-fixes/HON25013/24?title=Pop-up%20headlamp%20washers%20not%20retracting."
+      },
+      {
+        "id": "25",
+        "title": "Instrument panel illumination illuminates when ignition switched OFF.",
+        "href": "/w1/known-fixes/HON25013/25?title=Instrument%20panel%20illumination%20illuminates%20when%20ignition%20switched%20OFF."
+      },
+      {
+        "id": "25",
+        "title": "Instrument panel not working.",
+        "href": "/w1/known-fixes/HON25013/25?title=Instrument%20panel%20not%20working."
+      },
+      {
+        "id": "25",
+        "title": "Trouble code stored: U0155.",
+        "href": "/w1/known-fixes/HON25013/25?title=Trouble%20code%20stored%3A%20U0155."
+      },
+      {
+        "id": "26",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON25013/26?title=Battery%20discharged."
+      },
+      {
+        "id": "26",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON25013/26?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      },
+      {
+        "id": "27",
+        "title": "Immobilizer permanently active after attempting to jump starting vehicle.",
+        "href": "/w1/known-fixes/HON25013/27?title=Immobilizer%20permanently%20active%20after%20attempting%20to%20jump%20starting%20vehicle."
+      }
+    ],
+    "Engine management": [
+      {
+        "id": "4",
+        "title": "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine.",
+        "href": "/w1/known-fixes/HON25013/4?title=ABS%20warning%20lamp%2C%20brake%20system%20warning%20lamp%20and%20handbrake%20ON%20warning%20lamp%20illuminate%20when%20starting%20engine."
+      },
+      {
+        "id": "6",
+        "title": "Trouble code stored: U0122.",
+        "href": "/w1/known-fixes/HON25013/6?title=Trouble%20code%20stored%3A%20U0122."
+      },
+      {
+        "id": "6",
+        "title": "Possible CAN data bus trouble codes stored.",
+        "href": "/w1/known-fixes/HON25013/6?title=Possible%20CAN%20data%20bus%20trouble%20codes%20stored."
+      },
+      {
+        "id": "7",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/HON25013/7?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "7",
+        "title": "Possible trouble codes stored: P2A00, P0135, P1172.",
+        "href": "/w1/known-fixes/HON25013/7?title=Possible%20trouble%20codes%20stored%3A%20P2A00%2C%20P0135%2C%20P1172."
+      },
+      {
+        "id": "16",
+        "title": "Engine difficult to start after re-fuelling when tank has run dry.",
+        "href": "/w1/known-fixes/HON25013/16?title=Engine%20difficult%20to%20start%20after%20re-fuelling%20when%20tank%20has%20run%20dry."
+      },
+      {
+        "id": "22",
+        "title": "Engine malfunction indicator lamp (MIL) illuminates immediately after starting engine.",
+        "href": "/w1/known-fixes/HON25013/22?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminates%20immediately%20after%20starting%20engine."
+      },
+      {
+        "id": "22",
+        "title": "Trouble codes stored in engine control module (ECM) fault memory: P1683, P1684.",
+        "href": "/w1/known-fixes/HON25013/22?title=Trouble%20codes%20stored%20in%20engine%20control%20module%20%28ECM%29%20fault%20memory%3A%20P1683%2C%20P1684."
+      }
+    ],
+    "Fuel system": [
+      {
+        "id": "16",
+        "title": "Engine difficult to start after re-fuelling when tank has run dry.",
+        "href": "/w1/known-fixes/HON25013/16?title=Engine%20difficult%20to%20start%20after%20re-fuelling%20when%20tank%20has%20run%20dry."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "2",
+        "title": "Creaking noise from windscreen wipers.",
+        "href": "/w1/known-fixes/HON25013/2?title=Creaking%20noise%20from%20windscreen%20wipers."
+      },
+      {
+        "id": "3",
+        "title": "Front brake judder.",
+        "href": "/w1/known-fixes/HON25013/3?title=Front%20brake%20judder."
+      },
+      {
+        "id": "8",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON25013/8?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "13",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON25013/13?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "15",
+        "title": "Metallic clicking noise from RH front of vehicle when braking sharply or accelerating abruptly.",
+        "href": "/w1/known-fixes/HON25013/15?title=Metallic%20clicking%20noise%20from%20RH%20front%20of%20vehicle%20when%20braking%20sharply%20or%20accelerating%20abruptly."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from under front seats when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20under%20front%20seats%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "19",
+        "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+        "href": "/w1/known-fixes/HON25013/19?title=Splashing%20noise%20heard%20from%20instrument%20panel%20when%20accelerating%20and%20braking."
+      },
+      {
+        "id": "20",
+        "title": "Noise from rear suspension over uneven surfaces or speed humps.",
+        "href": "/w1/known-fixes/HON25013/20?title=Noise%20from%20rear%20suspension%20over%20uneven%20surfaces%20or%20speed%20humps."
+      },
+      {
+        "id": "23",
+        "title": "Knocking/squeaking noise from rear suspension when moving from stationary following overnight standing.",
+        "href": "/w1/known-fixes/HON25013/23?title=Knocking%2Fsqueaking%20noise%20from%20rear%20suspension%20when%20moving%20from%20stationary%20following%20overnight%20standing."
+      }
+    ],
+    "Starting and charging": [
+      {
+        "id": "4",
+        "title": "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine.",
+        "href": "/w1/known-fixes/HON25013/4?title=ABS%20warning%20lamp%2C%20brake%20system%20warning%20lamp%20and%20handbrake%20ON%20warning%20lamp%20illuminate%20when%20starting%20engine."
+      },
+      {
+        "id": "16",
+        "title": "Engine difficult to start after re-fuelling when tank has run dry.",
+        "href": "/w1/known-fixes/HON25013/16?title=Engine%20difficult%20to%20start%20after%20re-fuelling%20when%20tank%20has%20run%20dry."
+      },
+      {
+        "id": "26",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON25013/26?title=Battery%20discharged."
+      },
+      {
+        "id": "26",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON25013/26?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      },
+      {
+        "id": "27",
+        "title": "Immobilizer permanently active after attempting to jump starting vehicle.",
+        "href": "/w1/known-fixes/HON25013/27?title=Immobilizer%20permanently%20active%20after%20attempting%20to%20jump%20starting%20vehicle."
+      }
+    ],
+    "Steering": [
+      {
+        "id": "5",
+        "title": "Electronic stability program (ESP) warning lamp flashes during normal driving.",
+        "href": "/w1/known-fixes/HON25013/5?title=Electronic%20stability%20program%20%28ESP%29%20warning%20lamp%20flashes%20during%20normal%20driving."
+      },
+      {
+        "id": "6",
+        "title": "Trouble code stored: U0122.",
+        "href": "/w1/known-fixes/HON25013/6?title=Trouble%20code%20stored%3A%20U0122."
+      },
+      {
+        "id": "6",
+        "title": "Possible CAN data bus trouble codes stored.",
+        "href": "/w1/known-fixes/HON25013/6?title=Possible%20CAN%20data%20bus%20trouble%20codes%20stored."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) warning lamp illuminated.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "12",
+        "title": "Electric power steering (EPS) inoperative.",
+        "href": "/w1/known-fixes/HON25013/12?title=Electric%20power%20steering%20%28EPS%29%20inoperative."
+      }
+    ],
+    "Suspension": [
+      {
+        "id": "23",
+        "title": "Knocking/squeaking noise from rear suspension when moving from stationary following overnight standing.",
+        "href": "/w1/known-fixes/HON25013/23?title=Knocking%2Fsqueaking%20noise%20from%20rear%20suspension%20when%20moving%20from%20stationary%20following%20overnight%20standing."
+      }
+    ],
+    "Transmission": [
+      {
+        "id": "1",
+        "title": "Gears difficult to engage.",
+        "href": "/w1/known-fixes/HON25013/1?title=Gears%20difficult%20to%20engage."
+      },
+      {
+        "id": "1",
+        "title": "Poor gear selection.",
+        "href": "/w1/known-fixes/HON25013/1?title=Poor%20gear%20selection."
+      },
+      {
+        "id": "1",
+        "title": "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919.",
+        "href": "/w1/known-fixes/HON25013/1?title=Possible%20auto%20shift%20manual%20%28ASM%29%20transmission%20trouble%20codes%20stored%3A%20P0909%2C%20P0919."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "9e88971a-a483-4880-85e4-eb8fd33d2164",
+      "title": "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "ABS warning lamp, brake system warning lamp and handbrake ON warning lamp illuminate when starting engine."
+      ],
+      "causes": [
+        "Possible trouble codes stored.",
+        "Battery voltage low when starting engine."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check for trouble codes. Rectify faults as necessary.",
+          "Charge or replace battery."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "6631e1f5-eb37-4fd9-aec6-2663ff1ce51c",
+      "title": "Battery discharged.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC)."
+      ],
+      "problems": [
+        "Battery discharged.",
+        "Irregular operation of AC compressor clutch."
+      ],
+      "causes": [
+        "AC compressor clutch relay faulty.Note: This fault is only associated with relays made by Omron."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "AC compressor clutch relay",
+            "part_number": "39794-SDA-A05",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Replace AC compressor clutch relay."
+        ]
+      },
+      "notes": [
+        "Note: This fault is only associated with relays made by Omron."
+      ]
+    },
+    {
+      "id": "8ab31c30-9a0c-4cd9-a8e5-60364fd273f0",
+      "title": "Battery discharging.",
+      "affected_vehicles": [
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521.",
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521."
+      ],
+      "problems": [
+        "Battery discharging."
+      ],
+      "causes": [
+        "Low resistance in electric sun blind motor."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check resistance of electric sun blind motor. Specified resistance: 3 MΩ.",
+          "Renew electric sun blind motor if necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "3d639da0-5dea-4754-8d74-0635d5befce3",
+      "title": "Creaking noise from windscreen wipers.",
+      "affected_vehicles": [
+        "VIN →SHHFN1***8U003250.",
+        "VIN →SHHFN2***8U002626.",
+        "VIN →SHHFN3***8U001630.",
+        "VIN →SHHFK1***8U005560.",
+        "VIN →SHHFK2***8U013393.",
+        "VIN →SHHFK3***8U008410.",
+        "VIN →SHHFN1***8U003250.",
+        "VIN →SHHFN2***8U002626.",
+        "VIN →SHHFN3***8U001630.",
+        "VIN →SHHFK1***8U005560.",
+        "VIN →SHHFK2***8U013393.",
+        "VIN →SHHFK3***8U008410."
+      ],
+      "problems": [
+        "Creaking noise from windscreen wipers."
+      ],
+      "causes": [
+        "Windscreen wiper mechanism spindles corroded because of insufficient lubrication included at manufacture.",
+        "Worn windscreen wiper mechanism spindle seals because of insufficient lubrication included at manufacture."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Windscreen wiper mechanism spindle seal",
+            "part_number": "76561-SNA-A01",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Clean corrosion from windscreen wiper mechanism spindles.",
+          "Grease windscreen wiper mechanism spindles.",
+          "Fit new windscreen wiper mechanism spindle seals."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "0efa683f-a167-48e6-b343-334ac4f1e4df",
+      "title": "Electric power steering (EPS) inoperative.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Electric power steering (EPS) inoperative.",
+        "Electric power steering (EPS) warning lamp illuminated."
+      ],
+      "causes": [
+        "Poor connection between EPS pump motor and harness multi-plug.",
+        "Poor connection between engine control module (ECM) and harness multi-plug."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check harness multi-plugs to EPS pump motor and ECM. Ensure positive connection."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "a0c6c3c3-8f9f-4197-9cb6-e5ccfc7b67b1",
+      "title": "Electric power steering (EPS) warning lamp illuminated.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Electric power steering (EPS) inoperative.",
+        "Electric power steering (EPS) warning lamp illuminated."
+      ],
+      "causes": [
+        "Poor connection between EPS pump motor and harness multi-plug.",
+        "Poor connection between engine control module (ECM) and harness multi-plug."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check harness multi-plugs to EPS pump motor and ECM. Ensure positive connection."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "844ac885-8c5c-4c74-8e46-9de4e4a26bb4",
+      "title": "Electronic stability program (ESP) warning lamp flashes during normal driving.",
+      "affected_vehicles": [
+        "All models, 2006-07."
+      ],
+      "problems": [
+        "Electronic stability program (ESP) warning lamp flashes during normal driving."
+      ],
+      "causes": [
+        "Steering column shaft splined joint misaligned.",
+        "Yaw rate sensor incorrectly positioned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Electronic stability program (ESP) warning lamp flashes during normal driving Fig.118885.1.",
+          "Check steering column shaft splined joint for correct alignment. Ensure alignment of reference marks Fig.118885.2. Realign if necessary.",
+          "Check yaw rate sensor is positioned correctly. Ensure terminal side of yaw rate sensor faces rear of vehicle Fig.118885.3.",
+          "ViewView more informationFig.118885"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "abb93ee9-2bc0-4af2-b125-6f0552cbf70e",
+      "title": "Engine difficult to start after re-fuelling when tank has run dry.",
+      "affected_vehicles": [
+        "All models, 2006-07."
+      ],
+      "problems": [
+        "Engine difficult to start after re-fuelling when tank has run dry."
+      ],
+      "causes": [
+        "Insufficient fuel added to empty fuel tank."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "A minimum of 7 litres of fuel must be added to an empty fuel tank."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d9b62a30-5db1-4e1a-91c1-c4428478d9a6",
+      "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+      "affected_vehicles": [
+        "VIN →JHMCM1***3C-C7******.",
+        "VIN →JHMCM2***3C-C7******.",
+        "VIN →SHHFK2***6U******.",
+        "VIN →SHSRD8***5U******.",
+        "VIN →SHSRD8***6U******.",
+        "VIN →JHMAP1***8S200499.",
+        "VIN →JHMCM1***3C-C7******.",
+        "VIN →JHMCM2***3C-C7******.",
+        "VIN →SHHFK2***6U******.",
+        "VIN →SHSRD8***5U******.",
+        "VIN →SHSRD8***6U******.",
+        "VIN →JHMAP1***8S200499."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Possible trouble codes stored: P2A00, P0135, P1172."
+      ],
+      "causes": [
+        "Faulty heated oxygen sensor (HO2S)."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Heated oxygen sensor (HO2S) - Accord",
+            "part_number": "36531-RBB-003",
+            "quantity": "1"
+          },
+          {
+            "name": "Heated oxygen sensor (HO2S) - S2000",
+            "part_number": "06180-PZX-305",
+            "quantity": "1"
+          },
+          {
+            "name": "Heated oxygen sensor (HO2S) - Civic/CR-V",
+            "part_number": "Refer to manufacturer",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Renew heated oxygen sensor (HO2S).",
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b70111f1-29da-4ed2-8f6f-bad58547559e",
+      "title": "Engine malfunction indicator lamp (MIL) illuminates immediately after starting engine.",
+      "affected_vehicles": [
+        "All models with LDA2/R16A2/R18A1/R18A2 engine codes, →2007."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminates immediately after starting engine.",
+        "Trouble codes stored in engine control module (ECM) fault memory: P1683, P1684."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "e10d6e16-fb2a-4bcc-9e56-d5934816904a",
+      "title": "Engine oil level warning lamp illuminated even though engine oil level correct.",
+      "affected_vehicles": [
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521.",
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521."
+      ],
+      "problems": [
+        "Battery discharging.",
+        "Engine oil level warning lamp illuminated even though engine oil level correct.",
+        "Trouble code stored: P250B."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "3a8b7bc3-5cf9-44ff-9506-07d3a58990bd",
+      "title": "Front brake judder.",
+      "affected_vehicles": [
+        "All models, 2005-08."
+      ],
+      "problems": [
+        "Front brake judder."
+      ],
+      "causes": [
+        "Excessive front brake disc runout."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check front brake disc runout is less than 0,04 mm. Reface or replace front brake discs as necessary.",
+          "Check front brake disc thickness variation is less than 0,015 mm. Reface or replace front brake discs as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "8fb4e02f-1c78-4629-a0c6-982fbe134d4d",
+      "title": "Front doors difficult to open from outside.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Front doors difficult to open from outside.",
+        "Front doors will not open from outside."
+      ],
+      "causes": [
+        "Front door misaligned.",
+        "Front door handle release cable incorrectly adjusted.",
+        "Front door lock mechanism faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Ensure front door is correctly aligned.",
+          "Ensure front door handle release cable is correctly adjusted.",
+          "If front door handle release cable is correctly adjusted:Renew front door lock mechanism.",
+          "Renew front door lock mechanism.",
+          "Renew front door lock mechanism."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "4fedc9ec-2f9d-4a95-b2b4-05c2ddf6761d",
+      "title": "Front doors will not open from outside.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Front doors difficult to open from outside.",
+        "Front doors will not open from outside."
+      ],
+      "causes": [
+        "Front door misaligned.",
+        "Front door handle release cable incorrectly adjusted.",
+        "Front door lock mechanism faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Ensure front door is correctly aligned.",
+          "Ensure front door handle release cable is correctly adjusted.",
+          "If front door handle release cable is correctly adjusted:Renew front door lock mechanism.",
+          "Renew front door lock mechanism.",
+          "Renew front door lock mechanism."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "256ce1ea-fe49-40bb-8156-572c48ddf8ca",
+      "title": "Fuel filler flap will not open.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Fuel filler flap will not open."
+      ],
+      "causes": [
+        "Insufficient spring tension on fuel filler flap."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Spring",
+            "part_number": "74480-SMG-ZS10",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit additional spring to fuel filler flap Fig.1202060.1.",
+          "ViewView more informationFig.1202060"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "4cc8f03f-6c75-44ac-837e-eafcdcc42348",
+      "title": "Gears difficult to engage.",
+      "affected_vehicles": [
+        "All 5-door models with 1,4/1,8 engines and manual transmission, 2006.",
+        "All 5-door models with 1,4/1,8 engines and auto shift manual (ASM) transmission, 2006."
+      ],
+      "problems": [
+        "Gears difficult to engage.",
+        "Poor gear selection.",
+        "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919."
+      ],
+      "causes": [
+        "Foreign objects and/or debris in gear selection mechanism."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove any foreign objects and/or debris from gear selection mechanism."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7cd297a8-46de-4c56-b757-e9af3e1868bf",
+      "title": "Immobilizer permanently active after attempting to jump starting vehicle.",
+      "affected_vehicles": [
+        "All models, →2007."
+      ],
+      "problems": [
+        "Immobilizer permanently active after attempting to jump starting vehicle."
+      ],
+      "causes": [
+        "Transponder key was inserted in ignition switch when connecting jump start battery, which erases transponder key coding."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-program transponder key."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "578e3e4b-431d-4d54-a3f4-94f0c23813c4",
+      "title": "Instrument panel illumination illuminates when ignition switched OFF.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Instrument panel illumination illuminates when ignition switched OFF.",
+        "Instrument panel not working.",
+        "Trouble code stored: U0155."
+      ],
+      "causes": [
+        "Instrument panel faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new instrument panel."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "86d6bcd6-8e13-4f70-ad03-99c0fe0b3f9e",
+      "title": "Instrument panel not working.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Instrument panel illumination illuminates when ignition switched OFF.",
+        "Instrument panel not working.",
+        "Trouble code stored: U0155."
+      ],
+      "causes": [
+        "Instrument panel faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new instrument panel."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f78e53db-6fc5-400a-a65b-756cab8937a6",
+      "title": "Interior lamp permanently illuminated.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Battery discharging.",
+        "Interior lamp permanently illuminated."
+      ],
+      "causes": [
+        "Retaining clip not securing interior lamp wiring harness sufficiently.",
+        "Interior lamp wiring harness trapped by lamp assembly retaining screw."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Repair interior lamp wiring harness.",
+          "Ensure interior lamp wiring harness held in retaining clip."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "2f4f16bb-1a23-4221-b195-f08ed426923f",
+      "title": "Irregular operation of AC compressor clutch.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC)."
+      ],
+      "problems": [
+        "Battery discharged.",
+        "Irregular operation of AC compressor clutch."
+      ],
+      "causes": [
+        "AC compressor clutch relay faulty.Note: This fault is only associated with relays made by Omron."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "AC compressor clutch relay",
+            "part_number": "39794-SDA-A05",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Replace AC compressor clutch relay."
+        ]
+      },
+      "notes": [
+        "Note: This fault is only associated with relays made by Omron."
+      ]
+    },
+    {
+      "id": "bb5700fa-2ff8-4af3-b3d0-9ab5f64597c4",
+      "title": "Knocking/squeaking noise from rear suspension when moving from stationary following overnight standing.",
+      "affected_vehicles": [
+        "All models, →12/10."
+      ],
+      "problems": [
+        "Knocking/squeaking noise from rear suspension when moving from stationary following overnight standing."
+      ],
+      "causes": [
+        "Excessive friction between rear shock absorber damper rod and shock absorber damper rod seal."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Grease",
+            "part_number": "52611-SMG-ZS00",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Lubricate shock absorber damper rod with grease. Use special tool: Grease application tool 52610-SMG-ZS00."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "1558c4ce-3d54-4ae1-8277-98b806181354",
+      "title": "Metallic clicking noise from RH front of vehicle when braking sharply or accelerating abruptly.",
+      "affected_vehicles": [
+        "All models, 2006-08."
+      ],
+      "problems": [
+        "Metallic clicking noise from RH front of vehicle when braking sharply or accelerating abruptly."
+      ],
+      "causes": [
+        "Build up of debris between front subframe sections."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Clean and grease area between front subframe sections.Remove subframe mounting bolts Fig.119082.1.Slacken subframe mounting bolt Fig.119082.2.Apply grease to contact surfaces between front subframe sections Fig.119082.3.Tighten subframe mounting bolt Fig.119082.2. Tightening torque: 106 Nm.Refit subframe mounting bolts Fig.119082.1. Tightening torque: 60 Nm.",
+          "Remove subframe mounting bolts Fig.119082.1.",
+          "Slacken subframe mounting bolt Fig.119082.2.",
+          "Apply grease to contact surfaces between front subframe sections Fig.119082.3.",
+          "Tighten subframe mounting bolt Fig.119082.2. Tightening torque: 106 Nm.",
+          "Refit subframe mounting bolts Fig.119082.1. Tightening torque: 60 Nm.",
+          "Remove subframe mounting bolts Fig.119082.1.",
+          "Slacken subframe mounting bolt Fig.119082.2.",
+          "Apply grease to contact surfaces between front subframe sections Fig.119082.3.",
+          "Tighten subframe mounting bolt Fig.119082.2. Tightening torque: 106 Nm.",
+          "Refit subframe mounting bolts Fig.119082.1. Tightening torque: 60 Nm.",
+          "ViewView more informationFig.119082"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "3ff72f58-69ab-4210-8c35-4338f9962aea",
+      "title": "Noise from rear suspension over uneven surfaces or speed humps.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Noise from rear suspension over uneven surfaces or speed humps."
+      ],
+      "causes": [
+        "Rear suspension spring not located correctly against end stop."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check rear suspension spring positioned correctly. Adjust if necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "eadd4450-2754-49b7-b736-eb3eb0f203cc",
+      "title": "Poor gear selection.",
+      "affected_vehicles": [
+        "All 5-door models with 1,4/1,8 engines and manual transmission, 2006.",
+        "All 5-door models with 1,4/1,8 engines and auto shift manual (ASM) transmission, 2006."
+      ],
+      "problems": [
+        "Gears difficult to engage.",
+        "Poor gear selection.",
+        "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919."
+      ],
+      "causes": [
+        "Foreign objects and/or debris in gear selection mechanism."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove any foreign objects and/or debris from gear selection mechanism."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "5c3ce471-9b03-4969-a08d-ef84c6bd3033",
+      "title": "Pop-up headlamp washers not retracting.",
+      "affected_vehicles": [
+        "All models with pop-up headlamp washers, →2008."
+      ],
+      "problems": [
+        "Pop-up headlamp washers not retracting."
+      ],
+      "causes": [
+        "Dirt ingress to pop-up headlamp washers."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Headlamp washer (LH) - Accord",
+            "part_number": "76885-SEA-S03",
+            "quantity": "1"
+          },
+          {
+            "name": "Headlamp washer (RH) - Accord",
+            "part_number": "76880-SEA-S03",
+            "quantity": "1"
+          },
+          {
+            "name": "Headlamp washer (LH) - Civic",
+            "part_number": "76885-SNB-S02",
+            "quantity": "1"
+          },
+          {
+            "name": "Headlamp washer (RH) - Civic",
+            "part_number": "76880-SNB-S02",
+            "quantity": "1"
+          },
+          {
+            "name": "Headlamp washer (LH) - Legend",
+            "part_number": "76885-SJA-S02",
+            "quantity": "1"
+          },
+          {
+            "name": "Headlamp washer (RH) - Legend",
+            "part_number": "76880-SJA-S02",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit modified pop-up headlamp washers."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "009115d7-035c-4554-be56-4bf677d748ab",
+      "title": "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919.",
+      "affected_vehicles": [
+        "All 5-door models with 1,4/1,8 engines and manual transmission, 2006.",
+        "All 5-door models with 1,4/1,8 engines and auto shift manual (ASM) transmission, 2006."
+      ],
+      "problems": [
+        "Gears difficult to engage.",
+        "Poor gear selection.",
+        "Possible auto shift manual (ASM) transmission trouble codes stored: P0909, P0919."
+      ],
+      "causes": [
+        "Foreign objects and/or debris in gear selection mechanism."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove any foreign objects and/or debris from gear selection mechanism."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "45b1d894-f511-4ddd-bfa3-2affba727a59",
+      "title": "Possible CAN data bus trouble codes stored.",
+      "affected_vehicles": [
+        "Civic, MY 2006-07.",
+        "CR-V, MY 2007."
+      ],
+      "problems": [
+        "Possible CAN data bus trouble codes stored.",
+        "Trouble code stored: U0122."
+      ],
+      "causes": [
+        "Poor earth connection for ABS control module."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Locate and check condition of earth point:Civic - behind front bumper.CR-V - under ABS control module.",
+          "Civic - behind front bumper.",
+          "CR-V - under ABS control module.",
+          "If required: Clean/tighten earth point.",
+          "Check for trouble codes. Rectify faults as necessary.",
+          "Civic - behind front bumper.",
+          "CR-V - under ABS control module."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "9f441543-6364-4115-8166-a8e34dee4c94",
+      "title": "Possible trouble codes stored: P2A00, P0135, P1172.",
+      "affected_vehicles": [
+        "VIN →JHMCM1***3C-C7******.",
+        "VIN →JHMCM2***3C-C7******.",
+        "VIN →SHHFK2***6U******.",
+        "VIN →SHSRD8***5U******.",
+        "VIN →SHSRD8***6U******.",
+        "VIN →JHMAP1***8S200499.",
+        "VIN →JHMCM1***3C-C7******.",
+        "VIN →JHMCM2***3C-C7******.",
+        "VIN →SHHFK2***6U******.",
+        "VIN →SHSRD8***5U******.",
+        "VIN →SHSRD8***6U******.",
+        "VIN →JHMAP1***8S200499."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Possible trouble codes stored: P2A00, P0135, P1172."
+      ],
+      "causes": [
+        "Faulty heated oxygen sensor (HO2S)."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Heated oxygen sensor (HO2S) - Accord",
+            "part_number": "36531-RBB-003",
+            "quantity": "1"
+          },
+          {
+            "name": "Heated oxygen sensor (HO2S) - S2000",
+            "part_number": "06180-PZX-305",
+            "quantity": "1"
+          },
+          {
+            "name": "Heated oxygen sensor (HO2S) - Civic/CR-V",
+            "part_number": "Refer to manufacturer",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Renew heated oxygen sensor (HO2S).",
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "451d17af-eaba-4e19-a752-d2e159f22554",
+      "title": "Retractable door mirrors inoperative or slow to fold in.",
+      "affected_vehicles": [
+        "All models with retractable door mirrors."
+      ],
+      "problems": [
+        "Retractable door mirrors inoperative or slow to fold in."
+      ],
+      "causes": [
+        "Electric mirror thermal cut-off switch faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Electric mirror thermal cut-off switch",
+            "part_number": "76209-SMG-E01",
+            "quantity": "As required"
+          }
+        ],
+        "steps": [
+          "Fit modified electric mirror thermal cut-off switch to door mirror."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f6611a96-4386-41a1-9ceb-d56e6df135e9",
+      "title": "Retractable door mirror not working correctly.",
+      "affected_vehicles": [
+        "All models, 2006-07."
+      ],
+      "problems": [
+        "Retractable door mirror not working correctly."
+      ],
+      "causes": [
+        "Incorrect synchronization of retractable door mirror motor mechanism."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-synchronize retractable door mirror by operating 3-4 times.",
+          "If synchronization unsuccessful, renew door mirror."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b01e756d-7aa8-4031-b164-148cebb37761",
+      "title": "Splashing noise heard from instrument panel when accelerating and braking.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Splashing noise heard from instrument panel when accelerating and braking.",
+        "Splashing noise heard from under front seats when accelerating and braking."
+      ],
+      "causes": [
+        "Fuel movement in fuel tank. More pronounced due to fuel tank positioned under front seats."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "No action required. Normal operational characteristic."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "80b805de-873b-4f00-a22d-1626b48d3466",
+      "title": "Splashing noise heard from under front seats when accelerating and braking.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Splashing noise heard from instrument panel when accelerating and braking.",
+        "Splashing noise heard from under front seats when accelerating and braking."
+      ],
+      "causes": [
+        "Fuel movement in fuel tank. More pronounced due to fuel tank positioned under front seats."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "No action required. Normal operational characteristic."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "cce79612-0997-4003-95ce-d75379477364",
+      "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Squeaking/creaking noise when clutch pedal depressed or released."
+      ],
+      "causes": [
+        "Clutch master cylinder and clutch pedal misaligned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Slacken clutch master cylinder retaining bolts.",
+          "Fully depress clutch pedal and hold down.",
+          "Tighten clutch master cylinder retaining bolts. Tightening torque: 22 Nm.",
+          "Release clutch pedal."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7821663f-4b20-4832-b253-9e4dae4cff7d",
+      "title": "Trouble codes stored in engine control module (ECM) fault memory: P1683, P1684.",
+      "affected_vehicles": [
+        "All models with LDA2/R16A2/R18A1/R18A2 engine codes, →2007."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminates immediately after starting engine.",
+        "Trouble codes stored in engine control module (ECM) fault memory: P1683, P1684."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "60017bd1-1ed2-4927-b392-f8d23d6ae03a",
+      "title": "Trouble code stored: P250B.",
+      "affected_vehicles": [
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521.",
+        "VIN →SHHFK1***7U018227.",
+        "VIN →SHHFK2***7U053255.",
+        "VIN →SHHFN1***7U009553.",
+        "VIN →SHHFN2***7U007250.",
+        "VIN →SHHFK3***7U033515.",
+        "VIN →SHHFN3***7U006521."
+      ],
+      "problems": [
+        "Battery discharging.",
+        "Engine oil level warning lamp illuminated even though engine oil level correct.",
+        "Trouble code stored: P250B."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "c3de9f85-3242-438a-af05-180a1e8586a5",
+      "title": "Trouble code stored: U0122.",
+      "affected_vehicles": [
+        "Civic, MY 2006-07.",
+        "CR-V, MY 2007."
+      ],
+      "problems": [
+        "Possible CAN data bus trouble codes stored.",
+        "Trouble code stored: U0122."
+      ],
+      "causes": [
+        "Poor earth connection for ABS control module."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Locate and check condition of earth point:Civic - behind front bumper.CR-V - under ABS control module.",
+          "Civic - behind front bumper.",
+          "CR-V - under ABS control module.",
+          "If required: Clean/tighten earth point.",
+          "Check for trouble codes. Rectify faults as necessary.",
+          "Civic - behind front bumper.",
+          "CR-V - under ABS control module."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d077eb7a-3636-49da-a404-1f0701f8a37b",
+      "title": "Trouble code stored: U0155.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Instrument panel illumination illuminates when ignition switched OFF.",
+        "Instrument panel not working.",
+        "Trouble code stored: U0155."
+      ],
+      "causes": [
+        "Instrument panel faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Fit new instrument panel."
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

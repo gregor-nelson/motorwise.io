@@ -4,7 +4,11 @@ import {
   GovUKBody,
   GovUKBodyS,
   PremiumInfoPanel,
-  COLORS
+  COLORS,
+  FONT_SIZES,
+  LINE_HEIGHTS,
+  respondTo,
+  BREAKPOINTS
 } from '../../../../../styles/theme';
 
 // Use the consistent GOV.UK colors from the main theme
@@ -253,15 +257,21 @@ export const MetricValue = styled('span', {
 `);
 
 // Note section using GovUKBodyS
-export const InsightNote = styled(GovUKBodyS)(() => css`
+export const InsightNote = styled('div')(() => css`
   ${govukFontStyles}
   font-style: italic;
   color: ${GOVUK_COLORS.DARK_GREY};
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid ${GOVUK_COLORS.MID_GREY};
+  font-size: ${FONT_SIZES.XS}; // Add the font sizes from GovUKBodyS
+  line-height: ${LINE_HEIGHTS.XS};
+  
+  ${respondTo(BREAKPOINTS.TABLET)} {
+    font-size: ${FONT_SIZES.S};
+    line-height: ${LINE_HEIGHTS.S};
+  }
 `);
-
 // Loading states with GovUKLoadingSpinner integration
 export const EnhancedLoadingContainer = styled('div')(() => css`
   ${govukFontStyles}

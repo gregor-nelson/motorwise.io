@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   GovUKBody,
   GovUKBodyS,
   GovUKLoadingSpinner,
   GovUKSectionBreak,
-  GovUKList,
   GovUKHeadingM,
   COLORS
 } from '../../../../../styles/theme';
 
 // Import Material-UI icons
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import SpeedIcon from '@mui/icons-material/Speed';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/Info';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import HistoryIcon from '@mui/icons-material/History';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 // Import custom tooltip components
 import {
@@ -36,13 +32,8 @@ import { mileageTooltips } from './mileageTooltips';
 // Import styled components
 import {
   MileageInsightsContainer,
-  MileageInsightsHeader,
-  MileageBadge,
-  MileageInsightsTitle,
-  MileageInsightsDescription,
   MileageInsightSection,
   MileageInsightPanel,
-  MileageSectionHeading,
   MileageTable,
   RiskScoreDisplay,
   RiskScoreCircle,
@@ -65,6 +56,33 @@ import { calculateRiskScore, checkForMOTGaps } from './enhancedRiskAssessment';
 import { findMileageAnomalies, findInactivityPeriods, calculateAccurateMileageStats } from './mileageAnomalyDetector';
 import MileageClockingWarning from './MileageClockingWarning';
 
+// Constants for industry standard thresholds
+const USAGE_PATTERN_THRESHOLDS = {
+  HIGHLY_VARIABLE: 2.5,   // Ratio above which usage is considered highly variable
+  SOMEWHAT_VARIABLE: 1.7, // Ratio above which usage is considered somewhat variable
+  COMMERCIAL_USE: 20000   // Annual mileage above which commercial use is suspected
+};
+
+// Constants for vehicle lifespan
+const VEHICLE_LIFESPAN = {
+  DEFAULT: 150000,
+  DIESEL: 200000,
+  PETROL: 160000,
+  ELECTRIC: 180000,
+  HYBRID: 175000,
+  PHEV: 170000
+};
+
+// UK average mileage data - updated for 2024
+const UK_MILEAGE = {
+  AVERAGE: 6800,
+  DIESEL: 9000,
+  PETROL: 6700,
+  ELECTRIC: 7600,
+  HYBRID: 8200,
+  PHEV: 7500
+};
+
 // API configuration
 const isDevelopment = window.location.hostname === 'localhost' || 
                       window.location.hostname === '127.0.0.1';
@@ -72,6 +90,126 @@ const isDevelopment = window.location.hostname === 'localhost' ||
 const API_BASE_URL = isDevelopment 
                     ? 'http://localhost:8000/api/v1'
                     : '/api/v1';
+
+/**
+ * DataQualityIndicator - A component that provides an overall data quality assessment
+ */
+const DataQualityIndicator = ({ 
+  hasClockingIssues,
+  motGapsDetected,
+  anomalies = [],
+  dataPoints = 0
+}) => {
+  // Determine overall data quality
+  let qualityLevel = "High";
+  let qualityColor = COLORS.GREEN;
+  
+  if (hasClockingIssues) {
+    qualityLevel = "Poor";
+    qualityColor = COLORS.RED;
+  } else if (motGapsDetected || (anomalies && anomalies.length > 0)) {
+    qualityLevel = "Medium";
+    qualityColor = COLORS.BLACK;
+  } else if (dataPoints < 4) {
+    qualityLevel = "Limited";
+    qualityColor = COLORS.BLACK
+  }
+  
+  return (
+    <MileageInsightSection>
+      <HeadingWithTooltip 
+        tooltip="Assessment of the reliability and completeness of the vehicle's history data" 
+        iconColor={qualityColor}
+      >
+        <GovUKHeadingM>
+        Data Quality Assessment
+        </GovUKHeadingM>
+      </HeadingWithTooltip>
+      
+      <MileageInsightPanel borderColor={qualityColor}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: '15px',
+          padding: '10px',
+          backgroundColor: `${qualityColor}20`,
+          borderRadius: '5px'
+        }}>
+          <div style={{ 
+            backgroundColor: qualityColor, 
+            color: 'white', 
+            padding: '8px 16px', 
+            borderRadius: '4px',
+            fontWeight: 'bold',
+            marginRight: '15px',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            {qualityLevel === "High" && <CheckCircleIcon style={{ marginRight: '5px' }} />}
+            {qualityLevel === "Medium" && <WarningIcon style={{ marginRight: '5px' }} />}
+            {qualityLevel === "Poor" && <ErrorOutlineIcon style={{ marginRight: '5px' }} />}
+            {qualityLevel === "Limited" && <InfoIcon style={{ marginRight: '5px' }} />}
+            {qualityLevel} Quality
+          </div>
+          <div>
+            <GovUKBody style={{ margin: 0 }}>
+              {hasClockingIssues
+                ? "Significant mileage inconsistencies detected, affecting data reliability."
+                : motGapsDetected
+                ? "Gaps in vehicle testing history may impact the completeness of mileage data."
+                : `Based on ${dataPoints} mileage readings over the vehicle's history.`}
+            </GovUKBody>
+          </div>
+        </div>
+        
+        <FactorsList>
+          {hasClockingIssues && (
+            <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+              <ErrorOutlineIcon fontSize="small" />
+              <span>Mileage inconsistencies detected, suggesting potential odometer tampering.</span>
+            </FactorItem>
+          )}
+          
+          {motGapsDetected && (
+            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+              <WarningIcon fontSize="small" />
+              <span>Significant gaps in MOT testing history (18+ months) detected.</span>
+            </FactorItem>
+          )}
+          
+          {anomalies && anomalies.filter(a => a.type === 'negative').length > 0 && (
+            <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+              <ErrorOutlineIcon fontSize="small" />
+              <span>{anomalies.filter(a => a.type === 'negative').length} instances of decreasing mileage detected.</span>
+            </FactorItem>
+          )}
+          
+          {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
+            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+              <WarningIcon fontSize="small" />
+              <span>{anomalies.filter(a => a.type === 'spike').length} unusual mileage patterns detected.</span>
+            </FactorItem>
+          )}
+          
+          {dataPoints < 3 && (
+            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+              <InfoIcon fontSize="small" />
+              <span>Limited data points available ({dataPoints}). Analysis may be less reliable.</span>
+            </FactorItem>
+          )}
+          
+          {!hasClockingIssues && !motGapsDetected && dataPoints >= 4 && 
+           (!anomalies || anomalies.length === 0) && (
+            <FactorItem borderColor={COLORS.GREEN} iconColor={COLORS.GREEN}>
+              <CheckCircleIcon fontSize="small" />
+              <span>Complete and consistent mileage history with no detected anomalies.</span>
+            </FactorItem>
+          )}
+        </FactorsList>
+      </MileageInsightPanel>
+    </MileageInsightSection>
+  );
+};
 
 /**
  * MileageBenchmarksCalculator - Extract calculation logic to separate function
@@ -89,10 +227,14 @@ const MileageBenchmarksCalculator = (mileageData, vehicleInfo, mileageStats) => 
   // Get vehicle age in years
   const firstDate = mileageData[0].date;
   const lastDate = mileageData[mileageData.length - 1].date;
-  const registrationDate = vehicleInfo?.registrationDate ? vehicleInfo.registrationDate : firstDate;
+  const registrationDate = vehicleInfo?.registrationDate ? new Date(vehicleInfo.registrationDate) : firstDate;
+  
+  // Check if registration date is valid, if not fallback to first record
+  const validRegistrationDate = !isNaN(registrationDate.getTime()) ? registrationDate : firstDate;
+  
   const currentDate = new Date();
   
-  const vehicleAgeYears = (currentDate - registrationDate) / (1000 * 60 * 60 * 24 * 365.25);
+  const vehicleAgeYears = (currentDate - validRegistrationDate) / (1000 * 60 * 60 * 24 * 365.25);
   
   // Use adjusted values if vehicle has been clocked
   const totalMileage = hasAccurateStats 
@@ -103,43 +245,61 @@ const MileageBenchmarksCalculator = (mileageData, vehicleInfo, mileageStats) => 
     ? mileageStats.averageAnnualMileage
     : totalMileage / vehicleAgeYears;
   
-  // UK average annual mileage - updated for 2024 based on National Travel Survey
-  const UK_AVERAGE_ANNUAL_MILEAGE = 6800;
-  
   // Get vehicle type-specific benchmarks
-  let typeSpecificAnnualMileage = UK_AVERAGE_ANNUAL_MILEAGE;
+  let typeSpecificAnnualMileage = UK_MILEAGE.AVERAGE;
   let mileageCategory = "average";
-  let vehicleLifespanMiles = 150000; // Default lifespan
+  let vehicleLifespanMiles = VEHICLE_LIFESPAN.DEFAULT;
   
   // Adjust based on fuel type using latest UK statistics
   if (vehicleInfo?.fuelType) {
     const fuelTypeLower = vehicleInfo.fuelType.toLowerCase();
     
     if (fuelTypeLower.includes("diesel")) {
-      typeSpecificAnnualMileage = 9000; // Diesel cars - updated for 2024
-      vehicleLifespanMiles = 190000; // Diesel engines typically last longer
+      typeSpecificAnnualMileage = UK_MILEAGE.DIESEL;
+      vehicleLifespanMiles = VEHICLE_LIFESPAN.DIESEL;
     } else if (fuelTypeLower.includes("petrol")) {
-      typeSpecificAnnualMileage = 6700; // Petrol cars - updated for 2024
-      vehicleLifespanMiles = 160000;
+      typeSpecificAnnualMileage = UK_MILEAGE.PETROL;
+      vehicleLifespanMiles = VEHICLE_LIFESPAN.PETROL;
     } else if (fuelTypeLower.includes("electric") || fuelTypeLower.includes("ev")) {
-      typeSpecificAnnualMileage = 7600; // Electric vehicles - updated for 2024
-      vehicleLifespanMiles = 180000; // Modern EVs have good longevity
+      typeSpecificAnnualMileage = UK_MILEAGE.ELECTRIC;
+      vehicleLifespanMiles = VEHICLE_LIFESPAN.ELECTRIC;
     } else if (fuelTypeLower.includes("hybrid")) {
       if (fuelTypeLower.includes("plug") || fuelTypeLower.includes("phev")) {
-        typeSpecificAnnualMileage = 7500; // Plug-in hybrids
+        typeSpecificAnnualMileage = UK_MILEAGE.PHEV;
+        vehicleLifespanMiles = VEHICLE_LIFESPAN.PHEV;
       } else {
-        typeSpecificAnnualMileage = 8200; // Regular hybrids
+        typeSpecificAnnualMileage = UK_MILEAGE.HYBRID;
+        vehicleLifespanMiles = VEHICLE_LIFESPAN.HYBRID;
       }
-      vehicleLifespanMiles = 170000;
     }
   }
   
-  // Additional adjustments based on vehicle type
+  // Additional adjustments based on vehicle body type
   if (vehicleInfo?.bodyType) {
     const bodyTypeLower = vehicleInfo.bodyType.toLowerCase();
     
-    // Apply adjustments based on body type (using existing logic)
-    // ...
+    if (bodyTypeLower.includes("suv") || bodyTypeLower.includes("4x4")) {
+      typeSpecificAnnualMileage *= 1.05; // SUVs/4x4s slightly higher mileage
+      vehicleLifespanMiles -= 10000; // Slightly shorter lifespan due to weight
+    } else if (bodyTypeLower.includes("estate") || bodyTypeLower.includes("wagon")) {
+      typeSpecificAnnualMileage *= 1.12; // Estates/wagons often used for family trips
+      vehicleLifespanMiles += 5000; // Often well maintained
+    } else if (bodyTypeLower.includes("convertible") || bodyTypeLower.includes("coupe") || bodyTypeLower.includes("sports")) {
+      typeSpecificAnnualMileage *= 0.75; // Sports cars typically driven less
+      vehicleLifespanMiles -= 15000; // Often driven harder
+    } else if (bodyTypeLower.includes("mpv") || bodyTypeLower.includes("minivan") || bodyTypeLower.includes("people carrier")) {
+      typeSpecificAnnualMileage *= 1.15; // Family carriers driven more
+      vehicleLifespanMiles += 10000; // Built for durability
+    } else if (bodyTypeLower.includes("saloon") || bodyTypeLower.includes("sedan")) {
+      typeSpecificAnnualMileage *= 1.08; // Slightly higher for saloons (often business use)
+      vehicleLifespanMiles += 5000; // Often well maintained
+    } else if (bodyTypeLower.includes("pickup") || bodyTypeLower.includes("truck")) {
+      typeSpecificAnnualMileage *= 1.2; // Utility vehicles used more
+      vehicleLifespanMiles += 20000; // Built for durability
+    } else if (bodyTypeLower.includes("van") || bodyTypeLower.includes("commercial")) {
+      typeSpecificAnnualMileage *= 1.5; // Commercial vehicles used significantly more
+      vehicleLifespanMiles += 40000; // Built for high mileage
+    }
   }
   
   // Determine mileage category compared to expected
@@ -166,7 +326,7 @@ const MileageBenchmarksCalculator = (mileageData, vehicleInfo, mileageStats) => 
     vehicleAgeYears: Math.round(vehicleAgeYears * 10) / 10,
     averageAnnualMileage: Math.round(averageAnnualMileage),
     totalMileage: Math.round(totalMileage),
-    ukAverageAnnualMileage: UK_AVERAGE_ANNUAL_MILEAGE,
+    ukAverageAnnualMileage: UK_MILEAGE.AVERAGE,
     typeSpecificAnnualMileage: Math.round(typeSpecificAnnualMileage),
     expectedTotalMileage: Math.round(expectedTotalMileage),
     mileageRatio: Math.round(mileageRatio * 100) / 100,
@@ -176,6 +336,117 @@ const MileageBenchmarksCalculator = (mileageData, vehicleInfo, mileageStats) => 
     remainingYearsEstimate: Math.round(remainingYearsEstimate * 10) / 10,
     hasAdjustedMileage: hasAccurateStats
   };
+};
+
+/**
+ * Analyze usage patterns with improved thresholds and reliability
+ * @param {Array} mileageData - Array of mileage readings
+ * @param {Object} mileageStats - Accurate mileage statistics accounting for anomalies
+ * @returns {Object} Usage patterns analysis
+ */
+const analyzeUsagePatterns = (mileageData, mileageStats) => {
+  if (!mileageData || mileageData.length < 3) return null;
+  
+  // Don't trust simple year-over-year analysis for clocked vehicles
+  const hasBeenClocked = mileageStats?.hasBeenClocked || false;
+  
+  // Create yearly segments
+  const yearlyMileage = [];
+  let previousEntry = mileageData[0];
+  
+  for (let i = 1; i < mileageData.length; i++) {
+    const current = mileageData[i];
+    const daysDiff = (current.date - previousEntry.date) / (1000 * 60 * 60 * 24);
+    const mileageDiff = current.mileage - previousEntry.mileage;
+    
+    // Skip negative mileage periods if the vehicle has been clocked
+    if (hasBeenClocked && mileageDiff < 0) {
+      previousEntry = current;
+      continue;
+    }
+    
+    if (daysDiff > 30) {
+      const dailyRate = mileageDiff / daysDiff;
+      const annualizedRate = dailyRate * 365;
+      
+      yearlyMileage.push({
+        period: `${previousEntry.formattedDate} to ${current.formattedDate}`,
+        days: Math.round(daysDiff),
+        mileageAdded: mileageDiff,
+        dailyAverage: Math.round(dailyRate),
+        annualizedRate: Math.round(annualizedRate)
+      });
+    }
+    
+    previousEntry = current;
+  }
+  
+  if (yearlyMileage.length === 0) return null;
+  
+  // Calculate statistics on valid periods only
+  const rates = yearlyMileage.map(y => y.annualizedRate);
+  const avgRate = rates.reduce((sum, rate) => sum + rate, 0) / rates.length;
+  const maxRate = Math.max(...rates);
+  const minRate = Math.min(...rates);
+  const variance = Math.round(maxRate - minRate);
+  
+  // Find max and min periods
+  const maxPeriod = yearlyMileage.find(y => y.annualizedRate === maxRate);
+  const minPeriod = yearlyMileage.find(y => y.annualizedRate === minRate);
+  
+  // Determine usage pattern using updated thresholds
+  const variabilityRatio = maxRate / (minRate || 1);
+  let usagePattern = "consistent";
+  if (variabilityRatio > USAGE_PATTERN_THRESHOLDS.HIGHLY_VARIABLE) {
+    usagePattern = "highly variable";
+  } else if (variabilityRatio > USAGE_PATTERN_THRESHOLDS.SOMEWHAT_VARIABLE) {
+    usagePattern = "somewhat variable";
+  }
+  
+  // Check for commercial use
+  const potentialCommercialUse = maxRate > USAGE_PATTERN_THRESHOLDS.COMMERCIAL_USE;
+  
+  return {
+    averageAnnualRate: Math.round(avgRate),
+    highestUsagePeriod: {
+      period: maxPeriod.period,
+      annualizedRate: maxPeriod.annualizedRate
+    },
+    lowestUsagePeriod: {
+      period: minPeriod.period,
+      annualizedRate: minPeriod.annualizedRate
+    },
+    usageVariance: variance,
+    usagePattern,
+    potentialCommercialUse,
+    detailedPeriods: yearlyMileage,
+    dataQuality: hasBeenClocked ? "adjusted" : "reliable"
+  };
+};
+
+/**
+ * Helper function to parse dates safely
+ * @param {string} dateString - The date string to parse
+ * @returns {Date} Parsed date or fallback
+ */
+const parseDate = (dateString) => {
+  if (!dateString) {
+    console.warn('Missing date value, using fallback date');
+    return new Date('2018-01-01');
+  }
+  
+  try {
+    const parsedDate = new Date(dateString);
+    // Check if we got a valid date
+    if (isNaN(parsedDate.getTime())) {
+      console.warn(`Invalid date: ${dateString}, using fallback date`);
+      return new Date('2018-01-01'); 
+    }
+    return parsedDate;
+  } catch (e) {
+    console.warn(`Error parsing date: ${dateString}`, e);
+    return new Date('2018-01-01');
+  }
 };
 
 /**
@@ -191,36 +462,56 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   const [inactivityPeriods, setInactivityPeriods] = useState([]);
   const [vehicleInfo, setVehicleInfo] = useState(null);
   const [mileageStats, setMileageStats] = useState(null);
+  const [motGapsDetected, setMotGapsDetected] = useState(false);
   const [insights, setInsights] = useState({
     benchmarks: null,
     usagePatterns: null,
     riskAssessment: null
   });
+  const [dataUnavailable, setDataUnavailable] = useState(false);
 
   // Use a ref to track if data has been sent to parent
   const hasNotifiedParent = useRef(false);
+  
+  // Memoize the callback for parent notification to prevent unnecessary re-renders
+  const notifyParent = useCallback((data) => {
+    if (onDataLoad && typeof onDataLoad === 'function') {
+      onDataLoad(data);
+    }
+  }, [onDataLoad]);
   
   // Effect to handle data loading and parent notification
   useEffect(() => {
     // Only notify the parent once when we have meaningful data to share
     // and only if we haven't already notified them
-    if (onDataLoad && typeof onDataLoad === 'function' && 
-        mileageData && mileageData.length > 0 && 
-        !hasNotifiedParent.current) {
+    if (mileageData && mileageData.length > 0 && 
+        !hasNotifiedParent.current && 
+        !loading) {
       
       console.log("Mileage insights notifying parent with data");
       
       // Call the parent callback with the processed data
-      onDataLoad({
+      notifyParent({
         mileageData,
         anomalies,
         inactivityPeriods,
         vehicleInfo,
         mileageStats,
-        insights
+        insights,
+        motGapsDetected,
+        dataQuality: insights.riskAssessment?.hasClockingAnomalies ? "poor" : 
+                     motGapsDetected ? "medium" : 
+                     mileageData.length < 4 ? "limited" : "high"
       });
       
       // Mark as notified to prevent repeated callbacks
+      hasNotifiedParent.current = true;
+    } else if (dataUnavailable && !hasNotifiedParent.current && !loading) {
+      // Notify parent about unavailable data
+      notifyParent({
+        dataUnavailable: true
+      });
+      
       hasNotifiedParent.current = true;
     }
   }, [
@@ -229,8 +520,11 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     inactivityPeriods, 
     vehicleInfo, 
     mileageStats, 
-    insights, 
-    onDataLoad
+    insights,
+    motGapsDetected,
+    loading,
+    dataUnavailable,
+    notifyParent
   ]);
   
   // Use tooltip hooks
@@ -246,46 +540,45 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
 
         setLoading(true);
         setError(null);
+        setDataUnavailable(false);
         
         // Reset notification flag on new data fetch
         hasNotifiedParent.current = false;
 
-        // Use real API data instead of mock data
-        const useMockData = false;
-
-        if (!useMockData) {
-          // Construct proper endpoint
-          const endpoint = registration 
-            ? `${API_BASE_URL}/vehicle/registration/${registration}`
-            : `${API_BASE_URL}/vehicle/vin/${vin}`;
+        // Construct proper endpoint
+        const endpoint = registration 
+          ? `${API_BASE_URL}/vehicle/registration/${registration}`
+          : `${API_BASE_URL}/vehicle/vin/${vin}`;
+        
+        console.log(`Fetching vehicle data from: ${endpoint}`);
+        
+        const response = await fetch(endpoint, {
+          headers: {
+            'Accept': 'application/json',
+          },
+          credentials: isDevelopment ? 'include' : 'same-origin',
+          mode: isDevelopment ? 'cors' : 'same-origin'
+        });
+        
+        if (!response.ok) {
+          // Improved error handling with content-type check
+          let errorData = {};
+          const contentType = response.headers.get("content-type");
           
-          console.log(`Fetching vehicle data from: ${endpoint}`);
-          
-          const response = await fetch(endpoint, {
-            headers: {
-              'Accept': 'application/json',
-            },
-            credentials: isDevelopment ? 'include' : 'same-origin',
-            mode: isDevelopment ? 'cors' : 'same-origin'
-          });
-          
-          if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.errorMessage || `Failed to fetch vehicle data: ${response.status}`);
+          if (contentType && contentType.indexOf("application/json") !== -1) {
+            errorData = await response.json().catch(() => ({}));
+          } else {
+            const textError = await response.text().catch(() => "");
+            errorData = { errorMessage: textError || `HTTP error: ${response.status}` };
           }
           
-          const vehicleData = await response.json();
-          console.log('Received vehicle data:', vehicleData);
-          processVehicleData(vehicleData);
-          setLoading(false);
-        } else {
-          // Keep mock data path for fallback testing
-          setTimeout(() => {
-            const mockData = createMockData(registration || vin);
-            processVehicleData(mockData);
-            setLoading(false);
-          }, 1000);
+          throw new Error(errorData.errorMessage || `Failed to fetch vehicle data: ${response.status}`);
         }
+        
+        const vehicleData = await response.json();
+        console.log('Received vehicle data:', vehicleData);
+        processVehicleData(vehicleData);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching vehicle data for insights:", err);
         setError(err.message || "Failed to load vehicle insights");
@@ -325,6 +618,9 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
           try {
             if (test.completedDate) {
               const date = new Date(test.completedDate);
+              if (isNaN(date.getTime())) {
+                return null;
+              }
               parsedDate = date;
               formattedDate = date.toLocaleDateString('en-GB', { 
                 day: '2-digit', month: 'short', year: 'numeric' 
@@ -333,6 +629,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               return null;
             }
           } catch (err) {
+            console.warn("Error parsing test date:", err);
             return null;
           }
           
@@ -354,6 +651,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               return null;
             }
           } catch (err) {
+            console.warn("Error parsing mileage:", err);
             return null;
           }
           
@@ -376,10 +674,11 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         .sort((a, b) => a.date - b.date);
     }
     
-    // If not enough real data, create sample data
+    // Check if we have enough data for analysis
     if (formattedData.length < 2) {
-      console.warn('Not enough MOT data points for analysis, using sample data');
-      formattedData = createSampleMileageData();
+      console.warn('Not enough MOT data points for analysis');
+      setDataUnavailable(true);
+      return;
     }
     
     // Use enhanced anomaly detection and inactivity period detection
@@ -388,6 +687,10 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     
     // Calculate accurate mileage statistics accounting for clocking
     const accurateMileageStats = calculateAccurateMileageStats(formattedData, detectedAnomalies);
+    
+    // Check for MOT gaps
+    const hasMotGaps = checkForMOTGaps(formattedData);
+    setMotGapsDetected(hasMotGaps);
     
     setMileageData(formattedData);
     setAnomalies(detectedAnomalies);
@@ -403,7 +706,9 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     );
     
     // Analyze usage patterns
-    const usagePatterns = analyzeUsagePatterns(formattedData, accurateMileageStats);
+    const usagePatterns = formattedData.length >= 3
+      ? analyzeUsagePatterns(formattedData, accurateMileageStats)
+      : null;
     
     // Use enhanced risk assessment with accurate data
     const riskAssessment = calculateRiskScore(
@@ -421,142 +726,6 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     });
   };
 
-  // Helper to parse dates safely
-  const parseDate = (dateString) => {
-    if (!dateString) return new Date('2018-01-01');
-    
-    try {
-      return new Date(dateString);
-    } catch (e) {
-      return new Date('2018-01-01');
-    }
-  };
-
-  // Analyze usage patterns
-  const analyzeUsagePatterns = (mileageData, mileageStats) => {
-    if (!mileageData || mileageData.length < 3) return null;
-    
-    // Don't trust simple year-over-year analysis for clocked vehicles
-    const hasBeenClocked = mileageStats?.hasBeenClocked || false;
-    
-    // Create yearly segments
-    const yearlyMileage = [];
-    let previousEntry = mileageData[0];
-    
-    for (let i = 1; i < mileageData.length; i++) {
-      const current = mileageData[i];
-      const daysDiff = (current.date - previousEntry.date) / (1000 * 60 * 60 * 24);
-      const mileageDiff = current.mileage - previousEntry.mileage;
-      
-      // Skip negative mileage periods if the vehicle has been clocked
-      if (hasBeenClocked && mileageDiff < 0) {
-        previousEntry = current;
-        continue;
-      }
-      
-      if (daysDiff > 30) {
-        const dailyRate = mileageDiff / daysDiff;
-        const annualizedRate = dailyRate * 365;
-        
-        yearlyMileage.push({
-          period: `${previousEntry.formattedDate} to ${current.formattedDate}`,
-          days: Math.round(daysDiff),
-          mileageAdded: mileageDiff,
-          dailyAverage: Math.round(dailyRate),
-          annualizedRate: Math.round(annualizedRate)
-        });
-      }
-      
-      previousEntry = current;
-    }
-    
-    if (yearlyMileage.length === 0) return null;
-    
-    // Calculate statistics on valid periods only
-    const rates = yearlyMileage.map(y => y.annualizedRate);
-    const avgRate = rates.reduce((sum, rate) => sum + rate, 0) / rates.length;
-    const maxRate = Math.max(...rates);
-    const minRate = Math.min(...rates);
-    const variance = Math.round(maxRate - minRate);
-    
-    // Find max and min periods
-    const maxPeriod = yearlyMileage.find(y => y.annualizedRate === maxRate);
-    const minPeriod = yearlyMileage.find(y => y.annualizedRate === minRate);
-    
-    // Determine usage pattern
-    const variabilityRatio = maxRate / (minRate || 1);
-    let usagePattern = "consistent";
-    if (variabilityRatio > 3) {
-      usagePattern = "highly variable";
-    } else if (variabilityRatio > 1.8) {
-      usagePattern = "somewhat variable";
-    }
-    
-    // Check for commercial use
-    const potentialCommercialUse = maxRate > 25000;
-    
-    return {
-      averageAnnualRate: Math.round(avgRate),
-      highestUsagePeriod: {
-        period: maxPeriod.period,
-        annualizedRate: maxPeriod.annualizedRate
-      },
-      lowestUsagePeriod: {
-        period: minPeriod.period,
-        annualizedRate: minPeriod.annualizedRate
-      },
-      usageVariance: variance,
-      usagePattern,
-      potentialCommercialUse,
-      detailedPeriods: yearlyMileage,
-      dataQuality: hasBeenClocked ? "adjusted" : "reliable"
-    };
-  };
-
-  // Helper function for sample data
-  const createSampleMileageData = () => {
-    const startDate = new Date('2018-03-01');
-    const data = [];
-    
-    // Add 6 data points, roughly 1 year apart with increasing mileage
-    for (let i = 0; i < 6; i++) {
-      const testDate = new Date(startDate);
-      testDate.setFullYear(startDate.getFullYear() + i);
-      
-      // Base mileage on rough UK average of 8,000 miles per year
-      const mileage = 2000 + (i * 8000);
-      
-      data.push({
-        date: testDate,
-        formattedDate: testDate.toLocaleDateString('en-GB', { 
-          day: '2-digit', month: 'short', year: 'numeric' 
-        }),
-        mileage: mileage,
-        formattedMileage: mileage.toLocaleString(),
-        testResult: i === 3 ? 'FAIL' : 'PASS' // Make the 4th test a failure for variety
-      });
-    }
-    
-    return data;
-  };
-
-  // Create mock data (for fallback)
-  const createMockData = (reg) => {
-    return {
-      registration: reg,
-      make: 'Ford',
-      model: 'Focus',
-      fuelType: 'Petrol',
-      firstUsedDate: '2018-01-01',
-      bodyType: 'Hatchback',
-      motTests: createSampleMileageData().map(item => ({
-        completedDate: item.date.toISOString(),
-        odometerValue: item.mileage,
-        testResult: item.testResult
-      }))
-    };
-  };
-
   // Show loading state
   if (loading) {
     return (
@@ -572,7 +741,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
-          <GovUKHeadingM> Mileage Insights</GovUKHeadingM>
+          <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
         </SectionTitleContainer>
         
         <ErrorContainer>
@@ -580,16 +749,16 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             tooltip="Error occurred while fetching or processing vehicle data" 
             iconColor={COLORS.RED}
           >
-            <ErrorOutlineIcon /> Error Loading Insights
+            <ErrorOutlineIcon /> Service Unavailable
           </HeadingWithTooltip>
-          <GovUKBody>{error}</GovUKBody>
+          <GovUKBody>The vehicle mileage data service is currently unavailable. Please try again later.</GovUKBody>
         </ErrorContainer>
       </MileageInsightsContainer>
     );
   }
 
-  // Show empty state
-  if (!mileageData || mileageData.length === 0) {
+  // Show data unavailable state
+  if (dataUnavailable || !mileageData || mileageData.length < 2) {
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
@@ -598,7 +767,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         
         <EmptyContainer>
           <InfoIcon style={{ fontSize: 40, color: '#1d70b8', marginBottom: 10 }} />
-          <GovUKBody>No mileage data available for analysis.</GovUKBody>
+          <GovUKBody>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</GovUKBody>
         </EmptyContainer>
       </MileageInsightsContainer>
     );
@@ -626,6 +795,14 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         />
       )}
       
+      {/* Data Quality Indicator - Always show this first */}
+      <DataQualityIndicator 
+        hasClockingIssues={hasClockingIssues}
+        motGapsDetected={motGapsDetected}
+        anomalies={anomalies}
+        dataPoints={mileageData.length}
+      />
+      
       <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
       
       {/* Risk Assessment Panel - Always show first for clocked vehicles */}
@@ -635,24 +812,37 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             tooltip={mileageTooltips.sectionRiskAssessment} 
             iconColor={
               insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.ORANGE : 
+              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
               COLORS.RED
             }
           >
+            <GovUKHeadingM>
             <AssessmentIcon /> Mileage History Risk Assessment
+            </GovUKHeadingM>
           </HeadingWithTooltip>
           
           <MileageInsightPanel borderColor={
               insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.ORANGE : 
+              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
               COLORS.RED
           }>
             <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
                 {insights.riskAssessment.riskScore}
+                {/* Add icons for better accessibility */}
+                {insights.riskAssessment.riskCategory === 'Low' && 
+                  <CheckCircleIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
+                {insights.riskAssessment.riskCategory === 'Medium' && 
+                  <WarningIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
+                {insights.riskAssessment.riskCategory === 'High' && 
+                  <ErrorOutlineIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
               </RiskScoreCircle>
               <RiskScoreText>
                 <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
+                  {/* Add visual patterns for colour-blind users */}
+                  {insights.riskAssessment.riskCategory === 'Low' && "✓ "}
+                  {insights.riskAssessment.riskCategory === 'Medium' && "⚠ "}
+                  {insights.riskAssessment.riskCategory === 'High' && "⛔ "}
                   {insights.riskAssessment.riskCategory} Risk
                 </RiskCategory>
                 <RiskDescription>
@@ -713,7 +903,14 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 <ValueDisplay>{mileageData[mileageData.length-1].formattedMileage} miles</ValueDisplay>
               </ValueWithTooltip>
               {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
-                <span style={{ fontStyle: 'italic', marginLeft: '5px', color: COLORS.DARK_GREY }}>
+                <span style={{ 
+                  fontStyle: 'italic', 
+                  marginLeft: '5px', 
+                  color: COLORS.RED,
+                  backgroundColor: `${COLORS.RED}10`,
+                  padding: '2px 5px',
+                  borderRadius: '3px'
+                }}>
                   (adjusted for inconsistencies)
                 </span>
               )}, 
@@ -745,8 +942,16 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   <td>
                     {insights.benchmarks.averageAnnualMileage.toLocaleString()} miles/year
                     {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
-                      <span style={{ display: 'block', fontSize: '0.85em', color: COLORS.RED }}>
-                        Adjusted for inconsistencies
+                      <span style={{ 
+                        display: 'inline-block', 
+                        fontSize: '0.85em', 
+                        color: 'white',
+                        backgroundColor: COLORS.RED,
+                        padding: '1px 5px',
+                        borderRadius: '3px',
+                        marginLeft: '5px'
+                      }}>
+                        Adjusted
                       </span>
                     )}
                   </td>
@@ -761,7 +966,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   <td>
                     {insights.benchmarks.totalMileage.toLocaleString()} miles
                     {hasClockingIssues && (
-                      <span style={{ display: 'block', fontSize: '0.85em', color: COLORS.RED }}>
+                      <span style={{ 
+                        display: 'block', 
+                        fontSize: '0.85em', 
+                        color: COLORS.RED,
+                        fontWeight: 'bold'
+                      }}>
                         Excludes negative readings
                       </span>
                     )}
@@ -852,7 +1062,14 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 {insights.usagePatterns.averageAnnualRate.toLocaleString()} miles per year
               </ValueDisplay>.
               {hasClockingIssues && insights.usagePatterns.dataQuality === "adjusted" && (
-                <span style={{ fontStyle: 'italic', marginLeft: '5px', color: COLORS.DARK_GREY }}>
+                <span style={{ 
+                  fontStyle: 'italic', 
+                  marginLeft: '5px', 
+                  color: COLORS.RED,
+                  backgroundColor: `${COLORS.RED}10`,
+                  padding: '2px 5px',
+                  borderRadius: '3px' 
+                }}>
                   (excludes periods with inconsistent mileage)
                 </span>
               )}
@@ -869,7 +1086,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 <tr>
                   <CellWithTooltip 
                     label="Highest Usage Period" 
-                    tooltip="Period with the highest annualized mileage rate" 
+                    tooltip="Period with the highest annualised mileage rate" 
                   />
                   <td>
                     {insights.usagePatterns.highestUsagePeriod.period}
@@ -882,7 +1099,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 <tr>
                   <CellWithTooltip 
                     label="Lowest Usage Period" 
-                    tooltip="Period with the lowest annualized mileage rate" 
+                    tooltip="Period with the lowest annualised mileage rate" 
                   />
                   <td>
                     {insights.usagePatterns.lowestUsagePeriod.period}
@@ -910,7 +1127,16 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                       tooltip="Indicators that suggest potential commercial use" 
                     />
                     <td>
-                      <span style={{ color: COLORS.RED, fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                      <span style={{ 
+                        color: COLORS.RED, 
+                        fontWeight: 'bold', 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        padding: '3px 6px',
+                        backgroundColor: `${COLORS.RED}10`,
+                        borderRadius: '3px',
+                        width: 'fit-content'
+                      }}>
                         <WarningIcon fontSize="small" style={{ marginRight: '5px' }} />
                         Potential commercial use detected
                       </span>
@@ -920,9 +1146,26 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               </tbody>
             </MileageTable>
             
-            {anomalies.filter(a => a.type === 'spike').length > 0 && (
+            {/* MOT Gaps - Direct utilization of checkForMOTGaps */}
+            {motGapsDetected && (
               <>
-                <FactorsHeading color={COLORS.ORANGE}>
+                <FactorsHeading color={COLORS.RED}>
+                  <WarningIcon fontSize="small" /> MOT Testing Gaps
+                </FactorsHeading>
+                <FactorsList>
+                  <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+                    <WarningIcon fontSize="small" />
+                    <span>
+                      Significant gaps detected in MOT testing history (18+ months) - vehicle may have been untested or unregistered for periods
+                    </span>
+                  </FactorItem>
+                </FactorsList>
+              </>
+            )}
+            
+            {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
+              <>
+                <FactorsHeading color={COLORS.BLACK}>
                   <WarningIcon fontSize="small" /> Unusual Mileage Patterns
                 </FactorsHeading>
                 <FactorsList>
@@ -930,7 +1173,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
                     .slice(0, 2)
                     .map((anomaly, index) => (
-                    <FactorItem key={`anomaly-${index}`} borderColor={COLORS.ORANGE} iconColor={COLORS.ORANGE}>
+                    <FactorItem key={`anomaly-${index}`} borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
                       <WarningIcon fontSize="small" />
                       <span>
                         {anomaly.details.current.formattedDate}: {anomaly.message}
@@ -938,7 +1181,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     </FactorItem>
                   ))}
                   {anomalies.filter(a => a.type === 'spike').length > 2 && (
-                    <FactorItem borderColor={COLORS.ORANGE} iconColor={COLORS.ORANGE}>
+                    <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
                       <InfoIcon fontSize="small" />
                       <span>
                         {anomalies.filter(a => a.type === 'spike').length - 2} more unusual usage patterns detected
@@ -988,7 +1231,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             tooltip={mileageTooltips.sectionRiskAssessment} 
             iconColor={
               insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.ORANGE : 
+              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
               COLORS.RED
             }
           >
@@ -999,15 +1242,26 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
           
           <MileageInsightPanel borderColor={
               insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.ORANGE : 
+              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
               COLORS.RED
           }>
             <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
                 {insights.riskAssessment.riskScore}
+                {/* Add icons for better accessibility */}
+                {insights.riskAssessment.riskCategory === 'Low' && 
+                  <CheckCircleIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
+                {insights.riskAssessment.riskCategory === 'Medium' && 
+                  <WarningIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
+                {insights.riskAssessment.riskCategory === 'High' && 
+                  <ErrorOutlineIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
               </RiskScoreCircle>
               <RiskScoreText>
                 <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
+                  {/* Add visual patterns for colour-blind users */}
+                  {insights.riskAssessment.riskCategory === 'Low' && "✓ "}
+                  {insights.riskAssessment.riskCategory === 'Medium' && "⚠ "}
+                  {insights.riskAssessment.riskCategory === 'High' && "⛔ "}
                   {insights.riskAssessment.riskCategory} Risk
                 </RiskCategory>
                 <RiskDescription>

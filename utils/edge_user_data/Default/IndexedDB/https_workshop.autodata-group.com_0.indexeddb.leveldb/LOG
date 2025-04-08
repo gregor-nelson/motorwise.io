@@ -1,0 +1,14 @@
+2025/03/25-18:40:44.326 37dc Reusing MANIFEST C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\utils\edge_user_data\Default\IndexedDB\https_workshop.autodata-group.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/03/25-18:40:44.330 37dc Recovering log #234
+2025/03/25-18:40:44.331 37dc Reusing old log C:\Users\Dell-001\Downloads\Dev\MotCheck-UK\utils\edge_user_data\Default\IndexedDB\https_workshop.autodata-group.com_0.indexeddb.leveldb/000234.log 
+2025/03/25-18:40:44.333 37dc Delete type=2 #233
+2025/03/25-18:40:49.449 1980 Level-0 table #239: started
+2025/03/25-18:40:49.454 1980 Level-0 table #239: 594 bytes OK
+2025/03/25-18:40:49.458 1980 Delete type=0 #234
+2025/03/25-18:40:49.459 3120 Manual compaction at level-0 from '\x00J\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00K\x00\x00\x00' @ 0 : 0; will stop at '\x00J\x00\x00\x05' @ 1394 : 1
+2025/03/25-18:40:49.460 3120 Compacting 1@0 + 1@1 files
+2025/03/25-18:40:49.464 3120 Generated table #240@0: 15 keys, 358 bytes
+2025/03/25-18:40:49.465 3120 Compacted 1@0 + 1@1 files => 358 bytes
+2025/03/25-18:40:49.468 3120 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/03/25-18:40:49.469 3120 Delete type=2 #239
+2025/03/25-18:40:49.470 3120 Manual compaction at level-0 from '\x00J\x00\x00\x05' @ 1394 : 1 .. '\x00K\x00\x00\x00' @ 0 : 0; will stop at (end)

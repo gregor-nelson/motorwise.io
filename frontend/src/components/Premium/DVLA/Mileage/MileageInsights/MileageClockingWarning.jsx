@@ -3,7 +3,11 @@ import {
   GovUKBody,
   GovUKBodyS,
   GovUKHeadingS,
-  COLORS 
+  COLORS,
+  SPACING,
+  respondTo,
+  commonFontStyles,
+  printStyles
 } from '../../../../../styles/theme';
 import { styled, css } from '@mui/material/styles';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -23,44 +27,67 @@ const hexToRgb = (hex) => {
 };
 
 // Styled components using MUI's styled API
-const WarningBanner = styled('div')(({ theme }) => css`
+const WarningBanner = styled('div')(() => css`
+  ${commonFontStyles}
+  ${printStyles}
   background-color: rgba(${hexToRgb(COLORS.RED)}, 0.1);
   border-left: 5px solid ${COLORS.RED};
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: ${SPACING.L};
+  margin-bottom: ${SPACING.L};
+  
+  ${respondTo('MOBILE')} {
+    padding: ${SPACING.L};
+    margin-bottom: ${SPACING.XL};
+  }
 `);
 
-const WarningTitle = styled(GovUKHeadingS)(({ theme }) => css`
+const WarningTitle = styled(GovUKHeadingS)(() => css`
   color: ${COLORS.RED};
-  margin-bottom: 10px;
+  margin-bottom: ${SPACING.S};
   margin-top: 0;
   display: flex;
   align-items: center;
   
   & svg {
-    margin-right: 10px;
+    margin-right: ${SPACING.S};
   }
 `);
 
-const WarningRow = styled('div')(({ theme }) => css`
+const WarningRow = styled('div')(() => css`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 15px;
-  padding-top: 10px;
+  margin-top: ${SPACING.M};
+  padding-top: ${SPACING.S};
   border-top: 1px solid rgba(${hexToRgb(COLORS.RED)}, 0.3);
 `);
 
-const WarningColumn = styled('div')(({ theme }) => css`
+const WarningColumn = styled('div')(() => css`
   flex: 1;
   min-width: 200px;
-  padding-right: 10px;
-  margin-bottom: 10px;
+  padding-right: ${SPACING.S};
+  margin-bottom: ${SPACING.S};
+  
+  ${respondTo('MOBILE')} {
+    margin-bottom: ${SPACING.M};
+  }
 `);
 
-const WarningValue = styled('span')(({ theme }) => css`
+const WarningValue = styled('span')(() => css`
+  ${commonFontStyles}
   color: ${COLORS.RED};
   font-weight: bold;
+`);
+
+const LegalNote = styled(GovUKBodyS)(() => css`
+  margin-top: ${SPACING.S};
+  color: ${COLORS.DARK_GREY};
+  display: flex;
+  align-items: center;
+  
+  & svg {
+    margin-right: ${SPACING.XS};
+  }
 `);
 
 /**
@@ -123,10 +150,10 @@ const MileageClockingWarning = ({ anomalies, mileageStats }) => {
         )}
       </WarningRow>
 
-      <GovUKBodyS style={{ marginTop: '10px', color: COLORS.DARK_GREY, display: 'flex', alignItems: 'center' }}>
-        <InfoIcon fontSize="small" style={{ marginRight: '5px' }} />
+      <LegalNote>
+        <InfoIcon fontSize="small" />
         <strong>Legal note:</strong> Selling a vehicle with incorrect mileage is illegal under the Consumer Protection from Unfair Trading Regulations.
-      </GovUKBodyS>
+      </LegalNote>
     </WarningBanner>
   );
 };

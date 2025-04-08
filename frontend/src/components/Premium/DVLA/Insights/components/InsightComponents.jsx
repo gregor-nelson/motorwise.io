@@ -895,32 +895,33 @@ export const EmissionsPanelComponent = ({ insights }) => {
         </p>
       </FactorsSection>
       
-      {/* Updated Section: Verify Compliance to Avoid Charges - only show if NOT exempt due to historic status */}
+      {/* Verify Compliance Section - only for non-exempt, non-diesel, non-compliant vehicles */}
       {(!insights.isULEZCompliant || !insights.isScottishLEZCompliant) && 
-       !insights.isHistoricVehicle && (
+       !insights.isHistoricVehicle && 
+       insights.showComplianceVerification && (
         <FactorsSection>
           <FactorsTitle color={COLORS.BLUE}>
-            Verify Compliance to Avoid Charges
+            Verify Your Compliance Status
           </FactorsTitle>
           <p style={{ margin: '5px 0 5px 25px', color: COLORS.DARK_GREY }}>
-            Some vehicles, particularly older models, may meet emissions standards but are not recorded as compliant. For petrol vehicles, compliance with Euro 4 requires NOx emissions below 0.08 g/km. Verifying and updating your vehicle's status may exempt it from Clean Air Zone (CAZ), Ultra Low Emission Zone (ULEZ), or Low Emission Zone (LEZ) charges.
+            Your petrol vehicle may actually meet emissions standards despite being listed as non-compliant.
           </p>
           <FactorList>
             <FactorItem iconColor={COLORS.BLUE}>
               <InfoIcon fontSize="small" />
-              <span>Check your Vehicle Registration Certificate (V5C) for emissions data. If NOx emissions are listed and below 0.08 g/km, you may proceed to update the compliance status.</span>
+              <span>Check your V5C for NOx emissions below 0.08 g/km (Euro 4 standard)</span>
             </FactorItem>
             <FactorItem iconColor={COLORS.BLUE}>
               <InfoIcon fontSize="small" />
-              <span>If emissions data is not listed, obtain a Certificate of Conformity (CoC) from the vehicle manufacturer. Contact the manufacturer directly, providing your registration number and Vehicle Identification Number (VIN).</span>
+              <span>Or request a Certificate of Conformity from your manufacturer (provide your registration and VIN)</span>
             </FactorItem>
             <FactorItem iconColor={COLORS.BLUE}>
               <InfoIcon fontSize="small" />
-              <span>Submit the CoC and a copy of your V5C to the relevant authority to update your vehicle's status: <a href="https://contact.drive-clean-air-zone.service.gov.uk/" target="_blank" style={{ color: COLORS.BLUE }}>CAZ Service</a> for UK Clean Air Zones, <a href="https://tfl.gov.uk/modes/driving/ulez-make-an-enquiry-wizard" target="_blank" style={{ color: COLORS.BLUE }}>Transport for London</a> for ULEZ, or the relevant local authority for Scottish LEZs (e.g., <a href="mailto:LEZ@glasgow.gov.uk" style={{ color: COLORS.BLUE }}>Glasgow LEZ</a>).</span>
+              <span>Submit to: <a href="https://contact.drive-clean-air-zone.service.gov.uk/" target="_blank" style={{ color: COLORS.BLUE }}>CAZ Service</a>, <a href="https://tfl.gov.uk/modes/driving/ulez-make-an-enquiry-wizard" target="_blank" style={{ color: COLORS.BLUE }}>TfL</a> (ULEZ), or your local LEZ authority</span>
             </FactorItem>
             <FactorItem iconColor={COLORS.BLUE}>
               <InfoIcon fontSize="small" />
-              <span>Updating compliance can prevent charges and may avoid the need to replace a vehicle that meets the required standards.</span>
+              <span>This could save you from unnecessary clean air zone charges</span>
             </FactorItem>
           </FactorList>
         </FactorsSection>

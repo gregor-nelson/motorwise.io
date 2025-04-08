@@ -1,0 +1,127 @@
+2025-03-25 19:10:11,620 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-03-25 19:10:13,062 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-03-25 19:10:14,699 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-03-25 19:10:14,707 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-03-25 19:10:14,713 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-03-25 19:10:15,991 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-03-25 19:10:17,060 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-03-25 19:10:17,068 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-03-25 19:10:17,077 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-03-25 19:10:18,422 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-03-25 19:10:39,468 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-25 19:10:39,476 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 27.8584s
+2025-03-25 19:10:42,539 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-25 19:10:42,547 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 29.4905s
+2025-03-25 19:14:38,157 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0050s
+2025-03-25 19:14:38,166 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0110s
+2025-03-26 08:09:25,386 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-03-26 08:09:25,388 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-03-26 08:09:25,579 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-03-26 08:09:25,580 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-03-26 08:11:13,578 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-03-26 08:11:14,523 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-03-26 08:11:14,524 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-03-26 08:11:15,283 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-03-26 08:11:15,284 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-03-26 08:11:39,746 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-26 08:11:39,760 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 26.1829s
+2025-04-01 13:44:14,289 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-01 13:44:14,310 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-01 13:44:14,498 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-01 13:44:14,500 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-01 13:44:23,713 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-01 13:44:24,706 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-01 13:44:24,708 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-01 13:44:25,577 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-01 13:44:25,579 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-01 13:44:48,451 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-01 13:44:48,467 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 24.7550s
+2025-04-01 13:44:48,751 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0000s
+2025-04-01 13:44:49,069 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0000s
+2025-04-01 15:27:10,635 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-01 15:27:10,637 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-01 15:27:10,771 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-01 15:27:10,773 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-02 05:50:49,720 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-02 05:50:49,731 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-02 05:50:49,852 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-02 05:50:49,854 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-02 18:54:44,303 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0050s
+2025-04-03 10:59:59,780 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-03 10:59:59,792 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-03 10:59:59,896 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-03 10:59:59,897 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-04 18:47:16,134 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-04 18:47:16,136 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-04 18:47:16,508 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-04 18:47:16,509 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-04 18:48:08,709 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-04-04 18:48:10,439 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-04-04 18:48:10,443 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-04-04 18:48:11,529 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-04-04 18:48:11,531 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-04-04 18:48:11,546 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-04-04 18:48:11,552 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-04-04 18:48:11,553 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-04-04 18:48:29,373 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-04 18:48:29,386 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 200 - 20.6782s
+2025-04-04 18:53:43,987 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-04 18:53:45,277 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-04 18:53:45,283 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-04 18:53:46,654 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-04 18:53:46,657 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-04 18:54:07,365 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-04 18:54:07,379 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 23.3928s
+2025-04-08 08:26:33,939 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 08:26:33,969 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-08 08:26:34,114 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 08:26:34,115 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-08 08:31:38,549 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 08:31:38,551 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-08 08:31:38,781 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 08:31:38,782 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-08 08:32:08,449 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-08 08:32:10,416 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-08 08:32:10,423 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-08 08:32:11,585 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-08 08:32:11,586 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-08 08:32:47,021 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 "
+2025-04-08 08:32:47,024 - vehicle_analysis_api - ERROR - Claude API error: Server error '529 ' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/529
+2025-04-08 08:32:47,026 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 38.5782s
+2025-04-08 08:33:09,017 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-08 08:33:10,109 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-08 08:33:10,113 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-08 08:33:11,103 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-08 08:33:11,107 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-08 08:33:17,720 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 "
+2025-04-08 08:33:17,722 - vehicle_analysis_api - ERROR - Claude API error: Server error '529 ' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/529
+2025-04-08 08:33:17,724 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 8.7096s
+2025-04-08 08:45:19,622 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-08 08:45:23,069 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-08 08:45:23,072 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-08 08:45:24,524 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-08 08:45:24,527 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-08 08:45:28,894 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 "
+2025-04-08 08:45:28,898 - vehicle_analysis_api - ERROR - Claude API error: Server error '529 ' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/529
+2025-04-08 08:45:28,903 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 9.2803s
+2025-04-08 08:45:32,223 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-08 08:45:33,266 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-08 08:45:34,848 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-08 08:45:34,853 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-08 08:45:35,830 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-08 08:45:35,833 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-08 08:45:36,981 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-08 08:45:36,984 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-08 08:45:38,104 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-08 08:45:38,108 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-08 08:46:01,766 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-08 08:46:01,777 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 29.5546s
+2025-04-08 08:46:02,482 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-08 08:46:02,490 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 29.2244s
+2025-04-08 10:00:31,150 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 10:00:31,171 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-08 10:00:31,552 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 10:00:31,553 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk

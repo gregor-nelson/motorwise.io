@@ -29,6 +29,10 @@ SERVICES = {
     "mot_api": {"name": "MOT API", "dir": os.path.join(BACKEND_DIR, "mot_api"), "cmd": "python", "args": ["main.py"]},
     "stripe_api": {"name": "Stripe API", "dir": os.path.join(BACKEND_DIR, "stripe_api"), "cmd": "python", "args": ["main.py"]},
     "frontend": {"name": "Frontend", "dir": FRONTEND_DIR, "cmd": "npm", "args": ["run", "dev"]},
+    "auto_data_api": {"name": "Auto Data API", "dir": os.path.join(BACKEND_DIR, "auto_data_api"), "cmd": "python", "args": ["main.py"]},
+    "claude_api": {"name": "Claude API", "dir": os.path.join(BACKEND_DIR, "claude_api"), "cmd": "python", "args": ["main.py"]},
+    "tsb_api": {"name": "TSB API", "dir": os.path.join(BACKEND_DIR, "tsb_api"), "cmd": "python", "args": ["app.py"]}
+
 }
 
 # Enhanced One Dark Theme Colors - Matched with VSCode One Dark Theme

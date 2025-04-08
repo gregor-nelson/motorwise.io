@@ -1,0 +1,538 @@
+{
+  "vehicle_id": "HON24656",
+  "vehicle_info": {
+    "manufacturer": "Honda",
+    "model": "CR-V",
+    "engine_code": "N22B3"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "Honda CR-V",
+    "make": "Honda",
+    "model": "CR-V",
+    "engine_info": "N22B3/2.2 (07-12)"
+  },
+  "categories": {
+    "ABS/Brakes": [
+      {
+        "id": "5",
+        "title": "Loss of braking efficiency.",
+        "href": "/w1/known-fixes/HON24656/5?title=Loss%20of%20braking%20efficiency."
+      },
+      {
+        "id": "5",
+        "title": "Trouble codes stored: 43, 47.",
+        "href": "/w1/known-fixes/HON24656/5?title=Trouble%20codes%20stored%3A%2043%2C%2047."
+      }
+    ],
+    "AC/Heating": [
+      {
+        "id": "8",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON24656/8?title=Battery%20discharged."
+      },
+      {
+        "id": "8",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON24656/8?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      }
+    ],
+    "Body": [
+      {
+        "id": "4",
+        "title": "Rear folding seat base latch difficult to disengage.",
+        "href": "/w1/known-fixes/HON24656/4?title=Rear%20folding%20seat%20base%20latch%20difficult%20to%20disengage."
+      }
+    ],
+    "Clutch": [
+      {
+        "id": "2",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON24656/2?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "3",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON24656/3?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      }
+    ],
+    "Driveability": [
+      {
+        "id": "7",
+        "title": "Diesel particulate filter (DPF) warning lamp illuminated.",
+        "href": "/w1/known-fixes/HON24656/7?title=Diesel%20particulate%20filter%20%28DPF%29%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "7",
+        "title": "Engine oil level too high.",
+        "href": "/w1/known-fixes/HON24656/7?title=Engine%20oil%20level%20too%20high."
+      },
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated.%20Trouble%20code%20stored%3A%20P0087."
+      },
+      {
+        "id": "9",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20runs%20in%20limp%20home%20mode."
+      }
+    ],
+    "Drivetrain": [
+      {
+        "id": "10",
+        "title": "Shudder from rear of vehicle when cornering.",
+        "href": "/w1/known-fixes/HON24656/10?title=Shudder%20from%20rear%20of%20vehicle%20when%20cornering."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "8",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON24656/8?title=Battery%20discharged."
+      },
+      {
+        "id": "8",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON24656/8?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      }
+    ],
+    "Engine management": [
+      {
+        "id": "7",
+        "title": "Diesel particulate filter (DPF) warning lamp illuminated.",
+        "href": "/w1/known-fixes/HON24656/7?title=Diesel%20particulate%20filter%20%28DPF%29%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "7",
+        "title": "Engine oil level too high.",
+        "href": "/w1/known-fixes/HON24656/7?title=Engine%20oil%20level%20too%20high."
+      },
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated.%20Trouble%20code%20stored%3A%20P0087."
+      },
+      {
+        "id": "9",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20runs%20in%20limp%20home%20mode."
+      }
+    ],
+    "Exhaust": [
+      {
+        "id": "6",
+        "title": "Vibration through vehicle when engine idling or on light throttle. More pronounced in cold weather.",
+        "href": "/w1/known-fixes/HON24656/6?title=Vibration%20through%20vehicle%20when%20engine%20idling%20or%20on%20light%20throttle.%20More%20pronounced%20in%20cold%20weather."
+      }
+    ],
+    "Fuel system": [
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated.%20Trouble%20code%20stored%3A%20P0087."
+      },
+      {
+        "id": "9",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20runs%20in%20limp%20home%20mode."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "1",
+        "title": "Creaking noise from windscreen wipers.",
+        "href": "/w1/known-fixes/HON24656/1?title=Creaking%20noise%20from%20windscreen%20wipers."
+      },
+      {
+        "id": "2",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON24656/2?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "3",
+        "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+        "href": "/w1/known-fixes/HON24656/3?title=Squeaking%2Fcreaking%20noise%20when%20clutch%20pedal%20depressed%20or%20released."
+      },
+      {
+        "id": "6",
+        "title": "Vibration through vehicle when engine idling or on light throttle. More pronounced in cold weather.",
+        "href": "/w1/known-fixes/HON24656/6?title=Vibration%20through%20vehicle%20when%20engine%20idling%20or%20on%20light%20throttle.%20More%20pronounced%20in%20cold%20weather."
+      },
+      {
+        "id": "10",
+        "title": "Shudder from rear of vehicle when cornering.",
+        "href": "/w1/known-fixes/HON24656/10?title=Shudder%20from%20rear%20of%20vehicle%20when%20cornering."
+      }
+    ],
+    "Starting and charging": [
+      {
+        "id": "8",
+        "title": "Battery discharged.",
+        "href": "/w1/known-fixes/HON24656/8?title=Battery%20discharged."
+      },
+      {
+        "id": "8",
+        "title": "Irregular operation of AC compressor clutch.",
+        "href": "/w1/known-fixes/HON24656/8?title=Irregular%20operation%20of%20AC%20compressor%20clutch."
+      },
+      {
+        "id": "9",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated.%20Trouble%20code%20stored%3A%20P0087."
+      },
+      {
+        "id": "9",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/HON24656/9?title=Engine%20runs%20in%20limp%20home%20mode."
+      }
+    ],
+    "Steering": [
+      {
+        "id": "5",
+        "title": "Loss of braking efficiency.",
+        "href": "/w1/known-fixes/HON24656/5?title=Loss%20of%20braking%20efficiency."
+      },
+      {
+        "id": "5",
+        "title": "Trouble codes stored: 43, 47.",
+        "href": "/w1/known-fixes/HON24656/5?title=Trouble%20codes%20stored%3A%2043%2C%2047."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "becca045-88b8-4cd4-b336-fdb068866036",
+      "title": "Battery discharged.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC)."
+      ],
+      "problems": [
+        "Battery discharged.",
+        "Irregular operation of AC compressor clutch."
+      ],
+      "causes": [
+        "AC compressor clutch relay faulty.Note: This fault is only associated with relays made by Omron."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "AC compressor clutch relay",
+            "part_number": "39794-SDA-A05",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Replace AC compressor clutch relay."
+        ]
+      },
+      "notes": [
+        "Note: This fault is only associated with relays made by Omron."
+      ]
+    },
+    {
+      "id": "7e02b94b-1d46-4870-955a-8fcc3c1268ea",
+      "title": "Creaking noise from windscreen wipers.",
+      "affected_vehicles": [
+        "VIN →SHSRE5***8U010589.",
+        "VIN →SHSRE6***8U009717.",
+        "VIN →SHSRE5***8U010589.",
+        "VIN →SHSRE6***8U009717."
+      ],
+      "problems": [
+        "Creaking noise from windscreen wipers."
+      ],
+      "causes": [
+        "Side panel and windscreen lower panel rubbing together."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Remove engine bay trim panels to gain access to right-hand bonnet hinge.",
+          "Increase the clearance between side panel and windscreen lower panel. Modify affected area using a hammer and a suitable tool (centre punch) Fig.118865.1.",
+          "ViewView more informationFig.118865"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "0de5908d-8055-407c-b5f1-e1c1c97c027e",
+      "title": "Diesel particulate filter (DPF) warning lamp illuminated.",
+      "affected_vehicles": [
+        "All models with Diesel particulate filter (DPF) and engine code N22B3."
+      ],
+      "problems": [
+        "Diesel particulate filter (DPF) warning lamp illuminated.",
+        "Engine oil level too high."
+      ],
+      "causes": [
+        "DPF regeneration process repeatedly not completed due to engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program ECM with upgraded software.",
+          "Change engine oil and filter."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "326688a2-19bd-40b0-aedb-424c6a893b5a",
+      "title": "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+      "affected_vehicles": [
+        "All models with Diesel engines."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "Engine runs in limp home mode."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program engine control module (ECM) with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "eca9c9b8-0ece-4b15-aea6-45280f4a5bbf",
+      "title": "Engine oil level too high.",
+      "affected_vehicles": [
+        "All models with Diesel particulate filter (DPF) and engine code N22B3."
+      ],
+      "problems": [
+        "Diesel particulate filter (DPF) warning lamp illuminated.",
+        "Engine oil level too high."
+      ],
+      "causes": [
+        "DPF regeneration process repeatedly not completed due to engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program ECM with upgraded software.",
+          "Change engine oil and filter."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "cf64cf1d-6c6d-4d7e-b4e8-675cc472c31d",
+      "title": "Engine runs in limp home mode.",
+      "affected_vehicles": [
+        "All models with Diesel engines."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated. Trouble code stored: P0087.",
+        "Engine runs in limp home mode."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Re-program engine control module (ECM) with upgraded software."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "fba7c11b-457b-474f-b99f-3d18fcb32b94",
+      "title": "Irregular operation of AC compressor clutch.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC)."
+      ],
+      "problems": [
+        "Battery discharged.",
+        "Irregular operation of AC compressor clutch."
+      ],
+      "causes": [
+        "AC compressor clutch relay faulty.Note: This fault is only associated with relays made by Omron."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "AC compressor clutch relay",
+            "part_number": "39794-SDA-A05",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Replace AC compressor clutch relay."
+        ]
+      },
+      "notes": [
+        "Note: This fault is only associated with relays made by Omron."
+      ]
+    },
+    {
+      "id": "50e9b85b-10b4-4eef-b487-66f0128d11b3",
+      "title": "Loss of braking efficiency.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Loss of braking efficiency.",
+        "Trouble codes stored: 43, 47."
+      ],
+      "causes": [
+        "Incorrect front brake system fluid pressure."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check front ABS brake fluid pressure sensors for correct operation before replacing ABS hydraulic modulator."
+        ]
+      },
+      "notes": [
+        "Note: Front ABS brake fluid pressure sensors are not integral to ABS hydraulic modulator."
+      ]
+    },
+    {
+      "id": "5a3b2049-1a49-440c-b2a4-66e54749143e",
+      "title": "Rear folding seat base latch difficult to disengage.",
+      "affected_vehicles": [
+        "All models, 2007-08."
+      ],
+      "problems": [
+        "Rear folding seat base latch difficult to disengage."
+      ],
+      "causes": [
+        "Rear folding seat base catch misaligned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Using a suitable tool, adjust rear folding seat base catch."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "3d43de1a-063f-4025-aee2-1d943afbd8e8",
+      "title": "Shudder from rear of vehicle when cornering.",
+      "affected_vehicles": [
+        "All models with four wheel drive."
+      ],
+      "problems": [
+        "Shudder from rear of vehicle when cornering."
+      ],
+      "causes": [
+        "Incorrect specification rear differential oil used."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Renew rear differential oil. Ensure rear differential oil to manufacturer's specifications."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "c89735bd-af08-4861-b9d0-f4ce64034030",
+      "title": "Squeaking/creaking noise when clutch pedal depressed or released.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Squeaking/creaking noise when clutch pedal depressed or released."
+      ],
+      "causes": [
+        "Clutch master cylinder and clutch pedal misaligned."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Slacken clutch master cylinder retaining bolts.",
+          "Fully depress clutch pedal and hold down.",
+          "Tighten clutch master cylinder retaining bolts. Tightening torque: 22 Nm.",
+          "Release clutch pedal."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "4461573f-6552-4b70-af6e-71e6f9f53cd6",
+      "title": "Trouble codes stored: 43, 47.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Loss of braking efficiency.",
+        "Trouble codes stored: 43, 47."
+      ],
+      "causes": [
+        "Incorrect front brake system fluid pressure."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check front ABS brake fluid pressure sensors for correct operation before replacing ABS hydraulic modulator."
+        ]
+      },
+      "notes": [
+        "Note: Front ABS brake fluid pressure sensors are not integral to ABS hydraulic modulator."
+      ]
+    },
+    {
+      "id": "90d44c9e-ac9c-4157-b958-c081ea0e19aa",
+      "title": "Vibration through vehicle when engine idling or on light throttle. More pronounced in cold weather.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Vibration through vehicle when engine idling or on light throttle. More pronounced in cold weather."
+      ],
+      "causes": [
+        "Rear exhaust silencer mounting rubbers excessively compressed due to silencer hanger bracket incorrectly positioned."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Nut",
+            "part_number": "90115-659-003",
+            "quantity": "2"
+          },
+          {
+            "name": "Gasket (petrol)",
+            "part_number": "18229-SNA-A01",
+            "quantity": "1"
+          },
+          {
+            "name": "Gasket (Diesel)",
+            "part_number": "18229-S7S-003",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove rear exhaust silencer.",
+          "Adjust rear exhaust silencer hanger brackets:Raise silencer hanger LH bracket by 2 - 3 mm Fig.125598.Lower silencer hanger RH bracket by 2 - 3 mm Fig.125598.",
+          "Raise silencer hanger LH bracket by 2 - 3 mm Fig.125598.",
+          "Lower silencer hanger RH bracket by 2 - 3 mm Fig.125598.",
+          "Refit rear exhaust silencer.",
+          "Raise silencer hanger LH bracket by 2 - 3 mm Fig.125598.",
+          "Lower silencer hanger RH bracket by 2 - 3 mm Fig.125598.",
+          "ViewView more informationFig.125598"
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

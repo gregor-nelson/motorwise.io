@@ -1,0 +1,2093 @@
+{
+  "vehicle_id": "MIN13011",
+  "vehicle_info": {
+    "manufacturer": "MINI",
+    "model": "Mini",
+    "engine_code": "W10B16BA"
+  },
+  "metadata": {
+    "page_title": "Known fixes & bulletins",
+    "make_model": "MINI Mini",
+    "make": "MINI",
+    "model": "Mini",
+    "engine_info": "W10B16BA/1.6 (R50/52/53) (01-09)"
+  },
+  "categories": {
+    "ABS/Brakes": [
+      {
+        "id": "9",
+        "title": "Rattling noise in area of bulkhead.",
+        "href": "/w1/known-fixes/MIN13011/9?title=Rattling%20noise%20in%20area%20of%20bulkhead."
+      },
+      {
+        "id": "9",
+        "title": "Incorrectly diagnosed as instrument panel.",
+        "href": "/w1/known-fixes/MIN13011/9?title=Incorrectly%20diagnosed%20as%20instrument%20panel."
+      },
+      {
+        "id": "16",
+        "title": "Brake lamps stay on when switching ignition off.",
+        "href": "/w1/known-fixes/MIN13011/16?title=Brake%20lamps%20stay%20on%20when%20switching%20ignition%20off."
+      },
+      {
+        "id": "27",
+        "title": "Rear brakes binding.",
+        "href": "/w1/known-fixes/MIN13011/27?title=Rear%20brakes%20binding."
+      },
+      {
+        "id": "28",
+        "title": "ESP warning lamp illuminated.",
+        "href": "/w1/known-fixes/MIN13011/28?title=ESP%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "28",
+        "title": "TPMS warning lamp illuminated.",
+        "href": "/w1/known-fixes/MIN13011/28?title=TPMS%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "28",
+        "title": "Trouble code related to steering angle sensor stored in fault memory.",
+        "href": "/w1/known-fixes/MIN13011/28?title=Trouble%20code%20related%20to%20steering%20angle%20sensor%20stored%20in%20fault%20memory."
+      },
+      {
+        "id": "45",
+        "title": "ABS/ESP warning lamp illuminated. No communication with ABS control module.",
+        "href": "/w1/known-fixes/MIN13011/45?title=ABS%2FESP%20warning%20lamp%20illuminated.%20No%20communication%20with%20ABS%20control%20module."
+      }
+    ],
+    "AC/Heating": [
+      {
+        "id": "13",
+        "title": "Heater temperature control does not adjust temperature.",
+        "href": "/w1/known-fixes/MIN13011/13?title=Heater%20temperature%20control%20does%20not%20adjust%20temperature."
+      },
+      {
+        "id": "23",
+        "title": "Air conditioning (AC) inefficient.",
+        "href": "/w1/known-fixes/MIN13011/23?title=Air%20conditioning%20%28AC%29%20inefficient."
+      },
+      {
+        "id": "23",
+        "title": "Noise from air conditioning (AC) when operating.",
+        "href": "/w1/known-fixes/MIN13011/23?title=Noise%20from%20air%20conditioning%20%28AC%29%20when%20operating."
+      },
+      {
+        "id": "26",
+        "title": "Poor performance or failure of AC system.",
+        "href": "/w1/known-fixes/MIN13011/26?title=Poor%20performance%20or%20failure%20of%20AC%20system."
+      },
+      {
+        "id": "40",
+        "title": "Intermittent operation of AC/heater function control panel.",
+        "href": "/w1/known-fixes/MIN13011/40?title=Intermittent%20operation%20of%20AC%2Fheater%20function%20control%20panel."
+      },
+      {
+        "id": "41",
+        "title": "AC/heater blower motor operating intermittently.",
+        "href": "/w1/known-fixes/MIN13011/41?title=AC%2Fheater%20blower%20motor%20operating%20intermittently."
+      },
+      {
+        "id": "41",
+        "title": "Interior lamp not working.",
+        "href": "/w1/known-fixes/MIN13011/41?title=Interior%20lamp%20not%20working."
+      }
+    ],
+    "Body": [
+      {
+        "id": "6",
+        "title": "Front seat heating too hot or cold.",
+        "href": "/w1/known-fixes/MIN13011/6?title=Front%20seat%20heating%20too%20hot%20or%20cold."
+      },
+      {
+        "id": "11",
+        "title": "Water ingress into load area.",
+        "href": "/w1/known-fixes/MIN13011/11?title=Water%20ingress%20into%20load%20area."
+      },
+      {
+        "id": "11",
+        "title": "Water running down inside of rear screen.",
+        "href": "/w1/known-fixes/MIN13011/11?title=Water%20running%20down%20inside%20of%20rear%20screen."
+      },
+      {
+        "id": "12",
+        "title": "Boot lid opens without operating switch.",
+        "href": "/w1/known-fixes/MIN13011/12?title=Boot%20lid%20opens%20without%20operating%20switch."
+      },
+      {
+        "id": "14",
+        "title": "Rattling noise from rear seats when driving over rough roads.",
+        "href": "/w1/known-fixes/MIN13011/14?title=Rattling%20noise%20from%20rear%20seats%20when%20driving%20over%20rough%20roads."
+      },
+      {
+        "id": "17",
+        "title": "Stop lamps permanently illuminated.",
+        "href": "/w1/known-fixes/MIN13011/17?title=Stop%20lamps%20permanently%20illuminated."
+      },
+      {
+        "id": "20",
+        "title": "Glovebox will not close.",
+        "href": "/w1/known-fixes/MIN13011/20?title=Glovebox%20will%20not%20close."
+      },
+      {
+        "id": "20",
+        "title": "Glovebox opens when driving over rough roads.",
+        "href": "/w1/known-fixes/MIN13011/20?title=Glovebox%20opens%20when%20driving%20over%20rough%20roads."
+      },
+      {
+        "id": "30",
+        "title": "Rattling noise when opening front doors.",
+        "href": "/w1/known-fixes/MIN13011/30?title=Rattling%20noise%20when%20opening%20front%20doors."
+      },
+      {
+        "id": "31",
+        "title": "Vibration/rattle from tailgate over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/31?title=Vibration%2Frattle%20from%20tailgate%20over%20uneven%20surfaces."
+      },
+      {
+        "id": "33",
+        "title": "Door handles difficult to operate in very cold conditions.",
+        "href": "/w1/known-fixes/MIN13011/33?title=Door%20handles%20difficult%20to%20operate%20in%20very%20cold%20conditions."
+      },
+      {
+        "id": "35",
+        "title": "A-post outer trim panel becomes detached.",
+        "href": "/w1/known-fixes/MIN13011/35?title=A-post%20outer%20trim%20panel%20becomes%20detached."
+      },
+      {
+        "id": "36",
+        "title": "Creaking noise from centre of fascia over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/36?title=Creaking%20noise%20from%20centre%20of%20fascia%20over%20uneven%20surfaces."
+      },
+      {
+        "id": "37",
+        "title": "Door mirror glass movement restricted, when operating.",
+        "href": "/w1/known-fixes/MIN13011/37?title=Door%20mirror%20glass%20movement%20restricted%2C%20when%20operating."
+      },
+      {
+        "id": "38",
+        "title": "Squeaking noise from slide/tilt sunroof when opening or closing.",
+        "href": "/w1/known-fixes/MIN13011/38?title=Squeaking%20noise%20from%20slide%2Ftilt%20sunroof%20when%20opening%20or%20closing."
+      },
+      {
+        "id": "39",
+        "title": "Slow response of navigation system display unit on start-up.",
+        "href": "/w1/known-fixes/MIN13011/39?title=Slow%20response%20of%20navigation%20system%20display%20unit%20on%20start-up."
+      },
+      {
+        "id": "41",
+        "title": "AC/heater blower motor operating intermittently.",
+        "href": "/w1/known-fixes/MIN13011/41?title=AC%2Fheater%20blower%20motor%20operating%20intermittently."
+      },
+      {
+        "id": "41",
+        "title": "Interior lamp not working.",
+        "href": "/w1/known-fixes/MIN13011/41?title=Interior%20lamp%20not%20working."
+      },
+      {
+        "id": "44",
+        "title": "When opening boot lid water enters load area after heavy rain.",
+        "href": "/w1/known-fixes/MIN13011/44?title=When%20opening%20boot%20lid%20water%20enters%20load%20area%20after%20heavy%20rain."
+      }
+    ],
+    "Clutch": [
+      {
+        "id": "29",
+        "title": "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed.",
+        "href": "/w1/known-fixes/MIN13011/29?title=Rattling%20noise%20from%20clutch%20assembly%20with%20engine%20idling%20and%20transmission%20in%20neutral.%20Noise%20disappears%20when%20clutch%20pedal%20is%20depressed."
+      }
+    ],
+    "Driveability": [
+      {
+        "id": "5",
+        "title": "Accelerator pedal sticking.",
+        "href": "/w1/known-fixes/MIN13011/5?title=Accelerator%20pedal%20sticking."
+      },
+      {
+        "id": "24",
+        "title": "Engine oil pressure warning lamp illuminated while driving, even though oil level is correct.",
+        "href": "/w1/known-fixes/MIN13011/24?title=Engine%20oil%20pressure%20warning%20lamp%20illuminated%20while%20driving%2C%20even%20though%20oil%20level%20is%20correct."
+      },
+      {
+        "id": "32",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "32",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Engine%20runs%20in%20limp%20home%20mode."
+      },
+      {
+        "id": "32",
+        "title": "Possible trouble codes stored: P1125, P1226, P1692, P1693.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Possible%20trouble%20codes%20stored%3A%20P1125%2C%20P1226%2C%20P1692%2C%20P1693."
+      },
+      {
+        "id": "34",
+        "title": "Engine idle speed drops when down-shifting between 3rd-2nd gears.",
+        "href": "/w1/known-fixes/MIN13011/34?title=Engine%20idle%20speed%20drops%20when%20down-shifting%20between%203rd-2nd%20gears."
+      }
+    ],
+    "Drivetrain": [
+      {
+        "id": "18",
+        "title": "Oil leak from transmission.",
+        "href": "/w1/known-fixes/MIN13011/18?title=Oil%20leak%20from%20transmission."
+      },
+      {
+        "id": "34",
+        "title": "Engine idle speed drops when down-shifting between 3rd-2nd gears.",
+        "href": "/w1/known-fixes/MIN13011/34?title=Engine%20idle%20speed%20drops%20when%20down-shifting%20between%203rd-2nd%20gears."
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "6",
+        "title": "Front seat heating too hot or cold.",
+        "href": "/w1/known-fixes/MIN13011/6?title=Front%20seat%20heating%20too%20hot%20or%20cold."
+      },
+      {
+        "id": "7",
+        "title": "EPS pump overheating.",
+        "href": "/w1/known-fixes/MIN13011/7?title=EPS%20pump%20overheating."
+      },
+      {
+        "id": "8",
+        "title": "EPS pump overheating when ambient air temperature high.",
+        "href": "/w1/known-fixes/MIN13011/8?title=EPS%20pump%20overheating%20when%20ambient%20air%20temperature%20high."
+      },
+      {
+        "id": "8",
+        "title": "Lack of power steering.",
+        "href": "/w1/known-fixes/MIN13011/8?title=Lack%20of%20power%20steering."
+      },
+      {
+        "id": "10",
+        "title": "Electric power steering (EPS) inoperative.",
+        "href": "/w1/known-fixes/MIN13011/10?title=Electric%20power%20steering%20%28EPS%29%20inoperative."
+      },
+      {
+        "id": "12",
+        "title": "Boot lid opens without operating switch.",
+        "href": "/w1/known-fixes/MIN13011/12?title=Boot%20lid%20opens%20without%20operating%20switch."
+      },
+      {
+        "id": "15",
+        "title": "Erratic instrument panel operation.",
+        "href": "/w1/known-fixes/MIN13011/15?title=Erratic%20instrument%20panel%20operation."
+      },
+      {
+        "id": "16",
+        "title": "Brake lamps stay on when switching ignition off.",
+        "href": "/w1/known-fixes/MIN13011/16?title=Brake%20lamps%20stay%20on%20when%20switching%20ignition%20off."
+      },
+      {
+        "id": "17",
+        "title": "Stop lamps permanently illuminated.",
+        "href": "/w1/known-fixes/MIN13011/17?title=Stop%20lamps%20permanently%20illuminated."
+      },
+      {
+        "id": "24",
+        "title": "Engine oil pressure warning lamp illuminated while driving, even though oil level is correct.",
+        "href": "/w1/known-fixes/MIN13011/24?title=Engine%20oil%20pressure%20warning%20lamp%20illuminated%20while%20driving%2C%20even%20though%20oil%20level%20is%20correct."
+      },
+      {
+        "id": "28",
+        "title": "ESP warning lamp illuminated.",
+        "href": "/w1/known-fixes/MIN13011/28?title=ESP%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "28",
+        "title": "TPMS warning lamp illuminated.",
+        "href": "/w1/known-fixes/MIN13011/28?title=TPMS%20warning%20lamp%20illuminated."
+      },
+      {
+        "id": "28",
+        "title": "Trouble code related to steering angle sensor stored in fault memory.",
+        "href": "/w1/known-fixes/MIN13011/28?title=Trouble%20code%20related%20to%20steering%20angle%20sensor%20stored%20in%20fault%20memory."
+      },
+      {
+        "id": "37",
+        "title": "Door mirror glass movement restricted, when operating.",
+        "href": "/w1/known-fixes/MIN13011/37?title=Door%20mirror%20glass%20movement%20restricted%2C%20when%20operating."
+      },
+      {
+        "id": "39",
+        "title": "Slow response of navigation system display unit on start-up.",
+        "href": "/w1/known-fixes/MIN13011/39?title=Slow%20response%20of%20navigation%20system%20display%20unit%20on%20start-up."
+      },
+      {
+        "id": "40",
+        "title": "Intermittent operation of AC/heater function control panel.",
+        "href": "/w1/known-fixes/MIN13011/40?title=Intermittent%20operation%20of%20AC%2Fheater%20function%20control%20panel."
+      },
+      {
+        "id": "41",
+        "title": "AC/heater blower motor operating intermittently.",
+        "href": "/w1/known-fixes/MIN13011/41?title=AC%2Fheater%20blower%20motor%20operating%20intermittently."
+      },
+      {
+        "id": "41",
+        "title": "Interior lamp not working.",
+        "href": "/w1/known-fixes/MIN13011/41?title=Interior%20lamp%20not%20working."
+      },
+      {
+        "id": "43",
+        "title": "Brake lamps stay on when switching ignition off.",
+        "href": "/w1/known-fixes/MIN13011/43?title=Brake%20lamps%20stay%20on%20when%20switching%20ignition%20off."
+      },
+      {
+        "id": "45",
+        "title": "ABS/ESP warning lamp illuminated. No communication with ABS control module.",
+        "href": "/w1/known-fixes/MIN13011/45?title=ABS%2FESP%20warning%20lamp%20illuminated.%20No%20communication%20with%20ABS%20control%20module."
+      }
+    ],
+    "Engine cooling": [
+      {
+        "id": "19",
+        "title": "Engine coolant leak from alternator area.",
+        "href": "/w1/known-fixes/MIN13011/19?title=Engine%20coolant%20leak%20from%20alternator%20area."
+      },
+      {
+        "id": "25",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/MIN13011/25?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "25",
+        "title": "Trouble code stored: P0128.",
+        "href": "/w1/known-fixes/MIN13011/25?title=Trouble%20code%20stored%3A%20P0128."
+      }
+    ],
+    "Engine management": [
+      {
+        "id": "2",
+        "title": "Engine judder.",
+        "href": "/w1/known-fixes/MIN13011/2?title=Engine%20judder."
+      },
+      {
+        "id": "2",
+        "title": "Poor acceleration from cold.",
+        "href": "/w1/known-fixes/MIN13011/2?title=Poor%20acceleration%20from%20cold."
+      },
+      {
+        "id": "5",
+        "title": "Accelerator pedal sticking.",
+        "href": "/w1/known-fixes/MIN13011/5?title=Accelerator%20pedal%20sticking."
+      },
+      {
+        "id": "24",
+        "title": "Engine oil pressure warning lamp illuminated while driving, even though oil level is correct.",
+        "href": "/w1/known-fixes/MIN13011/24?title=Engine%20oil%20pressure%20warning%20lamp%20illuminated%20while%20driving%2C%20even%20though%20oil%20level%20is%20correct."
+      },
+      {
+        "id": "25",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/MIN13011/25?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "25",
+        "title": "Trouble code stored: P0128.",
+        "href": "/w1/known-fixes/MIN13011/25?title=Trouble%20code%20stored%3A%20P0128."
+      },
+      {
+        "id": "32",
+        "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Engine%20malfunction%20indicator%20lamp%20%28MIL%29%20illuminated."
+      },
+      {
+        "id": "32",
+        "title": "Engine runs in limp home mode.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Engine%20runs%20in%20limp%20home%20mode."
+      },
+      {
+        "id": "32",
+        "title": "Possible trouble codes stored: P1125, P1226, P1692, P1693.",
+        "href": "/w1/known-fixes/MIN13011/32?title=Possible%20trouble%20codes%20stored%3A%20P1125%2C%20P1226%2C%20P1692%2C%20P1693."
+      },
+      {
+        "id": "34",
+        "title": "Engine idle speed drops when down-shifting between 3rd-2nd gears.",
+        "href": "/w1/known-fixes/MIN13011/34?title=Engine%20idle%20speed%20drops%20when%20down-shifting%20between%203rd-2nd%20gears."
+      }
+    ],
+    "Engine mechanical": [
+      {
+        "id": "19",
+        "title": "Engine coolant leak from alternator area.",
+        "href": "/w1/known-fixes/MIN13011/19?title=Engine%20coolant%20leak%20from%20alternator%20area."
+      },
+      {
+        "id": "29",
+        "title": "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed.",
+        "href": "/w1/known-fixes/MIN13011/29?title=Rattling%20noise%20from%20clutch%20assembly%20with%20engine%20idling%20and%20transmission%20in%20neutral.%20Noise%20disappears%20when%20clutch%20pedal%20is%20depressed."
+      }
+    ],
+    "Exhaust": [
+      {
+        "id": "4",
+        "title": "Vibration after fitting replacement exhaust.",
+        "href": "/w1/known-fixes/MIN13011/4?title=Vibration%20after%20fitting%20replacement%20exhaust."
+      }
+    ],
+    "Fuel system": [
+      {
+        "id": "1",
+        "title": "Fuel gauge not reading full when tank full.",
+        "href": "/w1/known-fixes/MIN13011/1?title=Fuel%20gauge%20not%20reading%20full%20when%20tank%20full."
+      }
+    ],
+    "Noise, vibration and harshness": [
+      {
+        "id": "9",
+        "title": "Rattling noise in area of bulkhead.",
+        "href": "/w1/known-fixes/MIN13011/9?title=Rattling%20noise%20in%20area%20of%20bulkhead."
+      },
+      {
+        "id": "9",
+        "title": "Incorrectly diagnosed as instrument panel.",
+        "href": "/w1/known-fixes/MIN13011/9?title=Incorrectly%20diagnosed%20as%20instrument%20panel."
+      },
+      {
+        "id": "14",
+        "title": "Rattling noise from rear seats when driving over rough roads.",
+        "href": "/w1/known-fixes/MIN13011/14?title=Rattling%20noise%20from%20rear%20seats%20when%20driving%20over%20rough%20roads."
+      },
+      {
+        "id": "21",
+        "title": "Squeaking noise from steering column when steering turned or when driving over rough roads.",
+        "href": "/w1/known-fixes/MIN13011/21?title=Squeaking%20noise%20from%20steering%20column%20when%20steering%20turned%20or%20when%20driving%20over%20rough%20roads."
+      },
+      {
+        "id": "22",
+        "title": "Knocking noise from front of vehicle when turning steering wheel.",
+        "href": "/w1/known-fixes/MIN13011/22?title=Knocking%20noise%20from%20front%20of%20vehicle%20when%20turning%20steering%20wheel."
+      },
+      {
+        "id": "23",
+        "title": "Air conditioning (AC) inefficient.",
+        "href": "/w1/known-fixes/MIN13011/23?title=Air%20conditioning%20%28AC%29%20inefficient."
+      },
+      {
+        "id": "23",
+        "title": "Noise from air conditioning (AC) when operating.",
+        "href": "/w1/known-fixes/MIN13011/23?title=Noise%20from%20air%20conditioning%20%28AC%29%20when%20operating."
+      },
+      {
+        "id": "29",
+        "title": "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed.",
+        "href": "/w1/known-fixes/MIN13011/29?title=Rattling%20noise%20from%20clutch%20assembly%20with%20engine%20idling%20and%20transmission%20in%20neutral.%20Noise%20disappears%20when%20clutch%20pedal%20is%20depressed."
+      },
+      {
+        "id": "30",
+        "title": "Rattling noise when opening front doors.",
+        "href": "/w1/known-fixes/MIN13011/30?title=Rattling%20noise%20when%20opening%20front%20doors."
+      },
+      {
+        "id": "31",
+        "title": "Vibration/rattle from tailgate over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/31?title=Vibration%2Frattle%20from%20tailgate%20over%20uneven%20surfaces."
+      },
+      {
+        "id": "36",
+        "title": "Creaking noise from centre of fascia over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/36?title=Creaking%20noise%20from%20centre%20of%20fascia%20over%20uneven%20surfaces."
+      },
+      {
+        "id": "42",
+        "title": "Clicking or creaking noise from front of vehicle when turning steering wheel or driving over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/42?title=Clicking%20or%20creaking%20noise%20from%20front%20of%20vehicle%20when%20turning%20steering%20wheel%20or%20driving%20over%20uneven%20surfaces."
+      }
+    ],
+    "Steering": [
+      {
+        "id": "7",
+        "title": "EPS pump overheating.",
+        "href": "/w1/known-fixes/MIN13011/7?title=EPS%20pump%20overheating."
+      },
+      {
+        "id": "8",
+        "title": "EPS pump overheating when ambient air temperature high.",
+        "href": "/w1/known-fixes/MIN13011/8?title=EPS%20pump%20overheating%20when%20ambient%20air%20temperature%20high."
+      },
+      {
+        "id": "8",
+        "title": "Lack of power steering.",
+        "href": "/w1/known-fixes/MIN13011/8?title=Lack%20of%20power%20steering."
+      },
+      {
+        "id": "10",
+        "title": "Electric power steering (EPS) inoperative.",
+        "href": "/w1/known-fixes/MIN13011/10?title=Electric%20power%20steering%20%28EPS%29%20inoperative."
+      },
+      {
+        "id": "21",
+        "title": "Squeaking noise from steering column when steering turned or when driving over rough roads.",
+        "href": "/w1/known-fixes/MIN13011/21?title=Squeaking%20noise%20from%20steering%20column%20when%20steering%20turned%20or%20when%20driving%20over%20rough%20roads."
+      },
+      {
+        "id": "22",
+        "title": "Knocking noise from front of vehicle when turning steering wheel.",
+        "href": "/w1/known-fixes/MIN13011/22?title=Knocking%20noise%20from%20front%20of%20vehicle%20when%20turning%20steering%20wheel."
+      },
+      {
+        "id": "42",
+        "title": "Clicking or creaking noise from front of vehicle when turning steering wheel or driving over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/42?title=Clicking%20or%20creaking%20noise%20from%20front%20of%20vehicle%20when%20turning%20steering%20wheel%20or%20driving%20over%20uneven%20surfaces."
+      }
+    ],
+    "Suspension": [
+      {
+        "id": "42",
+        "title": "Clicking or creaking noise from front of vehicle when turning steering wheel or driving over uneven surfaces.",
+        "href": "/w1/known-fixes/MIN13011/42?title=Clicking%20or%20creaking%20noise%20from%20front%20of%20vehicle%20when%20turning%20steering%20wheel%20or%20driving%20over%20uneven%20surfaces."
+      }
+    ],
+    "Transmission": [
+      {
+        "id": "3",
+        "title": "Vibration from area of gear lever.",
+        "href": "/w1/known-fixes/MIN13011/3?title=Vibration%20from%20area%20of%20gear%20lever."
+      },
+      {
+        "id": "18",
+        "title": "Oil leak from transmission.",
+        "href": "/w1/known-fixes/MIN13011/18?title=Oil%20leak%20from%20transmission."
+      },
+      {
+        "id": "29",
+        "title": "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed.",
+        "href": "/w1/known-fixes/MIN13011/29?title=Rattling%20noise%20from%20clutch%20assembly%20with%20engine%20idling%20and%20transmission%20in%20neutral.%20Noise%20disappears%20when%20clutch%20pedal%20is%20depressed."
+      },
+      {
+        "id": "34",
+        "title": "Engine idle speed drops when down-shifting between 3rd-2nd gears.",
+        "href": "/w1/known-fixes/MIN13011/34?title=Engine%20idle%20speed%20drops%20when%20down-shifting%20between%203rd-2nd%20gears."
+      }
+    ]
+  },
+  "bulletins": [
+    {
+      "id": "d6419ab9-203e-4cbf-94f0-31c082e22e62",
+      "title": "A-post outer trim panel becomes detached.",
+      "affected_vehicles": [
+        "All models, →04/04."
+      ],
+      "problems": [
+        "A-post outer trim panel becomes detached."
+      ],
+      "causes": [
+        "A-post outer trim panel fixing clip faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Trim panel fixing clip",
+            "part_number": "07 14 7 145 753",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit modified A-post outer trim panel fixing clip."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "813e192c-0250-43e2-ab86-b72bf9f1eec4",
+      "title": "ABS/ESP warning lamp illuminated. No communication with ABS control module.",
+      "affected_vehicles": [
+        "All models, →2007."
+      ],
+      "problems": [
+        "ABS/ESP warning lamp illuminated. No communication with ABS control module."
+      ],
+      "causes": [
+        "ABS control module wiring harness chafing through on ABS hydraulic modulator mounting bracket."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check ABS control module wiring harness for damage and repair as necessary Fig.1170154.1.",
+          "Fit protective rubber sleeve to edge of ABS hydraulic modulator mounting bracket to prevent further damage Fig.1170154.2.",
+          "ViewView more informationFig.1170154"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f611bcf7-b272-4e34-a4b1-7a64dcc459e8",
+      "title": "Accelerator pedal sticking.",
+      "affected_vehicles": [
+        "All models, →07/02"
+      ],
+      "problems": [
+        "Accelerator pedal sticking."
+      ],
+      "causes": [
+        "Ambient air temperature high.",
+        "Hot air from heater blowing onto accelerator pedal position (APP) sensor.",
+        "Expansion occurs within APP sensor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "APP sensor - with AT",
+            "part_number": "35.406.762.483",
+            "quantity": "1"
+          },
+          {
+            "name": "APP sensor - with MT",
+            "part_number": "35.406.762.484",
+            "quantity": "1"
+          },
+          {
+            "name": "Adaptor plate",
+            "part_number": "35.400.141.446",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove APP sensor.",
+          "Check adaptor plate number Fig.101905.",
+          "If adaptor plate has part No. 1.165.708, it must be replaced.",
+          "Fit modified APP sensor.",
+          "ViewView more informationFig.101905"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "1e13f553-428a-4a58-ba38-cc3403871257",
+      "title": "AC/heater blower motor operating intermittently.",
+      "affected_vehicles": [
+        "All models, 2004 MY."
+      ],
+      "problems": [
+        "AC/heater blower motor operating intermittently.",
+        "Interior lamp not working."
+      ],
+      "causes": [
+        "Multifunction control module faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Multifunction control module",
+            "part_number": "61 35 6 949 289",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If multifunction control module has following part number it must be replaced: 61 35 6 943 157, or 61 35 6 935 645.",
+          "Replacement multifunction control module will require programming using diagnostic equipment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "a050e5b4-fce5-4e66-a687-d166126ff0c7",
+      "title": "Air conditioning (AC) inefficient.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC), →07/02."
+      ],
+      "problems": [
+        "Air conditioning (AC) inefficient.",
+        "Noise from air conditioning (AC) when operating."
+      ],
+      "causes": [
+        "Expansion valve contaminated with debris."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Replace expansion valve.",
+          "Check AC high-pressure pipe for debris. Clean or replace AC pipe(s) as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "32eaa5f1-8afd-475c-b414-3b8490f64c9a",
+      "title": "Boot lid opens without operating switch.",
+      "affected_vehicles": [
+        "All models except convertible."
+      ],
+      "problems": [
+        "Boot lid opens without operating switch."
+      ],
+      "causes": [
+        "Water ingress into boot lid release actuator harness multi-plug through rear screen wiper motor spindle.",
+        "Boot lid release actuator short circuit."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Renew rear screen wiper motor.",
+          "Check and clean harness multi-plug terminals."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f7450c06-53cb-4d8c-bbb7-31206ddb4557",
+      "title": "Brake lamps stay on when switching ignition off.",
+      "affected_vehicles": [
+        "All models →13/03/05."
+      ],
+      "problems": [
+        "Brake lamps stay on when switching ignition off."
+      ],
+      "causes": [
+        "Multifunction control module faulty."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Fit new multifunction control module."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "63b67040-fc44-4555-9bdd-2ebccd9a5ff5",
+      "title": "Clicking or creaking noise from front of vehicle when turning steering wheel or driving over uneven surfaces.",
+      "affected_vehicles": [
+        "All models, →2006."
+      ],
+      "problems": [
+        "Clicking or creaking noise from front of vehicle when turning steering wheel or driving over uneven surfaces."
+      ],
+      "causes": [
+        "Front suspension turret distorted or damaged.",
+        "Front suspension strut upper mounting bush split or cracked."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check condition of front suspension turret for distortion or damage. Repair as necessary.",
+          "Check condition of front suspension strut upper mounting bush. Repair as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b8748093-0c14-4f1d-8a49-12bef2d47713",
+      "title": "Creaking noise from centre of fascia over uneven surfaces.",
+      "affected_vehicles": [
+        "All models, →07/05."
+      ],
+      "problems": [
+        "Creaking noise from centre of fascia over uneven surfaces."
+      ],
+      "causes": [
+        "Movement between fascia upper section and body panel."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Felt tape",
+            "part_number": "61 13 0 301 534",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove fascia upper section.",
+          "Apply felt tape to fascia upper section guide pin Fig.121020.",
+          "Refit fascia upper section.",
+          "ViewView more informationFig.121020"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "930e8f3a-4ae5-4905-a9b5-63717219641c",
+      "title": "Door handles difficult to operate in very cold conditions.",
+      "affected_vehicles": [
+        "All models, →04/04."
+      ],
+      "problems": [
+        "Door handles difficult to operate in very cold conditions."
+      ],
+      "causes": [
+        "Door handle release cable frozen due to water ingress."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Door handle - LH",
+            "part_number": "51 21 7 147 503",
+            "quantity": "1"
+          },
+          {
+            "name": "Door handle - RH",
+            "part_number": "51 21 7 147 504",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit modified door handles."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "adbab2bf-1a30-423d-a6cb-8d4924865bd2",
+      "title": "Door mirror glass movement restricted, when operating.",
+      "affected_vehicles": [
+        "All models with electric door mirrors."
+      ],
+      "problems": [
+        "Door mirror glass movement restricted, when operating."
+      ],
+      "causes": [
+        "Door mirror wiring harness incorrectly routed."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-route door mirror wiring harness as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7f147635-3146-4135-a29f-c481bb4f6fce",
+      "title": "Electric power steering (EPS) inoperative.",
+      "affected_vehicles": [
+        "All models with electric power steering (EPS).",
+        "Automatic transmission (AT) and air conditioning.",
+        "Hot country specification."
+      ],
+      "problems": [
+        "Electric power steering (EPS) inoperative."
+      ],
+      "causes": [
+        "Water ingress into EPS pump motor connector.",
+        "Faulty EPS control module in pump."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Disconnect battery earth lead.",
+          "Remove EPS pump motor connectors and check for water ingress.",
+          "If connections damaged replace harness and EPS pump motor.",
+          "If connections not damaged replace EPS pump motor only."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "2512d8fe-9068-4f53-a1ae-ef323b9fb0a2",
+      "title": "Engine coolant leak from alternator area.",
+      "affected_vehicles": [
+        "All models with W10 engine code, →12/03."
+      ],
+      "problems": [
+        "Engine coolant leak from alternator area."
+      ],
+      "causes": [
+        "Engine coolant hose chafes on alternator mounting bolt."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Inspect engine coolant hose for damage and replace if necessary.",
+          "Check clearance between engine coolant hose and alternator mounting bolt:Ensure reference marks on engine coolant hose and coolant radiator are aligned Fig.119262.1.Ensure clearance of 8 mm minimum between engine coolant hose and alternator mounting bolt Fig.119262.2.",
+          "Ensure reference marks on engine coolant hose and coolant radiator are aligned Fig.119262.1.",
+          "Ensure clearance of 8 mm minimum between engine coolant hose and alternator mounting bolt Fig.119262.2.",
+          "Ensure reference marks on engine coolant hose and coolant radiator are aligned Fig.119262.1.",
+          "Ensure clearance of 8 mm minimum between engine coolant hose and alternator mounting bolt Fig.119262.2.",
+          "ViewView more informationFig.119262"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d8eac091-759e-42a2-83ab-0888302744c8",
+      "title": "Engine idle speed drops when down-shifting between 3rd-2nd gears.",
+      "affected_vehicles": [
+        "All models with manual transmission, →07/02."
+      ],
+      "problems": [
+        "Engine idle speed drops when down-shifting between 3rd-2nd gears."
+      ],
+      "causes": [
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If no fault(s) found: Program ECM with modified software using suitable diagnostic equipment."
+        ]
+      },
+      "notes": [
+        "Note: To carry out an effective repair a software upgrade will be required - refer to manufacturer."
+      ]
+    },
+    {
+      "id": "c4608dc8-7ee5-449a-8f6c-8328029cfc79",
+      "title": "Engine judder.",
+      "affected_vehicles": [
+        "All models with manual transmission, →10/01/03."
+      ],
+      "problems": [
+        "Engine judder.",
+        "Poor acceleration from cold."
+      ],
+      "causes": [
+        "Cold ambient air temperature.",
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f376919c-b79e-4b05-8726-f263e015c435",
+      "title": "Engine malfunction indicator lamp (MIL) illuminated.",
+      "affected_vehicles": [
+        "All models with W10/W11 engine codes."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Trouble code stored: P0128."
+      ],
+      "causes": [
+        "Air lock in cooling system."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Bleed cooling system."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "ffde63dd-a417-4a4c-b2dd-04ac60f418bb",
+      "title": "Engine oil pressure warning lamp illuminated while driving, even though oil level is correct.",
+      "affected_vehicles": [
+        "All models with W10/W11 engine codes, →08/03."
+      ],
+      "problems": [
+        "Engine oil pressure warning lamp illuminated while driving, even though oil level is correct."
+      ],
+      "causes": [
+        "Engine wiring harness chafes against starter motor heat shield causing short circuit."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Heat shield",
+            "part_number": "12 41 1 495 806",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Inspect engine wiring harness for chafing. Repair or replace engine wiring harness as necessary.",
+          "Fit modified starter motor heat shield."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "c96bbe2f-5e5d-496d-a9d4-8cfe2843f10b",
+      "title": "Engine runs in limp home mode.",
+      "affected_vehicles": [
+        "All models with W10/W11 engine codes."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Engine runs in limp home mode.",
+        "Possible trouble codes stored: P1125, P1226, P1692, P1693."
+      ],
+      "causes": [
+        "Contaminated contacts on throttle motor harness multi-plug.",
+        "Poor connection in throttle motor harness multi-plug due to poor manufacture.",
+        "Internal failure of throttle motor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Engine wiring harness (Cooper with MT)",
+            "part_number": "13 51 7 520 939",
+            "quantity": "1"
+          },
+          {
+            "name": "Engine wiring harness (Cooper with AT)",
+            "part_number": "12 51 7 520 936",
+            "quantity": "1"
+          },
+          {
+            "name": "Engine wiring harness (Cooper S)",
+            "part_number": "12 51 7 533 103",
+            "quantity": "1"
+          },
+          {
+            "name": "Throttle motor (Cooper)",
+            "part_number": "13 54 7 509 043",
+            "quantity": "1"
+          },
+          {
+            "name": "Throttle motor (Cooper S)",
+            "part_number": "13 54 1 503 358",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new engine wiring harness.",
+          "Inspect production date code on throttle motor. If production date before 01/05/02, replace throttle motor."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "e3a458d0-2dfe-49e8-abc4-fa35f75b96c1",
+      "title": "EPS pump overheating.",
+      "affected_vehicles": [
+        "All models with electric power steering (EPS), 11/01-02/02.",
+        "Automatic transmission (AT) and air conditioning.",
+        "Hot country specification."
+      ],
+      "problems": [
+        "EPS pump overheating."
+      ],
+      "causes": [
+        "Change to EPS auxiliary cooling fan specification.",
+        "Diode not being removed from harness when new EPS cooling fan fitted."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "EPS cooling fan",
+            "part_number": "32.416.761.038",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Ensure diode removed when fitting new EPS cooling fan.",
+          "Disconnect battery earth lead.",
+          "Remove interior fuse box cover.",
+          "Unwrap harness, remove and discard diode.",
+          "Reconnect harness and insulate with tape."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "8564f5d9-3e18-40b0-b8d8-615a97b65687",
+      "title": "EPS pump overheating when ambient air temperature high.",
+      "affected_vehicles": [
+        "All models with electric power steering (EPS), 2001-12/02."
+      ],
+      "problems": [
+        "EPS pump overheating when ambient air temperature high.",
+        "Lack of power steering."
+      ],
+      "causes": [
+        "EPS pump cooling fan not functioning after long journeys at high temperatures."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Harness modification kit",
+            "part_number": "61.11.6.945.303",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit harness modification kit."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b25fcbef-451d-416c-93bd-01de0b97bb1e",
+      "title": "Erratic instrument panel operation.",
+      "affected_vehicles": [
+        "All models without navigation system, 11/03-01/04."
+      ],
+      "problems": [
+        "Erratic instrument panel operation."
+      ],
+      "causes": [
+        "Poor connection of instrument panel 12-pin multi-plug."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Connector cover",
+            "part_number": "61 13 8 365 906",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Inspect instrument panel 12-pin multi-plug. If multi-plug fitted with transparent cover, replace with modified version."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "9ef1224b-c894-4507-89a5-f9844fb8b988",
+      "title": "ESP warning lamp illuminated.",
+      "affected_vehicles": [
+        "All models, →04/03."
+      ],
+      "problems": [
+        "ESP warning lamp illuminated.",
+        "TPMS warning lamp illuminated.",
+        "Trouble code related to steering angle sensor stored in fault memory."
+      ],
+      "causes": [
+        "Steering angle sensor faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Steering angle sensor",
+            "part_number": "37 14 6 763 916",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new steering angle sensor.",
+          "Carry out steering angle sensor calibration using diagnostic equipment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "745095d7-e1f7-4882-a60e-0aaeebf51c28",
+      "title": "Front seat heating too hot or cold.",
+      "affected_vehicles": [
+        "All models with heated seats, with liner 12/01-03/04, without liner 12/01-12/03."
+      ],
+      "problems": [
+        "Front seat heating too hot or cold."
+      ],
+      "causes": [
+        "Seat heating element resistance too high/low."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Adaptor harness",
+            "part_number": "61.100.152.025",
+            "quantity": "1"
+          },
+          {
+            "name": "Adaptor harness",
+            "part_number": "61.100.152.026",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit adaptor harness to existing seat harness Fig.101903.1 & Fig.101903.2.",
+          "If seat heating too hot: Fit adaptor harness 61.100.152.025.",
+          "If seat heating too cold: Fit adaptor harness 61.100.152.026.",
+          "Secure harness to seat frame with cable tie Fig.101898.",
+          "ViewView more informationFig.101903",
+          "ViewView more informationFig.101898",
+          "ViewView more informationFig.101903",
+          "ViewView more informationFig.101898"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "5c3c79b6-6d4f-4a0d-a36e-bda11dda8f29",
+      "title": "Fuel gauge not reading full when tank full.",
+      "affected_vehicles": [
+        "All models, →10/2001"
+      ],
+      "problems": [
+        "Fuel gauge not reading full when tank full."
+      ],
+      "causes": [
+        "Fuel gauge tank sensor float arm bent.",
+        "Contamination on fuel gauge tank sensor resistor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Fuel gauge tank sensor",
+            "part_number": "16.146.761.353",
+            "quantity": "1 set"
+          }
+        ],
+        "steps": [
+          "Remove rear seat.",
+          "Remove fuel pump, fit modified left and right hand fuel gauge tank sensor kit."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "688336f6-44a7-4eb0-8d61-49d64b17e5e4",
+      "title": "Glovebox opens when driving over rough roads.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Glovebox opens when driving over rough roads.",
+        "Glovebox will not close."
+      ],
+      "causes": [
+        "Glovebox latch does not engage with catch sufficiently."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Washer",
+            "part_number": "88 10 0 141 7069",
+            "quantity": "9"
+          }
+        ],
+        "steps": [
+          "Remove glovebox.",
+          "Fit three 1 mm washers on each of the torx screws retaining the top edge of the glovebox. Fit washers between glovebox top edge and blue plastic nuts."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "0592b78f-00a5-4c79-92c6-571a1fbc6823",
+      "title": "Glovebox will not close.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Glovebox opens when driving over rough roads.",
+        "Glovebox will not close."
+      ],
+      "causes": [
+        "Glovebox latch does not engage with catch sufficiently."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Washer",
+            "part_number": "88 10 0 141 7069",
+            "quantity": "9"
+          }
+        ],
+        "steps": [
+          "Remove glovebox.",
+          "Fit three 1 mm washers on each of the torx screws retaining the top edge of the glovebox. Fit washers between glovebox top edge and blue plastic nuts."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "44a48429-1fa0-412b-a5f4-1454d783d127",
+      "title": "Heater temperature control does not adjust temperature.",
+      "affected_vehicles": [
+        "All models with manual temperature control."
+      ],
+      "problems": [
+        "Heater temperature control does not adjust temperature."
+      ],
+      "causes": [
+        "Heater air mix flap lever disconnected from flap shaft."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Reconnect heater air mix flap lever under driver's side fascia.",
+          "Use small spot of glue to hold heater air mix flap lever in place.",
+          "ViewView more informationFig.109182"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "c3160521-37dc-4b40-b4ca-5dca8fee27be",
+      "title": "Incorrectly diagnosed as instrument panel.",
+      "affected_vehicles": [
+        "All models, →04/02"
+      ],
+      "problems": [
+        "Incorrectly diagnosed as instrument panel.",
+        "Rattling noise in area of bulkhead."
+      ],
+      "causes": [
+        "Brake pipes are secured by two-part bracket.",
+        "When two parts of bracket come into contact rattling occurs."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Insulate brake pipe securing bracket.",
+          "Remove coolant expansion tank Fig.101890.1 and power steering fluid reservoir Fig.101890.2.",
+          "Remove coolant expansion tank and power steering fluid reservoir carrier bracket Fig.101893.1.",
+          "Remove trim Fig.101893.2.",
+          "Fit felt strip between two parts of bracket Fig.101896.1.",
+          "Ensure two parts of bracket do not come into contact.",
+          "ViewView more informationFig.101890",
+          "ViewView more informationFig.101893",
+          "ViewView more informationFig.101896",
+          "ViewView more informationFig.101890",
+          "ViewView more informationFig.101893",
+          "ViewView more informationFig.101896"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "76dbca15-3fab-4a5e-bb9c-a036976469e6",
+      "title": "Interior lamp not working.",
+      "affected_vehicles": [
+        "All models, 2004 MY."
+      ],
+      "problems": [
+        "AC/heater blower motor operating intermittently.",
+        "Interior lamp not working."
+      ],
+      "causes": [
+        "Multifunction control module faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Multifunction control module",
+            "part_number": "61 35 6 949 289",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Carry out electrical, mechanical and component tests (as applicable) to eliminate any other possible cause(s).",
+          "If multifunction control module has following part number it must be replaced: 61 35 6 943 157, or 61 35 6 935 645.",
+          "Replacement multifunction control module will require programming using diagnostic equipment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f005069c-c5dc-43dd-9808-ac909b3fca5b",
+      "title": "Intermittent operation of AC/heater function control panel.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Intermittent operation of AC/heater function control panel."
+      ],
+      "causes": [
+        "Poor earth connection for AC/heater function control panel."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Locate and remove brown/black earth wire from position 26 of AC/heater function control panel harness multi-plug.",
+          "Connect new earth wire between AC/heater function control panel harness multi-plug and LH front door sill earth point."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "09238819-b9a6-4294-92cd-1374e73b199b",
+      "title": "Knocking noise from front of vehicle when turning steering wheel.",
+      "affected_vehicles": [
+        "All models, →06/04."
+      ],
+      "problems": [
+        "Knocking noise from front of vehicle when turning steering wheel."
+      ],
+      "causes": [
+        "Power steering pump mounting bracket incorrectly positioned and hitting power steering rack."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Slacken power steering pump mounting bracket retaining bolts Fig.119466.",
+          "Re-position power steering pump mounting bracket to ensure suitable clearance with power steering rack.",
+          "Tighten power steering pump mounting bracket retaining bolts. Tightening torque: 19 Nm.",
+          "ViewView more informationFig.119466"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "28e1c23f-1ee0-4216-ad05-52a5ed9bd2fa",
+      "title": "Lack of power steering.",
+      "affected_vehicles": [
+        "All models with electric power steering (EPS), 2001-12/02."
+      ],
+      "problems": [
+        "EPS pump overheating when ambient air temperature high.",
+        "Lack of power steering."
+      ],
+      "causes": [
+        "EPS pump cooling fan not functioning after long journeys at high temperatures."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Harness modification kit",
+            "part_number": "61.11.6.945.303",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit harness modification kit."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "db242bb0-0cc0-440f-aa1b-cbc8a8928c5f",
+      "title": "Noise from air conditioning (AC) when operating.",
+      "affected_vehicles": [
+        "All models with air conditioning (AC), →07/02."
+      ],
+      "problems": [
+        "Air conditioning (AC) inefficient.",
+        "Noise from air conditioning (AC) when operating."
+      ],
+      "causes": [
+        "Expansion valve contaminated with debris."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Replace expansion valve.",
+          "Check AC high-pressure pipe for debris. Clean or replace AC pipe(s) as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f343357c-9722-4112-bcf0-bd50300f6baf",
+      "title": "Oil leak from transmission.",
+      "affected_vehicles": [
+        "All models with continuously variable transmission (CVT)."
+      ],
+      "problems": [
+        "Oil leak from transmission."
+      ],
+      "causes": [
+        "Transmission input shaft oil seal faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Transmission input shaft oil seal",
+            "part_number": "24 21 7 518 705",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new transmission input shaft oil seal."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d312cbc8-b8ec-4760-95bc-318fc49a9b40",
+      "title": "Poor acceleration from cold.",
+      "affected_vehicles": [
+        "All models with manual transmission, →10/01/03."
+      ],
+      "problems": [
+        "Engine judder.",
+        "Poor acceleration from cold."
+      ],
+      "causes": [
+        "Cold ambient air temperature.",
+        "Engine control module (ECM) software fault."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Re-program ECM with upgraded software."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "7bb2a4a2-3d4d-4130-822b-ec121e189666",
+      "title": "Poor performance or failure of AC system.",
+      "affected_vehicles": [
+        "All models with continuously variable transmission (CVT), →08/04."
+      ],
+      "problems": [
+        "Poor performance or failure of AC system."
+      ],
+      "causes": [
+        "AC pipe from condenser to evaporator chaffed through on transmission."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Replace AC pipe.",
+          "Ensure suitable clearance between AC pipe and transmission.",
+          "Recharge AC system."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "fe364de9-dfdc-4663-a11a-7902d1f4101f",
+      "title": "Possible trouble codes stored: P1125, P1226, P1692, P1693.",
+      "affected_vehicles": [
+        "All models with W10/W11 engine codes."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Engine runs in limp home mode.",
+        "Possible trouble codes stored: P1125, P1226, P1692, P1693."
+      ],
+      "causes": [
+        "Contaminated contacts on throttle motor harness multi-plug.",
+        "Poor connection in throttle motor harness multi-plug due to poor manufacture.",
+        "Internal failure of throttle motor."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Engine wiring harness (Cooper with MT)",
+            "part_number": "13 51 7 520 939",
+            "quantity": "1"
+          },
+          {
+            "name": "Engine wiring harness (Cooper with AT)",
+            "part_number": "12 51 7 520 936",
+            "quantity": "1"
+          },
+          {
+            "name": "Engine wiring harness (Cooper S)",
+            "part_number": "12 51 7 533 103",
+            "quantity": "1"
+          },
+          {
+            "name": "Throttle motor (Cooper)",
+            "part_number": "13 54 7 509 043",
+            "quantity": "1"
+          },
+          {
+            "name": "Throttle motor (Cooper S)",
+            "part_number": "13 54 1 503 358",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new engine wiring harness.",
+          "Inspect production date code on throttle motor. If production date before 01/05/02, replace throttle motor."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "f302d9df-6c96-4847-9d04-37a00b5e1417",
+      "title": "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed.",
+      "affected_vehicles": [
+        "All models with GS6-85BG gearbox, →2005."
+      ],
+      "problems": [
+        "Rattling noise from clutch assembly with engine idling and transmission in neutral. Noise disappears when clutch pedal is depressed."
+      ],
+      "causes": [
+        "Dual mass flywheel faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Dual mass flywheel",
+            "part_number": "21 20 7 548 804",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new dual mass flywheel."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "e828fe81-b164-4cdc-904a-bff0182be473",
+      "title": "Rattling noise from rear seats when driving over rough roads.",
+      "affected_vehicles": [
+        "All models with rear folding seats, →06/03."
+      ],
+      "problems": [
+        "Rattling noise from rear seats when driving over rough roads."
+      ],
+      "causes": [
+        "Faulty rear seat back rest latches."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Rear seat back rest latch",
+            "part_number": "52 20 7 138 801",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Replace rear seat back rest latches."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "db32067d-0b7f-4dcc-9f92-3cbd04b97bd5",
+      "title": "Rattling noise in area of bulkhead.",
+      "affected_vehicles": [
+        "All models, →04/02"
+      ],
+      "problems": [
+        "Incorrectly diagnosed as instrument panel.",
+        "Rattling noise in area of bulkhead."
+      ],
+      "causes": [
+        "Brake pipes are secured by two-part bracket.",
+        "When two parts of bracket come into contact rattling occurs."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Insulate brake pipe securing bracket.",
+          "Remove coolant expansion tank Fig.101890.1 and power steering fluid reservoir Fig.101890.2.",
+          "Remove coolant expansion tank and power steering fluid reservoir carrier bracket Fig.101893.1.",
+          "Remove trim Fig.101893.2.",
+          "Fit felt strip between two parts of bracket Fig.101896.1.",
+          "Ensure two parts of bracket do not come into contact.",
+          "ViewView more informationFig.101890",
+          "ViewView more informationFig.101893",
+          "ViewView more informationFig.101896",
+          "ViewView more informationFig.101890",
+          "ViewView more informationFig.101893",
+          "ViewView more informationFig.101896"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "2c1beabc-2e20-4b62-aae8-e088daa869c4",
+      "title": "Rattling noise when opening front doors.",
+      "affected_vehicles": [
+        "All models, →04/03."
+      ],
+      "problems": [
+        "Rattling noise when opening front doors."
+      ],
+      "causes": [
+        "Excessive free play in window winder mechanism."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Anti-rattle clip",
+            "part_number": "51 33 7 132 223",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "Remove inner door panel.",
+          "Ensure window is fully closed.",
+          "Unseat rubber grommet from door and move aside Fig.119282.1.",
+          "Anti-rattle clip is fitted through access hole in door Fig.119282.2.",
+          "Hold anti-rattle clip with a pair of long nose pliers and install onto window winder mechanism through access hole Fig.119282.3.",
+          "Check smooth operation of window winder mechanism.",
+          "Refit rubber grommet.",
+          "Refit inner door panel.",
+          "ViewView more informationFig.119282"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "d4b977e7-e25d-4588-a685-88f9a10866da",
+      "title": "Rear brakes binding.",
+      "affected_vehicles": [
+        "All models, →08/04."
+      ],
+      "problems": [
+        "Rear brakes binding."
+      ],
+      "causes": [
+        "Handbrake cable sticking due to poor routing."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Lift vehicle.",
+          "Increase curve of handbrake cable on rear suspension arm until rear wheel turns freely."
+        ]
+      },
+      "notes": [
+        "Note: Do not bend handbrake cable with excessive force."
+      ]
+    },
+    {
+      "id": "979acfa8-ca45-4508-9f10-61011a1e9c8b",
+      "title": "Slow response of navigation system display unit on start-up.",
+      "affected_vehicles": [
+        "All models with navigation system."
+      ],
+      "problems": [
+        "Slow response of navigation system display unit on start-up."
+      ],
+      "causes": [
+        "Faulty navigation system display unit."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Navigation system display unit",
+            "part_number": "65 90 6 947 196",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit modified navigation system display unit."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "dd5eeb2a-d012-46fe-b396-f28e5e919253",
+      "title": "Squeaking noise from slide/tilt sunroof when opening or closing.",
+      "affected_vehicles": [
+        "All models with slide/tilt sunroof."
+      ],
+      "problems": [
+        "Squeaking noise from slide/tilt sunroof when opening or closing."
+      ],
+      "causes": [
+        "Dirt ingress into sunroof slide/tilt mechanism.",
+        "Insufficient lubrication of sunroof slide/tilt mechanism."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Lubricant",
+            "part_number": "83 19 0 142 692",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Clean sunroof outer guide rails and apply specified lubricant.",
+          "Operate sunroof several times."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "47e91b00-d5e9-436d-97fa-bb6eccb2c91f",
+      "title": "Squeaking noise from steering column when steering turned or when driving over rough roads.",
+      "affected_vehicles": [
+        "All models."
+      ],
+      "problems": [
+        "Squeaking noise from steering column when steering turned or when driving over rough roads."
+      ],
+      "causes": [
+        "Steering column trim chafing on steering column."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Felt tape",
+            "part_number": "65 77 0 406 286",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove steering column trims.",
+          "Apply felt tape to top of steering column assembly Fig.119273.",
+          "Apply felt tape to bottom of steering column assembly Fig.119273.",
+          "Refit steering column trims.",
+          "ViewView more informationFig.119273"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "235fd1e1-a7e0-4d05-af6c-34dbcffac045",
+      "title": "Stop lamps permanently illuminated.",
+      "affected_vehicles": [
+        "All models, →03/05."
+      ],
+      "problems": [
+        "Stop lamps permanently illuminated."
+      ],
+      "causes": [
+        "Water ingress into wiring harness due to AC evaporator drain tubes restricted or blocked."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Check AC evaporator drain tubes for blockage, clean as necessary.",
+          "Check AC evaporator drain tubes are not restricted by wiring harness. Re-route wiring harness as necessary.",
+          "Check components for water damage and repair/replace as necessary."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "004b8388-9910-426b-8807-46cb57acde2f",
+      "title": "TPMS warning lamp illuminated.",
+      "affected_vehicles": [
+        "All models, →04/03."
+      ],
+      "problems": [
+        "ESP warning lamp illuminated.",
+        "TPMS warning lamp illuminated.",
+        "Trouble code related to steering angle sensor stored in fault memory."
+      ],
+      "causes": [
+        "Steering angle sensor faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Steering angle sensor",
+            "part_number": "37 14 6 763 916",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new steering angle sensor.",
+          "Carry out steering angle sensor calibration using diagnostic equipment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "45c8ab75-b937-48d9-b594-ace96bc24280",
+      "title": "Trouble code related to steering angle sensor stored in fault memory.",
+      "affected_vehicles": [
+        "All models, →04/03."
+      ],
+      "problems": [
+        "ESP warning lamp illuminated.",
+        "TPMS warning lamp illuminated.",
+        "Trouble code related to steering angle sensor stored in fault memory."
+      ],
+      "causes": [
+        "Steering angle sensor faulty."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Steering angle sensor",
+            "part_number": "37 14 6 763 916",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new steering angle sensor.",
+          "Carry out steering angle sensor calibration using diagnostic equipment."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "8b6e5cb7-8c07-424b-afbc-ab49564364d4",
+      "title": "Trouble code stored: P0128.",
+      "affected_vehicles": [
+        "All models with W10/W11 engine codes."
+      ],
+      "problems": [
+        "Engine malfunction indicator lamp (MIL) illuminated.",
+        "Trouble code stored: P0128."
+      ],
+      "causes": [
+        "Air lock in cooling system."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Bleed cooling system."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "01c1d885-8621-4931-b5a8-6db6aa9ae038",
+      "title": "Vibration after fitting replacement exhaust.",
+      "affected_vehicles": [
+        "All models, →VIN TC04341."
+      ],
+      "problems": [
+        "Vibration after fitting replacement exhaust."
+      ],
+      "causes": [
+        "Vibration damper not fitted to replacement rear exhaust silencer."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Vibration damper MUST be discarded when modified exhaust manifold fitted.",
+          "Vibration damper MUST be fitted and welded to pre-marked replacement rear silencer.",
+          "Fit damping bracket and align to pre-mark on exhaust.",
+          "Fit bolt Fig.101906.1. Tightening torque: 21 Nm.",
+          "Weld hole Fig.101906.2.",
+          "ViewView more informationFig.101906"
+        ]
+      },
+      "notes": [
+        "Note: VIN TC04342→ - modified exhaust manifold fitted."
+      ]
+    },
+    {
+      "id": "a04c1a0e-1504-4a5f-870d-c10b43f54b5f",
+      "title": "Vibration from area of gear lever.",
+      "affected_vehicles": [
+        "All models with 5-speed transmission, 01/01/01-31/07/03."
+      ],
+      "problems": [
+        "Vibration from area of gear lever."
+      ],
+      "causes": [
+        "Gear lever remote cables not secured correctly.",
+        "Clearance between exhaust heat shield and gear lever cables too small."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Clip",
+            "part_number": "25.117.531.718",
+            "quantity": "1"
+          },
+          {
+            "name": "Cable tie",
+            "part_number": "61.130.302.967",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Remove exhaust heat shield.",
+          "Fit clip 10 cm from remote cable support Fig.101899.1.",
+          "Secure remote cables to support with cable tie Fig.101899.2.",
+          "Fit heat shield.",
+          "Ensure 10 mm clearance between heat shield Fig.101895.1 and remote cables Fig.101895.2.",
+          "Reshape heat shield if necessary.",
+          "ViewView more informationFig.101899",
+          "ViewView more informationFig.101895",
+          "ViewView more informationFig.101899",
+          "ViewView more informationFig.101895"
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "a5cde276-ae80-4e50-9dcd-ffe67316da75",
+      "title": "Vibration/rattle from tailgate over uneven surfaces.",
+      "affected_vehicles": [
+        "All models except convertible, →11/03."
+      ],
+      "problems": [
+        "Vibration/rattle from tailgate over uneven surfaces."
+      ],
+      "causes": [
+        "Poor manufacture of tailgate catch.",
+        "Hardening of tailgate bump stop rubber."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Tailgate catch",
+            "part_number": "51 24 7 154 735",
+            "quantity": "1"
+          },
+          {
+            "name": "Bump stop",
+            "part_number": "51 24 0 305 688",
+            "quantity": "2"
+          },
+          {
+            "name": "Tailgate latch bolt",
+            "part_number": "07 14 0 303 020",
+            "quantity": "2"
+          }
+        ],
+        "steps": [
+          "If black tailgate catch not fitted:Fit modified tailgate catch.Fit modified tailgate latch bolts.",
+          "Fit modified tailgate catch.",
+          "Fit modified tailgate latch bolts.",
+          "Fit modified bump stops. Ensure bump stop protrudes 35 mm from tailgate.",
+          "Fit modified tailgate catch.",
+          "Fit modified tailgate latch bolts."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "b4716137-d824-4baa-a4a2-4082d71dcd8e",
+      "title": "Water ingress into load area.",
+      "affected_vehicles": [
+        "All models except convertible."
+      ],
+      "problems": [
+        "Water ingress into load area.",
+        "Water running down inside of rear screen."
+      ],
+      "causes": [
+        "Centre stop lamp weather seal split or incorrectly fitted."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Renew centre stop lamp assembly."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "6a65b9b9-f80c-49e8-8ccb-6f6d91849a75",
+      "title": "Water running down inside of rear screen.",
+      "affected_vehicles": [
+        "All models except convertible."
+      ],
+      "problems": [
+        "Water ingress into load area.",
+        "Water running down inside of rear screen."
+      ],
+      "causes": [
+        "Centre stop lamp weather seal split or incorrectly fitted."
+      ],
+      "remedy": {
+        "parts": [],
+        "steps": [
+          "Renew centre stop lamp assembly."
+        ]
+      },
+      "notes": []
+    },
+    {
+      "id": "05880a04-32b0-40d1-84b0-ac8e9c4a0987",
+      "title": "When opening boot lid water enters load area after heavy rain.",
+      "affected_vehicles": [
+        "All convertible models, →28/06/05."
+      ],
+      "problems": [
+        "When opening boot lid water enters load area after heavy rain."
+      ],
+      "causes": [
+        "Unsatisfactory design of boot lid seal."
+      ],
+      "remedy": {
+        "parts": [
+          {
+            "name": "Boot lid seal",
+            "part_number": "51 76 7 178 288",
+            "quantity": "1"
+          }
+        ],
+        "steps": [
+          "Fit new boot lid seal."
+        ]
+      },
+      "notes": []
+    }
+  ]
+}

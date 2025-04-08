@@ -1,0 +1,18 @@
+{
+  "cookies": {
+    "has_js": "1",
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ25lbHNvbjU1NDUiLCJyb2xlcyI6WzgsMTIsMl0sImlzcyI6IndvcmtzaG9wIiwiZXhwIjoxNzQyOTI4NjQzfQ.5O4B-ryE6_LjwKZgskD71v5Y_hyZLJ7VTM5b2bTp9n4",
+    "ad_web_i_39322E34302E3139342E3830": "0",
+    "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsImxhbmd1YWdlIjoiZW4tZ2IiLCJpc3MiOiJ3b3Jrc2hvcCIsImV4cCI6MTc0Mjk0MjQ0M30.HaVHYobW9UksxBt3rhNb8faeicKMbWYZTmh9vDVg_LM",
+    "SESSd965b47fdd2684807fd560c91c3e21b6": "rwIwl5ACEpCM87JUKHKt4Ok3-I3px2BxFCM1l2wEu6A",
+    "adat": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNzM3MjU1IiwidW5hbWUiOiJnbmVsc29uNTU0NSIsImdpZCI6Ijc5MTk5MSIsInJpZHMiOls2XSwiaXNzIjoid29ya3Nob3AiLCJleHAiOjE3NDI5MzIyMjZ9.YM1XIzcCPGxmbPQ5J6pbZlIbNefyjKBGf9MRlij66LY",
+    "ad_web_i_39322E34302E3139342E3831": "0"
+  },
+  "expirations": {
+    "access_token": "2025-03-25T18:50:44+00:00",
+    "id_token": "2025-03-25T22:40:44+00:00",
+    "adat": "2025-03-25T19:50:26+00:00",
+    "SESSd965b47fdd2684807fd560c91c3e21b6": "2025-04-17T19:23:46+00:00"
+  },
+  "saved_at": "2025-03-25T18:40:48.895337+00:00"
+}

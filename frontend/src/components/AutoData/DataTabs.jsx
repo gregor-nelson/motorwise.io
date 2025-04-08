@@ -1,80 +1,24 @@
+// Refactored AutoDataSection.jsx with vertical layout instead of tabs
 import React, { useState, useEffect, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
 import { COLORS, commonFontStyles, BREAKPOINTS } from '../../styles/theme'; // Adjust import path as needed
 import TechnicalSpecificationsPage from './TechnicalSpecificationsPage';
 import VehicleRepairTimesComponent from './LabourTimes';
+import BulletinsComponent from './BulletinsComponent';
+import VehicleAnalysisComponent from './VehicleAnalysisComponent'; // Import the new component
 
-// Styled components aligned with GOV.UK design
-const StyledTabs = styled('div')`
+// Styled components for vertical layout
+const SectionContainer = styled('div')`
   ${commonFontStyles}
-  border-bottom: 1px solid ${COLORS.MID_GREY};
-  margin-bottom: 20px;
-`;
-
-const StyledTabList = styled('div')`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  
-  @media (max-width: ${BREAKPOINTS.MOBILE}) {
-    flex-direction: column;
-  }
 `;
 
-const StyledTab = styled('button')`
-  ${commonFontStyles}
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.25;
-  padding: 10px 15px;
-  background: ${props => props.selected ? COLORS.LIGHT_GREY : 'transparent'};
-  border: none;
-  border-bottom: 4px solid ${props => props.selected ? COLORS.BLUE : 'transparent'};
-  flex-grow: 1;
-  text-align: center;
-  cursor: pointer;
-  color: ${COLORS.BLACK};
-  text-transform: none;
-  
-  @media (min-width: ${BREAKPOINTS.MOBILE}) {
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
-    padding: 15px 20px;
-  }
-  
-  &:hover {
-    background-color: ${COLORS.LIGHT_GREY};
-  }
-  
-  &:focus {
-    outline: 3px solid ${COLORS.YELLOW};
-    outline-offset: 0;
-    background-color: ${COLORS.YELLOW};
-    box-shadow: 0 -2px ${COLORS.YELLOW}, 0 4px ${COLORS.BLACK};
-    color: ${COLORS.BLACK};
-  }
+
+const SectionContent = styled('div')`
+  padding-bottom: 20px;
 `;
-
-const StyledTabPanel = styled('div')`
-  padding-top: 20px;
-  display: ${props => props.hidden ? 'none' : 'block'};
-`;
-
-// TabPanel component
-const TabPanel = React.memo(function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <StyledTabPanel
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      {value === index ? children : null}
-    </StyledTabPanel>
-  );
-});
 
 // Extract year from various possible date fields in vehicleData
 const extractManufactureYear = (vehicleData) => {
@@ -116,7 +60,7 @@ const extractManufactureYear = (vehicleData) => {
   return null;
 };
 
-// NEW - Normalize fuel type
+// Normalize fuel type
 const normalizeFuelType = (fuelType) => {
   if (!fuelType) return null;
   
@@ -140,16 +84,18 @@ const normalizeFuelType = (fuelType) => {
 
 // Main component
 const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
-  const [tabValue, setTabValue] = useState(0);
+  // State for each section's data (keeping the same state variables)
   const [techSpecsData, setTechSpecsData] = useState(null);
   const [labourTimesData, setLabourTimesData] = useState(null);
+  const [bulletinsData, setBulletinsData] = useState(null);
+  const [analysisData, setAnalysisData] = useState(null);
 
   // Extract year from vehicle data
   const vehicleYear = useMemo(() => {
     return vehicleData ? extractManufactureYear(vehicleData) : null;
   }, [vehicleData]);
 
-  // NEW - Extract and normalize fuel type
+  // Extract and normalize fuel type
   const vehicleFuelType = useMemo(() => {
     if (!vehicleData) return null;
     
@@ -193,11 +139,6 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
     };
   }, [vehicleData, vehicleYear, vehicleFuelType]);
 
-  // Tab change handler
-  const handleTabChange = React.useCallback((newValue) => {
-    setTabValue(newValue);
-  }, []);
-
   // Handle data load from child components
   const handleTechSpecsDataLoad = React.useCallback((data) => {
     setTechSpecsData(data);
@@ -205,6 +146,14 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
 
   const handleLabourTimesDataLoad = React.useCallback((data) => {
     setLabourTimesData(data);
+  }, []);
+
+  const handleBulletinsDataLoad = React.useCallback((data) => {
+    setBulletinsData(data);
+  }, []);
+
+  const handleAnalysisDataLoad = React.useCallback((data) => {
+    setAnalysisData(data);
   }, []);
 
   // Log information about the vehicle for debugging
@@ -219,52 +168,50 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
     }
   }, [enhancedVehicleData]);
 
-  return (
-    <StyledTabs>
-      <StyledTabList>
-        <StyledTab
-          selected={tabValue === 0}
-          onClick={() => handleTabChange(0)}
-          aria-selected={tabValue === 0}
-          role="tab"
-          id="tab-0"
-          aria-controls="tabpanel-0"
-        >
-          Technical Specifications
-        </StyledTab>
-        <StyledTab
-          selected={tabValue === 1}
-          onClick={() => handleTabChange(1)}
-          aria-selected={tabValue === 1}
-          role="tab"
-          id="tab-1"
-          aria-controls="tabpanel-1"
-        >
-          Repair Times
-        </StyledTab>
-      </StyledTabList>
+  // If we don't have vehicle data, don't render anything
+  if (!enhancedVehicleData) {
+    return null;
+  }
 
-      <TabPanel value={tabValue} index={0}>
-        {/* Only render when tab is active and we have vehicle data */}
-        {enhancedVehicleData && (
-          <TechnicalSpecificationsPage
+  return (
+    <SectionContainer>
+      {/* Vehicle Analysis Section */}
+        <SectionContent>
+          <VehicleAnalysisComponent
             registration={registration}
             vehicleData={enhancedVehicleData}
-            onDataLoad={handleTechSpecsDataLoad}
+            onDataLoad={handleAnalysisDataLoad}
           />
-        )}
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        {/* Only render when tab is active and we have vehicle data */}
-        {enhancedVehicleData && (
+        </SectionContent>
+
+      {/* Technical Bulletins Section */}
+        <SectionContent>
+          <BulletinsComponent
+            vehicleData={enhancedVehicleData}
+            registration={registration}
+            onDataLoad={handleBulletinsDataLoad}
+          />
+        </SectionContent>
+
+      {/* Repair Times Section */}
+      
+        <SectionContent>
           <VehicleRepairTimesComponent
             registration={registration}
             vehicleData={enhancedVehicleData}
             onDataLoad={handleLabourTimesDataLoad}
           />
-        )}
-      </TabPanel>
-    </StyledTabs>
+        </SectionContent>
+
+      {/* Technical Specifications Section */}
+        <SectionContent>
+          <TechnicalSpecificationsPage
+            registration={registration}
+            vehicleData={enhancedVehicleData}
+            onDataLoad={handleTechSpecsDataLoad}
+          />
+        </SectionContent>
+    </SectionContainer>
   );
 };
 

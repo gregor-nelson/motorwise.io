@@ -1,62 +1,182 @@
-import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
 import {
   // Import theme components and styles
   COLORS,
   GovUKContainer,
-  GovUKMainWrapper,
+  GovUKHeadingM,
   GovUKHeadingS,
   GovUKBody,
-  GovUKLoadingContainer,
+  GovUKBodyS,
   GovUKLoadingSpinner,
-  PremiumInfoPanel,
-  GovUKHeadingM
+  GovUKButton,
 } from '../../styles/theme';
 
-// Import layout components
+// Import custom tooltip components
+import { HeadingWithTooltip } from '../../styles/tooltip';
+
+// Import styled components from shared components
 import {
-  RepairTimesContainer,
+  InsightsContainer,
+  InsightPanel,
+  InsightBody,
+  InsightTable,
   ValueHighlight,
-  GovUKToggleText,
-  SpecificationTable,
-  StyledTabs,
-  StyledTab,
+  FactorList,
+  FactorItem,
+  InsightNote,
+  EnhancedLoadingContainer,
+  EmptyStateContainer
+} from '../Premium/DVLA/Insights/style/style';
+
+// Import styled components specifically for repair times
+import {
+  // Layout components
+  MainLayout,
+  ContentArea,
+  
+  // Section components
+  BulletinDetailPanel,
+  DetailSectionTitle,
+  SubSectionHeading,
+  
+  // Accordion components
   AccordionSection,
   AccordionHeader,
   AccordionContent,
   AccordionIconWrapper,
   OperationCountBadge,
   GovUKChevron,
-  WarningPanel,
-  FooterNote,
-  SummaryPanel,
+  GovUKToggleText,
+  
+  // Tab components
+  StyledTabs,
+  StyledTab,
   TabPanel,
+  
+  // Summary components
+  SummaryPanel,
+  
+  // Operation components
+  OperationsGroup,
   OperationItem,
-  OperationsGroup
+  
+  // Message components
+  WarningPanel,
+  StyledFooterNote,
 } from './styles/style';
 
-import Alert from '@mui/material/Alert';
+// Import Material-UI components (minimal usage)
 import Box from '@mui/material/Box';
 
-// Import Material-UI icons
+// Import Material-UI icons (reduced usage)
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
+
+// Import RepairCalculator component
 import RepairCalculator from './RepairTimes/RateCalc';
 
 // Import API client
 import repairTimesApi from './api/RepairTimesApiClient';
 
-// Utility functions moved outside component to prevent recreation on render
+// Browser cache configuration
+const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const BROWSER_CACHE_PREFIX = 'repair_times_';
+const STORAGE_VERSION = 'v1'; // Use this to invalidate all caches if data structure changes
+
+// Browser storage utility functions
+const browserCache = {
+  saveToCache: (key, data) => {
+    try {
+      const cacheEntry = {
+        data,
+        timestamp: Date.now(),
+        version: STORAGE_VERSION
+      };
+      localStorage.setItem(`${BROWSER_CACHE_PREFIX}${key}`, JSON.stringify(cacheEntry));
+      return true;
+    } catch (error) {
+      console.error('Error saving to browser cache:', error);
+      // Handle quota exceeded errors
+      if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+        // Try to clear old entries if storage is full
+        browserCache.clearOldEntries();
+        return false;
+      }
+      return false;
+    }
+  },
+
+  getFromCache: (key) => {
+    try {
+      const cachedItem = localStorage.getItem(`${BROWSER_CACHE_PREFIX}${key}`);
+      if (!cachedItem) return null;
+      
+      const cacheEntry = JSON.parse(cachedItem);
+      
+      // Check version
+      if (cacheEntry.version !== STORAGE_VERSION) {
+        localStorage.removeItem(`${BROWSER_CACHE_PREFIX}${key}`);
+        return null;
+      }
+      
+      // Check if expired
+      if (Date.now() - cacheEntry.timestamp > BROWSER_CACHE_TTL) {
+        localStorage.removeItem(`${BROWSER_CACHE_PREFIX}${key}`);
+        return null;
+      }
+      
+      return cacheEntry.data;
+    } catch (error) {
+      console.error('Error retrieving from browser cache:', error);
+      return null;
+    }
+  },
+
+  clearCache: (key) => {
+    localStorage.removeItem(`${BROWSER_CACHE_PREFIX}${key}`);
+  },
+  
+  clearAllCache: () => {
+    Object.keys(localStorage)
+      .filter(key => key.startsWith(BROWSER_CACHE_PREFIX))
+      .forEach(key => localStorage.removeItem(key));
+  },
+  
+  clearOldEntries: () => {
+    const cacheKeys = Object.keys(localStorage)
+      .filter(key => key.startsWith(BROWSER_CACHE_PREFIX));
+    
+    if (cacheKeys.length === 0) return;
+    
+    // Get all cache entries with timestamps
+    const cacheEntries = cacheKeys
+      .map(key => {
+        try {
+          const item = JSON.parse(localStorage.getItem(key));
+          return { key, timestamp: item.timestamp };
+        } catch (e) {
+          return { key, timestamp: 0 };
+        }
+      })
+      .sort((a, b) => a.timestamp - b.timestamp); // Sort oldest first
+    
+    // Remove oldest 20% of entries
+    const entriesToRemove = Math.max(1, Math.floor(cacheEntries.length * 0.2));
+    cacheEntries.slice(0, entriesToRemove).forEach(entry => {
+      localStorage.removeItem(entry.key);
+    });
+  }
+};
+
+// Utility functions
 const formatValue = (value) => {
   if (!value) return '';
-  // Insert a space before an uppercase letter that follows a lowercase letter or closing parenthesis
   return value.replace(/([a-z\)])([A-Z])/g, '$1 $2');
 };
 
-// Memoized function to parse repair operations
 const parseRepairOperations = (text) => {
   if (!text) return [text];
   
-  // Common operation prefixes to look for
   const operationPrefixes = [
     "Remove and Install", 
     "Check and Adjust", 
@@ -69,17 +189,14 @@ const parseRepairOperations = (text) => {
     "Remove and Replace"
   ];
   
-  // If text doesn't contain multiple operations, return as is
   if (!operationPrefixes.some(prefix => text.includes(` - ${prefix}`))) {
     return [text];
   }
   
-  // Initialize with the first operation
   let operations = [];
   let currentOp = "";
   let remainingText = text;
   
-  // Find the first operation prefix
   for (const prefix of operationPrefixes) {
     if (text.startsWith(prefix)) {
       currentOp = prefix;
@@ -89,18 +206,14 @@ const parseRepairOperations = (text) => {
   }
   
   if (!currentOp) {
-    return [text]; // No recognized operation found
+    return [text];
   }
   
-  // Split the remaining text by recognized operation prefixes
   const parts = remainingText.split(/ - (?=(?:Remove and |Check and |Strip and |Renew|Drain and |Bleed|Disconnect|Partially remove|Remove and Replace))/);
   
-  // Add the first operation with its target
   operations.push(`${currentOp}${parts[0]}`);
   
-  // Process the rest of the operations
   for (let i = 1; i < parts.length; i++) {
-    // Find which prefix this part starts with
     for (const prefix of operationPrefixes) {
       if (parts[i].startsWith(prefix)) {
         operations.push(parts[i]);
@@ -112,18 +225,16 @@ const parseRepairOperations = (text) => {
   return operations;
 };
 
-// Extract year range from model type string - Outside component
 const extractYearRangeFromModelType = (modelType) => {
   if (!modelType) return { startYear: null, endYear: null };
   
-  // Look for patterns like (07-14), (2007-2014), (2007+)
   const yearPatterns = [
-    /\((\d{2})-(\d{2})\)/,             // (07-14)
-    /\((\d{4})-(\d{4})\)/,             // (2007-2014)
-    /\((\d{4})[\-\+](\d{4})\)/,        // (2007-2014) with different dash
-    /(\d{4})-(\d{4})/,                 // 2007-2014
-    /\((\d{4})\+\)/,                   // (2007+)
-    /(\d{4})\+/,                       // 2007+
+    /\((\d{2})-(\d{2})\)/,
+    /\((\d{4})-(\d{4})\)/,
+    /\((\d{4})[\-\+](\d{4})\)/,
+    /(\d{4})-(\d{4})/,
+    /\((\d{4})\+\)/,
+    /(\d{4})\+/,
   ];
   
   for (const pattern of yearPatterns) {
@@ -131,18 +242,15 @@ const extractYearRangeFromModelType = (modelType) => {
     if (match) {
       let startYear = match[1];
       
-      // Convert 2-digit years to 4-digit
       if (startYear.length === 2) {
-        startYear = parseInt(`20${startYear}`, 10);  // Assuming 20xx for modern vehicles
+        startYear = parseInt(`20${startYear}`, 10);
       } else {
         startYear = parseInt(startYear, 10);
       }
       
-      // Handle end year if it exists
       let endYear = null;
       if (match[2]) {
         endYear = match[2];
-        // Convert 2-digit years to 4-digit
         if (endYear.length === 2) {
           endYear = parseInt(`20${endYear}`, 10);
         } else {
@@ -157,16 +265,13 @@ const extractYearRangeFromModelType = (modelType) => {
   return { startYear: null, endYear: null };
 };
 
-// Extract year from various date fields in vehicleData - Outside component
 const extractVehicleYear = (vehicleData) => {
   if (!vehicleData) return null;
   
-  // First check if we already have a year field
   if (vehicleData.year && typeof vehicleData.year === 'number') {
     return vehicleData.year;
   }
   
-  // Try different date fields that might contain year information
   const dateFields = [
     'manufactureDate', 
     'yearOfManufacture', 
@@ -177,7 +282,6 @@ const extractVehicleYear = (vehicleData) => {
   
   for (const field of dateFields) {
     if (vehicleData[field]) {
-      // If it's a string, try to extract a 4-digit year
       if (typeof vehicleData[field] === 'string') {
         const yearMatch = /(\d{4})/.exec(vehicleData[field]);
         if (yearMatch) {
@@ -185,7 +289,6 @@ const extractVehicleYear = (vehicleData) => {
         }
       }
       
-      // If it's a number in a reasonable year range
       if (typeof vehicleData[field] === 'number' && 
           vehicleData[field] > 1900 && 
           vehicleData[field] < 2100) {
@@ -197,13 +300,11 @@ const extractVehicleYear = (vehicleData) => {
   return null;
 };
 
-// Helper to find the most complex system (most operations)
 const getMostComplexSystem = (data) => {
   if (!data) return 'Engine';
   
   const systemCounts = {};
   
-  // Map category names to display names
   const categoryMap = {
     'engineData': 'Engine',
     'fuelManagement': 'Fuel System',
@@ -216,7 +317,6 @@ const getMostComplexSystem = (data) => {
     'body': 'Body'
   };
   
-  // Count operations per system
   Object.entries(data).forEach(([key, section]) => {
     if (typeof section !== 'object' || section === null || key === 'vehicleIdentification') return;
     
@@ -230,7 +330,6 @@ const getMostComplexSystem = (data) => {
     });
   });
   
-  // Find system with most operations
   let maxSystem = 'Engine';
   let maxCount = 0;
   
@@ -244,24 +343,18 @@ const getMostComplexSystem = (data) => {
   return maxSystem;
 };
 
-
-// SpecTable component - Using styled components for multi-operation items
+// SpecTable component - using InsightTable as base
 const SpecTable = memo(({ items }) => {
-  // Return early if no items to avoid empty table
   if (!items || items.length === 0) return null;
   
-  // Create a processed array of all operations with grouping info
   const processedItems = [];
   
   items.forEach((item, index) => {
-    // Parse operations for each item
     const operations = parseRepairOperations(item.label);
     
-    // Skip if no valid operations
     if (!operations || operations.length === 0) return;
     
     if (operations.length === 1) {
-      // Single operation - simple case
       processedItems.push({
         id: `item-${index}`,
         operations: [operations[0]],
@@ -270,7 +363,6 @@ const SpecTable = memo(({ items }) => {
         isMultiOperation: false
       });
     } else {
-      // Multiple operations - group them
       processedItems.push({
         id: `item-${index}`,
         operations: operations,
@@ -282,22 +374,20 @@ const SpecTable = memo(({ items }) => {
   });
   
   return (
-    <SpecificationTable>
+    <InsightTable>
       <tbody>
         {processedItems.map((item) => {
           if (!item.isMultiOperation) {
-            // Single operation row - standard display
             return (
               <tr key={item.id}>
                 <th scope="row">{item.operations[0]}</th>
                 <td>
-                  <ValueHighlight color={COLORS.BLUE}>{formatValue(item.value)}</ValueHighlight>
+                  <ValueHighlight>{formatValue(item.value)}</ValueHighlight>
                   {item.unit && <span> {item.unit}</span>}
                 </td>
               </tr>
             );
           } else {
-            // Multiple operations - create a row with custom styling
             return (
               <tr key={item.id}>
                 <th scope="row">
@@ -313,7 +403,7 @@ const SpecTable = memo(({ items }) => {
                   </OperationsGroup>
                 </th>
                 <td>
-                  <ValueHighlight color={COLORS.BLUE}>{formatValue(item.value)}</ValueHighlight>
+                  <ValueHighlight>{formatValue(item.value)}</ValueHighlight>
                   {item.unit && <span> {item.unit}</span>}
                 </td>
               </tr>
@@ -321,30 +411,21 @@ const SpecTable = memo(({ items }) => {
           }
         })}
       </tbody>
-    </SpecificationTable>
+    </InsightTable>
   );
 });
 
-// LongLabel component just returns the text for single operations
-// For multiple operations, the handling is moved to the SpecTable component
-const LongLabel = memo(({ text }) => {
-  return <span>{text}</span>;
-});
-
+// Accordion component - simplified styling
 const Accordion = memo(({ title, children, expanded, onChange, id }) => {
-  // Count the number of items in the children - more direct approach
   const itemCount = useMemo(() => {
     try {
-      // Find the SpecTable in children
       const specTable = React.Children.toArray(children)
         .find(child => child && child.type === SpecTable);
       
       if (specTable && specTable.props && specTable.props.items) {
-        // Directly count items property if available
         return specTable.props.items.length || '0';
       }
       
-      // Fallback to scanning for tbody rows as before
       let items = 0;
       React.Children.forEach(children, child => {
         if (child && child.props && child.props.children) {
@@ -371,12 +452,14 @@ const Accordion = memo(({ title, children, expanded, onChange, id }) => {
         id={`${id}-header`}
       >
         <span>{title} <OperationCountBadge>{itemCount}</OperationCountBadge></span>
-        <AccordionIconWrapper style={{ transform: expanded ? 'translateY(2px)' : 'none' }}>
+        <AccordionIconWrapper>
           <GovUKChevron 
-            className="govuk-accordion-nav__chevron" 
             expanded={expanded}
-          />
-          <GovUKToggleText style={{ color: expanded ? COLORS.BLACK : COLORS.BLUE }}>
+            viewBox="0 0 24 24"
+          >
+            <path d={expanded ? "M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" : "M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"} />
+          </GovUKChevron>
+          <GovUKToggleText>
             {expanded ? "Hide" : "Show"}
           </GovUKToggleText>
         </AccordionIconWrapper>
@@ -394,10 +477,9 @@ const Accordion = memo(({ title, children, expanded, onChange, id }) => {
   );
 });
 
-// Tab Panel function component - Memoized
+// Tab Panel component
 const CustomTabPanel = memo(function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <TabPanel
       role="tabpanel"
@@ -411,7 +493,7 @@ const CustomTabPanel = memo(function CustomTabPanel(props) {
   );
 });
 
-// Tab props accessor function - Outside component
+// Tab props function
 function a11yProps(index) {
   return {
     id: `specs-tab-${index}`,
@@ -419,24 +501,115 @@ function a11yProps(index) {
   };
 }
 
-// Main component - with all optimizations and fixes
+/**
+ * MatchWarning Component - Following pattern from bulletins component
+ */
+const MatchWarning = ({ matchConfidence, vehicleIdentification, vehicleData }) => {
+  if (matchConfidence !== 'fuzzy' || !vehicleIdentification?.matchedTo) return null;
+  
+  const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
+    ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
+        vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
+          ? 'present' 
+          : vehicleIdentification.matchedTo.yearRange.endYear
+      })`
+    : '';
+  
+  const year = extractVehicleYear(vehicleData);
+  const requestedYear = year ? ` (${year})` : '';
+  
+  return (
+    <WarningPanel>
+      <div>
+        <GovUKHeadingS>Approximate Match</GovUKHeadingS>
+        <GovUKBody>
+          We don't have exact data for your <strong>{vehicleIdentification.make} {vehicleIdentification.model}{requestedYear}</strong>. 
+          The times shown are based on <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model}{matchedYearInfo}</strong>, 
+          which is the closest match to your vehicle.
+        </GovUKBody>
+      </div>
+    </WarningPanel>
+  );
+};
+
+/**
+ * Loading State Component - Following pattern from bulletins component
+ */
+const LoadingState = ({ vehicleMake, vehicleModel }) => (
+  <GovUKContainer>
+    <EnhancedLoadingContainer>
+      <GovUKLoadingSpinner />
+      <InsightBody>Loading repair times data...</InsightBody>
+      <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+        Please wait while we compile repair times for {vehicleMake} {vehicleModel}
+      </GovUKBodyS>
+    </EnhancedLoadingContainer>
+  </GovUKContainer>
+);
+
+/**
+ * Error State Component - Following pattern from bulletins component
+ */
+const ErrorState = ({ error, onRetry }) => (
+  <GovUKContainer>
+    <EmptyStateContainer>
+      <InsightBody>
+        <ValueHighlight color={COLORS.RED}>Error Loading Repair Times:</ValueHighlight> {error}
+      </InsightBody>
+      <GovUKButton onClick={onRetry}>
+        Try again
+      </GovUKButton>
+    </EmptyStateContainer>
+  </GovUKContainer>
+);
+
+/**
+ * Empty State Component - Following pattern from bulletins component
+ */
+const EmptyState = ({ vehicleMake, vehicleModel }) => (
+  <GovUKContainer>
+    <EmptyStateContainer>
+      <InsightBody>
+        No repair times data available for {vehicleMake} {vehicleModel}
+      </InsightBody>
+      <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+        This could be because the vehicle is too new, too old, or a rare model.
+      </GovUKBodyS>
+    </EmptyStateContainer>
+  </GovUKContainer>
+);
+
+// Main component - restructured for better alignment with bulletins component
 const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [repairData, setRepairData] = useState(null);
   const [matchConfidence, setMatchConfidence] = useState('none');
   const [tabValue, setTabValue] = useState(0);
-  // Track expanded accordion sections
   const [expandedSections, setExpandedSections] = useState({});
+  const abortControllerRef = useRef(null);
 
-  // Memoized tab change handler
+  // Function to check browser cache
+  const checkBrowserCache = useCallback(() => {
+    if (!vehicleData || !vehicleData.make || !vehicleData.model) return null;
+    
+    const vehicleYear = extractVehicleYear(vehicleData);
+    const cacheKey = `${vehicleData.make}_${vehicleData.model}_${vehicleYear || ''}`.toLowerCase().replace(/\s+/g, '_');
+    const cachedData = browserCache.getFromCache(cacheKey);
+    
+    if (cachedData) {
+      console.log('Found in browser cache:', cacheKey);
+      return cachedData;
+    }
+    
+    return null;
+  }, [vehicleData]);
+
   const handleTabChange = useCallback((event, newValue) => {
     setTabValue(newValue);
-    // Reset expanded sections when changing tabs
     setExpandedSections({});
   }, []);
 
-  // Memoized section toggle function to avoid recreation on render
   const toggleSection = useCallback((sectionId) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -444,13 +617,24 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
     }));
   }, []);
 
-  // Data fetching effect - optimized to only run when essential data changes
+  // Handle retry when error occurs
+  const handleRetry = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    setTimeout(() => window.location.reload(), 500);
+  }, []);
+
   useEffect(() => {
-    // Don't do anything if no vehicle data
-    if (!vehicleData) return;
+    if (!vehicleData || !vehicleData.make || !vehicleData.model) return;
     
-    // Cancel flag for cleanup
-    let isMounted = true;
+    // Cancel any ongoing fetch
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    // Create new abort controller
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
     
     const fetchRepairTimes = async () => {
       try {
@@ -464,56 +648,72 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
           throw new Error("Vehicle make and model required");
         }
         
-        // Use the API client for data fetching with fallback logic
-        const data = await repairTimesApi.lookupRepairTimes(vehicleData);
-        
-        // Only update state if component is still mounted
-        if (isMounted) {
-          setRepairData(data);
-          // Get match confidence from API client's _matchConfidence property
-          setMatchConfidence(data._matchConfidence || (data.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
+        // Check browser cache first
+        const cachedData = checkBrowserCache();
+        if (cachedData) {
+          setRepairData(cachedData);
+          setMatchConfidence(cachedData._matchConfidence || (cachedData.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
+          setLoading(false);
           
-          // Call onDataLoad with the new data, not stale state
-          if (onDataLoad) onDataLoad(data);
+          // Still call onDataLoad with cached data
+          if (onDataLoad && typeof onDataLoad === 'function') {
+            onDataLoad(cachedData);
+          }
+          
+          return;
+        }
+        
+        const data = await repairTimesApi.lookupRepairTimes(vehicleData, { signal });
+        
+        // Store in browser cache
+        const vehicleYear = extractVehicleYear(vehicleData);
+        const cacheKey = `${make}_${model}_${vehicleYear || ''}`.toLowerCase().replace(/\s+/g, '_');
+        browserCache.saveToCache(cacheKey, data);
+        
+        setRepairData(data);
+        setMatchConfidence(data._matchConfidence || (data.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
+        
+        if (onDataLoad && typeof onDataLoad === 'function') {
+          onDataLoad(data);
         }
       } catch (err) {
-        if (isMounted) {
-          // Don't log AbortError (happens during normal cleanup)
-          if (err.name !== 'AbortError') {
-            console.error("Error fetching repair times:", err);
-            setError(err.message || "Failed to load repair times");
-          }
-          setMatchConfidence('none');
+        // Don't handle aborted requests as errors
+        if (err.name === 'AbortError') {
+          console.log('Request was aborted');
+          return;
         }
+        
+        console.error("Error fetching repair times:", err);
+        setError(err.message || "Failed to load repair times");
+        setMatchConfidence('none');
       } finally {
-        if (isMounted) setLoading(false);
+        if (!signal.aborted) {
+          setLoading(false);
+        }
       }
     };
   
     fetchRepairTimes();
     
-    // Cleanup function to prevent state updates if component unmounts
+    // Cleanup function
     return () => {
-      isMounted = false;
-      // Cancel any pending requests
-      repairTimesApi.cancelAllRequests();
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     };
     
-  }, [vehicleData?.make, vehicleData?.model, vehicleData?.year, onDataLoad]);
+  }, [vehicleData?.make, vehicleData?.model, onDataLoad, checkBrowserCache]);
 
-  // Memoized function to generate year range display
   const getYearRangeDisplay = useCallback(() => {
     if (!repairData || !repairData.vehicleIdentification) return '';
     
     const { vehicleIdentification } = repairData;
     
-    // First check if API returned year range in matchedTo
     if (vehicleIdentification.matchedTo?.yearRange) {
       const { startYear, endYear } = vehicleIdentification.matchedTo.yearRange;
       return ` (${startYear}-${endYear === 'present' ? 'present' : endYear})`;
     }
     
-    // Otherwise, try to extract from model type
     const modelType = vehicleIdentification.modelType || '';
     const { startYear, endYear } = extractYearRangeFromModelType(modelType);
     
@@ -521,67 +721,55 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
       return ` (${startYear}${endYear ? `-${endYear}` : '+'})`;
     }
     
-    // Last resort - use vehicle's actual year if available
     const year = vehicleData ? extractVehicleYear(vehicleData) : null;
     if (year) {
       return ` (${year})`;
     }
     
-    return ''; // No year info available
+    return '';
   }, [repairData, vehicleData]);
 
-  // Memoized match warning component
-  const MatchWarning = useMemo(() => {
-    if (!repairData || !vehicleData) return null;
+  const vehicleSummary = useMemo(() => {
+    if (!repairData) return null;
     
-    const { vehicleIdentification } = repairData;
+    const totalOperations = Object.values(repairData).reduce((count, section) => {
+      if (typeof section !== 'object' || section === null) return count;
+      
+      return count + Object.values(section).reduce((subCount, subSection) => {
+        if (subSection && subSection.details && Array.isArray(subSection.details)) {
+          return subCount + subSection.details.length;
+        }
+        return subCount;
+      }, 0);
+    }, 0);
     
-    if (matchConfidence === 'fuzzy' && vehicleIdentification?.matchedTo) {
-      // Get matched vehicle year range for display
-      const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
-        ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
-            vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
-              ? 'present' 
-              : vehicleIdentification.matchedTo.yearRange.endYear
-          })`
-        : '';
+    let totalTime = 0;
+    let timeCount = 0;
+    
+    Object.values(repairData).forEach(section => {
+      if (typeof section !== 'object' || section === null) return;
       
-      // Get requested vehicle year for display
-      const year = extractVehicleYear(vehicleData);
-      const requestedYear = year ? ` (${year})` : '';
-      
-      return (
-        <WarningPanel>
-          <WarningIcon />
-          <div>
-            <GovUKHeadingS>Approximate Match</GovUKHeadingS>
-            <GovUKBody>
-              We don't have exact data for your <strong>{vehicleIdentification.make} {vehicleIdentification.model}{requestedYear}</strong>. 
-              The times shown are based on <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model}{matchedYearInfo}</strong>, 
-              which is the closest match to your vehicle.
-            </GovUKBody>
-          </div>
-        </WarningPanel>
-      );
-    } else if (matchConfidence === 'year-match' && vehicleIdentification?.matchedTo) {
-      // It's the right year range but not exact model variant
-      return (
-        <PremiumInfoPanel>
-          <InfoIcon style={{ marginRight: '15px', marginTop: '3px', flexShrink: 0, color: COLORS.BLUE }} />
-          <div>
-            <GovUKHeadingS>Compatible Model Match</GovUKHeadingS>
-            <GovUKBody>
-              The repair times shown are for <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model} {vehicleIdentification.matchedTo.modelType}</strong>, 
-              which is compatible with your specific vehicle variant.
-            </GovUKBody>
-          </div>
-        </PremiumInfoPanel>
-      );
-    }
-    return null;
-  }, [repairData, vehicleData, matchConfidence]);
+      Object.values(section).forEach(subSection => {
+        if (subSection && subSection.details && Array.isArray(subSection.details)) {
+          subSection.details.forEach(item => {
+            if (item.value && !isNaN(parseFloat(item.value))) {
+              totalTime += parseFloat(item.value);
+              timeCount++;
+            }
+          });
+        }
+      });
+    });
+    
+    const avgTime = timeCount > 0 ? (totalTime / timeCount).toFixed(1) : 'N/A';
+    
+    return {
+      totalOperations,
+      avgTime,
+      mostComplexSystem: getMostComplexSystem(repairData)
+    };
+  }, [repairData]);
 
-  // Memoized tabs configuration
   const tabs = useMemo(() => {
     if (!repairData) return [];
     
@@ -658,164 +846,97 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
     ].filter(tab => tab.sections.length > 0);
   }, [repairData]);
 
-  // Memoized vehicle summary calculation
-  const vehicleSummary = useMemo(() => {
-    if (!repairData) return null;
-    
-    // Use the original, proven algorithm for counting operations
-    const totalOperations = Object.values(repairData).reduce((count, section) => {
-      if (typeof section !== 'object' || section === null) return count;
-      
-      return count + Object.values(section).reduce((subCount, subSection) => {
-        if (subSection && subSection.details && Array.isArray(subSection.details)) {
-          return subCount + subSection.details.length;
-        }
-        return subCount;
-      }, 0);
-    }, 0);
-    
-    // Continue with the time calculations as in the optimized version
-    let totalTime = 0;
-    let timeCount = 0;
-    
-    Object.values(repairData).forEach(section => {
-      if (typeof section !== 'object' || section === null) return;
-      
-      Object.values(section).forEach(subSection => {
-        if (subSection && subSection.details && Array.isArray(subSection.details)) {
-          subSection.details.forEach(item => {
-            if (item.value && !isNaN(parseFloat(item.value))) {
-              totalTime += parseFloat(item.value);
-              timeCount++;
-            }
-          });
-        }
-      });
-    });
-    
-    const avgTime = timeCount > 0 ? (totalTime / timeCount).toFixed(1) : 'N/A';
-    
-    return {
-      totalOperations,
-      avgTime,
-      mostComplexSystem: getMostComplexSystem(repairData)
-    };
-  }, [repairData]);
+  // Loading state
+  if (loading) {
+    return <LoadingState vehicleMake={vehicleData?.make} vehicleModel={vehicleData?.model} />;
+  }
 
-  // Bail out early for loading and error states
-  if (loading) return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
-        <GovUKLoadingContainer>
-          <GovUKLoadingSpinner />
-          <GovUKHeadingS>Loading repair times data</GovUKHeadingS>
-          <GovUKBody>Please wait while we retrieve the information for your vehicle.</GovUKBody>
-        </GovUKLoadingContainer>
-      </GovUKMainWrapper>
-    </GovUKContainer>
-  );
+  // Error state
+  if (error) {
+    return <ErrorState error={error} onRetry={handleRetry} />;
+  }
 
-  if (error) return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
-        <Alert 
-          severity="error" 
-          icon={<WarningIcon />}
-          style={{ 
-            marginBottom: '20px', 
-            borderRadius: 0, 
-            borderLeft: `5px solid ${COLORS.RED}`,
-            padding: '20px'
-          }}
-        >
-          <GovUKHeadingS>There was a problem</GovUKHeadingS>
-          <GovUKBody>{error}</GovUKBody>
-        </Alert>
-      </GovUKMainWrapper>
-    </GovUKContainer>
-  );
+  // No data state
+  if (!repairData) {
+    return <EmptyState vehicleMake={vehicleData?.make} vehicleModel={vehicleData?.model} />;
+  }
 
-  if (!repairData) return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
-        <PremiumInfoPanel>
-          <InfoIcon style={{ marginRight: '15px', marginTop: '3px', flexShrink: 0, color: COLORS.BLUE }} />
-          <div>
-            <GovUKHeadingS>No repair times available</GovUKHeadingS>
-            <GovUKBody>
-              We don't currently have repair times data for this vehicle. This could be because the vehicle is too new, too old, or a rare model.
-            </GovUKBody>
-          </div>
-        </PremiumInfoPanel>
-      </GovUKMainWrapper>
-    </GovUKContainer>
-  );
-
-  // Extract display info from vehicle identification
   const { vehicleIdentification } = repairData;
   const displayMake = vehicleIdentification.make;
   const displayModel = vehicleIdentification.model;
   const yearRangeDisplay = getYearRangeDisplay();
-
-  // Last updated date
   const lastUpdated = "March 2025";
 
   return (
     <GovUKContainer>
-      <GovUKMainWrapper>
-        {/* Main content */}
-        <RepairTimesContainer>
-     
+      <InsightsContainer>
+        <InsightPanel>
+          <HeadingWithTooltip 
+            tooltip="Repair time information based on industry standards"
+            iconColor={COLORS.BLUE}
+          >
+            <GovUKHeadingM>Repair Times for {displayMake} {displayModel}{yearRangeDisplay}</GovUKHeadingM>
+          </HeadingWithTooltip>
 
+          <InsightBody>
+            These repair times represent the industry standard labor times for common repair operations 
+            and can help you estimate repair costs for your {displayMake} {displayModel}.
+          </InsightBody>
+
+          {/* Match warning - using shared component */}
+          <MatchWarning 
+            matchConfidence={matchConfidence} 
+            vehicleIdentification={vehicleIdentification}
+            vehicleData={vehicleData}
+          />
+
+          {/* Important notice - following GOV.UK pattern */}
+          <InsightNote>
+            <GovUKHeadingS>Important</GovUKHeadingS>
+            <GovUKBody>
+              These repair times are for reference only. Actual repair time may vary depending on workshop conditions, equipment, and technician experience.
+            </GovUKBody>
+          </InsightNote>
+
+          {/* Vehicle summary - similar to bulletins pattern */}
           {vehicleSummary && (
             <SummaryPanel>
-              <GovUKHeadingM>Repair Overview</GovUKHeadingM>
-              <dl>
-                <div>
-                  <dt>Total Operations</dt>
-                  <dd>
-                    <ValueHighlight color={COLORS.BLUE}>
-                      {vehicleSummary.totalOperations}
-                    </ValueHighlight>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Average Time</dt>
-                  <dd>
-                    <ValueHighlight color={COLORS.BLUE}>
-                      {vehicleSummary.avgTime}
-                    </ValueHighlight> hours
-                  </dd>
-                </div>
-                <div>
-                  <dt>Most Complex System</dt>
-                  <dd>
-                    <ValueHighlight color={COLORS.BLUE}>
-                      {vehicleSummary.mostComplexSystem}
-                    </ValueHighlight>
-                  </dd>
-                </div>
-              </dl>
+              <Box>
+                <GovUKHeadingS>Repair Overview</GovUKHeadingS>
+                <dl>
+                  <div>
+                    <dt>Total Operations</dt>
+                    <dd>
+                      <ValueHighlight>
+                        {vehicleSummary.totalOperations}
+                      </ValueHighlight>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Average Time</dt>
+                    <dd>
+                      <ValueHighlight>
+                        {vehicleSummary.avgTime}
+                      </ValueHighlight> hours
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Most Complex System</dt>
+                    <dd>
+                      <ValueHighlight>
+                        {vehicleSummary.mostComplexSystem}
+                      </ValueHighlight>
+                    </dd>
+                  </div>
+                </dl>
+              </Box>
             </SummaryPanel>
           )}
-          {/* Match warning - memoized component */}
-          {MatchWarning}
-
-          {/* Important notice */}
-          <WarningPanel>
-            <WarningIcon />
-            <div>
-              <GovUKHeadingS>Important</GovUKHeadingS>
-              <GovUKBody>
-                These repair times are for reference only. Actual repair time may vary depending on workshop conditions, equipment, and technician experience.
-              </GovUKBody>
-            </div>
-          </WarningPanel>
 
           <RepairCalculator />
 
-          {/* Tabs Navigation */}
-          <Box>
+          {/* Tabs - simplified with no icons */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <StyledTabs
               value={tabValue}
               onChange={handleTabChange}
@@ -833,38 +954,40 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
             </StyledTabs>
           </Box>
 
-          {/* Tab Content */}
-          {tabs.map((tab, tabIndex) => (
-            <CustomTabPanel key={tabIndex} value={tabValue} index={tabIndex}>
-              {tab.sections.map((section, sectionIndex) => {
-                const sectionId = `${tabIndex}-${sectionIndex}`;
-                const isExpanded = !!expandedSections[sectionId];
-                
-                return (
-                  <Accordion
-                    key={sectionId}
-                    id={`section-${sectionId}`}
-                    title={section.title}
-                    expanded={isExpanded}
-                    onChange={() => toggleSection(sectionId)}
-                  >
+          {/* Tab content */}
+          <MainLayout>
+            <ContentArea>
+              {tabs.map((tab, tabIndex) => (
+                <CustomTabPanel key={tabIndex} value={tabValue} index={tabIndex}>
+                  {tab.sections.map((section, sectionIndex) => {
+                    const sectionId = `${tabIndex}-${sectionIndex}`;
+                    const isExpanded = !!expandedSections[sectionId];
                     
-                    {section.content}
-                  </Accordion>
-                );
-              })}
-            </CustomTabPanel>
-          ))}
+                    return (
+                      <Accordion
+                        key={sectionId}
+                        id={`section-${sectionId}`}
+                        title={section.title}
+                        expanded={isExpanded}
+                        onChange={() => toggleSection(sectionId)}
+                      >
+                        {section.content}
+                      </Accordion>
+                    );
+                  })}
+                </CustomTabPanel>
+              ))}
+            </ContentArea>
+          </MainLayout>
 
-          {/* Footer Note */}
-          <FooterNote>
-            <InfoIcon fontSize="small" /> Repair times sourced from industry standard databases. Last updated: {lastUpdated}
-          </FooterNote>
-        </RepairTimesContainer>
-      </GovUKMainWrapper>
+          {/* Footer note - following GOV.UK pattern */}
+          <StyledFooterNote>
+            Repair times sourced from industry standard databases. Last updated: {lastUpdated}
+          </StyledFooterNote>
+        </InsightPanel>
+      </InsightsContainer>
     </GovUKContainer>
   );
 };
 
-// Memoize the entire component to prevent unnecessary re-renders
 export default memo(VehicleRepairTimesComponent);

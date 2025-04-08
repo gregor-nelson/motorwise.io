@@ -5,166 +5,536 @@ import React from 'react';
  * A specialized component to calculate emissions and compliance insights for vehicles
  * based on Euro emissions standards, UK and Scottish LEZ regulations
  * 
- * Incorporates Scottish Low Emission Zones (Emission Standards, Exemptions and Enforcement)
- * (Scotland) Regulations 2021 requirements
+ * Features:
+ * - Accurate vehicle tax calculations (April 2025)
+ * - Enhanced vehicle type detection using DVLA API fields
+ * - Advanced CO2 emissions estimation using Euro standards
+ * - Improved motorcycle and light goods vehicle handling
+ * - Scottish LEZ and UK ULEZ compliance determination
  * 
- * Updated with accurate commercial vehicle tax calculations (April 2024)
- * Includes Direct Debit rates and motorcycle/tricycle tax support
- * Improved historic vehicle, special tax class, and exemption handling
+ * References:
+ * - RAC Euro Emissions Guide: https://www.rac.co.uk/drive/advice/emissions/euro-emissions-standards/
+ * - UK Government: https://www.gov.uk/emissions-tax
+ * - Transport for London ULEZ: https://tfl.gov.uk/modes/driving/ultra-low-emission-zone
+ * - DVLA Vehicle Tax Rates (V149): https://www.gov.uk/government/publications/vehicle-tax-rates-v149
  */
-const EmissionsInsightsCalculator = (vehicleData) => {
-  // Extract basic emissions data
-  const co2Emissions = vehicleData.co2Emissions || null;
-  const euroStatus = vehicleData.euroStatus || null;
-  const fuelType = vehicleData.fuelType || "Unknown";
-  const engineSize = vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : null;
-  const makeYear = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
-  const registrationDate = vehicleData.monthOfFirstRegistration || null;
-  const taxStatus = vehicleData.taxStatus || null;
-  const revenueWeight = vehicleData.revenueWeight || null;
+
+// Define constants to replace magic values
+const CONSTANTS = {
+  // Vehicle classification thresholds
+  VEHICLE_WEIGHT: {
+    MOTORCYCLE_MAX: 450,
+    LGV_MAX: 3500,
+    HGV_N2_MAX: 12000
+  },
   
-  // Vehicle categorization
-  const vehicleCategory = determineVehicleCategory(vehicleData);
+  // Tax thresholds
+  TAX: {
+    HIGH_VALUE_THRESHOLD: 40000,
+    ADDITIONAL_RATE: 425,
+    ENGINE_SIZE_THRESHOLD: 1549
+  },
+  
+  // Date thresholds for emissions standards
+  EURO_DATES: {
+    EURO_1_START: { year: 1993 },
+    EURO_2_START: { year: 1997 },
+    EURO_3_START: { year: 2001 },
+    EURO_4_START: { year: 2006 },
+    EURO_4_PETROL: { year: 2006, month: 1 },
+    EURO_5_START: { year: 2011 },
+    EURO_5_END: { year: 2015, month: 8 },
+    EURO_6_START: { year: 2015, month: 9 },
+    EURO_6_DIESEL: { year: 2015, month: 9 },
+    EURO_6B_END: { year: 2018 },
+    EURO_6C_END: { year: 2019 },
+    EURO_6D_TEMP_END: { year: 2021 },
+    EURO_7_START: { year: 2026 }
+  },
+  
+  // VED tax dates
+  VED_DATES: {
+    PRE_2001: { year: 2001, month: 3 },
+    POST_2017: { year: 2017, month: 4 },
+    POST_2025: { year: 2025, month: 4 }
+  },
+  
+  // Historic vehicle thresholds
+  HISTORIC: {
+    TAX_EXEMPT_AGE: 40,
+    LEZ_EXEMPT_AGE: 30
+  },
+  
+  // Import detection
+  IMPORT: {
+    YEAR_GAP_THRESHOLD: 5  // Years between manufacture and registration
+  }
+};
+
+/**
+ * Helper function to safely access nested properties
+ */
+const getProperty = (obj, path, defaultValue = null) => {
+  if (!obj) return defaultValue;
+  
+  const keys = path.split('.');
+  let result = obj;
+  
+  for (const key of keys) {
+    if (result === null || result === undefined) {
+      return defaultValue;
+    }
+    result = result[key];
+  }
+  
+  return (result === undefined || result === null) ? defaultValue : result;
+};
+
+/**
+ * Helper function for defensive error handling
+ */
+const safeCalculate = (calculationFn, fallbackValue, ...args) => {
+  try {
+    return calculationFn(...args);
+  } catch (error) {
+    console.error(`Calculation error: ${error.message}`);
+    return fallbackValue;
+  }
+};
+
+/**
+ * Input data sanitization and validation
+ */
+const sanitizeVehicleData = (vehicleData) => {
+  if (!vehicleData || typeof vehicleData !== 'object') {
+    return {}; // Return empty object if invalid input
+  }
+  
+  // Create a clean copy to avoid mutating the original object
+  const sanitized = { ...vehicleData };
+  
+  // Normalize string fields - ensure they're strings
+  const stringFields = [
+    'fuelType', 'euroStatus', 'make', 'typeApproval', 
+    'wheelplan', 'taxStatus', 'monthOfFirstRegistration'
+  ];
+  
+  stringFields.forEach(field => {
+    sanitized[field] = vehicleData[field] ? String(vehicleData[field]).trim() : null;
+  });
+  
+  // Normalize number fields - ensure they're valid numbers
+  const numberFields = [
+    'co2Emissions', 'engineCapacity', 'yearOfManufacture', 
+    'revenueWeight', 'listPrice'
+  ];
+  
+  numberFields.forEach(field => {
+    const value = vehicleData[field];
+    sanitized[field] = (value !== null && value !== undefined) 
+      ? (isNaN(Number(value)) ? null : Number(value))
+      : null;
+  });
+  
+  // Normalize date fields
+  if (vehicleData.monthOfFirstRegistration) {
+    try {
+      // Ensure valid date format YYYY-MM
+      const dateParts = vehicleData.monthOfFirstRegistration.split('-');
+      if (dateParts.length >= 2) {
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]);
+        if (!isNaN(year) && !isNaN(month) && month >= 1 && month <= 12) {
+          sanitized.monthOfFirstRegistration = `${year}-${month.toString().padStart(2, '0')}`;
+        } else {
+          sanitized.monthOfFirstRegistration = null;
+        }
+      } else {
+        sanitized.monthOfFirstRegistration = null;
+      }
+    } catch (e) {
+      sanitized.monthOfFirstRegistration = null;
+    }
+  }
+  
+  return sanitized;
+};
+
+/**
+ * Parse registration date safely
+ */
+const parseRegistrationDate = (dateString) => {
+  if (!dateString) return { year: null, month: null };
+  
+  try {
+    const parts = dateString.split('-');
+    if (parts.length < 2) return { year: parseInt(parts[0]) || null, month: null };
+    
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]);
+    
+    return {
+      year: !isNaN(year) ? year : null,
+      month: (!isNaN(month) && month >= 1 && month <= 12) ? month : null
+    };
+  } catch (e) {
+    return { year: null, month: null };
+  }
+};
+
+/**
+ * Helper function to determine if a vehicle is electric or zero emission
+ */
+const isElectricVehicle = (fuelType) => {
+  if (!fuelType) return false;
+  
+  const fuelTypeLower = fuelType.toLowerCase();
+  return fuelTypeLower.includes('electric') || 
+         fuelTypeLower.includes('ev') || 
+         fuelTypeLower.includes('zero emission');
+};
+
+/**
+ * Enhanced import detection function that uses the gap between manufacturing and registration
+ * Much more reliable than looking for specific keywords
+ */
+const isImportedVehicle = (vehicleData) => {
+  const yearOfManufacture = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
+  const registrationDate = getProperty(vehicleData, 'monthOfFirstRegistration') || 
+                          getProperty(vehicleData, 'monthOfFirstDvlaRegistration');
+  const { year: regYear } = parseRegistrationDate(registrationDate);
+  
+  // Direct import markers from existing fields
+  const directImportMarkers = [
+    vehicleData.typeApproval?.includes('IVA'),
+    vehicleData.typeApproval?.includes('IVSA'),
+    vehicleData.typeApproval?.includes('foreign'),
+    vehicleData.import === true,
+    vehicleData.importDate
+  ];
+  
+  // If any direct markers are found, it's an import
+  if (directImportMarkers.some(marker => !!marker)) {
+    return true;
+  }
+  
+  // Check for significant gap between manufacture and registration
+  // 5+ years typically indicates an imported used vehicle
+  if (yearOfManufacture && regYear && (regYear - yearOfManufacture >= CONSTANTS.IMPORT.YEAR_GAP_THRESHOLD)) {
+    return true;
+  }
+  
+  return false;
+};
+
+/**
+ * Helper to determine which tax regime applies based on vehicle history
+ * Prioritizes manufacture date when it matters most (pre-2001 vehicles)
+ */
+const determineTaxRegime = (vehicleData) => {
+  const yearOfManufacture = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
+  const registrationDate = getProperty(vehicleData, 'monthOfFirstRegistration') || 
+                         getProperty(vehicleData, 'monthOfFirstDvlaRegistration');
+  const { year: regYear, month: regMonth } = parseRegistrationDate(registrationDate);
+  
+  // Define possible regimes
+  const regimes = {
+    PRE_2001: "pre-2001",           // Engine-size based (PLG)
+    POST_2001_PRE_2017: "2001-2017", // CO2-based bands A-M
+    POST_2017_PRE_2025: "2017-2025", // First year rate + standard rate
+    POST_2025: "post-2025"           // Includes EV taxation
+  };
+  
+  // No dates available - default to most common
+  if (!yearOfManufacture && !regYear) {
+    return regimes.POST_2001_PRE_2017;
+  }
+  
+  // CRITICAL FIX: If manufactured before 2001, use pre-2001 regime REGARDLESS of registration date
+  if (yearOfManufacture && yearOfManufacture < 2001) {
+    return regimes.PRE_2001;
+  }
+  
+  // For other cases, use registration date to determine regime
+  if (regYear) {
+    if (regYear < 2001 || (regYear === 2001 && regMonth && regMonth < 3)) {
+      return regimes.PRE_2001;
+    } else if (regYear < 2017 || (regYear === 2017 && regMonth && regMonth < 4)) {
+      return regimes.POST_2001_PRE_2017;
+    } else if (regYear < 2025 || (regYear === 2025 && regMonth && regMonth < 4)) {
+      return regimes.POST_2017_PRE_2025;
+    } else {
+      return regimes.POST_2025;
+    }
+  }
+  
+  // If only manufacturing year is available
+  if (yearOfManufacture) {
+    if (yearOfManufacture < 2001) {
+      return regimes.PRE_2001;
+    } else if (yearOfManufacture < 2017) {
+      return regimes.POST_2001_PRE_2017;
+    } else if (yearOfManufacture < 2025) {
+      return regimes.POST_2017_PRE_2025;
+    } else {
+      return regimes.POST_2025;
+    }
+  }
+  
+  // Default case
+  return regimes.POST_2001_PRE_2017;
+};
+
+/**
+ * Improved RDE2 detection logic
+ */
+const determineRDE2Compliance = (vehicleData) => {
+  const { realDrivingEmissions, rdeCompliance, yearOfManufacture, euroStatus, typeApproval, monthOfFirstRegistration } = vehicleData;
+  const fuelType = vehicleData.fuelType || "Unknown";
+  const makeYear = yearOfManufacture ? parseInt(yearOfManufacture) : null;
+  
+  // Not a diesel vehicle - RDE2 doesn't apply
+  if (!fuelType?.toUpperCase().includes("DIESEL")) {
+    return false;
+  }
+  
+  // Explicit RDE2 compliance indicators in vehicle data
+  if (realDrivingEmissions === 'RDE2' || rdeCompliance === 'RDE2') {
+    return true;
+  }
+  
+  // Check if the vehicle has Euro 6d or Euro 6d-TEMP status which are RDE2 compliant
+  if (euroStatus?.includes("Euro 6d") || typeApproval?.includes("Euro 6d")) {
+    return true;
+  }
+  
+  // More conservative estimate based on registration date
+  // Mandatory RDE2 for all new diesel registrations from January 2021
+  if (makeYear >= 2021) {
+    return true;
+  }
+  
+  // For 2019-2020 vehicles, require both Euro 6 and specific month cutoffs
+  if (makeYear >= 2019 && (euroStatus === "Euro 6" || euroStatus?.includes("Euro 6"))) {
+    // For 2020, after September mostly RDE2 compliant
+    if (makeYear === 2020) {
+      if (monthOfFirstRegistration) {
+        const { month } = parseRegistrationDate(monthOfFirstRegistration);
+        return month && month >= 9; // September 2020 onwards
+      }
+      return false; // Without month info, safer to assume non-RDE2
+    }
+    
+    // Less likely to be RDE2 compliant in 2019
+    return false;
+  }
+  
+  return false;
+};
+
+/**
+ * Get notes for imported vehicles
+ */
+const getImportedVehicleNotes = (vehicleData) => {
+  if (!isImportedVehicle(vehicleData)) return [];
+  
+  return [
+    "This appears to be an imported vehicle. Emissions standards may vary from UK standards.",
+    "For imported vehicles, tax calculations are based on available data and may not reflect special import provisions.",
+    "Consider checking with DVLA for official guidance on imported vehicle taxation."
+  ];
+};
+
+/**
+ * Validate final calculation results for consistency
+ */
+const validateResults = (results) => {
+  const validationWarnings = [];
+  
+  // Check for impossible combinations
+  if (results.co2Emissions === 0 && !isElectricVehicle(results.fuelType)) {
+    validationWarnings.push("Warning: Non-electric vehicle showing zero CO2 emissions");
+  }
+  
+  if (results.isULEZCompliant && !results.isScottishLEZCompliant) {
+    validationWarnings.push("Warning: Vehicle is ULEZ compliant but not Scottish LEZ compliant (unusual scenario)");
+  }
+  
+  const currentYear = new Date().getFullYear();
+  if (results.euroStatus === "Euro 7" && currentYear < 2026) {
+    validationWarnings.push("Warning: Euro 7 status detected before official implementation");
+  }
+  
+  if (results.taxBand === "Unknown" && results.co2Emissions) {
+    validationWarnings.push("Warning: CO2 emissions available but tax band undetermined");
+  }
+  
+  return {
+    ...results,
+    validationWarnings: validationWarnings.length > 0 ? validationWarnings : null
+  };
+};
+
+// Main calculation function
+const EmissionsInsightsCalculator = (vehicleData) => {
+  // Sanitize and validate input data
+  const sanitizedData = sanitizeVehicleData(vehicleData);
+  
+  // Extract basic emissions data from DVLA API response with safe access
+  const co2Emissions = getProperty(sanitizedData, 'co2Emissions');
+  const euroStatus = getProperty(sanitizedData, 'euroStatus');
+  const fuelType = getProperty(sanitizedData, 'fuelType', 'Unknown');
+  const engineSize = sanitizedData.engineCapacity ? `${sanitizedData.engineCapacity}cc` : null;
+  const makeYear = sanitizedData.yearOfManufacture ? parseInt(sanitizedData.yearOfManufacture) : null;
+  const registrationDate = getProperty(sanitizedData, 'monthOfFirstRegistration') || 
+                           getProperty(sanitizedData, 'monthOfFirstDvlaRegistration');
+  const taxStatus = getProperty(sanitizedData, 'taxStatus');
+  const revenueWeight = getProperty(sanitizedData, 'revenueWeight');
+  const realDrivingEmissions = getProperty(sanitizedData, 'realDrivingEmissions');
+  const typeApproval = getProperty(sanitizedData, 'typeApproval');
+  const wheelplan = getProperty(sanitizedData, 'wheelplan');
+  const make = getProperty(sanitizedData, 'make');
+  
+  // Parse registration date more precisely
+  const { year: regYear, month: regMonth } = parseRegistrationDate(registrationDate);
+  
+  // Enhanced estimation tracking
+  const estimationDetails = {
+    isEstimated: false,
+    co2Estimated: false,
+    euroStatusEstimated: false,
+    vehicleCategoryEstimated: false,
+    taxCalculationEstimated: false
+  };
+  
+  // Vehicle categorization using DVLA fields
+  const vehicleCategory = safeCalculate(determineVehicleCategory, "light passenger vehicle", sanitizedData);
   const isCommercial = vehicleCategory === "light goods vehicle" || 
                        vehicleCategory === "heavy goods vehicle N2" || 
                        vehicleCategory === "heavy goods vehicle N3";
-  const normalizedTaxClass = normalizeTaxClass(vehicleData.taxClass);
+  const normalizedTaxClass = inferTaxClass(sanitizedData, vehicleCategory);
   const inferredTaxClass = normalizedTaxClass || (isCommercial ? "light goods" : "private car");
   
-  // Check if explicitly RDE2 compliant (if available in data)
-  // This is important for diesel tax rates
-  const isDieselRDE2 = fuelType?.toUpperCase().includes("DIESEL") && 
-                      (vehicleData.rdeCompliance === 'RDE2' || 
-                      (makeYear >= 2019 && (euroStatus === "Euro 6" || euroStatus?.includes("Euro 6"))));
+  // Check if imported vehicle with enhanced detection
+  const isImported = isImportedVehicle(sanitizedData);
+  const importNotes = isImported ? getImportedVehicleNotes(sanitizedData) : [];
+  
+  // Check if explicitly RDE2 compliant with enhanced detection
+  const isDieselRDE2 = determineRDE2Compliance(sanitizedData);
   
   // Initialize variables
   let estimatedCO2 = null;
   let estimatedEuroStatus = null;
   let estimatedEuroSubcategory = null;
-  let isEstimated = false;
   
-  // Estimate emissions if not available based on vehicle type
-  if (!co2Emissions && makeYear && fuelType && engineSize) {
-    isEstimated = true;
-    
-    // Simple heuristic for estimating CO2 emissions based on fuel type, year and engine size
-    const engineSizeCC = parseInt(engineSize) || 0;
-    
-    if (fuelType.toUpperCase().includes("DIESEL")) {
-      if (makeYear < 2010) {
-        estimatedCO2 = Math.round(engineSizeCC * 0.085 + 60);
-      } else if (makeYear < 2015) {
-        estimatedCO2 = Math.round(engineSizeCC * 0.075 + 50);
-      } else {
-        estimatedCO2 = Math.round(engineSizeCC * 0.065 + 40);
-      }
-    } else if (fuelType.toUpperCase().includes("PETROL")) {
-      if (makeYear < 2010) {
-        estimatedCO2 = Math.round(engineSizeCC * 0.095 + 80);
-      } else if (makeYear < 2015) {
-        estimatedCO2 = Math.round(engineSizeCC * 0.085 + 70);
-      } else {
-        estimatedCO2 = Math.round(engineSizeCC * 0.075 + 60);
-      }
-    } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-      estimatedCO2 = 0; // Electric vehicles emit 0 g/km
-    }
+  // Enhanced CO2 emission estimation if not available in vehicle data
+  if (!co2Emissions) {
+    estimationDetails.isEstimated = true;
+    estimationDetails.co2Estimated = true;
+    estimatedCO2 = safeCalculate(estimateCO2Emissions, 150, sanitizedData);
   }
   
-  // Estimate Euro status if not available based on the Scottish LEZ legislation requirements
-  if (!euroStatus && makeYear) {
-    isEstimated = true;
+  // IMPROVED: Estimate Euro status based on both registration date and manufacturing year
+  // Using official implementation dates from RAC article
+  if (!euroStatus) {
+    estimationDetails.isEstimated = true;
+    estimationDetails.euroStatusEstimated = true;
+    
+    // Prefer registration date over manufacturing year when available
+    const effectiveYear = regYear || makeYear;
     
     if (fuelType.toUpperCase().includes("DIESEL")) {
-      if (makeYear < 1993) {
+      if (effectiveYear < CONSTANTS.EURO_DATES.EURO_1_START.year) {
         estimatedEuroStatus = "Pre-Euro";
-      } else if (makeYear < 1997) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_2_START.year) {
         estimatedEuroStatus = "Euro 1";
-      } else if (makeYear < 2001) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_3_START.year) {
         estimatedEuroStatus = "Euro 2";
-      } else if (makeYear < 2006) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_4_START.year) {
         estimatedEuroStatus = "Euro 3";
-      } else if (makeYear < 2011) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_5_START.year) {
         estimatedEuroStatus = "Euro 4";
-      } else if (makeYear < 2015) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6_START.year || 
+                (effectiveYear === CONSTANTS.EURO_DATES.EURO_6_START.year && 
+                 regMonth && regMonth < CONSTANTS.EURO_DATES.EURO_6_START.month)) {
         estimatedEuroStatus = "Euro 5";
         // Euro 5a/5b subcategory
-        estimatedEuroSubcategory = makeYear < 2013 ? "Euro 5a" : "Euro 5b";
-      } else if (makeYear < 2020) {
+        if (effectiveYear < 2013) {
+          estimatedEuroSubcategory = "Euro 5a";
+        } else {
+          estimatedEuroSubcategory = "Euro 5b";
+        }
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_7_START.year) {
         estimatedEuroStatus = "Euro 6";
-        // Estimate Euro 6 subcategory
-        if (makeYear < 2018) {
+        // Estimate Euro 6 subcategory based on RAC information
+        if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6B_END.year) {
           estimatedEuroSubcategory = "Euro 6b";
-        } else if (makeYear < 2019) {
+        } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6C_END.year) {
           estimatedEuroSubcategory = "Euro 6c";
-        } else if (makeYear < 2021) {
-          estimatedEuroSubcategory = "Euro 6d-Temp";
+        } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6D_TEMP_END.year) {
+          estimatedEuroSubcategory = "Euro 6d-TEMP";
         } else {
           estimatedEuroSubcategory = "Euro 6d";
         }
-      } else if (makeYear < 2024) {
-        estimatedEuroStatus = "Euro 6";
-        estimatedEuroSubcategory = "Euro 6d";
-      } else if (makeYear < 2026) {
-        estimatedEuroStatus = "Euro 6";
-        estimatedEuroSubcategory = "Euro 6e";
       } else {
         estimatedEuroStatus = "Euro 7";
       }
     } else if (fuelType.toUpperCase().includes("PETROL")) {
-      if (makeYear < 1993) {
+      if (effectiveYear < CONSTANTS.EURO_DATES.EURO_1_START.year) {
         estimatedEuroStatus = "Pre-Euro";
-      } else if (makeYear < 1997) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_2_START.year) {
         estimatedEuroStatus = "Euro 1";
-      } else if (makeYear < 2001) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_3_START.year) {
         estimatedEuroStatus = "Euro 2";
-      } else if (makeYear < 2006) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_4_START.year) {
         estimatedEuroStatus = "Euro 3";
-      } else if (makeYear < 2011) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_5_START.year) {
         estimatedEuroStatus = "Euro 4";
-      } else if (makeYear < 2015) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6_START.year || 
+                (effectiveYear === CONSTANTS.EURO_DATES.EURO_6_START.year && 
+                 regMonth && regMonth < CONSTANTS.EURO_DATES.EURO_6_START.month)) {
         estimatedEuroStatus = "Euro 5";
         // Euro 5a/5b subcategory
-        estimatedEuroSubcategory = makeYear < 2013 ? "Euro 5a" : "Euro 5b";
-      } else if (makeYear < 2020) {
+        if (effectiveYear < 2013) {
+          estimatedEuroSubcategory = "Euro 5a";
+        } else {
+          estimatedEuroSubcategory = "Euro 5b";
+        }
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_7_START.year) {
         estimatedEuroStatus = "Euro 6";
         // Estimate Euro 6 subcategory
-        if (makeYear < 2018) {
+        if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6B_END.year) {
           estimatedEuroSubcategory = "Euro 6b";
-        } else if (makeYear < 2019) {
+        } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6C_END.year) {
           estimatedEuroSubcategory = "Euro 6c";
-        } else if (makeYear < 2021) {
-          estimatedEuroSubcategory = "Euro 6d-Temp";
+        } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6D_TEMP_END.year) {
+          estimatedEuroSubcategory = "Euro 6d-TEMP";
         } else {
           estimatedEuroSubcategory = "Euro 6d";
         }
-      } else if (makeYear < 2024) {
-        estimatedEuroStatus = "Euro 6";
-        estimatedEuroSubcategory = "Euro 6d";
-      } else if (makeYear < 2026) {
-        estimatedEuroStatus = "Euro 6";
-        estimatedEuroSubcategory = "Euro 6e";
       } else {
         estimatedEuroStatus = "Euro 7";
       }
-    } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
+    } else if (isElectricVehicle(fuelType)) {
       // Electric vehicles are not categorized under Euro emissions standards
       estimatedEuroStatus = "Zero Emission";
     } else if (fuelType.toUpperCase().includes("HYBRID")) {
       // Use petrol standards for hybrids as they're primarily regulated like petrol vehicles
-      if (makeYear < 1993) {
+      if (effectiveYear < CONSTANTS.EURO_DATES.EURO_1_START.year) {
         estimatedEuroStatus = "Pre-Euro";
-      } else if (makeYear < 1997) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_2_START.year) {
         estimatedEuroStatus = "Euro 1";
-      } else if (makeYear < 2001) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_3_START.year) {
         estimatedEuroStatus = "Euro 2";
-      } else if (makeYear < 2006) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_4_START.year) {
         estimatedEuroStatus = "Euro 3";
-      } else if (makeYear < 2011) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_5_START.year) {
         estimatedEuroStatus = "Euro 4";
-      } else if (makeYear < 2015) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_6_START.year || 
+                (effectiveYear === CONSTANTS.EURO_DATES.EURO_6_START.year && 
+                 regMonth && regMonth < CONSTANTS.EURO_DATES.EURO_6_START.month)) {
         estimatedEuroStatus = "Euro 5";
-      } else if (makeYear < 2026) {
+      } else if (effectiveYear < CONSTANTS.EURO_DATES.EURO_7_START.year) {
         estimatedEuroStatus = "Euro 6";
       } else {
         estimatedEuroStatus = "Euro 7";
@@ -177,10 +547,10 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   const effectiveEuroSubcategory = euroStatus ? null : estimatedEuroSubcategory;
   const effectiveCO2 = co2Emissions || estimatedCO2 || 0;
   
-  // Added information about Euro 7 brake particulate standards
+  // IMPROVED: Euro 7 information with disclaimer about its preliminary nature
   let brakeParticulateInfo = null;
   if (effectiveEuroStatus === "Euro 7") {
-    brakeParticulateInfo = "Euro 7 introduces new standards for non-exhaust emissions including brake particulates (PM10). Currently set at 0.007g/km for passenger vehicles, dropping to 0.003g/km after 2035.";
+    brakeParticulateInfo = "Euro 7 introduces new standards for non-exhaust emissions including brake particulates (PM10), with current draft setting limits at 0.007g/km for passenger vehicles, potentially dropping to 0.003g/km after 2035. Note: Euro 7 standards are forthcoming (scheduled for November 2026) and details may be subject to change.";
   }
   
   // Determine tax band and cost based on CO2 emissions and registration date
@@ -189,6 +559,11 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   let annualTaxCostDirectDebit = "Unknown"; // Added for Direct Debit
   let firstYearTaxCost = "Unknown";
   let taxNotes = [];
+  
+  // Add imported vehicle notes if applicable
+  if (importNotes.length > 0) {
+    taxNotes = [...taxNotes, ...importNotes];
+  }
   
   // Note current tax status if available
   if (taxStatus) {
@@ -224,9 +599,8 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   
   // Emergency vehicles
   else if (normalizedTaxClass === 'emergency vehicle' || 
-          vehicleData.bodyType?.toLowerCase().includes('ambulance') || 
-          vehicleData.bodyType?.toLowerCase().includes('fire') ||
-          vehicleData.bodyType?.toLowerCase().includes('police')) {
+          (typeApproval && typeApproval.toLowerCase().includes('ambulance')) || 
+          (wheelplan && wheelplan.toLowerCase().includes('ambulance'))) {
     annualTaxCost = "£0 (Emergency Vehicle - Exempt)";
     annualTaxCostDirectDebit = "£0 (Emergency Vehicle - Exempt)";
     firstYearTaxCost = "£0 (Emergency Vehicle - Exempt)";
@@ -246,7 +620,7 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   }
   
   // Check for historic vehicle tax exemption (40+ years old)
-  else if (isHistoricVehicle(vehicleData, 'tax')) {
+  else if (isHistoricVehicle(sanitizedData, 'tax')) {
     annualTaxCost = "£0 (Historic Vehicle - Exempt)";
     annualTaxCostDirectDebit = "£0 (Historic Vehicle - Exempt)";
     firstYearTaxCost = "£0 (Historic Vehicle - Exempt)";
@@ -257,51 +631,44 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   }
   
   // Skip other tax calculations if the vehicle has a special exemption
-  let registrationDateObj = null;
-  if (hasSpecialExemption) {
-    // Prevent further tax calculations by not initializing registrationDateObj
-  } else if (registrationDate || makeYear) {
-    const regParts = registrationDate ? registrationDate.split('-') : [];
-    const regYear = regParts.length >= 1 ? parseInt(regParts[0]) : makeYear; // Robust parsing
-    const regMonth = regParts.length >= 2 ? parseInt(regParts[1]) : 1; // Default to January if missing
-    
-    // Handle Motorcycles and Tricycles
+  if (!hasSpecialExemption && (registrationDate || makeYear)) {
+    // Handle Motorcycles and Tricycles - updated to April 2025 rates
     if (vehicleCategory === "motorcycle or moped") {
       const cc = parseInt(engineSize) || 0;
       
-      // Check for electric motorcycles first - they're exempt since April 2001
-      if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-        annualTaxCost = "£0 (Electric Motorcycle - Exempt)";
-        annualTaxCostDirectDebit = "£0 (Electric Motorcycle - Exempt)";
-        taxBand = "N/A (Electric Motorcycle)";
-        taxNotes.push("Electric motorcycles and tricycles are exempt from vehicle tax since April 2001");
-      } else if (revenueWeight <= 450) {
-        if (inferredTaxClass === "tricycle" || normalizedTaxClass === "tricycle") {
+      // Check for electric motorcycles - now taxed at £26 from April 2025
+      if (isElectricVehicle(fuelType)) {
+        annualTaxCost = "£26";
+        annualTaxCostDirectDebit = "£27.30 (12 monthly installments)";
+        taxBand = "N/A (Zero Emission Motorcycle)";
+        taxNotes.push("From April 2025, zero-emission motorcycles are subject to vehicle tax (£26)");
+      } else if (revenueWeight && revenueWeight <= CONSTANTS.VEHICLE_WEIGHT.MOTORCYCLE_MAX) {
+        if (isThreeWheeler(sanitizedData)) {
           if (cc <= 150) {
-            annualTaxCost = "£25";
-            annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
+            annualTaxCost = "£26";
+            annualTaxCostDirectDebit = "£27.30 (12 monthly installments)";
             taxBand = "N/A (Tricycle ≤150cc)";
           } else {
-            annualTaxCost = "£117";
-            annualTaxCostDirectDebit = "£122.85 (12 monthly installments)";
+            annualTaxCost = "£121";
+            annualTaxCostDirectDebit = "£127.05 (12 monthly installments)";
             taxBand = "N/A (Tricycle >150cc)";
           }
-        } else { // Motorcycle (tax class 17)
+        } else { // Standard Motorcycle
           if (cc <= 150) {
-            annualTaxCost = "£25";
-            annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
+            annualTaxCost = "£26";
+            annualTaxCostDirectDebit = "£27.30 (12 monthly installments)";
             taxBand = "N/A (Motorcycle ≤150cc)";
           } else if (cc <= 400) {
-            annualTaxCost = "£55";
-            annualTaxCostDirectDebit = "£57.75 (12 monthly installments)";
+            annualTaxCost = "£57";
+            annualTaxCostDirectDebit = "£59.85 (12 monthly installments)";
             taxBand = "N/A (Motorcycle 151-400cc)";
           } else if (cc <= 600) {
-            annualTaxCost = "£84";
-            annualTaxCostDirectDebit = "£88.20 (12 monthly installments)";
+            annualTaxCost = "£87";
+            annualTaxCostDirectDebit = "£91.35 (12 monthly installments)";
             taxBand = "N/A (Motorcycle 401-600cc)";
           } else {
-            annualTaxCost = "£117";
-            annualTaxCostDirectDebit = "£122.85 (12 monthly installments)";
+            annualTaxCost = "£121";
+            annualTaxCostDirectDebit = "£127.05 (12 monthly installments)";
             taxBand = "N/A (Motorcycle >600cc)";
           }
         }
@@ -309,20 +676,28 @@ const EmissionsInsightsCalculator = (vehicleData) => {
       } else {
         // Treat as private/light goods if over 450kg
         const cc = parseInt(engineSize) || 0;
-        annualTaxCost = cc <= 1549 ? "£210" : "£345";
-        annualTaxCostDirectDebit = cc <= 1549 ? "£220.50 (12 monthly installments)" : "£362.25 (12 monthly installments)";
-        taxBand = "N/A (Pre-2001 Goods)";
+        annualTaxCost = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£220" : "£360";
+        annualTaxCostDirectDebit = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£231 (12 monthly installments)" : "£378 (12 monthly installments)";
+        taxBand = "N/A (Private/Light Goods)";
         taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
       }
     }
-    // Handle Light Goods Vehicles and Vans
-    else if (inferredTaxClass.includes("goods") && (!revenueWeight || revenueWeight <= 3500)) {
-      if (regYear < 2001) { // Pre-2001 Private/Light Goods (tax class 11)
+    // Handle Light Goods Vehicles and Vans - updated to April 2025 rates
+    else if (vehicleCategory === "light goods vehicle" || (inferredTaxClass && inferredTaxClass.includes("goods") && (!revenueWeight || revenueWeight <= CONSTANTS.VEHICLE_WEIGHT.LGV_MAX))) {
+      // Get tax regime based on vehicle history - use improved helper function
+      const taxRegime = determineTaxRegime(sanitizedData);
+      
+      if (taxRegime === "pre-2001") { // Pre-2001 manufactured vehicles
         const cc = parseInt(engineSize) || 0;
-        annualTaxCost = cc <= 1549 ? "£210" : "£345";
-        annualTaxCostDirectDebit = cc <= 1549 ? "£220.50 (12 monthly installments)" : "£362.25 (12 monthly installments)";
+        annualTaxCost = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£220" : "£360";
+        annualTaxCostDirectDebit = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£231 (12 monthly installments)" : "£378 (12 monthly installments)";
         taxBand = "N/A (Pre-2001 Goods)";
         taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
+        
+        // Add note for imported or late-registered vintage vehicles
+        if (regYear && regYear >= 2001) {
+          taxNotes.push("Vehicle manufactured before 2001 but registered later - taxation based on manufacture date.");
+        }
       } else if (regYear >= 2003 && regYear <= 2006 && effectiveEuroStatus === "Euro 4") {
         // Euro 4 Light Goods Vehicles registered between 1 March 2003 and 31 December 2006
         annualTaxCost = "£140";
@@ -336,209 +711,245 @@ const EmissionsInsightsCalculator = (vehicleData) => {
         taxBand = "N/A (Euro 5 Light Goods)";
         taxNotes.push("Taxed as Euro 5 compliant light goods vehicle (tax class 36)");
       } else { // Standard Light Goods (tax class 39, post-2001)
-        annualTaxCost = "£335";
-        annualTaxCostDirectDebit = "£351.75 (12 monthly installments)";
+        annualTaxCost = "£345";
+        annualTaxCostDirectDebit = "£362.25 (12 monthly installments)";
         taxBand = "N/A (Light Goods Vehicle)";
         taxNotes.push("Taxed as a light goods vehicle (tax class 39)");
       }
-    } else if (regYear > 2017 || (regYear === 2017 && regMonth >= 4)) {
-      // Post-April 2017 regime - updated to 2024 DVLA rates
-      
-      if (fuelType.toUpperCase().includes("DIESEL") && !isDieselRDE2) {
-        // Diesel cars not meeting RDE2 standards pay higher rates
-        // Standard rate from second licence onwards: £190
-        annualTaxCost = "£190 per year";
-        annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
-        
-        // First year rate depends on CO2 - updated to April 2024 rates
-        if (effectiveCO2 === 0) {
-          firstYearTaxCost = "£0";
-        } else if (effectiveCO2 <= 50) {
-          firstYearTaxCost = "£30";
-        } else if (effectiveCO2 <= 75) {
-          firstYearTaxCost = "£135";
-        } else if (effectiveCO2 <= 90) {
-          firstYearTaxCost = "£175";
-        } else if (effectiveCO2 <= 100) {
-          firstYearTaxCost = "£195";
-        } else if (effectiveCO2 <= 110) {
-          firstYearTaxCost = "£220";
-        } else if (effectiveCO2 <= 130) {
-          firstYearTaxCost = "£270";
-        } else if (effectiveCO2 <= 150) {
-          firstYearTaxCost = "£680";
-        } else if (effectiveCO2 <= 170) {
-          firstYearTaxCost = "£1,095";
-        } else if (effectiveCO2 <= 190) {
-          firstYearTaxCost = "£1,650";
-        } else if (effectiveCO2 <= 225) {
-          firstYearTaxCost = "£2,340";
-        } else if (effectiveCO2 <= 255) {
-          firstYearTaxCost = "£2,745";
-        } else {
-          firstYearTaxCost = "£2,745";
-        }
-        
-        taxNotes.push("Vehicle is taxed at the higher diesel rate as it does not meet RDE2 standards.");
-      } else if (fuelType.toUpperCase().includes("DIESEL") || fuelType.toUpperCase().includes("PETROL")) {
-        // Petrol cars and diesel cars meeting RDE2 standards
-        // Standard rate from second licence onwards: £190
-        annualTaxCost = "£190 per year";
-        annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
-        
-        // First year rate depends on CO2 - updated to April 2024 rates
-        if (effectiveCO2 === 0) {
-          firstYearTaxCost = "£0";
-        } else if (effectiveCO2 <= 50) {
-          firstYearTaxCost = "£10";
-        } else if (effectiveCO2 <= 75) {
-          firstYearTaxCost = "£30";
-        } else if (effectiveCO2 <= 90) {
-          firstYearTaxCost = "£135";
-        } else if (effectiveCO2 <= 100) {
-          firstYearTaxCost = "£175";
-        } else if (effectiveCO2 <= 110) {
-          firstYearTaxCost = "£195";
-        } else if (effectiveCO2 <= 130) {
-          firstYearTaxCost = "£220";
-        } else if (effectiveCO2 <= 150) {
-          firstYearTaxCost = "£270";
-        } else if (effectiveCO2 <= 170) {
-          firstYearTaxCost = "£680";
-        } else if (effectiveCO2 <= 190) {
-          firstYearTaxCost = "£1,095";
-        } else if (effectiveCO2 <= 225) {
-          firstYearTaxCost = "£1,650";
-        } else if (effectiveCO2 <= 255) {
-          firstYearTaxCost = "£2,340";
-        } else {
-          firstYearTaxCost = "£2,745";
-        }
-        
-        if (isDieselRDE2) {
-          taxNotes.push("Vehicle is taxed at the standard rate as it meets RDE2 standards.");
-        }
-      } else if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-        // Electric vehicles - zero tax until April 2025
-        annualTaxCost = "£0 (zero-emission vehicles exempt until April 2025)";
-        annualTaxCostDirectDebit = "£0 (zero-emission vehicles exempt until April 2025)";
-        firstYearTaxCost = "£0";
-        taxNotes.push("From April 2025, zero-emission vehicles will be subject to standard rate vehicle tax.");
-      } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
-        // Alternative fuel vehicles (including hybrids) - updated to April 2024 rates
-        annualTaxCost = "£180 per year";
-        annualTaxCostDirectDebit = "£189 (12 monthly installments)";
-        
-        // First year rate for alternative fuel vehicles depends on CO2
-        if (effectiveCO2 === 0) {
-          firstYearTaxCost = "£0";
-        } else if (effectiveCO2 <= 50) {
-          firstYearTaxCost = "£0";
-        } else if (effectiveCO2 <= 75) {
-          firstYearTaxCost = "£20";
-        } else if (effectiveCO2 <= 90) {
-          firstYearTaxCost = "£125";
-        } else if (effectiveCO2 <= 100) {
-          firstYearTaxCost = "£165";
-        } else if (effectiveCO2 <= 110) {
-          firstYearTaxCost = "£185";
-        } else if (effectiveCO2 <= 130) {
-          firstYearTaxCost = "£210";
-        } else if (effectiveCO2 <= 150) {
-          firstYearTaxCost = "£260";
-        } else if (effectiveCO2 <= 170) {
-          firstYearTaxCost = "£670";
-        } else if (effectiveCO2 <= 190) {
-          firstYearTaxCost = "£1,085";
-        } else if (effectiveCO2 <= 225) {
-          firstYearTaxCost = "£1,640";
-        } else if (effectiveCO2 <= 255) {
-          firstYearTaxCost = "£2,330";
-        } else {
-          firstYearTaxCost = "£2,735";
-        }
-      }
-      
-      // Additional rate for expensive vehicles
-      if (vehicleData.listPrice && vehicleData.listPrice > 40000) {
-        if (fuelType.toUpperCase().includes("ELECTRIC") || fuelType.toUpperCase().includes("EV")) {
-          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 will apply for 5 years from the second licence, but currently suspended for zero emission vehicles until April 2025.");
-        } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
-          annualTaxCost = "£590 per year for 5 years from second licence, then £180";
-          annualTaxCostDirectDebit = "£619.50 (12 monthly installments) for 5 years from second licence, then £189";
-          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
-        } else {
-          annualTaxCost = "£600 per year for 5 years from second licence, then £190";
-          annualTaxCostDirectDebit = "£630 (12 monthly installments) for 5 years from second licence, then £199.50";
-          taxNotes.push("As a vehicle with a list price over £40,000, an additional rate of £410 applies for 5 years from the second licence.");
-        }
-      }
     } else {
-      // Pre-April 2017 - Based on CO2 emissions
-      // Updated to match April 2024 rates
+      // For passenger vehicles - use tax regime helper
+      const taxRegime = determineTaxRegime(sanitizedData);
       
-      if (fuelType.toUpperCase().includes("ALTERNATIVE") || 
-          fuelType.toUpperCase().includes("HYBRID")) {
-        // Alternative fuel rates
-        if (effectiveCO2 <= 100) {
-          taxBand = "A";
-          annualTaxCost = "£0";
-          annualTaxCostDirectDebit = "£0";
-        } else if (effectiveCO2 <= 110) {
-          taxBand = "B";
-          annualTaxCost = "£10";
-          annualTaxCostDirectDebit = "£10.50 (12 monthly installments)";
-        } else if (effectiveCO2 <= 120) {
-          taxBand = "C";
-          annualTaxCost = "£25";
-          annualTaxCostDirectDebit = "£26.25 (12 monthly installments)";
-        } else if (effectiveCO2 <= 130) {
-          taxBand = "D";
-          annualTaxCost = "£150";
-          annualTaxCostDirectDebit = "£157.50 (12 monthly installments)";
-        } else if (effectiveCO2 <= 140) {
-          taxBand = "E";
-          annualTaxCost = "£180";
-          annualTaxCostDirectDebit = "£189 (12 monthly installments)";
-        } else if (effectiveCO2 <= 150) {
-          taxBand = "F";
-          annualTaxCost = "£200";
-          annualTaxCostDirectDebit = "£210 (12 monthly installments)";
-        } else if (effectiveCO2 <= 165) {
-          taxBand = "G";
-          annualTaxCost = "£245";
-          annualTaxCostDirectDebit = "£257.25 (12 monthly installments)";
-        } else if (effectiveCO2 <= 175) {
-          taxBand = "H";
-          annualTaxCost = "£295";
-          annualTaxCostDirectDebit = "£309.75 (12 monthly installments)";
-        } else if (effectiveCO2 <= 185) {
-          taxBand = "I";
-          annualTaxCost = "£325";
-          annualTaxCostDirectDebit = "£341.25 (12 monthly installments)";
-        } else if (effectiveCO2 <= 200) {
-          taxBand = "J";
-          annualTaxCost = "£375";
-          annualTaxCostDirectDebit = "£393.75 (12 monthly installments)";
-        } else if (effectiveCO2 <= 225) {
-          taxBand = "K";
-          annualTaxCost = "£405";
-          annualTaxCostDirectDebit = "£425.25 (12 monthly installments)";
-        } else if (effectiveCO2 <= 255) {
-          taxBand = "L";
-          annualTaxCost = "£700";
-          annualTaxCostDirectDebit = "£735 (12 monthly installments)";
+      if (taxRegime === "pre-2001") {
+        // Pre-2001 manufactured vehicles - use engine size-based bands
+        const cc = parseInt(engineSize) || 0;
+        if (cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD) {
+          taxBand = "Lower Rate (pre-2001)";
+          annualTaxCost = "£220";
+          annualTaxCostDirectDebit = "£231 (12 monthly installments)";
+          taxNotes.push("Vehicle taxation based on pre-2001 engine size bands (manufacture date).");
         } else {
-          taxBand = "M";
-          annualTaxCost = "£725";
-          annualTaxCostDirectDebit = "£761.25 (12 monthly installments)";
+          taxBand = "Higher Rate (pre-2001)";
+          annualTaxCost = "£360";
+          annualTaxCostDirectDebit = "£378 (12 monthly installments)";
+          taxNotes.push("Vehicle taxation based on pre-2001 engine size bands (manufacture date).");
         }
-      } else {
-        // Standard petrol and diesel rates
+        
+        // Add note for imported or late-registered vintage vehicles
+        if (regYear && regYear >= 2001) {
+          taxNotes.push("Vehicle manufactured before 2001 but registered later - taxation based on manufacture date.");
+        }
+      }
+      else if (taxRegime === "post-2025") {
+        // April 2025 rates for all vehicles
+        // Standard rate from second license onwards
+        annualTaxCost = "£195 per year";
+        annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
+        
+        // First year rate for 2025+ registrations - based on official April 2025 DVLA rates
+        if (fuelType.toUpperCase().includes("DIESEL") && !isDieselRDE2) {
+          // Diesel cars not meeting RDE2 standards (RDE standard)
+          if (effectiveCO2 === 0) {
+            firstYearTaxCost = "£10";
+          } else if (effectiveCO2 <= 50) {
+            firstYearTaxCost = "£130";
+          } else if (effectiveCO2 <= 75) {
+            firstYearTaxCost = "£270";
+          } else if (effectiveCO2 <= 90) {
+            firstYearTaxCost = "£350";
+          } else if (effectiveCO2 <= 100) {
+            firstYearTaxCost = "£390";
+          } else if (effectiveCO2 <= 110) {
+            firstYearTaxCost = "£440";
+          } else if (effectiveCO2 <= 130) {
+            firstYearTaxCost = "£540";
+          } else if (effectiveCO2 <= 150) {
+            firstYearTaxCost = "£1,360";
+          } else if (effectiveCO2 <= 170) {
+            firstYearTaxCost = "£2,190";
+          } else if (effectiveCO2 <= 190) {
+            firstYearTaxCost = "£3,300";
+          } else if (effectiveCO2 <= 225) {
+            firstYearTaxCost = "£4,680";
+          } else if (effectiveCO2 <= 255) {
+            firstYearTaxCost = "£5,490";
+          } else {
+            firstYearTaxCost = "£5,490";
+          }
+          taxNotes.push("Vehicle is taxed at the higher diesel rate as it does not meet RDE2 standards.");
+        } else {
+          // All other vehicles including petrol, diesel RDE2, alternative fuel and electric
+          if (effectiveCO2 === 0) {
+            firstYearTaxCost = "£10";
+          } else if (effectiveCO2 <= 50) {
+            firstYearTaxCost = "£110";
+          } else if (effectiveCO2 <= 75) {
+            firstYearTaxCost = "£130";
+          } else if (effectiveCO2 <= 90) {
+            firstYearTaxCost = "£270";
+          } else if (effectiveCO2 <= 100) {
+            firstYearTaxCost = "£350";
+          } else if (effectiveCO2 <= 110) {
+            firstYearTaxCost = "£390";
+          } else if (effectiveCO2 <= 130) {
+            firstYearTaxCost = "£440";
+          } else if (effectiveCO2 <= 150) {
+            firstYearTaxCost = "£540";
+          } else if (effectiveCO2 <= 170) {
+            firstYearTaxCost = "£1,360";
+          } else if (effectiveCO2 <= 190) {
+            firstYearTaxCost = "£2,190";
+          } else if (effectiveCO2 <= 225) {
+            firstYearTaxCost = "£3,300";
+          } else if (effectiveCO2 <= 255) {
+            firstYearTaxCost = "£4,680";
+          } else {
+            firstYearTaxCost = "£5,490";
+          }
+        }
+        
+        // Add note about zero emission vehicles no longer being exempt
+        if (isElectricVehicle(fuelType)) {
+          taxNotes.push("As of April 2025, zero-emission vehicles are no longer exempt from vehicle tax.");
+        }
+      }
+      else if (taxRegime === "2017-2025") {
+        // Post-April 2017 to March 2025 regime
+        
+        if (fuelType.toUpperCase().includes("DIESEL") && !isDieselRDE2) {
+          // Diesel cars not meeting RDE2 standards pay higher rates
+          // Standard rate from second licence onwards: £195 (updated to 2025 rates)
+          annualTaxCost = "£195 per year";
+          annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
+          
+          // First year rate depends on CO2 - using pre-2025 rates for vehicles registered before April 2025
+          if (effectiveCO2 === 0) {
+            firstYearTaxCost = "£0";
+          } else if (effectiveCO2 <= 50) {
+            firstYearTaxCost = "£30";
+          } else if (effectiveCO2 <= 75) {
+            firstYearTaxCost = "£135";
+          } else if (effectiveCO2 <= 90) {
+            firstYearTaxCost = "£175";
+          } else if (effectiveCO2 <= 100) {
+            firstYearTaxCost = "£195";
+          } else if (effectiveCO2 <= 110) {
+            firstYearTaxCost = "£220";
+          } else if (effectiveCO2 <= 130) {
+            firstYearTaxCost = "£270";
+          } else if (effectiveCO2 <= 150) {
+            firstYearTaxCost = "£680";
+          } else if (effectiveCO2 <= 170) {
+            firstYearTaxCost = "£1,095";
+          } else if (effectiveCO2 <= 190) {
+            firstYearTaxCost = "£1,650";
+          } else if (effectiveCO2 <= 225) {
+            firstYearTaxCost = "£2,340";
+          } else if (effectiveCO2 <= 255) {
+            firstYearTaxCost = "£2,745";
+          } else {
+            firstYearTaxCost = "£2,745";
+          }
+          
+          taxNotes.push("Vehicle is taxed at the higher diesel rate as it does not meet RDE2 standards.");
+        } else if (fuelType.toUpperCase().includes("DIESEL") || fuelType.toUpperCase().includes("PETROL")) {
+          // Petrol cars and diesel cars meeting RDE2 standards
+          // Standard rate from second licence onwards: £195 (updated to 2025 rates)
+          annualTaxCost = "£195 per year";
+          annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
+          
+          // First year rate depends on CO2 - using pre-2025 rates for vehicles registered before April 2025
+          if (effectiveCO2 === 0) {
+            firstYearTaxCost = "£0";
+          } else if (effectiveCO2 <= 50) {
+            firstYearTaxCost = "£10";
+          } else if (effectiveCO2 <= 75) {
+            firstYearTaxCost = "£30";
+          } else if (effectiveCO2 <= 90) {
+            firstYearTaxCost = "£135";
+          } else if (effectiveCO2 <= 100) {
+            firstYearTaxCost = "£175";
+          } else if (effectiveCO2 <= 110) {
+            firstYearTaxCost = "£195";
+          } else if (effectiveCO2 <= 130) {
+            firstYearTaxCost = "£220";
+          } else if (effectiveCO2 <= 150) {
+            firstYearTaxCost = "£270";
+          } else if (effectiveCO2 <= 170) {
+            firstYearTaxCost = "£680";
+          } else if (effectiveCO2 <= 190) {
+            firstYearTaxCost = "£1,095";
+          } else if (effectiveCO2 <= 225) {
+            firstYearTaxCost = "£1,650";
+          } else if (effectiveCO2 <= 255) {
+            firstYearTaxCost = "£2,340";
+          } else {
+            firstYearTaxCost = "£2,745";
+          }
+          
+          if (isDieselRDE2) {
+            taxNotes.push("Vehicle is taxed at the standard rate as it meets RDE2 standards.");
+          }
+        } else if (isElectricVehicle(fuelType)) {
+          // Electric vehicles - now taxed at £195 from April 2025
+          const currentDate = new Date();
+          const april2025 = new Date(2025, 3, 1); // Month is 0-indexed, so 3 is April
+          
+          if (currentDate >= april2025) {
+            annualTaxCost = "£195 per year";
+            annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
+            firstYearTaxCost = "£0"; // First-year cost still applies from when vehicle was registered
+            taxNotes.push("As of April 2025, zero-emission vehicles are subject to standard rate vehicle tax.");
+          } else {
+            annualTaxCost = "£0 (zero-emission vehicles exempt until April 2025)";
+            annualTaxCostDirectDebit = "£0 (zero-emission vehicles exempt until April 2025)";
+            firstYearTaxCost = "£0";
+            taxNotes.push("From April 2025, zero-emission vehicles will be subject to standard rate vehicle tax (£195).");
+          }
+        } else if (fuelType.toUpperCase().includes("HYBRID") || fuelType.toUpperCase().includes("ALTERNATIVE")) {
+          // Alternative fuel vehicles (including hybrids) - updated to 2025 DVLA rates
+          annualTaxCost = "£195 per year";
+          annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
+          
+          // First year rate for alternative fuel vehicles depends on CO2 (pre-2025 rates)
+          if (effectiveCO2 === 0) {
+            firstYearTaxCost = "£0";
+          } else if (effectiveCO2 <= 50) {
+            firstYearTaxCost = "£0";
+          } else if (effectiveCO2 <= 75) {
+            firstYearTaxCost = "£20";
+          } else if (effectiveCO2 <= 90) {
+            firstYearTaxCost = "£125";
+          } else if (effectiveCO2 <= 100) {
+            firstYearTaxCost = "£165";
+          } else if (effectiveCO2 <= 110) {
+            firstYearTaxCost = "£185";
+          } else if (effectiveCO2 <= 130) {
+            firstYearTaxCost = "£210";
+          } else if (effectiveCO2 <= 150) {
+            firstYearTaxCost = "£260";
+          } else if (effectiveCO2 <= 170) {
+            firstYearTaxCost = "£670";
+          } else if (effectiveCO2 <= 190) {
+            firstYearTaxCost = "£1,085";
+          } else if (effectiveCO2 <= 225) {
+            firstYearTaxCost = "£1,640";
+          } else if (effectiveCO2 <= 255) {
+            firstYearTaxCost = "£2,330";
+          } else {
+            firstYearTaxCost = "£2,735";
+          }
+        }
+      } 
+      else {
+        // 2001-2017 - CO2 emission bands
+        // All fuel types now consolidated with the same rates according to DVLA April 2025 document
+        
+        // Standard rates for all fuel types including petrol, diesel, alternative and EVs
         if (effectiveCO2 <= 100) {
           taxBand = "A";
-          annualTaxCost = "£0";
-          annualTaxCostDirectDebit = "£0";
+          annualTaxCost = "£20";
+          annualTaxCostDirectDebit = "£21 (12 monthly installments)";
         } else if (effectiveCO2 <= 110) {
           taxBand = "B";
           annualTaxCost = "£20";
@@ -549,64 +960,96 @@ const EmissionsInsightsCalculator = (vehicleData) => {
           annualTaxCostDirectDebit = "£36.75 (12 monthly installments)";
         } else if (effectiveCO2 <= 130) {
           taxBand = "D";
-          annualTaxCost = "£160";
-          annualTaxCostDirectDebit = "£168 (12 monthly installments)";
+          annualTaxCost = "£165";
+          annualTaxCostDirectDebit = "£173.25 (12 monthly installments)";
         } else if (effectiveCO2 <= 140) {
           taxBand = "E";
-          annualTaxCost = "£190";
-          annualTaxCostDirectDebit = "£199.50 (12 monthly installments)";
+          annualTaxCost = "£195";
+          annualTaxCostDirectDebit = "£204.75 (12 monthly installments)";
         } else if (effectiveCO2 <= 150) {
           taxBand = "F";
-          annualTaxCost = "£210";
-          annualTaxCostDirectDebit = "£220.50 (12 monthly installments)";
+          annualTaxCost = "£215";
+          annualTaxCostDirectDebit = "£225.75 (12 monthly installments)";
         } else if (effectiveCO2 <= 165) {
           taxBand = "G";
-          annualTaxCost = "£255";
-          annualTaxCostDirectDebit = "£267.75 (12 monthly installments)";
+          annualTaxCost = "£265";
+          annualTaxCostDirectDebit = "£278.25 (12 monthly installments)";
         } else if (effectiveCO2 <= 175) {
           taxBand = "H";
-          annualTaxCost = "£305";
-          annualTaxCostDirectDebit = "£320.25 (12 monthly installments)";
+          annualTaxCost = "£315";
+          annualTaxCostDirectDebit = "£330.75 (12 monthly installments)";
         } else if (effectiveCO2 <= 185) {
           taxBand = "I";
-          annualTaxCost = "£335";
-          annualTaxCostDirectDebit = "£351.75 (12 monthly installments)";
+          annualTaxCost = "£345";
+          annualTaxCostDirectDebit = "£362.25 (12 monthly installments)";
         } else if (effectiveCO2 <= 200) {
           taxBand = "J";
-          annualTaxCost = "£385";
-          annualTaxCostDirectDebit = "£404.25 (12 monthly installments)";
-        } else if (effectiveCO2 <= 225) {
+          annualTaxCost = "£395";
+          annualTaxCostDirectDebit = "£414.75 (12 monthly installments)";
+        } else if (effectiveCO2 <= 225 || 
+                  (effectiveCO2 > 225 && regYear && 
+                   ((regYear < 2006) || 
+                    (regYear === 2006 && regMonth && regMonth < 3)))) {
+          // Band K - includes cars with CO2 over 225g/km registered before 23 March 2006
           taxBand = "K";
-          annualTaxCost = "£415";
-          annualTaxCostDirectDebit = "£435.75 (12 monthly installments)";
+          annualTaxCost = "£430";
+          annualTaxCostDirectDebit = "£451.50 (12 monthly installments)";
+          if (effectiveCO2 > 225) {
+            taxNotes.push("Vehicle placed in Band K as it has CO2 emissions over 225g/km but was registered before 23 March 2006.");
+          }
         } else if (effectiveCO2 <= 255) {
           taxBand = "L";
-          annualTaxCost = "£710";
-          annualTaxCostDirectDebit = "£745.50 (12 monthly installments)";
-        } else {
-          taxBand = "M";
           annualTaxCost = "£735";
           annualTaxCostDirectDebit = "£771.75 (12 monthly installments)";
+        } else {
+          taxBand = "M";
+          annualTaxCost = "£760";
+          annualTaxCostDirectDebit = "£798 (12 monthly installments)";
+        }
+        
+        // Special note for zero emission vehicles that now pay tax
+        if (isElectricVehicle(fuelType)) {
+          taxNotes.push("As of April 2025, zero-emission vehicles registered between 2001-2017 are subject to the same CO2-based bands as other vehicles.");
+        }
+      }
+
+      // Additional rate for expensive vehicles - updated to 2025 rate of £425
+      if (sanitizedData.listPrice && sanitizedData.listPrice > CONSTANTS.TAX.HIGH_VALUE_THRESHOLD) {
+        const currentDate = new Date();
+        const april2025 = new Date(2025, 3, 1); // Month is 0-indexed, so 3 is April
+        
+        if (isElectricVehicle(fuelType)) {
+          if (currentDate >= april2025) {
+            annualTaxCost = `£620 per year for 5 years from second licence, then £195`;
+            annualTaxCostDirectDebit = `£651 (12 monthly installments) for 5 years from second licence, then £204.75`;
+            taxNotes.push(`As a vehicle with a list price over £${CONSTANTS.TAX.HIGH_VALUE_THRESHOLD.toLocaleString()}, an additional rate of £${CONSTANTS.TAX.ADDITIONAL_RATE} applies for 5 years from the second licence.`);
+          } else {
+            taxNotes.push(`As a vehicle with a list price over £${CONSTANTS.TAX.HIGH_VALUE_THRESHOLD.toLocaleString()}, an additional rate of £${CONSTANTS.TAX.ADDITIONAL_RATE} will apply for 5 years from the second licence, but currently suspended for zero emission vehicles until April 2025.`);
+          }
+        } else {
+          annualTaxCost = `£620 per year for 5 years from second licence, then £195`;
+          annualTaxCostDirectDebit = `£651 (12 monthly installments) for 5 years from second licence, then £204.75`;
+          taxNotes.push(`As a vehicle with a list price over £${CONSTANTS.TAX.HIGH_VALUE_THRESHOLD.toLocaleString()}, an additional rate of £${CONSTANTS.TAX.ADDITIONAL_RATE} applies for 5 years from the second licence.`);
         }
       }
     }
   }
 
   // Add estimation note if applicable
-  if (isEstimated) {
-    if (estimatedCO2 && !co2Emissions) {
-      taxNotes.push("CO2 emissions estimated based on vehicle specifications.");
+  if (estimationDetails.isEstimated) {
+    if (estimationDetails.co2Estimated && !co2Emissions) {
+      taxNotes.push("CO2 emissions estimated based on vehicle type, Euro standard, and engine size.");
     }
-    if (estimatedEuroStatus && !euroStatus) {
-      taxNotes.push("Euro status estimated based on vehicle age.");
+    if (estimationDetails.euroStatusEstimated && !euroStatus) {
+      taxNotes.push("Euro status estimated based on vehicle age and registration date.");
     }
   }
 
   // Determine Scottish LEZ compliance based on the regulations
-  const isScottishLEZCompliant = determineScottishLEZCompliance(fuelType, effectiveEuroStatus, vehicleCategory, vehicleData);
+  const isScottishLEZCompliant = determineScottishLEZCompliance(fuelType, effectiveEuroStatus, vehicleCategory, sanitizedData);
   
   // Determine ULEZ compliance for other UK zones
-  const isULEZCompliant = determineULEZCompliance(fuelType, makeYear, effectiveEuroStatus, vehicleData);
+  const isULEZCompliant = determineULEZCompliance(fuelType, makeYear, regYear, regMonth, effectiveEuroStatus, sanitizedData);
   
   // Determine clean air zone status
   let ukCleanAirZoneStatus = isULEZCompliant ? "Compliant" : "Non-Compliant";
@@ -615,7 +1058,7 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   // Set impact message
   let cleanAirZoneImpact = "No charges in UK or Scottish Clean Air/Low Emission Zones";
   
-  if (isHistoricVehicle(vehicleData, 'lez')) {
+  if (isHistoricVehicle(sanitizedData, 'lez')) {
     cleanAirZoneImpact = "Vehicle is exempt from ULEZ and LEZ charges as a historic vehicle (30+ years old)";
   } else if (!isScottishLEZCompliant && !isULEZCompliant) {
     cleanAirZoneImpact = "Vehicle is not compliant with UK ULEZ and Scottish LEZ standards";
@@ -625,6 +1068,9 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     cleanAirZoneImpact = "Vehicle is not compliant with UK ULEZ standards";
   }
   
+  // Add reference link for clean air zones
+  cleanAirZoneImpact += ". For more details, see: https://www.gov.uk/clean-air-zones";
+  
   // Scottish LEZ penalty information
   let scottishLEZPenaltyInfo = null;
   if (!isScottishLEZCompliant) {
@@ -633,27 +1079,29 @@ const EmissionsInsightsCalculator = (vehicleData) => {
   }
   
   // Exemption information for Scottish LEZ
-  const scottishExemptions = getScottishLEZExemptions(vehicleData);
+  const scottishExemptions = getScottishLEZExemptions(sanitizedData);
   
   // Add specific information about Euro standard pollutant limits if available
   let pollutantLimits = getPollutantLimits(fuelType, effectiveEuroStatus, effectiveEuroSubcategory);
   
   // Check for MOT exemption (40+ years old)
-  const isMotExempt = isHistoricVehicle(vehicleData, 'tax'); // Uses same rule as tax (40+ years)
+  const isMotExempt = isHistoricVehicle(sanitizedData, 'tax'); // Uses same rule as tax (40+ years)
   
-  // Return the comprehensive emissions insights
-  return {
+  // Create the comprehensive emissions insights object
+  const results = {
     co2Emissions: effectiveCO2,
     euroStatus: effectiveEuroStatus,
     euroSubcategory: effectiveEuroSubcategory,
     rde2Compliant: isDieselRDE2,
-    isEstimated,
+    isEstimated: estimationDetails.isEstimated,
+    estimationDetails, // Enhanced estimation tracking
+    isImported,
     taxBand,
     annualTaxCost,
-    annualTaxCostDirectDebit, // Added for Direct Debit
+    annualTaxCostDirectDebit,
     firstYearTaxCost,
     taxNotes,
-    isHistoricVehicle: isHistoricVehicle(vehicleData, 'tax'),
+    isHistoricVehicle: isHistoricVehicle(sanitizedData, 'tax'),
     isMotExempt,
     
     // UK ULEZ Information
@@ -672,65 +1120,309 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     
     // Add category specific information
     isCommercial,
-    vehicleCategory
+    vehicleCategory,
+    
+    // Tax calculation effective date
+    taxRatesEffectiveDate: "April 1, 2025",
+    
+    // Add reference links
+    references: [
+      {
+        title: "RAC Euro Emissions Guide",
+        url: "https://www.rac.co.uk/drive/advice/emissions/euro-emissions-standards/"
+      },
+      {
+        title: "Transport for London ULEZ",
+        url: "https://tfl.gov.uk/modes/driving/ultra-low-emission-zone"
+      },
+      {
+        title: "UK Government Clean Air Zones",
+        url: "https://www.gov.uk/clean-air-zones"
+      },
+      {
+        title: "DVLA Vehicle Tax Rates (V149)",
+        url: "https://www.gov.uk/government/publications/vehicle-tax-rates-v149"
+      }
+    ]
   };
+  
+  // Run final validation checks
+  return validateResults(results);
 };
 
 /**
- * Helper function to normalize tax class codes to standard formats
- * Maps DVLA tax class codes to their proper categories
+ * Determines the vehicle category based on official EU and DVLA classifications.
+ * 
+ * This function follows the standards set in Directive 2007/46/EC and classifies vehicles according to:
+ * - Type approval code (M, N, L categories) 
+ * - Special purpose designations
+ * - Weight thresholds
+ * - Vehicle characteristics
+ * 
+ * @param {Object} vehicleData - The vehicle data object from DVLA API
+ * @returns {string} The determined vehicle category
  */
-const normalizeTaxClass = (taxClass) => {
-  if (!taxClass) return null;
-  
-  const taxClassLower = taxClass.toLowerCase();
-  
-  // Official tax class code mappings
-  const taxClassMap = {
-    // Private/Light Goods
-    'tc11': 'private/light goods',
-    
-    // Cars by fuel type
-    'tc01': 'petrol car',
-    'tc02': 'diesel car',
-    'tc03': 'alternative fuel car',
-    
-    // Light goods
-    'tc39': 'light goods vehicle',
-    'tc36': 'euro 4/5 light goods vehicle',
-    
-    // Motorcycles
-    'tc17': 'motorcycle',
-    'tc50': 'tricycle',
-    
-    // Other common codes
-    'tc40': 'crown',
-    'tc34': 'disabled',
-    'tc85': 'exempt',
-    'tc37': 'emergency vehicle',
-    'tc35': 'historic vehicle'
-  };
-  
-  // Check for exact match with tax class code
-  if (taxClassMap[taxClassLower]) {
-    return taxClassMap[taxClassLower];
+const determineVehicleCategory = (vehicleData) => {
+  // Input validation with safe default
+  if (!vehicleData || typeof vehicleData !== 'object') {
+    console.warn('Invalid vehicleData provided to determineVehicleCategory');
+    return "light passenger vehicle"; // Default to most common type on error
   }
   
-  // Check for partial text match
-  if (taxClassLower.includes('historic')) return 'historic vehicle';
-  if (taxClassLower.includes('disabled')) return 'disabled';
-  if (taxClassLower.includes('emergency')) return 'emergency vehicle';
-  if (taxClassLower.includes('motorcycle') || taxClassLower.includes('moped')) return 'motorcycle';
-  if (taxClassLower.includes('tricycle')) return 'tricycle';
-  if (taxClassLower.includes('goods')) return 'light goods vehicle';
-  if (taxClassLower.includes('diesel')) return 'diesel car';
-  if (taxClassLower.includes('petrol')) return 'petrol car';
-  if (taxClassLower.includes('alternative') || taxClassLower.includes('hybrid')) return 'alternative fuel car';
-  if (taxClassLower.includes('crown')) return 'crown';
-  if (taxClassLower.includes('nhs')) return 'national health service';
+  // Internal utility functions
   
-  // Default
-  return taxClassLower;
+  /**
+   * Sanitizes a string value to prevent errors
+   */
+  const sanitizeString = (value) => {
+    if (value === null || value === undefined) return '';
+    return String(value).trim();
+  };
+  
+  /**
+   * Sanitizes a number value to prevent errors
+   */
+  const sanitizeNumber = (value) => {
+    if (value === null || value === undefined) return 0;
+    const num = Number(value);
+    return isNaN(num) ? 0 : num;
+  };
+  
+  /**
+   * Extracts the EU type approval category from the typeApproval string
+   */
+  const extractTypeApprovalCategory = (typeApproval) => {
+    if (!typeApproval) return null;
+    const categoryMatch = typeApproval.match(/[LMN][1-7][a-e]?/i);
+    return categoryMatch ? categoryMatch[0].toUpperCase() : null;
+  };
+  
+  /**
+   * Checks if the wheelplan indicates a motorcycle or moped
+   */
+  const isMotorcycleWheelplan = (wheelplan) => {
+    if (!wheelplan) return false;
+    return wheelplan.includes('motorcycle') || wheelplan.includes('moped');
+  };
+  
+  /**
+   * Checks if the wheelplan indicates a goods vehicle
+   */
+  const isGoodsVehicleWheelplan = (wheelplan) => {
+    if (!wheelplan) return false;
+    return wheelplan.includes('rigid') || 
+           wheelplan.includes('pickup') || 
+           wheelplan.includes('van') || 
+           wheelplan.includes('goods');
+  };
+  
+  // ------------------------------------------------------------
+  // Extract and sanitize vehicle data
+  // ------------------------------------------------------------
+  const typeApproval = sanitizeString(getProperty(vehicleData, 'typeApproval', ''));
+  const wheelplan = sanitizeString(getProperty(vehicleData, 'wheelplan', '')).toLowerCase();
+  const revenueWeight = sanitizeNumber(getProperty(vehicleData, 'revenueWeight', 0));
+  const engineCapacity = sanitizeNumber(getProperty(vehicleData, 'engineCapacity', 0));
+  const fuelType = sanitizeString(getProperty(vehicleData, 'fuelType', '')).toLowerCase();
+  
+  try {
+    // ------------------------------------------------------------
+    // 1. TYPE APPROVAL-BASED CLASSIFICATION (highest priority)
+    // ------------------------------------------------------------
+    const approvalCategory = extractTypeApprovalCategory(typeApproval);
+    
+    if (approvalCategory) {
+      // Passenger vehicles (M-category)
+      if (approvalCategory === 'M1') return "light passenger vehicle";
+      if (approvalCategory === 'M2') return "minibus";
+      if (approvalCategory === 'M3') return "bus or coach";
+      
+      // Goods vehicles (N-category)
+      if (approvalCategory === 'N1') return "light goods vehicle";
+      if (approvalCategory === 'N2') return "heavy goods vehicle N2";
+      if (approvalCategory === 'N3') return "heavy goods vehicle N3";
+      
+      // Motorcycles, mopeds (L-category)
+      if (approvalCategory.match(/^L[1-7]/)) return "motorcycle or moped";
+    }
+    
+    // ------------------------------------------------------------
+    // 2. SPECIAL PURPOSE VEHICLE CLASSIFICATION
+    // ------------------------------------------------------------
+    const typeApprovalLower = typeApproval.toLowerCase();
+    
+    // Check for special purpose vehicles in type approval or wheelplan
+    if (typeApprovalLower.includes('ambulance') || wheelplan.includes('ambulance')) {
+      return "ambulance";
+    }
+    
+    if (typeApprovalLower.includes('hearse') || wheelplan.includes('hearse')) {
+      return "hearse";
+    }
+    
+    if (typeApprovalLower.includes('motor caravan') || 
+        typeApprovalLower.includes('motorhome') || 
+        typeApprovalLower.includes('camper') ||
+        wheelplan.includes('motorhome') || 
+        wheelplan.includes('motor caravan') || 
+        wheelplan.includes('camper')) {
+      return "motor caravan";
+    }
+    
+    if (typeApprovalLower.includes('armoured') || typeApprovalLower.includes('armored')) {
+      // Determine if passenger or goods based on other factors
+      if (typeApprovalLower.includes('goods') || 
+          wheelplan.includes('van') || 
+          wheelplan.includes('goods')) {
+        return "armored goods vehicle";
+      }
+      return "armored passenger vehicle";
+    }
+    
+    if (typeApprovalLower.includes('wheelchair') || typeApprovalLower.includes('wav')) {
+      return "wheelchair accessible vehicle";
+    }
+    
+    // ------------------------------------------------------------
+    // 3. WEIGHT-BASED CLASSIFICATION
+    // ------------------------------------------------------------
+    if (revenueWeight > 0) {
+      // Goods vehicle classification
+      if (isGoodsVehicleWheelplan(wheelplan)) {
+        if (revenueWeight > CONSTANTS.VEHICLE_WEIGHT.HGV_N2_MAX) {  // > 12 tonnes
+          return "heavy goods vehicle N3";
+        } else if (revenueWeight > CONSTANTS.VEHICLE_WEIGHT.LGV_MAX) {  // > 3.5 tonnes but ≤ 12 tonnes
+          return "heavy goods vehicle N2";
+        } else {  // ≤ 3.5 tonnes
+          return "light goods vehicle";
+        }
+      }
+      
+      // Passenger vehicle classification by weight
+      if (revenueWeight > 5000) {  // > 5 tonnes
+        return "bus or coach";  // M3 category
+      } else if (revenueWeight > 3500) {  // > 3.5 tonnes but ≤ 5 tonnes
+        return "minibus";  // M2 category
+      }
+      
+      // Motorcycle weight classification
+      if (revenueWeight < CONSTANTS.VEHICLE_WEIGHT.MOTORCYCLE_MAX) {
+        if (isMotorcycleWheelplan(wheelplan) || (engineCapacity > 0 && engineCapacity <= 900)) {
+          return "motorcycle or moped";
+        }
+      }
+      
+      // Standard passenger vehicles - weight is a reliable indicator
+      if (revenueWeight >= 750 && revenueWeight <= CONSTANTS.VEHICLE_WEIGHT.LGV_MAX) {
+        return "light passenger vehicle";
+      }
+    }
+    
+    // ------------------------------------------------------------
+    // 4. WHEELPLAN-BASED CLASSIFICATION
+    // ------------------------------------------------------------
+    if (wheelplan) {
+      if (isMotorcycleWheelplan(wheelplan)) {
+        return "motorcycle or moped";
+      }
+      
+      if (isGoodsVehicleWheelplan(wheelplan)) {
+        return "light goods vehicle";
+      }
+    }
+    
+    // ------------------------------------------------------------
+    // 5. ENGINE CAPACITY CLASSIFICATION
+    // ------------------------------------------------------------
+    if (engineCapacity > 0) {
+      // Very small engines (< 125cc) are almost certainly motorcycles/mopeds
+      if (engineCapacity < 125) {
+        return "motorcycle or moped";
+      }
+      
+      // Large engines (> 1000cc) in combination with certain types are passenger vehicles
+      if (engineCapacity > 1000 && !isMotorcycleWheelplan(wheelplan)) {
+        return "light passenger vehicle";
+      }
+    }
+    
+    // ------------------------------------------------------------
+    // 6. DEFAULT CLASSIFICATION
+    // ------------------------------------------------------------
+    return "light passenger vehicle"; // Most common vehicle type
+    
+  } catch (error) {
+    console.error('Error in determineVehicleCategory:', error.message);
+    return "light passenger vehicle"; // Fail safely to most common type
+  }
+};
+
+
+/**
+ * Helper function to identify whether vehicle is a tricycle/three-wheeler
+ */
+const isThreeWheeler = (vehicleData) => {
+  const wheelplan = getProperty(vehicleData, 'wheelplan', '').toLowerCase();
+  const make = getProperty(vehicleData, 'make', '').toLowerCase();
+  
+  // Check if wheelplan indicates a three-wheeler
+  if (wheelplan.includes('tricycle') || wheelplan.includes('three wheel')) {
+    return true;
+  }
+  
+  // Check for common three-wheeler models
+  const threeWheelerModels = ['piaggio mp3', 'can-am', 'spyder', 'ryker', 'reliant', 'morgan 3'];
+  
+  return threeWheelerModels.some(model => make.includes(model));
+};
+
+/**
+ * Helper function to infer tax class based on available DVLA API data
+ */
+const inferTaxClass = (vehicleData, vehicleCategory) => {
+  const typeApproval = getProperty(vehicleData, 'typeApproval', '').toLowerCase();
+  const fuelType = getProperty(vehicleData, 'fuelType', '').toLowerCase();
+  const make = getProperty(vehicleData, 'make', '').toLowerCase();
+  const wheelplan = getProperty(vehicleData, 'wheelplan', '').toLowerCase();
+  
+  // Check for ambulances and emergency vehicles
+  if (typeApproval.includes('ambulance') || wheelplan.includes('ambulance') ||
+      make.includes('ambulance') || wheelplan.includes('fire') || make.includes('fire engine')) {
+    return 'emergency vehicle';
+  }
+  
+  // Check for disabled vehicles
+  if (typeApproval.includes('disabled') || wheelplan.includes('disabled')) {
+    return 'disabled';
+  }
+  
+  // Check for historic vehicles
+  if (isHistoricVehicle(vehicleData, 'tax')) {
+    return 'historic vehicle';
+  }
+  
+  // Infer based on vehicle category
+  if (vehicleCategory === "motorcycle or moped") {
+    return isThreeWheeler(vehicleData) ? 'tricycle' : 'motorcycle';
+  }
+  
+  if (vehicleCategory === "light goods vehicle") {
+    return 'light goods vehicle';
+  }
+  
+  // Infer based on fuel type for passenger vehicles
+  if (vehicleCategory === "light passenger vehicle") {
+    if (fuelType.includes('diesel')) {
+      return 'diesel car';
+    } else if (fuelType.includes('petrol')) {
+      return 'petrol car';
+    } else if (isElectricVehicle(fuelType) || fuelType.includes('hybrid')) {
+      return 'alternative fuel car';
+    }
+  }
+  
+  // Default to private/light goods
+  return 'private/light goods';
 };
 
 /**
@@ -745,7 +1437,7 @@ const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
   
   // For tax purposes, vehicles 40+ years old are exempt (rolling from April 1st each year)
   if (purposeType === 'tax') {
-    const cutoffYear = currentYear - 40;
+    const cutoffYear = currentYear - CONSTANTS.HISTORIC.TAX_EXEMPT_AGE;
     
     // Check base historic status
     const isHistoric = yearOfManufacture <= cutoffYear;
@@ -755,8 +1447,7 @@ const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
       const vehicleCategory = determineVehicleCategory(vehicleData);
       const isCommercialGoods = (vehicleCategory === "light goods vehicle" || 
                                 vehicleCategory === "heavy goods vehicle N2" || 
-                                vehicleCategory === "heavy goods vehicle N3") && 
-                                !vehicleData.privateUse;
+                                vehicleCategory === "heavy goods vehicle N3");
       const isBus = vehicleCategory === "bus or coach" || vehicleCategory === "minibus";
       
       // Not exempt if a commercial goods vehicle or bus
@@ -770,7 +1461,7 @@ const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
   
   // For ULEZ/LEZ purposes, vehicles 30+ years old that are in original state are exempt
   if (purposeType === 'lez' || purposeType === 'ulez') {
-    const cutoffYear = currentYear - 30;
+    const cutoffYear = currentYear - CONSTANTS.HISTORIC.LEZ_EXEMPT_AGE;
     return yearOfManufacture <= cutoffYear;
   }
   
@@ -778,74 +1469,207 @@ const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
 };
 
 /**
- * Determines the vehicle category based on weight and tax class
- * Make/model agnostic approach to categorizing vehicles
- * Refined to prevent misclassification of passenger vehicles as goods
+ * Enhanced CO2 emission estimation based on Euro standards, engine size, and vehicle type
+ * Uses improved formulas for commercial vehicles to prevent overestimation
+ * 
+ * @param {Object} vehicleData - The vehicle data object from DVLA API
+ * @returns {number} - Estimated CO2 emissions in g/km
  */
-const determineVehicleCategory = (vehicleData) => {
-  const bodyType = vehicleData.bodyType || "";
-  const seats = vehicleData.seats ? parseInt(vehicleData.seats) : 0;
-  const weight = vehicleData.weight ? parseInt(vehicleData.weight) : 0;
-  const revenueWeight = vehicleData.revenueWeight || 0;
-  const taxClass = vehicleData.taxClass?.toLowerCase() || "";
+const estimateCO2Emissions = (vehicleData) => {
+  const engineSizeCC = getProperty(vehicleData, 'engineCapacity', 0);
+  const makeYear = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : 2010;
+  const fuelType = getProperty(vehicleData, 'fuelType', 'unknown').toLowerCase();
+  const vehicleCategory = safeCalculate(determineVehicleCategory, "light passenger vehicle", vehicleData);
+  const revenueWeight = getProperty(vehicleData, 'revenueWeight', getEstimatedWeight(vehicleCategory));
   
-  // Explicit LGV indicators
-  if ((taxClass === "light goods vehicle" || taxClass === "lgv" || taxClass === "tc39") && 
-      (bodyType.toLowerCase().includes('van') || bodyType.toLowerCase().includes('pickup'))) {
-    return "light goods vehicle";
+  // For zero emission vehicles
+  if (isElectricVehicle(fuelType) || fuelType.includes('hydrogen')) {
+    return 0;
   }
   
-  // Revenue weight alone isn't enough; check body type and tax class explicitly
-  if (revenueWeight > 0 && revenueWeight <= 3500 && 
-      (bodyType.toLowerCase().includes('van') || taxClass === "light goods vehicle" || taxClass === "tc39")) {
-    return "light goods vehicle";
+  // Determine Euro standard
+  let euroNumber = 0;
+  if (vehicleData.euroStatus) {
+    const match = vehicleData.euroStatus.match(/\d+/);
+    if (match) {
+      euroNumber = parseInt(match[0]);
+    }
+  } else {
+    // Estimate Euro number based on year
+    if (makeYear < CONSTANTS.EURO_DATES.EURO_1_START.year) euroNumber = 0; // Pre-Euro
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_2_START.year) euroNumber = 1;
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_3_START.year) euroNumber = 2;
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_4_START.year) euroNumber = 3;
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_5_START.year) euroNumber = 4;
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_6_START.year) euroNumber = 5;
+    else if (makeYear < CONSTANTS.EURO_DATES.EURO_7_START.year) euroNumber = 6;
+    else euroNumber = 7;
   }
   
-  // Default to passenger vehicle unless explicitly a goods vehicle
-  if (seats >= 4 && !bodyType.toLowerCase().includes('van') && 
-      !taxClass.includes('goods')) {
-    return "light passenger vehicle";
+  // CO2 estimation for motorcycles - already accurate, keep as is
+  if (vehicleCategory === "motorcycle or moped") {
+    const baseMotorcycleEmission = Math.round(engineSizeCC * 0.045 + 20);
+    const yearFactor = Math.max(0.7, 1 - ((makeYear - 2000) * 0.01));
+    return Math.round(baseMotorcycleEmission * yearFactor);
   }
   
-  // Scottish LEZ regulations use these categories
-  if (bodyType.toLowerCase().includes("motorcycle") || 
-      bodyType.toLowerCase().includes("moped")) {
-    return "motorcycle or moped";
+  // For hybrids, reduce emissions by 30%
+  const isHybrid = fuelType.includes('hybrid');
+  const hybridFactor = isHybrid ? 0.7 : 1.0;
+  
+  // If we don't have engine size, use categorical estimates
+  if (engineSizeCC === 0) {
+    // Default estimates based on vehicle category and fuel type
+    let baseCO2 = 150; // Default for unknown passenger vehicle
+    
+    if (vehicleCategory === "light passenger vehicle") {
+      baseCO2 = fuelType.includes('diesel') ? 140 : 160;
+    } else if (vehicleCategory === "light goods vehicle") {
+      // FIXED: More accurate base estimates for LGVs
+      baseCO2 = fuelType.includes('diesel') ? 190 : 210;
+    } else if (vehicleCategory.includes("heavy goods")) {
+      return 250; // Heavy goods vehicles not typically measured in g/km
+    }
+    
+    // Apply Euro standard efficiency improvements
+    // FIXED: Corrected factors to reduce emissions for newer standards
+    const euroFactorSimple = getEuroEfficiencyFactor(euroNumber);
+    
+    // Apply year-based improvement
+    const yearFactorSimple = Math.max(0.7, 1 - ((makeYear - 2000) * 0.01));
+    
+    return Math.round(baseCO2 * euroFactorSimple * yearFactorSimple * hybridFactor);
   }
   
-  if (bodyType.toLowerCase().includes("bus") || 
-      bodyType.toLowerCase().includes("coach") || 
-      (seats > 8 && weight > 5000)) {
-    return "bus or coach"; // M3 in Scottish regulations
+  // IMPROVED: Base CO2 calculation with better scaling for large engines
+  let baseCO2;
+  
+  // FIXED: Different calculation paths for different vehicle categories
+  if (vehicleCategory === "light goods vehicle") {
+    // Special formula for light goods vehicles that produces more realistic values
+    if (fuelType.includes('diesel')) {
+      // Typical diesel van CO2 values range from 180-230 g/km
+      baseCO2 = 180 + (engineSizeCC / 100);
+      
+      // Add small weight adjustment
+      const weightFactor = Math.min(1.2, Math.sqrt(revenueWeight / 2500));
+      baseCO2 *= weightFactor;
+    } else {
+      // Petrol vans typically emit about 10-15% more than diesel
+      baseCO2 = 200 + (engineSizeCC / 90);
+      
+      // Add small weight adjustment
+      const weightFactor = Math.min(1.2, Math.sqrt(revenueWeight / 2500));
+      baseCO2 *= weightFactor;
+    }
+  } else {
+    // Standard passenger vehicles
+    if (fuelType.includes('diesel')) {
+      // FIXED: Less aggressive formula for diesel passenger vehicles
+      baseCO2 = 100 + (engineSizeCC * 0.04);
+      
+      // Add weight adjustment that doesn't overshoot for heavier vehicles
+      const weightFactor = Math.min(1.3, Math.pow(revenueWeight / 1500, 0.4));
+      baseCO2 *= weightFactor;
+    } else if (fuelType.includes('petrol') || fuelType.includes('gas')) {
+      // FIXED: Less aggressive formula for petrol passenger vehicles
+      baseCO2 = 120 + (engineSizeCC * 0.035);
+      
+      // Add weight adjustment that doesn't overshoot for heavier vehicles
+      const weightFactor = Math.min(1.3, Math.pow(revenueWeight / 1500, 0.4));
+      baseCO2 *= weightFactor;
+    } else {
+      // Unknown fuel type - assume petrol-like
+      baseCO2 = 130 + (engineSizeCC * 0.035);
+      
+      // Add weight adjustment
+      const weightFactor = Math.min(1.3, Math.pow(revenueWeight / 1500, 0.4));
+      baseCO2 *= weightFactor;
+    }
   }
   
-  if (seats > 8 && weight <= 5000) {
-    return "minibus"; // M2 in Scottish regulations
+  // FIXED: Apply Euro standard efficiency factors with corrected values
+  const euroFactor = getEuroEfficiencyFactor(euroNumber);
+  
+  // Apply technological improvement factor based on year
+  // Approximately 1% improvement per year in engine efficiency (reduced from 1.5%)
+  const yearFactor = Math.max(0.75, 1 - ((makeYear - 2000) * 0.01));
+  
+  // FIXED: More modest category adjustment factors
+  let categoryFactor = 1.0;
+  if (vehicleCategory === "light goods vehicle") {
+    // Light goods already handled with special formula above, no additional factor needed
+    categoryFactor = 1.0;
+  } else if (vehicleCategory.includes("heavy goods")) {
+    categoryFactor = 1.2;
+  } else if (vehicleCategory === "bus or coach" || vehicleCategory === "minibus") {
+    categoryFactor = 1.15;
   }
   
-  if (bodyType.toLowerCase().includes("ambulance")) {
-    return "ambulance";
-  }
+  // Final calculation with all factors applied
+  const estimatedCO2 = Math.round(baseCO2 * euroFactor * yearFactor * categoryFactor * hybridFactor);
   
-  if (bodyType.toLowerCase().includes("hearse")) {
-    return "hearse";
-  }
+  // FIXED: More realistic upper bound for different vehicle types
+  const upperBound = getUpperCO2Bound(vehicleCategory);
   
-  if (bodyType.toLowerCase().includes("motor caravan") || 
-      bodyType.toLowerCase().includes("camper")) {
-    return "motor caravan";
-  }
+  // Apply bounds - ensure we don't go below 0 or above the category-specific upper bound
+  return Math.max(0, Math.min(estimatedCO2, upperBound));
+};
+
+/**
+ * Helper to get Euro efficiency factor based on Euro standard
+ * FIXED: Corrected to reduce emissions for newer standards
+ */
+const getEuroEfficiencyFactor = (euroNumber) => {
+  const factors = {
+    0: 1.35,   // Pre-Euro
+    1: 1.25,   // Euro 1
+    2: 1.15,   // Euro 2
+    3: 1.05,   // Euro 3
+    4: 0.95,   // Euro 4
+    5: 0.90,   // Euro 5
+    6: 0.85,   // Euro 6
+    7: 0.80    // Euro 7
+  };
   
-  if (weight > 12000 && !bodyType.toLowerCase().includes("passenger")) {
-    return "heavy goods vehicle N3";
+  return factors[euroNumber] || 1.0;
+};
+
+/**
+ * Helper to get realistic upper CO2 bounds by vehicle category
+ */
+const getUpperCO2Bound = (vehicleCategory) => {
+  switch (vehicleCategory) {
+    case "motorcycle or moped":
+      return 180;
+    case "light passenger vehicle":
+      return 350;  // Very high performance/large engine cars
+    case "light goods vehicle":
+      return 280;  // Large vans
+    case "heavy goods vehicle N2":
+    case "heavy goods vehicle N3":
+      return 320;  // HGVs aren't typically measured in g/km
+    case "bus or coach":
+    case "minibus":
+      return 300;
+    default:
+      return 300;
   }
-  
-  if (weight > 3500 && weight <= 12000 && !bodyType.toLowerCase().includes("passenger")) {
-    return "heavy goods vehicle N2";
+};
+/**
+ * Estimates vehicle weight based on category if not available
+ */
+const getEstimatedWeight = (category) => {
+  switch (category) {
+    case "motorcycle or moped": return 200;
+    case "light passenger vehicle": return 1500;
+    case "light goods vehicle": return 2200;
+    case "heavy goods vehicle N2": return 7500;
+    case "heavy goods vehicle N3": return 18000;
+    case "bus or coach": return 12000;
+    case "minibus": return 3500;
+    default: return 1500;
   }
-  
-  // Default to light passenger vehicle (M1)
-  return "light passenger vehicle";
 };
 
 /**
@@ -880,9 +1704,7 @@ const determineScottishLEZCompliance = (fuelType, euroStatus, vehicleCategory, v
   }
   
   // Electric and hydrogen vehicles are always compliant
-  if (fuelTypeLower.includes('electric') || 
-      fuelTypeLower.includes('ev') || 
-      fuelTypeLower.includes('hydrogen')) {
+  if (isElectricVehicle(fuelTypeLower) || fuelTypeLower.includes('hydrogen')) {
     return true;
   }
   
@@ -934,14 +1756,19 @@ const determineScottishLEZCompliance = (fuelType, euroStatus, vehicleCategory, v
 
 /**
  * ULEZ compliance for London and other UK zones
+ * IMPROVED: Now considers both registration date and year of manufacture
  */
-const determineULEZCompliance = (fuelType, makeYear, euroStatus, vehicleData) => {
+const determineULEZCompliance = (fuelType, makeYear, regYear, regMonth, euroStatus, vehicleData) => {
   // Check for historic vehicle exemption first (vehicles over 30 years old)
   if (vehicleData && isHistoricVehicle(vehicleData, 'ulez')) {
     return true; // Historic vehicles are exempt from ULEZ restrictions
   }
   
-  if (!fuelType || !makeYear) return false;
+  if (!fuelType) return false;
+  
+  // Prefer registration date over manufacturing year
+  const effectiveYear = regYear || makeYear;
+  if (!effectiveYear) return false;
   
   const fuelTypeLower = fuelType.toLowerCase();
   let euroNumber = 0;
@@ -955,38 +1782,47 @@ const determineULEZCompliance = (fuelType, makeYear, euroStatus, vehicleData) =>
   }
   
   // Electric and hydrogen vehicles are always compliant
-  if (fuelTypeLower.includes('electric') || 
-      fuelTypeLower.includes('ev') || 
-      fuelTypeLower.includes('hydrogen')) {
+  if (isElectricVehicle(fuelTypeLower) || fuelTypeLower.includes('hydrogen')) {
     return true;
   }
   
-  // Diesel vehicles need to be Euro 6 (generally post-2015)
+  // Diesel vehicles need to be Euro 6 
   if (fuelTypeLower.includes('diesel')) {
-    // Euro 6 became mandatory for new model approvals in Sept 2014
-    // And for all new registrations in Sept 2015
-    return euroNumber >= 6 || makeYear >= 2015;
+    // Per RAC article: Euro 6 mandatory for new registrations from September 2015
+    if (euroNumber >= 6) return true;
+    if (effectiveYear > CONSTANTS.EURO_DATES.EURO_6_START.year) return true;
+    if (effectiveYear === CONSTANTS.EURO_DATES.EURO_6_START.year && regMonth && regMonth >= CONSTANTS.EURO_DATES.EURO_6_START.month) return true;
+    return false;
   }
   
-  // Petrol vehicles need to be Euro 4 (generally post-2006)
+  // Petrol vehicles need to be Euro 4
   if (fuelTypeLower.includes('petrol')) {
-    // Euro 4 became mandatory for new registrations in Jan 2006
-    return euroNumber >= 4 || makeYear >= 2006;
+    // Per RAC article: Euro 4 mandatory for new registrations from January 2006
+    if (euroNumber >= 4) return true;
+    if (effectiveYear >= CONSTANTS.EURO_DATES.EURO_4_START.year) return true;
+    return false;
   }
   
   // Hybrids follow the same rules as their primary fuel type
   if (fuelTypeLower.includes('hybrid')) {
     if (fuelTypeLower.includes('diesel')) {
-      return euroNumber >= 6 || makeYear >= 2015;
+      if (euroNumber >= 6) return true;
+      if (effectiveYear > CONSTANTS.EURO_DATES.EURO_6_START.year) return true;
+      if (effectiveYear === CONSTANTS.EURO_DATES.EURO_6_START.year && regMonth && regMonth >= CONSTANTS.EURO_DATES.EURO_6_START.month) return true;
+      return false;
     } else {
       // Assume petrol hybrid if not specified
-      return euroNumber >= 4 || makeYear >= 2006;
+      if (euroNumber >= 4) return true;
+      if (effectiveYear >= CONSTANTS.EURO_DATES.EURO_4_START.year) return true;
+      return false;
     }
   }
   
   // Motorcycles need to be Euro 3 for ULEZ
   if (fuelTypeLower.includes('motorcycle') || fuelTypeLower.includes('moped')) {
-    return euroNumber >= 3 || makeYear >= 2007;
+    if (euroNumber >= 3) return true;
+    if (effectiveYear >= 2007) return true;
+    return false;
   }
   
   // Default to non-compliant if we can't determine
@@ -999,26 +1835,26 @@ const determineULEZCompliance = (fuelType, makeYear, euroStatus, vehicleData) =>
  */
 const getScottishLEZExemptions = (vehicleData) => {
   const exemptions = [];
+  const wheelplan = getProperty(vehicleData, 'wheelplan', '').toLowerCase();
+  const typeApproval = getProperty(vehicleData, 'typeApproval', '').toLowerCase();
   
   // Check for potential exemptions
   
   // Emergency vehicles
-  if (vehicleData.taxClass?.toLowerCase().includes('emergency') || 
-      vehicleData.bodyType?.toLowerCase().includes('ambulance') ||
-      vehicleData.bodyType?.toLowerCase().includes('fire')) {
+  if (typeApproval.includes('ambulance') || wheelplan.includes('ambulance') ||
+      typeApproval.includes('fire') || wheelplan.includes('fire')) {
     exemptions.push({
       type: "Emergency Vehicle Exemption",
       description: "Emergency vehicles including ambulance, fire and police are exempt from Scottish LEZ restrictions"
     });
   }
   
-  // Blue badge holders
-  if (vehicleData.blueBadgeHolder) {
-    exemptions.push({
-      type: "Blue Badge Exemption",
-      description: "Vehicles used by a Blue Badge holder as a driver or passenger are exempt from Scottish LEZ restrictions"
-    });
-  }
+  // Added information about Blue Badge exemption (not detectable via API)
+  exemptions.push({
+    type: "Possible Blue Badge Exemption",
+    description: "Vehicles used by a Blue Badge holder as a driver or passenger are exempt from Scottish LEZ restrictions. This cannot be automatically detected via the vehicle data. The registered keeper should check if they qualify for this exemption.",
+    isAutoDetectable: false
+  });
   
   // Historic vehicles (using our helper function for consistency)
   if (isHistoricVehicle(vehicleData, 'lez')) {
@@ -1029,7 +1865,7 @@ const getScottishLEZExemptions = (vehicleData) => {
   }
   
   // Military vehicles
-  if (vehicleData.taxClass?.toLowerCase().includes('military')) {
+  if (typeApproval.includes('military') || wheelplan.includes('military')) {
     exemptions.push({
       type: "Military Vehicle Exemption",
       description: "Vehicles being used for naval, military or air force purposes are exempt"
@@ -1037,7 +1873,7 @@ const getScottishLEZExemptions = (vehicleData) => {
   }
   
   // Showman's vehicles
-  if (vehicleData.taxClass?.toLowerCase().includes('showman')) {
+  if (typeApproval.includes('showman') || wheelplan.includes('showman')) {
     exemptions.push({
       type: "Showman's Vehicle Exemption",
       description: "Showman's goods vehicles and showman's vehicles are exempt"
@@ -1084,6 +1920,7 @@ const getScottishLEZPenaltyInfo = (vehicleCategory) => {
 
 /**
  * Get pollutant limits based on Euro standard
+ * UPDATED: Corrected values to match RAC article exactly
  */
 const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
   const pollutantLimits = [];
@@ -1094,18 +1931,18 @@ const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
       if (fuelType.toUpperCase().includes("DIESEL")) {
         return [
           "CO: 0.50 g/km",
-          "NOx: 0.080 g/km",
-          "PM: 0.0045 g/km",
-          "PN: 6×10¹¹ #/km"
+          "NOx: 0.08 g/km",
+          "PM: 0.005 g/km",
+          "PN: 6.0x10^11 #/km"
         ];
       } else { // Petrol
         return [
           "CO: 1.0 g/km",
-          "NOx: 0.060 g/km",
+          "NOx: 0.06 g/km",
           "NMHC: 0.068 g/km",
           "THC: 0.10 g/km",
-          "PM: 0.0045 g/km (direct injection only)",
-          "PN: 6×10¹¹ #/km (direct injection only)"
+          "PM: 0.005 g/km (direct injection only)",
+          "PN: 6.0x10^11 #/km (direct injection only)"
         ];
       }
     } else if (euroStatus === "Euro 4" || euroStatus === "Euro IV") {
@@ -1127,15 +1964,15 @@ const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
       if (fuelType.toUpperCase().includes("DIESEL")) {
         return [
           "CO: 0.50 g/km",
-          "NOx: 0.180 g/km",
-          "HC+NOx: 0.230 g/km",
+          "NOx: 0.18 g/km",
+          "HC+NOx: 0.23 g/km",
           "PM: 0.005 g/km",
-          "PN: 6×10¹¹ #/km"
+          "PN: 6.0x10^11 #/km"
         ];
       } else { // Petrol
         return [
           "CO: 1.0 g/km",
-          "NOx: 0.060 g/km",
+          "NOx: 0.06 g/km",
           "HC: 0.10 g/km",
           "NMHC: 0.068 g/km",
           "PM: 0.005 g/km (direct injection only)"
@@ -1144,7 +1981,7 @@ const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
     } else if (euroStatus === "Euro 3" || euroStatus === "Euro III") {
       if (fuelType.toUpperCase().includes("DIESEL")) {
         return [
-          "CO: 0.64 g/km",
+          "CO: 0.66 g/km", // Corrected from 0.64 g/km to match RAC article
           "NOx: 0.50 g/km",
           "HC+NOx: 0.56 g/km",
           "PM: 0.05 g/km"
@@ -1156,26 +1993,39 @@ const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
           "HC: 0.20 g/km"
         ];
       }
-    } else if (euroStatus === "Euro 7") {
+    } else if (euroStatus === "Euro 2" || euroStatus === "Euro II") {
       if (fuelType.toUpperCase().includes("DIESEL")) {
         return [
-          "CO: 0.50 g/km",
-          "NOx: 0.080 g/km",
-          "PM: 0.0045 g/km",
-          "PN: 6×10¹¹ #/km (includes particles down to 10nm)",
-          "Brake PM10: 0.007 g/km"
+          "CO: 1.0 g/km",
+          "HC+NOx: 0.7 g/km",
+          "PM: 0.08 g/km"
         ];
       } else { // Petrol
         return [
-          "CO: 1.0 g/km",
-          "NOx: 0.060 g/km",
-          "NMHC: 0.068 g/km",
-          "THC: 0.10 g/km",
-          "PM: 0.0045 g/km",
-          "PN: 6×10¹¹ #/km (includes particles down to 10nm)",
-          "Brake PM10: 0.007 g/km"
+          "CO: 2.2 g/km",
+          "HC+NOx: 0.5 g/km"
         ];
       }
+    } else if (euroStatus === "Euro 1" || euroStatus === "Euro I") {
+      if (fuelType.toUpperCase().includes("DIESEL")) {
+        return [
+          "CO: 2.72 g/km",
+          "HC+NOx: 0.97 g/km",
+          "PM: 0.14 g/km"
+        ];
+      } else { // Petrol
+        return [
+          "CO: 2.72 g/km",
+          "HC+NOx: 0.97 g/km"
+        ];
+      }
+    } else if (euroStatus === "Euro 7") {
+      return [
+        "Euro 7 standards are forthcoming (scheduled for November 2026).",
+        "Primary focus on non-exhaust emissions including brake dust (PM10).",
+        "Will address both exhaust and non-exhaust emissions with extended compliance periods.",
+        "Note: Final emission limits may be adjusted before implementation."
+      ];
     }
   } else if (fuelType.toUpperCase().includes("MOTORCYCLE") || fuelType.toUpperCase().includes("MOPED")) {
     if (euroStatus === "Euro 3") {
@@ -1185,7 +2035,25 @@ const getPollutantLimits = (fuelType, euroStatus, euroSubcategory) => {
         "HC: 0.8 g/km (for engines ≤150cc)",
         "NOx: 0.15 g/km"
       ];
+    } else if (euroStatus === "Euro 4") {
+      return [
+        "CO: 1.14 g/km",
+        "HC: 0.17 g/km",
+        "NOx: 0.09 g/km"
+      ];
+    } else if (euroStatus === "Euro 5") {
+      return [
+        "CO: 1.0 g/km",
+        "HC: 0.1 g/km",
+        "NOx: 0.06 g/km",
+        "PM: 0.0045 g/km (only for direct injection engines)"
+      ];
     }
+  } else if (isElectricVehicle(fuelType)) {
+    return [
+      "Zero direct emissions at the tailpipe.",
+      "Not classified under traditional Euro emissions standards."
+    ];
   }
   
   return pollutantLimits;

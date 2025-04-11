@@ -15,14 +15,16 @@ import {
   GovUKLoadingContainer,
   GovUKLoadingSpinner,
   PremiumButton,
+  GovUKButton,
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
 
-// Import the refactored dialog components
+// Import the refactored dialog components, including the new FullScreenSampleReportButton
 import { 
   PaymentDialog, 
   FreeReportDialog,
-  SuccessDialog 
+  SuccessDialog,
+  FullScreenSampleReportButton
 } from './Dialog/PremiumDialog';
 
 // Determine if we're in development or production
@@ -41,9 +43,9 @@ const vehicleCache = {};
 // Configure the stale time in milliseconds (5 minutes)
 const CACHE_STALE_TIME = 5 * 60 * 1000;
 
-  // Constants for free report eligibility
-  const CLASSIC_VEHICLE_YEAR_THRESHOLD = 1996; // Vehicles older than this get free reports
-  const MODERN_VEHICLE_YEAR_THRESHOLD = 2018;  // Vehicles newer than or equal to this get free reports
+// Constants for free report eligibility
+const CLASSIC_VEHICLE_YEAR_THRESHOLD = 1996; // Vehicles older than this get free reports
+const MODERN_VEHICLE_YEAR_THRESHOLD = 2018;  // Vehicles newer than or equal to this get free reports
 
 const VehicleHeader = ({ registration }) => {
   const [vehicleData, setVehicleData] = useState(null);
@@ -366,11 +368,12 @@ const VehicleHeader = ({ registration }) => {
     setFreeReportDialogOpen(false);
   };
   
-  const handlePaymentSuccess = (paymentIntent) => {
+  const handlePaymentSuccess = (paymentIntent, email) => {
     setPaymentDialogOpen(false);
     setPaymentInfo({
       paymentId: paymentIntent.id,
       registration: registration,
+      email: email,
       timestamp: Date.now()
     });
     setSuccessDialogOpen(true);
@@ -411,14 +414,23 @@ const VehicleHeader = ({ registration }) => {
               </GovUKLink>
             </GovUKBody>
             
-            <PremiumButton 
-              onClick={handlePremiumButtonClick}
-              data-test-id="premium-report-button"
-            >
-              {isEligibleForFreeReport(vehicleData) 
-                ? "View Enhanced Vehicle Report" 
-                : "Get Premium Vehicle Report - £19.95"}
-            </PremiumButton>
+            {/* Action buttons container with sample report button added */}
+            <div style={{ display: 'flex', marginTop: '20px', marginBottom: '20px', gap: '10px' }}>
+              {/* Sample Report Button - shows fullscreen dialog with sample report */}
+              <FullScreenSampleReportButton 
+                onProceedToPayment={handlePremiumButtonClick}
+              />
+              
+              {/* Premium Report Button - existing functionality */}
+              <PremiumButton 
+                onClick={handlePremiumButtonClick}
+                data-test-id="premium-report-button"
+              >
+                {isEligibleForFreeReport(vehicleData) 
+                  ? "View Enhanced Vehicle Report" 
+                  : "Get Premium Vehicle Report - £19.95"}
+              </PremiumButton>
+            </div>
             
             <GovUKGridRow data-test-id="colour-fuel-date-details">
               <GovUKGridColumnOneThird>
@@ -519,6 +531,7 @@ const VehicleHeader = ({ registration }) => {
               onClose={handleCloseSuccessDialog}
               registration={vehicleData?.registration}
               paymentId={paymentInfo?.paymentId}
+              email={paymentInfo?.email}
             />
           </>
         )}

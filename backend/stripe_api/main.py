@@ -73,23 +73,44 @@ async def create_payment_intent(request: Request):
             
         registration = data.get("registration")
         amount = data.get("amount")
+        email = data.get("email")
+        report_url = data.get("report_url", "")
         
         if not registration:
             raise HTTPException(status_code=400, detail="Vehicle registration is required")
             
         if not amount or amount < 100:
             raise HTTPException(status_code=400, detail="Valid amount is required (minimum 100 pence)")
+            
+        if not email:
+            raise HTTPException(status_code=400, detail="Email address is required")
         
-        # Create a payment intent
+        # Create full URL with payment details that will be included in the receipt
+        full_report_url = f"{report_url}?paymentId={{PAYMENT_ID}}"
+        
+        # Create a description that includes the report URL
+        # Note: We use a placeholder for the payment ID that we'll update after payment is complete
+        description = f"Premium Vehicle Report for {registration}. Access your report at: {full_report_url}"
+        
+        # Create a payment intent with enhanced description
         payment_intent = stripe.PaymentIntent.create(
             amount=amount,
             currency="gbp",
+            receipt_email=email,  # Stripe will send receipt to this email
             metadata={
                 "registration": registration,
-                "product": "Premium Vehicle Report"
+                "product": "Premium Vehicle Report",
+                "report_url": report_url  # Store the report URL in metadata
             },
-            description=f"Premium Vehicle Report for {registration}",
-            # Removing automatic_payment_methods since we're using CardElement in frontend
+            description=description,
+        )
+        
+        # Update the description with the actual payment ID
+        # This ensures the URL in the receipt email contains the correct payment ID
+        updated_description = description.replace("{PAYMENT_ID}", payment_intent.id)
+        payment_intent = stripe.PaymentIntent.modify(
+            payment_intent.id,
+            description=updated_description,
         )
         
         return {
@@ -114,7 +135,3 @@ if __name__ == "__main__":
         uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
     except Exception as e:
         print(f"Server startup error: {str(e)}")
-
-
-
-        

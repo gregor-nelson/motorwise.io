@@ -125,3 +125,21 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-04-08 10:00:31,171 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
 2025-04-08 10:00:31,552 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-04-08 10:00:31,553 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-08 11:45:51,493 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-04-08 11:45:53,392 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-04-08 11:45:53,394 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-04-08 11:45:54,299 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-04-08 11:45:54,302 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-04-08 11:45:54,333 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-04-08 11:45:54,336 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-04-08 11:45:54,337 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-04-08 11:46:11,931 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-08 11:46:11,948 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 200 - 20.4607s
+2025-04-08 11:54:07,875 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 11:54:07,923 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-08 11:54:08,193 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 11:54:08,195 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-08 13:15:30,991 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 13:15:30,993 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-08 13:15:31,202 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-08 13:15:31,205 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk

@@ -355,7 +355,7 @@ export const formControlBase = css`
 
 // Updated container to exactly match GOV.UK width container
 export const GovUKContainer = styled('div')`
-  max-width: 960px;
+  max-width: 1280px;
   margin-right: ${SPACING.M};
   margin-left: ${SPACING.M};
   
@@ -1073,7 +1073,7 @@ export const GovUKInsetText = styled('div')`
     margin-bottom: ${SPACING.XL};
   }
 
-  & > :first-child {
+  & > :first-of-type {
     margin-top: 0;
   }
 

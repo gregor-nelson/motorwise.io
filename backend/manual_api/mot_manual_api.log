@@ -415,3 +415,66 @@
 2025-04-08 13:15:29,803 - mot_manual_api - INFO - Built index with 592 entries
 2025-04-08 13:15:29,804 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
 2025-04-08 13:15:29,804 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-11 18:28:11,848 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-11 18:28:11,848 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-11 18:28:11,848 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-11 18:28:11,849 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-11 18:28:11,850 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-11 18:28:11,850 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-11 18:28:11,850 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-11 20:36:52,862 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-11 20:36:52,863 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-11 20:36:52,863 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-11 20:36:52,864 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-11 20:36:52,865 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-11 20:36:52,865 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-11 20:36:52,865 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-11 21:50:54,028 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-11 21:50:54,029 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-11 21:50:54,029 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-11 21:50:54,030 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-11 21:50:54,030 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-11 21:50:54,031 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-11 21:50:54,031 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-12 18:02:14,503 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-12 18:02:14,504 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-12 18:02:14,505 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-12 18:02:14,505 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-12 18:02:14,506 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-12 18:02:14,507 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-12 18:02:14,507 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-12 19:57:33,509 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-12 19:57:33,510 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-12 19:57:33,511 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-12 19:57:33,511 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-12 19:57:33,512 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-12 19:57:33,512 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-12 19:57:33,512 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-12 20:33:17,998 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-12 20:33:18,001 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-12 20:33:18,001 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-12 20:33:18,002 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-12 20:33:18,003 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-12 20:33:18,004 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-12 20:33:18,004 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-13 18:24:48,833 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-13 18:24:48,834 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-13 18:24:48,835 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-13 18:24:48,835 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-13 18:24:48,836 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-13 18:24:48,836 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-13 18:24:48,836 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-13 22:21:40,385 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-13 22:21:40,386 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-13 22:21:40,386 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-13 22:21:40,386 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-13 22:21:40,387 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-13 22:21:40,387 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-13 22:21:40,388 - mot_manual_api - INFO - API started and data indexed successfully
+2025-04-21 09:16:35,443 - mot_manual_api - WARNING - Item ID 1.2.2 does not follow expected format 1.1.X
+2025-04-21 09:16:35,444 - mot_manual_api - WARNING - Subsection ID 3 does not follow expected format 2.X
+2025-04-21 09:16:35,445 - mot_manual_api - WARNING - Subsection 3 has no items
+2025-04-21 09:16:35,445 - mot_manual_api - INFO - Successfully loaded MOT manual data from mot_manual.json
+2025-04-21 09:16:35,447 - mot_manual_api - INFO - Built index with 592 entries
+2025-04-21 09:16:35,447 - mot_manual_api - INFO - Index structure: {'section': 8, 'subsection': 37, 'item': 96, 'defect': 451}
+2025-04-21 09:16:35,448 - mot_manual_api - INFO - API started and data indexed successfully

@@ -143,3 +143,78 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-04-08 13:15:30,993 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
 2025-04-08 13:15:31,202 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-04-08 13:15:31,205 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-11 18:28:13,843 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 18:28:13,878 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-11 18:28:14,096 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 18:28:14,097 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-11 18:28:30,082 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-04-11 18:28:31,112 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-04-11 18:28:31,114 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-04-11 18:28:31,745 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-04-11 18:28:31,746 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-04-11 18:28:31,749 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-04-11 18:28:31,750 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-04-11 18:28:31,750 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-04-11 18:28:49,656 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-11 18:28:49,667 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 200 - 19.5850s
+2025-04-11 20:36:53,358 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 20:36:53,373 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-11 20:36:53,504 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 20:36:53,505 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-11 20:47:20,240 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-04-11 20:47:21,347 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-04-11 20:47:21,349 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-04-11 20:47:22,063 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-04-11 20:47:22,064 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-04-11 20:47:41,300 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-11 20:47:41,303 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 21.0638s
+2025-04-11 21:50:54,127 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 21:50:54,158 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-11 21:50:54,333 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-11 21:50:54,334 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-11 23:31:08,405 - vehicle_analysis_api - INFO - Fetching MOT data for registration: OCA479P
+2025-04-11 23:31:09,207 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/OCA479P "HTTP/1.1 200 OK"
+2025-04-11 23:31:09,208 - vehicle_analysis_api - INFO - Fetching bulletins for TRIUMPH SPITFIRE
+2025-04-11 23:31:09,743 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-04-11 23:31:09,743 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-04-11 23:31:09,749 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/TRIUMPH/SPITFIRE "HTTP/1.1 404 Not Found"
+2025-04-11 23:31:09,749 - vehicle_analysis_api - WARNING - No bulletins found for TRIUMPH SPITFIRE
+2025-04-11 23:31:09,749 - vehicle_analysis_api - INFO - Analyzing data for OCA479P with Claude API
+2025-04-11 23:31:15,855 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-11 23:31:15,860 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 7.4555s
+2025-04-12 18:02:16,203 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 18:02:16,206 - vehicle_analysis_api - INFO - Loaded 3 valid cache entries from disk
+2025-04-12 18:02:16,313 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 18:02:16,314 - vehicle_analysis_api - INFO - Loaded 3 valid cache entries from disk
+2025-04-12 19:57:35,046 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 19:57:35,097 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-12 19:57:35,254 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 19:57:35,255 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-12 20:33:19,317 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 20:33:19,348 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-12 20:33:19,489 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-12 20:33:19,491 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-04-12 21:30:42,218 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-04-12 23:08:15,425 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-04-12 23:08:16,362 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-04-12 23:08:16,363 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-04-12 23:08:16,959 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-04-12 23:08:16,959 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-04-12 23:08:16,962 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-04-12 23:08:16,963 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-04-12 23:08:16,963 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-04-12 23:08:39,106 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-04-12 23:08:39,112 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 200 - 23.6886s
+2025-04-13 00:13:39,589 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-04-13 18:24:50,064 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-13 18:24:50,113 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-13 18:24:50,283 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-13 18:24:50,285 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-13 22:21:41,398 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-13 22:21:41,438 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-13 22:21:41,698 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-13 22:21:41,700 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-04-21 09:16:36,032 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-21 09:16:36,056 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-04-21 09:16:36,259 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-04-21 09:16:36,260 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk

@@ -1259,7 +1259,7 @@ export const OperationItem = styled('div')`
   padding: ${SPACING.XS} 0;
   position: relative;
   
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-top: ${SPACING.XS};
     padding-top: ${SPACING.S};
     border-top: 1px dashed ${COLORS.MID_GREY};

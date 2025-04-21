@@ -4196,3 +4196,286 @@
 2025-04-08 13:15:30,604 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-04-08 13:15:30,606 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-04-08 13:15:30,606 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-11 18:28:13,115 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-11 18:28:13,146 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-11 18:28:13,166 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-11 18:28:13,188 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-11 18:28:13,208 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-11 18:28:13,230 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-11 18:28:13,231 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-11 18:28:13,253 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-11 18:28:13,253 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-11 18:28:13,274 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-11 18:28:13,274 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-11 18:28:13,275 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-11 18:28:13,276 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-11 18:28:30,428 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-04-11 18:28:30,429 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-04-11 18:28:30,429 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-04-11 18:28:30,429 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-04-11 18:28:30,429 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-04-11 18:28:30,429 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-11 18:28:30,430 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-04-11 18:28:30,430 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-04-11 18:28:30,430 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-04-11 18:28:30,430 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-04-11 18:28:30,432 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-11 18:28:30,432 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-11 18:28:30,432 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-11 18:28:30,432 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-04-11 18:28:30,433 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-11 18:28:30,433 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-04-11 18:28:30,433 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-11 18:28:30,433 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-04-11 18:28:30,434 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-04-11 18:28:30,434 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-04-11 20:36:52,898 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-11 20:36:52,915 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-11 20:36:52,927 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-11 20:36:52,946 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-11 20:36:52,962 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-11 20:36:52,975 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-11 20:36:52,976 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-11 20:36:52,992 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-11 20:36:52,993 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-11 20:36:53,008 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-11 20:36:53,009 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-11 20:36:53,010 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-11 20:36:53,010 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-11 20:47:20,570 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-04-11 20:47:20,571 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-04-11 20:47:20,571 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-04-11 20:47:20,578 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-11 20:47:20,578 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-11 20:47:20,578 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-11 20:47:20,579 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-04-11 20:47:20,579 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-04-11 20:47:20,579 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-04-11 20:47:20,579 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-04-11 20:47:20,580 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-04-11 20:47:20,580 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-04-11 20:47:20,580 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-04-11 20:47:20,580 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-04-11 20:47:20,583 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0180s
+2025-04-11 20:47:20,583 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0180s
+2025-04-11 21:50:53,561 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-11 21:50:53,581 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-11 21:50:53,604 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-11 21:50:53,623 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-11 21:50:53,647 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-11 21:50:53,671 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-11 21:50:53,672 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-11 21:50:53,696 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-11 21:50:53,697 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-11 21:50:53,716 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-11 21:50:53,717 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-11 21:50:53,719 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-11 21:50:53,719 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-11 23:31:08,717 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-04-11 23:31:08,717 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-04-11 23:31:08,717 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-04-11 23:31:08,718 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-04-11 23:31:08,718 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-11 23:31:08,718 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-04-11 23:31:08,718 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-04-11 23:31:08,718 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-04-11 23:31:08,719 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-04-11 23:31:08,719 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-04-11 23:31:08,720 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-04-11 23:31:08,720 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-04-11 23:31:08,720 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-11 23:31:08,720 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-04-11 23:31:08,720 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-04-11 23:31:08,720 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-04-11 23:31:08,721 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-04-11 23:31:08,721 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-04-12 18:02:15,776 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-12 18:02:15,780 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-12 18:02:15,781 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-12 18:02:15,783 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-12 18:02:15,784 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-12 18:02:15,785 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-12 18:02:15,786 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-12 18:02:15,786 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-12 18:02:15,787 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-12 18:02:15,858 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-12 18:02:15,858 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-12 18:02:15,859 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-12 18:02:15,859 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-12 18:02:25,882 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-04-12 18:02:25,882 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-04-12 18:02:25,883 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-04-12 18:02:25,883 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-04-12 18:02:25,883 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-04-12 18:02:25,883 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 18:02:25,884 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-04-12 18:02:25,884 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-04-12 18:02:25,884 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-04-12 18:02:25,884 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-04-12 18:02:25,886 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 18:02:25,886 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 18:02:25,886 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 18:02:25,886 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-04-12 18:02:25,886 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 18:02:25,887 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-04-12 18:02:25,887 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 18:02:25,887 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-04-12 18:02:25,887 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-04-12 18:02:25,888 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-04-12 19:57:34,747 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-12 19:57:34,769 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-12 19:57:34,790 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-12 19:57:34,807 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-12 19:57:34,827 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-12 19:57:34,846 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-12 19:57:34,846 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-12 19:57:34,864 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-12 19:57:34,865 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-12 19:57:34,879 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-12 19:57:34,880 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-12 19:57:34,881 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-12 19:57:34,881 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-12 20:33:18,812 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-12 20:33:18,837 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-12 20:33:18,855 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-12 20:33:18,874 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-12 20:33:18,892 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-12 20:33:18,910 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-12 20:33:18,911 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-12 20:33:18,926 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-12 20:33:18,927 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-12 20:33:18,943 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-12 20:33:18,943 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-12 20:33:18,944 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-12 20:33:18,944 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-12 21:30:42,243 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-04-12 21:30:42,243 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-04-12 21:30:42,243 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-04-12 21:30:42,249 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0140s
+2025-04-12 21:30:42,252 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-12 21:30:42,252 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-12 21:30:42,253 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-12 21:30:42,253 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-04-12 21:30:42,253 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-04-12 21:30:42,253 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-04-12 21:30:42,254 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-04-12 21:30:42,254 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-04-12 21:30:42,254 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-04-12 21:30:42,254 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-04-12 21:30:42,254 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-04-12 21:30:42,260 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0220s
+2025-04-12 23:08:15,734 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-04-12 23:08:15,735 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-04-12 23:08:15,735 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-04-12 23:08:15,735 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-04-12 23:08:15,735 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-04-12 23:08:15,735 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 23:08:15,736 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-04-12 23:08:15,736 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-04-12 23:08:15,736 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-04-12 23:08:15,737 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-04-12 23:08:15,737 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-04-12 23:08:15,743 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:08:15,743 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:08:15,744 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:08:15,744 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-04-12 23:08:15,744 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 23:08:15,744 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-04-12 23:08:15,744 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:08:15,745 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-04-12 23:08:15,745 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-04-12 23:16:16,494 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 23:16:16,495 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-04-12 23:16:16,496 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-04-12 23:16:16,496 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-04-12 23:16:16,496 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-04-12 23:16:16,496 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:16:16,497 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:16:16,497 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:16:16,497 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-04-12 23:16:16,497 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-12 23:16:16,498 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-04-12 23:16:16,498 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-12 23:16:16,499 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-04-12 23:16:16,500 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-04-12 23:16:16,500 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-04-13 00:13:39,590 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-04-13 00:13:39,591 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-04-13 00:13:39,591 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-04-13 00:13:39,596 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0070s
+2025-04-13 00:13:39,603 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-13 00:13:39,604 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-13 00:13:39,604 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-04-13 00:13:39,604 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-04-13 00:13:39,604 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-04-13 00:13:39,605 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-04-13 00:13:39,609 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0070s
+2025-04-13 03:05:09,570 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-04-13 03:05:09,570 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-04-13 03:05:09,570 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-04-13 03:05:09,571 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-04-13 03:05:09,571 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-04-13 03:05:09,571 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-13 03:05:09,571 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-04-13 03:05:09,571 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-04-13 03:05:09,572 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-04-13 03:05:09,572 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-04-13 03:05:09,572 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-13 03:05:09,573 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-13 03:05:09,573 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-13 03:05:09,573 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-04-13 03:05:09,573 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-04-13 03:05:09,573 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-04-13 03:05:09,573 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-04-13 03:05:09,573 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-04-13 03:05:09,574 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-04-13 03:05:09,574 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-04-13 18:24:49,440 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-13 18:24:49,458 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-13 18:24:49,477 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-13 18:24:49,495 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-13 18:24:49,515 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-13 18:24:49,539 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-13 18:24:49,540 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-13 18:24:49,557 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-13 18:24:49,557 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-13 18:24:49,573 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-13 18:24:49,573 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-13 18:24:49,574 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-13 18:24:49,574 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-13 22:21:40,566 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-13 22:21:40,591 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-13 22:21:40,616 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-13 22:21:40,648 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-13 22:21:40,672 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-13 22:21:40,693 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-13 22:21:40,694 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-13 22:21:40,721 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-13 22:21:40,722 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-13 22:21:40,752 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-13 22:21:40,752 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-13 22:21:40,754 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-13 22:21:40,754 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-04-21 09:16:35,584 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-04-21 09:16:35,609 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-04-21 09:16:35,629 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-04-21 09:16:35,651 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-04-21 09:16:35,672 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-04-21 09:16:35,690 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-04-21 09:16:35,690 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-04-21 09:16:35,708 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-04-21 09:16:35,709 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-04-21 09:16:35,728 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-04-21 09:16:35,728 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-04-21 09:16:35,729 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-04-21 09:16:35,730 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records

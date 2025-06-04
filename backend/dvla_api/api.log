@@ -7643,3 +7643,5 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-06-01 05:33:28,707 - ves_api - INFO - Starting server in PRODUCTION mode
 2025-06-01 05:33:28,708 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-06-01 05:33:28,708 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-06-04 08:29:29,914 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-06-04 08:33:32,855 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY

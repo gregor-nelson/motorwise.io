@@ -22,12 +22,6 @@ import {
   FAQPanel,
   SearchPanel,
   SearchInput,
-  EnhancedAccordion,
-  EnhancedAccordionItem,
-  EnhancedAccordionButton,
-  EnhancedAccordionContent,
-  FeedbackSection,
-  FeedbackPrompt,
   CategoryHeader,
   SearchResultsHeader,
   StatusContainer,
@@ -40,6 +34,29 @@ import {
   GlossaryDefinition,
   AlphabetContainer,
   AlphabetLink,
+  // New imports from revised styles
+  FormFieldWrapper,
+  FlexRow,
+  InlineButton,
+  SectionWrapper,
+  ContentHeader,
+  SearchResultText,
+  GovUKLabel,
+  GovUKInput,
+  GovUKSelect,
+  GovUKTextarea,
+  GovUKErrorMessage,
+  GovUKVisuallyHidden,
+  // GOV.UK Accordion components
+  GovUKAccordion,
+  GovUKAccordionSection,
+  GovUKAccordionSectionHeader,
+  GovUKAccordionSectionHeading,
+  GovUKAccordionSectionButton,
+  GovUKAccordionSectionSummary,
+  GovUKAccordionSectionContent,
+  AccordionControls,
+  AccordionShowAllButton,
 } from '../../../../styles/Home/styles';
 
 // Import data from separate file to reduce component size
@@ -108,105 +125,46 @@ const useForm = (initialValues, validate) => {
 const FormField = ({ id, name, label, type = 'text', value, error, onChange, required, ...props }) => {
   const fieldId = `support-${id}`;
   const errorId = `error-${id}`;
-  const Tag = type === 'textarea' ? 'textarea' : type === 'select' ? 'select' : 'input';
+  
+  const InputComponent = type === 'textarea' ? GovUKTextarea : 
+                        type === 'select' ? GovUKSelect : 
+                        GovUKInput;
 
   return (
-    <div style={{ marginBottom: SPACING.M }}>
-      <label htmlFor={fieldId} style={{ display: 'block', marginBottom: SPACING.XS, fontWeight: 'bold' }}>
+    <FormFieldWrapper className={error ? 'govuk-form-group--error' : ''}>
+      <GovUKLabel htmlFor={fieldId}>
         {label} {required && (
           <>
             <span aria-hidden="true">*</span>
-            <span className="govuk-visually-hidden">(required)</span>
+            <GovUKVisuallyHidden>(required)</GovUKVisuallyHidden>
           </>
         )}
-      </label>
-      <Tag
+      </GovUKLabel>
+      <InputComponent
         id={fieldId}
         name={name}
         type={type !== 'textarea' && type !== 'select' ? type : undefined}
         value={value}
         onChange={onChange}
+        error={!!error}
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
         aria-required={required}
-        style={{
-          width: '100%',
-          padding: SPACING.S,
-          border: `2px solid ${error ? COLORS.RED : COLORS.GREY}`,
-          borderRadius: '2px',
-          ...(type === 'textarea' ? { resize: 'vertical' } : {}),
-          ...(type === 'select' ? { height: '40px' } : {})
-        }}
         {...props}
       />
       {error && (
-        <p id={errorId} role="alert" style={{ color: COLORS.RED, margin: `${SPACING.XS} 0 0 0`, fontSize: '16px' }}>
+        <GovUKErrorMessage id={errorId} role="alert">
           {error}
-        </p>
+        </GovUKErrorMessage>
       )}
-    </div>
-  );
-};
-
-const AccordionItem = ({ item, isExpanded, onToggle }) => {
-  const [feedbackGiven, setFeedbackGiven] = useState(false);
-  
-  return (
-    <EnhancedAccordionItem>
-      <h3 id={`heading-${item.id}`}>
-        <EnhancedAccordionButton 
-          isExpanded={isExpanded}
-          onClick={() => onToggle(item.id)}
-          aria-expanded={isExpanded}
-          aria-controls={`content-${item.id}`}
-        >
-          {item.question}
-        </EnhancedAccordionButton>
-      </h3>
-      <EnhancedAccordionContent 
-        isExpanded={isExpanded}
-        id={`content-${item.id}`}
-        role="region"
-        aria-labelledby={`heading-${item.id}`}
-        hidden={!isExpanded}
-      >
-        <Paragraph>{item.answer}</Paragraph>
-        
-        <FeedbackSection>
-          {feedbackGiven ? (
-            <SuccessMessage role="status">Thank you for your feedback</SuccessMessage>
-          ) : (
-            <>
-              <FeedbackPrompt>Is this page useful?</FeedbackPrompt>
-              <div>
-                <Button 
-                  variant="secondary" 
-                  size="small" 
-                  onClick={() => setFeedbackGiven(true)}
-                  style={{ marginRight: SPACING.S, marginBottom: 0 }}
-                >
-                  Yes
-                </Button>
-                <Button 
-                  variant="secondary" 
-                  size="small" 
-                  onClick={() => setFeedbackGiven(true)}
-                  style={{ marginBottom: 0 }}
-                >
-                  No
-                </Button>
-              </div>
-            </>
-          )}
-        </FeedbackSection>
-      </EnhancedAccordionContent>
-    </EnhancedAccordionItem>
+    </FormFieldWrapper>
   );
 };
 
 // Tab Content Components
 const FAQSection = () => {
-  const [expandedId, setExpandedId] = useState(null);
+  const [expandedItems, setExpandedItems] = useState(new Set());
+  const [showAll, setShowAll] = useState(false);
   const { searchTerm, setSearchTerm, results, isSearching } = useSearch(FAQ_ITEMS, ['question', 'answer']);
   
   const categories = useMemo(() => [...new Set(FAQ_ITEMS.map(item => item.category))], []);
@@ -220,8 +178,67 @@ const FAQSection = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (results.length > 0) setExpandedId(results[0].id);
+    if (results.length > 0) {
+      setExpandedItems(new Set([results[0].id]));
+    }
   };
+
+  const toggleItem = (itemId) => {
+    const newExpanded = new Set(expandedItems);
+    if (newExpanded.has(itemId)) {
+      newExpanded.delete(itemId);
+    } else {
+      newExpanded.add(itemId);
+    }
+    setExpandedItems(newExpanded);
+  };
+
+  const toggleAllItems = () => {
+    if (showAll) {
+      setExpandedItems(new Set());
+      setShowAll(false);
+    } else {
+      const allIds = FAQ_ITEMS.map(item => item.id);
+      setExpandedItems(new Set(allIds));
+      setShowAll(true);
+    }
+  };
+
+  const renderAccordionSection = (item) => (
+    <GovUKAccordionSection key={item.id}>
+      <GovUKAccordionSectionHeader>
+        <GovUKAccordionSectionHeading>
+          <GovUKAccordionSectionButton
+            id={`accordion-button-${item.id}`}
+            aria-controls={`accordion-content-${item.id}`}
+            aria-expanded={expandedItems.has(item.id)}
+            onClick={() => toggleItem(item.id)}
+          >
+            {item.question}
+          </GovUKAccordionSectionButton>
+        </GovUKAccordionSectionHeading>
+        {item.summary && (
+          <GovUKAccordionSectionSummary id={`accordion-summary-${item.id}`}>
+            {item.summary}
+          </GovUKAccordionSectionSummary>
+        )}
+      </GovUKAccordionSectionHeader>
+      <GovUKAccordionSectionContent 
+        id={`accordion-content-${item.id}`}
+        aria-labelledby={`accordion-button-${item.id}`}
+        hidden={!expandedItems.has(item.id)}
+      >
+        <Paragraph>{item.answer}</Paragraph>
+        {item.additionalInfo && (
+          <InfoBox>
+            <Paragraph>{item.additionalInfo}</Paragraph>
+          </InfoBox>
+        )}
+      </GovUKAccordionSectionContent>
+    </GovUKAccordionSection>
+  );
+
+  const displayItems = searchTerm && results.length > 0 ? results : null;
 
   return (
     <Section background={COLORS.LIGHT_GREY}>
@@ -231,8 +248,8 @@ const FAQSection = () => {
         
         <SearchPanel>
           <form onSubmit={handleSearch}>
-            <label htmlFor="faq-search">Search frequently asked questions</label>
-            <div style={{ display: 'flex', gap: SPACING.M }}>
+            <GovUKLabel htmlFor="faq-search">Search frequently asked questions</GovUKLabel>
+            <FlexRow>
               <SearchInput
                 id="faq-search"
                 type="text"
@@ -241,47 +258,46 @@ const FAQSection = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Button variant="primary" size="medium" type="submit">Search</Button>
-            </div>
+            </FlexRow>
           </form>
           
           {searchTerm && (
-            <p style={{ marginTop: SPACING.M }}>
+            <SearchResultText>
               {results.length === 0 
                 ? 'No results found. Please try different terms.' 
                 : `Showing ${results.length} result${results.length !== 1 ? 's' : ''}`}
-            </p>
+            </SearchResultText>
           )}
         </SearchPanel>
+
+        {!displayItems && (
+          <AccordionControls>
+            <AccordionShowAllButton
+              onClick={toggleAllItems}
+              aria-expanded={showAll}
+            >
+              {showAll ? 'Hide all sections' : 'Show all sections'}
+            </AccordionShowAllButton>
+          </AccordionControls>
+        )}
         
-        {results.length > 0 ? (
-          <div style={{ marginBottom: SPACING.XXL }}>
+        {displayItems ? (
+          <SectionWrapper>
             <SearchResultsHeader>Search results</SearchResultsHeader>
-            <EnhancedAccordion>
-              {results.map(item => (
-                <AccordionItem
-                  key={item.id}
-                  item={item}
-                  isExpanded={expandedId === item.id}
-                  onToggle={setExpandedId}
-                />
-              ))}
-            </EnhancedAccordion>
-          </div>
-        ) : (!searchTerm || results.length === 0) && categories.map(category => (
-          <div key={category} style={{ marginBottom: SPACING.XXL }}>
-            <CategoryHeader>{category}</CategoryHeader>
-            <EnhancedAccordion>
-              {itemsByCategory[category].map(item => (
-                <AccordionItem
-                  key={item.id}
-                  item={item}
-                  isExpanded={expandedId === item.id}
-                  onToggle={setExpandedId}
-                />
-              ))}
-            </EnhancedAccordion>
-          </div>
-        ))}
+            <GovUKAccordion id="search-results-accordion">
+              {displayItems.map(renderAccordionSection)}
+            </GovUKAccordion>
+          </SectionWrapper>
+        ) : (
+          categories.map(category => (
+            <SectionWrapper key={category}>
+              <CategoryHeader>{category}</CategoryHeader>
+              <GovUKAccordion id={`accordion-${category.toLowerCase().replace(/\s+/g, '-')}`}>
+                {itemsByCategory[category].map(renderAccordionSection)}
+              </GovUKAccordion>
+            </SectionWrapper>
+          ))
+        )}
         
         <Grid columns="1fr 1fr" gap={SPACING.XL}>
           <Card accent={COLORS.GREEN}>
@@ -369,14 +385,14 @@ const SupportSection = () => {
             <FAQPanel>
               {isSubmitted && (
                 <SuccessMessage role="alert">
-                  <h2 style={{ margin: `0 0 ${SPACING.S} 0` }}>Support request submitted</h2>
-                  <p style={{ margin: 0 }}>We will respond within 2 working hours.</p>
+                  <ContentHeader>Support request submitted</ContentHeader>
+                  <NoMarginParagraph>We will respond within 2 working hours.</NoMarginParagraph>
                 </SuccessMessage>
               )}
               
               {errors.submit && (
                 <ErrorAlert role="alert">
-                  <p style={{ margin: 0 }}>{errors.submit}</p>
+                  <NoMarginParagraph>{errors.submit}</NoMarginParagraph>
                 </ErrorAlert>
               )}
             
@@ -442,14 +458,14 @@ const SupportSection = () => {
           
           <div>
             <Card accent={COLORS.BLUE}>
-              <h4>Operating hours</h4>
+              <ContentHeader as="h4">Operating hours</ContentHeader>
               <Paragraph>Monday to Friday: 9am to 5pm</Paragraph>
-              <h4>Contact methods</h4>
+              <ContentHeader as="h4">Contact methods</ContentHeader>
               <Paragraph>Email: support@vehiclecheck.gov.uk</Paragraph>
             </Card>
             
-            <Card accent={COLORS.GREEN} style={{ marginTop: SPACING.XL }}>
-              <h4>Service status</h4>
+            <Card accent={COLORS.GREEN}>
+              <ContentHeader as="h4">Service status</ContentHeader>
               <StatusContainer>All systems operational</StatusContainer>
             </Card>
           </div>

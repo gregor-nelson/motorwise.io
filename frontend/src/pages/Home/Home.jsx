@@ -15,7 +15,6 @@ function Home() {
       {/* Main Content */}
         <Hero />
 
-
         <PremiumReportFeature />
 
         <HelpSection />

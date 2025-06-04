@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   COLORS,
   SPACING,
@@ -11,163 +11,45 @@ import {
   GovUKHeadingM,
   GovUKHeadingS,
   GovUKBody,
+  GovUKBodyS,
   GovUKSectionBreak,
   GovUKInsetText,
-  GovUKList,
-  PremiumButton
+  GovUKHeader,
+  PremiumButton,
+  PremiumBanner,
+  PremiumInfoPanel,
+  PremiumBadge,
+  PremiumFeatureList,
+  ReportSection,
+  ReportTable,
+  MotHistoryItem,
+  DetailHeading,
+  DetailCaption
 } from '../../../../styles/theme';
 import { styled } from '@mui/material/styles';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import LinearProgress from '@mui/material/LinearProgress';
 
-// Styled components for GOV.UK styling
-const GovUKHeader = styled('div')`
-  background-color: ${COLORS.WHITE};
-  padding: ${SPACING.XL};
-  color: ${COLORS.BLACK};
-  position: relative;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background-color: ${COLORS.BLUE};
-  }
-`;
-
-const ServiceBadge = styled('div')`
-  display: inline-block;
-  padding: ${SPACING.XS} ${SPACING.M};
-  margin-bottom: ${SPACING.M};
-  background-color: ${COLORS.BLACK};
-  color: ${COLORS.WHITE};
-  font-size: ${FONT_SIZES.XS};
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-`;
-
+// Minimal custom components for specific functionality
 const SectionHeading = styled(GovUKHeadingM)`
-  position: relative;
-  margin-bottom: ${SPACING.L};
-  padding-bottom: ${SPACING.S};
-  padding-left: ${SPACING.M};
-  border-left: 4px solid ${COLORS.BLUE};
-  
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background-color: ${COLORS.BLUE};
-  }
-`;
-
-const StyledTabs = styled(Tabs)`
-  border-bottom: 1px solid ${COLORS.MID_GREY};
-  margin-bottom: ${SPACING.L};
-  
-  & .MuiTabs-indicator {
-    background-color: ${COLORS.BLUE};
-    height: 4px;
-  }
-`;
-
-const StyledTab = styled(Tab)`
-  text-transform: none;
-  font-weight: 600;
-  font-size: ${FONT_SIZES.M};
-  color: ${COLORS.BLACK};
-  
-  &.Mui-selected {
-    color: ${COLORS.BLUE};
-  }
-`;
-
-const ContentCard = styled(Paper)`
-  padding: ${SPACING.L};
-  margin-bottom: ${SPACING.L};
-  border: 1px solid ${COLORS.LIGHT_GREY};
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-`;
-
-const HighlightedCard = styled(ContentCard)`
-  border-left: 4px solid ${COLORS.BLUE};
-`;
-
-const FeatureCard = styled(ContentCard)`
-  background-color: ${COLORS.WHITE};
-`;
-
-const StatCard = styled('div')`
   display: flex;
   align-items: center;
-  background-color: ${COLORS.LIGHT_GREY};
-  padding: ${SPACING.L};
+  gap: ${SPACING.M};
   margin-bottom: ${SPACING.L};
-  margin-top: ${SPACING.L};
-  border-left: 5px solid ${COLORS.BLUE};
 `;
 
-const ProcessStep = styled('div')`
-  display: flex;
-  align-items: flex-start;
-  padding: ${SPACING.M};
-  margin-bottom: ${SPACING.M};
-  border: 1px solid ${COLORS.LIGHT_GREY};
-  background-color: ${COLORS.WHITE};
-`;
-
-const StepNumber = styled('div')`
+const SectionNumber = styled('div')`
+  background-color: ${COLORS.BLUE};
+  color: ${COLORS.WHITE};
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: ${COLORS.BLUE};
-  color: ${COLORS.WHITE};
-  border-radius: 50%;
+  font-weight: 700;
   font-size: ${FONT_SIZES.M};
-  font-weight: bold;
-  margin-right: ${SPACING.M};
   flex-shrink: 0;
 `;
-
-const StepContent = styled('div')`
-  flex: 1;
-`;
-
-const StatusIndicator = styled('div')(({ status }) => {
-  const colors = {
-    good: COLORS.GREEN,
-    warning: COLORS.YELLOW,
-    danger: COLORS.RED,
-  };
-  
-  return {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: '28px',
-    height: '28px',
-    borderRadius: '4px',
-    marginRight: SPACING.M,
-    backgroundColor: colors[status] || COLORS.MID_GREY,
-    color: status === 'warning' ? COLORS.BLACK : COLORS.WHITE,
-    fontWeight: 'bold',
-    flexShrink: 0,
-    fontSize: FONT_SIZES.XS,
-  };
-});
 
 const ComparisonGrid = styled('div')`
   display: grid;
@@ -180,241 +62,100 @@ const ComparisonGrid = styled('div')`
   }
 `;
 
-const DataVerificationItem = styled('div')`
+const StatCard = styled(PremiumBanner)`
   display: flex;
   align-items: center;
-  margin-bottom: ${SPACING.M};
-  padding: ${SPACING.M};
-  background-color: ${COLORS.LIGHT_GREY};
-  border-radius: 4px;
+  border: 3px solid ${COLORS.BLUE};
+  background-color: ${COLORS.WHITE};
 `;
 
-const DataSourceBadge = styled('div')`
-  width: 40px;
-  height: 40px;
+const StatNumber = styled('div')`
+  font-size: ${FONT_SIZES.XXXXL};
+  font-weight: 700;
+  color: ${COLORS.RED};
+  line-height: 1;
+  margin-right: ${SPACING.L};
+`;
+
+const ProcessStep = styled(MotHistoryItem)`
+  border-left: 1px solid ${COLORS.LIGHT_GREY};
+  border: 1px solid ${COLORS.LIGHT_GREY};
+  background-color: ${COLORS.WHITE};
+  display: flex;
+  align-items: flex-start;
+  gap: ${SPACING.L};
+`;
+
+const StepNumber = styled('div')`
+  background-color: ${COLORS.BLUE};
+  color: ${COLORS.WHITE};
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${COLORS.BLUE};
-  color: ${COLORS.WHITE};
+  font-size: ${FONT_SIZES.L};
   font-weight: bold;
-  margin-right: ${SPACING.M};
   flex-shrink: 0;
 `;
 
-const CustomTable = styled('table')`
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-bottom: ${SPACING.L};
-  font-size: ${FONT_SIZES.S};
-  border: 1px solid ${COLORS.MID_GREY};
-  
-  & th {
-    text-align: left;
-    padding: ${SPACING.M};
-    background-color: ${COLORS.LIGHT_GREY};
-    border-bottom: 2px solid ${COLORS.MID_GREY};
-    font-weight: 700;
-    color: ${COLORS.BLACK};
-  }
-  
-  & td {
-    padding: ${SPACING.M};
-    border-bottom: 1px solid ${COLORS.LIGHT_GREY};
-    vertical-align: middle;
-  }
-  
-  & tr:last-child td {
-    border-bottom: none;
-  }
-`;
-
-const SystemAssessmentItem = styled('div')`
-  display: flex;
-  align-items: flex-start;
-  padding: ${SPACING.M};
-  margin-bottom: ${SPACING.M};
-  background-color: ${COLORS.WHITE};
-  border: 1px solid ${COLORS.LIGHT_GREY};
-`;
-
-const ProgressContainer = styled('div')`
-  width: 100%;
-  margin-top: ${SPACING.S};
-`;
-
-const StyledProgress = styled(LinearProgress)(({ status }) => {
-  const colors = {
-    good: COLORS.GREEN,
-    warning: COLORS.YELLOW,
-    danger: COLORS.RED,
-  };
-  
-  return {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: COLORS.LIGHT_GREY,
-    '& .MuiLinearProgress-bar': {
-      backgroundColor: colors[status] || COLORS.BLUE,
-    },
-  };
-});
-
-const FeatureItem = styled('li')`
-  padding: ${SPACING.M} 0;
-  border-bottom: 1px solid ${COLORS.LIGHT_GREY};
-  position: relative;
-  padding-left: 32px;
-  
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const FeatureCheck = styled('span')`
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${COLORS.BLUE};
-  font-weight: bold;
-`;
-
-const FeatureItemTitle = styled('h4')`
-  font-size: ${FONT_SIZES.M};
-  margin: 0 0 ${SPACING.XS} 0;
-  font-weight: 600;
-  color: ${COLORS.BLACK};
-`;
-
-const MainContainer = styled('div')`
-  background-color: ${COLORS.WHITE};
-  border-top: 6px solid ${COLORS.BLUE};
-  border-bottom: 1px solid ${COLORS.MID_GREY};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const ContentArea = styled('div')`
-  padding: ${SPACING.XL};
-`;
-
-const TechnicalLabel = styled('div')`
-  position: absolute;
-  top: -12px;
-  left: 24px;
-  padding: ${SPACING.XS} ${SPACING.M};
+const ExampleHeader = styled('div')`
   background-color: ${COLORS.BLUE};
   color: ${COLORS.WHITE};
-  font-weight: 700;
-  font-size: ${FONT_SIZES.S};
+  padding: ${SPACING.M};
+  margin: -${SPACING.L} -${SPACING.L} ${SPACING.L} -${SPACING.L};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const StatCardValue = styled('span')`
-  font-size: ${FONT_SIZES.XXXL};
-  font-weight: 700;
-  color: ${COLORS.BLUE};
-  line-height: 1;
+const StatusIndicator = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   margin-right: ${SPACING.M};
-`;
-
-const StatCardText = styled('div')`
-  font-size: ${FONT_SIZES.S};
-  max-width: 250px;
-  line-height: 1.4;
-`;
-
-const FeatureList = styled('ul')`
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-`;
-
-const ButtonContainer = styled('div')`
-  text-align: center;
-  margin-top: ${SPACING.XL};
-`;
-
-const SideButtonContainer = styled('div')`
-  text-align: center;
-  margin-top: ${SPACING.M};
-`;
-
-// Additional styled components to replace inline styles
-const ListWithDisc = styled(GovUKList)`
-  padding-left: ${SPACING.M};
-  list-style-type: disc;
-`;
-
-const ListItemWithMargin = styled('li')`
-  margin-bottom: ${SPACING.S};
-`;
-
-const BlueBorderedCard = styled(ContentCard)`
-  border: 2px solid ${COLORS.BLUE};
-`;
-
-const BlueHeading = styled(GovUKHeadingS)`
-  color: ${COLORS.BLUE};
-`;
-
-const BoldText = styled('span')`
-  font-weight: 700;
-`;
-
-const FullWidthBox = styled(Box)`
-  width: 100%;
-  margin-bottom: ${SPACING.XXXL};
-`;
-
-const SpacedBox = styled(Box)`
-  margin-top: ${SPACING.L};
-  margin-bottom: ${SPACING.L};
-`;
-
-const SpecialContentCard = styled(ContentCard)`
-  margin: ${SPACING.L} 0;
-  position: relative;
-  border: 2px dashed ${COLORS.MID_GREY};
-  background-color: ${COLORS.WHITE};
-  padding-top: ${SPACING.XL};
-`;
-
-const FlexContainer = styled('div')`
-  flex: 1;
-`;
-
-const NoMarginHeading = styled(GovUKHeadingS)`
+  background-color: ${props => {
+    switch(props.status) {
+      case 'good': return COLORS.GREEN;
+      case 'warning': return COLORS.YELLOW;
+      case 'danger': return COLORS.RED;
+      default: return COLORS.MID_GREY;
+    }
+  }};
+  color: ${props => props.status === 'warning' ? COLORS.BLACK : COLORS.WHITE};
+  font-weight: bold;
+  flex-shrink: 0;
   font-size: ${FONT_SIZES.M};
-  margin: 0;
 `;
 
-const SmallerBodyText = styled(GovUKBody)`
-  font-size: ${FONT_SIZES.S};
-  margin-bottom: ${SPACING.XS};
-`;
-
-const SidebarList = styled('ul')`
-  padding-left: ${SPACING.M};
-`;
-
-const BodyWithMarginTop = styled(GovUKBody)`
-  margin-top: ${SPACING.M};
-`;
-
-const BodyNoMargin = styled(GovUKBody)`
-  margin-bottom: 0;
+const StyledProgress = styled(LinearProgress)`
+  height: 8px;
+  background-color: ${COLORS.LIGHT_GREY};
+  margin-top: ${SPACING.S};
+  
+  & .MuiLinearProgress-bar {
+    background-color: ${props => {
+      switch(props.status) {
+        case 'good': return COLORS.GREEN;
+        case 'warning': return COLORS.YELLOW;
+        case 'danger': return COLORS.RED;
+        default: return COLORS.BLUE;
+      }
+    }};
+  }
 `;
 
 const PremiumReportFeature = () => {
   return (
     <GovUKContainer>
-      <MainContainer>
+      <div style={{ backgroundColor: COLORS.WHITE, borderTop: `6px solid ${COLORS.BLUE}`, borderBottom: `1px solid ${COLORS.MID_GREY}` }}>
         {/* Header */}
-        <GovUKHeader>
-          <ServiceBadge>
+        <GovUKHeader style={{ borderBottom: 'none' }}>
+          <PremiumBadge>
             Official DVLA Data
-          </ServiceBadge>
+          </PremiumBadge>
           <GovUKHeadingL>Premium Vehicle Report</GovUKHeadingL>
           <GovUKBody>
             Evidence-based vehicle assessment connecting MOT history with manufacturer technical bulletins to identify patterns and provide a comprehensive analysis.
@@ -422,339 +163,379 @@ const PremiumReportFeature = () => {
         </GovUKHeader>
         
         {/* Content Area */}
-        <ContentArea>
+        <div style={{ padding: SPACING.XL }}>
           <GovUKGridRow>
             <GovUKGridColumnTwoThirds>
               {/* Comparative Value Section */}
               <SectionHeading>
+                <SectionNumber>01</SectionNumber>
                 Standard Check vs. Premium Report
               </SectionHeading>
               
               <ComparisonGrid>
                 {/* Standard Check Column */}
-                <ContentCard>
+                <ReportSection>
                   <GovUKHeadingS>
                     Standard Vehicle Check
                   </GovUKHeadingS>
-                  <ListWithDisc>
-                    <ListItemWithMargin>
-                      Basic MOT pass/fail history
-                    </ListItemWithMargin>
-                    <ListItemWithMargin>
-                      Current vehicle status
-                    </ListItemWithMargin>
-                    <ListItemWithMargin>
-                      Registration information
-                    </ListItemWithMargin>
-                    <li>
-                      Simple list of previous tests
-                    </li>
-                  </ListWithDisc>
-                </ContentCard>
+                  <ul style={{ paddingLeft: SPACING.M, listStyleType: 'disc' }}>
+                    <li style={{ marginBottom: SPACING.S }}>Basic MOT pass/fail history</li>
+                    <li style={{ marginBottom: SPACING.S }}>Current vehicle status</li>
+                    <li style={{ marginBottom: SPACING.S }}>Registration information</li>
+                    <li>Simple list of previous tests</li>
+                  </ul>
+                </ReportSection>
                 
                 {/* Premium Report Column */}
-                <BlueBorderedCard>
-                  <BlueHeading>
+                <ReportSection style={{ border: `2px solid ${COLORS.BLUE}`, position: 'relative' }}>
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '-1px', 
+                    right: '-1px', 
+                    backgroundColor: COLORS.GREEN, 
+                    color: COLORS.WHITE, 
+                    padding: `${SPACING.XS} ${SPACING.S}`, 
+                    fontSize: FONT_SIZES.XS, 
+                    fontWeight: 700, 
+                    textTransform: 'uppercase' 
+                  }}>
+                    ENHANCED
+                  </div>
+                  <GovUKHeadingS style={{ color: COLORS.BLUE }}>
                     Premium Vehicle Report
-                  </BlueHeading>
-                  <ListWithDisc>
-                    <ListItemWithMargin>
-                      <BoldText>Pattern analysis</BoldText> of recurring issues
-                    </ListItemWithMargin>
-                    <ListItemWithMargin>
-                      <BoldText>Technical bulletin correlation</BoldText> with known issues
-                    </ListItemWithMargin>
-                    <ListItemWithMargin>
-                      <BoldText>Component-level risk assessment</BoldText> for major systems
-                    </ListItemWithMargin>
-                    <li>
-                      <BoldText>Evidence-based evaluation</BoldText> of maintenance needs
+                  </GovUKHeadingS>
+                  <ul style={{ paddingLeft: SPACING.M, listStyleType: 'disc' }}>
+                    <li style={{ marginBottom: SPACING.S }}>
+                      <strong>Pattern analysis</strong> of recurring issues
                     </li>
-                  </ListWithDisc>
-                </BlueBorderedCard>
+                    <li style={{ marginBottom: SPACING.S }}>
+                      <strong>Technical bulletin correlation</strong> with known issues
+                    </li>
+                    <li style={{ marginBottom: SPACING.S }}>
+                      <strong>Component-level risk assessment</strong> for major systems
+                    </li>
+                    <li>
+                      <strong>Evidence-based evaluation</strong> of maintenance needs
+                    </li>
+                  </ul>
+                </ReportSection>
               </ComparisonGrid>
               
               <StatCard>
-                <StatCardValue>31%</StatCardValue>
-                <StatCardText>
-                  of used vehicles have systematic issues that are only identifiable through pattern analysis across multiple MOT tests
-                </StatCardText>
+                <StatNumber>31%</StatNumber>
+                <div style={{ flex: 1 }}>
+                  <GovUKBody style={{ fontSize: FONT_SIZES.M, marginBottom: SPACING.XS }}>
+                    of used vehicles have systematic issues that are only identifiable through pattern analysis across multiple MOT tests
+                  </GovUKBody>
+                  <GovUKBodyS style={{ color: COLORS.MID_GREY, fontStyle: 'italic' }}>
+                    Source: DVLA MOT database analysis
+                  </GovUKBodyS>
+                </div>
               </StatCard>
               
               {/* Technical Analysis Section */}
-              <FullWidthBox>
-                <SectionHeading>Technical Analysis Methodology</SectionHeading>
+              <ReportSection>
+                <SectionHeading>
+                  <SectionNumber>02</SectionNumber>
+                  Technical Analysis Methodology
+                </SectionHeading>
                 
                 <GovUKBody>
                   Our Premium Report utilizes a systematic analytical process to identify patterns and potential issues:
                 </GovUKBody>
                 
-                <SpacedBox>
+                <div style={{ marginTop: SPACING.L, marginBottom: SPACING.L }}>
                   <ProcessStep>
                     <StepNumber>1</StepNumber>
-                    <StepContent>
+                    <div style={{ flex: 1 }}>
                       <GovUKHeadingS>Data Collection</GovUKHeadingS>
-                      <GovUKBody>Complete MOT history from DVLA official records</GovUKBody>
-                    </StepContent>
+                      <GovUKBody>Complete MOT history from DVLA official records with full test details and advisory information</GovUKBody>
+                    </div>
                   </ProcessStep>
                   
                   <ProcessStep>
                     <StepNumber>2</StepNumber>
-                    <StepContent>
+                    <div style={{ flex: 1 }}>
                       <GovUKHeadingS>Pattern Analysis</GovUKHeadingS>
-                      <GovUKBody>Identification of recurring issues in vehicle history</GovUKBody>
-                    </StepContent>
+                      <GovUKBody>Systematic identification of recurring issues across test cycles and correlation timeline analysis</GovUKBody>
+                    </div>
                   </ProcessStep>
                   
                   <ProcessStep>
                     <StepNumber>3</StepNumber>
-                    <StepContent>
+                    <div style={{ flex: 1 }}>
                       <GovUKHeadingS>Technical Matching</GovUKHeadingS>
-                      <GovUKBody>Correlation with manufacturer technical bulletins</GovUKBody>
-                    </StepContent>
+                      <GovUKBody>Cross-reference with manufacturer technical service bulletins and known issue patterns</GovUKBody>
+                    </div>
                   </ProcessStep>
-                </SpacedBox>
+                </div>
                 
-                <HighlightedCard>
-                  <GovUKHeadingS>Technical Assessment Methodology</GovUKHeadingS>
+                <PremiumInfoPanel style={{ backgroundColor: '#e8f4fd' }}>
+                  <GovUKHeadingS style={{ color: COLORS.BLUE }}>Technical Assessment Process</GovUKHeadingS>
                   <GovUKBody>
-                    The correlation engine identifies relationships between recurring MOT issues 
-                    and manufacturer service bulletins. This systematic approach reveals technical 
-                    patterns that indicate potential underlying issues requiring assessment before 
-                    they become serious faults.
+                    Our correlation engine identifies relationships between recurring MOT issues and manufacturer service bulletins. This systematic approach reveals technical patterns that indicate potential underlying issues requiring assessment before they develop into serious faults.
                   </GovUKBody>
-                </HighlightedCard>
-              </FullWidthBox>
-              
-              {/* Visual Divider */}
-              <GovUKSectionBreak className="govuk-section-break--xl govuk-section-break--visible" />
+                </PremiumInfoPanel>
+              </ReportSection>
               
               {/* Technical Bulletin Section */}
-              <FullWidthBox>
-                <SectionHeading>Technical Bulletin Correlation Analysis</SectionHeading>
+              <ReportSection style={{ border: `2px solid ${COLORS.BLUE}` }}>
+                <SectionHeading>
+                  <SectionNumber>03</SectionNumber>
+                  Technical Bulletin Correlation Analysis
+                </SectionHeading>
                 
-                <HighlightedCard>
-                  <GovUKHeadingS>Example Analysis: Technical Bulletin Matching</GovUKHeadingS>
+                <div style={{ border: `2px solid ${COLORS.BLUE}` }}>
+                  <ExampleHeader>
+                    <GovUKHeadingS style={{ margin: 0, color: COLORS.WHITE }}>Example Analysis: Technical Bulletin Matching</GovUKHeadingS>
+                    <PremiumBadge style={{ backgroundColor: COLORS.YELLOW, color: COLORS.BLACK }}>SAMPLE REPORT</PremiumBadge>
+                  </ExampleHeader>
                   
-                  <CustomTable>
-                    <thead>
-                      <tr>
-                        <th>MOT Issue</th>
-                        <th>Related Technical Bulletin</th>
-                        <th>Technical Assessment</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Service brake grabbing (2023)</td>
-                        <td>"Loss of braking efficiency" (TSB-BR1284)</td>
-                        <td>Potential correlation with brake pressure sensors</td>
-                      </tr>
-                      <tr>
-                        <td>Anti-roll bar linkage wear</td>
-                        <td>"Shudder from rear when cornering" (TSB-SUS2742)</td>
-                        <td>Related component in suspension system</td>
-                      </tr>
-                      <tr>
-                        <td>Underside/structure corrosion</td>
-                        <td>No direct bulletin match</td>
-                        <td>Environmental exposure assessment recommended</td>
-                      </tr>
-                    </tbody>
-                  </CustomTable>
-                </HighlightedCard>
-                
-                <SpecialContentCard>
-                  <TechnicalLabel>
-                    Technical Assessment Methodology
-                  </TechnicalLabel>
-                  <GovUKBody>
-                    The correlation engine identifies relationships between recurring MOT issues and manufacturer service bulletins. This systematic approach reveals technical patterns that indicate potential underlying issues requiring assessment before they become serious faults.
-                  </GovUKBody>
-                </SpecialContentCard>
-              </FullWidthBox>
-              
-              {/* Visual Divider */}
-              <GovUKSectionBreak className="govuk-section-break--xl govuk-section-break--visible" />
+                  <div style={{ padding: SPACING.L }}>
+                    <ReportTable>
+                      <thead>
+                        <tr>
+                          <th>MOT Issue</th>
+                          <th>Related Technical Bulletin</th>
+                          <th>Technical Assessment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div>
+                              <strong>Service brake grabbing</strong><br />
+                              <small style={{ color: COLORS.MID_GREY }}>(2023)</small>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <strong style={{ color: COLORS.BLUE }}>"Loss of braking efficiency"</strong><br />
+                              <small style={{ color: COLORS.MID_GREY }}>(TSB-BR1284)</small>
+                            </div>
+                          </td>
+                          <td>Potential correlation with brake pressure sensors</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div>
+                              <strong>Anti-roll bar linkage wear</strong><br />
+                              <small style={{ color: COLORS.MID_GREY }}>(2022, 2023)</small>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <strong style={{ color: COLORS.BLUE }}>"Shudder from rear when cornering"</strong><br />
+                              <small style={{ color: COLORS.MID_GREY }}>(TSB-SUS2742)</small>
+                            </div>
+                          </td>
+                          <td>Related component in suspension system</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div>
+                              <strong>Underside/structure corrosion</strong><br />
+                              <small style={{ color: COLORS.MID_GREY }}>(2021-2023)</small>
+                            </div>
+                          </td>
+                          <td style={{ fontStyle: 'italic', color: COLORS.MID_GREY }}>No direct bulletin match</td>
+                          <td>Environmental exposure assessment recommended</td>
+                        </tr>
+                      </tbody>
+                    </ReportTable>
+                  </div>
+                </div>
+              </ReportSection>
               
               {/* Component Assessment Section */}
-              <FullWidthBox>
-                <SectionHeading>Component-Level Risk Assessment</SectionHeading>
+              <ReportSection>
+                <SectionHeading>
+                  <SectionNumber>04</SectionNumber>
+                  Component-Level Risk Assessment
+                </SectionHeading>
                 
-                <HighlightedCard>
+                <PremiumInfoPanel style={{ border: `2px solid ${COLORS.YELLOW}` }}>
                   <GovUKHeadingS>Vehicle System Risk Assessment</GovUKHeadingS>
                   
-                  <SystemAssessmentItem>
+                  <MotHistoryItem style={{ display: 'flex', alignItems: 'flex-start' }}>
                     <StatusIndicator status="warning">⚠️</StatusIndicator>
-                    <FlexContainer>
-                      <NoMarginHeading>Suspension</NoMarginHeading>
-                      <SmallerBodyText>
-                        Recurring anti-roll bar linkage issues, suspension arm bush wear
-                      </SmallerBodyText>
-                      <ProgressContainer>
-                        <StyledProgress variant="determinate" value={65} status="warning" />
-                      </ProgressContainer>
-                    </FlexContainer>
-                  </SystemAssessmentItem>
+                    <div style={{ flex: 1 }}>
+                      <DetailHeading style={{ margin: 0 }}>Suspension</DetailHeading>
+                      <DetailCaption>Recurring anti-roll bar linkage issues, suspension arm bush wear</DetailCaption>
+                      <StyledProgress variant="determinate" value={65} status="warning" />
+                    </div>
+                  </MotHistoryItem>
                   
-                  <SystemAssessmentItem>
+                  <MotHistoryItem style={{ display: 'flex', alignItems: 'flex-start' }}>
                     <StatusIndicator status="warning">⚠️</StatusIndicator>
-                    <FlexContainer>
-                      <NoMarginHeading>Brakes</NoMarginHeading>
-                      <SmallerBodyText>
-                        History of brake grab and worn pads/discs
-                      </SmallerBodyText>
-                      <ProgressContainer>
-                        <StyledProgress variant="determinate" value={60} status="warning" />
-                      </ProgressContainer>
-                    </FlexContainer>
-                  </SystemAssessmentItem>
+                    <div style={{ flex: 1 }}>
+                      <DetailHeading style={{ margin: 0 }}>Brakes</DetailHeading>
+                      <DetailCaption>History of brake grab and worn pads/discs</DetailCaption>
+                      <StyledProgress variant="determinate" value={60} status="warning" />
+                    </div>
+                  </MotHistoryItem>
                   
-                  <SystemAssessmentItem>
+                  <MotHistoryItem style={{ display: 'flex', alignItems: 'flex-start' }}>
                     <StatusIndicator status="danger">🔴</StatusIndicator>
-                    <FlexContainer>
-                      <NoMarginHeading>Corrosion</NoMarginHeading>
-                      <SmallerBodyText>
-                        Progressive underside/structural corrosion evident
-                      </SmallerBodyText>
-                      <ProgressContainer>
-                        <StyledProgress variant="determinate" value={85} status="danger" />
-                      </ProgressContainer>
-                    </FlexContainer>
-                  </SystemAssessmentItem>
+                    <div style={{ flex: 1 }}>
+                      <DetailHeading style={{ margin: 0 }}>Corrosion</DetailHeading>
+                      <DetailCaption>Progressive underside/structural corrosion evident</DetailCaption>
+                      <StyledProgress variant="determinate" value={85} status="danger" />
+                    </div>
+                  </MotHistoryItem>
                   
-                  <SystemAssessmentItem>
+                  <MotHistoryItem style={{ display: 'flex', alignItems: 'flex-start' }}>
                     <StatusIndicator status="good">✓</StatusIndicator>
-                    <FlexContainer>
-                      <NoMarginHeading>Engine</NoMarginHeading>
-                      <SmallerBodyText>
-                        No significant issues detected
-                      </SmallerBodyText>
-                      <ProgressContainer>
-                        <StyledProgress variant="determinate" value={95} status="good" />
-                      </ProgressContainer>
-                    </FlexContainer>
-                  </SystemAssessmentItem>
-                </HighlightedCard>
+                    <div style={{ flex: 1 }}>
+                      <DetailHeading style={{ margin: 0 }}>Engine</DetailHeading>
+                      <DetailCaption>No significant issues detected</DetailCaption>
+                      <StyledProgress variant="determinate" value={95} status="good" />
+                    </div>
+                  </MotHistoryItem>
+                </PremiumInfoPanel>
                 
                 <GovUKInsetText>
-                  <strong>Data-driven insights for informed decision-making.</strong> Our technical correlation analysis identifies underlying issues that standard checks miss, helping you understand the vehicle's condition based on evidence rather than assumptions.
+                  <GovUKHeadingS style={{ color: COLORS.BLUE, margin: `0 0 ${SPACING.S} 0` }}>
+                    💡 Data-driven insights for informed decision-making
+                  </GovUKHeadingS>
+                  <GovUKBody style={{ margin: 0 }}>
+                    Our technical correlation analysis identifies underlying issues that standard checks miss, helping you understand the vehicle's condition based on evidence rather than assumptions.
+                  </GovUKBody>
                 </GovUKInsetText>
-              </FullWidthBox>
+              </ReportSection>
               
-              <ButtonContainer>
+              <div style={{ textAlign: 'center', marginTop: SPACING.XL }}>
                 <PremiumButton>
                   Get Vehicle Technical Report
                 </PremiumButton>
-              </ButtonContainer>
+              </div>
             </GovUKGridColumnTwoThirds>
             
             <GovUKGridColumnOneThird>
               {/* Report Benefits */}
-              <FeatureCard>
-                <SectionHeading>
+              <ReportSection>
+                <GovUKHeadingM style={{ marginBottom: SPACING.M }}>
                   Technical Report Features
-                </SectionHeading>
+                </GovUKHeadingM>
                 
                 <GovUKSectionBreak className="govuk-section-break--m govuk-section-break--visible" />
                 
-                <FeatureList>
-                  <FeatureItem>
-                    <FeatureCheck>✓</FeatureCheck>
-                    <FeatureItemTitle>Official DVLA Data</FeatureItemTitle>
-                    <GovUKBody>Complete MOT history with detailed records</GovUKBody>
-                  </FeatureItem>
-                  
-                  <FeatureItem>
-                    <FeatureCheck>✓</FeatureCheck>
-                    <FeatureItemTitle>Technical Bulletin Matching</FeatureItemTitle>
-                    <GovUKBody>Correlation with manufacturer service information</GovUKBody>
-                  </FeatureItem>
-                  
-                  <FeatureItem>
-                    <FeatureCheck>✓</FeatureCheck>
-                    <FeatureItemTitle>Component Risk Assessment</FeatureItemTitle>
-                    <GovUKBody>Detailed evaluation of major vehicle systems</GovUKBody>
-                  </FeatureItem>
-                  
-                  <FeatureItem>
-                    <FeatureCheck>✓</FeatureCheck>
-                    <FeatureItemTitle>Evidence-Based Evaluation</FeatureItemTitle>
-                    <GovUKBody>Systematic analysis of patterns and indicators</GovUKBody>
-                  </FeatureItem>
-                </FeatureList>
+                <PremiumFeatureList>
+                  <li>
+                    <span style={{ marginRight: SPACING.S }}>📊</span>
+                    <strong>Official DVLA Data</strong><br />
+                    Complete MOT history with detailed records
+                  </li>
+                  <li>
+                    <span style={{ marginRight: SPACING.S }}>🔍</span>
+                    <strong>Technical Bulletin Matching</strong><br />
+                    Correlation with manufacturer service information
+                  </li>
+                  <li>
+                    <span style={{ marginRight: SPACING.S }}>⚙️</span>
+                    <strong>Component Risk Assessment</strong><br />
+                    Detailed evaluation of major vehicle systems
+                  </li>
+                  <li>
+                    <span style={{ marginRight: SPACING.S }}>📋</span>
+                    <strong>Evidence-Based Evaluation</strong><br />
+                    Systematic analysis of patterns and indicators
+                  </li>
+                </PremiumFeatureList>
                 
                 <GovUKInsetText>
                   <strong>Verified data:</strong> All analysis is based on official DVLA records and manufacturer technical data processed through our correlation system.
                 </GovUKInsetText>
-              </FeatureCard>
+              </ReportSection>
               
               {/* Technical Assessment Information */}
-              <HighlightedCard>
+              <PremiumBanner>
                 <GovUKHeadingM>Technical Assessment Methodology</GovUKHeadingM>
                 
                 <GovUKBody>
                   The Premium Report provides a systematic technical assessment based on:
                 </GovUKBody>
                 
-                <SidebarList>
-                  <ListItemWithMargin>
+                <ul style={{ paddingLeft: SPACING.M }}>
+                  <li style={{ marginBottom: SPACING.S }}>
                     <GovUKBody>Pattern recognition of recurring issues</GovUKBody>
-                  </ListItemWithMargin>
-                  <ListItemWithMargin>
+                  </li>
+                  <li style={{ marginBottom: SPACING.S }}>
                     <GovUKBody>Correlation with manufacturer technical bulletins</GovUKBody>
-                  </ListItemWithMargin>
-                  <ListItemWithMargin>
+                  </li>
+                  <li style={{ marginBottom: SPACING.S }}>
                     <GovUKBody>Component lifecycle analysis using historical data</GovUKBody>
-                  </ListItemWithMargin>
+                  </li>
                   <li>
                     <GovUKBody>Evidence-based risk assessment for major systems</GovUKBody>
                   </li>
-                </SidebarList>
+                </ul>
                 
-                <BodyWithMarginTop>
+                <GovUKBody style={{ marginTop: SPACING.M }}>
                   This approach provides a comprehensive technical understanding of the vehicle's condition based on its documented history and known technical issues for that make and model.
-                </BodyWithMarginTop>
-              </HighlightedCard>
+                </GovUKBody>
+              </PremiumBanner>
               
               {/* Data Verification */}
-              <FeatureCard>
+              <ReportSection>
                 <GovUKHeadingM>Data Verification</GovUKHeadingM>
                 
-                <DataVerificationItem>
-                  <DataSourceBadge>
+                <MotHistoryItem style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ 
+                    width: '50px', 
+                    height: '50px', 
+                    backgroundColor: COLORS.BLUE, 
+                    color: COLORS.WHITE, 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontWeight: 'bold', 
+                    marginRight: SPACING.M, 
+                    fontSize: FONT_SIZES.S 
+                  }}>
                     DVLA
-                  </DataSourceBadge>
+                  </div>
                   <div>
-                    <BodyNoMargin>
+                    <GovUKBody style={{ marginBottom: 0 }}>
                       <strong>Official DVLA MOT Records</strong><br />
                       Direct from government database
-                    </BodyNoMargin>
+                    </GovUKBody>
                   </div>
-                </DataVerificationItem>
+                </MotHistoryItem>
                 
-                <DataVerificationItem>
-                  <DataSourceBadge>
+                <MotHistoryItem style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ 
+                    width: '50px', 
+                    height: '50px', 
+                    backgroundColor: COLORS.BLUE, 
+                    color: COLORS.WHITE, 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontWeight: 'bold', 
+                    marginRight: SPACING.M, 
+                    fontSize: FONT_SIZES.S 
+                  }}>
                     TSB
-                  </DataSourceBadge>
+                  </div>
                   <div>
-                    <BodyNoMargin>
+                    <GovUKBody style={{ marginBottom: 0 }}>
                       <strong>Technical Service Bulletins</strong><br />
                       Manufacturer-issued documents
-                    </BodyNoMargin>
+                    </GovUKBody>
                   </div>
-                </DataVerificationItem>
-              </FeatureCard>
+                </MotHistoryItem>
+              </ReportSection>
               
-              <SideButtonContainer>
+              <div style={{ textAlign: 'center', marginTop: SPACING.M }}>
                 <PremiumButton>
                   Get Vehicle Technical Report
                 </PremiumButton>
-              </SideButtonContainer>
+              </div>
             </GovUKGridColumnOneThird>
           </GovUKGridRow>
-        </ContentArea>
-      </MainContainer>
+        </div>
+      </div>
     </GovUKContainer>
   );
 };

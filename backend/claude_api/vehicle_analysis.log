@@ -270,3 +270,5 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-05-31 14:46:59,941 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 25.1929s
 2025-06-01 05:33:31,332 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-06-01 05:33:31,352 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-06-04 08:30:10,661 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-06-04 08:33:36,009 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL

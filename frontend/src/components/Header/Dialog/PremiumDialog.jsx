@@ -27,6 +27,7 @@ import {
   GovUKButton,
   GovUKList,
   GovUKListBullet,
+  BaseButton
 } from '../../../styles/theme'
 
 // Determine if we're in development or production
@@ -123,7 +124,7 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
         },
         body: JSON.stringify({
           registration,
-          amount: 1995, // £19.95 in pence
+          amount: 495, // £04.95 in pence
           email: email,
           receipt_email: email,
           report_url: reportUrl
@@ -293,7 +294,7 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
 
       <PremiumBanner>
         <GovUKBody style={{ marginBottom: '0' }}>
-          One-time payment of <PremiumPrice>£19.95</PremiumPrice>
+          One-time payment of <PremiumPrice>£4.95</PremiumPrice>
         </GovUKBody>
       </PremiumBanner>
       
@@ -572,44 +573,25 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
   );
 };
 
-// NEW: Combined button + dialog component for sample report
 export const FullScreenSampleReportButton = ({ className, onProceedToPayment }) => {
   const [open, setOpen] = useState(false);
   
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
-  
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const handleProceedToPayment = () => {
     setOpen(false);
-    if (onProceedToPayment) {
-      onProceedToPayment();
-    }
+    if (onProceedToPayment) onProceedToPayment();
   };
   
   return (
     <>
-      <GovUKButton
+      <BaseButton
         onClick={handleOpen}
+        variant="blue"
         className={className}
-        style={{
-          backgroundColor: '#1d70b8', // Blue color for sample report
-          marginRight: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px',
-          fontWeight: 700,
-          boxShadow: '0 2px 0 #003078',
-          padding: '10px 15px'
-        }}
       >
         View Free Sample Report
-      </GovUKButton>
+      </BaseButton>
       
       <SampleReportDialog 
         open={open} 

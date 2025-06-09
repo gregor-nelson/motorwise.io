@@ -4,7 +4,6 @@ import { styled, css } from '@mui/material/styles';
 // Constants and Theme Configuration
 // ======================================================
 
-// Colors refined to match GOV.UK palette exactly
 export const COLORS = {
   // Core colors
   BLACK: '#0b0c0c',
@@ -22,7 +21,7 @@ export const COLORS = {
   LINK_VISITED: '#4c2c92',
   LINK_HOVER: '#003078',
   LINK_ACTIVE: '#0b0c0c',
-  FOCUS: '#fd0', // Changed to match GOV.UK focus color
+  FOCUS: '#fd0',
   
   // Button-specific shades
   GREEN_HOVER: '#005a30',
@@ -43,14 +42,12 @@ export const COLORS = {
   PRINT_TEXT: '#000000',
 };
 
-// Breakpoints refined to match GOV.UK breakpoints exactly
 export const BREAKPOINTS = {
-  MOBILE: '40.0625em', // 650px - matches GOV.UK mobile breakpoint
-  TABLET: '48.0625em', // 769px - matches GOV.UK tablet breakpoint
-  DESKTOP: '64em',     // 1024px - matches GOV.UK desktop breakpoint
+  MOBILE: '40.0625em', // 650px
+  TABLET: '48.0625em', // 769px
+  DESKTOP: '64em',     // 1024px
 };
 
-// Spacing refined to match GOV.UK spacing scale
 export const SPACING = {
   NONE: '0',
   XS: '5px',
@@ -78,7 +75,6 @@ export const SPACING = {
   }
 };
 
-// Font sizes refined to match GOV.UK typography scale
 export const FONT_SIZES = {
   XS: '0.875rem',     // 14px
   S: '1rem',          // 16px
@@ -91,31 +87,27 @@ export const FONT_SIZES = {
   XXXXXL: '3rem'      // 48px
 };
 
-// Line heights refined to match GOV.UK line heights
 export const LINE_HEIGHTS = {
-  XS: 1.1428571429,  // For 14px
-  S: 1.25,           // For 16px
-  M: 1.3157894737,   // For 19px
-  L: 1.25,           // For 24px - Adjusted to match GOV.UK line height
-  XL: 1.1111111111,  // For 36px
-  XXL: 1.0416666667  // For 48px
+  XS: 1.1428571429,
+  S: 1.25,
+  M: 1.3157894737,
+  L: 1.25,
+  XL: 1.1111111111,
+  XXL: 1.0416666667
 };
 
 // ======================================================
 // Mixins & Common Styles
 // ======================================================
 
-// Media query helper - uses GOV.UK breakpoints
 export const respondTo = (breakpoint) => `@media (min-width: ${BREAKPOINTS[breakpoint]})`;
 
-// Common font styles - ensures GOV.UK typography is used consistently
 export const commonFontStyles = css`
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 `;
 
-// Print styles - ensures consistent styling for print
 export const printStyles = css`
   @media print {
     font-family: sans-serif;
@@ -123,7 +115,6 @@ export const printStyles = css`
   }
 `;
 
-// Focus styles - updated to match GOV.UK focus state exactly
 export const focusStyles = css`
   outline: 3px solid transparent;
   color: ${COLORS.BLACK};
@@ -134,7 +125,6 @@ export const focusStyles = css`
   box-decoration-break: clone;
 `;
 
-// Link hover styles - updated to match GOV.UK link hover state
 export const linkHoverStyles = css`
   text-decoration-thickness: max(3px, .1875rem, .12em);
   -webkit-text-decoration-skip-ink: none;
@@ -143,7 +133,6 @@ export const linkHoverStyles = css`
   text-decoration-skip: none;
 `;
 
-// Link styles - comprehensive styles for all link states
 export const linkStyles = css`
   ${commonFontStyles}
   text-decoration: underline;
@@ -189,7 +178,6 @@ export const linkStyles = css`
   }
 `;
 
-// Standard spacing pattern - responsive spacing for components
 export const standardSpacing = css`
   margin-bottom: ${SPACING.L};
   
@@ -198,7 +186,14 @@ export const standardSpacing = css`
   }
 `;
 
-// Typography base styles - base styles for all text elements
+export const responsiveSpacing = (mobileSpacing, desktopSpacing) => css`
+  margin-bottom: ${mobileSpacing};
+  
+  ${respondTo('MOBILE')} {
+    margin-bottom: ${desktopSpacing};
+  }
+`;
+
 export const typographyBase = css`
   ${commonFontStyles}
   color: ${COLORS.BLACK};
@@ -207,10 +202,9 @@ export const typographyBase = css`
   ${printStyles}
 `;
 
-// Base for all button styles - updated to match GOV.UK button base styles
 export const buttonBase = css`
   ${commonFontStyles}
-  font-weight: 400;
+  font-weight: 700;
   font-size: ${FONT_SIZES.S};
   line-height: 1.1875;
   box-sizing: border-box;
@@ -261,9 +255,12 @@ export const buttonBase = css`
   &:active::before {
     top: -4px;
   }
+
+  &:active {
+    top: 2px;
+  }
 `;
 
-// Button variant styles - updated to match GOV.UK button variants
 export const buttonVariants = {
   primary: css`
     color: ${COLORS.WHITE};
@@ -273,10 +270,6 @@ export const buttonVariants = {
     &:hover {
       background-color: ${COLORS.GREEN_HOVER};
     }
-
-    &:active {
-      top: 2px;
-    }
   `,
   blue: css`
     color: ${COLORS.WHITE};
@@ -285,10 +278,6 @@ export const buttonVariants = {
     
     &:hover {
       background-color: ${COLORS.BLUE_HOVER};
-    }
-
-    &:active {
-      top: 2px;
     }
   `,
   secondary: css`
@@ -303,10 +292,6 @@ export const buttonVariants = {
     &:focus {
       color: ${COLORS.BLACK};
     }
-
-    &:active {
-      top: 2px;
-    }
   `,
   warning: css`
     color: ${COLORS.WHITE};
@@ -316,14 +301,9 @@ export const buttonVariants = {
     &:hover {
       background-color: ${COLORS.RED_HOVER};
     }
-
-    &:active {
-      top: 2px;
-    }
   `
 };
 
-// Generic form control styles - updated to match GOV.UK form controls
 export const formControlBase = css`
   ${commonFontStyles}
   font-weight: 400;
@@ -333,7 +313,7 @@ export const formControlBase = css`
   width: 100%;
   height: 40px;
   margin-top: 0;
-  padding: 5px;
+  padding: ${SPACING.XS};
   border: 2px solid ${COLORS.BLACK};
   border-radius: 0;
   
@@ -353,7 +333,6 @@ export const formControlBase = css`
 // Layout Components
 // ======================================================
 
-// Updated container to exactly match GOV.UK width container
 export const GovUKContainer = styled('div')`
   max-width: 1280px;
   margin-right: ${SPACING.M};
@@ -385,7 +364,6 @@ export const GovUKContainer = styled('div')`
   }
 `;
 
-// Updated main wrapper to match GOV.UK main wrapper
 export const GovUKMainWrapper = styled('main')`
   display: block;
   padding-top: ${SPACING.L};
@@ -406,7 +384,6 @@ export const GovUKMainWrapper = styled('main')`
   }
 `;
 
-// Updated grid row to match GOV.UK grid row
 export const GovUKGridRow = styled('div')`
   margin-right: -${SPACING.M};
   margin-left: -${SPACING.M};
@@ -418,76 +395,71 @@ export const GovUKGridRow = styled('div')`
   }
 `;
 
-// Base grid column for DRY code - updated for better responsiveness
-const GridColumnBase = styled('div')`
+// Consolidated Grid Column Component
+const GridColumn = styled('div')`
   box-sizing: border-box;
   width: 100%;
   padding: 0 ${SPACING.M};
 
   ${respondTo('TABLET')} {
     float: left;
-  }
-`;
-
-// Updated grid columns to match GOV.UK grid columns
-export const GovUKGridColumnOneThird = styled(GridColumnBase)`
-  ${respondTo('MOBILE')} {
-    width: 33.3333%;
-  }
-`;
-
-export const GovUKGridColumnOneHalf = styled(GridColumnBase)`
-  ${respondTo('MOBILE')} {
-    width: 50%;
-  }
-`;
-
-export const GovUKGridColumnTwoThirds = styled(GridColumnBase)`
-  ${respondTo('MOBILE')} {
-    width: 66.6667%;
-  }
-`;
-
-export const GovUKGridColumnFull = styled(GridColumnBase)`
-  width: 100%;
-`;
-
-// Responsive grid column that stacks on mobile
-export const GovUKGridColumnResponsive = styled(GridColumnBase)`
-  width: 100%;
-  
-  ${respondTo('MOBILE')} {
     width: ${props => props.width || '100%'};
   }
 `;
+
+// Preserve original exports for backward compatibility
+
+
+export const GovUKGridColumnOneThird = styled(GridColumn)`
+  ${respondTo('TABLET')} {
+    width: 33.3333%;
+  }
+`;
+export const GovUKGridColumnOneHalf = styled(GridColumn)`
+  ${respondTo('TABLET')} {
+    width: 50%;
+  }
+`;
+export const GovUKGridColumnTwoThirds = styled(GridColumn)`
+  ${respondTo('TABLET')} {
+    width: 66.6667%;
+  }
+`;
+export const GovUKGridColumnFull = styled(GridColumn)`
+  ${respondTo('TABLET')} {
+    width: 100%;
+  }
+`;
+
+export const GovUKGridColumnResponsive = GridColumn;
 
 // ======================================================
 // Typography Components
 // ======================================================
 
-// Enhanced factory function for heading components with theme constants
-const createHeading = (fontSize, mobileFontSize, lineHeight, mobileLineHeight, marginBottom, mobileMarginBottom, printFontSize, printLineHeight) => styled('h2')`
+// Base Typography Component
+const BaseTypography = styled('div')`
   ${typographyBase}
-  font-weight: 700;
-  font-size: ${fontSize};
-  line-height: ${lineHeight};
-  margin-bottom: ${marginBottom};
+  font-weight: ${props => props.weight || 400};
+  font-size: ${props => props.size || FONT_SIZES.S};
+  line-height: ${props => props.lineHeight || LINE_HEIGHTS.S};
+  margin-bottom: ${props => props.marginBottom || SPACING.M};
+  color: ${props => props.color || COLORS.BLACK};
   
   ${respondTo('MOBILE')} {
-    font-size: ${mobileFontSize};
-    line-height: ${mobileLineHeight};
-    margin-bottom: ${mobileMarginBottom};
+    font-size: ${props => props.mobileSize || props.size || FONT_SIZES.L};
+    line-height: ${props => props.mobileLineHeight || props.lineHeight || LINE_HEIGHTS.M};
+    margin-bottom: ${props => props.mobileMarginBottom || props.marginBottom || SPACING.L};
   }
   
   @media print {
-    font-size: ${printFontSize};
-    line-height: ${printLineHeight};
+    font-size: ${props => props.printSize || '14pt'};
+    line-height: ${props => props.printLineHeight || '1.15'};
   }
 `;
 
-// Updated heading styles to match GOV.UK headings
-export const GovUKHeadingXL = styled('h1')`
-  ${typographyBase}
+// Heading components using BaseTypography
+export const GovUKHeadingXL = styled(BaseTypography.withComponent('h1'))`
   color: ${props => props.motStatus === 'PASS' ? COLORS.GREEN : props.motStatus ? COLORS.RED : COLORS.BLACK};
   font-weight: 700;
   font-size: ${FONT_SIZES.XXXL};
@@ -506,36 +478,71 @@ export const GovUKHeadingXL = styled('h1')`
   }
 `;
 
-export const GovUKHeadingL = createHeading(
-  FONT_SIZES.XXL, FONT_SIZES.XXXXL, 
-  LINE_HEIGHTS.L, LINE_HEIGHTS.XL, 
-  SPACING.L, SPACING.XL, 
-  '24pt', '1.05'
-);
+export const GovUKHeadingL = styled('h2')`
+  ${typographyBase}
+  font-weight: 700;
+  font-size: ${FONT_SIZES.XXL};
+  line-height: ${LINE_HEIGHTS.L};
+  margin-bottom: ${SPACING.L};
+  
+  ${respondTo('MOBILE')} {
+    font-size: ${FONT_SIZES.XXXXL};
+    line-height: ${LINE_HEIGHTS.XL};
+    margin-bottom: ${SPACING.XL};
+  }
+  
+  @media print {
+    font-size: 24pt;
+    line-height: 1.05;
+  }
+`;
 
-export const GovUKHeadingM = createHeading(
-  FONT_SIZES.XL, FONT_SIZES.XXL, 
-  LINE_HEIGHTS.S, LINE_HEIGHTS.L, 
-  SPACING.M, SPACING.L, 
-  '18pt', '1.15'
-);
+export const GovUKHeadingM = styled('h2')`
+  ${typographyBase}
+  font-weight: 700;
+  font-size: ${FONT_SIZES.XL};
+  line-height: ${LINE_HEIGHTS.S};
+  margin-bottom: ${SPACING.M};
+  
+  ${respondTo('MOBILE')} {
+    font-size: ${FONT_SIZES.XXL};
+    line-height: ${LINE_HEIGHTS.L};
+    margin-bottom: ${SPACING.L};
+  }
+  
+  @media print {
+    font-size: 18pt;
+    line-height: 1.15;
+  }
+`;
 
-export const GovUKHeadingS = createHeading(
-  FONT_SIZES.S, FONT_SIZES.M, 
-  LINE_HEIGHTS.S, LINE_HEIGHTS.M, 
-  SPACING.M, SPACING.L, 
-  '14pt', '1.15'
-);
+export const GovUKHeadingS = styled('h2')`
+  ${typographyBase}
+  font-weight: 700;
+  font-size: ${FONT_SIZES.S};
+  line-height: ${LINE_HEIGHTS.S};
+  margin-bottom: ${SPACING.M};
+  
+  ${respondTo('MOBILE')} {
+    font-size: ${FONT_SIZES.M};
+    line-height: ${LINE_HEIGHTS.M};
+    margin-bottom: ${SPACING.L};
+  }
+  
+  @media print {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+`;
 
-// Updated caption styles to match GOV.UK caption
 export const GovUKCaptionM = styled('span')`
   ${typographyBase}
   font-weight: 400;
   font-size: ${FONT_SIZES.S};
   line-height: ${LINE_HEIGHTS.S};
   color: ${COLORS.DARK_GREY};
-  display: block;
   margin-bottom: 5px;
+  display: block;
   
   ${respondTo('MOBILE')} {
     font-size: ${FONT_SIZES.L};
@@ -547,19 +554,17 @@ export const GovUKCaptionM = styled('span')`
     line-height: 1.15;
   }
 `;
-
-// Enhanced factory function for body text components with theme constants
-const createBodyText = (fontSize, mobileFontSize, lineHeight, mobileLineHeight, marginBottom, mobileMarginBottom) => styled('p')`
+export const GovUKBody = styled('p')`
   ${typographyBase}
   font-weight: 400;
-  font-size: ${fontSize};
-  line-height: ${lineHeight};
-  margin-bottom: ${marginBottom};
+  font-size: ${FONT_SIZES.S};
+  line-height: ${LINE_HEIGHTS.S};
+  margin-bottom: ${SPACING.M};
   
   ${respondTo('MOBILE')} {
-    font-size: ${mobileFontSize};
-    line-height: ${mobileLineHeight};
-    margin-bottom: ${mobileMarginBottom};
+    font-size: ${FONT_SIZES.L};
+    line-height: ${LINE_HEIGHTS.M};
+    margin-bottom: ${SPACING.L};
   }
   
   @media print {
@@ -568,43 +573,36 @@ const createBodyText = (fontSize, mobileFontSize, lineHeight, mobileLineHeight, 
   }
 `;
 
-// Updated body text styles to match GOV.UK body text
-export const GovUKBody = createBodyText(
-  FONT_SIZES.S, FONT_SIZES.L, 
-  LINE_HEIGHTS.S, LINE_HEIGHTS.M, 
-  SPACING.M, SPACING.L
-);
-
-export const GovUKBodyS = createBodyText(
-  FONT_SIZES.XS, FONT_SIZES.S, 
-  LINE_HEIGHTS.XS, LINE_HEIGHTS.S, 
-  SPACING.M, SPACING.L
-);
-
-// Updated link styles to match GOV.UK links
-export const GovUKLink = styled('a')`
-  ${linkStyles}
+// REPLACE: GovUKBodyS
+export const GovUKBodyS = styled('p')`
+  ${typographyBase}
+  font-weight: 400;
+  font-size: ${FONT_SIZES.XS};
+  line-height: ${LINE_HEIGHTS.XS};
+  margin-bottom: ${SPACING.M};
+  
+  ${respondTo('MOBILE')} {
+    font-size: ${FONT_SIZES.S};
+    line-height: ${LINE_HEIGHTS.S};
+    margin-bottom: ${SPACING.L};
+  }
   
   @media print {
-    &[href^="/"]::after,
-    &[href^="http://"]::after,
-    &[href^="https://"]::after {
-      content: " (" attr(href) ")";
-      font-size: 90%;
-      word-wrap: break-word;
-    }
+    font-size: 14pt;
+    line-height: 1.15;
   }
 `;
 
-// Updated list styles to match GOV.UK lists
-export const GovUKList = styled('ul')`
+export const GovUKLink = styled('a')`
+  ${linkStyles}
+`;
+
+const BaseList = styled('ul')`
   ${typographyBase}
   font-weight: 400;
   font-size: ${FONT_SIZES.S};
   line-height: ${LINE_HEIGHTS.S};
   margin-bottom: ${SPACING.M};
-  padding-left: 0;
-  list-style-type: none;
   
   ${respondTo('MOBILE')} {
     font-size: ${FONT_SIZES.L};
@@ -620,24 +618,20 @@ export const GovUKList = styled('ul')`
     margin-bottom: ${SPACING.XS};
   }
 `;
-
-// Bulleted list variant
-export const GovUKListBullet = styled(GovUKList)`
+export const GovUKList = BaseList;
+export const GovUKListBullet = styled(BaseList)`
   padding-left: 20px;
   list-style-type: disc;
 `;
 
-// Numbered list variant
-export const GovUKListNumber = styled(GovUKList)`
+export const GovUKListNumber = styled(BaseList)`
   padding-left: 20px;
   list-style-type: decimal;
 `;
-
 // ======================================================
 // Section Break Component
 // ======================================================
 
-// Updated section break to match GOV.UK section break
 export const GovUKSectionBreak = styled('hr')`
   margin: 0;
   border: 0;
@@ -671,18 +665,13 @@ export const GovUKSectionBreak = styled('hr')`
 // Form Components
 // ======================================================
 
-// Updated form group to match GOV.UK form group
 export const GovUKFormGroup = styled('div')`
-  margin-bottom: ${SPACING.L};
+  ${standardSpacing}
   
   &::after {
     content: "";
     display: block;
     clear: both;
-  }
-  
-  ${respondTo('MOBILE')} {
-    margin-bottom: ${SPACING.XL};
   }
   
   & .govuk-form-group:last-of-type {
@@ -695,7 +684,6 @@ export const GovUKFormGroup = styled('div')`
   }
 `;
 
-// Updated hint to match GOV.UK hint
 export const GovUKHint = styled('div')`
   ${typographyBase}
   font-weight: 400;
@@ -710,13 +698,11 @@ export const GovUKHint = styled('div')`
   }
 `;
 
-// Updated label to match GOV.UK label
 export const GovUKLabel = styled('label')`
   ${typographyBase}
   font-weight: 400;
   font-size: ${FONT_SIZES.S};
   line-height: ${LINE_HEIGHTS.S};
-  display: block;
   margin-bottom: ${SPACING.XS};
   
   ${respondTo('MOBILE')} {
@@ -725,36 +711,25 @@ export const GovUKLabel = styled('label')`
   }
 `;
 
-// Updated input to match GOV.UK input
 export const GovUKInput = styled('input')`
   ${formControlBase}
-  height: 40px;
-  padding: 5px;
-  border: 2px solid ${props => props.error ? COLORS.RED : COLORS.BLACK};
-  border-radius: 0;
+  border-color: ${props => props.error ? COLORS.RED : COLORS.BLACK};
   -webkit-appearance: none;
   appearance: none;
-  
-  &:focus {
-    outline: 3px solid ${COLORS.FOCUS};
-    outline-offset: 0;
-    box-shadow: inset 0 0 0 2px;
-  }
   
   &.govuk-input--error {
     border-color: ${COLORS.RED};
   }
 `;
 
-// Updated error message to match GOV.UK error message
 export const GovUKErrorMessage = styled('span')`
   ${typographyBase}
   font-weight: 700;
   font-size: ${FONT_SIZES.S};
   line-height: ${LINE_HEIGHTS.S};
   margin-bottom: ${SPACING.M};
-  clear: both;
   color: ${COLORS.RED};
+  clear: both;
   
   ${respondTo('MOBILE')} {
     font-size: ${FONT_SIZES.L};
@@ -762,29 +737,34 @@ export const GovUKErrorMessage = styled('span')`
   }
 `;
 
-// Updated button to match GOV.UK button
-export const GovUKButton = styled('button', {
-  shouldForwardProp: (prop) => prop !== 'noMargin'
+// Base Button Component
+export const BaseButton = styled('button', {
+  shouldForwardProp: (prop) => !['variant', 'noMargin'].includes(prop)
 })`
   ${buttonBase}
-  background-color: ${COLORS.GREEN};
-  color: ${COLORS.WHITE};
-  box-shadow: 0 2px 0 ${COLORS.GREEN_DARK};
+  ${props => props.variant ? buttonVariants[props.variant] : buttonVariants.primary}
   margin-bottom: ${props => props.noMargin ? '0' : '22px'};
   
   ${respondTo('MOBILE')} {
     margin-bottom: ${props => props.noMargin ? '0' : '32px'};
   }
   
-  &:hover {
-    background-color: ${COLORS.GREEN_HOVER};
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: ${props => {
+        if (props.variant === 'secondary') return COLORS.LIGHT_GREY;
+        if (props.variant === 'warning') return COLORS.RED;
+        if (props.variant === 'blue') return COLORS.BLUE;
+        return COLORS.GREEN;
+      }};
+    }
   }
+`;
 
-  &:active {
-    top: 2px;
-    box-shadow: none;
-  }
-  
+export const GovUKButton = styled(BaseButton)`
   &.govuk-button--start {
     font-weight: 700;
     font-size: ${FONT_SIZES.M};
@@ -800,36 +780,19 @@ export const GovUKButton = styled('button', {
   }
 
   &.govuk-button--secondary {
-    background-color: ${COLORS.LIGHT_GREY};
-    box-shadow: 0 2px 0 ${COLORS.DARK_GREY};
-    color: ${COLORS.BLACK};
-    
-    &:hover {
-      background-color: ${COLORS.LIGHT_GREY_HOVER};
-    }
+    ${buttonVariants.secondary}
   }
 
   &.govuk-button--warning {
-    background-color: ${COLORS.RED};
-    box-shadow: 0 2px 0 ${COLORS.RED_DARK};
-    
-    &:hover {
-      background-color: ${COLORS.RED_HOVER};
-    }
+    ${buttonVariants.warning}
   }
 
-  &:disabled {
-    opacity: 0.5;
-    background-color: ${COLORS.GREEN};
-    cursor: not-allowed;
-    
-    &:hover {
-      background-color: ${COLORS.GREEN};
-    }
+  &:active {
+    top: 2px;
+    box-shadow: none;
   }
 `;
 
-// Updated button start icon to match GOV.UK button start icon
 export const GovUKButtonStartIcon = styled('svg')`
   margin-left: ${SPACING.XS};
   vertical-align: middle;
@@ -846,7 +809,6 @@ export const GovUKButtonStartIcon = styled('svg')`
 // Navigation Components
 // ======================================================
 
-// Updated back link to match GOV.UK back link
 export const GovUKBackLink = styled('a')`
   ${commonFontStyles}
   font-size: ${FONT_SIZES.XS};
@@ -911,22 +873,19 @@ export const GovUKBackLink = styled('a')`
 // Details Component
 // ======================================================
 
-// Updated details to match GOV.UK details
 export const GovUKDetails = styled('details')`
   ${typographyBase}
   font-weight: 400;
   font-size: ${FONT_SIZES.S};
   line-height: ${LINE_HEIGHTS.S};
-  margin-bottom: ${SPACING.L};
+  ${standardSpacing}
   
   ${respondTo('MOBILE')} {
     font-size: ${FONT_SIZES.L};
     line-height: ${LINE_HEIGHTS.M};
-    margin-bottom: ${SPACING.XL};
   }
 `;
 
-// Updated details summary to match GOV.UK details summary
 export const GovUKDetailsSummary = styled('summary')`
   display: block;
   position: relative;
@@ -957,12 +916,11 @@ export const GovUKDetailsSummary = styled('summary')`
   }
 `;
 
-// Updated details text to match GOV.UK details text
 export const GovUKDetailsText = styled('div')`
   padding: ${SPACING.M};
   padding-left: ${SPACING.L};
   border-left: 5px solid ${COLORS.MID_GREY};
-  margin-top: 5px;
+  margin-top: ${SPACING.XS};
   
   & > p {
     margin-top: 0;
@@ -978,7 +936,6 @@ export const GovUKDetailsText = styled('div')`
 // Error Summary Component
 // ======================================================
 
-// Updated error summary to match GOV.UK error summary
 export const GovUKErrorSummary = styled('div')`
   ${typographyBase}
   font-weight: 400;
@@ -1000,12 +957,9 @@ export const GovUKErrorSummary = styled('div')`
   }
 `;
 
-// Updated error summary title to match GOV.UK error summary title
-export const GovUKErrorSummaryTitle = styled('h2')`
+export const GovUKErrorSummaryTitle = styled(GovUKHeadingS)`
   font-size: ${FONT_SIZES.M};
-  line-height: 1.1111111111;
-  font-weight: 700;
-  margin-top: 0;
+  line-height: ${LINE_HEIGHTS.XL};
   margin-bottom: ${SPACING.M};
   
   ${respondTo('MOBILE')} {
@@ -1015,14 +969,12 @@ export const GovUKErrorSummaryTitle = styled('h2')`
   }
 `;
 
-// Updated error summary body to match GOV.UK error summary body
 export const GovUKErrorSummaryBody = styled('div')`
   & p {
     margin-bottom: 0;
   }
 `;
 
-// Updated error summary list to match GOV.UK error summary list
 export const GovUKErrorSummaryList = styled('ul')`
   margin-bottom: 0;
   padding-left: 0;
@@ -1054,7 +1006,6 @@ export const GovUKErrorSummaryList = styled('ul')`
 // Inset Text Component
 // ======================================================
 
-// Updated inset text to match GOV.UK inset text
 export const GovUKInsetText = styled('div')`
   ${typographyBase}
   font-weight: 400;
@@ -1086,7 +1037,6 @@ export const GovUKInsetText = styled('div')`
 // Header Components
 // ======================================================
 
-// Updated skip link to match GOV.UK skip link
 export const GovUKSkipLink = styled('a')`
   ${commonFontStyles}
   font-size: ${FONT_SIZES.XS};
@@ -1124,7 +1074,6 @@ export const GovUKSkipLink = styled('a')`
   }
 `;
 
-// Updated header to match GOV.UK header
 export const GovUKHeader = styled('header')`
   ${commonFontStyles}
   font-weight: 400;
@@ -1140,7 +1089,6 @@ export const GovUKHeader = styled('header')`
   }
 `;
 
-// Updated header container to match GOV.UK header container
 export const GovUKHeaderContainer = styled('div')`
   position: relative;
   margin-bottom: -10px;
@@ -1154,7 +1102,6 @@ export const GovUKHeaderContainer = styled('div')`
   }
 `;
 
-// Updated header logo to match GOV.UK header logo
 export const GovUKHeaderLogo = styled('div')`
   margin-bottom: ${SPACING.S};
   padding-right: 80px;
@@ -1167,7 +1114,6 @@ export const GovUKHeaderLogo = styled('div')`
   }
 `;
 
-// Updated header content to match GOV.UK header content
 export const GovUKHeaderContent = styled('div')`
   ${respondTo('TABLET')} {
     width: 66.66%;
@@ -1176,7 +1122,6 @@ export const GovUKHeaderContent = styled('div')`
   }
 `;
 
-// Updated header link to match GOV.UK header link
 export const GovUKHeaderLink = styled('a')`
   ${commonFontStyles}
   text-decoration: none;
@@ -1216,13 +1161,12 @@ export const GovUKHeaderLink = styled('a')`
   `}
 `;
 
-// Updated header service name to match GOV.UK header service name
 export const GovUKHeaderServiceName = styled('a')`
   ${commonFontStyles}
   display: inline-block;
   margin-bottom: ${SPACING.S};
   font-size: ${FONT_SIZES.M};
-  line-height: 1.1111111111;
+  line-height: ${LINE_HEIGHTS.XL};
   font-weight: 700;
   
   &:link, &:visited {
@@ -1240,13 +1184,11 @@ export const GovUKHeaderServiceName = styled('a')`
   }
 `;
 
-// Updated header logotype to match GOV.UK header logotype
 export const GovUKHeaderLogotype = styled('span')`
   display: inline-flex;
   align-items: center;
 `;
 
-// Updated header logotype text to match GOV.UK header logotype text
 export const GovUKHeaderLogotypeText = styled('span')`
   ${commonFontStyles}
   font-weight: 700;
@@ -1263,14 +1205,12 @@ export const GovUKHeaderLogotypeText = styled('span')`
 // Phase Banner Components
 // ======================================================
 
-// Updated phase banner to match GOV.UK phase banner
 export const GovUKPhaseBanner = styled('div')`
   padding-top: ${SPACING.S};
   padding-bottom: ${SPACING.S};
   border-bottom: 1px solid ${COLORS.MID_GREY};
 `;
 
-// Updated phase banner content to match GOV.UK phase banner content
 export const GovUKPhaseBannerContent = styled('p')`
   ${commonFontStyles}
   font-weight: 400;
@@ -1286,7 +1226,6 @@ export const GovUKPhaseBannerContent = styled('p')`
   }
 `;
 
-// Updated phase banner tag to match GOV.UK phase banner tag
 export const GovUKPhaseBannerTag = styled('strong')`
   display: inline-block;
   margin-right: ${SPACING.S};
@@ -1304,7 +1243,6 @@ export const GovUKPhaseBannerTag = styled('strong')`
   }
 `;
 
-// Updated phase banner text to match GOV.UK phase banner text
 export const GovUKPhaseBannerText = styled('span')`
   display: table-cell;
   vertical-align: middle;
@@ -1314,7 +1252,6 @@ export const GovUKPhaseBannerText = styled('span')`
 // Footer Components
 // ======================================================
 
-// Updated footer to match GOV.UK footer
 export const GovUKFooter = styled('footer')`
   ${commonFontStyles}
   font-weight: 400;
@@ -1334,7 +1271,6 @@ export const GovUKFooter = styled('footer')`
   }
 `;
 
-// Updated footer meta to match GOV.UK footer meta
 export const GovUKFooterMeta = styled('div')`
   display: flex;
   margin-right: -${SPACING.M};
@@ -1344,7 +1280,6 @@ export const GovUKFooterMeta = styled('div')`
   justify-content: center;
 `;
 
-// Updated footer meta item to match GOV.UK footer meta item
 export const GovUKFooterMetaItem = styled('div')`
   margin-right: ${SPACING.M};
   margin-bottom: 25px;
@@ -1359,7 +1294,6 @@ export const GovUKFooterMetaItem = styled('div')`
   `}
 `;
 
-// Updated visually hidden to match GOV.UK visually hidden
 export const GovUKVisuallyHidden = styled('span')`
   position: absolute !important;
   width: 1px !important;
@@ -1377,7 +1311,6 @@ export const GovUKVisuallyHidden = styled('span')`
   user-select: none;
 `;
 
-// Updated footer inline list to match GOV.UK footer inline list
 export const GovUKFooterInlineList = styled('ul')`
   margin-top: 0;
   margin-bottom: ${SPACING.M};
@@ -1385,7 +1318,6 @@ export const GovUKFooterInlineList = styled('ul')`
   list-style: none;
 `;
 
-// Updated footer inline list item to match GOV.UK footer inline list item
 export const GovUKFooterInlineListItem = styled('li')`
   display: inline-block;
   margin-right: ${SPACING.M};
@@ -1393,7 +1325,6 @@ export const GovUKFooterInlineListItem = styled('li')`
   line-height: ${LINE_HEIGHTS.S};
 `;
 
-// Updated footer link to match GOV.UK footer link
 export const GovUKFooterLink = styled(GovUKLink)`
   &:link, &:visited {
     color: ${COLORS.BLACK};
@@ -1408,13 +1339,11 @@ export const GovUKFooterLink = styled(GovUKLink)`
   }
 `;
 
-// Updated footer meta custom to match GOV.UK footer meta custom
 export const GovUKFooterMetaCustom = styled(GovUKBody)`
   margin-top: ${SPACING.L};
   margin-bottom: ${SPACING.S};
 `;
 
-// Updated footer licence logo to match GOV.UK footer licence logo
 export const GovUKFooterLicenceLogo = styled('svg')`
   margin-right: ${SPACING.S};
   margin-bottom: ${SPACING.XS};
@@ -1422,13 +1351,11 @@ export const GovUKFooterLicenceLogo = styled('svg')`
   vertical-align: top;
 `;
 
-// Updated footer licence description to match GOV.UK footer licence description
 export const GovUKFooterLicenceDescription = styled(GovUKBodyS)`
   margin-top: ${SPACING.S};
   display: inline-block;
 `;
 
-// Updated footer copyright logo to match GOV.UK footer copyright logo
 export const GovUKFooterCopyrightLogo = styled(GovUKLink)`
   display: inline-block;
   min-width: 125px;
@@ -1446,7 +1373,6 @@ export const GovUKFooterCopyrightLogo = styled(GovUKLink)`
 // Accordion Components
 // ======================================================
 
-// Updated accordion to match GOV.UK accordion
 export const GovUKAccordion = styled('div')`
   margin-bottom: ${SPACING.L};
   border-bottom: 1px solid ${COLORS.MID_GREY};
@@ -1456,17 +1382,14 @@ export const GovUKAccordion = styled('div')`
   }
 `;
 
-// Updated accordion section to match GOV.UK accordion section
 export const GovUKAccordionSection = styled('div')`
   border-top: 1px solid ${COLORS.MID_GREY};
 `;
 
-// Updated accordion section header to match GOV.UK accordion section header
 export const GovUKAccordionSectionHeader = styled('div')`
   padding: ${SPACING.M} 0;
 `;
 
-// Updated accordion section heading to match GOV.UK accordion section heading
 export const GovUKAccordionSectionHeading = styled('h2')`
   ${commonFontStyles}
   font-weight: 700;
@@ -1481,14 +1404,13 @@ export const GovUKAccordionSectionHeading = styled('h2')`
   }
 `;
 
-// Updated accordion section button to match GOV.UK accordion section button
 export const GovUKAccordionSectionButton = styled('button')`
   ${commonFontStyles}
   font-weight: 700;
   font-size: ${FONT_SIZES.XXL};
   line-height: ${LINE_HEIGHTS.S};
   width: 100%;
-  padding: 10px 0 0;
+  padding: ${SPACING.S} 0 0;
   border: 0;
   border-top: 1px solid ${COLORS.MID_GREY};
   border-bottom: 10px solid transparent;
@@ -1500,7 +1422,7 @@ export const GovUKAccordionSectionButton = styled('button')`
   ${respondTo('MOBILE')} {
     font-size: 1.875rem;
     line-height: 1.2;
-    padding-bottom: 10px;
+    padding-bottom: ${SPACING.S};
   }
   
   &:hover {
@@ -1512,7 +1434,6 @@ export const GovUKAccordionSectionButton = styled('button')`
   }
 `;
 
-// Updated accordion section summary to match GOV.UK accordion section summary
 export const GovUKAccordionSectionSummary = styled('div')`
   ${commonFontStyles}
   font-size: ${FONT_SIZES.S};
@@ -1526,7 +1447,6 @@ export const GovUKAccordionSectionSummary = styled('div')`
   }
 `;
 
-// Updated accordion section content to match GOV.UK accordion section content
 export const GovUKAccordionSectionContent = styled('div')`
   padding: ${SPACING.M} 0;
   display: ${props => props.hidden ? 'none' : 'block'};
@@ -1536,7 +1456,6 @@ export const GovUKAccordionSectionContent = styled('div')`
 // DVSA Vehicle Components
 // ======================================================
 
-// Updated vehicle registration to match DVSA VRM
 export const VehicleRegistration = styled('div')`
   ${commonFontStyles}
   display: inline-block;
@@ -1552,33 +1471,19 @@ export const VehicleRegistration = styled('div')`
   ${printStyles}
 `;
 
-// Updated vehicle heading to match DVSA heading
 export const VehicleHeading = styled(GovUKHeadingXL)`
-  margin-bottom: ${SPACING.L};
-  
-  ${respondTo('MOBILE')} {
-    margin-bottom: ${SPACING.XL};
-  }
+  ${standardSpacing}
 `;
 
-// Updated detail caption to match DVSA caption
 export const DetailCaption = styled(GovUKCaptionM)`
   margin-bottom: ${SPACING.XS};
 `;
 
-// Updated detail heading to match DVSA heading
-export const DetailHeading = styled(GovUKHeadingS)`
-  margin-bottom: ${SPACING.M};
-  
-  ${respondTo('MOBILE')} {
-    margin-bottom: ${SPACING.L};
-  }
-`;
+export const DetailHeading = styled(GovUKHeadingS)``;
 
-// Updated MOT caption to match DVSA MOT caption
 export const MOTCaption = styled(GovUKCaptionM)`
   font-size: ${FONT_SIZES.M};
-  line-height: 1.1111111111;
+  line-height: ${LINE_HEIGHTS.XL};
   margin-bottom: ${SPACING.XS};
   
   ${respondTo('MOBILE')} {
@@ -1588,7 +1493,6 @@ export const MOTCaption = styled(GovUKCaptionM)`
   }
 `;
 
-// Updated MOT due date to match DVSA MOT due date
 export const MOTDueDate = styled('div')`
   ${typographyBase}
   font-weight: 700;
@@ -1612,14 +1516,12 @@ export const MOTDueDate = styled('div')`
 // Loading Components
 // ======================================================
 
-// Updated loading container to match GOV.UK loading container
 export const GovUKLoadingContainer = styled('div')`
   text-align: center;
   padding: ${SPACING.XL} 0;
   margin: ${SPACING.L} 0;
 `;
 
-// Updated loading spinner to match GOV.UK loading spinner
 export const GovUKLoadingSpinner = styled('div')`
   display: inline-block;
   width: 50px;
@@ -1645,49 +1547,27 @@ export const GovUKLoadingSpinner = styled('div')`
 // Premium Components
 // ======================================================
 
-// Premium Button (Blue)
-export const PremiumButton = styled(GovUKButton)`
-  background-color: ${COLORS.BLUE};
-  box-shadow: 0 2px 0 ${COLORS.BLUE_DARK};
+// Consolidate premium buttons
+export const PremiumButton = styled(BaseButton)`
+  ${buttonVariants.blue}
   margin-top: ${SPACING.M};
   margin-bottom: ${SPACING.XL};
   width: auto;
   font-weight: 700;
-  
-  &:hover {
-    background-color: ${COLORS.BLUE_HOVER};
-  }
 `;
 
-// Primary Pay Button (Green)
-export const PayButtonPrimary = styled(GovUKButton)`
-  background-color: ${COLORS.GREEN};
-  box-shadow: 0 2px 0 ${COLORS.GREEN_DARK};
-  
-  &:hover {
-    background-color: ${COLORS.GREEN_HOVER};
-  }
+export const PayButtonPrimary = styled(BaseButton)`
+  ${buttonVariants.primary}
 `;
 
-// Secondary Pay Button (Grey)
-export const PayButtonSecondary = styled(GovUKButton)`
-  background-color: ${COLORS.MID_GREY};
-  color: ${COLORS.BLACK};
-  box-shadow: 0 2px 0 ${COLORS.DARK_GREY};
-  
-  &:hover {
-    background-color: ${COLORS.LIGHT_GREY_HOVER};
-  }
-  
-  &:focus {
-    color: ${COLORS.BLACK};
-  }
+// REPLACE: PayButtonSecondary
+export const PayButtonSecondary = styled(BaseButton)`
+  ${buttonVariants.secondary}
 `;
 
-// Link Pay Button (Blue)
-export const LinkPayButton = styled(GovUKButton)`
-  background-color: ${COLORS.BLUE};
-  box-shadow: 0 2px 0 ${COLORS.BLUE_DARK};
+// REPLACE: LinkPayButton
+export const LinkPayButton = styled(BaseButton)`
+  ${buttonVariants.blue}
   margin-right: 0;
   margin-bottom: 22px;
   width: 100%;
@@ -1697,11 +1577,8 @@ export const LinkPayButton = styled(GovUKButton)`
     margin-right: ${SPACING.S};
     margin-bottom: 32px;
   }
-  
-  &:hover {
-    background-color: ${COLORS.BLUE_HOVER};
-  }
 `;
+
 
 // Form components
 export const StyledCardElement = styled('div')`
@@ -1749,6 +1626,10 @@ export const PremiumPrice = styled('span')`
   margin-left: ${SPACING.XS};
 `;
 
+// ======================================================
+// Premium Components (Continued)
+// ======================================================
+
 export const PremiumInfoPanel = styled('div')`
   ${commonFontStyles}
   padding: ${SPACING.M};
@@ -1765,12 +1646,16 @@ export const PremiumInfoPanel = styled('div')`
 export const PremiumFeatureList = styled(GovUKList)`
   margin-top: ${SPACING.M};
   
+  ${respondTo('MOBILE')} {
+    margin-top: ${SPACING.L};
+  }
+  
   & > li {
     margin-bottom: ${SPACING.S};
     position: relative;
-    padding-left: ${SPACING.M};
+    padding-left: ${SPACING.L};
     
-    &:before {
+    &::before {
       content: "✓";
       color: ${COLORS.GREEN};
       font-weight: bold;
@@ -1778,41 +1663,52 @@ export const PremiumFeatureList = styled(GovUKList)`
       left: 0;
     }
   }
+`;
+
+// ======================================================
+// Report Components
+// ======================================================
+
+export const ReportSection = styled('section')`
+  margin-bottom: ${SPACING.XL};
   
   ${respondTo('MOBILE')} {
-    margin-top: ${SPACING.L};
+    margin-bottom: ${SPACING.XXXL};
   }
 `;
 
-// Content sections
-export const ReportSection = styled('div')`
-  margin-bottom: ${SPACING.XL};
-`;
-
 export const ReportTable = styled('table')`
+  ${commonFontStyles}
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
   margin-bottom: ${SPACING.L};
   
-  & th {
-    ${commonFontStyles}
-    font-weight: 700;
-    padding: ${SPACING.S};
-    text-align: left;
-    background-color: ${COLORS.LIGHT_GREY};
-    border: 1px solid ${COLORS.MID_GREY};
+  ${respondTo('MOBILE')} {
+    margin-bottom: ${SPACING.XL};
   }
   
+  & th,
   & td {
-    ${commonFontStyles}
     padding: ${SPACING.S};
-    border: 1px solid ${COLORS.MID_GREY};
     text-align: left;
+    border: 1px solid ${COLORS.MID_GREY};
   }
   
-  & tr:nth-of-type(even) {
+  & th {
+    font-weight: 700;
     background-color: ${COLORS.LIGHT_GREY};
+  }
+  
+  & tr:nth-of-type(even) td {
+    background-color: ${COLORS.LIGHT_GREY};
+  }
+  
+  @media print {
+    & th,
+    & td {
+      border: 1px solid ${COLORS.BLACK};
+    }
   }
 `;
 
@@ -1825,6 +1721,7 @@ export const MotHistoryItem = styled('div')`
   
   ${respondTo('MOBILE')} {
     padding: ${SPACING.L};
+    margin-bottom: ${SPACING.L};
   }
 `;
 
@@ -1832,18 +1729,22 @@ export const MotHistoryItem = styled('div')`
 // Dialog Components
 // ======================================================
 
-export const PaymentDialog = styled('div')`
+const DialogBase = css`
   ${commonFontStyles}
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1300;
+`;
+
+export const PaymentDialog = styled('div')`
+  ${DialogBase}
   display: ${props => props.open ? 'flex' : 'none'};
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1300;
   padding: ${SPACING.L};
 `;
 
@@ -1861,14 +1762,13 @@ export const DialogContainer = styled('div')`
   
   ${printStyles}
 `;
-
 export const DialogTitle = styled('h2')`
   ${typographyBase}
   font-weight: 700;
   font-size: ${FONT_SIZES.XXL};
   line-height: ${LINE_HEIGHTS.XXL};
+  margin-bottom: 0;
   padding: ${SPACING.M} ${SPACING.L};
-  margin: 0;
   border-bottom: 1px solid ${COLORS.MID_GREY};
   
   ${respondTo('MOBILE')} {
@@ -1915,6 +1815,7 @@ export const TabsContainer = styled('div')`
 
   ${respondTo('MOBILE')} {
     border-bottom: 1px solid ${COLORS.MID_GREY};
+    margin-bottom: ${SPACING.XL};
   }
 `;
 
@@ -1925,6 +1826,20 @@ export const TabsList = styled('div')`
   @media (max-width: ${BREAKPOINTS.MOBILE}) {
     flex-direction: column;
   }
+  
+  ${respondTo('MOBILE')} {
+    flex-direction: row;
+  }
+`;
+
+const tabSelectedStyles = css`
+  position: relative;
+  margin-top: -5px;
+  margin-bottom: -1px;
+  padding: 14px 19px 16px;
+  border: 1px solid ${COLORS.MID_GREY};
+  border-bottom: 0;
+  background-color: ${COLORS.WHITE};
 `;
 
 export const TabButton = styled('button')`
@@ -1946,32 +1861,26 @@ export const TabButton = styled('button')`
     font-size: ${FONT_SIZES.L};
     line-height: ${LINE_HEIGHTS.M};
     padding: ${SPACING.M} ${SPACING.L};
-    position: relative;
     margin-right: 5px;
     margin-bottom: 0;
     float: left;
     background-color: ${props => props.selected ? COLORS.WHITE : COLORS.LIGHT_GREY};
-    text-align: center;
-
-    ${props => props.selected && css`
-      position: relative;
-      margin-top: -5px;
-      margin-bottom: -1px;
-      padding-top: 14px;
-      padding-right: 19px;
-      padding-bottom: 16px;
-      padding-left: 19px;
-      border: 1px solid ${COLORS.MID_GREY};
-      border-bottom: 0;
-    `}
+    border-bottom: none;
+    
+    ${props => props.selected && tabSelectedStyles}
   }
   
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: ${COLORS.LIGHT_GREY};
   }
   
   &:focus {
     ${focusStyles}
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
@@ -1991,7 +1900,7 @@ export const TabPanel = styled('div')`
 // ======================================================
 
 export const PaymentMethodContainer = styled('div')`
-  margin-bottom: ${SPACING.L};
+  ${standardSpacing}
   
   ${respondTo('MOBILE')} {
     margin-bottom: ${SPACING.XL};
@@ -2002,14 +1911,14 @@ export const WalletButtonContainer = styled('div')`
   margin-top: ${SPACING.M};
   margin-bottom: ${SPACING.M};
   
-  .StripePaymentRequestButton {
-    width: 100%;
-    max-width: 300px;
-  }
-  
   ${respondTo('MOBILE')} {
     margin-top: ${SPACING.L};
     margin-bottom: ${SPACING.L};
+  }
+  
+  .StripePaymentRequestButton {
+    width: 100%;
+    max-width: 300px;
   }
 `;
 
@@ -2017,41 +1926,41 @@ export const PaymentFormActions = styled('div')`
   display: flex;
   flex-direction: column;
   margin-top: ${SPACING.L};
+  gap: ${SPACING.M};
   
   ${respondTo('MOBILE')} {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: ${SPACING.M};
     margin-top: ${SPACING.XL};
   }
 `;
 
 // ======================================================
-// Responsive Utility Classes
+// Responsive Utility Components
 // ======================================================
 
+const visibilityMixin = (mobileDisplay, desktopDisplay) => css`
+  display: ${mobileDisplay};
+  
+  ${respondTo('MOBILE')} {
+    display: ${desktopDisplay};
+  }
+`;
+
 export const Hidden = styled('div')`
-  display: none;
+  display: none !important;
 `;
 
 export const VisibleMobile = styled('div')`
-  display: block;
-  
-  ${respondTo('MOBILE')} {
-    display: none;
-  }
+  ${visibilityMixin('block', 'none')}
 `;
 
 export const VisibleDesktop = styled('div')`
-  display: none;
-  
-  ${respondTo('MOBILE')} {
-    display: block;
-  }
+  ${visibilityMixin('none', 'block')}
 `;
 
 export const ResponsiveFlex = styled('div')`
-  display: block;
+  display: ${props => props.mobileDisplay || 'block'};
   
   ${respondTo('MOBILE')} {
     display: flex;
@@ -2085,3 +1994,90 @@ export const FocusableElement = styled('div')`
     ${focusStyles}
   }
 `;
+
+// ======================================================
+// Additional Utility Components
+// ======================================================
+
+export const ScreenReaderOnly = styled(GovUKVisuallyHidden)``;
+
+export const ClearFix = styled('div')`
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
+
+export const FlexContainer = styled('div')`
+  display: flex;
+  flex-direction: ${props => props.direction || 'row'};
+  flex-wrap: ${props => props.wrap || 'nowrap'};
+  justify-content: ${props => props.justify || 'flex-start'};
+  align-items: ${props => props.align || 'stretch'};
+  gap: ${props => props.gap || '0'};
+`;
+
+export const GridContainer = styled('div')`
+  display: grid;
+  grid-template-columns: ${props => props.columns || '1fr'};
+  grid-gap: ${props => props.gap || SPACING.M};
+  align-items: ${props => props.align || 'stretch'};
+  
+  ${respondTo('MOBILE')} {
+    grid-template-columns: ${props => props.desktopColumns || props.columns || '1fr'};
+    grid-gap: ${props => props.desktopGap || props.gap || SPACING.L};
+  }
+`;
+
+// ======================================================
+// Export all theme constants and utilities
+// ======================================================
+
+export const theme = {
+  colors: COLORS,
+  breakpoints: BREAKPOINTS,
+  spacing: SPACING,
+  fontSizes: FONT_SIZES,
+  lineHeights: LINE_HEIGHTS,
+  mixins: {
+    respondTo,
+    commonFontStyles,
+    printStyles,
+    focusStyles,
+    linkHoverStyles,
+    linkStyles,
+    standardSpacing,
+    responsiveSpacing,
+    typographyBase,
+    buttonBase,
+    formControlBase,
+  },
+};
+
+// ======================================================
+// Custom Hooks for Theme Usage
+// ======================================================
+
+export const useTheme = () => theme;
+
+export const useResponsive = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [isTablet, setIsTablet] = React.useState(false);
+  const [isDesktop, setIsDesktop] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkBreakpoints = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 650);
+      setIsTablet(width >= 650 && width < 769);
+      setIsDesktop(width >= 1024);
+    };
+
+    checkBreakpoints();
+    window.addEventListener('resize', checkBreakpoints);
+    return () => window.removeEventListener('resize', checkBreakpoints);
+  }, []);
+
+  return { isMobile, isTablet, isDesktop };
+};

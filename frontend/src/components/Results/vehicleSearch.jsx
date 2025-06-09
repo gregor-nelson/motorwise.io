@@ -96,7 +96,7 @@ const VehicleSearch = () => {
       ) : (
         <>
           <GovUKHeadingL>
-            Check MOT history
+            Check MOT History
           </GovUKHeadingL>
           
           <GovUKBody>

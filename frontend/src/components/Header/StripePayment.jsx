@@ -62,7 +62,7 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
         },
         body: JSON.stringify({
           registration,
-          amount: 1995, // £19.95 in pence
+          amount: 495, // £04.95 in pence
         }),
         credentials: isDevelopment ? 'include' : 'same-origin',
         mode: isDevelopment ? 'cors' : 'same-origin'

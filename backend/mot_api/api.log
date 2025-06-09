@@ -4243,3 +4243,323 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-05-31 15:21:14,846 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
 2025-06-04 08:29:53,192 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
 2025-06-04 08:33:33,885 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-06-04 12:40:01,317 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-04 12:40:01,322 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0070s
+2025-06-04 12:40:01,323 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0069s
+2025-06-04 12:40:01,324 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0050s
+2025-06-04 12:40:01,629 - mot_api - INFO - Requesting new access token
+2025-06-04 12:40:13,106 - mot_api - INFO - Successfully obtained new access token
+2025-06-04 12:40:13,109 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-04 12:40:14,061 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.4321s
+2025-06-04 12:40:14,066 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-04 12:40:18,698 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-04 12:40:20,388 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0011s
+2025-06-04 12:40:39,394 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-04 12:40:39,682 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 10:02:55,501 - mot_api - INFO - Requesting new access token
+2025-06-05 10:03:07,244 - mot_api - INFO - Successfully obtained new access token
+2025-06-05 10:03:07,247 - mot_api - INFO - Fetching vehicle data for registration: A5ENK
+2025-06-05 10:03:08,259 - mot_api - INFO - GET /api/v1/vehicle/registration/A5ENK - 200 - 12.7587s
+2025-06-05 10:10:06,470 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-05 10:10:06,471 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-05 10:10:06,473 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-05 10:10:06,474 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-05 10:10:06,475 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-05 10:10:06,781 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 10:10:19,244 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.4627s
+2025-06-05 10:10:19,246 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.4647s
+2025-06-05 10:10:19,249 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-05 10:10:19,323 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 10:26:00,464 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 10:26:00,464 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 10:26:00,771 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 10:26:01,679 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.9091s
+2025-06-05 10:26:01,680 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-05 11:22:48,339 - mot_api - INFO - Requesting new access token
+2025-06-05 11:22:48,864 - mot_api - INFO - Successfully obtained new access token
+2025-06-05 11:22:48,865 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 11:22:50,099 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.7616s
+2025-06-05 11:22:50,101 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-05 11:22:50,162 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 11:22:50,170 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-05 13:37:41,230 - mot_api - INFO - Requesting new access token
+2025-06-05 13:37:52,908 - mot_api - INFO - Successfully obtained new access token
+2025-06-05 13:37:52,909 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 13:37:53,688 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.4598s
+2025-06-05 13:37:53,690 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 13:37:53,827 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 14:30:33,410 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 14:30:45,444 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.0351s
+2025-06-05 14:30:45,446 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0010s
+2025-06-05 14:30:45,448 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0010s
+2025-06-05 14:30:45,448 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-05 14:30:45,452 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-05 14:30:47,036 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 1.5845s
+2025-06-05 14:30:47,042 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-05 14:30:50,047 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 14:30:50,121 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 15:39:46,040 - mot_api - INFO - Requesting new access token
+2025-06-05 15:39:57,757 - mot_api - INFO - Successfully obtained new access token
+2025-06-05 15:39:57,757 - mot_api - INFO - Fetching vehicle data for registration: A5ENK
+2025-06-05 15:39:58,698 - mot_api - INFO - GET /api/v1/vehicle/registration/A5ENK - 200 - 12.6590s
+2025-06-05 15:39:59,255 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0010s
+2025-06-05 15:39:59,256 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0010s
+2025-06-05 15:39:59,257 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0020s
+2025-06-05 15:39:59,258 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0030s
+2025-06-05 15:39:59,262 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-05 15:40:00,088 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.8273s
+2025-06-05 15:40:00,092 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0010s
+2025-06-05 15:40:30,064 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-05 15:40:41,844 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.7808s
+2025-06-05 15:40:41,923 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-05 15:40:41,930 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 08:56:36,756 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0060s
+2025-06-09 08:56:36,759 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0060s
+2025-06-09 08:56:36,760 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0070s
+2025-06-09 08:56:36,761 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0080s
+2025-06-09 08:56:37,072 - mot_api - INFO - Requesting new access token
+2025-06-09 08:56:37,603 - mot_api - INFO - Successfully obtained new access token
+2025-06-09 08:56:37,603 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 08:56:49,597 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.5256s
+2025-06-09 08:56:49,600 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.5286s
+2025-06-09 08:56:49,605 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 09:02:52,478 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:02:53,612 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.1343s
+2025-06-09 09:02:59,994 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0060s
+2025-06-09 09:02:59,999 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0080s
+2025-06-09 09:03:00,003 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0070s
+2025-06-09 09:03:00,005 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0030s
+2025-06-09 09:03:00,011 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 09:03:00,784 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.7726s
+2025-06-09 09:03:00,793 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0030s
+2025-06-09 09:05:02,955 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:05:38,355 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 09:05:38,357 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 09:05:38,358 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0040s
+2025-06-09 09:05:38,359 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0050s
+2025-06-09 09:05:38,362 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-09 09:05:38,398 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-09 09:05:50,965 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 12.5678s
+2025-06-09 09:05:50,967 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 12.5698s
+2025-06-09 09:07:23,386 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0050s
+2025-06-09 09:07:23,389 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0051s
+2025-06-09 09:07:23,391 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0070s
+2025-06-09 09:07:23,393 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0090s
+2025-06-09 09:07:23,397 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-09 09:07:23,703 - mot_api - INFO - Fetching vehicle data for registration: BN54MXJ
+2025-06-09 09:07:35,692 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 11.9888s
+2025-06-09 09:07:35,694 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0039s
+2025-06-09 09:10:11,188 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 09:10:23,491 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 12.3038s
+2025-06-09 09:10:23,493 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0050s
+2025-06-09 09:10:23,498 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0030s
+2025-06-09 09:10:26,556 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0030s
+2025-06-09 09:10:26,558 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0030s
+2025-06-09 09:10:26,560 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0050s
+2025-06-09 09:10:26,561 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0050s
+2025-06-09 09:10:26,568 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 09:10:27,419 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.8517s
+2025-06-09 09:10:27,421 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0060s
+2025-06-09 09:10:31,874 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:10:31,880 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:10:31,884 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:10:31,887 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:10:31,888 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:10:32,686 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.7978s
+2025-06-09 09:10:32,694 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0060s
+2025-06-09 09:10:49,116 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0010s
+2025-06-09 09:10:49,117 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0010s
+2025-06-09 09:10:49,432 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-06-09 09:10:50,577 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.1446s
+2025-06-09 09:10:50,578 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 1.1466s
+2025-06-09 09:18:58,772 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0020s
+2025-06-09 09:18:58,773 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0020s
+2025-06-09 09:18:58,775 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0030s
+2025-06-09 09:18:59,085 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 09:19:11,460 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 12.3761s
+2025-06-09 09:19:11,462 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0060s
+2025-06-09 09:20:42,725 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:20:54,680 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9555s
+2025-06-09 09:20:54,684 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 09:20:54,685 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-09 09:20:54,686 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-09 09:21:33,473 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0010s
+2025-06-09 09:21:33,474 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0010s
+2025-06-09 09:21:33,782 - mot_api - INFO - Fetching vehicle data for registration: BN54MXJ
+2025-06-09 09:21:35,396 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 1.6146s
+2025-06-09 09:21:35,397 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 1.6145s
+2025-06-09 09:22:16,747 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:22:16,756 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:22:16,763 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:22:16,769 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:22:16,771 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:22:16,777 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:22:37,412 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0000s
+2025-06-09 09:22:37,428 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0000s
+2025-06-09 09:22:37,432 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0000s
+2025-06-09 09:22:37,434 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0000s
+2025-06-09 09:22:37,436 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-09 09:22:38,726 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 1.2892s
+2025-06-09 09:22:38,733 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 09:22:53,157 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-06-09 09:22:53,164 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-06-09 09:22:53,167 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0000s
+2025-06-09 09:22:53,170 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SB09UKO - 200 - 0.0010s
+2025-06-09 09:22:53,479 - mot_api - INFO - Fetching vehicle data for registration: SB09UKO
+2025-06-09 09:22:54,359 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.8813s
+2025-06-09 09:22:54,360 - mot_api - INFO - GET /api/v1/vehicle/registration/SB09UKO - 200 - 0.0030s
+2025-06-09 09:25:26,173 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV20WRJ - 200 - 0.0041s
+2025-06-09 09:25:26,176 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV20WRJ - 200 - 0.0039s
+2025-06-09 09:25:26,178 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV20WRJ - 200 - 0.0059s
+2025-06-09 09:25:26,181 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV20WRJ - 200 - 0.0089s
+2025-06-09 09:25:26,186 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-09 09:25:26,508 - mot_api - INFO - Fetching vehicle data for registration: SV20WRJ
+2025-06-09 09:25:38,707 - mot_api - INFO - GET /api/v1/vehicle/registration/SV20WRJ - 200 - 12.2006s
+2025-06-09 09:25:38,710 - mot_api - INFO - GET /api/v1/vehicle/registration/SV20WRJ - 200 - 12.2025s
+2025-06-09 09:25:40,891 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/KN02WLY - 200 - 0.0010s
+2025-06-09 09:25:40,894 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/KN02WLY - 200 - 0.0010s
+2025-06-09 09:25:40,899 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/KN02WLY - 200 - 0.0021s
+2025-06-09 09:25:40,901 - mot_api - INFO - Fetching vehicle data for registration: KN02WLY
+2025-06-09 09:25:41,608 - mot_api - INFO - GET /api/v1/vehicle/registration/KN02WLY - 200 - 0.7089s
+2025-06-09 09:25:41,615 - mot_api - INFO - GET /api/v1/vehicle/registration/KN02WLY - 200 - 0.0031s
+2025-06-09 09:26:11,991 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0000s
+2025-06-09 09:26:11,994 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0010s
+2025-06-09 09:26:11,997 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0010s
+2025-06-09 09:26:12,000 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0010s
+2025-06-09 09:26:12,311 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 09:26:13,137 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.8259s
+2025-06-09 09:26:13,140 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0050s
+2025-06-09 09:29:16,482 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:29:28,464 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9840s
+2025-06-09 09:29:28,471 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-09 09:29:28,472 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-09 09:29:28,474 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 09:29:28,475 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 09:29:28,477 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 09:29:28,478 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 09:29:28,479 - mot_api - INFO - Fetching vehicle data for registration: BN54MXJ
+2025-06-09 09:29:29,154 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.6765s
+2025-06-09 09:29:29,155 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0040s
+2025-06-09 09:33:36,209 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 09:33:37,162 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.9538s
+2025-06-09 09:33:40,955 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 09:33:41,777 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.8232s
+2025-06-09 09:33:41,780 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0050s
+2025-06-09 09:33:58,176 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0010s
+2025-06-09 09:33:58,180 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-06-09 09:33:58,183 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-06-09 09:33:58,188 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0000s
+2025-06-09 09:33:58,512 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0060s
+2025-06-09 09:33:58,514 - mot_api - INFO - GET /api/v1/vehicle/registration/BN54MXJ - 200 - 0.0080s
+2025-06-09 09:42:32,660 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:42:32,662 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0019s
+2025-06-09 09:42:32,972 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:42:44,908 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9369s
+2025-06-09 09:42:44,910 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0039s
+2025-06-09 09:44:30,503 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 09:44:30,507 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0051s
+2025-06-09 09:44:30,510 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0081s
+2025-06-09 09:44:30,516 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-09 09:44:30,830 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 09:44:42,790 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 11.9596s
+2025-06-09 09:44:42,791 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 11.9615s
+2025-06-09 09:51:55,620 - mot_api - INFO - Requesting new access token
+2025-06-09 09:52:07,288 - mot_api - INFO - Successfully obtained new access token
+2025-06-09 09:52:07,289 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 09:52:08,204 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 12.5846s
+2025-06-09 09:52:08,210 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 09:52:08,212 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 09:52:08,214 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-09 09:52:08,216 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-09 09:52:08,221 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:52:09,412 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.1912s
+2025-06-09 09:52:09,415 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-09 09:57:36,294 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0010s
+2025-06-09 09:57:36,295 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-09 09:57:36,295 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0010s
+2025-06-09 09:57:36,296 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-09 09:57:36,299 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\Dell-001\AppData\Local\Programs\Python\Python311\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-06-09 09:57:36,613 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-09 09:57:37,438 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.8268s
+2025-06-09 09:57:37,439 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.8278s
+2025-06-09 09:58:28,813 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 09:58:29,574 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.7605s
+2025-06-09 09:58:29,639 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 09:58:30,913 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 09:59:53,925 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0041s
+2025-06-09 09:59:53,927 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 10:06:07,490 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-09 10:06:07,807 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 10:06:08,659 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.8518s
+2025-06-09 10:08:45,991 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0020s
+2025-06-09 10:08:45,994 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0030s
+2025-06-09 10:08:45,996 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0050s
+2025-06-09 10:08:46,316 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 10:08:58,303 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 11.9880s
+2025-06-09 10:08:58,307 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0070s
+2025-06-09 10:08:58,308 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0010s
+2025-06-09 10:08:58,309 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-09 10:08:58,309 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-09 10:08:58,310 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 10:08:58,322 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-09 10:08:59,058 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.7355s
+2025-06-09 10:08:59,064 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 10:15:11,633 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0010s
+2025-06-09 10:15:11,635 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0020s
+2025-06-09 10:15:11,635 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/G504SCG - 200 - 0.0020s
+2025-06-09 10:15:11,948 - mot_api - INFO - Fetching vehicle data for registration: G504SCG
+2025-06-09 10:15:23,865 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 11.9182s
+2025-06-09 10:15:23,869 - mot_api - INFO - GET /api/v1/vehicle/registration/G504SCG - 200 - 0.0099s
+2025-06-09 10:16:01,656 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 10:16:13,637 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9825s
+2025-06-09 10:16:13,639 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 10:16:13,640 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 10:16:41,818 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0050s
+2025-06-09 10:16:41,820 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0040s
+2025-06-09 10:16:41,822 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0050s
+2025-06-09 10:16:41,823 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SN08AVF - 200 - 0.0060s
+2025-06-09 10:16:41,831 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
+2025-06-09 10:16:42,756 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.9256s
+2025-06-09 10:16:42,760 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0020s

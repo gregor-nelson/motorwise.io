@@ -16,6 +16,7 @@ import {
   GovUKLoadingSpinner,
   PremiumButton,
   GovUKButton,
+  BaseButton
 } from '../../styles/theme';
 import Alert from '@mui/material/Alert';
 
@@ -414,24 +415,23 @@ const VehicleHeader = ({ registration }) => {
               </GovUKLink>
             </GovUKBody>
             
-            {/* Action buttons container with sample report button added */}
+            {/* Action buttons container using existing theme components */}
             <div style={{ display: 'flex', marginTop: '20px', marginBottom: '20px', gap: '10px' }}>
-              {/* Sample Report Button - shows fullscreen dialog with sample report */}
-              <FullScreenSampleReportButton 
-                onProceedToPayment={handlePremiumButtonClick}
-              />
-              
-              {/* Premium Report Button - existing functionality */}
-              <PremiumButton 
-                onClick={handlePremiumButtonClick}
-                data-test-id="premium-report-button"
-              >
-                {isEligibleForFreeReport(vehicleData) 
-                  ? "View Enhanced Vehicle Report" 
-                  : "Get Premium Vehicle Report - £19.95"}
-              </PremiumButton>
-            </div>
+            <FullScreenSampleReportButton 
+              onProceedToPayment={handlePremiumButtonClick}
+            />
             
+            <BaseButton
+              onClick={handlePremiumButtonClick}
+              variant="primary"  // or "blue" if you want both the same color
+              data-test-id="premium-report-button"
+            >
+              {isEligibleForFreeReport(vehicleData) 
+                ? "View Enhanced Vehicle Report" 
+                : "Get Premium Vehicle Report - £4.95"}
+            </BaseButton>
+          </div>
+                        
             <GovUKGridRow data-test-id="colour-fuel-date-details">
               <GovUKGridColumnOneThird>
                 <DetailCaption>Colour</DetailCaption>

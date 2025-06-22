@@ -4563,3 +4563,123 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-06-09 10:16:41,831 - mot_api - INFO - Fetching vehicle data for registration: SN08AVF
 2025-06-09 10:16:42,756 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.9256s
 2025-06-09 10:16:42,760 - mot_api - INFO - GET /api/v1/vehicle/registration/SN08AVF - 200 - 0.0020s
+2025-06-09 10:24:53,925 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0031s
+2025-06-09 10:24:53,926 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0020s
+2025-06-09 10:24:53,927 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0030s
+2025-06-09 10:24:53,928 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/SV57GVL - 200 - 0.0040s
+2025-06-09 10:24:54,250 - mot_api - INFO - Fetching vehicle data for registration: SV57GVL
+2025-06-09 10:25:06,663 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 12.4137s
+2025-06-09 10:25:06,664 - mot_api - INFO - GET /api/v1/vehicle/registration/SV57GVL - 200 - 12.4146s
+2025-06-09 10:27:50,647 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 10:28:02,593 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9468s
+2025-06-09 10:28:02,713 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-09 11:05:38,133 - mot_api - INFO - Requesting new access token
+2025-06-09 11:05:49,783 - mot_api - INFO - Successfully obtained new access token
+2025-06-09 11:05:49,785 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 11:05:50,849 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.7173s
+2025-06-09 11:05:50,955 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 11:08:11,537 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 11:08:11,539 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-09 11:08:11,866 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0050s
+2025-06-09 11:08:11,868 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0070s
+2025-06-09 11:08:13,638 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-09 11:11:23,563 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 11:11:24,545 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.9830s
+2025-06-09 14:04:00,802 - mot_api - INFO - Requesting new access token
+2025-06-09 14:04:12,519 - mot_api - INFO - Successfully obtained new access token
+2025-06-09 14:04:12,523 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-09 14:04:13,651 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.8504s
+2025-06-09 14:04:13,793 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-10 14:05:39,054 - mot_api - INFO - Requesting new access token
+2025-06-10 14:05:39,586 - mot_api - INFO - Successfully obtained new access token
+2025-06-10 14:05:39,587 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-10 14:05:40,728 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.6741s
+2025-06-10 14:05:40,852 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-10 14:05:42,180 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 10:49:38,864 - mot_api - INFO - Requesting new access token
+2025-06-18 10:49:39,508 - mot_api - INFO - Successfully obtained new access token
+2025-06-18 10:49:39,509 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 10:49:40,572 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.7073s
+2025-06-18 10:49:40,575 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 10:49:40,632 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 10:49:41,811 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 10:50:11,145 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 10:52:57,539 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 10:56:48,689 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 10:56:49,626 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.9366s
+2025-06-18 10:56:49,632 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-18 10:56:49,759 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 10:56:49,772 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
+2025-06-18 10:56:50,320 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 11:34:11,433 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 11:34:12,759 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.3262s
+2025-06-18 11:34:12,762 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 11:34:12,824 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 11:34:13,427 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 11:42:53,813 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 11:43:05,767 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9540s
+2025-06-18 11:43:05,941 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-18 11:43:07,041 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 14:20:29,396 - mot_api - INFO - Requesting new access token
+2025-06-18 14:20:42,007 - mot_api - INFO - Successfully obtained new access token
+2025-06-18 14:20:42,008 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:20:43,532 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 14.1355s
+2025-06-18 14:20:43,598 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 14:20:44,575 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 14:44:44,630 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:44:56,226 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: b6cd8ebd-3393-4684-80ca-b355fe585340
+2025-06-18 14:44:56,226 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:44:56,227 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 11.5985s
+2025-06-18 14:44:56,533 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:44:56,914 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: ee09636c-e262-4410-91b8-af172f0a791a
+2025-06-18 14:44:56,915 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:44:56,917 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 0.3840s
+2025-06-18 14:46:15,262 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:46:26,779 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: c7482765-abe2-49f2-aaa7-4b33337ef549
+2025-06-18 14:46:26,780 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:46:26,781 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 11.5188s
+2025-06-18 14:46:26,785 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:46:27,160 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: 1fea2853-00eb-4607-b1cd-d8413256d32b
+2025-06-18 14:46:27,160 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:46:27,162 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:46:27,512 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: 47a9ace5-a847-4b57-8d62-7674592895e9
+2025-06-18 14:46:27,512 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:46:27,513 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 0.7292s
+2025-06-18 14:46:27,513 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:46:27,863 - mot_api - ERROR - MOT API Error: MOTH-FB-01 - You do not have permission to access this - Request ID: b12118df-ab4b-4a9e-8bb4-f0d91f0861ed
+2025-06-18 14:46:27,864 - mot_api - ERROR - Error accessing MOT API: 403 Client Error: Forbidden for url: https://history.mot.api.gov.uk/v1/trade/vehicles/registration/CN09JEJ
+2025-06-18 14:46:27,864 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 1.0795s
+2025-06-18 14:46:27,865 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 500 - 0.3523s
+2025-06-18 14:47:43,255 - mot_api - INFO - Requesting new access token
+2025-06-18 14:47:43,813 - mot_api - INFO - Successfully obtained new access token
+2025-06-18 14:47:43,813 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:47:55,829 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.5749s
+2025-06-18 14:47:55,894 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 14:48:25,862 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 14:48:25,863 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 14:51:55,226 - mot_api - INFO - Requesting new access token
+2025-06-18 14:51:55,739 - mot_api - INFO - Successfully obtained new access token
+2025-06-18 14:51:55,740 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 14:52:07,745 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.5189s
+2025-06-18 15:04:09,996 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 15:04:21,946 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 11.9494s
+2025-06-18 15:04:21,950 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-06-18 15:04:21,951 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-18 15:04:22,004 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 15:04:22,008 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 15:04:23,000 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-06-18 15:14:46,693 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 15:14:47,593 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.9008s
+2025-06-18 15:14:47,712 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 15:14:48,718 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 15:42:55,742 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-18 15:43:07,915 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.1734s
+2025-06-18 15:43:07,917 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 12.1744s
+2025-06-18 15:43:08,104 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-18 15:43:08,970 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0010s
+2025-06-22 10:54:26,098 - mot_api - INFO - Requesting new access token
+2025-06-22 10:54:26,449 - mot_api - INFO - Successfully obtained new access token
+2025-06-22 10:54:26,450 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-06-22 10:54:27,369 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.2708s
+2025-06-22 10:54:27,487 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-06-22 10:54:29,235 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s

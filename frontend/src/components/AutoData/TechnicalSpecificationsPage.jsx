@@ -44,7 +44,513 @@ const BROWSER_CACHE_PREFIX = 'tech_specs_';
 const STORAGE_VERSION = 'v1'; // Use this to invalidate all caches if data structure changes
 const MAX_CACHE_SIZE = 1000000; // ~1MB max size for cache entries
 
-// Improved browser storage utility functions
+// GDS-aligned Visual Tech Specs Styled Components
+const VisualSpecsContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: COLORS.WHITE,
+  minHeight: '600px'
+}));
+
+const SpecCategoryHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  marginBottom: '30px',
+  padding: '20px',
+  backgroundColor: COLORS.WHITE,
+  borderLeft: `10px solid ${COLORS.BLUE}`,
+  borderBottom: `1px solid ${COLORS.MID_GREY}`
+}));
+
+const CategoryIcon = styled(Box)(({ color }) => ({
+  width: '48px',
+  height: '48px',
+  backgroundColor: color || COLORS.BLUE,
+  color: COLORS.WHITE,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '24px',
+  fontWeight: 700,
+  flexShrink: 0
+}));
+
+const SpecGrid = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '20px',
+  marginBottom: '40px',
+  
+  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '15px'
+  },
+  
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    gridTemplateColumns: '1fr',
+    gap: '15px'
+  }
+}));
+
+const VisualSpecCard = styled(Box)(({ variant = 'default' }) => ({
+  backgroundColor: COLORS.WHITE,
+  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  padding: '24px',
+  position: 'relative',
+  transition: 'all 0.2s ease',
+  
+  ...(variant === 'gauge' && {
+    textAlign: 'center',
+    minHeight: '200px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  }),
+  
+  ...(variant === 'bar' && {
+    minHeight: '160px'
+  }),
+  
+  '&:hover': {
+    boxShadow: '0 2px 0 0 rgba(0,0,0,0.1)',
+    borderColor: COLORS.BLACK
+  },
+  
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: '5px',
+    backgroundColor: COLORS.BLUE,
+    opacity: 0,
+    transition: 'opacity 0.2s ease'
+  },
+  
+  '&:hover:before': {
+    opacity: 1
+  }
+}));
+
+const SpecCardHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  marginBottom: '16px'
+}));
+
+const SpecCardTitle = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: 700,
+  color: COLORS.DARK_GREY,
+  textTransform: 'uppercase',
+  letterSpacing: '1px',
+  lineHeight: 1.4,
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+const SpecCardIcon = styled(Box)(({ color }) => ({
+  width: '30px',
+  height: '30px',
+  backgroundColor: color || COLORS.BLUE,
+  color: COLORS.WHITE,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '16px',
+  fontWeight: 700,
+  flexShrink: 0
+}));
+
+const SpecValue = styled(Box)(({ size = 'large' }) => ({
+  fontSize: size === 'large' ? '36px' : size === 'medium' ? '27px' : '19px',
+  fontWeight: 700,
+  color: COLORS.BLACK,
+  lineHeight: 1.1,
+  marginBottom: '8px',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    fontSize: size === 'large' ? '27px' : size === 'medium' ? '24px' : '16px'
+  }
+}));
+
+const SpecUnit = styled('span')(({ theme }) => ({
+  fontSize: '16px',
+  fontWeight: 400,
+  color: COLORS.DARK_GREY,
+  marginLeft: '8px',
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+const SpecSubtext = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  color: COLORS.DARK_GREY,
+  marginTop: '4px',
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+// GDS-aligned gauge component
+const GaugeContainer = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  width: '120px',
+  height: '120px',
+  margin: '0 auto 16px'
+}));
+
+const GaugeSvg = styled('svg')(({ theme }) => ({
+  transform: 'rotate(-90deg)'
+}));
+
+const GaugeTrack = styled('circle')(({ theme }) => ({
+  fill: 'none',
+  stroke: COLORS.MID_GREY,
+  strokeWidth: '10'
+}));
+
+const GaugeFill = styled('circle')(({ color }) => ({
+  fill: 'none',
+  stroke: color,
+  strokeWidth: '10',
+  strokeLinecap: 'square',
+  transition: 'stroke-dashoffset 0.5s ease'
+}));
+
+const GaugeCenterText = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  textAlign: 'center'
+}));
+
+// GDS-aligned progress bar component
+const ProgressContainer = styled(Box)(({ theme }) => ({
+  marginTop: '16px'
+}));
+
+const ProgressBar = styled(Box)(({ theme }) => ({
+  width: '100%',
+  height: '20px',
+  backgroundColor: COLORS.LIGHT_GREY,
+  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  position: 'relative'
+}));
+
+const ProgressFill = styled(Box)(({ color, width }) => ({
+  height: '100%',
+  width: `${width}%`,
+  backgroundColor: color || COLORS.BLUE,
+  transition: 'width 0.5s ease',
+  position: 'relative'
+}));
+
+const ProgressLabel = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '8px',
+  fontSize: '16px',
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+// Icon grid for multiple values
+const IconGrid = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: '12px',
+  marginTop: '16px'
+}));
+
+const IconItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px'
+}));
+
+const IconIndicator = styled(Box)(({ color }) => ({
+  width: '24px',
+  height: '24px',
+  backgroundColor: color || COLORS.BLUE,
+  color: COLORS.WHITE,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '14px',
+  fontWeight: 600
+}));
+
+// GDS-aligned status indicator
+const StatusBadge = styled('strong')(({ status }) => ({
+  display: 'inline-block',
+  padding: '5px 10px 4px',
+  fontSize: '14px',
+  fontWeight: 700,
+  letterSpacing: '1px',
+  textTransform: 'uppercase',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  backgroundColor: 
+    status === 'good' ? COLORS.GREEN :
+    status === 'warning' ? COLORS.ORANGE :
+    status === 'critical' ? COLORS.RED :
+    COLORS.BLUE,
+  color: COLORS.WHITE
+}));
+
+// Visual divider
+const VisualDivider = styled(Box)(({ theme }) => ({
+  height: '3px',
+  backgroundColor: COLORS.BORDER_COLOUR,
+  margin: '40px 0'
+}));
+
+// GDS-aligned tabs
+const VisualTabs = styled(Tabs)(({ theme }) => ({
+  borderBottom: `2px solid ${COLORS.BORDER_COLOUR}`,
+  marginBottom: '40px',
+  
+  '& .MuiTabs-indicator': {
+    height: '5px',
+    backgroundColor: COLORS.BLUE
+  }
+}));
+
+const VisualTab = styled(Tab)(({ theme }) => ({
+  textTransform: 'none',
+  fontWeight: 700,
+  fontSize: '19px',
+  color: COLORS.BLACK,
+  padding: '20px 20px',
+  minHeight: '60px',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  '&.Mui-selected': {
+    color: COLORS.BLUE,
+    backgroundColor: COLORS.LIGHT_GREY
+  },
+  
+  '&:hover': {
+    color: COLORS.BLUE,
+    backgroundColor: COLORS.LIGHT_GREY
+  },
+  
+  '&:focus': {
+    outline: `3px solid ${COLORS.FOCUS}`,
+    outlineOffset: 0
+  }
+}));
+
+// Helper functions
+const getSpecIcon = (type) => {
+  const icons = {
+    pressure: 'P',
+    temperature: 'T',
+    volume: 'V',
+    torque: 'τ',
+    electrical: 'E',
+    time: 't',
+    distance: 'D',
+    speed: 'S',
+    default: '•'
+  };
+  return icons[type] || icons.default;
+};
+
+const getSpecColor = (type) => {
+  const colors = {
+    pressure: COLORS.BLUE,
+    temperature: COLORS.RED,
+    volume: COLORS.GREEN,
+    torque: COLORS.PURPLE,
+    electrical: COLORS.ORANGE,
+    time: COLORS.PINK,
+    distance: COLORS.DARK_BLUE,
+    speed: COLORS.BRIGHT_PURPLE,
+    default: COLORS.DARK_GREY
+  };
+  return colors[type] || colors.default;
+};
+
+const getCategoryIcon = (category) => {
+  const icons = {
+    'Engine Details': 'E',
+    'Service Information': 'S',
+    'Torque Specifications': 'T',
+    'Brakes & A/C': 'B',
+    'Vehicle Identification': 'V',
+    'Injection System': 'I',
+    'Tuning & Emissions': 'TE',
+    'Spark Plugs': 'SP',
+    'Fuel System': 'F',
+    'Starting & Charging': 'SC',
+    'Lubricants & Capacities': 'L',
+    'Service Checks & Adjustments': 'SA',
+    'Cylinder Head Instructions': 'CH',
+    'Engine Tightening Torques': 'ET',
+    'Chassis Tightening Torques': 'CT',
+    'Brake Disc & Drum Dimensions': 'BD',
+    'Air Conditioning': 'AC'
+  };
+  return icons[category] || '?';
+};
+
+const getCategoryColor = (category) => {
+  const colors = {
+    'Engine Details': COLORS.BLUE,
+    'Service Information': COLORS.GREEN,
+    'Torque Specifications': COLORS.PURPLE,
+    'Brakes & A/C': COLORS.ORANGE
+  };
+  return colors[category] || COLORS.DARK_GREY;
+};
+
+// Gauge component
+const Gauge = ({ value, max, unit, label, color }) => {
+  const percentage = Math.min((value / max) * 100, 100);
+  const circumference = 2 * Math.PI * 50;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  
+  return (
+    <Box>
+      <GaugeContainer>
+        <GaugeSvg width="120" height="120" viewBox="0 0 120 120">
+          <GaugeTrack
+            cx="60"
+            cy="60"
+            r="50"
+          />
+          <GaugeFill
+            cx="60"
+            cy="60"
+            r="50"
+            color={color}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+          />
+        </GaugeSvg>
+        <GaugeCenterText>
+          <SpecValue size="medium">{value}</SpecValue>
+          <SpecSubtext>{unit}</SpecSubtext>
+        </GaugeCenterText>
+      </GaugeContainer>
+      <SpecCardTitle>{label}</SpecCardTitle>
+    </Box>
+  );
+};
+
+// Visual spec renderer
+const renderVisualSpecs = (items, sectionTitle) => {
+  if (!items || !Array.isArray(items) || items.length === 0) return null;
+  
+  return (
+    <SpecGrid>
+      {items.map((item, index) => {
+        const label = item.label || item.name || '';
+        let value = item.value !== undefined ? item.value : '';
+        const unit = item.unit || '';
+        
+        // Determine spec type
+        const specType = getSpecType(label, unit);
+        const color = getSpecColor(specType);
+        const icon = getSpecIcon(specType);
+        
+        // Parse numeric values
+        const numericValue = parseFloat(value);
+        const hasNumericValue = !isNaN(numericValue);
+        
+        // Determine card variant
+        let variant = 'default';
+        if (hasNumericValue && (unit.includes('bar') || unit.includes('psi'))) {
+          variant = 'gauge';
+        } else if (hasNumericValue && items.length > 6) {
+          variant = 'compact';
+        }
+        
+        // Handle special cases
+        if (typeof value === 'string' && value.includes('Not adjustable')) {
+          const parts = value.split(/(Not adjustable)/i);
+          value = parts[0].trim();
+        }
+        
+        // Render gauge for pressure values
+        if (variant === 'gauge' && hasNumericValue) {
+          const maxValue = unit.includes('bar') ? 10 : 150; // Approximate max values
+          return (
+            <VisualSpecCard key={index} variant="gauge">
+              <Gauge
+                value={numericValue}
+                max={maxValue}
+                unit={unit}
+                label={label}
+                color={color}
+              />
+            </VisualSpecCard>
+          );
+        }
+        
+        // Render progress bar for percentage or range values
+        if (hasNumericValue && (unit === '%' || label.toLowerCase().includes('range'))) {
+          return (
+            <VisualSpecCard key={index} variant="bar">
+              <SpecCardHeader>
+                <SpecCardTitle>{label}</SpecCardTitle>
+                <SpecCardIcon color={color}>{icon}</SpecCardIcon>
+              </SpecCardHeader>
+              <ProgressContainer>
+                <ProgressLabel>
+                  <span style={{ fontWeight: 700 }}>{value} {unit}</span>
+                  <StatusBadge status={numericValue > 70 ? 'good' : numericValue > 40 ? 'warning' : 'critical'}>
+                    {numericValue > 70 ? 'Optimal' : numericValue > 40 ? 'Acceptable' : 'Low'}
+                  </StatusBadge>
+                </ProgressLabel>
+                <ProgressBar>
+                  <ProgressFill color={color} width={numericValue} />
+                </ProgressBar>
+              </ProgressContainer>
+            </VisualSpecCard>
+          );
+        }
+        
+        // Default card layout
+        return (
+          <VisualSpecCard key={index}>
+            <SpecCardHeader>
+              <SpecCardTitle>{label}</SpecCardTitle>
+              <SpecCardIcon color={color}>{icon}</SpecCardIcon>
+            </SpecCardHeader>
+            <SpecValue size={variant === 'compact' ? 'medium' : 'large'}>
+              {value}
+              {unit && <SpecUnit>{unit}</SpecUnit>}
+            </SpecValue>
+            {sectionTitle === 'Lubricants & Capacities' && (
+              <Box mt={2}>
+                <StatusBadge status="good">Recommended</StatusBadge>
+              </Box>
+            )}
+          </VisualSpecCard>
+        );
+      })}
+    </SpecGrid>
+  );
+};
+
+// Helper function for determining spec type
+const getSpecType = (label, unit) => {
+  const labelLower = (label || '').toLowerCase();
+  const unitLower = (unit || '').toLowerCase();
+  
+  if (unitLower.includes('bar') || unitLower.includes('psi') || labelLower.includes('pressure')) return 'pressure';
+  if (unitLower.includes('°c') || unitLower.includes('temp') || labelLower.includes('temperature')) return 'temperature';
+  if (unitLower.includes('litre') || unitLower.includes('ml') || labelLower.includes('capacity')) return 'volume';
+  if (unitLower.includes('nm') || labelLower.includes('torque')) return 'torque';
+  if (unitLower.includes('v') || unitLower.includes('amp') || labelLower.includes('volt')) return 'electrical';
+  if (unitLower.includes('min') || unitLower.includes('sec') || labelLower.includes('time')) return 'time';
+  if (unitLower.includes('mm') || unitLower.includes('inch') || labelLower.includes('dimension')) return 'distance';
+  if (unitLower.includes('rpm') || labelLower.includes('speed')) return 'speed';
+  return 'default';
+};
+
+// Browser storage utility functions (keep existing)
 const browserCache = {
   isAvailable: () => {
     try {
@@ -61,7 +567,6 @@ const browserCache = {
     if (!browserCache.isAvailable()) return false;
     
     try {
-      // Standardize key format
       const cacheKey = `${BROWSER_CACHE_PREFIX}${key.toLowerCase().replace(/\s+/g, '_')}`;
       
       const cacheEntry = {
@@ -70,7 +575,6 @@ const browserCache = {
         version: STORAGE_VERSION
       };
       
-      // Rough estimation of data size
       const serialized = JSON.stringify(cacheEntry);
       if (serialized.length > MAX_CACHE_SIZE) {
         console.warn(`Cache entry too large (${Math.round(serialized.length/1024)}KB), not caching`);
@@ -89,7 +593,6 @@ const browserCache = {
     if (!browserCache.isAvailable()) return null;
     
     try {
-      // Standardize key format
       const cacheKey = `${BROWSER_CACHE_PREFIX}${key.toLowerCase().replace(/\s+/g, '_')}`;
       const cachedItem = localStorage.getItem(cacheKey);
       
@@ -97,11 +600,9 @@ const browserCache = {
       
       const cacheEntry = JSON.parse(cachedItem);
       
-      // Simple validation
       if (!cacheEntry || !cacheEntry.data || !cacheEntry.timestamp || 
           cacheEntry.version !== STORAGE_VERSION ||
           Date.now() - cacheEntry.timestamp > BROWSER_CACHE_TTL) {
-        // Invalid or expired entry
         localStorage.removeItem(cacheKey);
         return null;
       }
@@ -144,103 +645,37 @@ const safeGet = (obj, path, defaultValue = null) => {
   return result !== undefined ? result : defaultValue;
 };
 
-// Specification table styling - fixed CSS with no problematic selectors
-const SpecificationTable = styled(InsightTable)(({ theme }) => ({
-  marginBottom: '20px',
-  width: '100%',
-  
-  '& th': {
-    width: '40%',
-    fontWeight: 700,
-    padding: '10px 20px 10px 0',
-    textAlign: 'left',
-    borderBottom: `1px solid ${COLORS.MID_GREY}`
-  },
-  
-  '& td': {
-    width: '60%',
-    padding: '10px 20px 10px 0',
-    borderBottom: `1px solid ${COLORS.MID_GREY}`,
-    '& .unit': {
-      paddingLeft: '5px',
-      color: COLORS.DARK_GREY
-    }
-  },
-  
-  '& tr:last-child': {
-    '& th, & td': {
-      borderBottom: 'none'
-    }
-  }
-}));
-
-// Styled Tab Panel component
-const TabPanel = styled(Box)(({ theme }) => ({
-  padding: '30px 0',
-}));
-
-// Styled Tabs - GOV.UK style
-const StyledTabs = styled(Tabs)(({ theme }) => ({
-  borderBottom: `1px solid ${COLORS.MID_GREY}`,
-  
-  '& .MuiTabs-indicator': {
-    backgroundColor: COLORS.BLUE,
-    height: '5px',
-  },
-  
-  '& .MuiTabs-flexContainer': {
-    borderBottom: `2px solid ${COLORS.MID_GREY}`,
-  }
-}));
-
-// Styled Tab - GOV.UK style with no icon
-const StyledTab = styled(Tab)(({ theme }) => ({
-  textTransform: 'none',
-  fontWeight: 700,
-  fontSize: '16px',
-  color: COLORS.BLACK,
-  padding: '15px 20px',
-  minHeight: '60px',
-  
-  '&.Mui-selected': {
-    color: COLORS.BLUE,
-    backgroundColor: COLORS.LIGHT_GREY,
-  },
-  
-  '&:hover': {
-    color: COLORS.BLUE,
-    backgroundColor: COLORS.LIGHT_GREY,
-    opacity: 0.9,
-  },
-  
-  '&:focus': {
-    outline: `3px solid ${COLORS.FOCUS}`,
-    outlineOffset: 0,
-  }
-}));
-
-// Section Header - aligned with other components, using no icons
-const SectionHeader = styled(Box)(({ theme }) => ({
-  marginBottom: '20px',
-  borderBottom: `2px solid ${COLORS.BLUE}`,
-  paddingBottom: '10px',
-}));
-
-// Section Container - removed problematic selectors
-const SectionContainer = styled(Box)(({ theme }) => ({
-  marginBottom: '40px',
-}));
-
-// Warning panel - aligned with BulletinsComponent
+// Important panels
 const WarningPanel = styled(InsightNote)(() => ({
-  backgroundColor: '#fff4f4',
-  borderColor: COLORS.RED,
+  backgroundColor: '#fff7ed',
+  borderColor: COLORS.ORANGE,
   marginBottom: '20px',
-  padding: '15px',
-  borderLeftWidth: '10px'
+  padding: '20px',
+  borderLeftWidth: '10px',
+  position: 'relative',
+  
+  '&:before': {
+    content: '"!"',
+    position: 'absolute',
+    left: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '30px',
+    height: '30px',
+    backgroundColor: COLORS.ORANGE,
+    color: COLORS.WHITE,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 700,
+    fontSize: '19px'
+  },
+  
+  '& > *': {
+    paddingLeft: '40px'
+  }
 }));
 
-// Important notice panel
 const NoticePanel = styled(InsightNote)(() => ({
   backgroundColor: COLORS.LIGHT_GREY,
   borderColor: COLORS.BLUE,
@@ -249,27 +684,49 @@ const NoticePanel = styled(InsightNote)(() => ({
   borderLeftWidth: '10px'
 }));
 
-// Fuel type badge - revised to be more GOV.UK style
-const FuelTypeBadge = styled(Box)(({ theme }) => ({
+const FuelTypeBadge = styled('strong')(({ theme }) => ({
   display: 'inline-block',
   backgroundColor: COLORS.BLUE,
   color: COLORS.WHITE,
-  padding: '5px 10px',
-  fontWeight: 600,
+  padding: '5px 10px 4px',
+  fontWeight: 700,
+  fontSize: '14px',
+  letterSpacing: '1px',
+  textTransform: 'uppercase',
+  fontFamily: '"GDS Transport", arial, sans-serif',
   marginTop: '10px',
   marginBottom: '15px'
 }));
 
-// Technical specs panel - aligned with other components
-const TechSpecsPanel = styled(InsightPanel)(() => ({
-  borderLeftColor: COLORS.BLUE
-}));
+// Tab Panel function component
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-// Improved year extraction with better validation
+  return (
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      id={`specs-tabpanel-${index}`}
+      aria-labelledby={`specs-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </Box>
+  );
+}
+
+// Tab props accessor function
+function a11yProps(index) {
+  return {
+    id: `specs-tab-${index}`,
+    'aria-controls': `specs-tabpanel-${index}`,
+  };
+}
+
+// Extract year function
 const extractVehicleYear = (vehicleData) => {
   if (!vehicleData || typeof vehicleData !== 'object') return null;
   
-  // First check if we already have a valid year field
   if (vehicleData.year && 
       typeof vehicleData.year === 'number' && 
       vehicleData.year > 1900 && 
@@ -277,7 +734,6 @@ const extractVehicleYear = (vehicleData) => {
     return vehicleData.year;
   }
   
-  // Try different date fields that might contain year information
   const dateFields = [
     'manufactureDate',
     'yearOfManufacture',
@@ -288,7 +744,6 @@ const extractVehicleYear = (vehicleData) => {
   
   for (const field of dateFields) {
     if (vehicleData[field]) {
-      // If it's a string, try to extract a 4-digit year
       if (typeof vehicleData[field] === 'string') {
         const yearMatch = /(\d{4})/.exec(vehicleData[field]);
         if (yearMatch) {
@@ -299,7 +754,6 @@ const extractVehicleYear = (vehicleData) => {
         }
       }
       
-      // If it's a number in a reasonable year range
       if (typeof vehicleData[field] === 'number' && 
           vehicleData[field] > 1900 && 
           vehicleData[field] < new Date().getFullYear() + 5) {
@@ -311,15 +765,13 @@ const extractVehicleYear = (vehicleData) => {
   return null;
 };
 
-// Improved fuel type determination with better validation
+// Determine fuel type function
 const determineFuelType = (vehicleData) => {
   if (!vehicleData || typeof vehicleData !== 'object') return null;
   
-  // First check for explicit fuel type
   if (vehicleData.fuelType && typeof vehicleData.fuelType === 'string') {
     const normalizedFuelType = vehicleData.fuelType.toLowerCase().trim();
     
-    // Map common variations
     if (['gasoline', 'unleaded', 'gas', 'petrol'].includes(normalizedFuelType)) {
       return 'petrol';
     } else if (['gasoil', 'derv', 'diesel'].includes(normalizedFuelType)) {
@@ -330,13 +782,11 @@ const determineFuelType = (vehicleData) => {
       return 'electric';
     }
     
-    // Return as-is if it's another valid type
     if (normalizedFuelType.length > 0) {
       return normalizedFuelType;
     }
   }
   
-  // Check model and variant for fuel type indicators (simplified logic)
   const model = (vehicleData.model || '').toLowerCase();
   const variant = (vehicleData.variant || '').toLowerCase();
   
@@ -353,34 +803,24 @@ const determineFuelType = (vehicleData) => {
     return 'petrol';
   }
   
-  // Return null if we can't determine
   return null;
 };
 
-// Tab Panel function component
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+// Helper render for notes
+const renderNotes = (notes) => {
+  if (!notes || !Array.isArray(notes) || notes.length === 0) return null;
+  
   return (
-    <TabPanel
-      role="tabpanel"
-      hidden={value !== index}
-      id={`specs-tabpanel-${index}`}
-      aria-labelledby={`specs-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </TabPanel>
+    <NoticePanel>
+      <GovUKHeadingS>Important notes</GovUKHeadingS>
+      <ul className="govuk-list govuk-list--bullet">
+        {notes.map((note, index) => (
+          <li key={`note-${index}`}>{note || ''}</li>
+        ))}
+      </ul>
+    </NoticePanel>
   );
-}
-
-// Tab props accessor function
-function a11yProps(index) {
-  return {
-    id: `specs-tab-${index}`,
-    'aria-controls': `specs-tabpanel-${index}`,
-  };
-}
+};
 
 const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoading = false, error: initialError = null, onDataLoad }) => {
   // States
@@ -416,79 +856,17 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     setTabValue(newValue);
   }, []);
 
-  // Render spec table - improved with better unit handling
-  const renderSpecTable = useCallback((items) => {
-    if (!items || !Array.isArray(items) || items.length === 0) return null;
-    
-    return (
-      <SpecificationTable>
-        <tbody>
-          {items.map((item, index) => {
-            // Handle complex values that might include status info
-            let valueContent = item.value !== undefined ? item.value : '';
-            let statusInfo = '';
-            
-            // Check if value contains status like "Not adjustable"
-            if (typeof valueContent === 'string' && valueContent.includes('Not adjustable')) {
-              const parts = valueContent.split(/(Not adjustable)/i);
-              valueContent = parts[0].trim();
-              statusInfo = parts[1] ? ` (${parts[1]})` : '';
-            }
-            
-            // For percentage values, ensure proper formatting
-            if (typeof valueContent === 'string' && valueContent.startsWith('%')) {
-              valueContent = valueContent.replace('%', '').trim();
-              statusInfo = `% ${statusInfo}`;
-            }
-            
-            return (
-              <tr key={index}>
-                <th scope="row">
-                  {item.label || item.name || ''}
-                </th>
-                <td>
-                  <ValueHighlight>{valueContent}</ValueHighlight>
-                  {statusInfo && <span style={{ color: COLORS.DARK_GREY }}>{statusInfo}</span>}
-                  {item.unit && <span className="unit">{item.unit}</span>}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </SpecificationTable>
-    );
-  }, []);
-
-  // Helper function to render notes - simplified and memoized
-  const renderNotes = useCallback((notes) => {
-    if (!notes || !Array.isArray(notes) || notes.length === 0) return null;
-    
-    return (
-      <NoticePanel>
-        <GovUKHeadingS>Important notes</GovUKHeadingS>
-        <ul className="govuk-list govuk-list--bullet">
-          {notes.map((note, index) => (
-            <li key={`note-${index}`}>{note || ''}</li>
-          ))}
-        </ul>
-      </NoticePanel>
-    );
-  }, []);
-
-  // Data fetching effect - simplified with better error handling
+  // Data fetching effect
   useEffect(() => {
-    // Don't do anything if no vehicle data with required fields
     if (!vehicleData?.make || !vehicleData?.model) {
       setLoading(false);
       return;
     }
     
-    // Cancel any ongoing fetch
     if (abortControllerRef.current) {
       abortControllerRef.current.abort('New request started');
     }
     
-    // Create new abort controller and increment request ID
     abortControllerRef.current = new AbortController();
     const { signal } = abortControllerRef.current;
     const currentRequestId = ++requestIdRef.current;
@@ -505,10 +883,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           throw new Error("Vehicle make and model required");
         }
         
-        // Check browser cache first
         const cachedData = cacheKey ? browserCache.getFromCache(cacheKey) : null;
         if (cachedData) {
-          // Ensure this is still the current request
           if (currentRequestId !== requestIdRef.current) return;
           
           console.log('Found in browser cache:', cacheKey);
@@ -516,7 +892,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           setMatchConfidence(cachedData._matchConfidence || 
                           (cachedData.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
           
-          // Still call onDataLoad with cached data
           if (onDataLoad && typeof onDataLoad === 'function') {
             onDataLoad(cachedData);
           }
@@ -527,7 +902,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         
         console.log(`Fetching tech specs for ${make} ${model} (Year: ${vehicleYear}, Fuel: ${vehicleFuelType})`);
         
-        // Fetch data from API
         const data = await techSpecsApi.lookupTechSpecs({
           make,
           model,
@@ -535,15 +909,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           fuelType: vehicleFuelType
         }, { signal });
         
-        // Ensure this is still the current request
         if (currentRequestId !== requestIdRef.current) return;
         
-        // Validate returned data
         if (!data) {
           throw new Error("No data returned from API");
         }
         
-        // Store in browser cache if we have a valid response
         if (cacheKey && data.vehicleIdentification) {
           browserCache.saveToCache(cacheKey, data);
         }
@@ -552,18 +923,15 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         setMatchConfidence(data._matchConfidence || 
                          (data.vehicleIdentification?.matchedTo ? 'fuzzy' : 'exact'));
         
-        // Call onDataLoad with the new data
         if (onDataLoad && typeof onDataLoad === 'function') {
           onDataLoad(data);
         }
       } catch (err) {
-        // Don't handle aborted requests as errors
         if (err.name === 'AbortError') {
           console.log('Request was aborted:', err.message);
           return;
         }
         
-        // Ensure this is still the current request
         if (currentRequestId !== requestIdRef.current) return;
         
         console.error("Error fetching technical specifications:", err);
@@ -571,7 +939,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         setMatchConfidence('none');
         setTechSpecsData(null);
       } finally {
-        // Only update if this is still the current request and not aborted
         if (currentRequestId === requestIdRef.current && !signal.aborted) {
           setLoading(false);
         }
@@ -580,7 +947,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   
     fetchTechSpecs();
     
-    // Cleanup function to prevent state updates if component unmounts
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort('Component unmounted');
@@ -589,14 +955,13 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     
   }, [vehicleData?.make, vehicleData?.model, vehicleYear, vehicleFuelType, onDataLoad, cacheKey]);
 
-  // Improved match warning component - simplified and memoized
+  // Match warning component
   const MatchWarning = useMemo(() => {
     if (!techSpecsData?.vehicleIdentification || !vehicleData) return null;
     
     const { vehicleIdentification } = techSpecsData;
     
     if (matchConfidence === 'fuzzy' && vehicleIdentification?.matchedTo) {
-      // Get matched vehicle year range for display
       const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
         ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
             vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
@@ -605,18 +970,15 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           })`
         : '';
       
-      // Get matched fuel type info
       const matchedFuelType = vehicleIdentification.matchedTo.fuelType && 
                              vehicleIdentification.matchedTo.fuelType !== 'unknown'
         ? ` - ${vehicleIdentification.matchedTo.fuelType.charAt(0).toUpperCase() + 
              vehicleIdentification.matchedTo.fuelType.slice(1)} Engine`
         : '';
       
-      // Get requested vehicle year for display
       const year = extractVehicleYear(vehicleData);
       const requestedYear = year ? ` (${year})` : '';
       
-      // Get requested fuel type for display
       const requestedFuelType = vehicleFuelType 
         ? ` - ${vehicleFuelType.charAt(0).toUpperCase() + vehicleFuelType.slice(1)} Engine`
         : '';
@@ -632,7 +994,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         </WarningPanel>
       );
     } else if (matchConfidence === 'year-match' && vehicleIdentification?.matchedTo) {
-      // It's the right year range but not exact model variant
       return (
         <NoticePanel>
           <GovUKHeadingS>Compatible Model Match</GovUKHeadingS>
@@ -646,7 +1007,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return null;
   }, [techSpecsData, vehicleData, matchConfidence, vehicleFuelType]);
 
-  // Simplified tab configuration with better validation - removed icons
+  // Visual tabs configuration
   const tabs = useMemo(() => {
     if (!techSpecsData) return [];
     
@@ -655,52 +1016,37 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     // Engine Details Tab
     const engineSections = [];
     
-    // Vehicle Identification section
     const engineDetails = safeGet(techSpecsData, 'vehicleIdentification.engineDetails', []);
     if (Array.isArray(engineDetails) && engineDetails.length > 0) {
       engineSections.push({
         title: "Vehicle Identification",
-        content: (
-          <>
-            <InsightBody>
-              Key specifications for this <ValueHighlight>{safeGet(techSpecsData, 'vehicleIdentification.make', '')} {safeGet(techSpecsData, 'vehicleIdentification.model', '')}</ValueHighlight> engine.
-            </InsightBody>
-            {renderSpecTable(engineDetails)}
-          </>
-        )
+        icon: getCategoryIcon("Vehicle Identification"),
+        content: renderVisualSpecs(engineDetails, "Vehicle Identification")
       });
     }
     
-    // Injection System section
     const injectionSpecs = safeGet(techSpecsData, 'injectionSystem.specifications', []) || 
                           safeGet(techSpecsData, 'injectionSystem.details', []);
     
     if (Array.isArray(injectionSpecs) && injectionSpecs.length > 0) {
       engineSections.push({
         title: "Injection System",
-        content: renderSpecTable(injectionSpecs)
+        icon: getCategoryIcon("Injection System"),
+        content: renderVisualSpecs(injectionSpecs, "Injection System")
       });
     }
     
-    // Tuning & Emissions section
     const tuningSpecs = safeGet(techSpecsData, 'tuningEmissions.specifications', []) || 
                        safeGet(techSpecsData, 'tuningEmissions.details', []);
     
     if (Array.isArray(tuningSpecs) && tuningSpecs.length > 0) {
       engineSections.push({
         title: "Tuning & Emissions",
-        content: (
-          <>
-            <InsightBody>
-              These specifications are important for emissions testing and engine tuning operations.
-            </InsightBody>
-            {renderSpecTable(tuningSpecs)}
-          </>
-        )
+        icon: getCategoryIcon("Tuning & Emissions"),
+        content: renderVisualSpecs(tuningSpecs, "Tuning & Emissions")
       });
     }
     
-    // Other engine sections (simplified)
     const engineSectionMap = [
       { path: 'spark_plugs', title: 'Spark Plugs' },
       { path: 'fuel_system', title: 'Fuel System' },
@@ -714,7 +1060,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       if (Array.isArray(specs) && specs.length > 0) {
         engineSections.push({
           title: section.title,
-          content: renderSpecTable(specs)
+          icon: getCategoryIcon(section.title),
+          content: renderVisualSpecs(specs, section.title)
         });
       }
     });
@@ -722,6 +1069,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     if (engineSections.length > 0) {
       tabsConfig.push({
         label: "Engine Details",
+        icon: getCategoryIcon("Engine Details"),
+        color: getCategoryColor("Engine Details"),
         sections: engineSections
       });
     }
@@ -729,25 +1078,17 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     // Service Information Tab
     const serviceSections = [];
     
-    // Service Checks section
     const serviceChecksSpecs = safeGet(techSpecsData, 'serviceChecks.specifications', []) || 
                              safeGet(techSpecsData, 'serviceChecks.details', []);
     
     if (Array.isArray(serviceChecksSpecs) && serviceChecksSpecs.length > 0) {
       serviceSections.push({
         title: "Service Checks & Adjustments",
-        content: (
-          <>
-            <InsightBody>
-              Reference values for maintenance and diagnostics.
-            </InsightBody>
-            {renderSpecTable(serviceChecksSpecs)}
-          </>
-        )
+        icon: getCategoryIcon("Service Checks & Adjustments"),
+        content: renderVisualSpecs(serviceChecksSpecs, "Service Checks & Adjustments")
       });
     }
     
-    // Lubricants & Capacities section
     const engineOilOptions = safeGet(techSpecsData, 'lubricantsCapacities.engine_oil_options.specifications', []) || 
                            safeGet(techSpecsData, 'lubricantsCapacities.engine_oil_options.details', []);
     
@@ -760,24 +1101,26 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     if (hasEngineOilOptions || hasLubricantSpecs) {
       serviceSections.push({
         title: "Lubricants & Capacities",
+        icon: getCategoryIcon("Lubricants & Capacities"),
         content: (
           <>
             {hasEngineOilOptions && (
-              <Box mb={4}>
-                <GovUKHeadingS>
+              <>
+                <GovUKHeadingS style={{ marginBottom: '20px' }}>
                   Engine Oil Options
                 </GovUKHeadingS>
-                {renderSpecTable(engineOilOptions)}
-              </Box>
+                {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
+              </>
             )}
             
             {hasLubricantSpecs && (
-              <Box>
-                <GovUKHeadingS>
+              <>
+                {hasEngineOilOptions && <VisualDivider />}
+                <GovUKHeadingS style={{ marginBottom: '20px' }}>
                   Other Lubricants & Capacities
                 </GovUKHeadingS>
-                {renderSpecTable(lubricantSpecs)}
-              </Box>
+                {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
+              </>
             )}
           </>
         )
@@ -787,17 +1130,18 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     if (serviceSections.length > 0) {
       tabsConfig.push({
         label: "Service Information",
+        icon: getCategoryIcon("Service Information"),
+        color: getCategoryColor("Service Information"),
         sections: serviceSections
       });
     }
     
-    // Torque Specifications Tab (simplified)
+    // Torque Specifications Tab
     const torqueSections = [];
     
     if (techSpecsData.tighteningTorques) {
       const { tighteningTorques } = techSpecsData;
       
-      // Cylinder head instructions
       const headInstructions = safeGet(tighteningTorques, 'cylinder_head_instructions', []);
       const headTorques = safeGet(tighteningTorques, 'cylinder_head_torques', []);
       
@@ -806,53 +1150,52 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         
         torqueSections.push({
           title: "Cylinder Head Instructions",
+          icon: getCategoryIcon("Cylinder Head Instructions"),
           content: (
             <>
-              <InsightBody>
+              <InsightBody style={{ marginBottom: '20px' }}>
                 {headInstructions.map((instruction, index) => (
                   <p key={`instr-${index}`}>{instruction}</p>
                 ))}
               </InsightBody>
               
               {hasTorqueSequence && (
-                <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={3} mb={4}>
-                  <Box flex={1}>
-                    <GovUKHeadingS>Tightening sequence</GovUKHeadingS>
-                    <ol className="govuk-list govuk-list--number">
-                      {headTorques.map((step, index) => (
-                        <li key={`step-${index}`}>{step}</li>
-                      ))}
-                    </ol>
-                  </Box>
-                </Box>
+                <VisualSpecCard>
+                  <GovUKHeadingS>Tightening sequence</GovUKHeadingS>
+                  <ol className="govuk-list govuk-list--number">
+                    {headTorques.map((step, index) => (
+                      <li key={`step-${index}`}>{step}</li>
+                    ))}
+                  </ol>
+                </VisualSpecCard>
               )}
             </>
           )
         });
       }
       
-      // Engine torques
       const engineTorques = safeGet(tighteningTorques, 'engine_torques', []);
       if (Array.isArray(engineTorques) && engineTorques.length > 0) {
         torqueSections.push({
           title: "Engine Tightening Torques",
+          icon: getCategoryIcon("Engine Tightening Torques"),
           content: (
             <>
-              {renderSpecTable(engineTorques)}
+              {renderVisualSpecs(engineTorques, "Engine Tightening Torques")}
               {tighteningTorques.engine_notes && renderNotes(tighteningTorques.engine_notes)}
             </>
           )
         });
       }
       
-      // Chassis torques
       const chassisTorques = safeGet(tighteningTorques, 'chassis_tightening_torques', []);
       if (Array.isArray(chassisTorques) && chassisTorques.length > 0) {
         torqueSections.push({
           title: "Chassis Tightening Torques",
+          icon: getCategoryIcon("Chassis Tightening Torques"),
           content: (
             <>
-              {renderSpecTable(chassisTorques)}
+              {renderVisualSpecs(chassisTorques, "Chassis Tightening Torques")}
               {tighteningTorques.chassis_notes && renderNotes(tighteningTorques.chassis_notes)}
             </>
           )
@@ -863,53 +1206,50 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     if (torqueSections.length > 0) {
       tabsConfig.push({
         label: "Torque Specifications",
+        icon: getCategoryIcon("Torque Specifications"),
+        color: getCategoryColor("Torque Specifications"),
         sections: torqueSections
       });
     }
     
-    // Brakes & A/C Tab (simplified)
+    // Brakes & A/C Tab
     const otherSections = [];
     
-    // Brake Dimensions section
     const brakeSpecs = safeGet(techSpecsData, 'brakeDimensions.specifications', []) || 
                       safeGet(techSpecsData, 'brakeDimensions.details', []);
     
     if (Array.isArray(brakeSpecs) && brakeSpecs.length > 0) {
       otherSections.push({
         title: "Brake Disc & Drum Dimensions",
-        content: (
-          <>
-            <InsightBody>
-              Reference measurements for brake component service and replacement.
-            </InsightBody>
-            {renderSpecTable(brakeSpecs)}
-          </>
-        )
+        icon: getCategoryIcon("Brake Disc & Drum Dimensions"),
+        content: renderVisualSpecs(brakeSpecs, "Brake Disc & Drum Dimensions")
       });
     }
     
-    // Air Conditioning section
     const acSpecs = safeGet(techSpecsData, 'airConditioning.specifications', []) || 
                    safeGet(techSpecsData, 'airConditioning.details', []);
     
     if (Array.isArray(acSpecs) && acSpecs.length > 0) {
       otherSections.push({
         title: "Air Conditioning",
-        content: renderSpecTable(acSpecs)
+        icon: getCategoryIcon("Air Conditioning"),
+        content: renderVisualSpecs(acSpecs, "Air Conditioning")
       });
     }
     
     if (otherSections.length > 0) {
       tabsConfig.push({
         label: "Brakes & A/C",
+        icon: getCategoryIcon("Brakes & A/C"),
+        color: getCategoryColor("Brakes & A/C"),
         sections: otherSections
       });
     }
     
     return tabsConfig.filter(tab => tab.sections.length > 0);
-  }, [techSpecsData, renderSpecTable, renderNotes]);
+  }, [techSpecsData]);
 
-  // Loading state - aligned with GOV.UK style
+  // Loading state
   if (loading) {
     return (
       <GovUKContainer>
@@ -924,7 +1264,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     );
   }
 
-  // Error state - aligned with GOV.UK style
+  // Error state
   if (error) {
     return (
       <GovUKContainer>
@@ -955,7 +1295,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     );
   }
 
-  // No data state - aligned with GOV.UK style
+  // No data state
   if (!techSpecsData) {
     return (
       <GovUKContainer>
@@ -974,26 +1314,22 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     );
   }
 
-  // Extract display info from vehicle identification with better validation
+  // Extract display info
   const { vehicleIdentification } = techSpecsData;
   const displayMake = vehicleIdentification?.make || vehicleData?.make || 'Unknown';
   const displayModel = vehicleIdentification?.model || vehicleData?.model || 'Model';
   
-  // Extract fuel type for display with better validation
   const displayFuelType = vehicleIdentification?.matchedTo?.fuelType || 
                          vehicleIdentification?.fuelType || 
                          vehicleFuelType;
 
-  // Ensure we don't render tabs if there are none
   const hasTabs = tabs && tabs.length > 0;
-  
-  // Last updated date - hardcoded for now
   const lastUpdated = "March 2025";
 
   return (
     <GovUKContainer>
       <InsightsContainer>
-        <TechSpecsPanel>
+        <InsightPanel>
           <HeadingWithTooltip 
             tooltip="Technical specifications for your vehicle, based on manufacturer data"
             iconColor={COLORS.BLUE}
@@ -1005,10 +1341,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
             These specifications provide detailed technical information for servicing and maintaining your vehicle.
           </InsightBody>
           
-          {/* Match warning - memoized component */}
           {MatchWarning}
           
-          {/* Important notice */}
           <WarningPanel>
             <GovUKHeadingS>Important</GovUKHeadingS>
             <GovUKBody>
@@ -1016,7 +1350,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
             </GovUKBody>
           </WarningPanel>
           
-          {/* Display fuel type if available */}
           {displayFuelType && displayFuelType !== 'unknown' && (
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: 2, marginBottom: 2 }}>
               <FuelTypeBadge>
@@ -1024,45 +1357,48 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
               </FuelTypeBadge>
             </Box>
           )}
-          
-          {/* Only render tabs if we have data */}
+        </InsightPanel>
+        
+        <VisualSpecsContainer>
           {hasTabs ? (
             <>
-              {/* Tabs Navigation */}
-              <Box>
-                <StyledTabs 
-                  value={tabValue < tabs.length ? tabValue : 0} // Ensure valid tab
-                  onChange={handleTabChange} 
-                  aria-label="technical specifications tabs"
-                  variant="scrollable"
-                  scrollButtons="auto"
-                >
-                  {tabs.map((tab, index) => (
-                    <StyledTab 
-                      key={`tab-${index}`}
-                      label={tab.label} 
-                      {...a11yProps(index)} 
-                    />
-                  ))}
-                </StyledTabs>
-              </Box>
+              <VisualTabs 
+                value={tabValue < tabs.length ? tabValue : 0}
+                onChange={handleTabChange} 
+                aria-label="technical specifications tabs"
+                variant="scrollable"
+                scrollButtons="auto"
+              >
+                {tabs.map((tab, index) => (
+                  <VisualTab 
+                    key={`tab-${index}`}
+                    label={tab.label}
+                    {...a11yProps(index)} 
+                  />
+                ))}
+              </VisualTabs>
               
-              {/* Tab Content */}
               {tabs.map((tab, tabIndex) => (
                 <CustomTabPanel key={`panel-${tabIndex}`} value={tabValue} index={tabIndex}>
                   {tab.sections.map((section, sectionIndex) => {
                     const isLastSection = sectionIndex === tab.sections.length - 1;
                     
                     return (
-                      <SectionContainer 
-                        key={`section-${tabIndex}-${sectionIndex}`}
-                        style={isLastSection ? { marginBottom: 0 } : {}}
-                      >
-                        <SectionHeader>
-                          <GovUKHeadingM>{section.title}</GovUKHeadingM>
-                        </SectionHeader>
+                      <Box key={`section-${tabIndex}-${sectionIndex}`}>
+                        <SpecCategoryHeader>
+                          <CategoryIcon color={tab.color}>
+                            {section.icon}
+                          </CategoryIcon>
+                          <Box>
+                            <GovUKHeadingM style={{ margin: 0 }}>{section.title}</GovUKHeadingM>
+                            <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
+                              Technical specifications and measurements
+                            </GovUKBodyS>
+                          </Box>
+                        </SpecCategoryHeader>
                         {section.content}
-                      </SectionContainer>
+                        {!isLastSection && <VisualDivider />}
+                      </Box>
                     );
                   })}
                 </CustomTabPanel>
@@ -1078,7 +1414,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
             </Box>
           )}
           
-          {/* Footer Note */}
           <NoticePanel>
             <GovUKBodyS>
               Technical specifications sourced from industry standard databases.
@@ -1086,7 +1421,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
               Last updated: {lastUpdated}
             </GovUKBodyS>
           </NoticePanel>
-        </TechSpecsPanel>
+        </VisualSpecsContainer>
       </InsightsContainer>
     </GovUKContainer>
   );

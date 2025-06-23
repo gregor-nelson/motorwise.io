@@ -314,6 +314,24 @@ const PremiumReportPage = () => {
                 <DVLAVehicleData registration={reportData.registration} paymentId={paymentId} />
               </ErrorBoundary>
             </div>
+
+             {/* Vehicle Insights section - keeping original implementation */}
+            <div className="report-section">
+              <ErrorBoundary fallback={
+                <ErrorMessage 
+                  message="The vehicle insights information is temporarily unavailable. Please try again later."
+                  severity="warning"
+                />
+              }>
+                <VehicleInsights
+                  registration={reportData.registration}
+                  vin={reportData.vin}
+                  paymentId={paymentId}
+                  onDataLoad={handleVehicleInsightsData}
+                />
+              </ErrorBoundary>
+            </div>
+            
             
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
              {/* AutoData section */}
@@ -333,23 +351,7 @@ const PremiumReportPage = () => {
               </ErrorBoundary>
             </ReportSection>
             
-            {/* Vehicle Insights section - keeping original implementation */}
-            <div className="report-section">
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The vehicle insights information is temporarily unavailable. Please try again later."
-                  severity="warning"
-                />
-              }>
-                <VehicleInsights
-                  registration={reportData.registration}
-                  vin={reportData.vin}
-                  paymentId={paymentId}
-                  onDataLoad={handleVehicleInsightsData}
-                />
-              </ErrorBoundary>
-            </div>
-            
+           
             <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
             
             {/* Mileage Chart section */}

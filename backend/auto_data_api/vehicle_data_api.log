@@ -4768,3 +4768,110 @@
 2025-06-22 10:54:28,126 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
 2025-06-22 10:54:28,130 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0210s
 2025-06-22 10:54:28,131 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0220s
+2025-06-23 08:06:30,288 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-06-23 08:06:30,314 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-06-23 08:06:30,333 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-06-23 08:06:30,354 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-06-23 08:06:30,379 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-06-23 08:06:30,402 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-06-23 08:06:30,403 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-06-23 08:06:30,421 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-06-23 08:06:30,422 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-06-23 08:06:30,442 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-06-23 08:06:30,442 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-06-23 08:06:30,444 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-06-23 08:06:30,445 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-06-23 08:28:51,018 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-06-23 08:28:51,019 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-06-23 08:28:51,019 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-06-23 08:28:51,026 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0170s
+2025-06-23 08:28:51,028 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-06-23 08:28:51,028 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-06-23 08:28:51,028 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-06-23 08:28:51,028 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-06-23 08:28:51,028 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-06-23 08:28:51,029 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-06-23 08:28:51,029 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-06-23 08:28:51,029 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-06-23 08:28:51,029 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-06-23 08:28:51,029 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-06-23 08:28:51,030 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-06-23 08:28:51,035 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0230s
+2025-06-23 08:44:47,524 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:44:47,525 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:44:47,526 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:44:47,526 - vehicle_data_api - INFO - Searching for: ford transit connect, Year=2020, Fuel=diesel, Type=tech_specs
+2025-06-23 08:44:47,526 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:44:47,528 - vehicle_data_api - INFO - No good match found for FORD TRANSIT CONNECT (Year: 2020, Fuel: diesel)
+2025-06-23 08:44:47,528 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:44:47,528 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT CONNECT (year: 2020) (fuel type: diesel)
+2025-06-23 08:44:47,529 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT CONNECT (year: 2020)
+2025-06-23 08:44:47,530 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT CONNECT (year: 2020)
+2025-06-23 08:44:47,530 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT CONNECT (year: 2020)
+2025-06-23 08:44:47,531 - vehicle_data_api - INFO - Searching for: ford transit connect, Year=2020, Fuel=None, Type=repair_times
+2025-06-23 08:44:47,531 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-06-23 08:44:47,531 - vehicle_data_api - INFO - Top 1 matching candidates:
+2025-06-23 08:44:47,532 - vehicle_data_api - INFO - #1: Ford Fiesta (2017-present) Fuel: unknown - Score: 0.53
+2025-06-23 08:44:47,532 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-06-23 08:44:47,532 - vehicle_data_api - INFO - Selected match: Ford Fiesta (2017-present) Fuel: unknown with score: 0.53
+2025-06-23 08:44:47,532 - vehicle_data_api - INFO - Fuzzy match found: Ford Fiesta 2017-None
+2025-06-23 08:44:47,541 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0200s
+2025-06-23 08:44:47,542 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0200s
+2025-06-23 08:45:03,373 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:45:03,373 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:45:03,373 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:45:03,374 - vehicle_data_api - INFO - Searching for: ford transit connect, Year=2020, Fuel=diesel, Type=tech_specs
+2025-06-23 08:45:03,374 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:45:03,374 - vehicle_data_api - INFO - No good match found for FORD TRANSIT CONNECT (Year: 2020, Fuel: diesel)
+2025-06-23 08:45:03,374 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:45:03,375 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT CONNECT (year: 2020) (fuel type: diesel)
+2025-06-23 08:45:03,375 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-06-23 08:56:17,523 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:56:17,523 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:56:17,524 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:56:17,524 - vehicle_data_api - INFO - Searching for: ford transit connect, Year=2020, Fuel=diesel, Type=tech_specs
+2025-06-23 08:56:17,524 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:56:17,525 - vehicle_data_api - INFO - No good match found for FORD TRANSIT CONNECT (Year: 2020, Fuel: diesel)
+2025-06-23 08:56:17,525 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT CONNECT (year: 2020, fuel: diesel)
+2025-06-23 08:56:17,525 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT CONNECT (year: 2020) (fuel type: diesel)
+2025-06-23 08:56:17,526 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-06-23 08:57:39,348 - vehicle_data_api - INFO - Looking up repair times for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:39,348 - vehicle_data_api - INFO - Looking up repair times for: MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:39,348 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:39,348 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=None, Type=repair_times
+2025-06-23 08:57:39,348 - vehicle_data_api - INFO - Found 2 vehicles matching make 'mazda'
+2025-06-23 08:57:39,349 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:57:39,349 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: None)
+2025-06-23 08:57:39,349 - vehicle_data_api - WARNING - No repair time match found for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:39,350 - vehicle_data_api - INFO - Similar repair time keys available: ['mazda_mx-5', 'mazda_mx', 'mazda_mx-5_2005', 'mazda_mx_2005', 'mazda_mx-5_2006', 'mazda_mx_2006', 'mazda_mx-5_2007', 'mazda_mx_2007', 'mazda_mx-5_2008', 'mazda_mx_2008', 'mazda_mx-5_2009', 'mazda_mx_2009', 'mazda_mx-5_2010', 'mazda_mx_2010', 'mazda_mx-5_2011', 'mazda_mx_2011', 'mazda_mx-5_2012', 'mazda_mx_2012', 'mazda_mx-5_2013', 'mazda_mx_2013', 'mazda_mx-5_2014', 'mazda_mx_2014', 'mazda_mx-5_2015', 'mazda_mx_2015']
+2025-06-23 08:57:39,350 - vehicle_data_api - ERROR - HTTPException: No repair time data found for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:39,351 - vehicle_data_api - INFO - Looking up tech specs for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:39,351 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:39,351 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:39,351 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=petrol, Type=tech_specs
+2025-06-23 08:57:39,351 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:57:39,352 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: petrol)
+2025-06-23 08:57:39,352 - vehicle_data_api - WARNING - No tech specs match found for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:39,352 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA EUNOS (year: 1991) (fuel type: petrol)
+2025-06-23 08:57:39,352 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-06-23 08:57:39,353 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-06-23 08:57:51,382 - vehicle_data_api - INFO - Looking up repair times for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:51,382 - vehicle_data_api - INFO - Looking up repair times for: MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:51,382 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:51,383 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=None, Type=repair_times
+2025-06-23 08:57:51,383 - vehicle_data_api - INFO - Found 2 vehicles matching make 'mazda'
+2025-06-23 08:57:51,383 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:57:51,384 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: None)
+2025-06-23 08:57:51,384 - vehicle_data_api - WARNING - No repair time match found for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:51,385 - vehicle_data_api - INFO - Similar repair time keys available: ['mazda_mx-5', 'mazda_mx', 'mazda_mx-5_2005', 'mazda_mx_2005', 'mazda_mx-5_2006', 'mazda_mx_2006', 'mazda_mx-5_2007', 'mazda_mx_2007', 'mazda_mx-5_2008', 'mazda_mx_2008', 'mazda_mx-5_2009', 'mazda_mx_2009', 'mazda_mx-5_2010', 'mazda_mx_2010', 'mazda_mx-5_2011', 'mazda_mx_2011', 'mazda_mx-5_2012', 'mazda_mx_2012', 'mazda_mx-5_2013', 'mazda_mx_2013', 'mazda_mx-5_2014', 'mazda_mx_2014', 'mazda_mx-5_2015', 'mazda_mx_2015']
+2025-06-23 08:57:51,385 - vehicle_data_api - ERROR - HTTPException: No repair time data found for MAZDA EUNOS (year: 1991)
+2025-06-23 08:57:51,386 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-06-23 08:57:51,393 - vehicle_data_api - INFO - Looking up tech specs for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:51,393 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:51,394 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:51,394 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=petrol, Type=tech_specs
+2025-06-23 08:57:51,394 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-06-23 08:57:51,395 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: petrol)
+2025-06-23 08:57:51,395 - vehicle_data_api - WARNING - No tech specs match found for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-06-23 08:57:51,396 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA EUNOS (year: 1991) (fuel type: petrol)
+2025-06-23 08:57:51,396 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s

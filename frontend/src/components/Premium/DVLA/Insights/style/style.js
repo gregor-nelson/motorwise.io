@@ -1,301 +1,431 @@
-import { styled, css } from '@mui/material/styles';
-import {
-  GovUKHeadingS,
-  GovUKBody,
-  GovUKBodyS,
-  PremiumInfoPanel,
-  COLORS,
-  FONT_SIZES,
-  LINE_HEIGHTS,
-  respondTo,
-  BREAKPOINTS
-} from '../../../../../styles/theme';
+// EnhancedInsightStyles.js
+// Enhanced styled components for vehicle insights matching tech specs design
 
-// Use the consistent GOV.UK colors from the main theme
-export const GOVUK_COLORS = COLORS;
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import { COLORS, BREAKPOINTS } from '../../../../../styles/theme';
 
-// Media query helpers aligned with main theme
-const mobileMediaQuery = `@media (max-width: 40.0625em)`;
-const desktopMediaQuery = `@media (min-width: 40.0625em)`;
-
-// Base font styles aligned with GOV.UK
-const govukFontStyles = css`
-  font-family: "GDS Transport", arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: ${GOVUK_COLORS.BLACK};
+// Container Components
+export const InsightsContainer = styled(Box)(({ theme }) => ({
+  maxWidth: '1200px',
+  margin: '0 auto',
+  padding: '20px',
   
-  @media print {
-    font-family: sans-serif;
-    color: #000;
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    padding: '10px'
   }
-`;
+}));
 
-// Main container for all insights - aligned with GovUKContainer
-export const InsightsContainer = styled('div')(() => css`
-  ${govukFontStyles}
-  margin-bottom: 20px;
-
-  ${desktopMediaQuery} {
-    margin-bottom: 30px;
+export const InsightPanel = styled(Box)(({ theme }) => ({
+  backgroundColor: COLORS.WHITE,
+  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  borderRadius: '5px',
+  marginBottom: '30px',
+  overflow: 'hidden',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  transition: 'all 0.2s ease',
+  
+  '&:hover': {
+    boxShadow: '0 4px 8px rgba(0,0,0,0.15)'
   }
-`);
+}));
 
-// Enhanced panel styling using PremiumInfoPanel from main theme
-export const InsightPanel = styled(PremiumInfoPanel, {
-  shouldForwardProp: prop => prop !== 'borderColor',
-})(({ borderColor }) => css`
-  ${govukFontStyles}
-  border-left: 5px solid ${borderColor || GOVUK_COLORS.BLUE};
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
+// Panel Variants
+export const OwnershipPanel = styled(InsightPanel)(({ theme }) => ({
+  borderTopColor: COLORS.BLUE,
+  borderTopWidth: '5px'
+}));
 
-  ${desktopMediaQuery} {
-    padding: 20px;
-    margin-bottom: 30px;
+export const StatusPanel = styled(InsightPanel)(({ theme }) => ({
+  borderTopColor: COLORS.PURPLE,
+  borderTopWidth: '5px'
+}));
+
+export const EmissionsPanel = styled(InsightPanel)(({ theme }) => ({
+  borderTopColor: COLORS.GREEN,
+  borderTopWidth: '5px'
+}));
+
+export const FuelEfficiencyPanel = styled(InsightPanel)(({ theme }) => ({
+  borderTopColor: COLORS.GREEN,
+  borderTopWidth: '5px'
+}));
+
+// Content Components
+export const InsightBody = styled(Box)(({ theme }) => ({
+  fontSize: '19px',
+  lineHeight: 1.5,
+  color: COLORS.BLACK,
+  marginBottom: '20px',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    fontSize: '16px'
   }
-`);
+}));
 
-// Panel types with theme color constants
-export const OwnershipPanel = styled(InsightPanel)(() => css`
-  border-left-color: ${GOVUK_COLORS.BLUE};
-`);
-
-export const StatusPanel = styled(InsightPanel)(() => css`
-  border-left-color: #4c2c92; /* Purple from main theme */
-`);
-
-export const EmissionsPanel = styled(InsightPanel)(() => css`
-  border-left-color: ${GOVUK_COLORS.BLUE || '#28a197'};
-`);
-
-export const FuelEfficiencyPanel = styled(InsightPanel)(() => css`
-  border-left-color: ${GOVUK_COLORS.GREEN};
-`);
-
-// Enhanced headings using GovUKHeadingS from main theme
-export const InsightHeading = styled(GovUKHeadingS, {
-  shouldForwardProp: prop => prop !== 'iconColor',
-})(({ iconColor }) => css`
-  ${govukFontStyles}
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  font-weight: 700;
-
-  & svg {
-    margin-right: 10px;
-    color: ${iconColor || GOVUK_COLORS.BLUE};
-  }
-
-  ${desktopMediaQuery} {
-    margin-bottom: 20px;
-  }
-`);
-
-// Body text with GovUKBody from main theme
-export const InsightBody = styled(GovUKBody)(() => css`
-  ${govukFontStyles}
-  margin-bottom: 15px;
-
-  ${desktopMediaQuery} {
-    margin-bottom: 20px;
-  }
-
-  & strong {
-    font-weight: 700;
-  }
-`);
-
-// Enhanced table styling aligned with GOV.UK tables
-export const InsightTable = styled('table')(() => css`
-  ${govukFontStyles}
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-
-  ${desktopMediaQuery} {
-    margin-bottom: 30px;
-  }
-
-  & th {
-    font-weight: 700;
-    padding: 10px 20px 10px 0;
-    text-align: left;
-    border-bottom: 1px solid ${GOVUK_COLORS.MID_GREY};
-  }
-
-  & td {
-    padding: 10px 20px 10px 0;
-    border-bottom: 1px solid ${GOVUK_COLORS.MID_GREY};
-
-    &:first-of-type {
-      font-weight: 700;
+export const InsightTable = styled('table')(({ theme }) => ({
+  width: '100%',
+  borderCollapse: 'collapse',
+  marginBottom: '20px',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  '& th, & td': {
+    padding: '12px 15px',
+    textAlign: 'left',
+    borderBottom: `1px solid ${COLORS.BORDER_COLOUR}`,
+    fontSize: '16px',
+    
+    [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+      padding: '10px',
+      fontSize: '14px'
     }
-  }
-
-  & tr:nth-of-type(even) {
-    background-color: transparent; /* GOV.UK tables don't use zebra striping */
-  }
-`);
-
-// Status indicators using theme colors
-export const StatusIndicator = styled('span', {
-  shouldForwardProp: prop => prop !== 'status',
-})(({ status }) => css`
-  ${govukFontStyles}
-  display: inline-flex;
-  align-items: center;
-  font-weight: 700;
-  color: ${status === 'Low' || status === 'Compliant' ? GOVUK_COLORS.GREEN : 
-          status === 'Medium' ? GOVUK_COLORS.ORANGE : 
-          status === 'High' || status === 'Non-Compliant' ? GOVUK_COLORS.RED : 
-          GOVUK_COLORS.BLACK};
-
-  & svg {
-    margin-right: 5px;
-  }
-`);
-
-// Special value highlight with theme colors
-export const ValueHighlight = styled('span', {
-  shouldForwardProp: prop => prop !== 'color',
-})(({ color }) => css`
-  ${govukFontStyles}
-  font-weight: 700;
-  color: ${color || GOVUK_COLORS.BLUE};
-`);
-
-// Better list styling aligned with GOV.UK lists
-export const FactorList = styled('ul')(() => css`
-  ${govukFontStyles}
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0 0 15px;
-
-  ${desktopMediaQuery} {
-    margin-bottom: 20px;
-  }
-`);
-
-// Factor item with icon using theme colors
-export const FactorItem = styled('li', {
-  shouldForwardProp: prop => prop !== 'iconColor',
-})(({ iconColor }) => css`
-  ${govukFontStyles}
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 5px;
-
-  & svg {
-    margin-right: 10px;
-    margin-top: 2px;
-    min-width: 20px;
-    color: ${iconColor || GOVUK_COLORS.DARK_GREY};
-  }
-`);
-
-// Section for factors with title
-export const FactorsSection = styled('div')(() => css`
-  ${govukFontStyles}
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid ${GOVUK_COLORS.MID_GREY};
-
-  ${desktopMediaQuery} {
-    margin-top: 20px;
-    padding-top: 20px;
-  }
-`);
-
-// Factors title using GovUKBodyS
-export const FactorsTitle = styled(GovUKBodyS, {
-  shouldForwardProp: prop => prop !== 'color',
-})(({ color }) => css`
-  ${govukFontStyles}
-  font-weight: 700;
-  color: ${color || GOVUK_COLORS.BLACK};
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-
-  & svg {
-    margin-right: 5px;
-  }
-`);
-
-// Key metric display with theme colors
-export const MetricDisplay = styled('div', {
-  shouldForwardProp: prop => prop !== 'iconColor',
-})(({ iconColor }) => css`
-  ${govukFontStyles}
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-
-  & svg {
-    color: ${iconColor || GOVUK_COLORS.BLACK};
-    margin-right: 8px;
-  }
-`);
-
-// Metric label component
-export const MetricLabel = styled('span')(() => css`
-  ${govukFontStyles}
-  margin-right: 10px;
-`);
-
-// Metric value with theme colors
-export const MetricValue = styled('span', {
-  shouldForwardProp: prop => prop !== 'color',
-})(({ color }) => css`
-  ${govukFontStyles}
-  font-weight: 700;
-  color: ${color || GOVUK_COLORS.BLACK};
-`);
-
-// Note section using GovUKBodyS
-export const InsightNote = styled('div')(() => css`
-  ${govukFontStyles}
-  font-style: italic;
-  color: ${GOVUK_COLORS.DARK_GREY};
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid ${GOVUK_COLORS.MID_GREY};
-  font-size: ${FONT_SIZES.XS}; // Add the font sizes from GovUKBodyS
-  line-height: ${LINE_HEIGHTS.XS};
+  },
   
-  ${respondTo(BREAKPOINTS.TABLET)} {
-    font-size: ${FONT_SIZES.S};
-    line-height: ${LINE_HEIGHTS.S};
+  '& th': {
+    fontWeight: 700,
+    backgroundColor: COLORS.LIGHT_GREY,
+    color: COLORS.BLACK
+  },
+  
+  '& tr:hover': {
+    backgroundColor: '#f8f8f8'
   }
-`);
-// Loading states with GovUKLoadingSpinner integration
-export const EnhancedLoadingContainer = styled('div')(() => css`
-  ${govukFontStyles}
-  text-align: center;
-  padding: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
-  margin: 15px 0;
+}));
 
-  ${desktopMediaQuery} {
-    padding: 30px;
-    margin: 20px 0;
+// Status Components
+export const StatusIndicator = styled(Box)(({ status }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '8px',
+  padding: '6px 12px',
+  borderRadius: '3px',
+  fontWeight: 700,
+  fontSize: '14px',
+  textTransform: 'uppercase',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  backgroundColor: 
+    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.LIGHT_GREEN :
+    status === 'Medium' || status === 'warning' ? '#fff7ed' :
+    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? '#fef2f2' :
+    status === 'Exempt' ? '#e6f3ff' :
+    COLORS.LIGHT_GREY,
+  color: 
+    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.GREEN :
+    status === 'Medium' || status === 'warning' ? COLORS.ORANGE :
+    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? COLORS.RED :
+    status === 'Exempt' ? COLORS.BLUE :
+    COLORS.DARK_GREY,
+  border: `1px solid ${
+    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.GREEN :
+    status === 'Medium' || status === 'warning' ? COLORS.ORANGE :
+    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? COLORS.RED :
+    status === 'Exempt' ? COLORS.BLUE :
+    COLORS.DARK_GREY
+  }`,
+  
+  '& svg': {
+    fontSize: '16px'
   }
-`);
+}));
 
-// Empty state container with theme styling
-export const EmptyStateContainer = styled('div')(() => css`
-  ${govukFontStyles}
-  text-align: center;
-  padding: 20px;
-  background-color: ${GOVUK_COLORS.LIGHT_GREY};
-  margin: 15px 0;
+// Value Highlighting
+export const ValueHighlight = styled('strong')(({ color }) => ({
+  color: color || COLORS.BLUE,
+  fontWeight: 700,
+  fontSize: 'inherit'
+}));
 
-  ${desktopMediaQuery} {
-    padding: 30px;
-    margin: 20px 0;
+// Factor Lists
+export const FactorsSection = styled(Box)(({ theme }) => ({
+  marginTop: '30px',
+  paddingTop: '20px',
+  borderTop: `1px solid ${COLORS.BORDER_COLOUR}`
+}));
+
+export const FactorsTitle = styled(Box)(({ color }) => ({
+  fontSize: '19px',
+  fontWeight: 700,
+  color: color || COLORS.BLACK,
+  marginBottom: '15px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+export const FactorList = styled('ul')(({ theme }) => ({
+  listStyle: 'none',
+  padding: 0,
+  margin: 0
+}));
+
+export const FactorItem = styled('li')(({ iconColor }) => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '12px',
+  padding: '10px 0',
+  fontSize: '16px',
+  lineHeight: 1.5,
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  '& svg': {
+    flexShrink: 0,
+    marginTop: '2px',
+    color: iconColor || COLORS.DARK_GREY
+  },
+  
+  '& strong': {
+    fontWeight: 700
+  },
+  
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    fontSize: '14px'
   }
-`);
+}));
+
+// Metric Display Components
+export const MetricDisplay = styled(Box)(({ iconColor }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  
+  '& svg': {
+    color: iconColor || COLORS.BLUE,
+    fontSize: '20px'
+  }
+}));
+
+export const MetricLabel = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  color: COLORS.DARK_GREY,
+  marginTop: '4px',
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+export const MetricValue = styled('span')(({ color }) => ({
+  fontSize: '19px',
+  fontWeight: 700,
+  color: color || COLORS.BLACK,
+  fontFamily: '"GDS Transport", arial, sans-serif'
+}));
+
+// Notes and Warnings
+export const InsightNote = styled(Box)(({ variant = 'info' }) => ({
+  backgroundColor: 
+    variant === 'warning' ? '#fff7ed' :
+    variant === 'success' ? '#f0fdf4' :
+    variant === 'error' ? '#fef2f2' :
+    COLORS.LIGHT_GREY,
+  borderLeft: `4px solid ${
+    variant === 'warning' ? COLORS.ORANGE :
+    variant === 'success' ? COLORS.GREEN :
+    variant === 'error' ? COLORS.RED :
+    COLORS.BLUE
+  }`,
+  padding: '15px 20px',
+  marginTop: '20px',
+  fontSize: '14px',
+  lineHeight: 1.5,
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  
+  '& svg': {
+    verticalAlign: 'middle',
+    marginRight: '8px'
+  }
+}));
+
+// Loading and Empty States
+export const EnhancedLoadingContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '60px 20px',
+  minHeight: '400px',
+  backgroundColor: COLORS.WHITE,
+  borderRadius: '5px',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  
+  '& .govuk-loading-spinner': {
+    marginBottom: '20px'
+  }
+}));
+
+export const EmptyStateContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '60px 20px',
+  minHeight: '300px',
+  backgroundColor: COLORS.WHITE,
+  borderRadius: '5px',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  textAlign: 'center',
+  
+  '& svg': {
+    marginBottom: '20px'
+  }
+}));
+
+// Visual Elements for Enhanced Design
+export const VisualCard = styled(Box)(({ variant = 'default', status }) => ({
+  backgroundColor: COLORS.WHITE,
+  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  borderRadius: '5px',
+  padding: '24px',
+  position: 'relative',
+  transition: 'all 0.2s ease',
+  height: '100%',
+  
+  ...(variant === 'gauge' && {
+    textAlign: 'center',
+    minHeight: '220px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  }),
+  
+  ...(variant === 'progress' && {
+    minHeight: '160px'
+  }),
+  
+  '&:hover': {
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    borderColor: COLORS.BLACK
+  },
+  
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: '5px',
+    backgroundColor: 
+      status === 'good' ? COLORS.GREEN :
+      status === 'warning' ? COLORS.ORANGE :
+      status === 'critical' ? COLORS.RED :
+      COLORS.BLUE,
+    borderRadius: '5px 0 0 5px'
+  }
+}));
+
+// Grid Layout
+export const InsightGrid = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '20px',
+  marginBottom: '30px',
+  
+  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '15px'
+  },
+  
+  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
+    gridTemplateColumns: '1fr',
+    gap: '15px'
+  }
+}));
+
+// Section Headers
+export const SectionHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '15px',
+  marginBottom: '25px',
+  paddingBottom: '15px',
+  borderBottom: `2px solid ${COLORS.BORDER_COLOUR}`,
+  
+  '& h2, & h3': {
+    margin: 0
+  }
+}));
+
+export const SectionIcon = styled(Box)(({ color }) => ({
+  width: '40px',
+  height: '40px',
+  backgroundColor: color || COLORS.BLUE,
+  color: COLORS.WHITE,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '20px',
+  fontWeight: 700,
+  borderRadius: '5px',
+  flexShrink: 0
+}));
+
+// Enhanced Badge
+export const Badge = styled('span')(({ variant = 'default', size = 'medium' }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  padding: size === 'large' ? '8px 16px' : '4px 10px',
+  fontSize: size === 'large' ? '16px' : '14px',
+  fontWeight: 700,
+  letterSpacing: '0.5px',
+  textTransform: 'uppercase',
+  fontFamily: '"GDS Transport", arial, sans-serif',
+  borderRadius: '3px',
+  backgroundColor: 
+    variant === 'success' ? COLORS.GREEN :
+    variant === 'warning' ? COLORS.ORANGE :
+    variant === 'error' ? COLORS.RED :
+    variant === 'info' ? COLORS.BLUE :
+    COLORS.DARK_GREY,
+  color: COLORS.WHITE,
+  
+  '& svg': {
+    fontSize: size === 'large' ? '20px' : '16px'
+  }
+}));
+
+// Progress Components
+export const ProgressWrapper = styled(Box)(({ theme }) => ({
+  width: '100%',
+  marginTop: '15px'
+}));
+
+export const ProgressBar = styled(Box)(({ theme }) => ({
+  width: '100%',
+  height: '24px',
+  backgroundColor: COLORS.LIGHT_GREY,
+  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  borderRadius: '3px',
+  overflow: 'hidden',
+  position: 'relative'
+}));
+
+export const ProgressFill = styled(Box)(({ color, width }) => ({
+  height: '100%',
+  width: `${width}%`,
+  backgroundColor: color || COLORS.BLUE,
+  transition: 'width 0.5s ease',
+  position: 'relative',
+  
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+    animation: 'shimmer 2s infinite'
+  },
+  
+  '@keyframes shimmer': {
+    '0%': { transform: 'translateX(-100%)' },
+    '100%': { transform: 'translateX(100%)' }
+  }
+}));
+
+// Visual Divider
+export const Divider = styled(Box)(({ theme }) => ({
+  height: '2px',
+  backgroundColor: COLORS.BORDER_COLOUR,
+  margin: '30px 0'
+}));

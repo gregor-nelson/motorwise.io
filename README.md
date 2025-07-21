@@ -1,5 +1,5 @@
 
-**MotCheck-UK is a comprehensive vehicle analysis platform providing MOT history, DVLA data, and insightful vehicle diagnostics for UK vehicles.**
+**MotCheck-UK is a vehicle analysis platform providing MOT history, DVLA data, and insightful vehicle diagnostics for UK vehicles.**
 
 This platform leverages a microservice architecture with a React frontend and multiple specialized Python/FastAPI backend services to deliver timely and accurate vehicle information.
 ---
@@ -81,39 +81,6 @@ Each backend service is a specialized FastAPI application.
 * **Middleware:** Includes compression, structured logging, and error handling. Pydantic models are used for request/response validation in backend services.
 * **Rate Limiting:** Implemented within individual backend services.
 
----
-
-### Prerequisites
-
-* Node.js and npm (for Frontend)
-* Python 3.x and pip (for Backend services)
-* Git
-
-### Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your_username/MotCheck-UK.git](https://github.com/your_username/MotCheck-UK.git)
-    cd MotCheck-UK
-    ```
-
-2.  **Frontend Setup:**
-    ```bash
-    cd frontend
-    npm install
-    cd ..
-    ```
-
-3.  **Backend Setup:**
-    Each backend service in the `/backend/` directory has its own dependencies. You'll need to install them for each service. For example, for `dvla_api`:
-    ```bash
-    cd backend/dvla_api
-    # Assuming a requirements.txt file exists or you install dependencies manually
-    pip install -r requirements.txt # Or your specific dependency management command
-    cd ../..
-    ```
-    Repeat this process for each service directory under `/backend/`.
-
 ### Environment Configuration
 
 Services rely on environment variables for configuration (API keys, service ports, external API endpoints, feature flags).
@@ -130,10 +97,3 @@ Services rely on environment variables for configuration (API keys, service port
 
 ---
 
-##  Development & Usage
-
-### Running the Frontend (React + Vite)
-
-Navigate to the frontend directory:
-```bash
-cd frontend

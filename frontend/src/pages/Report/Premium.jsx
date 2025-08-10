@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { COLORS } from '../../styles/theme';
 import { 
   GovUKContainer, 
   GovUKMainWrapper,
@@ -22,7 +21,6 @@ import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
 import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
-import PDFGenerator from './PDF/PdfGenerator';
 import AutoDataSection from '../../components/AutoData/DataTabs';
 
 // Configurations 
@@ -260,27 +258,7 @@ const PremiumReportPage = () => {
     return (
       <GovUKContainer>
         <GovUKMainWrapper>
-          {/* PDF Generator commented out as in original */}
-          {/* <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-            <PDFGenerator
-              reportData={reportData}
-              motData={motData}
-              insightsData={insightsData}
-              vehicleInsightsData={vehicleInsightsData}
-              mileageInsightsData={mileageInsightsData}
-              buttonText="Download PDF Report"
-              buttonStyle={{
-                padding: '10px 20px',
-                backgroundColor: COLORS.GREEN,
-                color: COLORS.WHITE,
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-              }}
-              buttonClassName="pdf-download-button"
-            />
-          </div> */}
+        
           
           <div ref={reportContainerRef}>
             <div className="report-section">

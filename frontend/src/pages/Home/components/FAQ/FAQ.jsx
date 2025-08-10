@@ -1,90 +1,54 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { COLORS, SPACING } from '../../../../styles/theme';
-import {
-  Section,
-  Container,
-  PageTitle,
-  SectionTitle,
-  SubSectionTitle,
-  Lead,
-  Paragraph,
-  Grid,
-  Card,
-  Button,
-  IconList,
-  WarningText,
-  NoMarginParagraph,
-  TabList,
-  TabButton,
-  InfoBox,
-  SuccessMessage,
-  ErrorAlert,
-  FAQPanel,
-  SearchPanel,
-  SearchInput,
-  EnhancedAccordion,
-  EnhancedAccordionItem,
-  EnhancedAccordionButton,
-  EnhancedAccordionContent,
-  FeedbackSection,
-  FeedbackPrompt,
-  CategoryHeader,
-  SearchResultsHeader,
-  StatusContainer,
-  StepContainer,
-  StepCircle,
-  StepContent,
-  GlossaryLetterHeader,
-  GlossaryTermContainer,
-  GlossaryTerm,
-  GlossaryDefinition,
-  AlphabetContainer,
-  AlphabetLink,
-} from '../../../../styles/Home/styles';
-
-// Import data from separate file to reduce component size
+import React, { useState, useMemo } from 'react';
+import './FAQStyles.css';
 import { FAQ_ITEMS, GLOSSARY_ITEMS, GUIDE_STEPS } from './helpData';
 
-// Custom Hooks
+// Custom hooks for cleaner code
 const useSearch = (items, searchFields) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedTerm, setDebouncedTerm] = useState('');
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedTerm(searchTerm), 300);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
 
   const results = useMemo(() => {
-    if (!debouncedTerm.trim()) return [];
-    const term = debouncedTerm.toLowerCase();
+    if (!searchTerm.trim()) return [];
+    const term = searchTerm.toLowerCase();
     return items.filter(item =>
       searchFields.some(field => item[field].toLowerCase().includes(term))
     );
-  }, [debouncedTerm, items, searchFields]);
+  }, [searchTerm, items, searchFields]);
 
-  return { searchTerm, setSearchTerm, results, isSearching: searchTerm.trim() && !results.length };
+  return { searchTerm, setSearchTerm, results };
 };
 
-const useForm = (initialValues, validate) => {
+const useFormValidation = (initialValues) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValues(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-  }, [errors]);
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
 
-  const handleSubmit = useCallback(async (e, onSubmit) => {
+  const validate = (formValues) => {
+    const newErrors = {};
+    if (!formValues.name.trim()) newErrors.name = 'Enter your full name';
+    if (!formValues.email.trim()) newErrors.email = 'Enter your email address';
+    else if (!/\S+@\S+\.\S+/.test(formValues.email)) newErrors.email = 'Enter a valid email address';
+    if (!formValues.inquiry) newErrors.inquiry = 'Select an inquiry type';
+    if (!formValues.message.trim()) newErrors.message = 'Enter your message';
+    else if (formValues.message.length < 20) newErrors.message = 'Message must be at least 20 characters';
+    return newErrors;
+  };
+
+  const handleSubmit = async (e, onSubmit) => {
     e.preventDefault();
     const validationErrors = validate(values);
     
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      const firstError = document.getElementById(`support-${Object.keys(validationErrors)[0]}`);
+      const firstError = document.getElementById(`field-${Object.keys(validationErrors)[0]}`);
       if (firstError) firstError.focus();
       return;
     }
@@ -99,26 +63,21 @@ const useForm = (initialValues, validate) => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [values, validate, initialValues]);
+  };
 
   return { values, errors, isSubmitting, isSubmitted, handleChange, handleSubmit };
 };
 
 // Reusable Components
-const FormField = ({ id, name, label, type = 'text', value, error, onChange, required, ...props }) => {
-  const fieldId = `support-${id}`;
+const FormField = ({ id, name, label, type = 'text', value, error, onChange, required, children, ...props }) => {
+  const fieldId = `field-${id}`;
   const errorId = `error-${id}`;
   const Tag = type === 'textarea' ? 'textarea' : type === 'select' ? 'select' : 'input';
 
   return (
-    <div style={{ marginBottom: SPACING.M }}>
-      <label htmlFor={fieldId} style={{ display: 'block', marginBottom: SPACING.XS, fontWeight: 'bold' }}>
-        {label} {required && (
-          <>
-            <span aria-hidden="true">*</span>
-            <span className="govuk-visually-hidden">(required)</span>
-          </>
-        )}
+    <div className="form-field">
+      <label htmlFor={fieldId} className="form-label">
+        {label} {required && <span className="required" aria-hidden="true">*</span>}
       </label>
       <Tag
         id={fieldId}
@@ -126,21 +85,16 @@ const FormField = ({ id, name, label, type = 'text', value, error, onChange, req
         type={type !== 'textarea' && type !== 'select' ? type : undefined}
         value={value}
         onChange={onChange}
+        className={`form-input ${type} ${error ? 'error' : ''}`}
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
         aria-required={required}
-        style={{
-          width: '100%',
-          padding: SPACING.S,
-          border: `2px solid ${error ? COLORS.RED : COLORS.GREY}`,
-          borderRadius: '2px',
-          ...(type === 'textarea' ? { resize: 'vertical' } : {}),
-          ...(type === 'select' ? { height: '40px' } : {})
-        }}
         {...props}
-      />
+      >
+        {children}
+      </Tag>
       {error && (
-        <p id={errorId} role="alert" style={{ color: COLORS.RED, margin: `${SPACING.XS} 0 0 0`, fontSize: '16px' }}>
+        <p id={errorId} className="form-error" role="alert">
           {error}
         </p>
       )}
@@ -152,62 +106,67 @@ const AccordionItem = ({ item, isExpanded, onToggle }) => {
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   
   return (
-    <EnhancedAccordionItem>
-      <h3 id={`heading-${item.id}`}>
-        <EnhancedAccordionButton 
-          isExpanded={isExpanded}
+    <div className="accordion-item">
+      <h3 className="accordion-header">
+        <button 
+          className={`accordion-button ${isExpanded ? 'expanded' : ''}`}
           onClick={() => onToggle(item.id)}
           aria-expanded={isExpanded}
           aria-controls={`content-${item.id}`}
+          id={`heading-${item.id}`}
         >
-          {item.question}
-        </EnhancedAccordionButton>
+          <span className="accordion-question">{item.question}</span>
+          <span className="accordion-icon" aria-hidden="true">
+            {isExpanded ? '−' : '+'}
+          </span>
+        </button>
       </h3>
-      <EnhancedAccordionContent 
-        isExpanded={isExpanded}
+      <div 
+        className={`accordion-content ${isExpanded ? 'expanded' : ''}`}
         id={`content-${item.id}`}
         role="region"
         aria-labelledby={`heading-${item.id}`}
         hidden={!isExpanded}
       >
-        <Paragraph>{item.answer}</Paragraph>
-        
-        <FeedbackSection>
-          {feedbackGiven ? (
-            <SuccessMessage role="status">Thank you for your feedback</SuccessMessage>
-          ) : (
-            <>
-              <FeedbackPrompt>Is this page useful?</FeedbackPrompt>
-              <div>
-                <Button 
-                  variant="secondary" 
-                  size="small" 
-                  onClick={() => setFeedbackGiven(true)}
-                  style={{ marginRight: SPACING.S, marginBottom: 0 }}
-                >
-                  Yes
-                </Button>
-                <Button 
-                  variant="secondary" 
-                  size="small" 
-                  onClick={() => setFeedbackGiven(true)}
-                  style={{ marginBottom: 0 }}
-                >
-                  No
-                </Button>
+        <div className="accordion-body">
+          <p className="answer">{item.answer}</p>
+          
+          <div className="feedback-section">
+            {feedbackGiven ? (
+              <div className="success-message" role="status">
+                <span className="success-icon">✓</span>
+                Thank you for your feedback
               </div>
-            </>
-          )}
-        </FeedbackSection>
-      </EnhancedAccordionContent>
-    </EnhancedAccordionItem>
+            ) : (
+              <>
+                <p className="feedback-prompt">Was this helpful?</p>
+                <div className="feedback-buttons">
+                  <button 
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setFeedbackGiven(true)}
+                  >
+                    Yes
+                  </button>
+                  <button 
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setFeedbackGiven(true)}
+                  >
+                    No
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 // Tab Content Components
 const FAQSection = () => {
   const [expandedId, setExpandedId] = useState(null);
-  const { searchTerm, setSearchTerm, results, isSearching } = useSearch(FAQ_ITEMS, ['question', 'answer']);
+  const { searchTerm, setSearchTerm, results } = useSearch(FAQ_ITEMS, ['question', 'answer']);
   
   const categories = useMemo(() => [...new Set(FAQ_ITEMS.map(item => item.category))], []);
   const itemsByCategory = useMemo(() => {
@@ -223,133 +182,142 @@ const FAQSection = () => {
     if (results.length > 0) setExpandedId(results[0].id);
   };
 
+  const toggleAccordion = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
   return (
-    <Section background={COLORS.LIGHT_GREY}>
-      <Container>
-        <SectionTitle>Frequently asked questions</SectionTitle>
-        <Lead>Find answers to common questions about our vehicle information service.</Lead>
+    <section className="faq-section">
+      <div className="container">
+        <header className="section-header">
+          <h2 className="section-title">Frequently Asked Questions</h2>
+          <p className="section-description">
+            Find answers to common questions about our vehicle information service.
+          </p>
+        </header>
         
-        <SearchPanel>
-          <form onSubmit={handleSearch}>
-            <label htmlFor="faq-search">Search frequently asked questions</label>
-            <div style={{ display: 'flex', gap: SPACING.M }}>
-              <SearchInput
+        <div className="search-panel">
+          <form onSubmit={handleSearch} className="search-form">
+            <div className="search-group">
+              <label htmlFor="faq-search" className="sr-only">Search frequently asked questions</label>
+              <input
                 id="faq-search"
                 type="text"
-                placeholder="Search for answers"
+                placeholder="Search for answers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
               />
-              <Button variant="primary" size="medium" type="submit">Search</Button>
+              <button type="submit" className="btn btn-primary">
+                Search
+              </button>
             </div>
           </form>
           
           {searchTerm && (
-            <p style={{ marginTop: SPACING.M }}>
+            <div className="search-results-info">
               {results.length === 0 
                 ? 'No results found. Please try different terms.' 
                 : `Showing ${results.length} result${results.length !== 1 ? 's' : ''}`}
-            </p>
+            </div>
           )}
-        </SearchPanel>
+        </div>
         
         {results.length > 0 ? (
-          <div style={{ marginBottom: SPACING.XXL }}>
-            <SearchResultsHeader>Search results</SearchResultsHeader>
-            <EnhancedAccordion>
+          <div className="search-results">
+            <h3 className="results-title">Search Results</h3>
+            <div className="accordion">
               {results.map(item => (
                 <AccordionItem
                   key={item.id}
                   item={item}
                   isExpanded={expandedId === item.id}
-                  onToggle={setExpandedId}
+                  onToggle={toggleAccordion}
                 />
               ))}
-            </EnhancedAccordion>
+            </div>
           </div>
         ) : (!searchTerm || results.length === 0) && categories.map(category => (
-          <div key={category} style={{ marginBottom: SPACING.XXL }}>
-            <CategoryHeader>{category}</CategoryHeader>
-            <EnhancedAccordion>
+          <div key={category} className="category-section">
+            <h3 className="category-title">{category}</h3>
+            <div className="accordion">
               {itemsByCategory[category].map(item => (
                 <AccordionItem
                   key={item.id}
                   item={item}
                   isExpanded={expandedId === item.id}
-                  onToggle={setExpandedId}
+                  onToggle={toggleAccordion}
                 />
               ))}
-            </EnhancedAccordion>
+            </div>
           </div>
         ))}
         
-        <Grid columns="1fr 1fr" gap={SPACING.XL}>
-          <Card accent={COLORS.GREEN}>
-            <SubSectionTitle>Need further assistance?</SubSectionTitle>
-            <Paragraph>Our support team is available Monday to Friday, 9am to 5pm.</Paragraph>
-            <Button variant="success" size="medium" onClick={() => document.getElementById('tab-support')?.click()}>
-              Contact support
-            </Button>
-          </Card>
+        <div className="help-cards">
+          <div className="help-card success">
+            <h4>Need More Help?</h4>
+            <p>Our support team is available Monday to Friday, 9am to 5pm.</p>
+            <button 
+              className="btn btn-success"
+              onClick={() => document.getElementById('tab-support')?.click()}
+            >
+              Contact Support
+            </button>
+          </div>
           
-          <Card accent={COLORS.BLUE}>
-            <SubSectionTitle>Service information</SubSectionTitle>
-            <IconList>
+          <div className="help-card info">
+            <h4>Service Information</h4>
+            <ul className="info-list">
               <li>Official DVLA and DVSA data</li>
               <li>Updated daily</li>
               <li>Secure and GDPR compliant</li>
-            </IconList>
-          </Card>
-        </Grid>
-      </Container>
-    </Section>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
 const HowToUseSection = () => (
-  <Section background={COLORS.LIGHT_GREY}>
-    <Container>
-      <SectionTitle>How to use this service</SectionTitle>
-      <Lead>Follow these steps to check a vehicle's MOT and tax status.</Lead>
+  <section className="how-to-section">
+    <div className="container">
+      <header className="section-header">
+        <h2 className="section-title">How to Use This Service</h2>
+        <p className="section-description">
+          Follow these simple steps to check a vehicle's MOT and tax status.
+        </p>
+      </header>
       
-      {GUIDE_STEPS.map((step) => (
-        <StepContainer key={step.number}>
-          <StepCircle bgColor={COLORS.BLUE}>{step.number}</StepCircle>
-          <StepContent>
-            <SubSectionTitle>{step.title}</SubSectionTitle>
-            <Paragraph>{step.description}</Paragraph>
-          </StepContent>
-        </StepContainer>
-      ))}
+      <div className="steps-container">
+        {GUIDE_STEPS.map((step) => (
+          <div key={step.number} className="step-item">
+            <div className="step-number">{step.number}</div>
+            <div className="step-content">
+              <h3 className="step-title">{step.title}</h3>
+              <p className="step-description">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
       
-      <InfoBox variant="warning">
-        <SubSectionTitle>Accessibility features</SubSectionTitle>
-        <Paragraph>
+      <div className="info-box warning">
+        <h4>Accessibility Features</h4>
+        <p>
           This service is designed to be accessible to all users. We comply with WCAG 2.1 AA standards.
-        </Paragraph>
-      </InfoBox>
-    </Container>
-  </Section>
+        </p>
+      </div>
+    </div>
+  </section>
 );
 
 const SupportSection = () => {
-  const validate = useCallback((values) => {
-    const errors = {};
-    if (!values.name.trim()) errors.name = 'Enter your full name';
-    if (!values.email.trim()) errors.email = 'Enter your email address';
-    else if (!/\S+@\S+\.\S+/.test(values.email)) errors.email = 'Enter a valid email address';
-    if (!values.inquiry) errors.inquiry = 'Select an inquiry type';
-    if (!values.message.trim()) errors.message = 'Enter your message';
-    else if (values.message.length < 20) errors.message = 'Message must be at least 20 characters';
-    return errors;
-  }, []);
-
-  const { values, errors, isSubmitting, isSubmitted, handleChange, handleSubmit } = useForm(
-    { name: '', email: '', inquiry: '', message: '' },
-    validate
-  );
+  const { values, errors, isSubmitting, isSubmitted, handleChange, handleSubmit } = useFormValidation({
+    name: '', email: '', inquiry: '', message: ''
+  });
 
   const onSubmit = async (formValues) => {
+    // Simulate API call
     await new Promise((resolve, reject) => {
       setTimeout(() => {
         Math.random() > 0.05 ? resolve() : reject(new Error('Submission failed. Please try again.'));
@@ -358,104 +326,114 @@ const SupportSection = () => {
   };
 
   return (
-    <Section background={COLORS.LIGHT_GREY}>
-      <Container>
-        <SectionTitle>Get support</SectionTitle>
-        <Lead>Contact our support team or access self-help resources.</Lead>
+    <section className="support-section">
+      <div className="container">
+        <header className="section-header">
+          <h2 className="section-title">Get Support</h2>
+          <p className="section-description">
+            Contact our support team or access self-help resources.
+          </p>
+        </header>
         
-        <Grid columns="2fr 1fr" gap={SPACING.XL}>
-          <div>
-            <SubSectionTitle>Contact our support team</SubSectionTitle>
-            <FAQPanel>
-              {isSubmitted && (
-                <SuccessMessage role="alert">
-                  <h2 style={{ margin: `0 0 ${SPACING.S} 0` }}>Support request submitted</h2>
-                  <p style={{ margin: 0 }}>We will respond within 2 working hours.</p>
-                </SuccessMessage>
-              )}
-              
-              {errors.submit && (
-                <ErrorAlert role="alert">
-                  <p style={{ margin: 0 }}>{errors.submit}</p>
-                </ErrorAlert>
-              )}
+        <div className="support-layout">
+          <div className="support-form-container">
+            <h3>Contact Our Support Team</h3>
             
-              <form onSubmit={(e) => handleSubmit(e, onSubmit)} noValidate>
-                <FormField
-                  id="name"
-                  name="name"
-                  label="Full name"
-                  value={values.name}
-                  error={errors.name}
-                  onChange={handleChange}
-                  required
-                  autoComplete="name"
-                />
-                
-                <FormField
-                  id="email"
-                  name="email"
-                  label="Email address"
-                  type="email"
-                  value={values.email}
-                  error={errors.email}
-                  onChange={handleChange}
-                  required
-                  autoComplete="email"
-                />
-                
-                <FormField
-                  id="inquiry"
-                  name="inquiry"
-                  label="Type of inquiry"
-                  type="select"
-                  value={values.inquiry}
-                  error={errors.inquiry}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Please select</option>
-                  <option value="technical">Technical issue</option>
-                  <option value="account">Account question</option>
-                  <option value="payment">Payment query</option>
-                  <option value="other">Other</option>
-                </FormField>
-                
-                <FormField
-                  id="message"
-                  name="message"
-                  label="Your message"
-                  type="textarea"
-                  value={values.message}
-                  error={errors.message}
-                  onChange={handleChange}
-                  required
-                  rows="5"
-                />
-                
-                <Button variant="primary" size="medium" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Submit request'}
-                </Button>
-              </form>
-            </FAQPanel>
+            {isSubmitted && (
+              <div className="success-alert" role="alert">
+                <h4>Support Request Submitted</h4>
+                <p>We will respond within 2 working hours.</p>
+              </div>
+            )}
+            
+            {errors.submit && (
+              <div className="error-alert" role="alert">
+                <p>{errors.submit}</p>
+              </div>
+            )}
+          
+            <form onSubmit={(e) => handleSubmit(e, onSubmit)} noValidate className="support-form">
+              <FormField
+                id="name"
+                name="name"
+                label="Full Name"
+                value={values.name}
+                error={errors.name}
+                onChange={handleChange}
+                required
+                autoComplete="name"
+              />
+              
+              <FormField
+                id="email"
+                name="email"
+                label="Email Address"
+                type="email"
+                value={values.email}
+                error={errors.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+              />
+              
+              <FormField
+                id="inquiry"
+                name="inquiry"
+                label="Type of Inquiry"
+                type="select"
+                value={values.inquiry}
+                error={errors.inquiry}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Please select</option>
+                <option value="technical">Technical Issue</option>
+                <option value="account">Account Question</option>
+                <option value="payment">Payment Query</option>
+                <option value="other">Other</option>
+              </FormField>
+              
+              <FormField
+                id="message"
+                name="message"
+                label="Your Message"
+                type="textarea"
+                value={values.message}
+                error={errors.message}
+                onChange={handleChange}
+                required
+                rows="5"
+              />
+              
+              <button 
+                type="submit" 
+                className="btn btn-primary btn-lg"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              </button>
+            </form>
           </div>
           
-          <div>
-            <Card accent={COLORS.BLUE}>
-              <h4>Operating hours</h4>
-              <Paragraph>Monday to Friday: 9am to 5pm</Paragraph>
-              <h4>Contact methods</h4>
-              <Paragraph>Email: support@vehiclecheck.gov.uk</Paragraph>
-            </Card>
+          <aside className="support-sidebar">
+            <div className="support-card">
+              <h4>Operating Hours</h4>
+              <p>Monday to Friday: 9am to 5pm</p>
+              <h4>Contact Methods</h4>
+              <p>Email: support@vehiclecheck.gov.uk</p>
+            </div>
             
-            <Card accent={COLORS.GREEN} style={{ marginTop: SPACING.XL }}>
-              <h4>Service status</h4>
-              <StatusContainer>All systems operational</StatusContainer>
-            </Card>
-          </div>
-        </Grid>
-      </Container>
-    </Section>
+            <div className="support-card status">
+              <h4>Service Status</h4>
+              <div className="status-indicator operational">
+                <span className="status-dot"></span>
+                All systems operational
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -475,88 +453,101 @@ const GlossarySection = () => {
   }, []);
 
   return (
-    <Section background={COLORS.LIGHT_GREY}>
-      <Container>
-        <SectionTitle>Glossary of terms</SectionTitle>
-        <Lead>Common terminology used in vehicle testing and documentation.</Lead>
+    <section className="glossary-section">
+      <div className="container">
+        <header className="section-header">
+          <h2 className="section-title">Glossary of Terms</h2>
+          <p className="section-description">
+            Common terminology used in vehicle testing and documentation.
+          </p>
+        </header>
         
-        <FAQPanel>
-          <AlphabetContainer>
+        <div className="glossary-content">
+          <div className="alphabet-nav">
             {Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map(letter => (
-              <AlphabetLink 
+              <a 
                 key={letter}
                 href={availableLetters.has(letter) ? `#glossary-${letter}` : undefined}
-                active={availableLetters.has(letter)}
+                className={`alphabet-link ${availableLetters.has(letter) ? 'active' : 'inactive'}`}
                 aria-disabled={!availableLetters.has(letter)}
                 tabIndex={availableLetters.has(letter) ? 0 : -1}
               >
                 {letter}
-              </AlphabetLink>
+              </a>
             ))}
-          </AlphabetContainer>
+          </div>
           
           {Object.entries(groupedItems).map(([letter, items]) => (
-            <div key={letter} id={`glossary-${letter}`}>
-              <GlossaryLetterHeader>{letter}</GlossaryLetterHeader>
-              <dl>
+            <div key={letter} id={`glossary-${letter}`} className="glossary-section-letter">
+              <h3 className="glossary-letter-header">{letter}</h3>
+              <dl className="glossary-list">
                 {items.map(item => (
-                  <GlossaryTermContainer key={item.term}>
-                    <GlossaryTerm>{item.term}</GlossaryTerm>
-                    <GlossaryDefinition>{item.definition}</GlossaryDefinition>
-                  </GlossaryTermContainer>
+                  <div key={item.term} className="glossary-item">
+                    <dt className="glossary-term">{item.term}</dt>
+                    <dd className="glossary-definition">{item.definition}</dd>
+                  </div>
                 ))}
               </dl>
             </div>
           ))}
-        </FAQPanel>
-      </Container>
-    </Section>
+        </div>
+      </div>
+    </section>
   );
 };
 
 // Main Component
-const HelpSection = () => {
+const FAQ = () => {
   const [activeTab, setActiveTab] = useState('faqs');
   
   const tabs = [
-    { id: 'faqs', label: 'Frequently asked questions', component: FAQSection },
-    { id: 'guide', label: 'How to use this service', component: HowToUseSection },
-    { id: 'support', label: 'Get support', component: SupportSection },
+    { id: 'faqs', label: 'Frequently Asked Questions', component: FAQSection },
+    { id: 'guide', label: 'How to Use This Service', component: HowToUseSection },
+    { id: 'support', label: 'Get Support', component: SupportSection },
     { id: 'glossary', label: 'Glossary', component: GlossarySection }
   ];
 
   const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || FAQSection;
 
   return (
-    <>
-      <Section background={COLORS.WHITE}>
-        <Container>
-          <PageTitle>Help and support</PageTitle>
-          <Lead>Find information about our vehicle history service.</Lead>
+    <div className="faq-wrapper">
+      <section className="faq-hero">
+        <div className="container">
+          <header className="hero-header">
+            <h1 className="hero-title">Help & Support</h1>
+            <p className="hero-description">
+              Find information about our vehicle history service and get the help you need.
+            </p>
+          </header>
           
-          <TabList role="tablist">
+          <nav className="tab-navigation" role="tablist">
             {tabs.map(tab => (
-              <TabButton
+              <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                isActive={activeTab === tab.id}
+                className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
                 role="tab"
                 id={`tab-${tab.id}`}
                 aria-selected={activeTab === tab.id}
                 aria-controls={`panel-${tab.id}`}
               >
                 {tab.label}
-              </TabButton>
+              </button>
             ))}
-          </TabList>
-        </Container>
-      </Section>
+          </nav>
+        </div>
+      </section>
       
-      <div id={`panel-${activeTab}`} role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
+      <main 
+        className="tab-content" 
+        id={`panel-${activeTab}`}
+        role="tabpanel" 
+        aria-labelledby={`tab-${activeTab}`}
+      >
         <ActiveComponent />
-      </div>
-    </>
+      </main>
+    </div>
   );
 };
 
-export default HelpSection;
+export default FAQ;

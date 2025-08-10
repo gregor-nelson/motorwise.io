@@ -4743,3 +4743,5 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-06-23 08:39:08,528 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
 2025-06-23 08:39:08,529 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0040s
 2025-06-23 08:39:11,819 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-08-07 11:15:18,140 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-08-07 11:17:16,227 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY

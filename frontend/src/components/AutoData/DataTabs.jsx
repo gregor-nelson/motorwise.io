@@ -1,7 +1,7 @@
 // Refactored AutoDataSection.jsx with vertical layout instead of tabs
 import React, { useState, useEffect, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
-import { COLORS, commonFontStyles, BREAKPOINTS } from '../../styles/theme'; // Adjust import path as needed
+import { commonFontStyles } from '../../styles/theme'; // Adjust import path as needed
 import TechnicalSpecificationsPage from './TechnicalSpecificationsPage';
 import VehicleRepairTimesComponent from './LabourTimes';
 import BulletinsComponent from './BulletinsComponent';

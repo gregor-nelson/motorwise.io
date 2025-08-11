@@ -1,85 +1,43 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import {
-  COLORS,
-  SPACING,
-  FONT_SIZES,
-  GovUKLoadingSpinner,
-  GovUKContainer,
-  GovUKBodyS,
-  GovUKHeadingM,
-  GovUKHeadingS,
-  GovUKBody,
-} from '../../styles/theme';
-
-// Import custom tooltip components if used elsewhere
 import { HeadingWithTooltip } from '../../styles/tooltip';
-
-// Import Material-UI icons
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
-
-// Import bulletins API
 import bulletinsApi from './api/BulletinsApiClient';
 
-// Import all styled components
 import {
-  // Container and layout components
   BulletinsContainer,
   MainLayout,
   Sidebar,
   ContentArea,
-  
-  // Category components
   CategoryContainer,
   CategoryTitle,
   CategoryList,
   CategoryItem,
   CategoryCount,
-  
-  // Search components
   SearchContainer,
   SearchInput,
-  
-  // Button components
   GovButton,
   BackButton,
   ActionButton,
-  
-  // Bulletin list components
   BulletinsList,
   BulletinItem,
   BulletinTitle,
   BulletinDescription,
-  
-  // Metadata components
   MetadataContainer,
   MetadataItem,
-  
-  // Panel components
   BulletinPanel,
-  BulletinListPanel,
   BulletinDetailPanel,
   WarningPanel,
-  InfoPanel,
-  
-  // Detail components
-  DetailSectionTitle,
   DetailList,
-  MaterialDetailList,
   OrderedList,
   SubSectionHeading,
-  
-  // State components
-  LoadingContainer,
-  StyledCircularProgress,
-  MessageContainer,
-  NoMatchContainer,
-  
-  // Icon wrappers
-  StyledValueHighlight,
   StyledFooterNote,
-  
-  // Imported from InsightsContainer
+  CleanContainer,
+  CleanHeadingM,
+  CleanHeadingS,
+  CleanBody,
+  CleanBodyS,
+  CleanLoadingSpinner,
   InsightsContainer,
   InsightBody,
   InsightTable,
@@ -88,14 +46,10 @@ import {
   FactorItem,
   InsightNote,
   EnhancedLoadingContainer,
-  
-  // Empty state
   StyledEmptyStateContainer as EmptyStateContainer
-} from './styles/style';
+} from './styles/BulletinStyles';
 
-/**
- * Extract year from various possible date fields in vehicleData
- */
+
 const extractVehicleYear = (vehicleData) => {
   if (!vehicleData) return null;
   
@@ -135,13 +89,13 @@ const extractVehicleYear = (vehicleData) => {
   return null;
 };
 
-// Styled icon components for consistent icon styling
+// Styled icon components using CSS custom properties
 const StyledWarningIcon = () => (
-  <WarningIcon fontSize="small" sx={{ color: COLORS.RED, marginRight: SPACING.XS }} />
+  <WarningIcon fontSize="small" sx={{ color: 'var(--negative)', marginRight: 'var(--space-sm)' }} />
 );
 
-const StyledInfoIcon = ({ color = COLORS.BLUE }) => (
-  <InfoIcon fontSize="small" sx={{ color, marginRight: SPACING.XS }} />
+const StyledInfoIcon = ({ color = 'var(--primary)' }) => (
+  <InfoIcon fontSize="small" sx={{ color, marginRight: 'var(--space-sm)' }} />
 );
 
 /**
@@ -154,12 +108,12 @@ const MatchWarning = ({ matchConfidence, metadata, vehicleMake, vehicleModel }) 
     <WarningPanel>
       <StyledWarningIcon />
       <div>
-        <GovUKHeadingS style={{ marginBottom: SPACING.XS }}>Approximate Match</GovUKHeadingS>
-        <GovUKBodyS>
+        <CleanHeadingS>Approximate Match</CleanHeadingS>
+        <CleanBodyS>
           We don't have exact data for your <strong>{vehicleMake} {vehicleModel}</strong>. 
           The bulletins shown are based on <strong>{metadata.matched_to.make} {metadata.matched_to.model}</strong>, 
           which is the closest match to your vehicle.
-        </GovUKBodyS>
+        </CleanBodyS>
       </div>
     </WarningPanel>
   );
@@ -169,46 +123,46 @@ const MatchWarning = ({ matchConfidence, metadata, vehicleMake, vehicleModel }) 
  * Loading State Component - Extracted for reusability
  */
 const LoadingState = ({ vehicleMake, vehicleModel }) => (
-  <GovUKContainer>
+  <CleanContainer>
     <EnhancedLoadingContainer>
-      <GovUKLoadingSpinner />
+      <CleanLoadingSpinner />
       <InsightBody>Loading technical bulletins...</InsightBody>
-      <GovUKBodyS sx={{ color: COLORS.DARK_GREY }}>
+      <CleanBodyS style={{ color: 'var(--gray-500)' }}>
         Please wait while we search for bulletins for {vehicleMake} {vehicleModel}
-      </GovUKBodyS>
+      </CleanBodyS>
     </EnhancedLoadingContainer>
-  </GovUKContainer>
+  </CleanContainer>
 );
 
 /**
  * Error State Component - Extracted for reusability
  */
 const ErrorState = ({ error, onRetry }) => (
-  <GovUKContainer>
+  <CleanContainer>
     <EmptyStateContainer>
-      <WarningIcon sx={{ fontSize: 40, color: COLORS.RED, marginBottom: SPACING.S }} />
+      <WarningIcon sx={{ fontSize: 40, color: 'var(--negative)', marginBottom: 'var(--space-md)' }} />
       <InsightBody>
-        <ValueHighlight color={COLORS.RED}>Error Loading Bulletins:</ValueHighlight> {error}
+        <ValueHighlight color="var(--negative)">Error Loading Bulletins:</ValueHighlight> {error}
       </InsightBody>
       <GovButton onClick={onRetry}>
         Try again
       </GovButton>
     </EmptyStateContainer>
-  </GovUKContainer>
+  </CleanContainer>
 );
 
 /**
  * Empty State Component - Extracted for reusability
  */
 const EmptyState = ({ vehicleMake, vehicleModel }) => (
-  <GovUKContainer>
+  <CleanContainer>
     <EmptyStateContainer>
-      <InfoIcon sx={{ fontSize: 40, color: COLORS.BLUE, marginBottom: SPACING.S }} />
+      <InfoIcon sx={{ fontSize: 40, color: 'var(--primary)', marginBottom: 'var(--space-md)' }} />
       <InsightBody>
         No technical bulletins found for {vehicleMake} {vehicleModel}
       </InsightBody>
     </EmptyStateContainer>
-  </GovUKContainer>
+  </CleanContainer>
 );
 
 /**
@@ -232,9 +186,9 @@ const BulletinDetail = ({
       <BulletinPanel>
         <HeadingWithTooltip 
           tooltip="Technical bulletin with detailed information about vehicle issues and fixes"
-          iconColor={COLORS.BLUE}
+          iconColor="var(--primary)"
         >
-          <GovUKHeadingM>{bulletin.title}</GovUKHeadingM>
+          <CleanHeadingM>{bulletin.title}</CleanHeadingM>
         </HeadingWithTooltip>
         
         <MatchWarning 
@@ -245,19 +199,19 @@ const BulletinDetail = ({
         />
         
         {error && (
-          <InsightNote sx={{ backgroundColor: '#fff4f4', borderColor: COLORS.RED }}>
+          <InsightNote sx={{ backgroundColor: 'var(--negative-light)', borderColor: 'var(--negative)' }}>
             <StyledWarningIcon />
-            <GovUKBody>{error}</GovUKBody>
+            <CleanBody>{error}</CleanBody>
           </InsightNote>
         )}
 
         {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
-          <BulletinDetailPanel color={COLORS.BLUE}>
-            <GovUKHeadingS>Affected Vehicles</GovUKHeadingS>
+          <BulletinDetailPanel color="var(--primary)">
+            <CleanHeadingS>Affected Vehicles</CleanHeadingS>
             <DetailList>
               {bulletin.affected_vehicles.map((vehicle, idx) => (
                 <li key={idx}>
-                  <GovUKBody>{vehicle}</GovUKBody>
+                  <CleanBody>{vehicle}</CleanBody>
                 </li>
               ))}
             </DetailList>
@@ -265,11 +219,11 @@ const BulletinDetail = ({
         )}
         
         {bulletin.problems && bulletin.problems.length > 0 && (
-          <BulletinDetailPanel color={COLORS.RED}>
-            <GovUKHeadingS>Problems</GovUKHeadingS>
+          <BulletinDetailPanel color="var(--negative)">
+            <CleanHeadingS>Problems</CleanHeadingS>
             <FactorList>
               {bulletin.problems.map((problem, idx) => (
-                <FactorItem key={idx} iconColor={COLORS.RED}>
+                <FactorItem key={idx} iconColor="var(--negative)">
                   <StyledWarningIcon />
                   <span>{problem}</span>
                 </FactorItem>
@@ -279,12 +233,12 @@ const BulletinDetail = ({
         )}
         
         {bulletin.causes && bulletin.causes.length > 0 && (
-          <BulletinDetailPanel color={COLORS.YELLOW}>
-            <GovUKHeadingS>Causes</GovUKHeadingS>
+          <BulletinDetailPanel color="var(--warning)">
+            <CleanHeadingS>Causes</CleanHeadingS>
             <FactorList>
               {bulletin.causes.map((cause, idx) => (
-                <FactorItem key={idx} iconColor={COLORS.YELLOW}>
-                  <StyledInfoIcon color={COLORS.YELLOW} />
+                <FactorItem key={idx} iconColor="var(--warning)">
+                  <StyledInfoIcon color="var(--warning)" />
                   <span>{cause}</span>
                 </FactorItem>
               ))}
@@ -293,11 +247,11 @@ const BulletinDetail = ({
         )}
         
         {bulletin.remedy && (
-          <BulletinDetailPanel color={COLORS.GREEN}>
-            <GovUKHeadingS>Remedy</GovUKHeadingS>
+          <BulletinDetailPanel color="var(--positive)">
+            <CleanHeadingS>Remedy</CleanHeadingS>
             
             {bulletin.remedy.parts && bulletin.remedy.parts.length > 0 && (
-              <div style={{ marginBottom: SPACING.XL }}>
+              <div style={{ marginBottom: 'var(--space-xl)' }}>
                 <SubSectionHeading>Parts Required</SubSectionHeading>
                 <InsightTable>
                   <thead>
@@ -326,7 +280,7 @@ const BulletinDetail = ({
                 <OrderedList>
                   {bulletin.remedy.steps.map((step, idx) => (
                     <li key={idx}>
-                      <GovUKBody>{step}</GovUKBody>
+                      <CleanBody>{step}</CleanBody>
                     </li>
                   ))}
                 </OrderedList>
@@ -336,11 +290,11 @@ const BulletinDetail = ({
         )}
         
         {bulletin.notes && bulletin.notes.length > 0 && (
-          <BulletinDetailPanel color={COLORS.BLUE_DARK || COLORS.LINK_HOVER}>
-            <GovUKHeadingS>Notes</GovUKHeadingS>
+          <BulletinDetailPanel color="var(--primary-dark)">
+            <CleanHeadingS>Notes</CleanHeadingS>
             <FactorList>
               {bulletin.notes.map((note, idx) => (
-                <FactorItem key={idx} iconColor={COLORS.BLUE}>
+                <FactorItem key={idx} iconColor="var(--primary)">
                   <StyledInfoIcon />
                   <span>{note}</span>
                 </FactorItem>
@@ -371,13 +325,13 @@ const SearchAndFilters = ({
   selectedCategory 
 }) => (
   <SearchContainer>
-    <GovUKBodyS>
+    <CleanBodyS>
       {filteredCount} bulletins 
       {selectedCategory ? ` in category "${selectedCategory}"` : ""} 
       {searchTerm ? ` matching "${searchTerm}"` : ""}
-    </GovUKBodyS>
+    </CleanBodyS>
     
-    <div style={{ display: 'flex', gap: SPACING.XS }}>
+    <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
       {showClearFilters && (
         <GovButton 
           onClick={onClearFilters}
@@ -444,7 +398,7 @@ const BulletinListView = ({ bulletins, onViewDetails }) => (
         
         {bulletin.problems && bulletin.problems.length > 0 && (
           <BulletinDescription>
-            <ValueHighlight color={COLORS.RED}>Problem:</ValueHighlight> {bulletin.problems[0]}
+            <ValueHighlight color="var(--negative)">Problem:</ValueHighlight> {bulletin.problems[0]}
             {bulletin.problems.length > 1 && ` and ${bulletin.problems.length - 1} more...`}
           </BulletinDescription>
         )}
@@ -478,7 +432,7 @@ const BulletinListView = ({ bulletins, onViewDetails }) => (
  */
 const NoResults = ({ onClearFilters }) => (
   <EmptyStateContainer>
-    <InfoIcon sx={{ fontSize: 40, color: COLORS.BLUE, marginBottom: SPACING.S }} />
+    <InfoIcon sx={{ fontSize: 40, color: 'var(--primary)', marginBottom: 'var(--space-md)' }} />
     <InsightBody>
       No bulletins match your search criteria
     </InsightBody>
@@ -815,9 +769,9 @@ const BulletinsComponent = ({
         <BulletinPanel>
           <HeadingWithTooltip 
             tooltip="Technical bulletins for your vehicle, based on manufacturer data"
-            iconColor={COLORS.BLUE}
+            iconColor="var(--primary)"
           >
-            <GovUKHeadingM>Technical Bulletins for {vehicleMake} {vehicleModel}</GovUKHeadingM>
+            <CleanHeadingM>Technical Bulletins for {vehicleMake} {vehicleModel}</CleanHeadingM>
           </HeadingWithTooltip>
           
           <InsightBody>
@@ -834,9 +788,9 @@ const BulletinsComponent = ({
           />
           
           {error && (
-            <InsightNote sx={{ backgroundColor: '#fff4f4', borderColor: COLORS.RED, marginBottom: SPACING.M }}>
+            <InsightNote sx={{ backgroundColor: 'var(--negative-light)', borderColor: 'var(--negative)', marginBottom: 'var(--space-lg)' }}>
               <StyledWarningIcon />
-              <GovUKBody>{error}</GovUKBody>
+              <CleanBody>{error}</CleanBody>
             </InsightNote>
           )}
           

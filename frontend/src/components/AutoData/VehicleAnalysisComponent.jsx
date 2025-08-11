@@ -1,36 +1,229 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import {
-  GovUKHeadingM,
-  GovUKHeadingS,
-  GovUKBody,
-  GovUKBodyS,
-  GovUKLoadingSpinner,
-  GovUKContainer,
-  COLORS,
-} from '../../styles/theme'; // Adjust import path
 import { styled } from '@mui/material';
-// Import Material-UI icons for error/empty states
 import WarningIcon from '@mui/icons-material/Warning';
 import InfoIcon from '@mui/icons-material/Info';
 
-// Import custom tooltip components if used elsewhere
-import {
-  HeadingWithTooltip,
-} from '../../styles/tooltip'; // Adjust import path
+// Clean styled components using Home page design system
+const Container = styled('div')`
+  font-family: var(--font-main);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  width: 100%;
+  
+  @media (max-width: 767px) {
+    padding: 0 var(--space-md);
+  }
+`;
 
-// Import styled components
-import {
-  InsightsContainer,
-  InsightPanel,
-  InsightBody,
-  InsightTable,
-  ValueHighlight,
-  FactorList,
-  FactorItem,
-  InsightNote,
-  EnhancedLoadingContainer,
-  EmptyStateContainer
-} from '../Premium/DVLA/Insights/style/style'
+const AnalysisPanel = styled('div')`
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  
+  @media (max-width: 767px) {
+    padding: var(--space-lg);
+  }
+`;
+
+const Title = styled('h2')`
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: var(--gray-800);
+  margin: 0 0 var(--space-md) 0;
+  
+  @media (max-width: 767px) {
+    font-size: var(--text-xl);
+  }
+`;
+
+const Body = styled('p')`
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--gray-600);
+  margin: 0 0 var(--space-lg) 0;
+`;
+
+const LoadingContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl) var(--space-xl);
+  text-align: center;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+`;
+
+const LoadingSpinner = styled('div')`
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--gray-200);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-md);
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+const ErrorContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl) var(--space-xl);
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--negative-light);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+`;
+
+const Button = styled('button')`
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: var(--space-md) var(--space-xl);
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: var(--space-lg);
+  
+  &:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+  }
+  
+  &:focus {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+  }
+`;
+
+const AnalysisContent = styled('div')`
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: var(--font-semibold);
+    color: var(--gray-800);
+    margin: var(--space-xl) 0 var(--space-md) 0;
+    line-height: var(--leading-tight);
+  }
+  
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+  h4 { font-size: var(--text-lg); }
+  
+  p {
+    font-family: var(--font-main);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--gray-600);
+    margin: 0 0 var(--space-md) 0;
+  }
+  
+  ul, ol {
+    margin: var(--space-md) 0;
+    padding-left: var(--space-xl);
+  }
+  
+  li {
+    font-family: var(--font-main);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--gray-600);
+    margin-bottom: var(--space-sm);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-lg) 0;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  
+  th, td {
+    padding: var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+  }
+  
+  th {
+    background: var(--gray-50);
+    font-weight: var(--font-semibold);
+    color: var(--gray-800);
+  }
+  
+  td {
+    color: var(--gray-600);
+  }
+  
+  code {
+    background: var(--gray-100);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+  
+  pre {
+    background: var(--gray-50);
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    margin: var(--space-lg) 0;
+  }
+  
+  blockquote {
+    border-left: 4px solid var(--primary-light);
+    background: var(--gray-50);
+    padding: var(--space-md);
+    margin: var(--space-lg) 0;
+    font-style: italic;
+    color: var(--gray-700);
+  }
+`;
+
+const Note = styled('div')`
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  margin-top: var(--space-xl);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  
+  p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--gray-600);
+  }
+`;
 
 // API setup code with consistent approach
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -199,411 +392,126 @@ const browserCache = {
   }
 };
 
-/**
- * Safe markdown parser function
- * Converts markdown text to JSX elements without using dangerouslySetInnerHTML
- */
+// Simple markdown parser for clean rendering
 const parseMarkdown = (markdownText) => {
   if (!markdownText) return null;
-  
-  // Split the text into lines
+
   const lines = markdownText.split('\n');
   const elements = [];
-  let currentBlock = [];
-  let inCodeBlock = false;
-  let inTable = false;
-  let tableHeaders = [];
-  let listType = null; // 'ul' or 'ol'
-  let listItems = [];
   
-  // Initialize table rows array
-  let tableRows = [];
+  let currentParagraph = [];
   
-  /**
-   * Helper function to parse inline formatting into React elements
-   */
-  const parseInlineFormatting = (text) => {
-    if (!text) return [];
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
     
-    // Split text by formatting markers
-    let segments = [];
-    let currentText = '';
-    let inBold = false;
-    let inItalic = false;
-    let inCode = false;
-    
-    // Process character by character to handle nested formatting
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      const nextChar = text[i + 1] || '';
-      
-      // Handle bold with **
-      if (char === '*' && nextChar === '*') {
-        if (!inBold) {
-          // Start bold - push current text and start bold segment
-          if (currentText) segments.push({ type: 'text', content: currentText });
-          currentText = '';
-          inBold = true;
-          i++; // Skip next asterisk
-        } else {
-          // End bold - push bold segment
-          segments.push({ type: 'bold', content: currentText });
-          currentText = '';
-          inBold = false;
-          i++; // Skip next asterisk
-        }
-        continue;
-      }
-      
-      // Handle italic with single *
-      if (char === '*' && nextChar !== '*' && !inBold) {
-        if (!inItalic) {
-          // Start italic
-          if (currentText) segments.push({ type: 'text', content: currentText });
-          currentText = '';
-          inItalic = true;
-        } else {
-          // End italic
-          segments.push({ type: 'italic', content: currentText });
-          currentText = '';
-          inItalic = false;
-        }
-        continue;
-      }
-      
-      // Handle inline code with backticks
-      if (char === '`' && !inBold && !inItalic) {
-        if (!inCode) {
-          // Start code
-          if (currentText) segments.push({ type: 'text', content: currentText });
-          currentText = '';
-          inCode = true;
-        } else {
-          // End code
-          segments.push({ type: 'code', content: currentText });
-          currentText = '';
-          inCode = false;
-        }
-        continue;
-      }
-      
-      // Add character to current text
-      currentText += char;
-    }
-    
-    // Add any remaining text
-    if (currentText) {
-      segments.push({ 
-        type: inBold ? 'bold' : inItalic ? 'italic' : inCode ? 'code' : 'text', 
-        content: currentText 
-      });
-    }
-    
-    // Convert segments to React elements
-    return segments.map((segment, index) => {
-      switch (segment.type) {
-        case 'bold':
-          return <strong key={index}>{segment.content}</strong>;
-        case 'italic':
-          return <em key={index}>{segment.content}</em>;
-        case 'code':
-          return <code key={index}>{segment.content}</code>;
-        default:
-          return segment.content;
-      }
-    });
-  };
-  
-  // Process line by line
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmedLine = line.trim();
-    
-    // Handle code blocks
-    if (trimmedLine.startsWith('```')) {
-      if (!inCodeBlock) {
-        // Start a new code block
-        inCodeBlock = true;
-        if (currentBlock.length > 0) {
-          elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-          currentBlock = [];
-        }
-      } else {
-        // End code block
-        inCodeBlock = false;
+    // Empty line - finish current paragraph
+    if (!trimmed) {
+      if (currentParagraph.length > 0) {
         elements.push(
-          <pre key={`code-${i}`}>
-            <code>{currentBlock}</code>
-          </pre>
+          <p key={`p-${index}`}>
+            {currentParagraph.join(' ')}
+          </p>
         );
-        currentBlock = [];
+        currentParagraph = [];
       }
-      continue;
+      return;
     }
     
-    if (inCodeBlock) {
-      currentBlock.push(line);
-      if (currentBlock.length > 1) {
-        currentBlock.push(<br key={`br-code-${i}`} />);
+    // Headers
+    if (trimmed.startsWith('# ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
       }
-      continue;
+      elements.push(<h1 key={`h1-${index}`}>{trimmed.substring(2)}</h1>);
+      return;
     }
     
-    // Handle tables - using InsightTable component for consistency
-    if (trimmedLine.startsWith('|') && trimmedLine.endsWith('|')) {
-      if (!inTable) {
-        // Starting a new table
-        inTable = true;
-        if (currentBlock.length > 0) {
-          elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-          currentBlock = [];
-        }
-        // Parse headers
-        tableHeaders = trimmedLine
-          .split('|')
-          .filter(cell => cell.trim() !== '')
-          .map(header => header.trim());
-        
-        // Reset table rows for new table
-        tableRows = [];
-      } else if (trimmedLine.includes('---')) {
-        // Skip separator line
-        continue;
-      } else {
-        // Parse row
-        const cells = trimmedLine
-          .split('|')
-          .filter(cell => cell.trim() !== '')
-          .map(cell => cell.trim());
-          
-        // Add row to collection instead of directly to elements
-        tableRows.push(
-          <tr key={`tr-${i}`}>
-            {cells.map((cellContent, cellIndex) => (
-              <td key={`td-${i}-${cellIndex}`}>{parseInlineFormatting(cellContent)}</td>
+    if (trimmed.startsWith('## ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(<h2 key={`h2-${index}`}>{trimmed.substring(3)}</h2>);
+      return;
+    }
+    
+    if (trimmed.startsWith('### ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(<h3 key={`h3-${index}`}>{trimmed.substring(4)}</h3>);
+      return;
+    }
+    
+    // Lists
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(
+        <div key={`li-${index}`} style={{ margin: 'var(--space-sm) 0', paddingLeft: 'var(--space-lg)' }}>
+          • {trimmed.substring(2)}
+        </div>
+      );
+      return;
+    }
+    
+    // Blockquotes
+    if (trimmed.startsWith('> ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(
+        <blockquote key={`quote-${index}`}>
+          {trimmed.substring(2)}
+        </blockquote>
+      );
+      return;
+    }
+    
+    // Tables - basic support
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      
+      if (!trimmed.includes('---')) {
+        const cells = trimmed.split('|').filter(cell => cell.trim()).map(cell => cell.trim());
+        elements.push(
+          <div key={`table-row-${index}`} style={{ 
+            display: 'flex', 
+            gap: 'var(--space-md)', 
+            padding: 'var(--space-sm) 0',
+            borderBottom: '1px solid var(--gray-200)'
+          }}>
+            {cells.map((cell, cellIndex) => (
+              <div key={cellIndex} style={{ flex: 1, fontSize: 'var(--text-sm)' }}>
+                {cell}
+              </div>
             ))}
-          </tr>
+          </div>
         );
       }
-      continue;
-    } else if (inTable) {
-      // End of table - now create the full table structure with InsightTable
-      inTable = false;
-      elements.push(
-        <InsightTable key={`table-${i}`}>
-          <thead>
-            <tr>
-              {tableHeaders.map((header, index) => (
-                <th key={`th-${index}`}>{parseInlineFormatting(header)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {tableRows}
-          </tbody>
-        </InsightTable>
-      );
-      tableHeaders = [];
-      tableRows = [];
+      return;
     }
     
-    // Handle headers using GOV.UK heading components
-    if (trimmedLine.startsWith('# ')) {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-      elements.push(
-        <GovUKHeadingM key={`h1-${i}`}>
-          {parseInlineFormatting(trimmedLine.substring(2))}
-        </GovUKHeadingM>
-      );
-      continue;
-    }
-    
-    if (trimmedLine.startsWith('## ')) {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-      elements.push(
-        <GovUKHeadingS key={`h2-${i}`}>
-          {parseInlineFormatting(trimmedLine.substring(3))}
-        </GovUKHeadingS>
-      );
-      continue;
-    }
-    
-    if (trimmedLine.startsWith('### ')) {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-      elements.push(
-        <GovUKHeadingS key={`h3-${i}`} style={{ fontSize: '1.125rem' }}>
-          {parseInlineFormatting(trimmedLine.substring(4))}
-        </GovUKHeadingS>
-      );
-      continue;
-    }
-    
-    if (trimmedLine.startsWith('#### ')) {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-      elements.push(
-        <GovUKHeadingS key={`h4-${i}`} style={{ fontSize: '1rem' }}>
-          {parseInlineFormatting(trimmedLine.substring(5))}
-        </GovUKHeadingS>
-      );
-      continue;
-    }
-    
-    // Handle lists - use FactorList and FactorItem for consistency
-    if (trimmedLine.match(/^[\d]+\.\s/)) {
-      // Ordered list
-      if (listType !== 'ol') {
-        if (currentBlock.length > 0) {
-          elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-          currentBlock = [];
-        }
-        if (listType) {
-          // Add the previous list
-          elements.push(
-            listType === 'ul' 
-              ? <FactorList key={`ul-${i}`}>{listItems}</FactorList> 
-              : <ol key={`ol-${i}`} style={{ paddingLeft: '20px', marginBottom: '20px' }}>{listItems}</ol>
-          );
-          listItems = [];
-        }
-        listType = 'ol';
-      }
-      
-      listItems.push(
-        <li key={`li-${i}`} style={{ marginBottom: '5px' }}>
-          {parseInlineFormatting(trimmedLine.replace(/^[\d]+\.\s/, ''))}
-        </li>
-      );
-      continue;
-    } else if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ')) {
-      // Unordered list - use FactorItem for consistency
-      if (listType !== 'ul') {
-        if (currentBlock.length > 0) {
-          elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-          currentBlock = [];
-        }
-        if (listType) {
-          // Add the previous list
-          elements.push(
-            listType === 'ul' 
-              ? <FactorList key={`ul-${i}`}>{listItems}</FactorList> 
-              : <ol key={`ol-${i}`} style={{ paddingLeft: '20px', marginBottom: '20px' }}>{listItems}</ol>
-          );
-          listItems = [];
-        }
-        listType = 'ul';
-      }
-      
-      listItems.push(
-        <FactorItem key={`li-${i}`} iconColor={COLORS.BLUE}>
-          <InfoIcon fontSize="small" aria-hidden="true" />
-          <span>{parseInlineFormatting(trimmedLine.substring(2))}</span>
-        </FactorItem>
-      );
-      continue;
-    } else if (listType && trimmedLine === '') {
-      // End of list
-      elements.push(
-        listType === 'ul' 
-          ? <FactorList key={`ul-${i}`}>{listItems}</FactorList> 
-          : <ol key={`ol-${i}`} style={{ paddingLeft: '20px', marginBottom: '20px' }}>{listItems}</ol>
-      );
-      listItems = [];
-      listType = null;
-      continue;
-    }
-    
-    // Handle blockquotes
-    if (trimmedLine.startsWith('> ')) {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-      elements.push(
-        <InsightNote key={`blockquote-${i}`}>
-          <InfoIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px', color: COLORS.BLUE }} aria-hidden="true" />
-          <span className="govuk-visually-hidden">Note:</span>
-          {parseInlineFormatting(trimmedLine.substring(2))}
-        </InsightNote>
-      );
-      continue;
-    }
-    
-    // Handle paragraphs using GovUKBody
-    if (trimmedLine === '') {
-      if (currentBlock.length > 0) {
-        elements.push(<GovUKBody key={`p-${i}`}>{currentBlock}</GovUKBody>);
-        currentBlock = [];
-      }
-    } else {
-      // Add the formatted line content directly to the current block
-      const formattedContent = parseInlineFormatting(trimmedLine);
-      
-      // If current block is not empty, add a space in between
-      if (currentBlock.length > 0) {
-        currentBlock.push(' ');
-      }
-      
-      // Add formatted content to current block
-      if (Array.isArray(formattedContent)) {
-        currentBlock.push(...formattedContent);
-      } else {
-        currentBlock.push(formattedContent);
-      }
-    }
-  }
+    // Regular text - add to current paragraph
+    currentParagraph.push(trimmed);
+  });
   
-  // Handle any remaining content
-  if (currentBlock.length > 0) {
-    elements.push(<GovUKBody key={`p-final`}>{currentBlock}</GovUKBody>);
-  }
-  
-  if (listItems.length > 0) {
-    elements.push(
-      listType === 'ul' 
-        ? <FactorList key={`ul-final`}>{listItems}</FactorList> 
-        : <ol key={`ol-final`} style={{ paddingLeft: '20px', marginBottom: '20px' }}>{listItems}</ol>
-    );
+  // Handle any remaining paragraph
+  if (currentParagraph.length > 0) {
+    elements.push(<p key="final-p">{currentParagraph.join(' ')}</p>);
   }
   
   return <>{elements}</>;
 };
 
-// Create a styled component for the analysis content
-const AnalysisPanel = styled(InsightPanel)(() => ({
-  borderLeftColor: COLORS.BLUE
-}));
-
-// Create a styled button component for consistency
-const GovUKButton = styled('button')(() => ({
-  backgroundColor: COLORS.BUTTON_COLOUR || COLORS.GREEN,
-  color: 'white',
-  border: 'none',
-  padding: '10px 15px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  fontWeight: 700,
-  fontSize: '16px',
-  cursor: 'pointer',
-  marginTop: '10px',
-  '&:hover': {
-    backgroundColor: COLORS.BUTTON_HOVER || '#0b5d30'
-  },
-  '&:focus': {
-    outline: `3px solid ${COLORS.YELLOW}`,
-    outlineOffset: 0
-  }
-}));
 
 /**
  * VehicleAnalysisComponent to fetch and display vehicle information
@@ -776,92 +684,75 @@ const VehicleAnalysisComponent = ({
     return null;
   }, [analysis?.analysis]);
 
-  // Loading state - styled to match GOV.UK loading states
+  // Loading state
   if (loading) {
     return (
-      <GovUKContainer>
-        <EnhancedLoadingContainer>
-          <GovUKLoadingSpinner aria-label="Loading vehicle information" role="status" />
-          <InsightBody>Loading vehicle information</InsightBody>
-          <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
-            Please wait while we retrieve your vehicle details
-          </GovUKBodyS>
-        </EnhancedLoadingContainer>
-      </GovUKContainer>
+      <Container>
+        <LoadingContainer>
+          <LoadingSpinner aria-label="Loading vehicle information" role="status" />
+          <Title>Loading Vehicle Analysis</Title>
+          <Body>Please wait while we analyze your vehicle data...</Body>
+        </LoadingContainer>
+      </Container>
     );
   }
 
-  // Error state - styled to match GOV.UK error summary
+  // Error state
   if (error) {
     return (
-      <GovUKContainer>
-        <EmptyStateContainer>
-          <WarningIcon style={{ fontSize: 40, color: COLORS.RED, marginBottom: 10 }} aria-hidden="true" />
-          <InsightBody>
-            <ValueHighlight color={COLORS.RED}>Service unavailable</ValueHighlight>
-          </InsightBody>
-          <GovUKBody style={{ marginTop: '10px', marginBottom: '15px' }}>
-            {error}
-          </GovUKBody>
-          <GovUKButton onClick={() => fetchAnalysisFromApi()}>
-            Try again
-          </GovUKButton>
-        </EmptyStateContainer>
-      </GovUKContainer>
+      <Container>
+        <ErrorContainer>
+          <WarningIcon style={{ fontSize: 40, color: 'var(--negative)', marginBottom: 'var(--space-md)' }} aria-hidden="true" />
+          <Title>Analysis Unavailable</Title>
+          <Body>{error}</Body>
+          <Button onClick={() => fetchAnalysisFromApi()}>
+            Try Again
+          </Button>
+        </ErrorContainer>
+      </Container>
     );
   }
 
-  // No data state - styled to match GOV.UK notification banners
+  // No data state
   if (!analysis) {
     return (
-      <GovUKContainer>
-        <EmptyStateContainer>
-          <InfoIcon style={{ fontSize: 40, color: COLORS.BLUE, marginBottom: 10 }} aria-hidden="true" />
-          <InsightBody>
-            No vehicle information is available
-          </InsightBody>
-          <GovUKBody style={{ marginTop: '10px' }}>
-            The requested information for this vehicle registration cannot be displayed.
-          </GovUKBody>
-        </EmptyStateContainer>
-      </GovUKContainer>
+      <Container>
+        <ErrorContainer>
+          <InfoIcon style={{ fontSize: 40, color: 'var(--primary)', marginBottom: 'var(--space-md)' }} aria-hidden="true" />
+          <Title>No Analysis Available</Title>
+          <Body>The requested vehicle analysis cannot be displayed at this time.</Body>
+        </ErrorContainer>
+      </Container>
     );
   }
 
-  // Success state with vehicle information
+  // Success state with vehicle analysis
   return (
-    <GovUKContainer>
-      <InsightsContainer>
-        <AnalysisPanel>
-          <HeadingWithTooltip 
-            tooltip="This report is compiled from manufacturer data, service records, and vehicle statistics"
-            iconColor={COLORS.BLUE}
-          >
-            <GovUKHeadingM>Vehicle Information Report</GovUKHeadingM>
-          </HeadingWithTooltip>
-          
-          <InsightBody>
-            This report provides information about the {vehicleData?.make} {vehicleData?.model}, 
-            including maintenance requirements and reliability information.
-          </InsightBody>
-          
-          {/* Render memoized parsed markdown content */}
+    <Container>
+      <AnalysisPanel>
+        <Title>Vehicle Analysis Report</Title>
+        
+        <Body>
+          Analysis for {vehicleData?.make} {vehicleData?.model} based on MOT history and technical bulletins.
+        </Body>
+        
+        <AnalysisContent>
           {parsedContent}
-          
-          {/* Add the note at the bottom */}
-          <InsightNote>
-            <InfoIcon 
-              fontSize="small" 
-              style={{ verticalAlign: 'middle', marginRight: '5px', color: COLORS.BLUE }} 
-              aria-hidden="true" 
-            />
-            <span className="govuk-visually-hidden">Important note:</span>
-            This report is based on manufacturer data and vehicle records. 
-            Individual vehicle experiences may vary based on maintenance history and usage.
-          </InsightNote>
-        </AnalysisPanel>
-      </InsightsContainer>
-    </GovUKContainer>
+        </AnalysisContent>
+        
+        <Note>
+          <InfoIcon 
+            fontSize="small" 
+            style={{ color: 'var(--primary)' }} 
+            aria-hidden="true" 
+          />
+          <p>
+            This analysis is based on manufacturer data and vehicle records. 
+            Individual vehicle experiences may vary.
+          </p>
+        </Note>
+      </AnalysisPanel>
+    </Container>
   );
 };
 

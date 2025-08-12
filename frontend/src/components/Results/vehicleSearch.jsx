@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import { 
-  GovUKContainer,
-  GovUKMainWrapper,
-  GovUKHeadingL,
-  GovUKBody,
-  GovUKBackLink,
-  GovUKErrorSummary,
-  GovUKErrorSummaryTitle,
-  GovUKErrorSummaryBody,
-  GovUKErrorSummaryList,
-  GovUKFormGroup,
-  GovUKLabel,
-  GovUKHint,
-  GovUKErrorMessage,
-  GovUKInput,
-  GovUKButton,
-  GovUKButtonStartIcon,
-  GovUKGridRow,
-  GovUKGridColumnTwoThirds,
-  GovUKSectionBreak
-} from '../../styles/theme';
+import {
+  MarketDashContainer,
+  PageTitle,
+  BodyText,
+  BackLink,
+  ErrorSummary,
+  FormGroup,
+  Label,
+  HintText,
+  ErrorMessage,
+  Input,
+  Button,
+  GridContainer,
+  GridColumn,
+  SectionBreak,
+} from './ResultsStyles';
 
 // Import the MOTHistoryPage and VehicleHeader components
 import MOTHistoryPage from './MOTHistoryPage';
@@ -78,15 +73,15 @@ const VehicleSearch = () => {
   };
 
   return (
-    <GovUKMainWrapper>
+    <MarketDashContainer>
       {searchPerformed ? (
         <>
-          <GovUKBackLink href="#" onClick={(e) => {
+          <BackLink href="#" onClick={(e) => {
             e.preventDefault();
             handleReset();
           }}>
             Search another vehicle
-          </GovUKBackLink>
+          </BackLink>
           
           {/* Replace the GovUKHeadingL with VehicleHeader component */}
           <VehicleHeader registration={searchedRegistration} />
@@ -95,76 +90,70 @@ const VehicleSearch = () => {
         </>
       ) : (
         <>
-          <GovUKHeadingL>
+          <PageTitle>
             Check MOT History
-          </GovUKHeadingL>
+          </PageTitle>
           
-          <GovUKBody>
+          <BodyText>
             Find information about a vehicle's MOT test history, including test date, expiry date, test location, mileage, and any advisories or failures.
-          </GovUKBody>
+          </BodyText>
           
-          <GovUKSectionBreak className="govuk-section-break--m govuk-section-break--visible" />
+          <SectionBreak />
           
           {/* Error summary */}
           {error && (
-            <GovUKErrorSummary 
+            <ErrorSummary 
               aria-labelledby="error-summary-title" 
               role="alert" 
               tabIndex={-1}
             >
-              <GovUKErrorSummaryTitle id="error-summary-title">
+              <h2 id="error-summary-title">
                 There is a problem
-              </GovUKErrorSummaryTitle>
-              <GovUKErrorSummaryBody>
-                <GovUKErrorSummaryList>
-                  <li>
-                    <a href="#registration">{error}</a>
-                  </li>
-                </GovUKErrorSummaryList>
-              </GovUKErrorSummaryBody>
-            </GovUKErrorSummary>
+              </h2>
+              <ul>
+                <li>
+                  <a href="#registration">{error}</a>
+                </li>
+              </ul>
+            </ErrorSummary>
           )}
           
           {/* Form */}
-          <GovUKGridRow>
-            <GovUKGridColumnTwoThirds>
+          <GridContainer>
+            <GridColumn>
               <form onSubmit={handleSearch}>
-                <GovUKFormGroup className={error ? 'govuk-form-group--error' : ''}>
-                  <GovUKLabel htmlFor="registration">
+                <FormGroup error={!!error}>
+                  <Label htmlFor="registration">
                     Vehicle registration number
-                  </GovUKLabel>
-                  <GovUKHint id="registration-hint">
+                  </Label>
+                  <HintText id="registration-hint">
                     For example, AB12 CDE
-                  </GovUKHint>
+                  </HintText>
                   {error && (
-                    <GovUKErrorMessage id="registration-error">
+                    <ErrorMessage id="registration-error">
                       {error}
-                    </GovUKErrorMessage>
+                    </ErrorMessage>
                   )}
-                  <GovUKInput
+                  <Input
                     id="registration"
                     name="registration"
                     type="text"
                     value={registration}
                     onChange={(e) => setRegistration(e.target.value)}
                     aria-describedby={error ? "registration-error registration-hint" : "registration-hint"}
-                    className={error ? 'govuk-input--error' : ''}
-                    error={error ? true : false}
+                    error={!!error}
                   />
-                </GovUKFormGroup>
+                </FormGroup>
                 
-                <GovUKButton type="submit" className="govuk-button--start">
-                  Check vehicle
-                  <GovUKButtonStartIcon width="17.5" height="19">
-                    <path d="M0 0 L17.5 9.5 L0 19 z" fill="currentColor" />
-                  </GovUKButtonStartIcon>
-                </GovUKButton>
+                <Button type="submit" variant="primary" size="large">
+                  Check vehicle →
+                </Button>
               </form>
-            </GovUKGridColumnTwoThirds>
-          </GovUKGridRow>
+            </GridColumn>
+          </GridContainer>
         </>
       )}
-    </GovUKMainWrapper>
+    </MarketDashContainer>
   );
 };
 

@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  GovUKBody,
-  GovUKBodyS,
-  GovUKLoadingSpinner,
-  GovUKSectionBreak,
-  GovUKHeadingM,
-  COLORS
-} from '../../../../../styles/theme';
+// MarketDash self-contained components - no external theme dependencies
+const MarketDashColors = {
+  POSITIVE: '#10b981',
+  NEGATIVE: '#ef4444', 
+  WARNING: '#f59e0b',
+  PRIMARY: '#3b82f6',
+  GRAY_900: '#0f172a',
+  GRAY_800: '#1e293b',
+  GRAY_600: '#475569',
+  GRAY_500: '#64748b'
+};
 
 // Import Material-UI icons
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -17,14 +20,46 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import HistoryIcon from '@mui/icons-material/History';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-// Import custom tooltip components
-import {
-  GovUKTooltip,
-  HeadingWithTooltip,
-  ValueWithTooltip,
-  CellWithTooltip,
-  useTooltip
-} from '../../../../../styles/tooltip';
+// Simple self-contained tooltip and helper components
+const SimpleTooltip = ({ children, title }) => (
+  <span title={title} style={{ 
+    borderBottom: '1px dotted var(--gray-500)', 
+    cursor: 'help',
+    fontFamily: 'var(--font-main)'
+  }}>
+    {children}
+  </span>
+);
+
+const LoadingSpinner = () => (
+  <>
+    <style>
+      {`
+        @keyframes mileage-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}
+    </style>
+    <div style={{
+      width: '24px',
+      height: '24px',
+      border: '3px solid var(--gray-200)',
+      borderRadius: '50%',
+      borderTopColor: 'var(--primary)',
+      animation: 'mileage-spin 1s linear infinite',
+      margin: '0 auto var(--space-md)'
+    }} />
+  </>
+);
+
+const SectionBreak = () => (
+  <hr style={{
+    border: 'none',
+    borderTop: '1px solid var(--gray-200)',
+    margin: 'var(--space-xl) 0'
+  }} />
+);
 
 // Import mileage tooltips
 import { mileageTooltips } from './mileageTooltips';
@@ -102,29 +137,35 @@ const DataQualityIndicator = ({
 }) => {
   // Determine overall data quality
   let qualityLevel = "High";
-  let qualityColor = COLORS.GREEN;
+  let qualityColor = MarketDashColors.POSITIVE;
   
   if (hasClockingIssues) {
     qualityLevel = "Poor";
-    qualityColor = COLORS.RED;
+    qualityColor = MarketDashColors.NEGATIVE;
   } else if (motGapsDetected || (anomalies && anomalies.length > 0)) {
     qualityLevel = "Medium";
-    qualityColor = COLORS.BLACK;
+    qualityColor = MarketDashColors.WARNING;
   } else if (dataPoints < 4) {
     qualityLevel = "Limited";
-    qualityColor = COLORS.BLACK
+    qualityColor = MarketDashColors.GRAY_500;
   }
   
   return (
     <MileageInsightSection>
-      <HeadingWithTooltip 
-        tooltip="Assessment of the reliability and completeness of the vehicle's history data" 
-        iconColor={qualityColor}
-      >
-        <GovUKHeadingM>
-        Data Quality Assessment
-        </GovUKHeadingM>
-      </HeadingWithTooltip>
+      <SimpleTooltip title="Assessment of the reliability and completeness of the vehicle's history data">
+        <h3 style={{
+          margin: '0 0 var(--space-lg) 0',
+          fontFamily: 'var(--font-main)',
+          fontSize: 'var(--text-xl)',
+          fontWeight: '600',
+          color: 'var(--gray-800)',
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          <AssessmentIcon style={{ marginRight: 'var(--space-sm)', color: qualityColor }} />
+          Data Quality Assessment
+        </h3>
+      </SimpleTooltip>
       
       <MileageInsightPanel borderColor={qualityColor}>
         <div style={{ 
@@ -152,47 +193,53 @@ const DataQualityIndicator = ({
             {qualityLevel} Quality
           </div>
           <div>
-            <GovUKBody style={{ margin: 0 }}>
+            <p style={{ 
+              margin: 0,
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-base)',
+              color: 'var(--gray-800)',
+              lineHeight: '1.5'
+            }}>
               {hasClockingIssues
                 ? "Significant mileage inconsistencies detected, affecting data reliability."
                 : motGapsDetected
                 ? "Gaps in vehicle testing history may impact the completeness of mileage data."
                 : `Based on ${dataPoints} mileage readings over the vehicle's history.`}
-            </GovUKBody>
+            </p>
           </div>
         </div>
         
         <FactorsList>
           {hasClockingIssues && (
-            <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+            <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
               <ErrorOutlineIcon fontSize="small" />
               <span>Mileage inconsistencies detected, suggesting potential odometer tampering.</span>
             </FactorItem>
           )}
           
           {motGapsDetected && (
-            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
               <WarningIcon fontSize="small" />
               <span>Significant gaps in MOT testing history (18+ months) detected.</span>
             </FactorItem>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'negative').length > 0 && (
-            <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+            <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
               <ErrorOutlineIcon fontSize="small" />
               <span>{anomalies.filter(a => a.type === 'negative').length} instances of decreasing mileage detected.</span>
             </FactorItem>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
-            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
               <WarningIcon fontSize="small" />
               <span>{anomalies.filter(a => a.type === 'spike').length} unusual mileage patterns detected.</span>
             </FactorItem>
           )}
           
           {dataPoints < 3 && (
-            <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
               <InfoIcon fontSize="small" />
               <span>Limited data points available ({dataPoints}). Analysis may be less reliable.</span>
             </FactorItem>
@@ -200,7 +247,7 @@ const DataQualityIndicator = ({
           
           {!hasClockingIssues && !motGapsDetected && dataPoints >= 4 && 
            (!anomalies || anomalies.length === 0) && (
-            <FactorItem borderColor={COLORS.GREEN} iconColor={COLORS.GREEN}>
+            <FactorItem borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
               <CheckCircleIcon fontSize="small" />
               <span>Complete and consistent mileage history with no detected anomalies.</span>
             </FactorItem>
@@ -527,8 +574,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     notifyParent
   ]);
   
-  // Use tooltip hooks
-  const { withTooltip } = useTooltip();
+  // Self-contained tooltip functionality - no external hooks needed
 
   // Fetch necessary data when component mounts
   useEffect(() => {
@@ -730,8 +776,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   if (loading) {
     return (
       <LoadingContainer>
-        <GovUKLoadingSpinner />
-        <GovUKBody>Loading vehicle mileage insights...</GovUKBody>
+        <LoadingSpinner />
+        <p style={{
+          fontFamily: 'var(--font-main)',
+          fontSize: 'var(--text-base)',
+          color: 'var(--gray-600)',
+          margin: 0
+        }}>Loading vehicle mileage insights...</p>
       </LoadingContainer>
     );
   }
@@ -741,17 +792,29 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
-          <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
+          <h2>Mileage Insights</h2>
         </SectionTitleContainer>
         
         <ErrorContainer>
-          <HeadingWithTooltip 
-            tooltip="Error occurred while fetching or processing vehicle data" 
-            iconColor={COLORS.RED}
-          >
-            <ErrorOutlineIcon /> Service Unavailable
-          </HeadingWithTooltip>
-          <GovUKBody>The vehicle mileage data service is currently unavailable. Please try again later.</GovUKBody>
+          <h3 style={{
+            margin: '0 0 var(--space-md) 0',
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: '600',
+            color: 'var(--gray-800)',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <ErrorOutlineIcon style={{ marginRight: 'var(--space-sm)', color: 'var(--negative)' }} />
+            Service Unavailable
+          </h3>
+          <p style={{
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--gray-700)',
+            lineHeight: '1.5',
+            margin: 0
+          }}>The vehicle mileage data service is currently unavailable. Please try again later.</p>
         </ErrorContainer>
       </MileageInsightsContainer>
     );
@@ -762,12 +825,18 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     return (
       <MileageInsightsContainer>
         <SectionTitleContainer>
-          <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
+          <h2>Mileage Insights</h2>
         </SectionTitleContainer>
         
         <EmptyContainer>
           <InfoIcon style={{ fontSize: 40, color: '#1d70b8', marginBottom: 10 }} />
-          <GovUKBody>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</GovUKBody>
+          <p style={{
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--gray-700)',
+            lineHeight: '1.5',
+            margin: 0
+          }}>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</p>
         </EmptyContainer>
       </MileageInsightsContainer>
     );
@@ -780,12 +849,18 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   return (
     <MileageInsightsContainer>
       <SectionTitleContainer>
-        <GovUKHeadingM>Mileage Insights</GovUKHeadingM>
+        <h2>Mileage Insights</h2>
       </SectionTitleContainer>
       
-      <GovUKBodyS style={{ marginBottom: '20px', color: COLORS.DARK_GREY }}>
+      <p style={{ 
+        marginBottom: 'var(--space-xl)', 
+        color: 'var(--gray-600)',
+        fontFamily: 'var(--font-main)',
+        fontSize: 'var(--text-sm)',
+        lineHeight: '1.5'
+      }}>
         Advanced analysis of vehicle mileage patterns and usage history
-      </GovUKBodyS>
+      </p>
       
       {/* Clocking Warning Banner - Only shown if vehicle has been clocked */}
       {hasClockingIssues && (
@@ -803,28 +878,36 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         dataPoints={mileageData.length}
       />
       
-      <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+      <SectionBreak />
       
       {/* Risk Assessment Panel - Always show first for clocked vehicles */}
       {insights.riskAssessment && hasClockingIssues && (
         <MileageInsightSection>
-          <HeadingWithTooltip 
-            tooltip={mileageTooltips.sectionRiskAssessment} 
-            iconColor={
-              insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
-              COLORS.RED
+          <SimpleTooltip 
+            title={mileageTooltips.sectionRiskAssessment} 
+            _iconColor={
+              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
+              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
+              "var(--negative)"
             }
           >
-            <GovUKHeadingM>
+            <h3 style={{
+              margin: '0 0 var(--space-lg) 0',
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-xl)',
+              fontWeight: '600',
+              color: 'var(--gray-800)',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
             <AssessmentIcon /> Mileage History Risk Assessment
-            </GovUKHeadingM>
-          </HeadingWithTooltip>
+            </h3>
+          </SimpleTooltip>
           
           <MileageInsightPanel borderColor={
-              insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
-              COLORS.RED
+              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
+              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
+              "var(--negative)"
           }>
             <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
@@ -855,12 +938,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {insights.riskAssessment.riskFactors.length > 0 && (
               <div style={{ marginBottom: '20px' }}>
-                <FactorsHeading color={COLORS.RED}>
+                <FactorsHeading color={"var(--negative)"}>
                   <WarningIcon fontSize="small" /> Risk Factors
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} borderColor={COLORS.RED} iconColor={COLORS.RED}>
+                    <FactorItem key={`risk-${index}`} borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
                       <WarningIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -871,12 +954,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {insights.riskAssessment.positiveFactors.length > 0 && (
               <div>
-                <FactorsHeading color={COLORS.GREEN}>
+                <FactorsHeading color={"var(--positive)"}>
                   <CheckCircleIcon fontSize="small" /> Positive Factors
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} borderColor={COLORS.GREEN} iconColor={COLORS.GREEN}>
+                    <FactorItem key={`positive-${index}`} borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
                       <CheckCircleIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -891,33 +974,47 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Mileage Benchmark Panel */}
       {insights.benchmarks && (
         <MileageInsightSection>
-          <HeadingWithTooltip tooltip={mileageTooltips.sectionBenchmarks} iconColor={COLORS.BLUE}>
-            <GovUKHeadingM>
+          <SimpleTooltip title={mileageTooltips.sectionBenchmarks} _iconColor={"var(--primary)"}>
+            <h3 style={{
+              margin: '0 0 var(--space-lg) 0',
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-xl)',
+              fontWeight: '600',
+              color: 'var(--gray-800)',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
             Benchmark Analysis
-            </GovUKHeadingM>
-          </HeadingWithTooltip>
+            </h3>
+          </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={COLORS.BLUE}>
-            <GovUKBody>
-              This vehicle has <ValueWithTooltip tooltip={mileageTooltips.currentMileage}>
+          <MileageInsightPanel borderColor={"var(--primary)"}>
+            <p style={{
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--gray-700)',
+            lineHeight: '1.5',
+            margin: 0
+          }}>
+              This vehicle has <SimpleTooltip title={mileageTooltips.currentMileage}>
                 <ValueDisplay>{mileageData[mileageData.length-1].formattedMileage} miles</ValueDisplay>
-              </ValueWithTooltip>
+              </SimpleTooltip>
               {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
                 <span style={{ 
                   fontStyle: 'italic', 
                   marginLeft: '5px', 
-                  color: COLORS.RED,
-                  backgroundColor: `${COLORS.RED}10`,
+                  color: "var(--negative)",
+                  backgroundColor: `${"var(--negative)"}10`,
                   padding: '2px 5px',
                   borderRadius: '3px'
                 }}>
                   (adjusted for inconsistencies)
                 </span>
               )}, 
-              which is <ValueWithTooltip tooltip={mileageTooltips.mileageCategory}>
+              which is <SimpleTooltip title={mileageTooltips.mileageCategory}>
                 <ValueDisplay>{insights.benchmarks.mileageCategory}</ValueDisplay>
-              </ValueWithTooltip> for a vehicle of this age and type.
-            </GovUKBody>
+              </SimpleTooltip> for a vehicle of this age and type.
+            </p>
             
             <MileageTable>
               <thead>
@@ -928,17 +1025,19 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               </thead>
               <tbody>
                 <tr>
-                  <CellWithTooltip 
-                    label="Vehicle Age" 
-                    tooltip="Time since vehicle registration date" 
-                  />
+                  <td>
+                    <SimpleTooltip title="Time since vehicle registration date">
+                      Vehicle Age
+                    </SimpleTooltip>
+                  </td>
                   <td>{insights.benchmarks.vehicleAgeYears} years</td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
-                    label="Average Annual Mileage" 
-                    tooltip={mileageTooltips.averageAnnualMileage} 
-                  />
+                  <td>
+                    <SimpleTooltip title={mileageTooltips.averageAnnualMileage}>
+                      Average Annual Mileage
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     {insights.benchmarks.averageAnnualMileage.toLocaleString()} miles/year
                     {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
@@ -946,7 +1045,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                         display: 'inline-block', 
                         fontSize: '0.85em', 
                         color: 'white',
-                        backgroundColor: COLORS.RED,
+                        backgroundColor: "var(--negative)",
                         padding: '1px 5px',
                         borderRadius: '3px',
                         marginLeft: '5px'
@@ -957,19 +1056,20 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   </td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
-                    label={hasClockingIssues ? "Adjusted Total Mileage" : "Total Mileage"} 
-                    tooltip={hasClockingIssues ? 
+                  <td>
+                    <SimpleTooltip title={hasClockingIssues ? 
                       "Calculated by summing only positive mileage increments" : 
-                      "Total mileage added since first record"} 
-                  />
+                      "Total mileage added since first record"}>
+                      {hasClockingIssues ? "Adjusted Total Mileage" : "Total Mileage"}
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     {insights.benchmarks.totalMileage.toLocaleString()} miles
                     {hasClockingIssues && (
                       <span style={{ 
                         display: 'block', 
                         fontSize: '0.85em', 
-                        color: COLORS.RED,
+                        color: "var(--negative)",
                         fontWeight: 'bold'
                       }}>
                         Excludes negative readings
@@ -978,35 +1078,36 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   </td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
-                    label="Expected Mileage" 
-                    tooltip="Calculated based on vehicle age, type and typical usage" 
-                  />
+                  <td>
+                    <SimpleTooltip title="Calculated based on vehicle age, type and typical usage">
+                      Expected Mileage
+                    </SimpleTooltip>
+                  </td>
                   <td>{insights.benchmarks.expectedTotalMileage.toLocaleString()} miles</td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
+                  <SimpleTooltip 
                     label="Variance From Expected" 
-                    tooltip="How much the vehicle's mileage deviates from expected" 
+                    title="How much the vehicle's mileage deviates from expected" 
                   />
                   <td>
                     <ValueDisplay 
-                      color={insights.benchmarks.mileageRatio < 1 ? COLORS.GREEN : 
-                            insights.benchmarks.mileageRatio > 1.35 ? COLORS.RED : undefined}
+                      color={insights.benchmarks.mileageRatio < 1 ? "var(--positive)" : 
+                            insights.benchmarks.mileageRatio > 1.35 ? "var(--negative)" : undefined}
                     >
                       {insights.benchmarks.mileageRatio < 1 ? "-" : "+"}{Math.abs(Math.round((insights.benchmarks.mileageRatio - 1) * 100))}%
                     </ValueDisplay>
                   </td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
+                  <SimpleTooltip 
                     label="Estimated Remaining Life" 
-                    tooltip="Estimated miles and years remaining based on current usage patterns" 
+                    title="Estimated miles and years remaining based on current usage patterns" 
                   />
                   <td>
                     <ValueDisplay>{insights.benchmarks.remainingMilesEstimate.toLocaleString()} miles</ValueDisplay>
                     <br />
-                    <span style={{ fontSize: '0.9em', color: COLORS.DARK_GREY }}>
+                    <span style={{ fontSize: '0.9em', color: "var(--gray-600)" }}>
                       (approx. {insights.benchmarks.remainingYearsEstimate} years at current usage rate)
                     </span>
                   </td>
@@ -1014,13 +1115,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               </tbody>
             </MileageTable>
             
-            <GovUKTooltip title={mileageTooltips.dataSource} arrow placement="top">
-              <FactorsHeading color={COLORS.BLUE} style={{ borderBottom: '1px dotted #505a5f', display: 'inline-flex', cursor: 'help' }}>
+            <SimpleTooltip title={mileageTooltips.dataSource}>
+              <FactorsHeading color="var(--primary)" style={{ borderBottom: '1px dotted var(--gray-500)', display: 'inline-flex', cursor: 'help' }}>
                 <InfoIcon fontSize="small" /> Data Context:
               </FactorsHeading>
-            </GovUKTooltip>
+            </SimpleTooltip>
             <FactorsList>
-              <FactorItem iconColor={COLORS.BLUE}>
+              <FactorItem _iconColor={"var(--primary)"}>
                 <InfoIcon fontSize="small" />
                 <span>
                   UK average annual mileage is {insights.benchmarks.ukAverageAnnualMileage.toLocaleString()} miles. 
@@ -1029,7 +1130,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </span>
               </FactorItem>
               {hasClockingIssues && (
-                <FactorItem iconColor={COLORS.RED}>
+                <FactorItem _iconColor={"var(--negative)"}>
                   <WarningIcon fontSize="small" />
                   <span>
                     Due to detected mileage inconsistencies, average and total figures have been adjusted.
@@ -1044,36 +1145,49 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Usage Pattern Panel - Enhanced with anomaly detection */}
       {insights.usagePatterns && (
         <MileageInsightSection>
-          <HeadingWithTooltip 
-            tooltip="Analysis of how the vehicle has been used over time based on mileage records" 
-            iconColor={COLORS.BLUE}
-          >
-            <GovUKHeadingM>
+          <SimpleTooltip 
+            title="Analysis of how the vehicle has been used over time based on mileage records" 
+                     >
+            <h3 style={{
+              margin: '0 0 var(--space-lg) 0',
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-xl)',
+              fontWeight: '600',
+              color: 'var(--gray-800)',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
             Usage Pattern Analysis
-            </GovUKHeadingM>
-          </HeadingWithTooltip>
+            </h3>
+          </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={COLORS.BLUE}>
-            <GovUKBody>
-              This vehicle shows a <ValueDisplay color={COLORS.BLUE}>
+          <MileageInsightPanel borderColor={"var(--primary)"}>
+            <p style={{
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--gray-700)',
+            lineHeight: '1.5',
+            margin: 0
+          }}>
+              This vehicle shows a <ValueDisplay color={"var(--primary)"}>
                 {insights.usagePatterns.usagePattern}
               </ValueDisplay> usage pattern 
-              with an average of <ValueDisplay color={COLORS.BLUE}>
+              with an average of <ValueDisplay color={"var(--primary)"}>
                 {insights.usagePatterns.averageAnnualRate.toLocaleString()} miles per year
               </ValueDisplay>.
               {hasClockingIssues && insights.usagePatterns.dataQuality === "adjusted" && (
                 <span style={{ 
                   fontStyle: 'italic', 
                   marginLeft: '5px', 
-                  color: COLORS.RED,
-                  backgroundColor: `${COLORS.RED}10`,
+                  color: "var(--negative)",
+                  backgroundColor: `${"var(--negative)"}10`,
                   padding: '2px 5px',
                   borderRadius: '3px' 
                 }}>
                   (excludes periods with inconsistent mileage)
                 </span>
               )}
-            </GovUKBody>
+            </p>
             
             <MileageTable>
               <thead>
@@ -1084,35 +1198,35 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               </thead>
               <tbody>
                 <tr>
-                  <CellWithTooltip 
+                  <SimpleTooltip 
                     label="Highest Usage Period" 
-                    tooltip="Period with the highest annualised mileage rate" 
+                    title="Period with the highest annualised mileage rate" 
                   />
                   <td>
                     {insights.usagePatterns.highestUsagePeriod.period}
                     <br />
-                    <span style={{ color: COLORS.DARK_GREY }}>
+                    <span style={{ color: "var(--gray-600)" }}>
                       ({insights.usagePatterns.highestUsagePeriod.annualizedRate.toLocaleString()} miles/year)
                     </span>
                   </td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
+                  <SimpleTooltip 
                     label="Lowest Usage Period" 
-                    tooltip="Period with the lowest annualised mileage rate" 
+                    title="Period with the lowest annualised mileage rate" 
                   />
                   <td>
                     {insights.usagePatterns.lowestUsagePeriod.period}
                     <br />
-                    <span style={{ color: COLORS.DARK_GREY }}>
+                    <span style={{ color: "var(--gray-600)" }}>
                       ({insights.usagePatterns.lowestUsagePeriod.annualizedRate.toLocaleString()} miles/year)
                     </span>
                   </td>
                 </tr>
                 <tr>
-                  <CellWithTooltip 
+                  <SimpleTooltip 
                     label="Usage Variability" 
-                    tooltip="Difference between highest and lowest annual rates" 
+                    title="Difference between highest and lowest annual rates" 
                   />
                   <td>
                     <ValueDisplay>
@@ -1122,18 +1236,18 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </tr>
                 {insights.usagePatterns.potentialCommercialUse && (
                   <tr>
-                    <CellWithTooltip 
+                    <SimpleTooltip 
                       label="Commercial Usage" 
-                      tooltip="Indicators that suggest potential commercial use" 
+                      title="Indicators that suggest potential commercial use" 
                     />
                     <td>
                       <span style={{ 
-                        color: COLORS.RED, 
+                        color: "var(--negative)", 
                         fontWeight: 'bold', 
                         display: 'flex', 
                         alignItems: 'center',
                         padding: '3px 6px',
-                        backgroundColor: `${COLORS.RED}10`,
+                        backgroundColor: `${"var(--negative)"}10`,
                         borderRadius: '3px',
                         width: 'fit-content'
                       }}>
@@ -1149,11 +1263,11 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             {/* MOT Gaps - Direct utilization of checkForMOTGaps */}
             {motGapsDetected && (
               <>
-                <FactorsHeading color={COLORS.RED}>
+                <FactorsHeading color={"var(--negative)"}>
                   <WarningIcon fontSize="small" /> MOT Testing Gaps
                 </FactorsHeading>
                 <FactorsList>
-                  <FactorItem borderColor={COLORS.RED} iconColor={COLORS.RED}>
+                  <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
                     <WarningIcon fontSize="small" />
                     <span>
                       Significant gaps detected in MOT testing history (18+ months) - vehicle may have been untested or unregistered for periods
@@ -1165,7 +1279,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
               <>
-                <FactorsHeading color={COLORS.BLACK}>
+                <FactorsHeading color={"var(--warning)"}>
                   <WarningIcon fontSize="small" /> Unusual Mileage Patterns
                 </FactorsHeading>
                 <FactorsList>
@@ -1173,7 +1287,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
                     .slice(0, 2)
                     .map((anomaly, index) => (
-                    <FactorItem key={`anomaly-${index}`} borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+                    <FactorItem key={`anomaly-${index}`} borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
                       <WarningIcon fontSize="small" />
                       <span>
                         {anomaly.details.current.formattedDate}: {anomaly.message}
@@ -1181,7 +1295,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     </FactorItem>
                   ))}
                   {anomalies.filter(a => a.type === 'spike').length > 2 && (
-                    <FactorItem borderColor={COLORS.BLACK} iconColor={COLORS.BLACK}>
+                    <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
                       <InfoIcon fontSize="small" />
                       <span>
                         {anomalies.filter(a => a.type === 'spike').length - 2} more unusual usage patterns detected
@@ -1194,7 +1308,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {inactivityPeriods && inactivityPeriods.length > 0 && (
               <>
-                <FactorsHeading color={COLORS.BLUE}>
+                <FactorsHeading color={"var(--primary)"}>
                   <InfoIcon fontSize="small" /> Detected Inactivity Periods
                 </FactorsHeading>
                 <FactorsList>
@@ -1202,7 +1316,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     .sort((a, b) => b.days - a.days)
                     .slice(0, 2)
                     .map((period, index) => (
-                    <FactorItem key={`inactivity-${index}`} borderColor={COLORS.BLUE} iconColor={COLORS.BLUE}>
+                    <FactorItem key={`inactivity-${index}`} borderColor={"var(--primary)"} _iconColor={"var(--primary)"}>
                       <HistoryIcon fontSize="small" />
                       <span>
                         {period.start.formattedDate} to {period.end.formattedDate}: {period.description}
@@ -1210,7 +1324,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     </FactorItem>
                   ))}
                   {inactivityPeriods.length > 2 && (
-                    <FactorItem borderColor={COLORS.BLUE} iconColor={COLORS.BLUE}>
+                    <FactorItem borderColor={"var(--primary)"} _iconColor={"var(--primary)"}>
                       <InfoIcon fontSize="small" />
                       <span>
                         {inactivityPeriods.length - 2} more inactivity periods detected
@@ -1227,23 +1341,31 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Risk Assessment Panel - Only shown here if not a clocked vehicle */}
       {insights.riskAssessment && !hasClockingIssues && (
         <MileageInsightSection>
-          <HeadingWithTooltip 
-            tooltip={mileageTooltips.sectionRiskAssessment} 
-            iconColor={
-              insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
-              COLORS.RED
+          <SimpleTooltip 
+            title={mileageTooltips.sectionRiskAssessment} 
+            _iconColor={
+              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
+              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
+              "var(--negative)"
             }
           >
-           <GovUKHeadingM>
+           <h3 style={{
+              margin: '0 0 var(--space-lg) 0',
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-xl)',
+              fontWeight: '600',
+              color: 'var(--gray-800)',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
             History Risk Assessment
-            </GovUKHeadingM> 
-          </HeadingWithTooltip>
+            </h3>
+          </SimpleTooltip>
           
           <MileageInsightPanel borderColor={
-              insights.riskAssessment.riskCategory === 'Low' ? COLORS.GREEN : 
-              insights.riskAssessment.riskCategory === 'Medium' ? COLORS.BLACK : 
-              COLORS.RED
+              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
+              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
+              "var(--negative)"
           }>
             <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
@@ -1272,12 +1394,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {insights.riskAssessment.riskFactors.length > 0 && (
               <div style={{ marginBottom: '20px' }}>
-                <FactorsHeading color={COLORS.RED}>
+                <FactorsHeading color={"var(--negative)"}>
                   <WarningIcon fontSize="small" /> Risk Factors
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} borderColor={COLORS.RED} iconColor={COLORS.RED}>
+                    <FactorItem key={`risk-${index}`} borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
                       <WarningIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -1288,12 +1410,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
             
             {insights.riskAssessment.positiveFactors.length > 0 && (
               <div>
-                <FactorsHeading color={COLORS.GREEN}>
+                <FactorsHeading color={"var(--positive)"}>
                   <CheckCircleIcon fontSize="small" /> Positive Factors
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} borderColor={COLORS.GREEN} iconColor={COLORS.GREEN}>
+                    <FactorItem key={`positive-${index}`} borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
                       <CheckCircleIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -1305,13 +1427,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         </MileageInsightSection>
       )}
       
-      <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+      <SectionBreak />
       
-      <GovUKTooltip title="Information updated regularly with the latest UK vehicle data" arrow placement="top">
-        <FooterNote style={{ borderBottom: '1px dotted #505a5f', cursor: 'help', display: 'inline-block' }}>
+      <SimpleTooltip title="Information updated regularly with the latest UK vehicle data">
+        <FooterNote style={{ borderBottom: '1px dotted var(--gray-500)', cursor: 'help', display: 'inline-block' }}>
           Data analysis based on vehicle history and UK market trends as of March 2025
         </FooterNote>
-      </GovUKTooltip>
+      </SimpleTooltip>
     </MileageInsightsContainer>
   );
 };

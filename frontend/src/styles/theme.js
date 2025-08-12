@@ -5,95 +5,168 @@ import { styled, css } from '@mui/material/styles';
 // ======================================================
 
 export const COLORS = {
-  // Core colors
-  BLACK: '#0b0c0c',
+  // Core Gray Scale - Ultra Clean Palette
+  GRAY_900: '#0f172a',
+  GRAY_800: '#1e293b',
+  GRAY_700: '#334155',
+  GRAY_600: '#475569',
+  GRAY_500: '#64748b',
+  GRAY_400: '#94a3b8',
+  GRAY_300: '#cbd5e1',
+  GRAY_200: '#e2e8f0',
+  GRAY_100: '#f1f5f9',
+  GRAY_50: '#f8fafc',
   WHITE: '#ffffff',
-  BLUE: '#1d70b8',
-  YELLOW: '#ffdd00',
-  RED: '#d4351c',
-  GREEN: '#00703c',
-  LIGHT_GREY: '#f3f2f1',
-  MID_GREY: '#b1b4b6',
-  DARK_GREY: '#505a5f',
-  PURPLE: '#4c2c92',
   
-  // Derived functional colors
-  LINK_VISITED: '#4c2c92',
-  LINK_HOVER: '#003078',
-  LINK_ACTIVE: '#0b0c0c',
-  FOCUS: '#fd0',
+  // Legacy aliases for backward compatibility
+  BLACK: '#0f172a',
+  LIGHT_GREY: '#f1f5f9',
+  MID_GREY: '#94a3b8',
+  DARK_GREY: '#475569',
   
-  // Button-specific shades
-  GREEN_HOVER: '#005a30',
-  GREEN_DARK: '#002d18',
-  LIGHT_GREY_HOVER: '#dbdad9',
-  MID_GREY_DARK: '#929191',
-  RED_HOVER: '#aa2a16',
-  RED_DARK: '#55150b',
-  BLUE_HOVER: '#003078',
-  BLUE_DARK: '#144e81',
-  INVERSE_BLUE_HOVER: '#e8f1f8',
-  INVERSE_BLUE_DARK: '#144e81',
+  // Brand Colors - Professional Financial Theme
+  PRIMARY: '#3b82f6',
+  PRIMARY_HOVER: '#2563eb',
+  PRIMARY_LIGHT: '#dbeafe',
+  
+  // Legacy brand aliases
+  BLUE: '#3b82f6',
+  BLUE_HOVER: '#2563eb',
+  BLUE_DARK: '#1d4ed8',
+  INVERSE_BLUE_HOVER: '#dbeafe',
+  INVERSE_BLUE_DARK: '#1d4ed8',
+  
+  // Semantic Colors - Financial Data
+  POSITIVE: '#10b981',
+  POSITIVE_LIGHT: '#d1fae5',
+  NEGATIVE: '#ef4444',
+  NEGATIVE_LIGHT: '#fee2e2',
+  WARNING: '#f59e0b',
+  WARNING_LIGHT: '#fef3c7',
+  NEUTRAL: '#6b7280',
+  NEUTRAL_LIGHT: '#f3f4f6',
+  
+  // Legacy semantic aliases
+  GREEN: '#10b981',
+  GREEN_HOVER: '#059669',
+  GREEN_DARK: '#047857',
+  RED: '#ef4444',
+  RED_HOVER: '#dc2626',
+  RED_DARK: '#b91c1c',
+  YELLOW: '#f59e0b',
+  PURPLE: '#8b5cf6',
+  
+  // Functional colors
+  LINK_VISITED: '#8b5cf6',
+  LINK_HOVER: '#2563eb',
+  LINK_ACTIVE: '#0f172a',
+  FOCUS: '#f59e0b',
   
   // Navigation-specific
-  NAV_TOGGLE: '#1a65a6',
+  NAV_TOGGLE: '#3b82f6',
+  
+  // Button-specific shades
+  LIGHT_GREY_HOVER: '#e2e8f0',
+  MID_GREY_DARK: '#64748b',
   
   // Print-specific
   PRINT_TEXT: '#000000',
 };
 
 export const BREAKPOINTS = {
-  MOBILE: '40.0625em', // 650px
-  TABLET: '48.0625em', // 769px
+  MOBILE: '40em',      // 640px - Modern responsive system
+  TABLET: '48em',      // 768px
   DESKTOP: '64em',     // 1024px
 };
 
 export const SPACING = {
   NONE: '0',
-  XS: '5px',
-  S: '10px',
-  M: '15px',
-  L: '20px',
-  XL: '30px',
-  XXL: '40px', 
-  XXXL: '50px',
+  XS: '0.25rem',     // 4px - Clean spacing scale
+  S: '0.5rem',       // 8px
+  M: '1rem',         // 16px
+  L: '1.5rem',       // 24px
+  XL: '2rem',        // 32px
+  XXL: '3rem',       // 48px
+  XXXL: '4rem',      // 64px
   RESPONSIVE_L: {
-    MOBILE: '15px',
-    DESKTOP: '20px'
+    MOBILE: '1rem',    // 16px
+    DESKTOP: '1.5rem'  // 24px
   },
   RESPONSIVE_XL: {
-    MOBILE: '15px',
-    DESKTOP: '30px'
+    MOBILE: '1rem',    // 16px
+    DESKTOP: '2rem'    // 32px
   },
   RESPONSIVE_XXL: {
-    MOBILE: '20px',
-    DESKTOP: '40px'
+    MOBILE: '1.5rem',  // 24px
+    DESKTOP: '3rem'    // 48px
   },
   RESPONSIVE_XXXL: {
-    MOBILE: '30px',
-    DESKTOP: '50px'
+    MOBILE: '2rem',    // 32px
+    DESKTOP: '4rem'    // 64px
   }
 };
 
 export const FONT_SIZES = {
-  XS: '0.875rem',     // 14px
-  S: '1rem',          // 16px
-  M: '1.125rem',      // 18px
-  L: '1.1875rem',     // 19px
+  XS: '0.75rem',      // 12px - Modern typography scale
+  S: '0.875rem',      // 14px
+  M: '1rem',          // 16px
+  L: '1.125rem',      // 18px
   XL: '1.25rem',      // 20px
   XXL: '1.5rem',      // 24px
-  XXXL: '2rem',       // 32px
+  XXXL: '1.875rem',   // 30px
   XXXXL: '2.25rem',   // 36px
   XXXXXL: '3rem'      // 48px
 };
 
 export const LINE_HEIGHTS = {
-  XS: 1.1428571429,
-  S: 1.25,
-  M: 1.3157894737,
-  L: 1.25,
-  XL: 1.1111111111,
-  XXL: 1.0416666667
+  XS: 1,              // --leading-none
+  S: 1.25,            // --leading-tight
+  M: 1.375,           // --leading-snug
+  L: 1.5,             // --leading-normal
+  XL: 1.625,          // --leading-relaxed
+  XXL: 2              // --leading-loose
+};
+
+// New Design System Tokens
+export const FONT_FAMILIES = {
+  MAIN: "'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+  MONO: "'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace",
+  DISPLAY: "'Jost', sans-serif",
+};
+
+export const SHADOWS = {
+  SM: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  BASE: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+  MD: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  LG: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  XL: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+};
+
+export const TRANSITIONS = {
+  DEFAULT: 'all 0.2s ease',
+  FAST: 'all 0.15s ease',
+  SLOW: 'all 0.3s ease',
+  SMOOTH: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+};
+
+export const RADIUS = {
+  NONE: '0',
+  SM: '0.125rem',    // 2px
+  BASE: '0.25rem',   // 4px
+  MD: '0.375rem',    // 6px
+  LG: '0.5rem',      // 8px
+  XL: '0.75rem',     // 12px
+  XXL: '1rem',       // 16px
+  FULL: '9999px',
+};
+
+export const LETTER_SPACING = {
+  TIGHTER: '-0.05em',
+  TIGHT: '-0.025em',
+  NORMAL: '0',
+  WIDE: '0.025em',
+  WIDER: '0.05em',
+  WIDEST: '0.1em',
 };
 
 // ======================================================
@@ -103,7 +176,7 @@ export const LINE_HEIGHTS = {
 export const respondTo = (breakpoint) => `@media (min-width: ${BREAKPOINTS[breakpoint]})`;
 
 export const commonFontStyles = css`
-  font-family: "GDS Transport", arial, sans-serif;
+  font-family: ${FONT_FAMILIES.MAIN};
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 `;
@@ -204,102 +277,151 @@ export const typographyBase = css`
 
 export const buttonBase = css`
   ${commonFontStyles}
-  font-weight: 700;
+  font-weight: 600;
   font-size: ${FONT_SIZES.S};
-  line-height: 1.1875;
+  line-height: ${LINE_HEIGHTS.S};
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100%;
-  margin-top: 0;
-  margin-right: 0;
-  margin-left: 0;
-  padding: 8px 10px 7px;
-  border: 2px solid transparent;
-  border-radius: 0;
+  margin: 0;
+  padding: ${SPACING.S} ${SPACING.M};
+  border: 1px solid ${COLORS.GRAY_300};
+  border-radius: ${RADIUS.SM};
   text-align: center;
-  vertical-align: top;
+  text-decoration: none;
   cursor: pointer;
+  transition: ${TRANSITIONS.DEFAULT};
   -webkit-appearance: none;
+  appearance: none;
+  background: ${COLORS.WHITE};
+  color: ${COLORS.GRAY_700};
+  box-shadow: ${SHADOWS.SM};
+  gap: ${SPACING.XS};
   
   ${respondTo('MOBILE')} {
-    font-size: ${FONT_SIZES.L};
-    line-height: 1;
+    font-size: ${FONT_SIZES.S};
+    padding: ${SPACING.S} ${SPACING.L};
     width: auto;
   }
   
+  &:hover:not(:disabled) {
+    background: ${COLORS.GRAY_50};
+    border-color: ${COLORS.GRAY_400};
+    box-shadow: ${SHADOWS.BASE};
+    transform: translateY(-1px);
+  }
+  
   &:focus {
-    border-color: ${COLORS.FOCUS};
-    outline: 3px solid transparent;
-    box-shadow: inset 0 0 0 1px ${COLORS.FOCUS};
-  }
-
-  &:focus:not(:active):not(:hover) {
-    border-color: ${COLORS.FOCUS};
-    color: ${COLORS.BLACK};
-    background-color: ${COLORS.FOCUS};
-    box-shadow: 0 2px 0 ${COLORS.BLACK};
-  }
-
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    bottom: -4px;
-    left: -2px;
-    background: transparent;
-  }
-
-  &:active::before {
-    top: -4px;
+    outline: none;
+    border-color: ${COLORS.PRIMARY};
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), ${SHADOWS.BASE};
   }
 
   &:active {
-    top: 2px;
+    transform: translateY(0);
+    box-shadow: ${SHADOWS.SM};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    
+    &:hover {
+      background: ${COLORS.WHITE};
+      border-color: ${COLORS.GRAY_300};
+      box-shadow: ${SHADOWS.SM};
+      transform: none;
+    }
   }
 `;
 
 export const buttonVariants = {
   primary: css`
+    background: ${COLORS.PRIMARY};
     color: ${COLORS.WHITE};
-    background-color: ${COLORS.GREEN};
-    box-shadow: 0 2px 0 ${COLORS.GREEN_DARK};
+    border-color: ${COLORS.PRIMARY};
     
-    &:hover {
-      background-color: ${COLORS.GREEN_HOVER};
-    }
-  `,
-  blue: css`
-    color: ${COLORS.WHITE};
-    background-color: ${COLORS.BLUE};
-    box-shadow: 0 2px 0 ${COLORS.BLUE_DARK};
-    
-    &:hover {
-      background-color: ${COLORS.BLUE_HOVER};
-    }
-  `,
-  secondary: css`
-    color: ${COLORS.BLACK};
-    background-color: ${COLORS.LIGHT_GREY};
-    box-shadow: 0 2px 0 ${COLORS.DARK_GREY};
-    
-    &:hover {
-      background-color: ${COLORS.LIGHT_GREY_HOVER};
+    &:hover:not(:disabled) {
+      background: ${COLORS.PRIMARY_HOVER};
+      border-color: ${COLORS.PRIMARY_HOVER};
+      color: ${COLORS.WHITE};
     }
     
     &:focus {
-      color: ${COLORS.BLACK};
+      border-color: ${COLORS.PRIMARY};
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), ${SHADOWS.BASE};
     }
   `,
-  warning: css`
+  
+  blue: css`
+    background: ${COLORS.BLUE};
     color: ${COLORS.WHITE};
-    background-color: ${COLORS.RED};
-    box-shadow: 0 2px 0 ${COLORS.RED_DARK};
+    border-color: ${COLORS.BLUE};
     
-    &:hover {
-      background-color: ${COLORS.RED_HOVER};
+    &:hover:not(:disabled) {
+      background: ${COLORS.BLUE_HOVER};
+      border-color: ${COLORS.BLUE_HOVER};
+      color: ${COLORS.WHITE};
+    }
+    
+    &:focus {
+      border-color: ${COLORS.BLUE};
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), ${SHADOWS.BASE};
+    }
+  `,
+  
+  secondary: css`
+    background: ${COLORS.WHITE};
+    color: ${COLORS.GRAY_700};
+    border-color: ${COLORS.GRAY_300};
+    
+    &:hover:not(:disabled) {
+      background: ${COLORS.GRAY_50};
+      border-color: ${COLORS.GRAY_400};
+      color: ${COLORS.GRAY_800};
+    }
+    
+    &:focus {
+      border-color: ${COLORS.GRAY_400};
+      box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1), ${SHADOWS.BASE};
+    }
+  `,
+  
+  warning: css`
+    background: ${COLORS.NEGATIVE};
+    color: ${COLORS.WHITE};
+    border-color: ${COLORS.NEGATIVE};
+    
+    &:hover:not(:disabled) {
+      background: ${COLORS.RED_HOVER};
+      border-color: ${COLORS.RED_HOVER};
+      color: ${COLORS.WHITE};
+    }
+    
+    &:focus {
+      border-color: ${COLORS.NEGATIVE};
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2), ${SHADOWS.BASE};
+    }
+  `,
+  
+  positive: css`
+    background: ${COLORS.POSITIVE};
+    color: ${COLORS.WHITE};
+    border-color: ${COLORS.POSITIVE};
+    
+    &:hover:not(:disabled) {
+      background: ${COLORS.GREEN_HOVER};
+      border-color: ${COLORS.GREEN_HOVER};
+      color: ${COLORS.WHITE};
+    }
+    
+    &:focus {
+      border-color: ${COLORS.POSITIVE};
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), ${SHADOWS.BASE};
     }
   `
 };
@@ -311,21 +433,121 @@ export const formControlBase = css`
   line-height: ${LINE_HEIGHTS.S};
   box-sizing: border-box;
   width: 100%;
-  height: 40px;
-  margin-top: 0;
-  padding: ${SPACING.XS};
-  border: 2px solid ${COLORS.BLACK};
-  border-radius: 0;
+  min-height: 40px;
+  margin: 0;
+  padding: ${SPACING.S} ${SPACING.M};
+  background: ${COLORS.WHITE};
+  border: 1px solid ${COLORS.GRAY_300};
+  border-radius: ${RADIUS.SM};
+  color: ${COLORS.GRAY_700};
+  transition: ${TRANSITIONS.DEFAULT};
+  -webkit-appearance: none;
+  appearance: none;
   
   ${respondTo('MOBILE')} {
-    font-size: ${FONT_SIZES.L};
-    line-height: ${LINE_HEIGHTS.M};
+    font-size: ${FONT_SIZES.S};
+    padding: ${SPACING.S} ${SPACING.M};
+  }
+
+  &::placeholder {
+    color: ${COLORS.GRAY_400};
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: ${COLORS.GRAY_400};
+    background: ${COLORS.GRAY_50};
   }
 
   &:focus {
-    outline: 3px solid ${COLORS.FOCUS};
-    outline-offset: 0;
-    box-shadow: inset 0 0 0 2px;
+    outline: none;
+    border-color: ${COLORS.PRIMARY};
+    background: ${COLORS.WHITE};
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &:disabled {
+    background: ${COLORS.GRAY_100};
+    border-color: ${COLORS.GRAY_300};
+    color: ${COLORS.GRAY_400};
+    cursor: not-allowed;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: ${COLORS.NEGATIVE};
+    
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+  }
+`;
+
+// Modern Card/Container Base Styles
+export const cardBase = css`
+  background: ${COLORS.WHITE};
+  border: 1px solid ${COLORS.GRAY_200};
+  border-radius: ${RADIUS.SM};
+  box-shadow: ${SHADOWS.SM};
+  transition: ${TRANSITIONS.DEFAULT};
+  overflow: hidden;
+`;
+
+export const cardHover = css`
+  &:hover {
+    box-shadow: ${SHADOWS.MD};
+    transform: translateY(-2px);
+  }
+`;
+
+export const sectionBase = css`
+  padding: ${SPACING.XL};
+  margin-bottom: ${SPACING.XL};
+  
+  ${respondTo('MOBILE')} {
+    padding: ${SPACING.L};
+    margin-bottom: ${SPACING.L};
+  }
+  
+  @media (max-width: 768px) {
+    padding: ${SPACING.M};
+    margin-bottom: ${SPACING.M};
+  }
+`;
+
+export const gridBase = css`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: ${SPACING.M};
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: ${SPACING.S};
+  }
+`;
+
+export const flexBetween = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${SPACING.M};
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: ${SPACING.S};
+  }
+`;
+
+export const selectBase = css`
+  ${formControlBase}
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right ${SPACING.S} center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: calc(${SPACING.M} + 20px);
+  
+  &:hover {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   }
 `;
 
@@ -2034,13 +2256,82 @@ export const GridContainer = styled('div')`
 // Export all theme constants and utilities
 // ======================================================
 
+// Utility Mixins for Common Patterns
+export const utilityMixins = {
+  // Text utilities matching MarketDash patterns
+  textPositive: css`
+    color: ${COLORS.POSITIVE};
+    font-weight: 600;
+  `,
+  
+  textNegative: css`
+    color: ${COLORS.NEGATIVE};
+    font-weight: 600;
+  `,
+  
+  textNeutral: css`
+    color: ${COLORS.NEUTRAL};
+  `,
+  
+  textPrimary: css`
+    color: ${COLORS.PRIMARY};
+  `,
+  
+  // Background utilities
+  bgPositiveLight: css`
+    background: ${COLORS.POSITIVE_LIGHT};
+  `,
+  
+  bgNegativeLight: css`
+    background: ${COLORS.NEGATIVE_LIGHT};
+  `,
+  
+  bgNeutralLight: css`
+    background: ${COLORS.NEUTRAL_LIGHT};
+  `,
+  
+  // Loading animation
+  loadingSpinner: css`
+    width: 24px;
+    height: 24px;
+    border: 3px solid ${COLORS.GRAY_200};
+    border-radius: 50%;
+    border-top-color: ${COLORS.PRIMARY};
+    animation: spin 1s linear infinite;
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  `,
+  
+  // Screen reader only
+  srOnly: css`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  `
+};
+
 export const theme = {
   colors: COLORS,
   breakpoints: BREAKPOINTS,
   spacing: SPACING,
   fontSizes: FONT_SIZES,
   lineHeights: LINE_HEIGHTS,
+  fontFamilies: FONT_FAMILIES,
+  shadows: SHADOWS,
+  transitions: TRANSITIONS,
+  radius: RADIUS,
+  letterSpacing: LETTER_SPACING,
   mixins: {
+    // Original mixins
     respondTo,
     commonFontStyles,
     printStyles,
@@ -2052,6 +2343,17 @@ export const theme = {
     typographyBase,
     buttonBase,
     formControlBase,
+    
+    // New modern mixins
+    cardBase,
+    cardHover,
+    sectionBase,
+    gridBase,
+    flexBetween,
+    selectBase,
+    
+    // Utility mixins
+    ...utilityMixins,
   },
 };
 

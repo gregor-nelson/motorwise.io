@@ -19,7 +19,8 @@ import Alert from '@mui/material/Alert';
 // Import components directly to maintain original behavior
 import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader';
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
-import VehicleMileageChart from '../../components/Premium/DVLA/Mileage/Chart/MileageChart'; 
+ 
+import MileageChart3D from '../../components/Premium/DVLA/Mileage/Chart/MileageChart3D';
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
 import AutoDataSection from '../../components/AutoData/DataTabs';
 
@@ -169,14 +170,71 @@ const PremiumReportPage = () => {
     fetchVehicleData();
   }, [registration, paymentId, isFreeReport, reportType]);
   
-  // Transform MOT data function - optimized but keeping same logic
+  // Simple clocking detection function
+  const analyzeClockingRisk = (motTests) => {
+    if (!motTests || motTests.length < 2) return motTests;
+    
+    // Sort by date to ensure chronological order
+    const sortedTests = [...motTests].sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
+    
+    return sortedTests.map((test, index) => {
+      let clockingRisk = { level: 'LOW', evidence: [], score: 0 };
+      
+      if (index > 0 && test.rawMileage && sortedTests[index - 1].rawMileage) {
+        const currentMileage = test.rawMileage;
+        const previousMileage = sortedTests[index - 1].rawMileage;
+        const mileageDiff = currentMileage - previousMileage;
+        
+        // Check for obvious clocking (negative mileage)
+        if (mileageDiff < 0) {
+          clockingRisk.level = 'CRITICAL';
+          clockingRisk.score = 90;
+          clockingRisk.evidence.push(`Mileage decreased by ${Math.abs(mileageDiff).toLocaleString()} miles`);
+        }
+        // Check for suspiciously low mileage increases
+        else {
+          const daysDiff = (new Date(test.rawDate) - new Date(sortedTests[index - 1].rawDate)) / (1000 * 60 * 60 * 24);
+          const annualMileage = (mileageDiff / daysDiff) * 365.25;
+          
+          // Very low annual mileage (less than 500 miles per year)
+          if (annualMileage < 500 && annualMileage > 0 && daysDiff > 300) {
+            clockingRisk.level = 'MODERATE';
+            clockingRisk.score = 40;
+            clockingRisk.evidence.push(`Very low usage: ${Math.round(annualMileage).toLocaleString()} miles/year`);
+          }
+          // Check for round number patterns (ending in 000)
+          else if (currentMileage % 1000 === 0 && mileageDiff > 0 && mileageDiff < 2000) {
+            clockingRisk.level = 'MODERATE';
+            clockingRisk.score = 35;
+            clockingRisk.evidence.push('Suspicious round number pattern');
+          }
+        }
+      }
+      
+      return {
+        ...test,
+        clockingRisk
+      };
+    });
+  };
+  
+  // Transform MOT data function - enhanced with clocking detection
   const transformMotData = (apiData) => {
     if (!apiData || !apiData.motTests || apiData.motTests.length === 0) return [];
     
-    return apiData.motTests.map(test => {
+    const basicTransformed = apiData.motTests.map(test => {
       const testDate = new Date(test.completedDate);
       const options = { day: 'numeric', month: 'long', year: 'numeric' };
       const formattedDate = testDate.toLocaleDateString('en-GB', options);
+      
+      // Extract advisory information from defects
+      const hasAdvisories = test.defects ? test.defects.some(d => 
+        d.type === 'ADVISORY' || d.type === 'MINOR'
+      ) : false;
+      
+      const advisoryCount = test.defects ? test.defects.filter(d => 
+        d.type === 'ADVISORY' || d.type === 'MINOR'
+      ).length : 0;
       
       return {
         date: formattedDate,
@@ -195,8 +253,26 @@ const PremiumReportPage = () => {
           : null,
         rawMileage: test.odometerResultType === 'READ' ? parseInt(test.odometerValue) : null,
         rawDate: test.completedDate,
+        // Add advisory information for 3D chart color coding
+        hasAdvisories,
+        advisoryCount,
       };
     });
+    
+    // Add clocking risk analysis
+    const finalData = analyzeClockingRisk(basicTransformed);
+    
+    // Debug logging to verify clocking detection
+    console.log('Premium.jsx: Clocking analysis results:', 
+      finalData.filter(d => d.clockingRisk && d.clockingRisk.level !== 'LOW').map(d => ({
+        date: d.date,
+        level: d.clockingRisk.level,
+        evidence: d.clockingRisk.evidence,
+        rawMileage: d.rawMileage
+      }))
+    );
+    
+    return finalData;
   };
 
   // Callback functions - keeping the original implementation for data flow integrity
@@ -341,7 +417,7 @@ const PremiumReportPage = () => {
                 />
               }>
                 {motData && motData.length > 0 ? (
-                  <VehicleMileageChart motData={motData} />
+                  <MileageChart3D motData={motData} />
                 ) : (
                   <ErrorMessage message="No MOT mileage history is available for this vehicle." />
                 )}

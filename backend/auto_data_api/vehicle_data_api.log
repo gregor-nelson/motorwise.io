@@ -4969,3 +4969,403 @@
 2025-08-11 16:57:07,003 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-08-11 16:57:07,004 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-08-11 16:57:07,005 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-11 18:48:30,511 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-11 18:48:30,517 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-11 18:48:30,519 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-11 18:48:30,522 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-11 18:48:30,525 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-11 18:48:30,534 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-11 18:48:30,535 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-11 18:48:30,536 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-11 18:48:30,537 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-11 18:48:30,538 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-11 18:48:30,538 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-11 18:48:30,540 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-11 18:48:30,540 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-12 09:17:35,025 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-12 09:17:35,051 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-12 09:17:35,071 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-12 09:17:35,092 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-12 09:17:35,114 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-12 09:17:35,134 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-12 09:17:35,135 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-12 09:17:35,155 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-12 09:17:35,156 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-12 09:17:35,177 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-12 09:17:35,177 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-12 09:17:35,179 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-12 09:17:35,179 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-12 09:27:39,647 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-12 09:27:39,647 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-08-12 09:27:39,648 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-08-12 09:27:39,655 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-12 09:27:39,656 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-12 09:27:39,656 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-12 09:27:39,656 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-12 09:27:39,657 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-12 09:27:39,657 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-12 09:27:39,658 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-12 09:27:39,658 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-12 09:27:39,658 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-12 09:27:39,658 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-12 09:27:39,658 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-12 09:27:39,662 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0200s
+2025-08-12 09:27:39,663 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0190s
+2025-08-12 09:40:30,594 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 09:40:30,595 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 09:40:30,595 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 09:40:30,595 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 09:40:30,595 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 09:40:30,595 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:40:30,596 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 09:40:30,596 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 09:40:30,597 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 09:40:30,597 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 09:40:30,598 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:40:30,598 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:40:30,599 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:40:30,599 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 09:40:30,599 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:40:30,599 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 09:40:30,600 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:40:30,600 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 09:40:30,600 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-12 09:40:30,601 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-12 09:45:41,673 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:41,673 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 09:45:41,673 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:41,674 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 09:45:41,675 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 09:45:41,675 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:45:41,675 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 09:45:41,676 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:41,676 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 09:45:41,676 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:41,678 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:41,678 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:41,679 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:41,679 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 09:45:41,679 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:45:41,680 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 09:45:41,680 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:41,681 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 09:45:41,681 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0130s
+2025-08-12 09:45:41,682 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0128s
+2025-08-12 09:45:55,038 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:55,038 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 09:45:55,039 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:55,039 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 09:45:55,039 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 09:45:55,040 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:45:55,040 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 09:45:55,041 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:55,041 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 09:45:55,041 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 09:45:55,042 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-12 09:45:55,052 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:55,053 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:55,053 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:55,053 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 09:45:55,055 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:45:55,055 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 09:45:55,055 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:45:55,055 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 09:45:55,056 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-12 09:46:20,191 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:20,191 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 09:46:20,191 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:20,192 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 09:46:20,192 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 09:46:20,192 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:46:20,193 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 09:46:20,193 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:20,194 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 09:46:20,194 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:20,195 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-12 09:46:20,205 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:20,205 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:20,206 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:20,206 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 09:46:20,206 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:46:20,207 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 09:46:20,207 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:20,207 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 09:46:20,208 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-12 09:46:39,798 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:39,798 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 09:46:39,799 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:39,799 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 09:46:39,799 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 09:46:39,800 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:46:39,800 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 09:46:39,801 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:39,801 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 09:46:39,801 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 09:46:39,802 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-12 09:46:39,810 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:39,810 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:39,810 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:39,811 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 09:46:39,811 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 09:46:39,811 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 09:46:39,812 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 09:46:39,812 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 09:46:39,813 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0055s
+2025-08-12 10:34:38,677 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 10:34:38,677 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 10:34:38,678 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 10:34:38,678 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 10:34:38,678 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 10:34:38,678 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 10:34:38,678 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 10:34:38,679 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 10:34:38,679 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 10:34:38,679 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 10:34:38,680 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-12 10:34:38,685 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 10:34:38,686 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 10:34:38,686 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 10:34:38,686 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 10:34:38,687 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 10:34:38,687 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 10:34:38,687 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 10:34:38,688 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 10:34:38,688 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0039s
+2025-08-12 10:37:04,300 - vehicle_data_api - INFO - Looking up repair times for NISSAN MICRA (year: 2002)
+2025-08-12 10:37:04,300 - vehicle_data_api - INFO - Looking up repair times for: NISSAN MICRA (year: 2002)
+2025-08-12 10:37:04,301 - vehicle_data_api - INFO - Attempting fuzzy matching for NISSAN MICRA (year: 2002)
+2025-08-12 10:37:04,301 - vehicle_data_api - INFO - Searching for: nissan micra, Year=2002, Fuel=None, Type=repair_times
+2025-08-12 10:37:04,301 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 10:37:04,302 - vehicle_data_api - INFO - No good match found for NISSAN MICRA (Year: 2002, Fuel: None)
+2025-08-12 10:37:04,302 - vehicle_data_api - WARNING - No repair time match found for NISSAN MICRA (year: 2002)
+2025-08-12 10:37:04,302 - vehicle_data_api - ERROR - HTTPException: No repair time data found for NISSAN MICRA (year: 2002)
+2025-08-12 10:37:04,303 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-12 10:37:04,307 - vehicle_data_api - INFO - Looking up tech specs for NISSAN MICRA (year: 2002, fuel: petrol)
+2025-08-12 10:37:04,307 - vehicle_data_api - INFO - Looking up tech specs for: NISSAN MICRA (year: 2002, fuel: petrol)
+2025-08-12 10:37:04,307 - vehicle_data_api - INFO - Attempting fuzzy matching for NISSAN MICRA (year: 2002, fuel: petrol)
+2025-08-12 10:37:04,307 - vehicle_data_api - INFO - Searching for: nissan micra, Year=2002, Fuel=petrol, Type=tech_specs
+2025-08-12 10:37:04,308 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 10:37:04,308 - vehicle_data_api - INFO - No good match found for NISSAN MICRA (Year: 2002, Fuel: petrol)
+2025-08-12 10:37:04,309 - vehicle_data_api - WARNING - No tech specs match found for NISSAN MICRA (year: 2002, fuel: petrol)
+2025-08-12 10:37:04,310 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for NISSAN MICRA (year: 2002) (fuel type: petrol)
+2025-08-12 10:37:04,311 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-08-12 11:28:06,163 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:06,164 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:28:06,164 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:06,164 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:28:06,165 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:28:06,165 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:28:06,166 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:28:06,167 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:06,168 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:28:06,169 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:06,170 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-08-12 11:28:06,187 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:06,187 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:06,187 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:06,188 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:28:06,188 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:28:06,188 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:28:06,189 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:06,189 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:28:06,190 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0089s
+2025-08-12 11:28:27,517 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:27,518 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:28:27,518 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:27,518 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:28:27,519 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:28:27,519 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:28:27,520 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:28:27,520 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:27,520 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:28:27,521 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:28:27,521 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0049s
+2025-08-12 11:28:27,542 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:27,542 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:27,543 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:27,543 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:28:27,543 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:28:27,543 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:28:27,544 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:28:27,544 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:28:27,545 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0036s
+2025-08-12 11:50:05,442 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:50:05,443 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:50:05,443 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:50:05,443 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:50:05,443 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:50:05,443 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:50:05,444 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:50:05,444 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:50:05,444 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:50:05,444 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:50:05,445 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:50:05,446 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:50:05,446 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:50:05,446 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:50:05,446 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:50:05,447 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:50:05,447 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:50:05,447 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:50:05,448 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0355s
+2025-08-12 11:50:05,448 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-12 11:51:07,825 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:07,826 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:51:07,826 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:07,826 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:51:07,827 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:51:07,827 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:51:07,828 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:51:07,829 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:07,829 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:51:07,830 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:07,831 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:07,831 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:07,831 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:07,831 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:51:07,832 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:51:07,832 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:51:07,832 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:07,833 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:51:07,833 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-08-12 11:51:07,834 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0120s
+2025-08-12 11:51:50,429 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:50,430 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:51:50,431 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:50,432 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:51:50,432 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:51:50,432 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:51:50,435 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:51:50,435 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:50,435 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:51:50,436 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:51:50,437 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:50,438 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:50,438 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:50,438 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:51:50,439 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:51:50,440 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:51:50,440 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:51:50,440 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:51:50,440 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0153s
+2025-08-12 11:51:50,442 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0149s
+2025-08-12 11:52:03,190 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:03,190 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:52:03,191 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:03,191 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:52:03,191 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:52:03,192 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:52:03,192 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:52:03,193 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:03,193 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:52:03,193 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:03,194 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-12 11:52:03,223 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:03,223 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:03,224 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:03,224 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:52:03,224 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:52:03,225 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:52:03,225 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:03,225 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:52:03,227 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-12 11:52:36,589 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:36,589 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:52:36,590 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:36,590 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:52:36,590 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:52:36,591 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:52:36,592 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:52:36,593 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:36,593 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:52:36,593 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:52:36,594 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0077s
+2025-08-12 11:52:36,611 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:36,612 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:36,613 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:36,613 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:52:36,615 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:52:36,616 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:52:36,617 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:52:36,618 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:52:36,620 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0130s
+2025-08-12 11:53:25,823 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:53:25,824 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:53:25,824 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:53:25,825 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:53:25,825 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:53:25,825 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:53:25,826 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:53:25,827 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:53:25,831 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:53:25,831 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:53:25,833 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0247s
+2025-08-12 11:53:25,840 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:53:25,841 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:53:25,842 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:53:25,842 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:53:25,842 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:53:25,843 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:53:25,843 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:53:25,844 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:53:25,844 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-12 11:55:49,396 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 11:55:49,396 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 11:55:49,397 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 11:55:49,397 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 11:55:49,397 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 11:55:49,398 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:55:49,400 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 11:55:49,400 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 11:55:49,400 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 11:55:49,400 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 11:55:49,401 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0150s
+2025-08-12 11:55:49,405 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:55:49,405 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:55:49,406 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:55:49,406 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 11:55:49,406 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 11:55:49,407 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 11:55:49,407 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 11:55:49,408 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 11:55:49,409 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0158s
+2025-08-12 12:02:08,371 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 12:02:08,371 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 12:02:08,371 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 12:02:08,372 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 12:02:08,372 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 12:02:08,372 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 12:02:08,373 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 12:02:08,373 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 12:02:08,373 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 12:02:08,374 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 12:02:08,374 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:02:08,375 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:02:08,375 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:02:08,375 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 12:02:08,375 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 12:02:08,376 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 12:02:08,376 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:02:08,376 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 12:02:08,377 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-12 12:02:08,377 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0077s
+2025-08-12 12:07:28,974 - vehicle_data_api - INFO - Looking up repair times for FORD TRANSIT (year: 1998)
+2025-08-12 12:07:28,975 - vehicle_data_api - INFO - Looking up repair times for: FORD TRANSIT (year: 1998)
+2025-08-12 12:07:28,975 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998)
+2025-08-12 12:07:28,975 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=None, Type=repair_times
+2025-08-12 12:07:28,975 - vehicle_data_api - INFO - Found 1 vehicles matching make 'ford'
+2025-08-12 12:07:28,976 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 12:07:28,976 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: None)
+2025-08-12 12:07:28,977 - vehicle_data_api - WARNING - No repair time match found for FORD TRANSIT (year: 1998)
+2025-08-12 12:07:28,977 - vehicle_data_api - INFO - Similar repair time keys available: ['ford_fiesta', 'ford_fiesta_2017']
+2025-08-12 12:07:28,977 - vehicle_data_api - ERROR - HTTPException: No repair time data found for FORD TRANSIT (year: 1998)
+2025-08-12 12:07:28,978 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-12 12:07:28,999 - vehicle_data_api - INFO - Looking up tech specs for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:07:28,999 - vehicle_data_api - INFO - Looking up tech specs for: FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:07:29,000 - vehicle_data_api - INFO - Attempting fuzzy matching for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:07:29,000 - vehicle_data_api - INFO - Searching for: ford transit, Year=1998, Fuel=diesel, Type=tech_specs
+2025-08-12 12:07:29,000 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-12 12:07:29,001 - vehicle_data_api - INFO - No good match found for FORD TRANSIT (Year: 1998, Fuel: diesel)
+2025-08-12 12:07:29,001 - vehicle_data_api - WARNING - No tech specs match found for FORD TRANSIT (year: 1998, fuel: diesel)
+2025-08-12 12:07:29,001 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for FORD TRANSIT (year: 1998) (fuel type: diesel)
+2025-08-12 12:07:29,002 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0051s

@@ -33,8 +33,10 @@
 
 /* ===== HERO CONTAINER ===== */
 .hero-container {
-  max-width: var(--container-max);
-  margin: 0 auto;
+  /* Remove max-width constraint to allow full page width */
+  max-width: none;
+  margin: 0;
+  /* Add small margins on sides instead of centering */
   padding: 0 var(--space-lg);
   width: 100%;
   position: relative;
@@ -87,12 +89,15 @@
   border: 1px solid var(--gray-200);
   border-left: 4px solid var(--primary);
   box-shadow: var(--shadow-lg);
-  max-width: 600px;
-  margin: 0 auto;
+  /* Remove max-width constraint to allow full width */
+  max-width: none;
+  margin: 0;
   transition: var(--transition-smooth);
   animation: heroCardSlide 0.8s ease-out 0.6s;
   animation-fill-mode: both;
   position: relative;
+  /* Full width with small margins */
+  width: 100%;
 }
 
 .hero-search-card::before {
@@ -134,6 +139,20 @@
   color: var(--gray-800);
   margin: 0 0 var(--space-lg) 0;
   text-align: center;
+}
+
+/* ===== FULL WIDTH LAYOUT ===== */
+
+/* Ensure all content within hero uses full available width */
+.hero-search-card [class*="ResultsSection"],
+.hero-search-card [class*="MotResultCard"],
+.hero-search-card [class*="CollapsibleSection"],
+.hero-search-card [class*="CollapsibleContent"],
+.hero-search-card [class*="Results"],
+.hero-search-card [class*="Mot"] {
+  /* Use full available width within the card */
+  width: 100%;
+  max-width: none;
 }
 
 /* ===== HERO ANIMATIONS ===== */
@@ -194,7 +213,8 @@
   }
   
   .hero-container {
-    padding: 0 var(--space-xl);
+    /* Slightly larger margins on tablet/desktop */
+    padding: 0 var(--space-2xl);
   }
   
   .hero-title {
@@ -235,6 +255,7 @@
   }
   
   .hero-container {
+    /* Smaller margins on mobile */
     padding: 0 var(--space-md);
   }
   
@@ -247,13 +268,14 @@
   .hero-subtitle {
     font-size: var(--text-base);
     margin-bottom: var(--space-xl);
-    text-align: left;
+    text-align: center;
   }
   
   .hero-search-card {
     padding: var(--space-xl);
     border-radius: var(--radius-md);
-    margin: 0 var(--space-sm);
+    /* Remove additional margin since container already has padding */
+    margin: 0;
   }
   
   .hero-search-title {
@@ -262,7 +284,7 @@
   }
   
   .hero-content {
-    text-align: left;
+    text-align: center;
   }
 }
 
@@ -273,6 +295,7 @@
   }
   
   .hero-container {
+    /* Very small margins on tiny screens */
     padding: 0 var(--space-sm);
   }
   

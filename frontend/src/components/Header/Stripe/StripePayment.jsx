@@ -19,7 +19,7 @@ import {
   PremiumBanner,
   PremiumHeading,
   PremiumPrice
-} from '../../styles/theme';
+} from '../../../styles/theme';
 
 // Determine if we're in development or production
 export const isDevelopment = window.location.hostname === 'localhost' || 

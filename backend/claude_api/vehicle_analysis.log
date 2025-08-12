@@ -1799,3 +1799,450 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-08-12 12:12:11,779 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
 2025-08-12 12:12:11,780 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 3.0994s
+2025-08-12 12:21:52,981 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 12:21:53,832 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 12:21:53,833 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 12:21:54,550 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 12:21:54,552 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 12:21:55,434 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 12:21:55,438 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 12:21:55,439 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.4590s
+2025-08-12 12:31:21,681 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 12:31:22,592 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 12:31:22,594 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 12:31:23,418 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 12:31:23,419 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 12:31:25,452 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 12:31:25,454 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 12:31:25,454 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 3.7729s
+2025-08-12 12:31:56,107 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 12:31:56,971 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 12:31:56,973 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 12:31:58,083 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 12:31:58,085 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 12:31:59,088 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 12:31:59,088 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 12:31:59,089 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.9842s
+2025-08-12 12:32:00,733 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 12:32:01,458 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 12:32:01,464 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 12:32:02,371 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 12:32:02,373 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 12:32:03,376 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 12:32:03,378 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 12:32:03,379 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.6459s
+2025-08-12 12:34:14,673 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 12:34:15,375 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 12:34:15,376 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 12:34:16,194 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 12:34:16,195 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 12:34:17,028 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 12:34:17,029 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 12:34:17,030 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.3570s
+2025-08-12 14:00:41,099 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:00:41,100 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:00:41,477 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:00:41,478 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:06:10,358 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:06:10,359 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:06:10,766 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:06:10,768 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:44:53,282 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:44:53,283 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:44:53,559 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:44:53,561 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:59:35,346 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:59:35,348 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 14:59:35,664 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 14:59:35,666 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 15:06:54,736 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-08-12 15:06:56,487 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-08-12 15:06:56,490 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-08-12 15:06:57,722 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-12 15:06:57,725 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-12 15:06:57,732 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-08-12 15:06:57,735 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-08-12 15:06:57,735 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-08-12 15:06:59,434 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:06:59,437 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:06:59,441 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 500 - 4.7077s
+2025-08-12 15:07:04,176 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:07:05,173 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:07:05,173 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:07:05,891 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:07:05,893 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:07:07,038 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:07:07,042 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:07:07,044 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.8689s
+2025-08-12 15:15:48,492 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:15:49,536 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:15:49,539 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:15:50,626 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:15:50,628 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:15:51,740 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:15:51,742 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:15:51,743 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 3.2518s
+2025-08-12 15:18:29,108 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:18:30,040 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:18:30,043 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:18:31,518 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:18:31,520 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:18:33,423 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:18:33,425 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:18:33,426 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.3193s
+2025-08-12 15:19:22,112 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-08-12 15:19:23,194 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-08-12 15:19:23,195 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-08-12 15:19:24,189 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-12 15:19:24,190 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-12 15:19:24,203 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-08-12 15:19:24,204 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-08-12 15:19:24,205 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-08-12 15:19:25,484 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:19:25,504 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:19:25,506 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 500 - 3.3963s
+2025-08-12 15:20:02,320 - vehicle_analysis_api - INFO - Fetching MOT data for registration: A5ENK
+2025-08-12 15:20:03,396 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/A5ENK "HTTP/1.1 200 OK"
+2025-08-12 15:20:03,398 - vehicle_analysis_api - INFO - Fetching bulletins for FORD TRANSIT
+2025-08-12 15:20:04,733 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-12 15:20:04,734 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-12 15:20:04,742 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/FORD/TRANSIT "HTTP/1.1 404 Not Found"
+2025-08-12 15:20:04,745 - vehicle_analysis_api - WARNING - No bulletins found for FORD TRANSIT
+2025-08-12 15:20:04,745 - vehicle_analysis_api - INFO - Analyzing data for A5ENK with Claude API
+2025-08-12 15:20:05,727 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:20:05,730 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:20:05,731 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/A5ENK - 500 - 3.4116s
+2025-08-12 15:23:33,155 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:23:34,053 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:23:34,054 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:23:34,897 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:23:34,899 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:23:35,851 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:23:35,856 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:23:35,857 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.7019s
+2025-08-12 15:23:38,625 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:23:39,468 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:23:39,470 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:23:40,379 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:23:40,381 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:23:41,328 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:23:41,329 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:23:41,329 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.7033s
+2025-08-12 15:25:09,900 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:25:11,054 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:25:11,055 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:25:11,852 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:25:11,853 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:25:12,854 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:25:12,856 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:25:12,858 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 2.9585s
+2025-08-12 15:28:49,349 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:28:50,807 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:28:50,809 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:28:52,000 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:28:52,003 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:28:54,305 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:28:54,311 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:28:54,312 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.9636s
+2025-08-12 15:29:15,037 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 15:29:16,392 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 15:29:16,395 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 15:29:17,505 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 15:29:17,508 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 15:29:18,688 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 15:29:18,690 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 15:29:18,691 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 3.6557s
+2025-08-12 21:40:49,923 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 21:40:49,924 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 21:40:50,128 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 21:40:50,129 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 21:43:17,667 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 21:43:19,653 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 21:43:19,655 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 21:43:20,974 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 21:43:20,976 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 21:43:24,119 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 21:43:24,127 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 21:43:24,130 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.4640s
+2025-08-12 21:58:31,914 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 21:58:31,915 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 21:58:32,121 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-12 21:58:32,122 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-12 21:58:49,637 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 21:58:51,944 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 21:58:51,947 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 21:58:53,356 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 21:58:53,361 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 21:58:55,355 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 21:58:55,359 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 21:58:55,360 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.7237s
+2025-08-12 22:01:58,139 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:01:59,465 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:02:00,617 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:02:00,620 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:02:01,515 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:02:01,519 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:02:02,416 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:02:02,419 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:02:03,481 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:02:03,486 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:02:04,804 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:02:04,806 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:02:04,807 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.3434s
+2025-08-12 22:02:04,835 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:02:04,837 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:02:04,837 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.6991s
+2025-08-12 22:03:03,290 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:03:05,095 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:03:05,097 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:03:06,517 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:03:06,521 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:03:07,784 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:03:07,785 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:03:07,786 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.4995s
+2025-08-12 22:03:12,219 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:03:13,137 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:03:14,240 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:03:14,245 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:03:14,246 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:03:15,494 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:03:16,810 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:03:16,818 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:03:16,822 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:03:17,855 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:03:19,166 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:03:19,168 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:03:19,169 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.0331s
+2025-08-12 22:03:19,206 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:03:19,208 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:03:19,210 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.9923s
+2025-08-12 22:03:34,767 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:03:36,147 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:03:36,150 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:03:37,347 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:03:37,350 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:03:38,697 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:03:38,700 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:03:38,701 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 3.9360s
+2025-08-12 22:04:03,800 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:04:05,498 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:04:05,502 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:04:06,431 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:04:07,359 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:04:07,362 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:04:08,242 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:04:08,244 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:04:09,363 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:04:09,365 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:04:10,712 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:04:10,715 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:04:10,725 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.9261s
+2025-08-12 22:04:11,108 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:04:11,120 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:04:11,122 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.6916s
+2025-08-12 22:04:42,215 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:04:43,177 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:04:44,266 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:04:44,268 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:04:45,282 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:04:45,285 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:04:46,208 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:04:46,210 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:04:47,161 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:04:47,163 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:04:48,354 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:04:48,356 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:04:48,356 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.1803s
+2025-08-12 22:04:48,380 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:04:48,382 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:04:48,383 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.1686s
+2025-08-12 22:05:17,190 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:05:18,076 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:05:19,175 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:05:19,181 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:05:20,155 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:05:20,159 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:05:21,184 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:05:21,186 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:05:22,042 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:05:22,045 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:05:23,186 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:05:23,188 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:05:23,189 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.9992s
+2025-08-12 22:05:23,254 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:05:23,255 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:05:23,256 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.1805s
+2025-08-12 22:05:33,172 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:05:33,897 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:05:35,094 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:05:35,097 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:05:35,098 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:05:36,096 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:05:37,306 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:05:37,308 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:05:37,316 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:05:38,200 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:05:39,357 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:05:39,359 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:05:39,360 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.4633s
+2025-08-12 22:05:39,374 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:05:39,377 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:05:39,377 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.2063s
+2025-08-12 22:06:31,208 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:06:32,036 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:06:32,918 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:06:32,921 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:06:34,032 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:06:34,037 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:06:35,021 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:06:35,023 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:06:36,013 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:06:36,016 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:06:37,282 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:06:37,284 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:06:37,284 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 6.0782s
+2025-08-12 22:06:37,348 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:06:37,350 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:06:37,350 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.3148s
+2025-08-12 22:06:46,184 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:06:46,950 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:06:47,960 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:06:47,962 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:06:48,852 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:06:48,854 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:06:49,694 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:06:49,698 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:06:50,583 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:06:50,585 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:06:51,779 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:06:51,780 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:06:51,781 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.8312s
+2025-08-12 22:06:51,789 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:06:51,791 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:06:51,791 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.6077s
+2025-08-12 22:07:06,175 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:07:07,162 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:07:08,204 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:07:08,209 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:07:09,304 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:07:09,306 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:07:10,539 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:07:10,541 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:07:11,573 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:07:12,638 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:07:12,641 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:07:13,887 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:07:13,908 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:07:14,859 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:07:15,737 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:07:15,741 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:07:15,743 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 9.5683s
+2025-08-12 22:07:15,759 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:07:15,761 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:07:17,238 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:07:17,245 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:07:18,340 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:07:18,346 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 11.1847s
+2025-08-12 22:07:18,363 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:07:18,368 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:07:19,220 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:07:19,223 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:07:20,301 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:07:20,304 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:07:21,613 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:07:21,616 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:07:22,584 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:07:22,587 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:07:22,590 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 11.0171s
+2025-08-12 22:07:22,820 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:07:22,821 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:07:22,823 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 7.9734s
+2025-08-12 22:07:22,868 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:07:22,870 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:07:22,871 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.6315s
+2025-08-12 22:24:07,090 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:24:08,596 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:24:08,598 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:24:10,180 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:24:10,186 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:24:12,772 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:24:12,775 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:24:12,776 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 5.6886s
+2025-08-12 22:26:09,346 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:26:10,543 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:26:10,546 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:26:11,936 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:26:11,940 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:26:13,554 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:26:13,557 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:26:13,557 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.2127s
+2025-08-12 22:27:18,171 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:27:19,418 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:27:19,422 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:27:20,797 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:27:20,801 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:27:22,266 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:27:22,268 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:27:22,269 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.0994s
+2025-08-12 22:30:31,745 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:30:33,219 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:30:33,224 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:30:34,877 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:30:34,879 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:30:36,472 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:30:36,474 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:30:36,475 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.7305s
+2025-08-12 22:33:40,503 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-12 22:33:41,691 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-12 22:33:41,693 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-12 22:33:43,087 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-12 22:33:43,090 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-12 22:33:44,507 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2025-08-12 22:33:44,586 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-08-12 22:33:44,607 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.1055s

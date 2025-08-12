@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react';
 import {
-  SectionTitle,
-  SubTitle,
-  BodyText,
-  SmallText,
-  Link,
-  DefectList,
-  LoadingContainer,
-  LoadingSpinner,
-  LoadingText,
-  InsetText,
-  SectionBreak,
-  DetailContent,
-  BreadcrumbPath,
-  DefectContent,
-  DefectSection,
-  CategoryTag,
-} from './ResultsStyles';
+  GovUKBody,
+  GovUKHeadingS,
+  GovUKHeadingM,
+  GovUKInsetText,
+  GovUKLoadingContainer,
+  GovUKLoadingSpinner,
+  GovUKList,
+
+  GovUKBodyS,
+  GovUKDetails,
+  GovUKDetailsSummary,
+  GovUKDetailsText,
+  GovUKSectionBreak,
+  GovUKLink,
+  COLORS
+} from '../../styles/theme';
 
 // Alert component for errors
 import Alert from '@mui/material/Alert';
+import { styled } from '@mui/material/styles';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || 
@@ -35,12 +35,93 @@ const manualCache = {};
 
 
 
-// DefectItem styling for list items
-const DefectItem = {
-  marginBottom: 'var(--space-md)',
+// Styled components that match GOV.UK design system
+const DetailContent = styled('div')(({ theme }) => ({
+  marginTop: '15px',
+  marginBottom: '20px',
+  padding: '0',
+  color: COLORS.BLACK,
+  backgroundColor: COLORS.WHITE,
+  border: `1px solid ${COLORS.MID_GREY}`,
+  borderRadius: '0',
+  
+  '&:focus-within': {
+    outline: `3px solid ${COLORS.YELLOW}`,
+    outlineOffset: '0',
+  },
+
+  '@media (min-width: 40.0625em)': {
+    marginBottom: '30px',
+  }
+}));
+
+const BreadcrumbPath = styled('div')({
+  padding: '10px 15px',
+  marginBottom: '0',
+  borderBottom: `1px solid ${COLORS.MID_GREY}`,
+  backgroundColor: COLORS.LIGHT_GREY,
+  '& span': {
+    margin: '0 5px',
+    color: COLORS.DARK_GREY,
+  }
+});
+
+const DefectContent = styled('div')({
+  padding: '15px',
+  '@media (min-width: 40.0625em)': {
+    padding: '20px',
+  }
+});
+
+const DefectSection = styled('div')({
+  marginBottom: '20px',
+  '@media (min-width: 40.0625em)': {
+    marginBottom: '30px',
+  }
+});
+
+const CategoryTag = styled('span')(({ category }) => {
+  let bgColor = COLORS.BLUE; // Default blue
+  let textColor = COLORS.WHITE;
+  
+  switch(category?.toLowerCase()) {
+    case 'dangerous':
+      bgColor = COLORS.RED; // Red
+      break;
+    case 'major':
+      bgColor = '#f47738'; // Orange
+      break;
+    case 'minor':
+      bgColor = COLORS.GREEN; // Green
+      break;
+    case 'advisory':
+      bgColor = COLORS.DARK_GREY; // Grey
+      break;
+  }
+  
+  return {
+    backgroundColor: bgColor,
+    color: textColor,
+    padding: '2px 8px',
+    borderRadius: '0',
+    fontFamily: '"GDS Transport", arial, sans-serif',
+    fontSize: '0.875rem',
+    fontWeight: 'bold',
+    display: 'inline-block',
+    marginRight: '10px',
+    marginBottom: '5px',
+  };
+});
+
+const DefectItem = styled('li')({
+  marginBottom: '10px',
   paddingLeft: '0',
   listStyleType: 'none',
-};
+});
+
+const RelatedDefectsList = styled(GovUKList)({
+  paddingLeft: '0',
+});
 
 
 // Helper function to handle inline text formatting (bold, italic, links, etc.)
@@ -217,27 +298,27 @@ const formatText = (text) => {
                 
                 switch (level) {
                   case 1:
-                    return <SectionTitle key={index}>{formattedHeadingText}</SectionTitle>;
+                    return <GovUKHeadingL key={index}>{formattedHeadingText}</GovUKHeadingL>;
                   case 2:
-                    return <SubTitle key={index}>{formattedHeadingText}</SubTitle>;
+                    return <GovUKHeadingM key={index}>{formattedHeadingText}</GovUKHeadingM>;
                   case 3:
-                    return <SubTitle key={index}>{formattedHeadingText}</SubTitle>;
+                    return <GovUKHeadingS key={index}>{formattedHeadingText}</GovUKHeadingS>;
                   case 4:
+                    // Use a slightly styled version of GovUKBodyS for subsections
                     return (
-                      <SmallText 
+                      <GovUKBodyS 
                         key={index} 
                         style={{ 
-                          fontWeight: '600', 
-                          marginBottom: 'var(--space-sm)', 
-                          marginTop: 'var(--space-md)',
-                          display: 'block'
+                          fontWeight: 'bold', 
+                          marginBottom: '10px', 
+                          marginTop: '15px' 
                         }}
                       >
                         {formattedHeadingText}
-                      </SmallText>
+                      </GovUKBodyS>
                     );
                   default:
-                    return <SubTitle key={index}>{formattedHeadingText}</SubTitle>;
+                    return <GovUKHeadingS key={index}>{formattedHeadingText}</GovUKHeadingS>;
                 }
               }
             }
@@ -258,27 +339,29 @@ const formatText = (text) => {
               
               return (
                 <div key={index}>
-                  <InsetText>
+                  <GovUKInsetText style={{
+                    borderLeftColor: COLORS.BLUE,
+                    backgroundColor: COLORS.LIGHT_GREY,
+                    padding: '15px',
+                    margin: '0 0 20px 0'
+                  }}>
                     {language && (
-                      <SmallText style={{
-                        color: 'var(--gray-500)',
-                        marginBottom: 'var(--space-sm)'
+                      <GovUKBodyS style={{
+                        color: COLORS.DARK_GREY,
+                        marginBottom: '10px'
                       }}>
                         {language}
-                      </SmallText>
+                      </GovUKBodyS>
                     )}
                     <pre style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 'var(--text-sm)',
+                      fontFamily: '"GDS Transport", arial, sans-serif',
+                      fontSize: '1rem',
                       margin: 0,
-                      overflowX: 'auto',
-                      background: 'var(--gray-100)',
-                      padding: 'var(--space-md)',
-                      borderRadius: 'var(--radius-sm)'
+                      overflowX: 'auto'
                     }}>
                       <code>{code}</code>
                     </pre>
-                  </InsetText>
+                  </GovUKInsetText>
                 </div>
               );
             }
@@ -649,7 +732,7 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggl
     
     return (
       <BreadcrumbPath>
-        <SmallText>
+        <GovUKBodyS>
           <strong>Manual section:</strong> 
           {path.map((p, i) => (
             <React.Fragment key={i}>
@@ -657,7 +740,7 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggl
               {p.title}
             </React.Fragment>
           ))}
-        </SmallText>
+        </GovUKBodyS>
       </BreadcrumbPath>
     );
   };
@@ -670,7 +753,7 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggl
       <>
         {item.description && (
           <DefectSection>
-            <SubTitle>Description</SubTitle>
+            <GovUKHeadingS>Description</GovUKHeadingS>
             {formatText(item.description)}
           </DefectSection>
         )}
@@ -689,16 +772,16 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggl
       {expanded && (
         <DetailContent>
           {loading && (
-            <LoadingContainer>
-              <LoadingSpinner />
-              <LoadingText>Loading content from MOT manual...</LoadingText>
-            </LoadingContainer>
+            <GovUKLoadingContainer>
+              <GovUKLoadingSpinner />
+              <GovUKBody>Loading content from MOT manual...</GovUKBody>
+            </GovUKLoadingContainer>
           )}
           
           {error && (
-            <InsetText style={{ margin: 'var(--space-lg)', borderLeftColor: 'var(--negative)' }}>
-              <BodyText>{error}</BodyText>
-            </InsetText>
+            <GovUKInsetText style={{ margin: '15px', borderLeftColor: COLORS.RED }}>
+              <GovUKBody>{error}</GovUKBody>
+            </GovUKInsetText>
           )}
           
           {!loading && !error && defectDetail && (
@@ -709,9 +792,9 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, expanded, toggl
               <DefectContent>
                 {/* Show the ID and title */}
                 {defectDetail.data && defectDetail.data.title && (
-                  <SectionTitle>
+                  <GovUKHeadingM>
                     {defectDetail.id}: {defectDetail.data.title}
-                  </SectionTitle>
+                  </GovUKHeadingM>
                 )}
                 
                 {/* Show category if available */}

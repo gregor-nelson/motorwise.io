@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 // Import clean styled components
@@ -35,7 +38,15 @@ import {
   TabsList,
   TabButton,
   TabContent,
-  HeadingWithTooltip
+  HeadingWithTooltip,
+  SearchContainer,
+  SearchInput,
+  FilterContainer,
+  FilterButton,
+  ActiveFilters,
+  FilterChip,
+  SortContainer,
+  SortButton
 } from './styles/LabourTimesStyles';
 
 
@@ -347,8 +358,8 @@ const getComplexityColor = (complexity) => {
 
 
 
-// Clean visual components using existing structure but with clean styling
-const CleanSpecTable = memo(({ items }) => {
+// Clean visual components with enhanced filtering and search
+const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) => {
   if (!items || items.length === 0) return null;
   
   const processedItems = [];
@@ -358,25 +369,42 @@ const CleanSpecTable = memo(({ items }) => {
     if (!operations || operations.length === 0) return;
     const complexity = getOperationComplexity(item.value);
     
-    processedItems.push({
-      id: `item-${index}`,
-      operations: operations,
-      value: item.value,
-      unit: item.unit,
-      isMultiOperation: operations.length > 1,
-      complexity: complexity
-    });
+    // Apply search filter
+    const matchesSearch = !searchTerm || 
+      operations.some(op => op.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    // Apply complexity filter
+    const matchesComplexity = complexityFilter === 'all' || complexity === complexityFilter;
+    
+    if (matchesSearch && matchesComplexity) {
+      processedItems.push({
+        id: `item-${index}`,
+        operations: operations,
+        value: item.value,
+        unit: item.unit,
+        isMultiOperation: operations.length > 1,
+        complexity: complexity
+      });
+    }
   });
   
-  // Sort by complexity (high to low) and then by time
+  // Apply sorting
   processedItems.sort((a, b) => {
-    const complexityOrder = { high: 3, medium: 2, low: 1 };
-    const complexityDiff = complexityOrder[b.complexity] - complexityOrder[a.complexity];
-    if (complexityDiff !== 0) return complexityDiff;
-    
-    const aTime = parseFloat(a.value) || 0;
-    const bTime = parseFloat(b.value) || 0;
-    return bTime - aTime;
+    if (sortBy === 'complexity') {
+      const complexityOrder = { high: 3, medium: 2, low: 1 };
+      const complexityDiff = complexityOrder[b.complexity] - complexityOrder[a.complexity];
+      if (complexityDiff !== 0) return complexityDiff;
+      const aTime = parseFloat(a.value) || 0;
+      const bTime = parseFloat(b.value) || 0;
+      return bTime - aTime;
+    } else if (sortBy === 'time') {
+      const aTime = parseFloat(a.value) || 0;
+      const bTime = parseFloat(b.value) || 0;
+      return bTime - aTime;
+    } else if (sortBy === 'alphabetical') {
+      return a.operations[0].localeCompare(b.operations[0]);
+    }
+    return 0;
   });
   
   return (
@@ -419,28 +447,28 @@ const CleanSpecTable = memo(({ items }) => {
             
             <div style={{
               width: '100%',
-              height: '6px',
+              height: '4px',
               background: 'var(--gray-200)',
-              borderRadius: 'var(--radius-sm)',
-              marginTop: 'var(--space-md)',
+              marginTop: 'var(--space-lg)',
               overflow: 'hidden'
             }}>
               <div style={{
                 height: '100%',
                 width: `${percentage}%`,
                 background: getComplexityColor(item.complexity),
-                transition: 'width 0.5s ease'
+                transition: 'width 0.3s ease'
               }} />
             </div>
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
-              marginTop: 'var(--space-xs)',
+              marginTop: 'var(--space-sm)',
               fontSize: 'var(--text-xs)',
-              color: 'var(--gray-500)'
+              color: 'var(--gray-500)',
+              fontFamily: 'var(--font-main)'
             }}>
-              <span>0 hours</span>
-              <span>{maxHours} hours</span>
+              <span>0h</span>
+              <span>{maxHours}h</span>
             </div>
           </RepairCard>
         );
@@ -449,22 +477,38 @@ const CleanSpecTable = memo(({ items }) => {
   );
 });
 
-// Clean Accordion component
-const CleanAccordion = memo(({ title, children, expanded, onChange, id }) => {
+// Clean Accordion component with filtered item count
+const CleanAccordion = memo(({ title, children, expanded, onChange, id, searchTerm, complexityFilter }) => {
   const itemCount = useMemo(() => {
     try {
       const specTable = React.Children.toArray(children)
         .find(child => child && child.type === CleanSpecTable);
       
       if (specTable && specTable.props && specTable.props.items) {
-        return specTable.props.items.length || '0';
+        const items = specTable.props.items;
+        let filteredCount = 0;
+        
+        items.forEach((item) => {
+          const operations = parseRepairOperations(item.label);
+          const complexity = getOperationComplexity(item.value);
+          
+          const matchesSearch = !searchTerm || 
+            operations.some(op => op.toLowerCase().includes(searchTerm.toLowerCase()));
+          const matchesComplexity = complexityFilter === 'all' || complexity === complexityFilter;
+          
+          if (matchesSearch && matchesComplexity) {
+            filteredCount++;
+          }
+        });
+        
+        return filteredCount.toString();
       }
       return '0';
     } catch (e) {
       console.warn('Error counting items:', e);
       return '0';
     }
-  }, [children]);
+  }, [children, searchTerm, complexityFilter]);
 
   return (
     <DetailPanel>
@@ -474,7 +518,7 @@ const CleanAccordion = memo(({ title, children, expanded, onChange, id }) => {
           width: '100%', 
           textAlign: 'left',
           justifyContent: 'space-between',
-          padding: 'var(--space-lg)',
+          padding: 'var(--space-xl) 0',
           border: 'none',
           background: 'transparent'
         }}
@@ -482,28 +526,32 @@ const CleanAccordion = memo(({ title, children, expanded, onChange, id }) => {
         aria-controls={`${id}-content`}
         id={`${id}-header`}
       >
-        <span>
-          {title} 
+        <span style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 'var(--space-md)',
+          fontFamily: 'var(--font-main)',
+          fontSize: 'var(--text-lg)',
+          fontWeight: '500',
+          color: 'var(--gray-900)'
+        }}>
+          {title}
           <span style={{
-            display: 'inline-block',
-            minWidth: '30px',
-            padding: '2px 8px',
-            marginLeft: 'var(--space-sm)',
-            background: 'var(--primary)',
-            color: 'var(--white)',
+            fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-sm)',
-            fontWeight: 'var(--font-bold)',
-            borderRadius: 'var(--radius-sm)',
-            textAlign: 'center'
+            fontWeight: '500',
+            color: 'var(--primary)'
           }}>
-            {itemCount}
+            {itemCount} items
           </span>
         </span>
         <span style={{ 
-          fontSize: 'var(--text-sm)',
+          fontFamily: 'var(--font-main)',
+          fontSize: 'var(--text-lg)',
+          fontWeight: '400',
           color: 'var(--primary)'
         }}>
-          {expanded ? 'Hide' : 'Show'}
+          {expanded ? '−' : '+'}
         </span>
       </ActionButton>
       {expanded && (
@@ -511,7 +559,7 @@ const CleanAccordion = memo(({ title, children, expanded, onChange, id }) => {
           id={`${id}-content`}
           aria-labelledby={`${id}-header`}
           role="region"
-          style={{ padding: 'var(--space-lg)', paddingTop: 0 }}
+          style={{ paddingTop: 'var(--space-lg)' }}
         >
           {children}
         </div>
@@ -612,6 +660,9 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
   const [matchConfidence, setMatchConfidence] = useState('none');
   const [tabValue, setTabValue] = useState(0);
   const [expandedSections, setExpandedSections] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const [complexityFilter, setComplexityFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('complexity'); // 'complexity', 'time', 'alphabetical'
   const abortControllerRef = useRef(null);
 
   // Function to check browser cache
@@ -651,6 +702,25 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
       ...prev,
       [sectionId]: !prev[sectionId]
     }));
+  }, []);
+
+  // Handle search and filtering
+  const handleSearchChange = useCallback((event) => {
+    setSearchTerm(event.target.value);
+  }, []);
+
+  const handleComplexityFilter = useCallback((complexity) => {
+    setComplexityFilter(complexity);
+  }, []);
+
+  const handleSortChange = useCallback((sortType) => {
+    setSortBy(sortType);
+  }, []);
+
+  const clearAllFilters = useCallback(() => {
+    setSearchTerm('');
+    setComplexityFilter('all');
+    setSortBy('complexity');
   }, []);
 
   useEffect(() => {
@@ -808,78 +878,78 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
         label: "Engine",
         color: 'var(--primary)',
         sections: [
-          { title: "Engine Assembly", content: repairData.engineData?.engineAssembly?.details && <CleanSpecTable items={repairData.engineData.engineAssembly.details} /> },
-          { title: "Cylinder Head", content: repairData.engineData?.cylinderHead?.details && <CleanSpecTable items={repairData.engineData.cylinderHead.details} /> },
-          { title: "Camshaft & Drive Gear", content: repairData.engineData?.camshaftDrive?.details && <CleanSpecTable items={repairData.engineData.camshaftDrive.details} /> },
-          { title: "Crankshaft & Pistons", content: repairData.engineData?.crankshaft?.details && <CleanSpecTable items={repairData.engineData.crankshaft.details} /> },
-          { title: "Lubrication", content: repairData.engineData?.lubrication?.details && <CleanSpecTable items={repairData.engineData.lubrication.details} /> },
-          { title: "Auxiliary Drive", content: repairData.engineData?.auxiliaryDrive?.details && <CleanSpecTable items={repairData.engineData.auxiliaryDrive.details} /> },
+          { title: "Engine Assembly", content: repairData.engineData?.engineAssembly?.details && <CleanSpecTable items={repairData.engineData.engineAssembly.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Cylinder Head", content: repairData.engineData?.cylinderHead?.details && <CleanSpecTable items={repairData.engineData.cylinderHead.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Camshaft & Drive Gear", content: repairData.engineData?.camshaftDrive?.details && <CleanSpecTable items={repairData.engineData.camshaftDrive.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Crankshaft & Pistons", content: repairData.engineData?.crankshaft?.details && <CleanSpecTable items={repairData.engineData.crankshaft.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Lubrication", content: repairData.engineData?.lubrication?.details && <CleanSpecTable items={repairData.engineData.lubrication.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Auxiliary Drive", content: repairData.engineData?.auxiliaryDrive?.details && <CleanSpecTable items={repairData.engineData.auxiliaryDrive.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
         ].filter(section => section.content)
       },
       {
         label: "Fuel & Cooling",
         color: 'var(--positive)',
         sections: [
-          { title: "Air Filter & Manifolds", content: repairData.fuelManagement?.airFilter?.details && <CleanSpecTable items={repairData.fuelManagement.airFilter.details} /> },
-          { title: "Throttle Controls", content: repairData.fuelManagement?.throttleControls?.details && <CleanSpecTable items={repairData.fuelManagement.throttleControls.details} /> },
-          { title: "Diesel Injection System", content: repairData.fuelManagement?.dieselInjection?.details && <CleanSpecTable items={repairData.fuelManagement.dieselInjection.details} /> },
-          { title: "Fuel Supply", content: repairData.fuelManagement?.fuelSupply?.details && <CleanSpecTable items={repairData.fuelManagement.fuelSupply.details} /> },
-          { title: "Turbocharger", content: repairData.fuelManagement?.turbocharger?.details && <CleanSpecTable items={repairData.fuelManagement.turbocharger.details} /> },
-          { title: "Radiator & Cooling", content: repairData.cooling?.radiator?.details && <CleanSpecTable items={repairData.cooling.radiator.details} /> },
-          { title: "Pump & Drive", content: repairData.cooling?.pumpDrive?.details && <CleanSpecTable items={repairData.cooling.pumpDrive.details} /> },
-          { title: "Header Tank & Hoses", content: repairData.cooling?.headerTank?.details && <CleanSpecTable items={repairData.cooling.headerTank.details} /> },
-          { title: "Exhaust Manifold & Pipes", content: repairData.exhaust?.manifold?.details && <CleanSpecTable items={repairData.exhaust.manifold.details} /> },
-          { title: "Exhaust Gas Aftertreatment", content: repairData.exhaust?.exhaustGas?.details && <CleanSpecTable items={repairData.exhaust.exhaustGas.details} /> },
+          { title: "Air Filter & Manifolds", content: repairData.fuelManagement?.airFilter?.details && <CleanSpecTable items={repairData.fuelManagement.airFilter.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Throttle Controls", content: repairData.fuelManagement?.throttleControls?.details && <CleanSpecTable items={repairData.fuelManagement.throttleControls.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Diesel Injection System", content: repairData.fuelManagement?.dieselInjection?.details && <CleanSpecTable items={repairData.fuelManagement.dieselInjection.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Fuel Supply", content: repairData.fuelManagement?.fuelSupply?.details && <CleanSpecTable items={repairData.fuelManagement.fuelSupply.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Turbocharger", content: repairData.fuelManagement?.turbocharger?.details && <CleanSpecTable items={repairData.fuelManagement.turbocharger.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Radiator & Cooling", content: repairData.cooling?.radiator?.details && <CleanSpecTable items={repairData.cooling.radiator.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Pump & Drive", content: repairData.cooling?.pumpDrive?.details && <CleanSpecTable items={repairData.cooling.pumpDrive.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Header Tank & Hoses", content: repairData.cooling?.headerTank?.details && <CleanSpecTable items={repairData.cooling.headerTank.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Exhaust Manifold & Pipes", content: repairData.exhaust?.manifold?.details && <CleanSpecTable items={repairData.exhaust.manifold.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Exhaust Gas Aftertreatment", content: repairData.exhaust?.exhaustGas?.details && <CleanSpecTable items={repairData.exhaust.exhaustGas.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
         ].filter(section => section.content)
       },
       {
         label: "Transmission & Drive",
         color: 'var(--warning)',
         sections: [
-          { title: "Clutch Pedal & Hydraulics", content: repairData.drivetrain?.clutchControls?.details && <CleanSpecTable items={repairData.drivetrain.clutchControls.details} /> },
-          { title: "Clutch Unit & Flywheel", content: repairData.drivetrain?.clutchUnit?.details && <CleanSpecTable items={repairData.drivetrain.clutchUnit.details} /> },
-          { title: "Manual Transmission", content: repairData.drivetrain?.manualTransmission?.details && <CleanSpecTable items={repairData.drivetrain.manualTransmission.details} /> },
-          { title: "Final Drive, Shaft & Axles", content: repairData.drivetrain?.finalDrive?.details && <CleanSpecTable items={repairData.drivetrain.finalDrive.details} /> },
+          { title: "Clutch Pedal & Hydraulics", content: repairData.drivetrain?.clutchControls?.details && <CleanSpecTable items={repairData.drivetrain.clutchControls.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Clutch Unit & Flywheel", content: repairData.drivetrain?.clutchUnit?.details && <CleanSpecTable items={repairData.drivetrain.clutchUnit.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Manual Transmission", content: repairData.drivetrain?.manualTransmission?.details && <CleanSpecTable items={repairData.drivetrain.manualTransmission.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Final Drive, Shaft & Axles", content: repairData.drivetrain?.finalDrive?.details && <CleanSpecTable items={repairData.drivetrain.finalDrive.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
         ].filter(section => section.content)
       },
       {
         label: "Suspension & Brakes",
         color: 'var(--negative)',
         sections: [
-          { title: "Braking System Hydraulics", content: repairData.brakes?.brakingSystem?.details && <CleanSpecTable items={repairData.brakes.brakingSystem.details} /> },
-          { title: "Footbrakes", content: repairData.brakes?.footbrakes?.details && <CleanSpecTable items={repairData.brakes.footbrakes.details} /> },
-          { title: "Brake Pedal & Servo", content: repairData.brakes?.brakePedal?.details && <CleanSpecTable items={repairData.brakes.brakePedal.details} /> },
-          { title: "ABS or ABS/ESP", content: repairData.brakes?.absSystems?.details && <CleanSpecTable items={repairData.brakes.absSystems.details} /> },
-          { title: "Parking Brake", content: repairData.brakes?.parkingBrake?.details && <CleanSpecTable items={repairData.brakes.parkingBrake.details} /> },
+          { title: "Braking System Hydraulics", content: repairData.brakes?.brakingSystem?.details && <CleanSpecTable items={repairData.brakes.brakingSystem.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Footbrakes", content: repairData.brakes?.footbrakes?.details && <CleanSpecTable items={repairData.brakes.footbrakes.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Brake Pedal & Servo", content: repairData.brakes?.brakePedal?.details && <CleanSpecTable items={repairData.brakes.brakePedal.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "ABS or ABS/ESP", content: repairData.brakes?.absSystems?.details && <CleanSpecTable items={repairData.brakes.absSystems.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Parking Brake", content: repairData.brakes?.parkingBrake?.details && <CleanSpecTable items={repairData.brakes.parkingBrake.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
         ].filter(section => section.content)
       },
       {
         label: "Electrical & Body",
-        color: 'var(--neutral)',
+        color: 'var(--gray-600)',
         sections: [
-          { title: "Heating & Ventilation", content: repairData.climate?.heating?.details && <CleanSpecTable items={repairData.climate.heating.details} /> },
-          { title: "Air Conditioning", content: repairData.climate?.airConditioning?.details && <CleanSpecTable items={repairData.climate.airConditioning.details} /> },
-          { title: "Battery & Cables", content: repairData.electrical?.batteryCables?.details && <CleanSpecTable items={repairData.electrical.batteryCables.details} /> },
-          { title: "Charging System", content: repairData.electrical?.chargingSystem?.details && <CleanSpecTable items={repairData.electrical.chargingSystem.details} /> },
-          { title: "Starting System", content: repairData.electrical?.startingSystem?.details && <CleanSpecTable items={repairData.electrical.startingSystem.details} /> },
-          { title: "Bulbs & LEDs", content: repairData.electrical?.bulbsLeds?.details && <CleanSpecTable items={repairData.electrical.bulbsLeds.details} /> },
-          { title: "Front Lamps", content: repairData.electrical?.frontLamps?.details && <CleanSpecTable items={repairData.electrical.frontLamps.details} /> },
-          { title: "Rear Lamps", content: repairData.electrical?.rearLamps?.details && <CleanSpecTable items={repairData.electrical.rearLamps.details} /> },
-          { title: "Interior Lamps", content: repairData.electrical?.interiorLamps?.details && <CleanSpecTable items={repairData.electrical.interiorLamps.details} /> },
-          { title: "Switches", content: repairData.electrical?.switches?.details && <CleanSpecTable items={repairData.electrical.switches.details} /> },
-          { title: "Instruments", content: repairData.electrical?.instruments?.details && <CleanSpecTable items={repairData.electrical.instruments.details} /> },
-          { title: "Sensors & Transmitters", content: repairData.electrical?.sensors?.details && <CleanSpecTable items={repairData.electrical.sensors.details} /> },
-          { title: "Fusebox & Relays", content: repairData.electrical?.fuseboxRelays?.details && <CleanSpecTable items={repairData.electrical.fuseboxRelays.details} /> },
-          { title: "Motors", content: repairData.electrical?.motors?.details && <CleanSpecTable items={repairData.electrical.motors.details} /> },
-          { title: "Control & Audio Units", content: repairData.electrical?.audioUnits?.details && <CleanSpecTable items={repairData.electrical.audioUnits.details} /> },
-          { title: "Windscreen Wipers/Washers", content: repairData.electrical?.wipers?.details && <CleanSpecTable items={repairData.electrical.wipers.details} /> },
-          { title: "Headlamp Wipers/Washers", content: repairData.electrical?.headlampWipers?.details && <CleanSpecTable items={repairData.electrical.headlampWipers.details} /> },
-          { title: "Rear Screen Wipers/Washers", content: repairData.electrical?.rearScreenWipers?.details && <CleanSpecTable items={repairData.electrical.rearScreenWipers.details} /> },
-          { title: "Interior/Seats/Seatbelts", content: repairData.body?.interiorSeats?.details && <CleanSpecTable items={repairData.body.interiorSeats.details} /> },
+          { title: "Heating & Ventilation", content: repairData.climate?.heating?.details && <CleanSpecTable items={repairData.climate.heating.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Air Conditioning", content: repairData.climate?.airConditioning?.details && <CleanSpecTable items={repairData.climate.airConditioning.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Battery & Cables", content: repairData.electrical?.batteryCables?.details && <CleanSpecTable items={repairData.electrical.batteryCables.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Charging System", content: repairData.electrical?.chargingSystem?.details && <CleanSpecTable items={repairData.electrical.chargingSystem.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Starting System", content: repairData.electrical?.startingSystem?.details && <CleanSpecTable items={repairData.electrical.startingSystem.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Bulbs & LEDs", content: repairData.electrical?.bulbsLeds?.details && <CleanSpecTable items={repairData.electrical.bulbsLeds.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Front Lamps", content: repairData.electrical?.frontLamps?.details && <CleanSpecTable items={repairData.electrical.frontLamps.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Rear Lamps", content: repairData.electrical?.rearLamps?.details && <CleanSpecTable items={repairData.electrical.rearLamps.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Interior Lamps", content: repairData.electrical?.interiorLamps?.details && <CleanSpecTable items={repairData.electrical.interiorLamps.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Switches", content: repairData.electrical?.switches?.details && <CleanSpecTable items={repairData.electrical.switches.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Instruments", content: repairData.electrical?.instruments?.details && <CleanSpecTable items={repairData.electrical.instruments.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Sensors & Transmitters", content: repairData.electrical?.sensors?.details && <CleanSpecTable items={repairData.electrical.sensors.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Fusebox & Relays", content: repairData.electrical?.fuseboxRelays?.details && <CleanSpecTable items={repairData.electrical.fuseboxRelays.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Motors", content: repairData.electrical?.motors?.details && <CleanSpecTable items={repairData.electrical.motors.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Control & Audio Units", content: repairData.electrical?.audioUnits?.details && <CleanSpecTable items={repairData.electrical.audioUnits.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Windscreen Wipers/Washers", content: repairData.electrical?.wipers?.details && <CleanSpecTable items={repairData.electrical.wipers.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Headlamp Wipers/Washers", content: repairData.electrical?.headlampWipers?.details && <CleanSpecTable items={repairData.electrical.headlampWipers.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Rear Screen Wipers/Washers", content: repairData.electrical?.rearScreenWipers?.details && <CleanSpecTable items={repairData.electrical.rearScreenWipers.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
+          { title: "Interior/Seats/Seatbelts", content: repairData.body?.interiorSeats?.details && <CleanSpecTable items={repairData.body.interiorSeats.details} searchTerm={searchTerm} complexityFilter={complexityFilter} sortBy={sortBy} /> },
         ].filter(section => section.content)
       }
     ].filter(tab => tab.sections.length > 0);
-  }, [repairData]);
+  }, [repairData, searchTerm, complexityFilter, sortBy]);
 
   // Loading state
   if (loading) {
@@ -962,6 +1032,75 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
           )}
 
 
+          {/* Search and Filter Controls */}
+          <SearchContainer>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-lg)', flex: 1 }}>
+              <SearchIcon style={{ color: 'var(--gray-500)' }} />
+              <SearchInput
+                type="text"
+                placeholder="Search repair operations..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              {searchTerm && (
+                <ActionButton onClick={() => setSearchTerm('')}>
+                  <ClearIcon style={{ fontSize: 'var(--text-sm)' }} />
+                </ActionButton>
+              )}
+            </div>
+          </SearchContainer>
+
+          {/* Filter and Sort Controls */}
+          <FilterContainer>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+                <FilterListIcon style={{ color: 'var(--gray-500)', fontSize: 'var(--text-lg)' }} />
+                <CleanBodyS style={{ margin: 0, color: 'var(--gray-700)' }}>Filter:</CleanBodyS>
+              </div>
+              
+              <FilterButton 
+                active={complexityFilter === 'all'} 
+                onClick={() => handleComplexityFilter('all')}
+              >
+                All
+              </FilterButton>
+              <FilterButton 
+                active={complexityFilter === 'low'} 
+                onClick={() => handleComplexityFilter('low')}
+                style={{ color: complexityFilter === 'low' ? 'var(--positive)' : 'var(--gray-600)' }}
+              >
+                Low
+              </FilterButton>
+              <FilterButton 
+                active={complexityFilter === 'medium'} 
+                onClick={() => handleComplexityFilter('medium')}
+                style={{ color: complexityFilter === 'medium' ? 'var(--warning)' : 'var(--gray-600)' }}
+              >
+                Medium
+              </FilterButton>
+              <FilterButton 
+                active={complexityFilter === 'high'} 
+                onClick={() => handleComplexityFilter('high')}
+                style={{ color: complexityFilter === 'high' ? 'var(--negative)' : 'var(--gray-600)' }}
+              >
+                High
+              </FilterButton>
+            </div>
+            
+            <SortContainer>
+              <CleanBodyS style={{ margin: 0, color: 'var(--gray-700)' }}>Sort by:</CleanBodyS>
+              <SortButton active={sortBy === 'complexity'} onClick={() => handleSortChange('complexity')}>Complexity</SortButton>
+              <SortButton active={sortBy === 'time'} onClick={() => handleSortChange('time')}>Time</SortButton>
+              <SortButton active={sortBy === 'alphabetical'} onClick={() => handleSortChange('alphabetical')}>A-Z</SortButton>
+            </SortContainer>
+            
+            {(searchTerm || complexityFilter !== 'all' || sortBy !== 'complexity') && (
+              <ActionButton onClick={clearAllFilters} style={{ marginLeft: 'auto' }}>
+                Clear Filters
+              </ActionButton>
+            )}
+          </FilterContainer>
+
           {/* Tabs - clean design system */}
           <TabsContainer>
             <TabsList>
@@ -1007,6 +1146,8 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
                     title={section.title}
                     expanded={isExpanded}
                     onChange={() => toggleSection(sectionId)}
+                    searchTerm={searchTerm}
+                    complexityFilter={complexityFilter}
                   >
                     {section.content}
                   </CleanAccordion>

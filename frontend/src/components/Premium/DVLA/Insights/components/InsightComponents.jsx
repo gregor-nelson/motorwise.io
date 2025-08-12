@@ -2,19 +2,7 @@
 // Enhanced visual insight components matching the technical specs design
 
 import React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {
-  GovUKHeadingM,
-  GovUKHeadingS,
-  GovUKBody,
-  GovUKBodyS,
-  GovUKDetails,
-  GovUKDetailsSummary,
-  GovUKDetailsText,
-  COLORS,
-  BREAKPOINTS
-} from '../../../../../styles/theme';
 
 // Import tooltip components
 import {
@@ -41,317 +29,37 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 // Import calculator components
 import FuelCostCalculator from '../../MPG/FuelCostCalculator';
 
-// Enhanced styled components matching tech specs design
-const VisualInsightsContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  minHeight: '600px'
-}));
+// Import styled components from centralized styles
+import {
+  VisualInsightsContainer,
+  InsightCategoryHeader,
+  CategoryIcon,
+  InsightGrid,
+  VisualInsightCard,
+  CardHeader,
+  CardTitle,
+  CardIcon,
+  MetricValue,
+  MetricUnit,
+  MetricSubtext,
+  EnhancedStatusBadge,
+  ProgressContainer,
+  ProgressBar,
+  ProgressFill,
+  ProgressLabel,
+  GaugeContainer,
+  GaugeSvg,
+  GaugeTrack,
+  GaugeFill,
+  GaugeCenterText,
+  VisualDivider,
+  EnhancedInsightNote,
+  EnhancedFactorList,
+  HeadingM,
+  BodyText
+} from '../style/style';
 
-const InsightCategoryHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '20px',
-  marginBottom: '30px',
-  padding: '20px',
-  backgroundColor: COLORS.WHITE,
-  borderLeft: `10px solid ${COLORS.BLUE}`,
-  borderBottom: `1px solid ${COLORS.MID_GREY}`
-}));
-
-const CategoryIcon = styled(Box)(({ color }) => ({
-  width: '48px',
-  height: '48px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '24px',
-  fontWeight: 700,
-  flexShrink: 0,
-  borderRadius: '4px'
-}));
-
-const InsightGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  gap: '20px',
-  marginBottom: '40px',
-  
-  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '15px'
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    gridTemplateColumns: '1fr',
-    gap: '15px'
-  }
-}));
-
-const VisualInsightCard = styled(Box)(({ variant = 'default', status }) => ({
-  backgroundColor: COLORS.WHITE,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  padding: '24px',
-  position: 'relative',
-  transition: 'all 0.2s ease',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  
-  ...(variant === 'gauge' && {
-    textAlign: 'center',
-    minHeight: '220px',
-    justifyContent: 'center'
-  }),
-  
-  ...(variant === 'progress' && {
-    minHeight: '160px'
-  }),
-  
-  ...(variant === 'status' && {
-    minHeight: '140px'
-  }),
-  
-  '&:hover': {
-    boxShadow: '0 2px 0 0 rgba(0,0,0,0.1)',
-    borderColor: COLORS.BLACK
-  },
-  
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: '5px',
-    backgroundColor: 
-      status === 'good' ? COLORS.GREEN :
-      status === 'warning' ? COLORS.ORANGE :
-      status === 'critical' ? COLORS.RED :
-      COLORS.BLUE,
-    transition: 'opacity 0.2s ease'
-  }
-}));
-
-const CardHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  marginBottom: '16px'
-}));
-
-const CardTitle = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  fontWeight: 700,
-  color: COLORS.DARK_GREY,
-  textTransform: 'uppercase',
-  letterSpacing: '1px',
-  lineHeight: 1.4,
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-const CardIcon = styled(Box)(({ color }) => ({
-  width: '30px',
-  height: '30px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '16px',
-  fontWeight: 700,
-  flexShrink: 0,
-  borderRadius: '3px'
-}));
-
-const MetricValue = styled(Box)(({ size = 'large', color }) => ({
-  fontSize: size === 'large' ? '36px' : size === 'medium' ? '27px' : '19px',
-  fontWeight: 700,
-  color: color || COLORS.BLACK,
-  lineHeight: 1.1,
-  marginBottom: '8px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: size === 'large' ? '27px' : size === 'medium' ? '24px' : '16px'
-  }
-}));
-
-const MetricUnit = styled('span')(({ theme }) => ({
-  fontSize: '16px',
-  fontWeight: 400,
-  color: COLORS.DARK_GREY,
-  marginLeft: '8px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-const MetricSubtext = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  color: COLORS.DARK_GREY,
-  marginTop: '4px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-// Enhanced Status Badge
-const EnhancedStatusBadge = styled('strong')(({ status, size = 'medium' }) => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '6px',
-  padding: size === 'large' ? '8px 16px' : '5px 10px 4px',
-  fontSize: size === 'large' ? '16px' : '14px',
-  fontWeight: 700,
-  letterSpacing: '1px',
-  textTransform: 'uppercase',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  backgroundColor: 
-    status === 'good' || status === 'Compliant' || status === 'Low' ? COLORS.GREEN :
-    status === 'warning' || status === 'Medium' ? COLORS.ORANGE :
-    status === 'critical' || status === 'Non-Compliant' || status === 'High' ? COLORS.RED :
-    status === 'Exempt' ? COLORS.BLUE :
-    COLORS.DARK_GREY,
-  color: COLORS.WHITE,
-  borderRadius: '3px',
-  
-  '& svg': {
-    fontSize: size === 'large' ? '20px' : '16px'
-  }
-}));
-
-// Progress Bar Component
-const ProgressContainer = styled(Box)(({ theme }) => ({
-  marginTop: '16px',
-  width: '100%'
-}));
-
-const ProgressBar = styled(Box)(({ theme }) => ({
-  width: '100%',
-  height: '24px',
-  backgroundColor: COLORS.LIGHT_GREY,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  position: 'relative',
-  borderRadius: '3px',
-  overflow: 'hidden'
-}));
-
-const ProgressFill = styled(Box)(({ color, width }) => ({
-  height: '100%',
-  width: `${width}%`,
-  backgroundColor: color || COLORS.BLUE,
-  transition: 'width 0.5s ease',
-  position: 'relative',
-  
-  '&:after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-    animation: 'shimmer 2s infinite'
-  },
-  
-  '@keyframes shimmer': {
-    '0%': { transform: 'translateX(-100%)' },
-    '100%': { transform: 'translateX(100%)' }
-  }
-}));
-
-const ProgressLabel = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: '8px',
-  fontSize: '16px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-// Gauge components (reused from tech specs)
-const GaugeContainer = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  width: '140px',
-  height: '140px',
-  margin: '0 auto 16px'
-}));
-
-const GaugeSvg = styled('svg')(({ theme }) => ({
-  transform: 'rotate(-90deg)'
-}));
-
-const GaugeTrack = styled('circle')(({ theme }) => ({
-  fill: 'none',
-  stroke: COLORS.MID_GREY,
-  strokeWidth: '12'
-}));
-
-const GaugeFill = styled('circle')(({ color }) => ({
-  fill: 'none',
-  stroke: color,
-  strokeWidth: '12',
-  strokeLinecap: 'round',
-  transition: 'stroke-dashoffset 0.5s ease'
-}));
-
-const GaugeCenterText = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  textAlign: 'center'
-}));
-
-// Visual Divider
-const VisualDivider = styled(Box)(({ theme }) => ({
-  height: '3px',
-  backgroundColor: COLORS.BORDER_COLOUR,
-  margin: '40px 0'
-}));
-
-// Enhanced Insight Note
-const EnhancedInsightNote = styled(Box)(({ variant = 'info' }) => ({
-  backgroundColor: 
-    variant === 'warning' ? '#fff7ed' :
-    variant === 'success' ? '#f0fdf4' :
-    variant === 'error' ? '#fef2f2' :
-    COLORS.LIGHT_GREY,
-  borderLeft: `5px solid ${
-    variant === 'warning' ? COLORS.ORANGE :
-    variant === 'success' ? COLORS.GREEN :
-    variant === 'error' ? COLORS.RED :
-    COLORS.BLUE
-  }`,
-  padding: '15px 20px',
-  marginTop: '20px',
-  marginBottom: '20px',
-  
-  '& p': {
-    margin: 0,
-    fontSize: '14px',
-    color: COLORS.DARK_GREY
-  }
-}));
-
-// Factor List with Icons
-const EnhancedFactorList = styled('ul')(({ theme }) => ({
-  listStyle: 'none',
-  padding: 0,
-  margin: '10px 0',
-  
-  '& li': {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '10px',
-    marginBottom: '12px',
-    fontSize: '16px',
-    lineHeight: 1.5,
-    
-    '& svg': {
-      flexShrink: 0,
-      marginTop: '2px'
-    }
-  }
-}));
+// All styled components now imported from centralized styles
 
 // Complete tooltip content from original
 const tooltips = {
@@ -465,16 +173,16 @@ export const OwnershipPanelComponent = ({ insights }) => {
   return (
     <VisualInsightsContainer>
       <InsightCategoryHeader>
-        <CategoryIcon color={COLORS.BLUE}>
+        <CategoryIcon color="var(--primary)">
           <DirectionsCarIcon />
         </CategoryIcon>
         <Box>
-          <HeadingWithTooltip tooltip={tooltips.sectionOwnership} iconColor={COLORS.BLUE}>
-            <GovUKHeadingM style={{ margin: 0 }}>Ownership & History</GovUKHeadingM>
+          <HeadingWithTooltip tooltip={tooltips.sectionOwnership} iconColor="var(--primary)">
+            <HeadingM style={{ margin: 0 }}>Ownership & History</HeadingM>
           </HeadingWithTooltip>
-          <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
+          <BodyText style={{ margin: 0, marginTop: '4px' }}>
             Vehicle ownership patterns and regional analysis
-          </GovUKBodyS>
+          </BodyText>
         </Box>
       </InsightCategoryHeader>
       
@@ -486,8 +194,8 @@ export const OwnershipPanelComponent = ({ insights }) => {
             max={20}
             unit="years"
             label="Current Ownership"
-            color={insights.yearsWithCurrentOwner > 5 ? COLORS.GREEN : 
-                  insights.yearsWithCurrentOwner > 2 ? COLORS.ORANGE : COLORS.RED}
+            color={insights.yearsWithCurrentOwner > 5 ? 'var(--positive)' : 
+                  insights.yearsWithCurrentOwner > 2 ? 'var(--warning)' : 'var(--negative)'}
           />
           <MetricSubtext>
             Since {insights.v5cDate.toLocaleDateString('en-GB', { 
@@ -501,9 +209,9 @@ export const OwnershipPanelComponent = ({ insights }) => {
           <CardHeader>
             <CardTitle>Ownership Stability</CardTitle>
             <CardIcon color={
-              insights.ownershipRiskLevel === 'Low' ? COLORS.GREEN :
-              insights.ownershipRiskLevel === 'Medium' ? COLORS.ORANGE :
-              COLORS.RED
+              insights.ownershipRiskLevel === 'Low' ? 'var(--positive)' :
+              insights.ownershipRiskLevel === 'Medium' ? 'var(--warning)' :
+              'var(--negative)'
             }>
               <AccountBalanceIcon />
             </CardIcon>
@@ -517,8 +225,8 @@ export const OwnershipPanelComponent = ({ insights }) => {
             </ProgressLabel>
             <ProgressBar>
               <ProgressFill 
-                color={ownershipScore > 70 ? COLORS.GREEN : 
-                      ownershipScore > 40 ? COLORS.ORANGE : COLORS.RED} 
+                color={ownershipScore > 70 ? 'var(--positive)' : 
+                      ownershipScore > 40 ? 'var(--warning)' : 'var(--negative)'} 
                 width={ownershipScore} 
               />
             </ProgressBar>
@@ -530,7 +238,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
           <VisualInsightCard status="good">
             <CardHeader>
               <CardTitle>Registration Area</CardTitle>
-              <CardIcon color={COLORS.BLUE}>
+              <CardIcon color="var(--primary)">
                 <LocationOnIcon />
               </CardIcon>
             </CardHeader>
@@ -549,11 +257,11 @@ export const OwnershipPanelComponent = ({ insights }) => {
           <VisualInsightCard status="warning">
             <CardHeader>
               <CardTitle>Registration Gap</CardTitle>
-              <CardIcon color={COLORS.ORANGE}>
+              <CardIcon color="var(--warning)">
                 <CalendarTodayIcon />
               </CardIcon>
             </CardHeader>
-            <MetricValue size="large" color={COLORS.ORANGE}>
+            <MetricValue size="large" color="var(--warning)">
               {insights.regGapYears}
               <MetricUnit>years</MetricUnit>
             </MetricValue>
@@ -565,9 +273,9 @@ export const OwnershipPanelComponent = ({ insights }) => {
       {/* Environmental Insights Section */}
       {environmentalInsights && (
         <>
-          <GovUKHeadingS style={{ marginBottom: '20px' }}>
+          <HeadingM style={{ marginBottom: '20px' }}>
             Regional & Environmental Factors
-          </GovUKHeadingS>
+          </HeadingM>
           
           <InsightGrid>
             {/* Flood Risk Card */}
@@ -582,9 +290,9 @@ export const OwnershipPanelComponent = ({ insights }) => {
                 <CardHeader>
                   <CardTitle>Flood Risk</CardTitle>
                   <CardIcon color={
-                    environmentalInsights.floodRisk.riskLevel === 'Low' ? COLORS.GREEN :
-                    environmentalInsights.floodRisk.riskLevel === 'Medium' ? COLORS.ORANGE : 
-                    COLORS.RED
+                    environmentalInsights.floodRisk.riskLevel === 'Low' ? 'var(--positive)' :
+                    environmentalInsights.floodRisk.riskLevel === 'Medium' ? 'var(--warning)' : 
+                    'var(--negative)'
                   }>
                     {environmentalInsights.floodRisk.riskLevel === 'Low' ? '✓' :
                      environmentalInsights.floodRisk.riskLevel === 'Medium' ? '!' : '✗'}
@@ -620,9 +328,9 @@ export const OwnershipPanelComponent = ({ insights }) => {
                 <CardHeader>
                   <CardTitle>Air Quality</CardTitle>
                   <CardIcon color={
-                    environmentalInsights.airQuality.qualityLevel === 'Good' ? COLORS.GREEN :
-                    environmentalInsights.airQuality.qualityLevel === 'Moderate' ? COLORS.ORANGE : 
-                    COLORS.RED
+                    environmentalInsights.airQuality.qualityLevel === 'Good' ? 'var(--positive)' :
+                    environmentalInsights.airQuality.qualityLevel === 'Moderate' ? 'var(--warning)' : 
+                    'var(--negative)'
                   }>
                   </CardIcon>
                 </CardHeader>
@@ -650,9 +358,9 @@ export const OwnershipPanelComponent = ({ insights }) => {
                 <CardHeader>
                   <CardTitle>Road Salt Exposure</CardTitle>
                   <CardIcon color={
-                    environmentalInsights.roadSaltUsage.usageLevel === 'Light' ? COLORS.GREEN :
-                    environmentalInsights.roadSaltUsage.usageLevel === 'Moderate' ? COLORS.ORANGE : 
-                    COLORS.RED
+                    environmentalInsights.roadSaltUsage.usageLevel === 'Light' ? 'var(--positive)' :
+                    environmentalInsights.roadSaltUsage.usageLevel === 'Moderate' ? 'var(--warning)' : 
+                    'var(--negative)'
                   }>
                     <LocalShippingIcon />
                   </CardIcon>
@@ -678,14 +386,14 @@ export const OwnershipPanelComponent = ({ insights }) => {
           <VisualDivider />
           {insights.riskFactors?.length > 0 && (
             <Box mb={3}>
-              <GovUKHeadingS style={{ color: COLORS.RED, marginBottom: '10px' }}>
+              <HeadingM style={{ color: 'var(--negative)', marginBottom: '10px' }}>
                 <WarningIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
                 Risk Factors
-              </GovUKHeadingS>
+              </HeadingM>
               <EnhancedFactorList>
                 {insights.riskFactors.map((factor, index) => (
                   <li key={index}>
-                    <WarningIcon fontSize="small" style={{ color: COLORS.RED }} />
+                    <WarningIcon fontSize="small" style={{ color: 'var(--negative)' }} />
                     <span>{factor}</span>
                   </li>
                 ))}
@@ -695,14 +403,14 @@ export const OwnershipPanelComponent = ({ insights }) => {
           
           {insights.positiveFactors?.length > 0 && (
             <Box>
-              <GovUKHeadingS style={{ color: COLORS.GREEN, marginBottom: '10px' }}>
+              <HeadingM style={{ color: 'var(--positive)', marginBottom: '10px' }}>
                 <CheckCircleIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
                 Positive Factors
-              </GovUKHeadingS>
+              </HeadingM>
               <EnhancedFactorList>
                 {insights.positiveFactors.map((factor, index) => (
                   <li key={index}>
-                    <CheckCircleIcon fontSize="small" style={{ color: COLORS.GREEN }} />
+                    <CheckCircleIcon fontSize="small" style={{ color: 'var(--positive)' }} />
                     <span>{factor}</span>
                   </li>
                 ))}
@@ -715,7 +423,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
       {/* Data Source Note */}
       {insights.registrationRegion && (
         <EnhancedInsightNote variant="info">
-          <InfoIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px', color: COLORS.BLUE }} />
+          <InfoIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px', color: 'var(--primary)' }} />
           Regional and environmental assessments are based on statistical data for the vehicle's registration area.
           Individual vehicle experiences may vary based on specific usage patterns and maintenance history.
         </EnhancedInsightNote>
@@ -736,16 +444,16 @@ export const StatusPanelComponent = ({ insights }) => {
   return (
     <VisualInsightsContainer>
       <InsightCategoryHeader>
-        <CategoryIcon color={COLORS.PURPLE}>
+        <CategoryIcon color={'var(--neutral)'}>
           <SpeedIcon />
         </CategoryIcon>
         <Box>
-          <HeadingWithTooltip tooltip={tooltips.sectionStatus} iconColor={COLORS.PURPLE}>
-            <GovUKHeadingM style={{ margin: 0 }}>Current Status</GovUKHeadingM>
+          <HeadingWithTooltip tooltip={tooltips.sectionStatus} iconColor={'var(--neutral)'}>
+            <HeadingM style={{ margin: 0 }}>Current Status</HeadingM>
           </HeadingWithTooltip>
-          <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
+          <BodyText style={{ margin: 0, marginTop: '4px' }}>
             Tax and MOT status information
-          </GovUKBodyS>
+          </BodyText>
         </Box>
       </InsightCategoryHeader>
       
@@ -758,7 +466,7 @@ export const StatusPanelComponent = ({ insights }) => {
           <CardHeader>
             <CardTitle>Driveability Status</CardTitle>
             <CardIcon color={
-              insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' ? COLORS.GREEN : COLORS.RED
+              insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' ? 'var(--positive)' : 'var(--negative)'
             }>
               <DirectionsCarIcon />
             </CardIcon>
@@ -790,7 +498,7 @@ export const StatusPanelComponent = ({ insights }) => {
           <CardHeader>
             <CardTitle>Tax Status</CardTitle>
             <CardIcon color={
-              insights.isTaxExempt || insights.taxStatus === 'TAXED' ? COLORS.GREEN : COLORS.RED
+              insights.isTaxExempt || insights.taxStatus === 'TAXED' ? 'var(--positive)' : 'var(--negative)'
             }>
               <AccountBalanceIcon />
             </CardIcon>
@@ -814,8 +522,8 @@ export const StatusPanelComponent = ({ insights }) => {
             <CardHeader>
               <CardTitle>MOT Expiry</CardTitle>
               <CardIcon color={
-                insights.daysUntilMotExpiry < 0 ? COLORS.RED :
-                insights.daysUntilMotExpiry < 30 ? COLORS.ORANGE : COLORS.GREEN
+                insights.daysUntilMotExpiry < 0 ? 'var(--negative)' :
+                insights.daysUntilMotExpiry < 30 ? 'var(--warning)' : 'var(--positive)'
               }>
                 <CalendarTodayIcon />
               </CardIcon>
@@ -828,8 +536,8 @@ export const StatusPanelComponent = ({ insights }) => {
               <ProgressBar>
                 <ProgressFill 
                   color={
-                    insights.daysUntilMotExpiry < 0 ? COLORS.RED :
-                    insights.daysUntilMotExpiry < 30 ? COLORS.ORANGE : COLORS.GREEN
+                    insights.daysUntilMotExpiry < 0 ? 'var(--negative)' :
+                    insights.daysUntilMotExpiry < 30 ? 'var(--warning)' : 'var(--positive)'
                   }
                   width={motPercentage}
                 />
@@ -849,7 +557,7 @@ export const StatusPanelComponent = ({ insights }) => {
           <VisualInsightCard variant="status" status="Exempt">
             <CardHeader>
               <CardTitle>MOT Status</CardTitle>
-              <CardIcon color={COLORS.BLUE}>
+              <CardIcon color={'var(--primary)'}>
                 <InfoIcon />
               </CardIcon>
             </CardHeader>
@@ -876,8 +584,8 @@ export const StatusPanelComponent = ({ insights }) => {
             unit="%"
             label="Status Risk Score"
             color={
-              insights.statusRiskLevel === 'Low' ? COLORS.GREEN :
-              insights.statusRiskLevel === 'Medium' ? COLORS.ORANGE : COLORS.RED
+              insights.statusRiskLevel === 'Low' ? 'var(--positive)' :
+              insights.statusRiskLevel === 'Medium' ? 'var(--warning)' : 'var(--negative)'
             }
           />
           <EnhancedStatusBadge status={insights.statusRiskLevel}>
@@ -892,14 +600,14 @@ export const StatusPanelComponent = ({ insights }) => {
           <VisualDivider />
           {insights.riskFactors?.length > 0 && (
             <Box mb={3}>
-              <GovUKHeadingS style={{ color: COLORS.RED, marginBottom: '10px' }}>
+              <HeadingM style={{ color: 'var(--negative)', marginBottom: '10px' }}>
                 <WarningIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
                 Risk Factors
-              </GovUKHeadingS>
+              </HeadingM>
               <EnhancedFactorList>
                 {insights.riskFactors.map((factor, index) => (
                   <li key={index}>
-                    <WarningIcon fontSize="small" style={{ color: COLORS.RED }} />
+                    <WarningIcon fontSize="small" style={{ color: 'var(--negative)' }} />
                     <span>{factor}</span>
                   </li>
                 ))}
@@ -909,14 +617,14 @@ export const StatusPanelComponent = ({ insights }) => {
           
           {insights.considerations?.length > 0 && (
             <Box>
-              <GovUKHeadingS style={{ color: COLORS.BLUE, marginBottom: '10px' }}>
+              <HeadingM style={{ color: 'var(--primary)', marginBottom: '10px' }}>
                 <InfoIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
                 Considerations
-              </GovUKHeadingS>
+              </HeadingM>
               <EnhancedFactorList>
                 {insights.considerations.map((consideration, index) => (
                   <li key={index}>
-                    <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+                    <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
                     <span>{consideration}</span>
                   </li>
                 ))}
@@ -949,18 +657,18 @@ export const EmissionsPanelComponent = ({ insights }) => {
   return (
     <VisualInsightsContainer>
       <InsightCategoryHeader>
-        <CategoryIcon color={COLORS.GREEN}>
+        <CategoryIcon color={'var(--positive)'}>
         </CategoryIcon>
         <Box>
           <HeadingWithTooltip 
             tooltip={insights.isEstimated ? tooltips.sectionEmissions : tooltips.sectionEmissions}
-            iconColor={COLORS.GREEN}
+            iconColor={'var(--positive)'}
           >
-            <GovUKHeadingM style={{ margin: 0 }}>Emissions & Tax</GovUKHeadingM>
+            <HeadingM style={{ margin: 0 }}>Emissions & Tax</HeadingM>
           </HeadingWithTooltip>
-          <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
+          <BodyText style={{ margin: 0, marginTop: '4px' }}>
             Environmental impact and tax calculations
-          </GovUKBodyS>
+          </BodyText>
         </Box>
       </InsightCategoryHeader>
       
@@ -982,8 +690,8 @@ export const EmissionsPanelComponent = ({ insights }) => {
             unit="g/km"
             label="CO2 Emissions"
             color={
-              insights.co2Emissions < 100 ? COLORS.GREEN :
-              insights.co2Emissions < 150 ? COLORS.ORANGE : COLORS.RED
+              insights.co2Emissions < 100 ? 'var(--positive)' :
+              insights.co2Emissions < 150 ? 'var(--warning)' : 'var(--negative)'
             }
           />
           {insights.isEstimated && (
@@ -996,7 +704,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
           <VisualInsightCard variant="status">
             <CardHeader>
               <CardTitle>Emissions Standard</CardTitle>
-              <CardIcon color={COLORS.BLUE}>
+              <CardIcon color={'var(--primary)'}>
               </CardIcon>
             </CardHeader>
             <MetricValue size="medium">
@@ -1018,7 +726,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
           <VisualInsightCard variant="status">
             <CardHeader>
               <CardTitle>Annual Road Tax</CardTitle>
-              <CardIcon color={COLORS.BLUE}>
+              <CardIcon color={'var(--primary)'}>
                 <AccountBalanceIcon />
               </CardIcon>
             </CardHeader>
@@ -1042,7 +750,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
           <VisualInsightCard variant="status" status="Exempt">
             <CardHeader>
               <CardTitle>Tax Status</CardTitle>
-              <CardIcon color={COLORS.BLUE}>
+              <CardIcon color={'var(--primary)'}>
                 <AccountBalanceIcon />
               </CardIcon>
             </CardHeader>
@@ -1064,7 +772,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
           <CardHeader>
             <CardTitle>ULEZ Status</CardTitle>
             <CardIcon color={
-              insights.isULEZCompliant ? COLORS.GREEN : COLORS.RED
+              insights.isULEZCompliant ? 'var(--positive)' : 'var(--negative)'
             }>
               {insights.isULEZCompliant ? <CheckCircleIcon /> : <CancelIcon />}
             </CardIcon>
@@ -1094,7 +802,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
           <CardHeader>
             <CardTitle>Scottish LEZ</CardTitle>
             <CardIcon color={
-              insights.isScottishLEZCompliant ? COLORS.GREEN : COLORS.RED
+              insights.isScottishLEZCompliant ? 'var(--positive)' : 'var(--negative)'
             }>
               {insights.isScottishLEZCompliant ? <CheckCircleIcon /> : <CancelIcon />}
             </CardIcon>
@@ -1129,28 +837,28 @@ export const EmissionsPanelComponent = ({ insights }) => {
       {/* Verify Compliance Section - only for non-exempt, non-diesel, non-compliant vehicles */}
       {showComplianceVerification && (
         <Box mt={3}>
-          <GovUKHeadingS style={{ color: COLORS.BLUE, marginBottom: '10px' }}>
+          <HeadingM style={{ color: 'var(--primary)', marginBottom: '10px' }}>
             <InfoIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
             Verify Your Compliance Status
-          </GovUKHeadingS>
-          <GovUKBody style={{ marginBottom: '10px' }}>
+          </HeadingM>
+          <BodyText style={{ marginBottom: '10px' }}>
             Your petrol vehicle may actually meet emissions standards despite being listed as non-compliant.
-          </GovUKBody>
+          </BodyText>
           <EnhancedFactorList>
             <li>
-              <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+              <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
               <span>Check your V5C for NOx emissions below 0.08 g/km (Euro 4 standard)</span>
             </li>
             <li>
-              <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+              <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
               <span>Or request a Certificate of Conformity from your manufacturer (provide your registration and VIN)</span>
             </li>
             <li>
-              <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
-              <span>Submit to: <a href="https://contact.drive-clean-air-zone.service.gov.uk/" target="_blank" rel="noopener noreferrer" style={{ color: COLORS.BLUE }}>CAZ Service</a>, <a href="https://tfl.gov.uk/modes/driving/ulez-make-an-enquiry-wizard" target="_blank" rel="noopener noreferrer" style={{ color: COLORS.BLUE }}>TfL</a> (ULEZ), or your local LEZ authority</span>
+              <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
+              <span>Submit to: <a href="https://contact.drive-clean-air-zone.service.gov.uk/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>CAZ Service</a>, <a href="https://tfl.gov.uk/modes/driving/ulez-make-an-enquiry-wizard" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>TfL</a> (ULEZ), or your local LEZ authority</span>
             </li>
             <li>
-              <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+              <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
               <span>This could save you from unnecessary clean air zone charges</span>
             </li>
           </EnhancedFactorList>
@@ -1162,40 +870,40 @@ export const EmissionsPanelComponent = ({ insights }) => {
        !insights.isScottishLEZCompliant && 
        !insights.isHistoricVehicle && (
         <Box mt={3}>
-          <GovUKHeadingS style={{ color: COLORS.RED, marginBottom: '10px' }}>
+          <HeadingM style={{ color: 'var(--negative)', marginBottom: '10px' }}>
             <WarningIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
             Scottish LEZ Penalty Information
-          </GovUKHeadingS>
-          <GovUKBody style={{ marginBottom: '10px' }}>
+          </HeadingM>
+          <BodyText style={{ marginBottom: '10px' }}>
             Base penalty: {insights.scottishLEZPenaltyInfo.baseCharge}
-          </GovUKBody>
-          <GovUKBody style={{ marginBottom: '10px' }}>
+          </BodyText>
+          <BodyText style={{ marginBottom: '10px' }}>
             Penalties increase with repeated violations: 
             First: {insights.scottishLEZPenaltyInfo.firstSurcharge}, 
             Second: {insights.scottishLEZPenaltyInfo.secondSurcharge}, 
             Third: {insights.scottishLEZPenaltyInfo.thirdSurcharge}, 
             Fourth: {insights.scottishLEZPenaltyInfo.fourthSurcharge}
-          </GovUKBody>
-          <GovUKBody style={{ marginBottom: '10px' }}>
+          </BodyText>
+          <BodyText style={{ marginBottom: '10px' }}>
             {insights.scottishLEZPenaltyInfo.description}
-          </GovUKBody>
-          <GovUKBody>
+          </BodyText>
+          <BodyText>
             {insights.scottishLEZPenaltyInfo.resetPeriod}
-          </GovUKBody>
+          </BodyText>
         </Box>
       )}
       
       {/* Scottish LEZ Exemptions */}
       {insights.scottishExemptions && insights.scottishExemptions.length > 0 && (
         <Box mt={3}>
-          <GovUKHeadingS style={{ color: COLORS.GREEN, marginBottom: '10px' }}>
+          <HeadingM style={{ color: 'var(--positive)', marginBottom: '10px' }}>
             <CheckCircleIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
             Potential LEZ Exemptions
-          </GovUKHeadingS>
+          </HeadingM>
           <EnhancedFactorList>
             {insights.scottishExemptions.map((exemption, index) => (
               <li key={index}>
-                <CheckCircleIcon fontSize="small" style={{ color: COLORS.GREEN }} />
+                <CheckCircleIcon fontSize="small" style={{ color: 'var(--positive)' }} />
                 <span><strong>{exemption.type}:</strong> {exemption.description}</span>
               </li>
             ))}
@@ -1206,24 +914,24 @@ export const EmissionsPanelComponent = ({ insights }) => {
       {/* Brake Particulate Info for Euro 7 */}
       {insights.brakeParticulateInfo && (
         <Box mt={3}>
-          <GovUKHeadingS style={{ color: COLORS.BLUE, marginBottom: '10px' }}>
+          <HeadingM style={{ color: 'var(--primary)', marginBottom: '10px' }}>
             <InfoIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
             Euro 7 Brake Particulate Standards
-          </GovUKHeadingS>
-          <GovUKBody>{insights.brakeParticulateInfo}</GovUKBody>
+          </HeadingM>
+          <BodyText>{insights.brakeParticulateInfo}</BodyText>
         </Box>
       )}
       
       {/* Additional Information Sections */}
       {insights.pollutantLimits?.length > 0 && (
         <Box mt={3}>
-          <GovUKHeadingS style={{ marginBottom: '10px' }}>
+          <HeadingM style={{ marginBottom: '10px' }}>
             Euro Standard Pollutant Limits
-          </GovUKHeadingS>
+          </HeadingM>
           <EnhancedFactorList>
             {insights.pollutantLimits.map((limit, index) => (
               <li key={index}>
-                <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+                <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
                 <span>{limit}</span>
               </li>
             ))}
@@ -1236,13 +944,13 @@ export const EmissionsPanelComponent = ({ insights }) => {
         <>
           <VisualDivider />
           <Box>
-            <GovUKHeadingS style={{ marginBottom: '10px' }}>
+            <HeadingM style={{ marginBottom: '10px' }}>
               Tax Information
-            </GovUKHeadingS>
+            </HeadingM>
             <EnhancedFactorList>
               {insights.taxNotes.map((note, index) => (
                 <li key={index}>
-                  <InfoIcon fontSize="small" style={{ color: COLORS.BLUE }} />
+                  <InfoIcon fontSize="small" style={{ color: 'var(--primary)' }} />
                   <span>{note}</span>
                 </li>
               ))}
@@ -1272,16 +980,16 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
   return (
     <VisualInsightsContainer>
       <InsightCategoryHeader>
-        <CategoryIcon color={COLORS.GREEN}>
+        <CategoryIcon color={'var(--positive)'}>
           <LocalGasStationIcon />
         </CategoryIcon>
         <Box>
-          <HeadingWithTooltip tooltip={tooltips.sectionFuelEfficiency} iconColor={COLORS.GREEN}>
-            <GovUKHeadingM style={{ margin: 0 }}>Fuel Efficiency</GovUKHeadingM>
+          <HeadingWithTooltip tooltip={tooltips.sectionFuelEfficiency} iconColor={'var(--positive)'}>
+            <HeadingM style={{ margin: 0 }}>Fuel Efficiency</HeadingM>
           </HeadingWithTooltip>
-          <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
+          <BodyText style={{ margin: 0, marginTop: '4px' }}>
             Estimated fuel consumption and running costs
-          </GovUKBodyS>
+          </BodyText>
         </Box>
       </InsightCategoryHeader>
       
@@ -1295,7 +1003,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
                 max={5}
                 unit="mi/kWh"
                 label="Electric Efficiency"
-                color={COLORS.GREEN}
+                color={'var(--positive)'}
               />
             </VisualInsightCard>
             
@@ -1303,11 +1011,11 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status">
               <CardHeader>
                 <CardTitle>Cost Per Mile</CardTitle>
-                <CardIcon color={COLORS.GREEN}>
+                <CardIcon color={'var(--positive)'}>
                   £
                 </CardIcon>
               </CardHeader>
-              <MetricValue size="large" color={COLORS.GREEN}>
+              <MetricValue size="large" color={'var(--positive)'}>
                 {insights.estimatedCostPerMile}
                 <MetricUnit>per mile</MetricUnit>
               </MetricValue>
@@ -1318,7 +1026,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status">
               <CardHeader>
                 <CardTitle>Estimated Range</CardTitle>
-                <CardIcon color={COLORS.BLUE}>
+                <CardIcon color={'var(--primary)'}>
                   <SpeedIcon />
                 </CardIcon>
               </CardHeader>
@@ -1332,11 +1040,11 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status" status="good">
               <CardHeader>
                 <CardTitle>Annual Savings vs Petrol</CardTitle>
-                <CardIcon color={COLORS.GREEN}>
+                <CardIcon color={'var(--positive)'}>
                   £
                 </CardIcon>
               </CardHeader>
-              <MetricValue size="large" color={COLORS.GREEN}>
+              <MetricValue size="large" color={'var(--positive)'}>
                 {insights.annualSavingsVsPetrol}
               </MetricValue>
               <MetricSubtext>Based on 7,200 miles/year</MetricSubtext>
@@ -1346,10 +1054,10 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status" status="good">
               <CardHeader>
                 <CardTitle>Annual CO2 Savings</CardTitle>
-                <CardIcon color={COLORS.GREEN}>
+                <CardIcon color={'var(--positive)'}>
                 </CardIcon>
               </CardHeader>
-              <MetricValue size="large" color={COLORS.GREEN}>
+              <MetricValue size="large" color={'var(--positive)'}>
                 {insights.annualCO2Savings}
               </MetricValue>
               <MetricSubtext>Compared to equivalent petrol vehicle</MetricSubtext>
@@ -1372,8 +1080,8 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
                 unit="MPG"
                 label="Combined Fuel Economy"
                 color={
-                  parseFloat(insights.estimatedMPGCombined) > 50 ? COLORS.GREEN :
-                  parseFloat(insights.estimatedMPGCombined) > 30 ? COLORS.ORANGE : COLORS.RED
+                  parseFloat(insights.estimatedMPGCombined) > 50 ? 'var(--positive)' :
+                  parseFloat(insights.estimatedMPGCombined) > 30 ? 'var(--warning)' : 'var(--negative)'
                 }
               />
             </VisualInsightCard>
@@ -1382,7 +1090,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="progress">
               <CardHeader>
                 <CardTitle>Urban MPG</CardTitle>
-                <CardIcon color={COLORS.BLUE}>
+                <CardIcon color={'var(--primary)'}>
                   <DirectionsCarIcon />
                 </CardIcon>
               </CardHeader>
@@ -1393,7 +1101,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
               <ProgressContainer>
                 <ProgressBar>
                   <ProgressFill 
-                    color={COLORS.BLUE}
+                    color={'var(--primary)'}
                     width={(parseFloat(insights.estimatedMPGUrban) / 80) * 100}
                   />
                 </ProgressBar>
@@ -1404,7 +1112,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="progress">
               <CardHeader>
                 <CardTitle>Extra-Urban MPG</CardTitle>
-                <CardIcon color={COLORS.GREEN}>
+                <CardIcon color={'var(--positive)'}>
                   <SpeedIcon />
                 </CardIcon>
               </CardHeader>
@@ -1415,7 +1123,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
               <ProgressContainer>
                 <ProgressBar>
                   <ProgressFill 
-                    color={COLORS.GREEN}
+                    color={'var(--positive)'}
                     width={(parseFloat(insights.estimatedMPGExtraUrban) / 80) * 100}
                   />
                 </ProgressBar>
@@ -1426,7 +1134,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status">
               <CardHeader>
                 <CardTitle>Cost Per Mile</CardTitle>
-                <CardIcon color={COLORS.ORANGE}>
+                <CardIcon color={'var(--warning)'}>
                   £
                 </CardIcon>
               </CardHeader>
@@ -1441,7 +1149,7 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
             <VisualInsightCard variant="status">
               <CardHeader>
                 <CardTitle>Annual Fuel Cost</CardTitle>
-                <CardIcon color={COLORS.ORANGE}>
+                <CardIcon color={'var(--warning)'}>
                   <LocalGasStationIcon />
                 </CardIcon>
               </CardHeader>
@@ -1457,8 +1165,8 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
                 <CardHeader>
                   <CardTitle>CO2 Emissions</CardTitle>
                   <CardIcon color={
-                    parseFloat(insights.co2EmissionsGPerKM) < 120 ? COLORS.GREEN :
-                    parseFloat(insights.co2EmissionsGPerKM) < 150 ? COLORS.ORANGE : COLORS.RED
+                    parseFloat(insights.co2EmissionsGPerKM) < 120 ? 'var(--positive)' :
+                    parseFloat(insights.co2EmissionsGPerKM) < 150 ? 'var(--warning)' : 'var(--negative)'
                   }>
                   </CardIcon>
                 </CardHeader>
@@ -1481,10 +1189,10 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
           {/* Market Trends */}
           {insights.marketTrends && (
             <Box mt={3}>
-              <GovUKHeadingS style={{ marginBottom: '10px' }}>
+              <HeadingM style={{ marginBottom: '10px' }}>
                 Market Trends
-              </GovUKHeadingS>
-              <GovUKBody>{insights.marketTrends}</GovUKBody>
+              </HeadingM>
+              <BodyText>{insights.marketTrends}</BodyText>
             </Box>
           )}
         </>

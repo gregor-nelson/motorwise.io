@@ -1,18 +1,28 @@
 import React, { useState, useEffect, memo, useCallback } from 'react';
 import {
-  GovUKHeadingL,
-  GovUKGridRow,
-  GovUKGridColumnOneThird,
-  GovUKLoadingContainer,
-  GovUKLoadingSpinner,
-  GovUKBody,
-  DetailCaption,
-  DetailHeading,
-  ReportSection,
-  GovUKSectionBreak,
-  GovUKHeadingM
-} from '../../../../styles/theme';
-import Alert from '@mui/material/Alert';
+  DVLADataContainer,
+  SectionHeader,
+  DataGrid,
+  MetricGroup,
+  MetricRow,
+  MetricItem,
+  MetricLabel,
+  MetricValue,
+  StatusIndicator,
+  LoadingContainer,
+  LoadingSpinner,
+  LoadingText,
+  ErrorContainer,
+  ErrorHeader,
+  ErrorMessage,
+  SectionDivider,
+  ResponsiveWrapper
+} from './DVLADataHeaderStyles';
+// Material UI Icons
+import InfoIcon from '@mui/icons-material/Info';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' ||
@@ -119,23 +129,26 @@ const DVLAVehicleDataComponent = ({ registration }) => {
 
   if (loading) {
     return (
-      <ReportSection>
-        <GovUKLoadingContainer>
-          <GovUKLoadingSpinner />
-          <GovUKBody>Retrieving DVLA information...</GovUKBody>
-        </GovUKLoadingContainer>
-      </ReportSection>
+      <DVLADataContainer>
+        <LoadingContainer>
+          <LoadingSpinner />
+          <LoadingText>Retrieving DVLA vehicle information...</LoadingText>
+        </LoadingContainer>
+      </DVLADataContainer>
     );
   }
 
   if (error) {
     return (
-      <ReportSection>
-        <GovUKHeadingL>DVLA Vehicle Data</GovUKHeadingL>
-        <Alert severity="error" style={{ marginBottom: '20px' }}>
-          {error}
-        </Alert>
-      </ReportSection>
+      <DVLADataContainer>
+        <ErrorContainer>
+          <ErrorHeader>
+            <ErrorOutlineIcon />
+            DVLA Data Unavailable
+          </ErrorHeader>
+          <ErrorMessage>{error}</ErrorMessage>
+        </ErrorContainer>
+      </DVLADataContainer>
     );
   }
 
@@ -144,122 +157,157 @@ const DVLAVehicleDataComponent = ({ registration }) => {
   }
 
   return (
-    <>
-      <ReportSection>
-        <GovUKHeadingL>Vehicle Overview</GovUKHeadingL>
+    <ResponsiveWrapper>
+      <DVLADataContainer>
+        <SectionHeader>
+          <h1>Vehicle Information</h1>
+        </SectionHeader>
 
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Colour</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.colour)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Fuel type</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.fuelType)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Date registered</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.monthOfFirstRegistration)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
+        <DataGrid>
+          {/* Basic Vehicle Details */}
+          <MetricGroup>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>Make</MetricLabel>
+                <MetricValue>{formatData(vehicleData.make)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Colour</MetricLabel>
+                <MetricValue>{formatData(vehicleData.colour)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Fuel Type</MetricLabel>
+                <MetricValue>{formatData(vehicleData.fuelType)}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>Engine Size</MetricLabel>
+                <MetricValue>{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Date Registered</MetricLabel>
+                <MetricValue>{formatData(vehicleData.monthOfFirstRegistration)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Manufacture Date</MetricLabel>
+                <MetricValue>{formatData(vehicleData.yearOfManufacture)}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+          </MetricGroup>
 
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Engine size</DetailCaption>
-            <DetailHeading>{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Manufacture date</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.yearOfManufacture)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Make</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.make)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
-      </ReportSection>
+          {/* Legal Status */}
+          <MetricGroup>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>Tax Status</MetricLabel>
+                <MetricValue>
+                  <StatusIndicator status={vehicleData.taxStatus}>
+                    {formatData(vehicleData.taxStatus)}
+                  </StatusIndicator>
+                </MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Tax Due Date</MetricLabel>
+                <MetricValue>{vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>MOT Status</MetricLabel>
+                <MetricValue>
+                  <StatusIndicator status={vehicleData.motStatus}>
+                    {formatData(vehicleData.motStatus)}
+                  </StatusIndicator>
+                </MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>MOT Expiry Date</MetricLabel>
+                <MetricValue>{vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+          </MetricGroup>
+        </DataGrid>
 
-      <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+        <SectionDivider />
 
-      <ReportSection>
+        <SectionHeader>
+          <h1>Registration & Documentation</h1>
+        </SectionHeader>
 
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Tax Status</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.taxStatus)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Tax Due Date</DetailCaption>
-            <DetailHeading>{vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>MOT Status</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.motStatus)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
+        <DataGrid>
+          <MetricGroup>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>Marked For Export</MetricLabel>
+                <MetricValue>
+                  <StatusIndicator status={vehicleData.markedForExport ? 'exported' : 'domestic'}>
+                    {vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}
+                  </StatusIndicator>
+                </MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Last V5C Issued</MetricLabel>
+                <MetricValue>{vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>First DVLA Registration</MetricLabel>
+                <MetricValue>{formatData(vehicleData.monthOfFirstDvlaRegistration)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Automated Vehicle</MetricLabel>
+                <MetricValue>
+                  <StatusIndicator status={vehicleData.automatedVehicle ? 'autonomous' : 'manual'}>
+                    {vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}
+                  </StatusIndicator>
+                </MetricValue>
+              </MetricItem>
+            </MetricRow>
+          </MetricGroup>
+        </DataGrid>
 
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>MOT Expiry Date</DetailCaption>
-            <DetailHeading>{vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Marked For Export</DetailCaption>
-            <DetailHeading>{vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Last V5C Issued</DetailCaption>
-            <DetailHeading>{vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
-      </ReportSection>
+        <SectionDivider />
 
-      <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
+        <SectionHeader>
+          <h1>Environmental & Technical Data</h1>
+        </SectionHeader>
 
-      <ReportSection>
-
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>CO2 Emissions</DetailCaption>
-            <DetailHeading>{vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Euro Status</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.euroStatus)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Type Approval</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.typeApproval)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
-
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Wheel Plan</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.wheelplan)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Revenue Weight</DetailCaption>
-            <DetailHeading>{vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Real Driving Emissions</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.realDrivingEmissions)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
-
-        <GovUKGridRow>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>First DVLA Registration</DetailCaption>
-            <DetailHeading>{formatData(vehicleData.monthOfFirstDvlaRegistration)}</DetailHeading>
-          </GovUKGridColumnOneThird>
-          <GovUKGridColumnOneThird>
-            <DetailCaption>Automated Vehicle</DetailCaption>
-            <DetailHeading>{vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}</DetailHeading>
-          </GovUKGridColumnOneThird>
-        </GovUKGridRow>
-      </ReportSection>
-    </>
+        <DataGrid>
+          <MetricGroup>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>CO₂ Emissions</MetricLabel>
+                <MetricValue>{vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Euro Status</MetricLabel>
+                <MetricValue>{formatData(vehicleData.euroStatus)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Real Driving Emissions</MetricLabel>
+                <MetricValue>{formatData(vehicleData.realDrivingEmissions)}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+            <MetricRow>
+              <MetricItem>
+                <MetricLabel>Type Approval</MetricLabel>
+                <MetricValue>{formatData(vehicleData.typeApproval)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Wheel Plan</MetricLabel>
+                <MetricValue>{formatData(vehicleData.wheelplan)}</MetricValue>
+              </MetricItem>
+              <MetricItem>
+                <MetricLabel>Revenue Weight</MetricLabel>
+                <MetricValue>{vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}</MetricValue>
+              </MetricItem>
+            </MetricRow>
+          </MetricGroup>
+        </DataGrid>
+      </DVLADataContainer>
+    </ResponsiveWrapper>
   );
 };
 

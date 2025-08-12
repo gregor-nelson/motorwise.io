@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './HeaderStyles.css';
 
-
-
-
-
-
-
-
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);

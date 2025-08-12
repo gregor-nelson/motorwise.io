@@ -8,27 +8,32 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import SecurityIcon from '@mui/icons-material/Security';
+import PaymentIcon from '@mui/icons-material/Payment';
+import EmailIcon from '@mui/icons-material/Email';
 import {
-  // Form structure components
-  GovUKFormGroup,
-  GovUKInput,
-  GovUKErrorMessage,
-  
-  // Payment specific components
-  PaymentLabel,
-  StyledCardElement,
-  PayButtonPrimary,
-  PayButtonSecondary,
-  PaymentFormActions,
-  GovUKBody,
-  PremiumBanner,
-  PremiumPrice,
-  PremiumHeading,
+  PremiumModal,
+  ModalHeader,
+  ModalContent,
+  PremiumSection,
+  FeatureList,
+  PricingBanner,
+  PaymentFormContainer,
+  FormSection,
+  FormField,
+  CardElementContainer,
+  ErrorMessage,
+  ActionButtons,
+  PrimaryButton,
+  SecondaryButton,
+  SecurityBadge,
   GovUKButton,
-  GovUKList,
-  GovUKListBullet,
-  BaseButton
-} from '../../../styles/theme'
+  GovUKBody,
+  PayButtonPrimary,
+  BaseButton,
+  inlineStyles
+} from './PremiumDialogStyles';
 
 // Determine if we're in development or production
 export const isDevelopment = window.location.hostname === 'localhost' ||
@@ -42,33 +47,37 @@ export const PAYMENT_API_BASE_URL = isDevelopment
 // Initialize Stripe with your publishable key
 export const stripePromise = loadStripe('pk_test_51R0JFMP4qnmsLm0yBZ8WKNQ6jNsYigLRELdUhSMIEf4qWlEaQeWU7EIyIHySGTaqeR5BFup1XDNMDOEqmhynmkTi00ndP8XolL');
 
-// Base Dialog Component - Common structure for all dialogs
-const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm" }) => {
+
+// Enhanced MarketDash Base Dialog Component
+const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm", headerIcon }) => {
   return (
-    <Dialog 
+    <PremiumModal 
       open={open} 
       onClose={onClose}
       maxWidth={maxWidth}
       fullWidth
     >
-      <DialogTitle
-        style={{
-          fontFamily: '"GDS Transport", arial, sans-serif',
-          fontWeight: 700,
-          fontSize: '1.5rem',
-          padding: '20px 24px',
-        }}
-      >
-        {title}
-      </DialogTitle>
-      <DialogContent style={{ padding: '0 24px 20px' }}>
+      <ModalHeader>
+        <div className="title-content">
+          {headerIcon && <span className="header-icon">{headerIcon}</span>}
+          {title}
+        </div>
+        <IconButton
+          className="close-button"
+          onClick={onClose}
+          size="small"
+        >
+          <CloseIcon />
+        </IconButton>
+      </ModalHeader>
+      <ModalContent>
         {children}
-      </DialogContent>
-    </Dialog>
+      </ModalContent>
+    </PremiumModal>
   );
 };
 
-// Streamlined Payment Form Component with GovUK theme consistency
+// Enhanced MarketDash Payment Form Component
 const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -76,6 +85,10 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(null);
+  const [cardError, setCardError] = useState(null);
+  const [cardComplete, setCardComplete] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(null);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -86,6 +99,16 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailError(null); // Clear error when user types
+  };
+
+  const handleCardChange = (event) => {
+    setCardError(event.error ? event.error.message : null);
+    setCardComplete(event.complete);
+    
+    // Clear general errors when user types in card field
+    if (event.error) {
+      setError(null);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -108,8 +131,10 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
     }
 
     setLoading(true);
+    setProcessing(true);
     setError(null);
     setEmailError(null);
+    setCardError(null);
 
     try {
       // Generate the unique report URL that will be accessed after payment
@@ -175,100 +200,175 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
       setError(err.message || 'An error occurred during payment processing');
     } finally {
       setLoading(false);
+      setProcessing(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Email input field using GovUK form styling */}
-      <GovUKFormGroup>
-        <PaymentLabel htmlFor="email">
-          Email address
-        </PaymentLabel>
+    <PaymentFormContainer onSubmit={handleSubmit}>
+      <FormSection>
+        <div className="form-title">
+          <EmailIcon className="form-icon" />
+          Contact Information
+        </div>
         
-        {emailError && (
-          <GovUKErrorMessage>
-            {emailError}
-          </GovUKErrorMessage>
-        )}
-        
-        <GovUKInput
-          id="email"
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="example@domain.com"
-          error={emailError ? true : false}
-          aria-describedby={emailError ? "email-error" : undefined}
-        />
-      </GovUKFormGroup>
-
-      <GovUKFormGroup>
-        <PaymentLabel htmlFor="card-element">
-          Enter your card details
-        </PaymentLabel>
-        
-        <StyledCardElement id="card-element">
-          <CardElement
-            options={{
-              style: {
-                base: {
-                  fontSize: '16px',
-                  color: '#0b0c0c',
-                  fontFamily: '"GDS Transport", arial, sans-serif',
-                  '::placeholder': {
-                    color: '#505a5f',
-                  },
-                },
-                invalid: {
-                  color: '#d4351c',
-                },
-              }
-            }}
+        <FormField>
+          <label htmlFor="email">
+            Email Address
+          </label>
+          
+          {emailError && (
+            <ErrorMessage>
+              <span className="error-icon">⚠</span>
+              {emailError}
+            </ErrorMessage>
+          )}
+          
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="your.email@example.com"
+            className={emailError ? 'error' : ''}
+            aria-describedby={emailError ? "email-error" : undefined}
           />
-        </StyledCardElement>
+        </FormField>
+      </FormSection>
 
-        {error && (
-          <GovUKErrorMessage>
-            {error}
-          </GovUKErrorMessage>
-        )}
-      </GovUKFormGroup>
+      <FormSection>
+        <div className="form-title">
+          <PaymentIcon className="form-icon" />
+          Payment Details
+        </div>
+        
+        <FormField>
+          <label htmlFor="card-element">
+            Card Information
+          </label>
+          
+          {(error || cardError) && (
+            <ErrorMessage>
+              <span className="error-icon">⚠</span>
+              {error || cardError}
+            </ErrorMessage>
+          )}
+          
+          <CardElementContainer className={(error || cardError) ? 'error' : ''}>
+            <CardElement
+              id="card-element"
+              onChange={handleCardChange}
+              options={{
+                style: {
+                  base: {
+                    fontSize: '16px',
+                    color: '#1e293b',
+                    fontFamily: 'Jost, -apple-system, BlinkMacSystemFont, sans-serif',
+                    fontWeight: '400',
+                    letterSpacing: '0.025em',
+                    '::placeholder': {
+                      color: '#94a3b8',
+                      fontWeight: '400',
+                    },
+                    iconColor: '#64748b',
+                  },
+                  invalid: {
+                    color: '#ef4444',
+                    iconColor: '#ef4444',
+                  },
+                  complete: {
+                    color: '#10b981',
+                    iconColor: '#10b981',
+                  }
+                },
+                hidePostalCode: true,
+                fields: {
+                  number: {
+                    placeholder: '1234 1234 1234 1234'
+                  },
+                  expirationDate: {
+                    placeholder: 'MM/YY'
+                  },
+                  cvc: {
+                    placeholder: '123'
+                  }
+                }
+              }}
+            />
+          </CardElementContainer>
+        </FormField>
+        
+        <SecurityBadge>
+          <SecurityIcon className="security-icon" />
+          Your payment is secured with 256-bit SSL encryption
+        </SecurityBadge>
+        
+        {/* Payment Method Icons */}
+        <div style={inlineStyles.cardBrandContainer}>
+          <span style={inlineStyles.cardBrandText}>
+            We accept:
+          </span>
+          <div style={inlineStyles.cardBrandList}>
+            <div style={{...inlineStyles.cardBrand, ...inlineStyles.visaStyle}}>VISA</div>
+            <div style={{...inlineStyles.cardBrand, ...inlineStyles.mastercardStyle}}>MC</div>
+            <div style={{...inlineStyles.cardBrand, ...inlineStyles.amexStyle}}>AMEX</div>
+          </div>
+        </div>
+      </FormSection>
       
-      <PaymentFormActions>
-        <PayButtonPrimary 
+      <ActionButtons>
+        <PrimaryButton 
           type="submit" 
           disabled={!stripe || loading}
         >
-          {loading ? 'Processing...' : 'Pay now'}
-        </PayButtonPrimary>
+          {loading ? (
+            <>
+              <div className="loading-spinner" />
+              {processing ? 'Processing Payment...' : 'Preparing...'}
+            </>
+          ) : (
+            <>
+              <SecurityIcon />
+              Pay £4.95 Securely
+            </>
+          )}
+        </PrimaryButton>
         
-        <PayButtonSecondary 
+        <SecondaryButton 
           type="button"
           onClick={onClose}
         >
           Cancel
-        </PayButtonSecondary>
-      </PaymentFormActions>
-    </form>
+        </SecondaryButton>
+      </ActionButtons>
+    </PaymentFormContainer>
   );
 };
 
-// Common premium report features
+// Enhanced Premium Report Features with MarketDash styling
 const PremiumReportFeatures = () => {
+  const features = [
+    'Full MOT history with advisories',
+    'Previous owners count',
+    'Mileage history and verification', 
+    'Detailed technical specifications',
+    'Insurance write-off status',
+    'Import/Export status'
+  ];
+
   return (
-    <GovUKListBullet>
-      <li>Full MOT history with advisories</li>
-      <li>Previous owners count</li>
-      <li>Mileage history and verification</li>
-      <li>Detailed technical specifications</li>
-      <li>Insurance write-off status</li>
-      <li>Import/Export status</li>
-    </GovUKListBullet>
+    <FeatureList>
+      {features.map((feature, index) => (
+        <div key={index} className="feature-item">
+          <CheckCircleIcon className="check-icon" />
+          {feature}
+        </div>
+      ))}
+    </FeatureList>
   );
 };
 
-// Enhanced Payment Dialog Component
+// Enhanced MarketDash Payment Dialog Component
 export const PaymentDialog = ({ open, onClose, registration }) => {
   const navigate = useNavigate();
 
@@ -286,19 +386,27 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
       open={open}
       onClose={onClose}
       title="Premium Vehicle Report"
+      headerIcon={<PaymentIcon />}
     >
-      <GovUKBody>
-        Get a comprehensive premium report for <strong>{registration}</strong> including:
-      </GovUKBody>
-      <PremiumReportFeatures />
+      <PremiumSection>
+        <div className="section-title">
+          <CheckCircleIcon className="section-icon" />
+          What's Included
+        </div>
+        <p style={inlineStyles.textStyles.base}>
+          Get a comprehensive premium report for <strong style={inlineStyles.textStyles.emphasis}>{registration}</strong> including:
+        </p>
+        <PremiumReportFeatures />
+      </PremiumSection>
 
-      <PremiumBanner>
-        <GovUKBody style={{ marginBottom: '0' }}>
-          One-time payment of <PremiumPrice>£4.95</PremiumPrice>
-        </GovUKBody>
-      </PremiumBanner>
+      <PricingBanner>
+        <div className="price-content">
+          <p className="price-description">One-time payment</p>
+          <div className="price-value">£4.95</div>
+          <p className="price-description">Instant access • No subscription</p>
+        </div>
+      </PricingBanner>
       
-      <PremiumHeading>Payment Details</PremiumHeading>
       <Elements stripe={stripePromise}>
         <PaymentForm 
           registration={registration}
@@ -308,9 +416,9 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
       </Elements>
     </BaseDialog>
   );
-};
+}
 
-// Free Report Dialog Component for eligible vehicles
+// Enhanced Free Report Dialog with MarketDash styling
 export const FreeReportDialog = ({ open, onClose, registration, reportType = 'classic' }) => {
   const navigate = useNavigate();
 
@@ -325,7 +433,7 @@ export const FreeReportDialog = ({ open, onClose, registration, reportType = 'cl
   };
 
   // Set content based on report type
-  const dialogTitle = "Vehicle Report Information";
+  const dialogTitle = "Free Vehicle Report";
 
   // Different explanations based on report type
   const explanationText = reportType === 'modern'
@@ -337,50 +445,59 @@ export const FreeReportDialog = ({ open, onClose, registration, reportType = 'cl
       open={open}
       onClose={onClose}
       title={dialogTitle}
+      headerIcon={<CheckCircleIcon />}
     >
-      <GovUKBody>
-        The comprehensive report for vehicle <strong>{registration}</strong> is available at no cost.
-      </GovUKBody>
-
-      <GovUKBody>
-        {explanationText}
-      </GovUKBody>
-      
-      <GovUKBody>
-        The report includes:
-      </GovUKBody>
-      
-      <PremiumReportFeatures />
-      
-      <PremiumBanner>
-        <GovUKBody style={{ marginBottom: '0' }}>
-          No payment required
-        </GovUKBody>
-      </PremiumBanner>
-      
-      <div style={{ marginTop: '20px' }}>
-        <GovUKButton 
-          onClick={handleViewFreeReport}
-          style={{ backgroundColor: '#00703c', marginRight: '10px' }}
-        >
-          Continue to Report
-        </GovUKButton>
+      <PremiumSection>
+        <div className="section-title">
+          <CheckCircleIcon className="section-icon" />
+          Complimentary Access
+        </div>
+        <p style={inlineStyles.textStyles.base}>
+          The comprehensive report for vehicle <strong style={inlineStyles.textStyles.emphasis}>{registration}</strong> is available at no cost.
+        </p>
         
-        <GovUKButton 
+        <p style={inlineStyles.textStyles.small}>
+          {explanationText}
+        </p>
+        
+        <div style={{ marginBottom: 'var(--space-md)' }}>
+          <span style={inlineStyles.textStyles.emphasis}>
+            The report includes:
+          </span>
+        </div>
+        
+        <PremiumReportFeatures />
+      </PremiumSection>
+      
+      <PricingBanner style={inlineStyles.priceContentStyles.free}>
+        <div className="price-content">
+          <div className="price-value" style={inlineStyles.priceContentStyles.freePriceValue}>FREE</div>
+          <p className="price-description">No payment required • Instant access</p>
+        </div>
+      </PricingBanner>
+      
+      <ActionButtons>
+        <PrimaryButton 
+          type="button"
+          onClick={handleViewFreeReport}
+          style={inlineStyles.buttonStyles.success}
+        >
+          <CheckCircleIcon />
+          Continue to Report
+        </PrimaryButton>
+        
+        <SecondaryButton 
+          type="button"
           onClick={onClose}
-          style={{ 
-            backgroundColor: '#b1b4b6',
-            color: '#0b0c0c'
-          }}
         >
           Cancel
-        </GovUKButton>
-      </div>
+        </SecondaryButton>
+      </ActionButtons>
     </BaseDialog>
   );
 };
 
-// Enhanced Success Dialog Component
+// Enhanced Success Dialog with MarketDash styling
 export const SuccessDialog = ({ open, onClose, registration, paymentId, email }) => {
   const navigate = useNavigate();
 
@@ -401,49 +518,76 @@ export const SuccessDialog = ({ open, onClose, registration, paymentId, email })
       open={open}
       onClose={onClose}
       title="Payment Successful"
+      headerIcon={<CheckCircleIcon />}
     >
-      <GovUKBody>
-        Your premium report for <strong>{registration}</strong> has been successfully purchased.
-      </GovUKBody>
-      <GovUKBody>
-        Payment reference: <strong>{paymentId}</strong>
-      </GovUKBody>
-      {email && (
-        <>
-          <GovUKBody>
-            A receipt has been sent to: <strong>{email}</strong>
-          </GovUKBody>
-          <GovUKBody>
-            <strong>Important:</strong> Your receipt email contains a unique link to access your premium vehicle report.
-            Please save this email for future reference.
-          </GovUKBody>
-        </>
-      )}
-      <GovUKBody>
-        You can now view your comprehensive vehicle report with all available information.
-      </GovUKBody>
-
-      <DialogActions style={{ padding: '0 24px 20px' }}>
-        <GovUKButton 
-          onClick={handleViewReport}
-          style={{ backgroundColor: '#00703c', marginRight: '10px' }}
-        >
-          View Report
-        </GovUKButton>
+      <PremiumSection>
+        <div className="section-title">
+          <CheckCircleIcon className="section-icon" />
+          Transaction Complete
+        </div>
+        <p style={inlineStyles.textStyles.base}>
+          Your premium report for <strong style={inlineStyles.textStyles.emphasis}>{registration}</strong> has been successfully purchased.
+        </p>
         
-        <GovUKButton 
+        <div style={inlineStyles.infoPanel}>
+          <p style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--gray-700)',
+            margin: '0 0 var(--space-xs) 0'
+          }}>
+            <strong>Payment Reference:</strong> {paymentId}
+          </p>
+          {email && (
+            <p style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-sm)',
+              color: 'var(--gray-700)',
+              margin: '0'
+            }}>
+              <strong>Receipt sent to:</strong> {email}
+            </p>
+          )}
+        </div>
+        
+        {email && (
+          <div style={inlineStyles.infoHighlight}>
+            <p style={{
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-sm)',
+              color: 'var(--gray-800)',
+              margin: '0',
+              lineHeight: 'var(--leading-relaxed)'
+            }}>
+              <strong>Important:</strong> Your receipt email contains a unique link to access your premium vehicle report.
+              Please save this email for future reference.
+            </p>
+          </div>
+        )}
+        
+        <p style={inlineStyles.textStyles.base}>
+          You can now view your comprehensive vehicle report with all available information.
+        </p>
+      </PremiumSection>
+
+      <ActionButtons>
+        <PrimaryButton 
+          onClick={handleViewReport}
+          style={inlineStyles.buttonStyles.success}
+        >
+          <CheckCircleIcon />
+          View Report
+        </PrimaryButton>
+        
+        <SecondaryButton 
           onClick={onClose}
-          style={{ 
-            backgroundColor: '#b1b4b6',
-            color: '#0b0c0c'
-          }}
         >
           Close
-        </GovUKButton>
-      </DialogActions>
+        </SecondaryButton>
+      </ActionButtons>
     </BaseDialog>
   );
-};
+}
 
 // Sample Report Button Component - can be placed anywhere in your UI
 export const SampleReportButton = ({ onClick, className }) => {

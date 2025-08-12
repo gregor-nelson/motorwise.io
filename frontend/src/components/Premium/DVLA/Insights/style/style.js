@@ -1,431 +1,790 @@
-// EnhancedInsightStyles.js
-// Enhanced styled components for vehicle insights matching tech specs design
+// Minimal Clean Design System for Vehicle Insights
+// Ultra Restrained Design - Clean, Minimal, Professional
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { COLORS, BREAKPOINTS } from '../../../../../styles/theme';
 
-// Container Components
-export const InsightsContainer = styled(Box)(({ theme }) => ({
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '20px',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    padding: '10px'
+// Minimal Clean Design System - Ultra Restrained
+const MinimalTokens = `
+  :root {
+    /* Ultra Clean Color Palette - Minimal */
+    --gray-900: #1a1a1a;
+    --gray-800: #2d2d2d;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #a3a3a3;
+    --gray-300: #d4d4d4;
+    --gray-200: #e5e5e5;
+    --gray-100: #f5f5f5;
+    --gray-50: #fafafa;
+    --white: #ffffff;
+
+    /* Minimal Accent Colors */
+    --primary: #3b82f6;
+    --positive: #059669;
+    --negative: #dc2626;
+    --warning: #d97706;
+
+    /* Clean Spacing - Generous White Space */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Typography - Clean Hierarchy */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+
+    /* Clean Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+    /* Minimal Transitions */
+    --transition: all 0.15s ease;
   }
-}));
+`;
 
-export const InsightPanel = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  borderRadius: '5px',
-  marginBottom: '30px',
-  overflow: 'hidden',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  transition: 'all 0.2s ease',
+// =============== MAIN LAYOUT COMPONENTS ===============
+
+// Ultra Clean Main Wrapper
+export const InsightsWrapper = styled(Box)(({ theme }) => `
+  ${MinimalTokens}
   
-  '&:hover': {
-    boxShadow: '0 4px 8px rgba(0,0,0,0.15)'
+  font-family: var(--font-main);
+  background: var(--white);
+  min-height: 100vh;
+  padding: var(--space-3xl) var(--space-lg);
+  color: var(--gray-900);
+
+  @media (max-width: 767px) {
+    padding: var(--space-2xl) var(--space-md);
   }
-}));
+`);
 
-// Panel Variants
-export const OwnershipPanel = styled(InsightPanel)(({ theme }) => ({
-  borderTopColor: COLORS.BLUE,
-  borderTopWidth: '5px'
-}));
+// Clean Header - Typography Only
+export const InsightsHeader = styled(Box)(({ theme }) => `
+  padding: var(--space-2xl) 0;
+  margin-bottom: var(--space-3xl);
 
-export const StatusPanel = styled(InsightPanel)(({ theme }) => ({
-  borderTopColor: COLORS.PURPLE,
-  borderTopWidth: '5px'
-}));
-
-export const EmissionsPanel = styled(InsightPanel)(({ theme }) => ({
-  borderTopColor: COLORS.GREEN,
-  borderTopWidth: '5px'
-}));
-
-export const FuelEfficiencyPanel = styled(InsightPanel)(({ theme }) => ({
-  borderTopColor: COLORS.GREEN,
-  borderTopWidth: '5px'
-}));
-
-// Content Components
-export const InsightBody = styled(Box)(({ theme }) => ({
-  fontSize: '19px',
-  lineHeight: 1.5,
-  color: COLORS.BLACK,
-  marginBottom: '20px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: '16px'
+  @media (max-width: 767px) {
+    padding: var(--space-xl) 0;
+    margin-bottom: var(--space-2xl);
   }
+`);
+
+export const HeaderContent = styled(Box)(({ theme }) => `
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+
+  @media (max-width: 767px) {
+    padding: 0 var(--space-md);
+  }
+`);
+
+export const HeaderText = styled(Box)(({ theme }) => ({
+  flex: 1
 }));
 
-export const InsightTable = styled('table')(({ theme }) => ({
-  width: '100%',
-  borderCollapse: 'collapse',
-  marginBottom: '20px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
+export const InsightsContent = styled(Box)(({ theme }) => `
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+
+  @media (max-width: 767px) {
+    padding: 0 var(--space-md);
+  }
+`);
+
+export const InsightsContainer = styled(Box)(({ theme }) => `
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-xl);
+
+  @media (max-width: 767px) {
+    padding: var(--space-md);
+  }
+`);
+
+// =============== LOADING AND ERROR STATES ===============
+
+// Ultra Clean Loading State
+export const LoadingContainer = styled(Box)(({ theme }) => `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  flex-direction: column;
+  gap: var(--space-lg);
+`);
+
+export const LoadingSpinner = styled(Box)(({ theme }) => `
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gray-200);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
   
-  '& th, & td': {
-    padding: '12px 15px',
-    textAlign: 'left',
-    borderBottom: `1px solid ${COLORS.BORDER_COLOUR}`,
-    fontSize: '16px',
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`);
+
+export const EmptyStateContainer = styled(Box)(({ theme }) => `
+  text-align: center;
+  padding: var(--space-3xl);
+  
+  & svg {
+    margin-bottom: var(--space-lg);
+    color: var(--gray-400);
+    font-size: 3rem;
+  }
+`);
+
+export const ErrorContainer = styled(Box)(({ theme }) => `
+  text-align: center;
+  padding: var(--space-xl);
+  
+  & svg {
+    color: var(--negative);
+    margin-bottom: var(--space-lg);
+    font-size: 3rem;
+  }
+`);
+
+// =============== SUMMARY GRID AND CARDS ===============
+
+// Clean Summary Grid - No Visual Noise
+export const SummaryGrid = styled(Box)(({ theme }) => `
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+`);
+
+// Minimal Summary Card - No Borders, Just Spacing
+export const SummaryCard = styled(Box)(({ status }) => `
+  padding: var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  min-height: 120px;
+
+  @media (max-width: 767px) {
+    padding: var(--space-lg);
+    gap: var(--space-md);
+    min-height: 100px;
+  }
+`);
+
+export const SummaryContent = styled(Box)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0
+}));
+
+export const SummaryTitle = styled(Box)(({ theme }) => `
+  font-family: var(--font-main);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+`);
+
+export const SummaryValue = styled(Box)(({ theme }) => `
+  font-family: var(--font-main);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.2;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xl);
+  }
+`);
+
+// =============== INSIGHT SECTIONS ===============
+
+// Clean Insight Section - No Cards
+export const InsightSection = styled(Box)(({ theme }) => `
+  margin-bottom: var(--space-3xl);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
+`);
+
+export const VisualInsightsContainer = styled(Box)(({ theme }) => `
+  background: var(--white);
+  min-height: 400px;
+  padding: var(--space-2xl);
+
+  @media (max-width: 767px) {
+    padding: var(--space-xl);
+  }
+`);
+
+// =============== HEADERS AND TITLES ===============
+
+export const HeadingL = styled('h1')(({ theme }) => `
+  font-family: var(--font-main);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-2xl);
+  }
+`);
+
+export const HeadingM = styled('h2')(({ theme }) => `
+  font-family: var(--font-main);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 var(--space-2xl) 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-xl);
+  }
+`);
+
+export const BodyText = styled('p')(({ theme }) => `
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  color: var(--gray-700);
+  margin: 0;
+  line-height: 1.5;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
+  }
+`);
+
+// =============== CATEGORY HEADERS ===============
+
+export const InsightCategoryHeader = styled(Box)(({ theme }) => `
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
+`);
+
+// Section Headers - Clean Typography
+export const SectionHeader = styled(Box)(({ theme }) => `
+  margin-bottom: var(--space-2xl);
+  
+  & h2, & h3 {
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-xl);
+  }
+`);
+
+// =============== GRIDS AND CARDS ===============
+
+export const InsightGrid = styled(Box)(({ theme }) => `
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+`);
+
+// Minimal Visual Card - Clean Layout
+export const VisualInsightCard = styled(Box)(({ variant = 'default', status }) => `
+  padding: var(--space-xl);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  ${variant === 'gauge' ? `
+    text-align: center;
+    min-height: 220px;
+    justify-content: center;
+    align-items: center;
+  ` : ''}
+  
+  ${variant === 'progress' ? `
+    min-height: 160px;
+    justify-content: space-between;
+  ` : ''}
+  
+  ${variant === 'status' ? `
+    min-height: 140px;
+    justify-content: space-between;
+  ` : ''}
+
+  @media (max-width: 767px) {
+    padding: var(--space-lg);
+  }
+`);
+
+export const VisualCard = styled(Box)(({ variant = 'default', status }) => `
+  padding: var(--space-xl);
+  height: 100%;
+  
+  ${variant === 'gauge' && `
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  `}
+  
+  ${variant === 'progress' && `
+    min-height: 140px;
+  `}
+
+  @media (max-width: 767px) {
+    padding: var(--space-lg);
+  }
+`);
+
+export const CardHeader = styled(Box)(({ theme }) => `
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+`);
+
+export const CardTitle = styled(Box)(({ theme }) => `
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  line-height: 1.3;
+  font-family: var(--font-main);
+`);
+
+// =============== METRICS AND VALUES ===============
+
+export const MetricValue = styled(Box)(({ size = 'large', color }) => `
+  font-size: ${size === 'large' ? 'var(--text-3xl)' : size === 'medium' ? 'var(--text-2xl)' : 'var(--text-xl)'};
+  font-weight: 600;
+  color: ${color || 'var(--gray-900)'};
+  line-height: 1.1;
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-main);
+
+  @media (max-width: 767px) {
+    font-size: ${size === 'large' ? 'var(--text-2xl)' : size === 'medium' ? 'var(--text-xl)' : 'var(--text-lg)'};
+  }
+`);
+
+export const MetricUnit = styled('span')(({ theme }) => `
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--gray-600);
+  margin-left: var(--space-sm);
+  font-family: var(--font-main);
+`);
+
+export const MetricSubtext = styled(Box)(({ theme }) => `
+  font-size: var(--text-sm);
+  color: var(--gray-500);
+  margin-top: var(--space-sm);
+  font-family: var(--font-main);
+  line-height: 1.4;
+`);
+
+export const MetricDisplay = styled(Box)(({ iconColor }) => `
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  
+  & svg {
+    color: ${iconColor || 'var(--primary)'};
+    font-size: var(--text-lg);
+  }
+`);
+
+export const MetricLabel = styled(Box)(({ theme }) => `
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+  margin-top: var(--space-xs);
+  font-family: var(--font-main);
+`);
+
+// =============== STATUS COMPONENTS ===============
+
+// Minimal Status Indicators - Just Color, No Decorations
+export const StatusIndicator = styled(Box)(({ status }) => `
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  font-family: var(--font-main);
+  color: ${
+    status === 'Low' || status === 'Compliant' || status === 'good' ? 'var(--positive)' :
+    status === 'Medium' || status === 'warning' ? 'var(--warning)' :
+    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? 'var(--negative)' :
+    status === 'Exempt' ? 'var(--primary)' :
+    'var(--gray-600)'
+  };
+  
+  & svg {
+    font-size: var(--text-base);
+  }
+`);
+
+// Clean Status Badge - Minimal Styling
+export const EnhancedStatusBadge = styled('strong')(({ status, size = 'medium' }) => `
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: ${size === 'large' ? 'var(--text-base)' : 'var(--text-sm)'};
+  font-weight: 600;
+  font-family: var(--font-main);
+  color: ${
+    status === 'good' || status === 'Compliant' || status === 'Low' ? 'var(--positive)' :
+    status === 'warning' || status === 'Medium' ? 'var(--warning)' :
+    status === 'critical' || status === 'Non-Compliant' || status === 'High' ? 'var(--negative)' :
+    status === 'Exempt' ? 'var(--primary)' :
+    'var(--gray-700)'
+  };
+  
+  & svg {
+    font-size: ${size === 'large' ? 'var(--text-lg)' : 'var(--text-base)'};
+  }
+`);
+
+export const Badge = styled('span')(({ variant = 'default', size = 'medium' }) => `
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: ${size === 'large' ? 'var(--text-base)' : 'var(--text-sm)'};
+  font-weight: 500;
+  font-family: var(--font-main);
+  color: ${
+    variant === 'success' ? 'var(--positive)' :
+    variant === 'warning' ? 'var(--warning)' :
+    variant === 'error' ? 'var(--negative)' :
+    variant === 'info' ? 'var(--primary)' :
+    'var(--gray-600)'
+  };
+  
+  & svg {
+    font-size: ${size === 'large' ? 'var(--text-lg)' : 'var(--text-base)'};
+  }
+`);
+
+// =============== CONTENT COMPONENTS ===============
+
+export const InsightBody = styled(Box)(({ theme }) => `
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--gray-800);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-main);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
+  }
+`);
+
+export const InsightTable = styled('table')(({ theme }) => `
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-main);
+  
+  & th, & td {
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: var(--text-base);
     
-    [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-      padding: '10px',
-      fontSize: '14px'
+    @media (max-width: 767px) {
+      padding: var(--space-sm);
+      font-size: var(--text-sm);
     }
-  },
-  
-  '& th': {
-    fontWeight: 700,
-    backgroundColor: COLORS.LIGHT_GREY,
-    color: COLORS.BLACK
-  },
-  
-  '& tr:hover': {
-    backgroundColor: '#f8f8f8'
   }
-}));
-
-// Status Components
-export const StatusIndicator = styled(Box)(({ status }) => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '6px 12px',
-  borderRadius: '3px',
-  fontWeight: 700,
-  fontSize: '14px',
-  textTransform: 'uppercase',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  backgroundColor: 
-    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.LIGHT_GREEN :
-    status === 'Medium' || status === 'warning' ? '#fff7ed' :
-    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? '#fef2f2' :
-    status === 'Exempt' ? '#e6f3ff' :
-    COLORS.LIGHT_GREY,
-  color: 
-    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.GREEN :
-    status === 'Medium' || status === 'warning' ? COLORS.ORANGE :
-    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? COLORS.RED :
-    status === 'Exempt' ? COLORS.BLUE :
-    COLORS.DARK_GREY,
-  border: `1px solid ${
-    status === 'Low' || status === 'Compliant' || status === 'good' ? COLORS.GREEN :
-    status === 'Medium' || status === 'warning' ? COLORS.ORANGE :
-    status === 'High' || status === 'Non-Compliant' || status === 'critical' ? COLORS.RED :
-    status === 'Exempt' ? COLORS.BLUE :
-    COLORS.DARK_GREY
-  }`,
   
-  '& svg': {
-    fontSize: '16px'
+  & th {
+    font-weight: 600;
+    background: var(--gray-50);
+    color: var(--gray-900);
   }
-}));
-
-// Value Highlighting
-export const ValueHighlight = styled('strong')(({ color }) => ({
-  color: color || COLORS.BLUE,
-  fontWeight: 700,
-  fontSize: 'inherit'
-}));
-
-// Factor Lists
-export const FactorsSection = styled(Box)(({ theme }) => ({
-  marginTop: '30px',
-  paddingTop: '20px',
-  borderTop: `1px solid ${COLORS.BORDER_COLOUR}`
-}));
-
-export const FactorsTitle = styled(Box)(({ color }) => ({
-  fontSize: '19px',
-  fontWeight: 700,
-  color: color || COLORS.BLACK,
-  marginBottom: '15px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-export const FactorList = styled('ul')(({ theme }) => ({
-  listStyle: 'none',
-  padding: 0,
-  margin: 0
-}));
-
-export const FactorItem = styled('li')(({ iconColor }) => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: '12px',
-  padding: '10px 0',
-  fontSize: '16px',
-  lineHeight: 1.5,
-  fontFamily: '"GDS Transport", arial, sans-serif',
   
-  '& svg': {
-    flexShrink: 0,
-    marginTop: '2px',
-    color: iconColor || COLORS.DARK_GREY
-  },
-  
-  '& strong': {
-    fontWeight: 700
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: '14px'
+  & tr:hover {
+    background: var(--gray-50);
   }
-}));
+`);
 
-// Metric Display Components
-export const MetricDisplay = styled(Box)(({ iconColor }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
+export const ValueHighlight = styled('strong')(({ color }) => `
+  color: ${color || 'var(--primary)'};
+  font-weight: 600;
+  font-size: inherit;
+`);
+
+// =============== NOTES AND SECTIONS ===============
+
+export const InsightNote = styled(Box)(({ variant = 'info' }) => `
+  background: var(--gray-50);
+  padding: var(--space-lg);
+  margin-top: var(--space-lg);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: ${
+    variant === 'warning' ? 'var(--warning)' :
+    variant === 'success' ? 'var(--positive)' :
+    variant === 'error' ? 'var(--negative)' :
+    'var(--gray-700)'
+  };
+  font-family: var(--font-main);
   
-  '& svg': {
-    color: iconColor || COLORS.BLUE,
-    fontSize: '20px'
+  & svg {
+    vertical-align: middle;
+    margin-right: var(--space-xs);
   }
-}));
+`);
 
-export const MetricLabel = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  color: COLORS.DARK_GREY,
-  marginTop: '4px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-export const MetricValue = styled('span')(({ color }) => ({
-  fontSize: '19px',
-  fontWeight: 700,
-  color: color || COLORS.BLACK,
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-// Notes and Warnings
-export const InsightNote = styled(Box)(({ variant = 'info' }) => ({
-  backgroundColor: 
-    variant === 'warning' ? '#fff7ed' :
-    variant === 'success' ? '#f0fdf4' :
-    variant === 'error' ? '#fef2f2' :
-    COLORS.LIGHT_GREY,
-  borderLeft: `4px solid ${
-    variant === 'warning' ? COLORS.ORANGE :
-    variant === 'success' ? COLORS.GREEN :
-    variant === 'error' ? COLORS.RED :
-    COLORS.BLUE
-  }`,
-  padding: '15px 20px',
-  marginTop: '20px',
-  fontSize: '14px',
-  lineHeight: 1.5,
-  fontFamily: '"GDS Transport", arial, sans-serif',
+export const EnhancedInsightNote = styled(Box)(({ variant = 'info' }) => `
+  background: var(--gray-50);
+  padding: var(--space-lg) var(--space-xl);
+  margin: var(--space-lg) 0;
   
-  '& svg': {
-    verticalAlign: 'middle',
-    marginRight: '8px'
+  & p {
+    margin: 0;
+    font-size: var(--text-base);
+    color: ${
+      variant === 'warning' ? 'var(--warning)' :
+      variant === 'success' ? 'var(--positive)' :
+      variant === 'error' ? 'var(--negative)' :
+      'var(--gray-700)'
+    };
+    line-height: 1.5;
+    font-weight: 400;
   }
-}));
+`);
 
-// Loading and Empty States
-export const EnhancedLoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '60px 20px',
-  minHeight: '400px',
-  backgroundColor: COLORS.WHITE,
-  borderRadius: '5px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+export const FactorsSection = styled(Box)(({ theme }) => `
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+`);
+
+export const FactorsTitle = styled(Box)(({ color }) => `
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: ${color || 'var(--gray-900)'};
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-main);
+`);
+
+export const FactorList = styled('ul')(({ theme }) => `
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`);
+
+export const FactorItem = styled('li')(({ iconColor }) => `
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  font-family: var(--font-main);
   
-  '& .govuk-loading-spinner': {
-    marginBottom: '20px'
+  & svg {
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+    color: ${iconColor || 'var(--gray-600)'};
   }
-}));
-
-export const EmptyStateContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '60px 20px',
-  minHeight: '300px',
-  backgroundColor: COLORS.WHITE,
-  borderRadius: '5px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  textAlign: 'center',
   
-  '& svg': {
-    marginBottom: '20px'
+  & strong {
+    font-weight: 600;
   }
-}));
 
-// Visual Elements for Enhanced Design
-export const VisualCard = styled(Box)(({ variant = 'default', status }) => ({
-  backgroundColor: COLORS.WHITE,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  borderRadius: '5px',
-  padding: '24px',
-  position: 'relative',
-  transition: 'all 0.2s ease',
-  height: '100%',
-  
-  ...(variant === 'gauge' && {
-    textAlign: 'center',
-    minHeight: '220px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  }),
-  
-  ...(variant === 'progress' && {
-    minHeight: '160px'
-  }),
-  
-  '&:hover': {
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    borderColor: COLORS.BLACK
-  },
-  
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: '5px',
-    backgroundColor: 
-      status === 'good' ? COLORS.GREEN :
-      status === 'warning' ? COLORS.ORANGE :
-      status === 'critical' ? COLORS.RED :
-      COLORS.BLUE,
-    borderRadius: '5px 0 0 5px'
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
   }
-}));
+`);
 
-// Grid Layout
-export const InsightGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  gap: '20px',
-  marginBottom: '30px',
+export const EnhancedFactorList = styled('ul')(({ theme }) => `
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0;
   
-  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '15px'
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    gridTemplateColumns: '1fr',
-    gap: '15px'
+  & li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--gray-700);
+    padding: var(--space-sm) 0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    & svg {
+      flex-shrink: 0;
+      margin-top: var(--space-xs);
+    }
   }
-}));
+`);
 
-// Section Headers
-export const SectionHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '15px',
-  marginBottom: '25px',
-  paddingBottom: '15px',
-  borderBottom: `2px solid ${COLORS.BORDER_COLOUR}`,
+// =============== PROGRESS COMPONENTS ===============
+
+export const ProgressContainer = styled(Box)(({ theme }) => `
+  margin-top: var(--space-lg);
+  width: 100%;
+`);
+
+export const ProgressWrapper = styled(Box)(({ theme }) => `
+  width: 100%;
+  margin-top: var(--space-lg);
+`);
+
+export const ProgressBar = styled(Box)(({ theme }) => `
+  width: 100%;
+  height: 8px;
+  background: var(--gray-200);
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+`);
+
+export const ProgressFill = styled(Box)(({ color, width }) => `
+  height: 100%;
+  width: ${width}%;
+  background: ${color || 'var(--primary)'};
+  transition: width 0.6s ease;
+  border-radius: 4px;
+`);
+
+export const ProgressLabel = styled(Box)(({ theme }) => `
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-base);
+  font-family: var(--font-main);
+  font-weight: 500;
+`);
+
+// =============== GAUGE COMPONENTS ===============
+
+export const GaugeContainer = styled(Box)(({ theme }) => `
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto var(--space-lg);
+`);
+
+export const GaugeSvg = styled('svg')(({ theme }) => `
+  transform: rotate(-90deg);
+`);
+
+export const GaugeTrack = styled('circle')(({ theme }) => `
+  fill: none;
+  stroke: var(--gray-200);
+  stroke-width: 8;
+`);
+
+export const GaugeFill = styled('circle')(({ color }) => `
+  fill: none;
+  stroke: ${color || 'var(--primary)'};
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+`);
+
+export const GaugeCenterText = styled(Box)(({ theme }) => `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+`);
+
+// =============== PANELS AND DIVIDERS ===============
+
+export const InsightPanel = styled(Box)(({ theme }) => `
+  background: var(--white);
+  margin-bottom: var(--space-2xl);
   
-  '& h2, & h3': {
-    margin: 0
+  &:last-child {
+    margin-bottom: 0;
   }
-}));
+`);
 
-export const SectionIcon = styled(Box)(({ color }) => ({
-  width: '40px',
-  height: '40px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '20px',
-  fontWeight: 700,
-  borderRadius: '5px',
-  flexShrink: 0
-}));
+export const OwnershipPanel = styled(InsightPanel)``;
+export const StatusPanel = styled(InsightPanel)``;
+export const EmissionsPanel = styled(InsightPanel)``;
+export const FuelEfficiencyPanel = styled(InsightPanel)``;
 
-// Enhanced Badge
-export const Badge = styled('span')(({ variant = 'default', size = 'medium' }) => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '6px',
-  padding: size === 'large' ? '8px 16px' : '4px 10px',
-  fontSize: size === 'large' ? '16px' : '14px',
-  fontWeight: 700,
-  letterSpacing: '0.5px',
-  textTransform: 'uppercase',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  borderRadius: '3px',
-  backgroundColor: 
-    variant === 'success' ? COLORS.GREEN :
-    variant === 'warning' ? COLORS.ORANGE :
-    variant === 'error' ? COLORS.RED :
-    variant === 'info' ? COLORS.BLUE :
-    COLORS.DARK_GREY,
-  color: COLORS.WHITE,
-  
-  '& svg': {
-    fontSize: size === 'large' ? '20px' : '16px'
+// Clean Section Spacing - No Visual Dividers
+export const VisualDivider = styled(Box)(({ theme }) => `
+  height: var(--space-3xl);
+  margin: var(--space-3xl) 0;
+
+  @media (max-width: 767px) {
+    height: var(--space-2xl);
+    margin: var(--space-2xl) 0;
   }
-}));
+`);
 
-// Progress Components
-export const ProgressWrapper = styled(Box)(({ theme }) => ({
-  width: '100%',
-  marginTop: '15px'
-}));
+export const Divider = styled(Box)(({ theme }) => `
+  height: var(--space-2xl);
+  margin: var(--space-2xl) 0;
 
-export const ProgressBar = styled(Box)(({ theme }) => ({
-  width: '100%',
-  height: '24px',
-  backgroundColor: COLORS.LIGHT_GREY,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  borderRadius: '3px',
-  overflow: 'hidden',
-  position: 'relative'
-}));
-
-export const ProgressFill = styled(Box)(({ color, width }) => ({
-  height: '100%',
-  width: `${width}%`,
-  backgroundColor: color || COLORS.BLUE,
-  transition: 'width 0.5s ease',
-  position: 'relative',
-  
-  '&:after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-    animation: 'shimmer 2s infinite'
-  },
-  
-  '@keyframes shimmer': {
-    '0%': { transform: 'translateX(-100%)' },
-    '100%': { transform: 'translateX(100%)' }
+  @media (max-width: 767px) {
+    height: var(--space-xl);
+    margin: var(--space-xl) 0;
   }
-}));
+`);
 
-// Visual Divider
-export const Divider = styled(Box)(({ theme }) => ({
-  height: '2px',
-  backgroundColor: COLORS.BORDER_COLOUR,
-  margin: '30px 0'
-}));
+// =============== LEGACY COMPATIBILITY ===============
+
+// Keep these for backward compatibility but with minimal styling
+export const HeaderIcon = styled(Box)(({ theme }) => ({ display: 'none' }));
+export const SummaryIcon = styled(Box)(({ theme }) => ({ display: 'none' }));
+export const CategoryIcon = styled(Box)(({ theme }) => ({ display: 'none' }));
+export const CardIcon = styled(Box)(({ theme }) => ({ display: 'none' }));
+export const SectionIcon = styled(Box)(({ theme }) => ({ display: 'none' }));
+export const EnhancedLoadingContainer = styled(LoadingContainer)``;

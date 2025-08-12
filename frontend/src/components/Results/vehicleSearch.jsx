@@ -18,7 +18,7 @@ import {
 
 // Import the MOTHistoryPage and VehicleHeader components
 import MOTHistoryPage from './MOTHistoryPage';
-import VehicleHeader from '../Header/ResultsHeader';
+import VehicleHeader from '../Header/Results/ResultsHeader';
 const VehicleSearch = () => {
   const [registration, setRegistration] = useState('');
   const [searchedRegistration, setSearchedRegistration] = useState('');

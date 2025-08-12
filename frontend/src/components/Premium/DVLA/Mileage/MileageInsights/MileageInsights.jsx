@@ -39,6 +39,11 @@ const LoadingSpinner = () => (
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+        
+        @keyframes shimmer {
+          0% { background-position: -200px 0; }
+          100% { background-position: calc(200px + 100%) 0; }
+        }
       `}
     </style>
     <div style={{
@@ -83,7 +88,13 @@ import {
   LoadingContainer,
   ErrorContainer,
   EmptyContainer,
-  SectionTitleContainer
+  SectionTitleContainer,
+  MileageMetricCard,
+  MileageMetricLabel,
+  MileageMetricValue,
+  MileageMetricSubtext,
+  DataQualityBadge,
+  LoadingShimmer
 } from './style/style';
 
 // Import enhanced risk assessment, anomaly detection functions, and clocking warning
@@ -136,77 +147,82 @@ const DataQualityIndicator = ({
   dataPoints = 0
 }) => {
   // Determine overall data quality
-  let qualityLevel = "High";
+  let qualityLevel = "high";
+  let qualityDisplayName = "High Quality";
   let qualityColor = MarketDashColors.POSITIVE;
   
   if (hasClockingIssues) {
-    qualityLevel = "Poor";
+    qualityLevel = "poor";
+    qualityDisplayName = "Poor Quality";
     qualityColor = MarketDashColors.NEGATIVE;
   } else if (motGapsDetected || (anomalies && anomalies.length > 0)) {
-    qualityLevel = "Medium";
+    qualityLevel = "medium";
+    qualityDisplayName = "Medium Quality";
     qualityColor = MarketDashColors.WARNING;
   } else if (dataPoints < 4) {
-    qualityLevel = "Limited";
+    qualityLevel = "limited";
+    qualityDisplayName = "Limited Data";
     qualityColor = MarketDashColors.GRAY_500;
   }
   
   return (
     <MileageInsightSection>
-      <SimpleTooltip title="Assessment of the reliability and completeness of the vehicle's history data">
-        <h3 style={{
-          margin: '0 0 var(--space-lg) 0',
-          fontFamily: 'var(--font-main)',
-          fontSize: 'var(--text-xl)',
-          fontWeight: '600',
-          color: 'var(--gray-800)',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <AssessmentIcon style={{ marginRight: 'var(--space-sm)', color: qualityColor }} />
-          Data Quality Assessment
-        </h3>
-      </SimpleTooltip>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 'var(--space-lg)'
+      }}>
+        <SimpleTooltip title="Assessment of the reliability and completeness of the vehicle's history data">
+          <h3 style={{
+            margin: 0,
+            fontFamily: 'var(--font-display)',
+            fontSize: 'var(--text-2xl)',
+            fontWeight: '600',
+            color: 'var(--gray-800)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--space-sm)'
+          }}>
+            <AssessmentIcon style={{ color: qualityColor }} />
+            Data Quality Assessment
+          </h3>
+        </SimpleTooltip>
+        <DataQualityBadge quality={qualityLevel}>
+          {qualityLevel === "high" && <CheckCircleIcon fontSize="small" />}
+          {qualityLevel === "medium" && <WarningIcon fontSize="small" />}
+          {qualityLevel === "poor" && <ErrorOutlineIcon fontSize="small" />}
+          {qualityLevel === "limited" && <InfoIcon fontSize="small" />}
+          {qualityDisplayName}
+        </DataQualityBadge>
+      </div>
       
       <MileageInsightPanel borderColor={qualityColor}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          marginBottom: '15px',
-          padding: '10px',
-          backgroundColor: `${qualityColor}20`,
-          borderRadius: '5px'
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 'var(--space-lg)',
+          marginBottom: 'var(--space-xl)'
         }}>
-          <div style={{ 
-            backgroundColor: qualityColor, 
-            color: 'white', 
-            padding: '8px 16px', 
-            borderRadius: '4px',
-            fontWeight: 'bold',
-            marginRight: '15px',
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            {qualityLevel === "High" && <CheckCircleIcon style={{ marginRight: '5px' }} />}
-            {qualityLevel === "Medium" && <WarningIcon style={{ marginRight: '5px' }} />}
-            {qualityLevel === "Poor" && <ErrorOutlineIcon style={{ marginRight: '5px' }} />}
-            {qualityLevel === "Limited" && <InfoIcon style={{ marginRight: '5px' }} />}
-            {qualityLevel} Quality
-          </div>
-          <div>
-            <p style={{ 
-              margin: 0,
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-base)',
-              color: 'var(--gray-800)',
-              lineHeight: '1.5'
-            }}>
+          <MileageMetricCard>
+            <MileageMetricLabel>Data Points Available</MileageMetricLabel>
+            <MileageMetricValue>{dataPoints}</MileageMetricValue>
+            <MileageMetricSubtext>
+              {dataPoints >= 4 ? 'Sufficient for comprehensive analysis' : 'Limited data may affect analysis accuracy'}
+            </MileageMetricSubtext>
+          </MileageMetricCard>
+          
+          <MileageMetricCard>
+            <MileageMetricLabel>Assessment Status</MileageMetricLabel>
+            <MileageMetricValue style={{ color: qualityColor }}>{qualityDisplayName}</MileageMetricValue>
+            <MileageMetricSubtext>
               {hasClockingIssues
-                ? "Significant mileage inconsistencies detected, affecting data reliability."
+                ? "Significant inconsistencies detected"
                 : motGapsDetected
-                ? "Gaps in vehicle testing history may impact the completeness of mileage data."
-                : `Based on ${dataPoints} mileage readings over the vehicle's history.`}
-            </p>
-          </div>
+                ? "Testing gaps may impact completeness"
+                : "Complete and reliable history available"}
+            </MileageMetricSubtext>
+          </MileageMetricCard>
         </div>
         
         <FactorsList>
@@ -1086,10 +1102,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   <td>{insights.benchmarks.expectedTotalMileage.toLocaleString()} miles</td>
                 </tr>
                 <tr>
-                  <SimpleTooltip 
-                    label="Variance From Expected" 
-                    title="How much the vehicle's mileage deviates from expected" 
-                  />
+                  <td>
+                    <SimpleTooltip 
+                      title="How much the vehicle's mileage deviates from expected" 
+                    >
+                      Variance From Expected
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     <ValueDisplay 
                       color={insights.benchmarks.mileageRatio < 1 ? "var(--positive)" : 
@@ -1100,10 +1119,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   </td>
                 </tr>
                 <tr>
-                  <SimpleTooltip 
-                    label="Estimated Remaining Life" 
-                    title="Estimated miles and years remaining based on current usage patterns" 
-                  />
+                  <td>
+                    <SimpleTooltip 
+                      title="Estimated miles and years remaining based on current usage patterns" 
+                    >
+                      Estimated Remaining Life
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     <ValueDisplay>{insights.benchmarks.remainingMilesEstimate.toLocaleString()} miles</ValueDisplay>
                     <br />
@@ -1198,10 +1220,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
               </thead>
               <tbody>
                 <tr>
-                  <SimpleTooltip 
-                    label="Highest Usage Period" 
-                    title="Period with the highest annualised mileage rate" 
-                  />
+                  <td>
+                    <SimpleTooltip 
+                      title="Period with the highest annualised mileage rate" 
+                    >
+                      Highest Usage Period
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     {insights.usagePatterns.highestUsagePeriod.period}
                     <br />
@@ -1211,10 +1236,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   </td>
                 </tr>
                 <tr>
-                  <SimpleTooltip 
-                    label="Lowest Usage Period" 
-                    title="Period with the lowest annualised mileage rate" 
-                  />
+                  <td>
+                    <SimpleTooltip 
+                      title="Period with the lowest annualised mileage rate" 
+                    >
+                      Lowest Usage Period
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     {insights.usagePatterns.lowestUsagePeriod.period}
                     <br />
@@ -1224,10 +1252,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   </td>
                 </tr>
                 <tr>
-                  <SimpleTooltip 
-                    label="Usage Variability" 
-                    title="Difference between highest and lowest annual rates" 
-                  />
+                  <td>
+                    <SimpleTooltip 
+                      title="Difference between highest and lowest annual rates" 
+                    >
+                      Usage Variability
+                    </SimpleTooltip>
+                  </td>
                   <td>
                     <ValueDisplay>
                       {insights.usagePatterns.usageVariance.toLocaleString()} miles/year
@@ -1236,10 +1267,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </tr>
                 {insights.usagePatterns.potentialCommercialUse && (
                   <tr>
-                    <SimpleTooltip 
-                      label="Commercial Usage" 
-                      title="Indicators that suggest potential commercial use" 
-                    />
+                    <td>
+                      <SimpleTooltip 
+                        title="Indicators that suggest potential commercial use" 
+                      >
+                        Commercial Usage
+                      </SimpleTooltip>
+                    </td>
                     <td>
                       <span style={{ 
                         color: "var(--negative)", 

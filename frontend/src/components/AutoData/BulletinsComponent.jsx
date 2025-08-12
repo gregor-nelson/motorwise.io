@@ -46,7 +46,10 @@ import {
   FactorItem,
   InsightNote,
   EnhancedLoadingContainer,
-  StyledEmptyStateContainer as EmptyStateContainer
+  StyledEmptyStateContainer as EmptyStateContainer,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton
 } from './styles/BulletinStyles';
 
 
@@ -166,152 +169,181 @@ const EmptyState = ({ vehicleMake, vehicleModel }) => (
 );
 
 /**
- * BulletinDetail Component - Extracted for cleaner code organization
+ * BulletinDetailModal Component - Full Screen Modal for Better UX
  */
-const BulletinDetail = ({ 
+const BulletinDetailModal = ({ 
   bulletin, 
-  onBack, 
+  onClose, 
   matchConfidence, 
   metadata, 
   vehicleMake, 
   vehicleModel, 
   error 
-}) => (
-  <BulletinsContainer>
-    <InsightsContainer>
-      <BackButton onClick={onBack}>
-        ← Back to all bulletins
-      </BackButton>
+}) => {
+  // Handle escape key and click outside to close
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [onClose]);
 
-      <BulletinPanel>
-        <HeadingWithTooltip 
-          tooltip="Technical bulletin with detailed information about vehicle issues and fixes"
-          iconColor="var(--primary)"
-        >
-          <CleanHeadingM>{bulletin.title}</CleanHeadingM>
-        </HeadingWithTooltip>
-        
-        <MatchWarning 
-          matchConfidence={matchConfidence} 
-          metadata={metadata} 
-          vehicleMake={vehicleMake} 
-          vehicleModel={vehicleModel} 
-        />
-        
-        {error && (
-          <InsightNote sx={{ backgroundColor: 'var(--negative-light)', borderColor: 'var(--negative)' }}>
-            <StyledWarningIcon />
-            <CleanBody>{error}</CleanBody>
-          </InsightNote>
-        )}
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
-        {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
-          <BulletinDetailPanel color="var(--primary)">
-            <CleanHeadingS>Affected Vehicles</CleanHeadingS>
-            <DetailList>
-              {bulletin.affected_vehicles.map((vehicle, idx) => (
-                <li key={idx}>
-                  <CleanBody>{vehicle}</CleanBody>
-                </li>
-              ))}
-            </DetailList>
-          </BulletinDetailPanel>
-        )}
+  return (
+    <ModalOverlay onClick={handleOverlayClick}>
+      <ModalContent>
+        <ModalCloseButton onClick={onClose} aria-label="Close modal">
+          ×
+        </ModalCloseButton>
         
-        {bulletin.problems && bulletin.problems.length > 0 && (
-          <BulletinDetailPanel color="var(--negative)">
-            <CleanHeadingS>Problems</CleanHeadingS>
-            <FactorList>
-              {bulletin.problems.map((problem, idx) => (
-                <FactorItem key={idx} iconColor="var(--negative)">
+        <BulletinsContainer>
+          <InsightsContainer>
+            <BulletinPanel>
+              <HeadingWithTooltip 
+                tooltip="Technical bulletin with detailed information about vehicle issues and fixes"
+                iconColor="var(--primary)"
+              >
+                <CleanHeadingM>{bulletin.title}</CleanHeadingM>
+              </HeadingWithTooltip>
+              
+              <MatchWarning 
+                matchConfidence={matchConfidence} 
+                metadata={metadata} 
+                vehicleMake={vehicleMake} 
+                vehicleModel={vehicleModel} 
+              />
+              
+              {error && (
+                <InsightNote>
                   <StyledWarningIcon />
-                  <span>{problem}</span>
-                </FactorItem>
-              ))}
-            </FactorList>
-          </BulletinDetailPanel>
-        )}
-        
-        {bulletin.causes && bulletin.causes.length > 0 && (
-          <BulletinDetailPanel color="var(--warning)">
-            <CleanHeadingS>Causes</CleanHeadingS>
-            <FactorList>
-              {bulletin.causes.map((cause, idx) => (
-                <FactorItem key={idx} iconColor="var(--warning)">
-                  <StyledInfoIcon color="var(--warning)" />
-                  <span>{cause}</span>
-                </FactorItem>
-              ))}
-            </FactorList>
-          </BulletinDetailPanel>
-        )}
-        
-        {bulletin.remedy && (
-          <BulletinDetailPanel color="var(--positive)">
-            <CleanHeadingS>Remedy</CleanHeadingS>
-            
-            {bulletin.remedy.parts && bulletin.remedy.parts.length > 0 && (
-              <div style={{ marginBottom: 'var(--space-xl)' }}>
-                <SubSectionHeading>Parts Required</SubSectionHeading>
-                <InsightTable>
-                  <thead>
-                    <tr>
-                      <th>Part Name</th>
-                      <th>Part Number</th>
-                      <th>Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bulletin.remedy.parts.map((part, idx) => (
-                      <tr key={idx}>
-                        <td>{part.name}</td>
-                        <td>{part.part_number}</td>
-                        <td>{part.quantity || 1}</td>
-                      </tr>
+                  <CleanBody>{error}</CleanBody>
+                </InsightNote>
+              )}
+
+              {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
+                <BulletinDetailPanel>
+                  <CleanHeadingS>Affected Vehicles</CleanHeadingS>
+                  <DetailList>
+                    {bulletin.affected_vehicles.map((vehicle, idx) => (
+                      <li key={idx}>
+                        <CleanBody>{vehicle}</CleanBody>
+                      </li>
                     ))}
-                  </tbody>
-                </InsightTable>
-              </div>
-            )}
-            
-            {bulletin.remedy.steps && bulletin.remedy.steps.length > 0 && (
-              <div>
-                <SubSectionHeading>Repair Steps</SubSectionHeading>
-                <OrderedList>
-                  {bulletin.remedy.steps.map((step, idx) => (
-                    <li key={idx}>
-                      <CleanBody>{step}</CleanBody>
-                    </li>
-                  ))}
-                </OrderedList>
-              </div>
-            )}
-          </BulletinDetailPanel>
-        )}
-        
-        {bulletin.notes && bulletin.notes.length > 0 && (
-          <BulletinDetailPanel color="var(--primary-dark)">
-            <CleanHeadingS>Notes</CleanHeadingS>
-            <FactorList>
-              {bulletin.notes.map((note, idx) => (
-                <FactorItem key={idx} iconColor="var(--primary)">
-                  <StyledInfoIcon />
-                  <span>{note}</span>
-                </FactorItem>
-              ))}
-            </FactorList>
-          </BulletinDetailPanel>
-        )}
-        
-        <StyledFooterNote>
-          <StyledInfoIcon />
-          This technical bulletin is provided based on manufacturer information. 
-          Consult with a qualified technician before attempting any repairs.
-        </StyledFooterNote>
-      </BulletinPanel>
-    </InsightsContainer>
-  </BulletinsContainer>
-);
+                  </DetailList>
+                </BulletinDetailPanel>
+              )}
+              
+              {bulletin.problems && bulletin.problems.length > 0 && (
+                <BulletinDetailPanel>
+                  <CleanHeadingS>Problems</CleanHeadingS>
+                  <FactorList>
+                    {bulletin.problems.map((problem, idx) => (
+                      <FactorItem key={idx} iconColor="var(--negative)">
+                        <StyledWarningIcon />
+                        <span>{problem}</span>
+                      </FactorItem>
+                    ))}
+                  </FactorList>
+                </BulletinDetailPanel>
+              )}
+              
+              {bulletin.causes && bulletin.causes.length > 0 && (
+                <BulletinDetailPanel>
+                  <CleanHeadingS>Causes</CleanHeadingS>
+                  <FactorList>
+                    {bulletin.causes.map((cause, idx) => (
+                      <FactorItem key={idx} iconColor="var(--warning)">
+                        <StyledInfoIcon color="var(--warning)" />
+                        <span>{cause}</span>
+                      </FactorItem>
+                    ))}
+                  </FactorList>
+                </BulletinDetailPanel>
+              )}
+              
+              {bulletin.remedy && (
+                <BulletinDetailPanel>
+                  <CleanHeadingS>Remedy</CleanHeadingS>
+                  
+                  {bulletin.remedy.parts && bulletin.remedy.parts.length > 0 && (
+                    <div style={{ marginBottom: 'var(--space-xl)' }}>
+                      <SubSectionHeading>Parts Required</SubSectionHeading>
+                      <InsightTable>
+                        <thead>
+                          <tr>
+                            <th>Part Name</th>
+                            <th>Part Number</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {bulletin.remedy.parts.map((part, idx) => (
+                            <tr key={idx}>
+                              <td>{part.name}</td>
+                              <td>{part.part_number}</td>
+                              <td>{part.quantity || 1}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </InsightTable>
+                    </div>
+                  )}
+                  
+                  {bulletin.remedy.steps && bulletin.remedy.steps.length > 0 && (
+                    <div>
+                      <SubSectionHeading>Repair Steps</SubSectionHeading>
+                      <OrderedList>
+                        {bulletin.remedy.steps.map((step, idx) => (
+                          <li key={idx}>
+                            <CleanBody>{step}</CleanBody>
+                          </li>
+                        ))}
+                      </OrderedList>
+                    </div>
+                  )}
+                </BulletinDetailPanel>
+              )}
+              
+              {bulletin.notes && bulletin.notes.length > 0 && (
+                <BulletinDetailPanel>
+                  <CleanHeadingS>Notes</CleanHeadingS>
+                  <FactorList>
+                    {bulletin.notes.map((note, idx) => (
+                      <FactorItem key={idx} iconColor="var(--primary)">
+                        <StyledInfoIcon />
+                        <span>{note}</span>
+                      </FactorItem>
+                    ))}
+                  </FactorList>
+                </BulletinDetailPanel>
+              )}
+              
+              <StyledFooterNote>
+                <StyledInfoIcon />
+                This technical bulletin is provided based on manufacturer information. 
+                Consult with a qualified technician before attempting any repairs.
+              </StyledFooterNote>
+            </BulletinPanel>
+          </InsightsContainer>
+        </BulletinsContainer>
+      </ModalContent>
+    </ModalOverlay>
+  );
+};
 
 /**
  * SearchAndFilters Component - Extracted for cleaner code organization
@@ -556,6 +588,52 @@ const BulletinsComponent = ({
     };
   }, [vehicleMake, vehicleModel, vehicleEngineCode, vehicleYear, vehicleData, onDataLoad]);
 
+  // Fetch category from API
+  const fetchCategoryFromAPI = useCallback(async (category) => {
+    setLoading(true);
+    
+    try {
+      let data;
+      
+      if (vehicleData) {
+        data = await bulletinsApi.lookupBulletins(vehicleData, category);
+      } else {
+        data = await bulletinsApi.getBulletins(
+          vehicleMake, 
+          vehicleModel, 
+          vehicleEngineCode, 
+          vehicleYear, 
+          category
+        );
+      }
+      
+      if (data && data.bulletins) {
+        if (data.bulletins.length === 0) {
+          setError(`No bulletins found in category "${category}"`);
+          if (allBulletins) {
+            setBulletins(allBulletins);
+          }
+        } else {
+          setBulletins(data);
+        }
+      } else {
+        setError('No bulletins found for this category');
+        
+        if (allBulletins) {
+          setBulletins(allBulletins);
+        }
+      }
+      setLoading(false);
+    } catch (err) {
+      setError(err.message || 'Failed to fetch bulletins for this category');
+      setLoading(false);
+      
+      if (allBulletins) {
+        setBulletins(allBulletins);
+      }
+    }
+  }, [vehicleData, vehicleMake, vehicleModel, vehicleEngineCode, vehicleYear, allBulletins]);
+
   // Load category - client-side filtering as primary approach
   const loadCategory = useCallback((category) => {
     setSelectedCategory(category);
@@ -612,57 +690,11 @@ const BulletinsComponent = ({
       }
       
       setLoading(false);
-    } catch (err) {
+    } catch {
       // On error, fall back to API
       fetchCategoryFromAPI(category);
     }
-  }, [allBulletins]);
-
-  // Fetch category from API
-  const fetchCategoryFromAPI = useCallback(async (category) => {
-    setLoading(true);
-    
-    try {
-      let data;
-      
-      if (vehicleData) {
-        data = await bulletinsApi.lookupBulletins(vehicleData, category);
-      } else {
-        data = await bulletinsApi.getBulletins(
-          vehicleMake, 
-          vehicleModel, 
-          vehicleEngineCode, 
-          vehicleYear, 
-          category
-        );
-      }
-      
-      if (data && data.bulletins) {
-        if (data.bulletins.length === 0) {
-          setError(`No bulletins found in category "${category}"`);
-          if (allBulletins) {
-            setBulletins(allBulletins);
-          }
-        } else {
-          setBulletins(data);
-        }
-      } else {
-        setError('No bulletins found for this category');
-        
-        if (allBulletins) {
-          setBulletins(allBulletins);
-        }
-      }
-      setLoading(false);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch bulletins for this category');
-      setLoading(false);
-      
-      if (allBulletins) {
-        setBulletins(allBulletins);
-      }
-    }
-  }, [vehicleData, vehicleMake, vehicleModel, vehicleEngineCode, vehicleYear, allBulletins]);
+  }, [allBulletins, fetchCategoryFromAPI]);
 
   // Load specific bulletin
   const loadBulletin = useCallback((bulletinId) => {
@@ -706,18 +738,10 @@ const BulletinsComponent = ({
     setTimeout(() => window.location.reload(), 500);
   }, []);
 
-  // Handler for returning from bulletin detail view
-  const handleBackFromDetail = useCallback(() => {
+  // Handler for closing modal
+  const handleCloseModal = useCallback(() => {
     setSelectedBulletin(null);
-    if (selectedCategory || searchTerm) {
-      // Filtering is already applied, no need to change bulletins
-    } 
-    // If we're showing a single bulletin because we called the API with bulletin_id,
-    // restore all bulletins
-    else if (bulletins?.bulletins.length === 1 && allBulletins && allBulletins.bulletins.length > 1) {
-      setBulletins(allBulletins);
-    }
-  }, [selectedCategory, searchTerm, bulletins, allBulletins]);
+  }, []);
 
   // Handler for search input changes
   const handleSearchChange = useCallback((e) => {
@@ -747,86 +771,94 @@ const BulletinsComponent = ({
       allBulletins?.bulletins.find(b => b.id === selectedBulletin)
     : null;
 
-  // Render bulletin detail view
-  if (selectedBulletin && currentBulletin) {
-    return (
-      <BulletinDetail 
-        bulletin={currentBulletin}
-        onBack={handleBackFromDetail}
-        matchConfidence={matchConfidence}
-        metadata={bulletins.metadata}
-        vehicleMake={vehicleMake}
-        vehicleModel={vehicleModel}
-        error={error}
-      />
-    );
-  }
+  // Render bulletin detail modal
+  const renderModal = () => {
+    if (selectedBulletin && currentBulletin) {
+      return (
+        <BulletinDetailModal 
+          bulletin={currentBulletin}
+          onClose={handleCloseModal}
+          matchConfidence={matchConfidence}
+          metadata={bulletins.metadata}
+          vehicleMake={vehicleMake}
+          vehicleModel={vehicleModel}
+          error={error}
+        />
+      );
+    }
+    return null;
+  };
 
   // Render bulletins list view
   return (
-    <BulletinsContainer>
-      <InsightsContainer>
-        <BulletinPanel>
-          <HeadingWithTooltip 
-            tooltip="Technical bulletins for your vehicle, based on manufacturer data"
-            iconColor="var(--primary)"
-          >
-            <CleanHeadingM>Technical Bulletins for {vehicleMake} {vehicleModel}</CleanHeadingM>
-          </HeadingWithTooltip>
-          
-          <InsightBody>
-            {vehicleInfo.engine_info && `Engine: ${vehicleInfo.engine_info}. `}
-            {vehicleYear && `Year: ${vehicleYear}. `}
-            Found {bulletins.bulletins.length} technical bulletins that may apply to your vehicle.
-          </InsightBody>
-          
-          <MatchWarning 
-            matchConfidence={matchConfidence} 
-            metadata={bulletins.metadata} 
-            vehicleMake={vehicleMake} 
-            vehicleModel={vehicleModel} 
-          />
-          
-          {error && (
-            <InsightNote sx={{ backgroundColor: 'var(--negative-light)', borderColor: 'var(--negative)', marginBottom: 'var(--space-lg)' }}>
-              <StyledWarningIcon />
-              <CleanBody>{error}</CleanBody>
-            </InsightNote>
-          )}
-          
-          <SearchAndFilters 
-            searchTerm={searchTerm}
-            onSearchChange={handleSearchChange}
-            onClearFilters={resetFilters}
-            showClearFilters={searchTerm || selectedCategory}
-            filteredCount={filteredBulletinsList.length}
-            selectedCategory={selectedCategory}
-          />
-          
-          <MainLayout>
-            {/* Categories sidebar */}
-            <CategoriesSidebar 
-              categories={allBulletins?.categories}
-              selectedCategory={selectedCategory}
-              onCategorySelect={loadCategory}
-              onShowAllCategories={resetFilters}
+    <>
+      <BulletinsContainer>
+        <InsightsContainer>
+          <BulletinPanel>
+            <HeadingWithTooltip 
+              tooltip="Technical bulletins for your vehicle, based on manufacturer data"
+              iconColor="var(--primary)"
+            >
+              <CleanHeadingM>Technical Bulletins for {vehicleMake} {vehicleModel}</CleanHeadingM>
+            </HeadingWithTooltip>
+            
+            <InsightBody>
+              {vehicleInfo.engine_info && `Engine: ${vehicleInfo.engine_info}. `}
+              {vehicleYear && `Year: ${vehicleYear}. `}
+              Found {bulletins.bulletins.length} technical bulletins that may apply to your vehicle.
+            </InsightBody>
+            
+            <MatchWarning 
+              matchConfidence={matchConfidence} 
+              metadata={bulletins.metadata} 
+              vehicleMake={vehicleMake} 
+              vehicleModel={vehicleModel} 
             />
             
-            {/* Bulletins content */}
-            <ContentArea>
-              {filteredBulletinsList.length === 0 ? (
-                <NoResults onClearFilters={resetFilters} />
-              ) : (
-                <BulletinListView 
-                  bulletins={filteredBulletinsList}
-                  onViewDetails={loadBulletin}
-                />
-              )}
-            </ContentArea>
-          </MainLayout>
-        </BulletinPanel>
-      </InsightsContainer>
-    </BulletinsContainer>
+            {error && (
+              <InsightNote>
+                <StyledWarningIcon />
+                <CleanBody>{error}</CleanBody>
+              </InsightNote>
+            )}
+            
+            <SearchAndFilters 
+              searchTerm={searchTerm}
+              onSearchChange={handleSearchChange}
+              onClearFilters={resetFilters}
+              showClearFilters={searchTerm || selectedCategory}
+              filteredCount={filteredBulletinsList.length}
+              selectedCategory={selectedCategory}
+            />
+            
+            <MainLayout>
+              {/* Categories sidebar */}
+              <CategoriesSidebar 
+                categories={allBulletins?.categories}
+                selectedCategory={selectedCategory}
+                onCategorySelect={loadCategory}
+                onShowAllCategories={resetFilters}
+              />
+              
+              {/* Bulletins content */}
+              <ContentArea>
+                {filteredBulletinsList.length === 0 ? (
+                  <NoResults onClearFilters={resetFilters} />
+                ) : (
+                  <BulletinListView 
+                    bulletins={filteredBulletinsList}
+                    onViewDetails={loadBulletin}
+                  />
+                )}
+              </ContentArea>
+            </MainLayout>
+          </BulletinPanel>
+        </InsightsContainer>
+      </BulletinsContainer>
+      
+      {/* Render modal if bulletin is selected */}
+      {renderModal()}
+    </>
   );
 };
 

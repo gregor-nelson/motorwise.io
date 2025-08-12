@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { 
-  GovUKContainer, 
-  GovUKMainWrapper,
-  GovUKHeadingXL,
-  GovUKHeadingL,
-  GovUKBody,
-  GovUKLink,
-  GovUKSectionBreak,
-  GovUKLoadingContainer,
-  GovUKLoadingSpinner,
-  PremiumBadge,
+
+// MarketDash Professional Styled Components
+import {
+  PremiumContainer,
+  ReportHeader,
+  PremiumBadgeContainer,
+  ReportTitle,
+  VehicleRegistration,
+  VehicleMakeModel,
   ReportSection,
-  VehicleRegistration
-} from '../../styles/theme';
-import Alert from '@mui/material/Alert';
+  SectionHeader,
+  DataPanel,
+  DataTable,
+  MetricsGrid,
+  MetricCard,
+  MetricLabel,
+  MetricValue,
+  MetricDescription,
+  StatusIndicator,
+  RiskScore,
+  Alert,
+  LoadingContainer,
+  LoadingSpinner,
+  LoadingText,
+  ReportFooter
+} from './PremiumStyles';
 
 // Import components directly to maintain original behavior
 import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader';
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
- 
 import MileageChart3D from '../../components/Premium/DVLA/Mileage/Chart/MileageChart3D';
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
 import AutoDataSection from '../../components/AutoData/DataTabs';
@@ -35,10 +45,12 @@ const API_CONFIG = {
   }
 };
 
-// Error message component with GOV.UK styling
-const ErrorMessage = ({ message, severity = "info" }) => (
-  <Alert severity={severity} style={{ margin: '20px 0' }}>
-    {message}
+// Professional Error Message Component
+const ErrorMessage = ({ message, variant = "info" }) => (
+  <Alert variant={variant}>
+    <div className="alert-content">
+      <div className="alert-message">{message}</div>
+    </div>
   </Alert>
 );
 
@@ -297,163 +309,158 @@ const PremiumReportPage = () => {
     setPdfDataReady(!!reportData && !!motData);
   }, [reportData, motData]);
   
-  // Loading state - improved styling
+  // Loading state - MarketDash styling
   if (loading) {
     return (
-      <GovUKContainer>
-        <GovUKMainWrapper>
-          <GovUKLoadingContainer>
-            <GovUKLoadingSpinner />
-            <GovUKBody>Preparing your vehicle report. This may take a moment...</GovUKBody>
-          </GovUKLoadingContainer>
-        </GovUKMainWrapper>
-      </GovUKContainer>
+      <PremiumContainer>
+        <LoadingContainer>
+          <LoadingSpinner />
+          <LoadingText>Preparing your vehicle report. This may take a moment...</LoadingText>
+        </LoadingContainer>
+      </PremiumContainer>
     );
   }
   
-  // Error state - improved styling
+  // Error state - MarketDash styling
   if (error) {
     return (
-      <GovUKContainer>
-        <GovUKMainWrapper>
-          <Alert severity="error" style={{ marginBottom: '20px' }}>
-            We are unable to retrieve your vehicle report at this time. {error}
-          </Alert>
-          <GovUKBody>
-            <GovUKLink href="/" noVisitedState>
-              Return to the homepage
-            </GovUKLink>
-          </GovUKBody>
-        </GovUKMainWrapper>
-      </GovUKContainer>
+      <PremiumContainer>
+        <ErrorMessage variant="error" message={`We are unable to retrieve your vehicle report at this time. ${error}`} />
+        <ReportFooter>
+          <a href="/">Return to the homepage</a>
+        </ReportFooter>
+      </PremiumContainer>
     );
   }
   
-  // Render report - keeping the original structure but with improved error handling
+  // Render report - MarketDash professional layout
   if (reportData) {
     return (
-      <GovUKContainer>
-        <GovUKMainWrapper>
-        
-          
-          <div ref={reportContainerRef}>
-            <div className="report-section">
-              <PremiumBadge>
-                {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
-              </PremiumBadge>
-              <GovUKHeadingXL>Vehicle Report</GovUKHeadingXL>
-              <VehicleRegistration data-test-id="premium-vehicle-registration">
-                {reportData.registration}
-              </VehicleRegistration>
-              <GovUKHeadingL>{reportData.makeModel}</GovUKHeadingL>
-              {reportData.isFreeReport && (
-                <Alert severity="info" style={{ marginTop: '16px', marginBottom: '20px' }}>
-                  {reportData.reportType === 'classic'
-                    ? "Enhanced vehicle information is provided at no cost for vehicles registered before 1996."
-                    : "Enhanced vehicle information is provided at no cost for vehicles registered from 2018 onwards."}
-                </Alert>
-              )}
-            </div>
+      <PremiumContainer>
+        <div ref={reportContainerRef}>
+          {/* Professional Report Header */}
+          <ReportHeader>
+            <PremiumBadgeContainer>
+              {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
+            </PremiumBadgeContainer>
+            <ReportTitle>Vehicle Report</ReportTitle>
+            <VehicleRegistration data-test-id="premium-vehicle-registration">
+              {reportData.registration}
+            </VehicleRegistration>
+            <VehicleMakeModel>{reportData.makeModel}</VehicleMakeModel>
+            {reportData.isFreeReport && (
+              <Alert variant="info">
+                <div className="alert-content">
+                  <div className="alert-message">
+                    {reportData.reportType === 'classic'
+                      ? "Enhanced vehicle information is provided at no cost for vehicles registered before 1996."
+                      : "Enhanced vehicle information is provided at no cost for vehicles registered from 2018 onwards."}
+                  </div>
+                </div>
+              </Alert>
+            )}
+          </ReportHeader>
             
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* DVLA Vehicle Data section with error fallback */}
-            <div className="report-section">
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The vehicle registration details are temporarily unavailable. Please try again later." 
-                  severity="warning"
-                />
-              }>
-                <DVLAVehicleData registration={reportData.registration} paymentId={paymentId} />
-              </ErrorBoundary>
-            </div>
+          {/* DVLA Vehicle Data Section */}
+          <ReportSection>
+            <SectionHeader>
+              <h2>Vehicle Overview</h2>
+            </SectionHeader>
+            <ErrorBoundary fallback={
+              <ErrorMessage 
+                variant="warning"
+                message="The vehicle registration details are temporarily unavailable. Please try again later." 
+              />
+            }>
+              <DVLAVehicleData registration={reportData.registration} paymentId={paymentId} />
+            </ErrorBoundary>
+          </ReportSection>
 
-             {/* Vehicle Insights section - keeping original implementation */}
-            <div className="report-section">
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The vehicle insights information is temporarily unavailable. Please try again later."
-                  severity="warning"
-                />
-              }>
-                <VehicleInsights
-                  registration={reportData.registration}
-                  vin={reportData.vin}
-                  paymentId={paymentId}
-                  onDataLoad={handleVehicleInsightsData}
-                />
-              </ErrorBoundary>
-            </div>
+          {/* Vehicle Insights Section */}
+          <ReportSection>
+            <SectionHeader>
+              <h2>Vehicle Insights</h2>
+            </SectionHeader>
+            <ErrorBoundary fallback={
+              <ErrorMessage 
+                variant="warning"
+                message="The vehicle insights information is temporarily unavailable. Please try again later."
+              />
+            }>
+              <VehicleInsights
+                registration={reportData.registration}
+                vin={reportData.vin}
+                paymentId={paymentId}
+                onDataLoad={handleVehicleInsightsData}
+              />
+            </ErrorBoundary>
+          </ReportSection>
             
+          {/* Technical Specifications Section */}
+          <ReportSection>
+            <SectionHeader>
+              <h2>Technical Specifications</h2>
+            </SectionHeader>
+            <ErrorBoundary fallback={
+              <ErrorMessage 
+                variant="warning"
+                message="The technical vehicle specifications are temporarily unavailable. Please try again later."
+              />
+            }>
+              <AutoDataSection
+                vehicleData={fullVehicleData}
+                loading={loading}
+                error={error}
+                registration={registration}
+              />
+            </ErrorBoundary>
+          </ReportSection>
             
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-             {/* AutoData section */}
-             <ReportSection>
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The technical vehicle specifications are temporarily unavailable. Please try again later."
-                  severity="warning"
-                />
-              }>
-                <AutoDataSection
-                  vehicleData={fullVehicleData}
-                  loading={loading}
-                  error={error}
-                  registration={registration}
-                />
-              </ErrorBoundary>
-            </ReportSection>
+          {/* 3D Mileage History Section */}
+          <ReportSection>
+            <SectionHeader>
+              <h2>3D Mileage History</h2>
+            </SectionHeader>
+            <ErrorBoundary fallback={
+              <ErrorMessage 
+                variant="warning"
+                message="The MOT mileage history is temporarily unavailable. Please try again later."
+              />
+            }>
+              {motData && motData.length > 0 ? (
+                <MileageChart3D motData={motData} />
+              ) : (
+                <ErrorMessage variant="info" message="No MOT mileage history is available for this vehicle." />
+              )}
+            </ErrorBoundary>
+          </ReportSection>
             
-           
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* Mileage Chart section */}
-            <div className="report-section">
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The MOT mileage history is temporarily unavailable. Please try again later."
-                  severity="warning"
-                />
-              }>
-                {motData && motData.length > 0 ? (
-                  <MileageChart3D motData={motData} />
-                ) : (
-                  <ErrorMessage message="No MOT mileage history is available for this vehicle." />
-                )}
-              </ErrorBoundary>
-            </div>
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-            {/* Mileage Insights section */}
-            <div className="report-section">
-              <ErrorBoundary fallback={
-                <ErrorMessage 
-                  message="The mileage analysis information is temporarily unavailable. Please try again later."
-                  severity="warning"
-                />
-              }>
-                <VehicleMileageInsights
-                  registration={reportData.registration}
-                  paymentId={paymentId}
-                  onDataLoad={handleMileageInsightsData}
-                />
-              </ErrorBoundary>
-            </div>
-            
-            <GovUKSectionBreak className="govuk-section-break--visible govuk-section-break--m" />
-            
-           
-          </div>
+          {/* Mileage Insights Section */}
+          <ReportSection>
+            <SectionHeader>
+              <h2>Mileage Insights</h2>
+            </SectionHeader>
+            <ErrorBoundary fallback={
+              <ErrorMessage 
+                variant="warning"
+                message="The mileage analysis information is temporarily unavailable. Please try again later."
+              />
+            }>
+              <VehicleMileageInsights
+                registration={reportData.registration}
+                paymentId={paymentId}
+                onDataLoad={handleMileageInsightsData}
+              />
+            </ErrorBoundary>
+          </ReportSection>
+        </div>
           
-          <GovUKBody style={{ marginTop: '30px' }}>
-            <GovUKLink href={`/vehicle/${reportData.registration}`} noVisitedState>
-              Return to standard vehicle details
-            </GovUKLink>
-          </GovUKBody>
-        </GovUKMainWrapper>
-      </GovUKContainer>
+        <ReportFooter>
+          <a href={`/vehicle/${reportData.registration}`}>
+            Return to standard vehicle details
+          </a>
+        </ReportFooter>
+      </PremiumContainer>
     );
   }
   

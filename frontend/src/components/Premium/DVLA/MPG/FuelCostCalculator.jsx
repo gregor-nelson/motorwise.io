@@ -1,134 +1,138 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { GovUKTooltip } from '../../../../styles/tooltip';
-import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import SpeedIcon from '@mui/icons-material/Speed';
 
-// Material UI styled components to match GOV.UK styling
-const CalculatorContainer = styled('div')(({ theme }) => ({
-  marginTop: '20px',
-  padding: '20px',
-  backgroundColor: '#f8f8f8',
-  borderLeft: '5px solid #85994b',
-  borderRadius: '0 4px 4px 0'
-}));
+// Clean minimal styled components
+const CalculatorContainer = styled('div')`
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin-top: 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid #f1f5f9;
+`;
 
-const CalculatorTitle = styled('h3')(({ theme }) => ({
-  fontSize: '19px',
-  fontWeight: 700,
-  marginBottom: '15px',
-  color: '#0b0c0c',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px'
-}));
+const CalculatorTitle = styled('h3')`
+  font-family: 'Jost', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+  line-height: 1.25;
+`;
 
-const CalculatorDescription = styled('p')(({ theme }) => ({
-  marginBottom: '15px',
-  fontSize: '16px',
-  color: '#0b0c0c',
-  lineHeight: 1.5
-}));
+const CalculatorDescription = styled('p')`
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.625;
+  font-weight: 400;
+`;
 
-const InputGrid = styled('div')(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '20px',
-  marginBottom: '20px',
-  [theme.breakpoints.down('sm')]: {
-    gridTemplateColumns: '1fr'
+const InputGrid = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-}));
+`;
 
-const InputGroup = styled('div')(({ theme }) => ({
-  marginBottom: '15px'
-}));
+const InputGroup = styled('div')`
+  display: flex;
+  flex-direction: column;
+`;
 
-const InputLabel = styled('label')(({ theme }) => ({
-  display: 'block',
-  fontSize: '16px',
-  fontWeight: 600,
-  marginBottom: '5px',
-  cursor: 'pointer',
-  alignItems: 'center',
-  gap: '8px'
-}));
+const InputLabel = styled('label')`
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: #64748b;
+  cursor: pointer;
+`;
 
-const InputField = styled('input')(({ theme }) => ({
-  width: '100%',
-  padding: '10px',
-  border: '2px solid #0b0c0c',
-  borderRadius: 0,
-  fontSize: '16px',
-  lineHeight: 1.25,
-  '&:focus': {
-    outline: '3px solid #ffdd00',
-    boxShadow: '0 0 0 3px #ffdd00'
+const InputField = styled('input')`
+  width: 100%;
+  padding: 0.75rem 0;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  background: transparent;
+  font-size: 1rem;
+  font-family: 'JetBrains Mono', Monaco, monospace;
+  color: #0f172a;
+  
+  &:focus {
+    outline: none;
+    border-bottom-color: #0f172a;
   }
-}));
-
-const InputWithAddon = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'stretch'
-}));
-
-const InputAddon = styled('span')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: '0 10px',
-  backgroundColor: '#eee',
-  border: '2px solid #0b0c0c',
-  borderLeft: 'none',
-  fontWeight: 600,
-  fontSize: '16px'
-}));
-
-const ResultsContainer = styled('div')(({ theme }) => ({
-  backgroundColor: '#ffffff',
-  padding: '20px',
-  border: '1px solid #b1b4b6',
-  marginTop: '10px'
-}));
-
-const ResultTitle = styled('h4')(({ theme }) => ({
-  fontSize: '18px',
-  fontWeight: 700,
-  color: '#0b0c0c',
-  marginBottom: '10px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px'
-}));
-
-const ResultValue = styled('div')(({ theme }) => ({
-  fontSize: '36px',
-  fontWeight: 700,
-  color: '#00703c',
-  marginBottom: '5px'
-}));
-
-const ResultDetails = styled('div')(({ theme }) => ({
-  fontSize: '16px',
-  color: '#505a5f'
-}));
-
-const ResetButton = styled('button')(({ theme }) => ({
-  backgroundColor: '#f3f2f1',
-  color: '#0b0c0c',
-  fontSize: '16px',
-  fontWeight: 600,
-  padding: '8px 16px',
-  border: '1px solid #505a5f',
-  marginTop: '15px',
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: '#dbdad9'
-  },
-  '&:focus': {
-    outline: '3px solid #ffdd00'
+  
+  &::placeholder {
+    color: #94a3b8;
   }
-}));
+`;
+
+const InputWithAddon = styled('div')`
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+`;
+
+const InputAddon = styled('span')`
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 400;
+  padding-bottom: 0.75rem;
+`;
+
+const ResultsContainer = styled('div')`
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f1f5f9;
+`;
+
+const ResultTitle = styled('h4')`
+  font-size: 1rem;
+  font-weight: 400;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+`;
+
+const ResultValue = styled('div')`
+  font-family: 'JetBrains Mono', Monaco, monospace;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+`;
+
+const ResultDetails = styled('div')`
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.625;
+`;
+
+const ResetButton = styled('button')`
+  background: transparent;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: 0;
+  border: none;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+  
+  &:hover {
+    color: #0f172a;
+  }
+  
+  &:focus {
+    outline: none;
+    color: #0f172a;
+  }
+`;
 
 /**
  * Interactive Fuel Cost Calculator Component
@@ -196,11 +200,9 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
       <InputGrid>
         {!isElectric && (
           <InputGroup>
-            <GovUKTooltip title="Enter your vehicle's actual or expected MPG" arrow placement="top">
-              <InputLabel htmlFor="mpg-input">
-                <SpeedIcon fontSize="small" /> Fuel Economy (MPG)
-              </InputLabel>
-            </GovUKTooltip>
+            <InputLabel htmlFor="mpg-input">
+              Fuel Economy (MPG)
+            </InputLabel>
             <InputField
               id="mpg-input"
               type="number"
@@ -213,16 +215,9 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
         )}
         
         <InputGroup>
-          <GovUKTooltip 
-            title={isElectric ? "Current electricity price per kWh" : "Current fuel price per liter"} 
-            arrow 
-            placement="top"
-          >
-            <InputLabel htmlFor="fuel-price-input">
-              <LocalGasStationIcon fontSize="small" /> 
-              {isElectric ? "Electricity Price" : "Fuel Price"}
-            </InputLabel>
-          </GovUKTooltip>
+          <InputLabel htmlFor="fuel-price-input">
+            {isElectric ? "Electricity Price" : "Fuel Price"}
+          </InputLabel>
           <InputWithAddon>
             <InputField
               id="fuel-price-input"
@@ -237,11 +232,9 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
         </InputGroup>
         
         <InputGroup>
-          <GovUKTooltip title="Your expected annual mileage" arrow placement="top">
-            <InputLabel htmlFor="mileage-input">
-              <DirectionsCarIcon fontSize="small" /> Annual Mileage
-            </InputLabel>
-          </GovUKTooltip>
+          <InputLabel htmlFor="mileage-input">
+            Annual Mileage
+          </InputLabel>
           <InputField
             id="mileage-input"
             type="number"
@@ -255,7 +248,7 @@ const FuelCostCalculator = ({ defaultValues, fuelType, isElectric }) => {
       
       <ResultsContainer>
         <ResultTitle>
-        Your Estimated Fuel Costs
+          Your Estimated Fuel Costs
         </ResultTitle>
         <ResultValue>£{Math.round(annualCost).toLocaleString()}</ResultValue>
         <ResultDetails>

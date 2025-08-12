@@ -17,7 +17,7 @@ import {
   PremiumButton,
   GovUKButton,
   BaseButton
-} from '../../styles/theme';
+} from '../../../styles/theme';
 import Alert from '@mui/material/Alert';
 
 // Import the refactored dialog components, including the new FullScreenSampleReportButton
@@ -26,7 +26,7 @@ import {
   FreeReportDialog,
   SuccessDialog,
   FullScreenSampleReportButton
-} from './Dialog/PremiumDialog';
+} from '../Dialog/PremiumDialog';
 
 // Determine if we're in development or production
 const isDevelopment = 

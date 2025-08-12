@@ -1,15 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {
-  GovUKHeadingM,
-  GovUKHeadingL,
-  GovUKBodyS,
-  GovUKLoadingSpinner,
-  GovUKContainer,
-  COLORS,
-  BREAKPOINTS
-} from '../../../../styles/theme';
 
 // Import calculator components 
 import EmissionsInsightsCalculator from '../Tax/EmissionsInsightsCalculator';
@@ -26,239 +16,36 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import Co2Icon from '@mui/icons-material/Co2';
 
-// Styled components
-const InsightsWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: '#f8f8f8',
-  minHeight: '100vh',
-  paddingTop: '20px',
-  paddingBottom: '40px',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    paddingTop: '10px',
-    paddingBottom: '20px'
-  }
-}));
-
-const InsightsHeader = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  borderBottom: `3px solid ${COLORS.BLUE}`,
-  padding: '30px 0',
-  marginBottom: '30px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    padding: '20px 0',
-    marginBottom: '20px'
-  }
-}));
-
-const HeaderContent = styled(Box)(({ theme }) => ({
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '0 20px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '20px',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: '15px',
-    padding: '0 15px'
-  }
-}));
-
-const HeaderIcon = styled(Box)(({ theme }) => ({
-  width: '60px',
-  height: '60px',
-  backgroundColor: COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '30px',
-  borderRadius: '5px',
-  flexShrink: 0,
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    width: '48px',
-    height: '48px',
-    fontSize: '24px'
-  }
-}));
-
-const HeaderText = styled(Box)(({ theme }) => ({
-  flex: 1
-}));
-
-const InsightsContent = styled(Box)(({ theme }) => ({
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '0 20px',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    padding: '0 15px'
-  }
-}));
-
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  borderRadius: '5px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  padding: '60px 40px',
-  textAlign: 'center',
-  maxWidth: '600px',
-  margin: '40px auto',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    padding: '40px 20px',
-    margin: '20px auto'
-  }
-}));
-
-const EmptyStateContainer = styled(LoadingContainer)(({ theme }) => ({
-  '& svg': {
-    marginBottom: '20px'
-  }
-}));
-
-const ErrorContainer = styled(EmptyStateContainer)(({ theme }) => ({
-  borderLeft: `5px solid ${COLORS.RED}`,
-  
-  '& h2': {
-    color: COLORS.RED
-  }
-}));
-
-const SummaryGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-  gap: '20px',
-  marginBottom: '30px',
-  
-  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '15px'
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    gridTemplateColumns: '1fr',
-    gap: '12px',
-    marginBottom: '20px'
-  }
-}));
-
-const SummaryCard = styled(Box)(({ status }) => ({
-  backgroundColor: COLORS.WHITE,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  borderRadius: '5px',
-  padding: '20px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '15px',
-  transition: 'all 0.2s ease',
-  cursor: 'pointer',
-  position: 'relative',
-  
-  '&:hover': {
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-    borderColor: COLORS.BLACK,
-    transform: 'translateY(-2px)'
-  },
-  
-  '&:focus': {
-    outline: `3px solid ${COLORS.FOCUS}`,
-    outlineOffset: 0
-  },
-  
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: '4px',
-    backgroundColor: 
-      status === 'good' ? COLORS.GREEN :
-      status === 'warning' ? COLORS.ORANGE :
-      status === 'critical' ? COLORS.RED :
-      COLORS.BLUE,
-    borderRadius: '5px 0 0 5px'
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    padding: '15px',
-    gap: '12px'
-  }
-}));
-
-const SummaryIcon = styled(Box)(({ color }) => ({
-  width: '40px',
-  height: '40px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '20px',
-  borderRadius: '5px',
-  flexShrink: 0,
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    width: '36px',
-    height: '36px',
-    fontSize: '18px'
-  }
-}));
-
-const SummaryContent = styled(Box)(({ theme }) => ({
-  flex: 1
-}));
-
-const SummaryTitle = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  color: COLORS.DARK_GREY,
-  marginBottom: '4px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: '13px'
-  }
-}));
-
-const SummaryValue = styled(Box)(({ theme }) => ({
-  fontSize: '20px',
-  fontWeight: 700,
-  color: COLORS.BLACK,
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: '18px'
-  }
-}));
-
-const InsightSection = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  borderRadius: '5px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  marginBottom: '20px',
-  overflow: 'hidden',
-  scrollMarginTop: '20px', // For smooth scroll positioning
-  
-  '&:last-child': {
-    marginBottom: 0
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    marginBottom: '15px',
-    scrollMarginTop: '15px'
-  }
-}));
+// Import styled components from centralized styles
+import {
+  InsightsWrapper,
+  InsightsHeader,
+  HeaderContent,
+  HeaderIcon,
+  HeaderText,
+  InsightsContent,
+  LoadingContainer,
+  EmptyStateContainer,
+  ErrorContainer,
+  SummaryGrid,
+  SummaryCard,
+  SummaryIcon,
+  SummaryContent,
+  SummaryTitle,
+  SummaryValue,
+  InsightSection,
+  LoadingSpinner,
+  HeadingL,
+  HeadingM,
+  BodyText
+} from './style/style';
 
 // API configuration
 const API_BASE_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8004/api'
   : '/api';
+
+// All styled components now imported from centralized styles
 
 // Lazy load panel components with error handling
 const OwnershipPanelComponent = lazy(() => 
@@ -317,7 +104,7 @@ const calculateInsightQuality = (insightType, data) => {
   }
 };
 
-// Error boundary component
+// MarketDash error boundary component
 class InsightErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -336,8 +123,8 @@ class InsightErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <Box p={3} textAlign="center">
-          <WarningIcon style={{ fontSize: 30, color: COLORS.RED, marginBottom: 10 }} />
-          <GovUKBodyS>Error displaying this insight section</GovUKBodyS>
+          <WarningIcon style={{ fontSize: 30, color: 'var(--negative)', marginBottom: 10 }} />
+          <BodyText>Error displaying this insight section</BodyText>
         </Box>
       );
     }
@@ -346,10 +133,10 @@ class InsightErrorBoundary extends React.Component {
   }
 }
 
-// Loading fallback component
+// MarketDash loading fallback component
 const LoadingFallback = () => (
   <Box p={4} textAlign="center">
-    <GovUKLoadingSpinner size="small" />
+    <LoadingSpinner />
   </Box>
 );
 
@@ -600,7 +387,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     if (insights.ownershipInsights) {
       cards.push({
         icon: <DirectionsCarIcon />,
-        color: COLORS.BLUE,
+        color: 'var(--primary)',
         title: 'Ownership',
         value: `${insights.ownershipInsights.yearsWithCurrentOwner} years`,
         status: insights.ownershipInsights.ownershipRiskLevel === 'Low' ? 'good' : 
@@ -612,7 +399,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     if (insights.statusInsights) {
       cards.push({
         icon: <SpeedIcon />,
-        color: COLORS.PURPLE || COLORS.BLUE,
+        color: 'var(--neutral)',
         title: 'Status',
         value: insights.statusInsights.driveabilityStatus,
         status: ['Legal to drive', 'Fully Road Legal'].includes(insights.statusInsights.driveabilityStatus) 
@@ -624,7 +411,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     if (insights.emissionsInsights) {
       cards.push({
         icon: <Co2Icon />,
-        color: COLORS.GREEN,
+        color: 'var(--positive)',
         title: 'Emissions',
         value: `${insights.emissionsInsights.co2Emissions || 0}g/km`,
         status: insights.emissionsInsights.isULEZCompliant ? 'good' : 'critical',
@@ -635,7 +422,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     if (insights.fuelEfficiencyInsights) {
       cards.push({
         icon: <LocalGasStationIcon />,
-        color: COLORS.GREEN,
+        color: 'var(--warning)',
         title: 'Fuel Economy',
         value: insights.fuelEfficiencyInsights.isElectric 
           ? `${insights.fuelEfficiencyInsights.estimatedMilesPerKWh} mi/kWh`
@@ -692,17 +479,17 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
   if (loading) {
     return (
       <InsightsWrapper>
-        <GovUKContainer>
+        <InsightsContent>
           <LoadingContainer>
-            <GovUKLoadingSpinner />
-            <GovUKHeadingM style={{ marginTop: '20px', marginBottom: '10px' }}>
+            <LoadingSpinner />
+            <HeadingM style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-sm)' }}>
               Loading Vehicle Insights
-            </GovUKHeadingM>
-            <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+            </HeadingM>
+            <BodyText>
               We're analyzing your vehicle data to provide detailed insights...
-            </GovUKBodyS>
+            </BodyText>
           </LoadingContainer>
-        </GovUKContainer>
+        </InsightsContent>
       </InsightsWrapper>
     );
   }
@@ -711,33 +498,36 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
   if (error) {
     return (
       <InsightsWrapper>
-        <GovUKContainer>
+        <InsightsContent>
           <ErrorContainer>
-            <WarningIcon style={{ fontSize: 60, color: COLORS.RED }} />
-            <GovUKHeadingM style={{ marginBottom: '10px' }}>
+            <WarningIcon style={{ fontSize: 60, color: 'var(--negative)' }} />
+            <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>
               Unable to Load Insights
-            </GovUKHeadingM>
-            <GovUKBodyS style={{ color: COLORS.DARK_GREY, marginBottom: '20px' }}>
+            </HeadingM>
+            <BodyText style={{ marginBottom: 'var(--space-lg)' }}>
               {error}
-            </GovUKBodyS>
+            </BodyText>
             <button 
               onClick={() => window.location.reload()}
               style={{
-                backgroundColor: COLORS.BUTTON_COLOUR || COLORS.GREEN,
-                color: 'white',
+                background: 'var(--negative)',
+                color: 'var(--white)',
                 border: 'none',
-                padding: '10px 20px',
-                fontFamily: '"GDS Transport", arial, sans-serif',
-                fontWeight: 700,
-                fontSize: '16px',
+                padding: 'var(--space-md) var(--space-xl)',
+                fontFamily: 'var(--font-main)',
+                fontWeight: 'var(--font-medium)',
+                fontSize: 'var(--text-base)',
                 cursor: 'pointer',
-                borderRadius: '3px'
+                borderRadius: 'var(--radius-sm)',
+                transition: 'var(--transition)'
               }}
+              onMouseOver={(e) => e.target.style.background = 'var(--negative-hover)'}
+              onMouseOut={(e) => e.target.style.background = 'var(--negative)'}
             >
               Try again
             </button>
           </ErrorContainer>
-        </GovUKContainer>
+        </InsightsContent>
       </InsightsWrapper>
     );
   }
@@ -746,19 +536,19 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
   if (!vehicleData || availableInsights.length === 0) {
     return (
       <InsightsWrapper>
-        <GovUKContainer>
+        <InsightsContent>
           <EmptyStateContainer>
-            <InfoIcon style={{ fontSize: 60, color: COLORS.BLUE }} />
-            <GovUKHeadingM style={{ marginBottom: '10px' }}>
+            <InfoIcon style={{ fontSize: 60, color: 'var(--primary)' }} />
+            <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>
               Limited Data Available
-            </GovUKHeadingM>
-            <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+            </HeadingM>
+            <BodyText>
               {vehicleData ? 
                 "We don't have enough data to generate meaningful insights for this vehicle." :
                 "No vehicle data available for analysis."}
-            </GovUKBodyS>
+            </BodyText>
           </EmptyStateContainer>
-        </GovUKContainer>
+        </InsightsContent>
       </InsightsWrapper>
     );
   }
@@ -775,12 +565,12 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
             <AssessmentIcon />
           </HeaderIcon>
           <HeaderText>
-            <GovUKHeadingL style={{ margin: 0 }}>
+            <HeadingL>
               Vehicle Insights
-            </GovUKHeadingL>
-            <GovUKBodyS style={{ margin: 0, marginTop: '5px' }}>
+            </HeadingL>
+            <BodyText style={{ margin: 'var(--space-xs) 0 0 0' }}>
               Comprehensive analysis for {displayMake} {displayModel}
-            </GovUKBodyS>
+            </BodyText>
           </HeaderText>
         </HeaderContent>
       </InsightsHeader>
@@ -803,7 +593,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
                   }
                 }}
               >
-                <SummaryIcon color={card.color}>
+                <SummaryIcon style={{ backgroundColor: card.color }}>
                   {card.icon}
                 </SummaryIcon>
                 <SummaryContent>

@@ -8,7 +8,7 @@ import SubsectionView from './SubsectionView';
 import SearchInterface from './SearchInterface';
 import SearchResults from './SearchResults';
 
-// Ultra Clean Modal Design - Minimal approach following DVLADataHeader patterns
+// Mobile-Ready Modal Design - Future-proof foundation
 const MinimalTokens = `
   :root {
     --gray-900: #1a1a1a;
@@ -32,6 +32,15 @@ const MinimalTokens = `
     --space-3xl: 4rem;
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --transition: all 0.15s ease;
+    
+    /* Mobile-Ready Breakpoints - Future expansion ready */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+    
+    /* Touch Targets - Accessibility standard */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
   }
 `;
 
@@ -56,8 +65,11 @@ const MotDefectModalOverlay = styled('div')`
     to { opacity: 1; }
   }
 
-  @media (max-width: 767px) {
-    padding: var(--space-lg);
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
+    padding: var(--space-md);
+    align-items: stretch;
+    /* Future enhancement: Full-screen modal on mobile */
   }
 `;
 
@@ -93,6 +105,13 @@ const MotDefectModalContent = styled('div')`
   &::-webkit-scrollbar-thumb:hover {
     background: var(--gray-400);
   }
+  
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
+    max-height: 100vh;
+    /* Future enhancement: Full-screen experience */
+    /* Future enhancement: Optimized mobile scrolling */
+  }
 `;
 
 const MotDefectModalCloseButton = styled('button')`
@@ -101,8 +120,8 @@ const MotDefectModalCloseButton = styled('button')`
   right: var(--space-2xl);
   background: var(--white);
   border: none;
-  width: 40px;
-  height: 40px;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,12 +142,14 @@ const MotDefectModalCloseButton = styled('button')`
     outline-offset: 2px;
   }
 
-  @media (max-width: 767px) {
+  /* Mobile Touch Target Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
     top: var(--space-xl);
     right: var(--space-xl);
-    width: 36px;
-    height: 36px;
+    width: var(--touch-target-comfortable);
+    height: var(--touch-target-comfortable);
     font-size: 20px;
+    /* Future enhancement: Better mobile positioning */
   }
 `;
 

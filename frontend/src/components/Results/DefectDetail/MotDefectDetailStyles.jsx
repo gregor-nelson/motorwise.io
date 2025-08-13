@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-// Minimal Clean Design System - Ultra Restrained (exact copy from DVLADataHeader reference)
+// Mobile-Ready Design System - Future-proof foundation
 const MinimalTokens = `
   :root {
     /* Ultra Clean Color Palette - Minimal */
@@ -44,14 +44,33 @@ const MinimalTokens = `
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
 
+    /* Mobile-Ready Breakpoints - Future expansion ready */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+
+    /* Touch Targets - Accessibility standard */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
+
     /* Minimal Transitions */
     --transition: all 0.15s ease;
+    --transition-fast: all 0.1s ease;
+  }
+`;
+
+// =============== MOBILE-READY MIXINS ===============
+
+// Future-proof mobile mixin - easily extensible
+const mobileStyles = `
+  @media (max-width: var(--mobile-max)) {
+    /* Mobile styles here - can be extended in future */
   }
 `;
 
 // =============== MAIN CONTAINER ===============
 
-// Ultra Clean Detail Container - Following DVLADataHeader patterns
+// Mobile-Ready Detail Container - Future enhancement ready
 export const DefectDetailContainer = styled('div')`
   ${MinimalTokens}
   
@@ -62,8 +81,10 @@ export const DefectDetailContainer = styled('div')`
   padding: var(--space-2xl) var(--space-lg);
   color: var(--gray-900);
 
-  @media (max-width: 767px) {
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-xl) var(--space-md);
+    /* Future mobile enhancements can be added here */
   }
 `;
 
@@ -83,7 +104,7 @@ export const DefectSectionHeader = styled('div')`
     line-height: 1.2;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-2xl);
     
     & h1 {
@@ -100,7 +121,7 @@ export const DefectSection = styled('div')`
     margin-bottom: 0;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-2xl);
   }
 `;
@@ -131,7 +152,7 @@ export const SectionTitle = styled('h1')`
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xl);
     margin-bottom: var(--space-md);
   }
@@ -149,7 +170,7 @@ export const SubTitle = styled('h2')`
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-lg);
     margin: var(--space-lg) 0 var(--space-md) 0;
   }
@@ -166,7 +187,7 @@ export const BodyText = styled('p')`
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-sm);
     margin-bottom: var(--space-sm);
   }
@@ -180,7 +201,7 @@ export const SmallText = styled('span')`
   color: var(--gray-600);
   line-height: 1.4;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xs);
   }
 `;
@@ -251,7 +272,7 @@ export const DefectList = styled('ul')`
     overflow-wrap: break-word;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding-left: var(--space-lg);
     
     & li {
@@ -277,7 +298,7 @@ export const OrderedList = styled('ol')`
     overflow-wrap: break-word;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding-left: var(--space-lg);
     
     & li {
@@ -309,7 +330,7 @@ export const BreadcrumbPath = styled('div')`
     color: var(--gray-400);
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-xl);
     font-size: var(--text-xs);
   }
@@ -336,7 +357,7 @@ export const InsetText = styled('div')`
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin: var(--space-md) 0;
     
     & p {
@@ -359,7 +380,7 @@ export const CodeBlock = styled('pre')`
   word-wrap: break-word;
   max-width: 100%;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-md);
     font-size: var(--text-xs);
     margin: var(--space-md) 0;
@@ -418,7 +439,7 @@ export const ErrorMessage = styled('div')`
 export const SectionDivider = styled('div')`
   height: var(--space-3xl);
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     height: var(--space-2xl);
   }
 `;

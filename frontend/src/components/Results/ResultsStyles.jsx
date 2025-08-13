@@ -1,234 +1,363 @@
 /* ============================================
-   Results Components - MarketDash Design System
-   Self-Contained Styling for Results Folder
+   Results Components - Ultra-Clean Minimal Design System
+   Matches DVLADataHeader PRIMARY Reference Implementation
    ============================================ */
 
 import { styled } from '@mui/material/styles';
 
-/* ===== MARKETDASH DESIGN TOKENS ===== */
-// These tokens are self-contained and don't depend on external theme files
+/* ===== MINIMAL DESIGN TOKENS (EXACT COPY FROM DVLADataHeader) ===== */
+const MinimalTokens = `
+  :root {
+    /* Ultra Clean Color Palette - Minimal */
+    --gray-900: #1a1a1a;
+    --gray-800: #2d2d2d;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #a3a3a3;
+    --gray-300: #d4d4d4;
+    --gray-200: #e5e5e5;
+    --gray-100: #f5f5f9;
+    --gray-50: #fafafa;
+    --white: #ffffff;
 
+    /* Minimal Accent Colors */
+    --primary: #3b82f6;
+    --positive: #059669;
+    --negative: #dc2626;
+    --warning: #d97706;
+
+    /* Clean Spacing - Generous White Space */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Typography - Clean Hierarchy */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+
+    /* Clean Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+    /* Minimal Transitions */
+    --transition: all 0.15s ease;
+  }
+`;
+
+// Ultra Clean Container - No borders, minimal styling (matches DVLADataHeader pattern)
 export const MarketDashContainer = styled('div')`
-  /* MarketDash Design Tokens - Inline Definition */
-  --gray-900: #0f172a;
-  --gray-800: #1e293b;
-  --gray-700: #334155;
-  --gray-600: #475569;
-  --gray-500: #64748b;
-  --gray-400: #94a3b8;
-  --gray-300: #cbd5e1;
-  --gray-200: #e2e8f0;
-  --gray-100: #f1f5f9;
-  --gray-50: #f8fafc;
-  --white: #ffffff;
+  ${MinimalTokens}
   
-  /* Professional Colors */
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --positive: #10b981;
-  --negative: #ef4444;
-  --warning: #f59e0b;
-  
-  /* Spacing Scale */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  
-  /* Typography */
-  --font-main: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-  
-  /* Effects */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --transition: all 0.2s ease;
-  --transition-fast: all 0.15s ease;
-  --transition-slow: all 0.3s ease;
-  --radius-sm: 0.125rem;
-  --radius-base: 0.25rem;
-  --radius-md: 0.375rem;
-  
-  /* Line Heights */
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.625;
-  
-  /* Base Styling */
   font-family: var(--font-main);
-  background: var(--gray-50);
-  color: var(--gray-900);
+  background: var(--white);
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-xl);
-  min-height: 100vh;
+  padding: var(--space-2xl) var(--space-lg);
+  color: var(--gray-900);
+
+  @media (max-width: 767px) {
+    padding: var(--space-xl) var(--space-md);
+  }
 `;
 
-/* ===== TYPOGRAPHY COMPONENTS ===== */
+/* ===== TYPOGRAPHY COMPONENTS (MATCHES DVLADataHeader) ===== */
+
+// Clean Section Header Pattern (from DVLADataHeader)
+export const SectionHeader = styled('div')`
+  margin-bottom: var(--space-3xl);
+
+  & h1, & h2 {
+    margin: 0;
+    font-family: var(--font-main);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+    
+    & h1, & h2 {
+      font-size: var(--text-xl);
+    }
+  }
+`;
 
 export const PageTitle = styled('h1')`
-  font-family: var(--font-main);
-  font-size: var(--text-4xl);
-  font-weight: 600;
-  color: var(--gray-800);
-  margin: 0 0 var(--space-2xl) 0;
-  line-height: var(--leading-tight);
-`;
-
-export const SectionTitle = styled('h2')`
+  margin: 0;
   font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
-  color: var(--gray-800);
-  margin: 0 0 var(--space-lg) 0;
-  line-height: var(--leading-tight);
+  color: var(--gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2xl);
+  }
+`;
+
+export const SectionTitle = styled('h2')`
+  margin: 0;
+  font-family: var(--font-main);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-lg);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+  }
 `;
 
 export const SubTitle = styled('h3')`
+  margin: 0;
   font-family: var(--font-main);
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: 500;
-  color: var(--gray-700);
-  margin: 0 0 var(--space-md) 0;
-  line-height: var(--leading-tight);
+  color: var(--gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-sm);
+  }
+`;
+
+// Metric Label Pattern (from DVLADataHeader)
+export const MetricLabel = styled('div')`
+  font-family: var(--font-main);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+`;
+
+// Metric Value Pattern (from DVLADataHeader)
+export const MetricValue = styled('div')`
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--gray-900);
+  line-height: 1.4;
+  word-break: break-word;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
+  }
 `;
 
 export const BodyText = styled('p')`
   font-family: var(--font-main);
   font-size: var(--text-base);
-  color: var(--gray-600);
-  line-height: var(--leading-relaxed);
+  font-weight: 400;
+  color: var(--gray-700);
+  line-height: 1.5;
   margin: 0 0 var(--space-md) 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
+  }
 `;
 
 export const SmallText = styled('span')`
   font-family: var(--font-main);
   font-size: var(--text-sm);
-  color: var(--gray-500);
-  line-height: var(--leading-normal);
+  font-weight: 400;
+  color: var(--gray-600);
+  line-height: 1.4;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xs);
+  }
 `;
 
 export const MonoText = styled('span')`
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--gray-700);
-  background: var(--gray-100);
+  color: var(--gray-900);
+  background: var(--gray-50);
   padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xs);
+  }
 `;
 
+// Clean link styling (semantic color only, matches DVLADataHeader)
 export const Link = styled('a')`
+  font-family: var(--font-main);
   color: var(--primary);
   text-decoration: none;
-  font-family: var(--font-main);
   transition: var(--transition);
   
   &:hover {
-    color: var(--primary-hover);
+    color: var(--gray-900);
     text-decoration: underline;
   }
   
   &:focus {
-    outline: 3px solid var(--primary);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: 2px;
   }
 `;
 
-/* ===== LAYOUT COMPONENTS ===== */
+/* ===== LAYOUT COMPONENTS (INVISIBLE ARCHITECTURE - MATCHES DVLADataHeader) ===== */
 
+// Report Section Pattern (from Premium.jsx)
+export const ReportSection = styled('div')`
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
+`;
+
+// Results Section - Minimal version (no visual containers)
 export const ResultsSection = styled('section')`
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  padding: var(--space-xl);
-  margin-bottom: var(--space-xl);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-  
-  &:hover {
-    box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
+`;
+
+// Clean Grid System Pattern (from DVLADataHeader)
+export const DataGrid = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
   }
 `;
 
 export const GridContainer = styled('div')`
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
   
   @media (min-width: 768px) {
     grid-template-columns: 1fr 2fr;
   }
+
+  @media (max-width: 767px) {
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const GridColumn = styled('div')`
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  /* Pure minimal - no styling */
+`;
+
+// Minimal Metric Group - No Cards, Just Clean Spacing (from DVLADataHeader)
+export const MetricGroup = styled('div')`
+  /* No background, borders, or shadows - pure minimal */
+`;
+
+// Clean Metric Rows (from DVLADataHeader)
+export const MetricRow = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-xl);
+  
+  &:not(:last-child) {
+    margin-bottom: var(--space-xl);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    
+    &:not(:last-child) {
+      margin-bottom: var(--space-lg);
+    }
+  }
+`;
+
+// Ultra Clean Metric Item (from DVLADataHeader)
+export const MetricItem = styled('div')`
+  /* Pure minimal - no styling */
 `;
 
 export const FlexRow = styled('div')`
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   flex-wrap: wrap;
+
+  @media (max-width: 767px) {
+    gap: var(--space-md);
+  }
 `;
 
 export const FlexColumn = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+
+  @media (max-width: 767px) {
+    gap: var(--space-sm);
+  }
 `;
 
-/* ===== MOT HISTORY SPECIFIC COMPONENTS ===== */
+/* ===== MOT HISTORY SPECIFIC COMPONENTS (MINIMAL - NO VISUAL CONTAINERS) ===== */
 
+// Minimal MOT Result Card - No borders or shadows (invisible architecture)
 export const MotResultCard = styled('div')(({ show, index = 0 }) => ({
-  background: 'var(--white)',
-  border: '1px solid var(--gray-200)',
-  borderRadius: 'var(--radius-sm)',
-  padding: 'var(--space-xl)',
-  marginBottom: 'var(--space-xl)',
-  boxShadow: 'var(--shadow-sm)',
-  transition: 'var(--transition)',
+  marginBottom: 'var(--space-3xl)',
   opacity: show ? 1 : 0,
-  transform: show ? 'translateY(0)' : 'translateY(20px)',
+  transform: show ? 'translateY(0)' : 'translateY(10px)',
+  transition: 'all 0.3s ease',
   transitionDelay: `${index * 100}ms`,
   
-  '&:hover': {
-    boxShadow: 'var(--shadow-md)',
+  '@media (max-width: 767px)': {
+    marginBottom: 'var(--space-2xl)',
   }
 }));
 
+// Clean collapsible section - no visual containers
 export const CollapsibleSection = styled('div')(({ expanded }) => ({
-  background: 'var(--white)',
-  border: '1px solid var(--gray-200)',
-  borderRadius: 'var(--radius-sm)',
-  marginBottom: 'var(--space-xl)',
-  overflow: 'hidden',
-  boxShadow: 'var(--shadow-sm)',
-  transition: 'var(--transition)',
+  marginBottom: 'var(--space-3xl)',
   
-  '&:hover': {
-    boxShadow: 'var(--shadow-md)',
+  '@media (max-width: 767px)': {
+    marginBottom: 'var(--space-2xl)',
   }
 }));
 
+// Clean collapsible header - minimal styling
 export const CollapsibleHeader = styled('button')(({ expanded }) => ({
   width: '100%',
-  padding: 'var(--space-lg) var(--space-xl)',
-  background: 'var(--gray-50)',
+  padding: 'var(--space-lg) 0',
+  background: 'transparent',
   border: 'none',
-  borderBottom: '1px solid var(--gray-200)',
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
@@ -236,51 +365,54 @@ export const CollapsibleHeader = styled('button')(({ expanded }) => ({
   fontSize: 'var(--text-lg)',
   fontWeight: '600',
   fontFamily: 'var(--font-main)',
-  color: 'var(--gray-800)',
+  color: 'var(--gray-900)',
   textAlign: 'left',
   transition: 'var(--transition)',
   
   '&:hover': {
-    background: 'var(--gray-100)',
+    color: 'var(--primary)',
   },
   
   '&:focus': {
-    outline: '3px solid var(--primary)',
-    outlineOffset: '-3px',
-    background: 'var(--gray-100)',
+    outline: '2px solid var(--primary)',
+    outlineOffset: '2px',
+    borderRadius: '2px',
   },
+  
+  '@media (max-width: 767px)': {
+    fontSize: 'var(--text-base)',
+    padding: 'var(--space-md) 0',
+  }
 }));
 
+// Minimal collapsible icon - no decorative containers
 export const CollapsibleIcon = styled('span')(({ expanded }) => ({
   fontSize: 'var(--text-sm)',
   fontWeight: '500',
   color: 'var(--primary)',
   display: 'inline-block',
   flexShrink: 0,
-  padding: 'var(--space-xs) var(--space-sm)',
-  background: 'var(--white)',
-  borderRadius: 'var(--radius-sm)',
-  border: '1px solid var(--gray-300)',
   transition: 'var(--transition)',
 }));
 
+// Clean collapsible content
 export const CollapsibleContent = styled('div')(({ expanded }) => ({
   maxHeight: expanded ? 'none' : '0',
   overflow: 'hidden',
   transition: 'all 0.3s ease',
-  padding: expanded ? 'var(--space-xl)' : '0 var(--space-xl)',
   opacity: expanded ? 1 : 0,
-  background: 'var(--white)',
 }));
 
+// Results Summary - Minimal (matches DVLADataHeader StatusIndicator approach)
 export const ResultsSummary = styled('div')({
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
-  gap: 'var(--space-md)',
+  gap: 'var(--space-lg)',
   fontSize: 'var(--text-base)',
-  lineHeight: 'var(--leading-normal)',
+  lineHeight: 1.4,
   color: 'var(--gray-600)',
+  fontFamily: 'var(--font-main)',
   
   '& .summary-item': {
     display: 'flex',
@@ -290,7 +422,7 @@ export const ResultsSummary = styled('div')({
   
   '& .count': {
     fontWeight: '600',
-    color: 'var(--gray-800)',
+    color: 'var(--gray-900)',
   },
   
   '& .label': {
@@ -301,63 +433,53 @@ export const ResultsSummary = styled('div')({
     width: '1px',
     height: '16px',
     background: 'var(--gray-300)',
-    margin: '0 var(--space-xs)',
+    margin: '0 var(--space-sm)',
   },
   
+  // Minimal Status Indicators - Color only, no borders (matches DVLADataHeader)
   '& .status-tag': {
-    display: 'inline-block',
-    padding: 'var(--space-xs) var(--space-sm)',
+    fontFamily: 'var(--font-main)',
     fontSize: 'var(--text-sm)',
     fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: '0.025em',
-    borderRadius: 'var(--radius-sm)',
-    border: '1px solid',
-    lineHeight: '1.2',
-    fontFamily: 'var(--font-mono)',
   },
   
   '& .status-tag.pass': {
-    background: 'var(--positive)',
-    borderColor: 'var(--positive)',
-    color: 'var(--white)',
+    color: 'var(--positive)',
   },
   
   '& .status-tag.fail': {
-    background: 'var(--negative)',
-    borderColor: 'var(--negative)',
-    color: 'var(--white)',
+    color: 'var(--negative)',
   },
   
   '& .issue-tag': {
-    display: 'inline-block',
-    padding: 'var(--space-xs) var(--space-sm)',
+    fontFamily: 'var(--font-main)',
     fontSize: 'var(--text-sm)',
-    fontWeight: '600',
-    background: 'var(--warning)',
-    color: 'var(--white)',
-    borderRadius: 'var(--radius-sm)',
-    lineHeight: '1.2',
-    fontFamily: 'var(--font-mono)',
+    fontWeight: '500',
+    color: 'var(--warning)',
     marginLeft: 'var(--space-xs)',
   }
 });
 
+// Vehicle Registration - Cleaner styling (less decorative)
 export const VehicleRegistration = styled('div')`
   display: inline-block;
-  min-width: 150px;
-  font: 28px var(--font-mono);
+  min-width: 120px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
   padding: var(--space-md) var(--space-lg);
   text-align: center;
-  background: var(--warning);
+  background: var(--gray-900);
   color: var(--white);
-  border-radius: var(--radius-base);
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.1em;
-  margin-bottom: var(--space-lg);
-  box-shadow: var(--shadow-sm);
-  border: 2px solid var(--gray-800);
+  margin-bottom: var(--space-xl);
+
+  @media (max-width: 767px) {
+    font-size: var(--text-xl);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
 `;
 
 export const DefectLabel = styled('span')`
@@ -394,29 +516,34 @@ export const AnimatedDefectList = styled('div')(({ show }) => ({
   transition: 'opacity 0.3s ease, max-height 0.3s ease',
 }));
 
+// Minimal Clickable Defect Item - No visual containers (matches DVLADataHeader approach)
 export const ClickableDefectItem = styled('div')(({ expanded }) => ({
   cursor: 'pointer',
   position: 'relative',
-  padding: 'var(--space-md)',
-  borderLeft: expanded ? `4px solid var(--primary)` : '4px solid transparent',
-  background: expanded ? 'var(--gray-50)' : 'transparent',
-  borderRadius: 'var(--radius-sm)',
+  padding: 'var(--space-sm) 0',
   transition: 'var(--transition)',
   marginBottom: 'var(--space-sm)',
   width: '100%',
   
   '&:hover': {
-    background: 'var(--gray-50)',
-    borderLeftColor: 'var(--primary)',
     color: 'var(--primary)',
+  },
+  
+  '&:focus': {
+    outline: '2px solid var(--primary)',
+    outlineOffset: '2px',
+    borderRadius: '2px',
   },
   
   '& strong': {
     display: 'block',
     width: '100%',
+    fontFamily: 'var(--font-main)',
     fontWeight: '500',
     color: 'inherit',
-    lineHeight: 'var(--leading-relaxed)',
+    lineHeight: 1.5,
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
   },
 }));
 
@@ -477,6 +604,7 @@ export const Input = styled('input')(({ error }) => ({
   },
 }));
 
+// Minimal button - cleaner styling
 export const Button = styled('button')(({ variant = 'primary', size = 'normal' }) => ({
   fontFamily: 'var(--font-main)',
   fontSize: size === 'large' ? 'var(--text-lg)' : 'var(--text-base)',
@@ -486,8 +614,7 @@ export const Button = styled('button')(({ variant = 'primary', size = 'normal' }
   justifyContent: 'center',
   gap: 'var(--space-sm)',
   padding: size === 'large' ? 'var(--space-lg) var(--space-xl)' : 'var(--space-md) var(--space-lg)',
-  border: '2px solid',
-  borderRadius: 'var(--radius-sm)',
+  border: '1px solid',
   cursor: 'pointer',
   transition: 'var(--transition)',
   textDecoration: 'none',
@@ -498,35 +625,30 @@ export const Button = styled('button')(({ variant = 'primary', size = 'normal' }
     color: 'var(--white)',
     
     '&:hover': {
-      background: 'var(--primary-hover)',
-      borderColor: 'var(--primary-hover)',
-      transform: 'translateY(-1px)',
-      boxShadow: 'var(--shadow-md)',
+      background: 'var(--gray-900)',
+      borderColor: 'var(--gray-900)',
     },
   }),
   
   ...(variant === 'secondary' && {
-    background: 'var(--white)',
+    background: 'transparent',
     borderColor: 'var(--gray-300)',
-    color: 'var(--gray-700)',
+    color: 'var(--gray-900)',
     
     '&:hover': {
       background: 'var(--gray-50)',
       borderColor: 'var(--gray-400)',
-      transform: 'translateY(-1px)',
-      boxShadow: 'var(--shadow-md)',
     },
   }),
   
   '&:focus': {
-    outline: '3px solid var(--primary)',
+    outline: '2px solid var(--primary)',
     outlineOffset: '2px',
   },
   
   '&:disabled': {
     opacity: 0.6,
     cursor: 'not-allowed',
-    transform: 'none',
   },
 }));
 
@@ -558,22 +680,22 @@ export const BackLink = styled('a')`
   }
 `;
 
-/* ===== LOADING & ERROR STATES ===== */
+/* ===== LOADING & ERROR STATES (MATCHES DVLADataHeader) ===== */
 
+// Ultra Clean Loading State (exact copy from DVLADataHeader)
 export const LoadingContainer = styled('div')`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: var(--space-md);
-  padding: var(--space-2xl);
-  text-align: center;
+  align-items: center;
+  min-height: 200px;
+  flex-direction: column;
+  gap: var(--space-lg);
 `;
 
 export const LoadingSpinner = styled('div')`
   width: 24px;
   height: 24px;
-  border: 3px solid var(--gray-200);
+  border: 2px solid var(--gray-200);
   border-radius: 50%;
   border-top-color: var(--primary);
   animation: spin 1s linear infinite;
@@ -584,11 +706,11 @@ export const LoadingSpinner = styled('div')`
   }
 `;
 
-export const LoadingText = styled('p')`
+export const LoadingText = styled('div')`
   font-family: var(--font-main);
-  color: var(--gray-500);
+  color: var(--gray-600);
   font-size: var(--text-sm);
-  margin: 0;
+  text-align: center;
 `;
 
 export const ErrorContainer = styled('div')`
@@ -651,37 +773,46 @@ export const ErrorSummary = styled('div')`
 
 /* ===== DEFECT DETAIL SPECIFIC COMPONENTS ===== */
 
+// Clean Detail Content - Minimal (no visual containers)
 export const DetailContent = styled('div')`
-  margin-top: var(--space-lg);
-  margin-bottom: var(--space-lg);
-  padding: 0;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  
+  @media (max-width: 767px) {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
 `;
 
+// Clean breadcrumb path - minimal
 export const BreadcrumbPath = styled('div')`
-  padding: var(--space-md) var(--space-lg);
-  background: var(--gray-50);
-  border-bottom: 1px solid var(--gray-200);
+  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
+  margin-bottom: var(--space-lg);
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   
-  span {
+  & strong {
+    color: var(--gray-900);
+    font-weight: 600;
+  }
+  
+  & span {
     margin: 0 var(--space-xs);
     color: var(--gray-400);
   }
-  
-  strong {
-    color: var(--gray-800);
-    font-weight: 600;
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-md);
+    font-size: var(--text-xs);
   }
 `;
 
+// Clean defect content
 export const DefectContent = styled('div')`
-  padding: var(--space-lg);
+  /* Pure minimal - no styling, just content flow */
 `;
 
 export const DefectSection = styled('div')`
@@ -692,59 +823,61 @@ export const DefectSection = styled('div')`
   }
 `;
 
-export const CategoryTag = styled('span')(({ category }) => {
-  let bgColor = 'var(--primary)';
-  let textColor = 'var(--white)';
+// Minimal Status Badge - Color only, no decoration (matches DVLADataHeader StatusIndicator)
+export const CategoryTag = styled('span', {
+  shouldForwardProp: prop => prop !== 'category',
+})`
+  font-family: var(--font-main);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: var(--space-lg);
   
-  switch(category?.toLowerCase()) {
-    case 'dangerous':
-      bgColor = 'var(--negative)';
-      break;
-    case 'major':
-      bgColor = 'var(--warning)';
-      break;
-    case 'minor':
-      bgColor = 'var(--positive)';
-      break;
-    case 'advisory':
-      bgColor = 'var(--gray-500)';
-      break;
-  }
-  
-  return {
-    backgroundColor: bgColor,
-    color: textColor,
-    padding: 'var(--space-xs) var(--space-sm)',
-    borderRadius: 'var(--radius-sm)',
-    fontFamily: 'var(--font-mono)',
-    fontSize: 'var(--text-sm)',
-    fontWeight: '600',
-    display: 'inline-block',
-    textTransform: 'uppercase',
-    letterSpacing: '0.025em',
-    marginRight: 'var(--space-sm)',
-    marginBottom: 'var(--space-xs)',
-  };
-});
+  ${({ category }) => {
+    switch (category?.toLowerCase()) {
+      case 'dangerous':
+        return `color: var(--negative);`;
+      case 'major':
+        return `color: var(--warning);`;
+      case 'minor':
+        return `color: var(--positive);`;
+      case 'advisory':
+        return `color: var(--gray-600);`;
+      default:
+        return `color: var(--gray-700);`;
+    }
+  }}
+`;
 
+// Clean inset text - minimal
 export const InsetText = styled('div')`
   background: var(--gray-50);
-  border-left: 4px solid var(--primary);
   padding: var(--space-lg);
   margin: var(--space-lg) 0;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  width: 100%;
+  overflow-x: auto;
   
-  p {
+  & p {
+    font-family: var(--font-main);
+    font-size: var(--text-base);
+    color: var(--gray-700);
+    line-height: 1.5;
     margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     
     &:not(:last-child) {
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
     }
   }
-  
-  strong {
-    font-weight: 600;
-    color: var(--gray-800);
+
+  @media (max-width: 767px) {
+    padding: var(--space-md);
+    margin: var(--space-md) 0;
+    
+    & p {
+      font-size: var(--text-sm);
+    }
   }
 `;
 

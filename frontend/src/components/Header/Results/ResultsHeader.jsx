@@ -1,23 +1,30 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { 
-  GovUKContainer,
-  GovUKMainWrapper,
-  GovUKLink,
-  GovUKBody,
-  GovUKGridRow,
-  GovUKGridColumnOneThird,
-  VehicleRegistration,
-  VehicleHeading,
-  DetailCaption,
-  DetailHeading,
+  CleanContainer,
+  SectionHeader,
+  DataGrid,
+  MetricRow,
+  MetricItem,
+  MetricLabel,
+  MetricValue,
+  VehicleRegistrationDisplay,
+  VehicleTitle,
+  ActionButtonsContainer,
+  PremiumActionButton,
+  MOTSection,
   MOTCaption,
-  MOTDueDate,
-  GovUKLoadingContainer,
-  GovUKLoadingSpinner,
-  PremiumButton,
-  GovUKButton,
-  BaseButton
-} from '../../../styles/theme';
+  MOTDate,
+  NavigationLinks,
+  NavigationLink,
+  LoadingContainer,
+  LoadingSpinner,
+  LoadingText,
+  ErrorContainer,
+  ErrorMessage,
+  StatusIndicator,
+  SectionDivider,
+  ResponsiveWrapper
+} from './ResultsHeaderStyles';
 import Alert from '@mui/material/Alert';
 
 // Import the refactored dialog components, including the new FullScreenSampleReportButton
@@ -385,129 +392,130 @@ const VehicleHeader = ({ registration }) => {
   };
 
   return (
-    <GovUKContainer>
-      <GovUKMainWrapper>
+    <ResponsiveWrapper>
+      <CleanContainer>
         {loading && (
-          <GovUKLoadingContainer>
-            <GovUKLoadingSpinner />
-          </GovUKLoadingContainer>
+          <LoadingContainer>
+            <LoadingSpinner />
+            <LoadingText>Loading vehicle information...</LoadingText>
+          </LoadingContainer>
         )}
         
         {error && (
-          <Alert severity="error" style={{ marginBottom: '20px' }}>
-            {error}
-          </Alert>
+          <ErrorContainer>
+            <ErrorMessage>{error}</ErrorMessage>
+          </ErrorContainer>
         )}
         
         {vehicleData && !loading && (
           <>
-            <VehicleRegistration data-test-id="vehicle-registration">
-              {formatRegistration(vehicleData.registration)}
-            </VehicleRegistration>
+            <SectionHeader>
+              <VehicleRegistrationDisplay data-test-id="vehicle-registration">
+                {formatRegistration(vehicleData.registration)}
+              </VehicleRegistrationDisplay>
 
-            <VehicleHeading data-test-id="vehicle-make-model">
-              {vehicleData.makeModel}
-            </VehicleHeading>
+              <VehicleTitle data-test-id="vehicle-make-model">
+                {vehicleData.makeModel}
+              </VehicleTitle>
+            </SectionHeader>
 
-            <GovUKBody>
-              <GovUKLink href="/" noVisitedState>
+            <ActionButtonsContainer>
+              <FullScreenSampleReportButton 
+                onProceedToPayment={handlePremiumButtonClick}
+              />
+              
+              <PremiumActionButton
+                onClick={handlePremiumButtonClick}
+                data-test-id="premium-report-button"
+              >
+                {isEligibleForFreeReport(vehicleData) 
+                  ? "View Enhanced Vehicle Report" 
+                  : "Get Premium Vehicle Report - £4.95"}
+              </PremiumActionButton>
+            </ActionButtonsContainer>
+
+            <DataGrid>
+              <MetricRow data-test-id="colour-fuel-date-details">
+                <MetricItem>
+                  <MetricLabel>Colour</MetricLabel>
+                  <MetricValue data-test-id="vehicle-colour">
+                    {vehicleData.colour}
+                  </MetricValue>
+                </MetricItem>
+                <MetricItem>
+                  <MetricLabel>Fuel type</MetricLabel>
+                  <MetricValue data-test-id="vehicle-fuel-type">
+                    {vehicleData.fuelType}
+                  </MetricValue>
+                </MetricItem>
+                <MetricItem>
+                  <MetricLabel>Date registered</MetricLabel>
+                  <MetricValue data-test-id="vehicle-date-registered">
+                    {vehicleData.dateRegistered}
+                  </MetricValue>
+                </MetricItem>
+              </MetricRow>
+
+              <MetricRow data-test-id="additional-details">
+                <MetricItem>
+                  <MetricLabel>Engine size</MetricLabel>
+                  <MetricValue data-test-id="vehicle-engine-size">
+                    {vehicleData.engineSize}
+                  </MetricValue>
+                </MetricItem>
+                <MetricItem>
+                  <MetricLabel>Manufacture date</MetricLabel>
+                  <MetricValue data-test-id="vehicle-manufacture-date">
+                    {vehicleData.manufactureDate}
+                  </MetricValue>
+                </MetricItem>
+                <MetricItem>
+                  <MetricLabel>Outstanding recall</MetricLabel>
+                  <MetricValue data-test-id="vehicle-recall-status">
+                    <StatusIndicator status={vehicleData.hasOutstandingRecall}>
+                      {vehicleData.hasOutstandingRecall}
+                    </StatusIndicator>
+                  </MetricValue>
+                </MetricItem>
+              </MetricRow>
+            </DataGrid>
+
+            <MOTSection>
+              <MetricItem>
+                <MetricLabel data-test-id="mot-expiry-text">
+                  MOT valid until
+                </MetricLabel>
+                <MetricValue data-test-id="mot-due-date">
+                  {vehicleData.motDueDate}
+                </MetricValue>
+              </MetricItem>
+            </MOTSection>
+
+            <SectionDivider />
+
+            <NavigationLinks>
+              <NavigationLink href="/">
                 Check another vehicle
-              </GovUKLink>
-            </GovUKBody>
-            
-            {/* Action buttons container using existing theme components */}
-            <div style={{ display: 'flex', marginTop: '20px', marginBottom: '20px', gap: '10px' }}>
-            <FullScreenSampleReportButton 
-              onProceedToPayment={handlePremiumButtonClick}
-            />
-            
-            <BaseButton
-              onClick={handlePremiumButtonClick}
-              variant="primary"  // or "blue" if you want both the same color
-              data-test-id="premium-report-button"
-            >
-              {isEligibleForFreeReport(vehicleData) 
-                ? "View Enhanced Vehicle Report" 
-                : "Get Premium Vehicle Report - £4.95"}
-            </BaseButton>
-          </div>
-                        
-            <GovUKGridRow data-test-id="colour-fuel-date-details">
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Colour</DetailCaption>
-                <DetailHeading data-test-id="vehicle-colour">
-                  {vehicleData.colour}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Fuel type</DetailCaption>
-                <DetailHeading data-test-id="vehicle-fuel-type">
-                  {vehicleData.fuelType}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Date registered</DetailCaption>
-                <DetailHeading data-test-id="vehicle-date-registered">
-                  {vehicleData.dateRegistered}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-            </GovUKGridRow>
-
-            <GovUKGridRow data-test-id="additional-details">
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Engine size</DetailCaption>
-                <DetailHeading data-test-id="vehicle-engine-size">
-                  {vehicleData.engineSize}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Manufacture date</DetailCaption>
-                <DetailHeading data-test-id="vehicle-manufacture-date">
-                  {vehicleData.manufactureDate}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-              <GovUKGridColumnOneThird>
-                <DetailCaption>Outstanding recall</DetailCaption>
-                <DetailHeading data-test-id="vehicle-recall-status">
-                  {vehicleData.hasOutstandingRecall}
-                </DetailHeading>
-              </GovUKGridColumnOneThird>
-            </GovUKGridRow>
-
-            <MOTCaption data-test-id="mot-expiry-text">
-              MOT valid until
-            </MOTCaption>
-            
-            <MOTDueDate data-test-id="mot-due-date">
-              {vehicleData.motDueDate}
-            </MOTDueDate>
-
-            <GovUKBody>
-              <GovUKLink href="https://www.gov.uk/mot-reminder" noVisitedState>
+              </NavigationLink>
+              
+              <NavigationLink href="https://www.gov.uk/mot-reminder">
                 Get an MOT reminder
-              </GovUKLink>
-              {' '}by email or text.
-            </GovUKBody>
+              </NavigationLink>
 
-            <GovUKBody>
-              <GovUKLink 
-                href={`/enter-document-reference?registration=${vehicleData.registration}`} 
-                noVisitedState 
+              <NavigationLink 
+                href={`/enter-document-reference?registration=${vehicleData.registration}`}
                 data-test-id="download-certificates-link"
               >
                 Download test certificates
-              </GovUKLink>
-            </GovUKBody>
+              </NavigationLink>
 
-            <GovUKBody data-test-id="expiry-date-guidance">
-              If you think the MOT expiry date or any of the vehicle details are wrong:{' '}
-              <GovUKLink 
-                href="https://www.gov.uk/getting-an-mot/correcting-mot-certificate-mistakes" 
-                noVisitedState
+              <NavigationLink 
+                href="https://www.gov.uk/getting-an-mot/correcting-mot-certificate-mistakes"
+                data-test-id="expiry-date-guidance"
               >
-                contact DVSA
-              </GovUKLink>
-            </GovUKBody>
+                Contact DVSA about incorrect details
+              </NavigationLink>
+            </NavigationLinks>
             
             {/* Payment Dialog for non-classic vehicles */}
             <PaymentDialog 
@@ -535,8 +543,8 @@ const VehicleHeader = ({ registration }) => {
             />
           </>
         )}
-      </GovUKMainWrapper>
-    </GovUKContainer>
+      </CleanContainer>
+    </ResponsiveWrapper>
   );
 };
 

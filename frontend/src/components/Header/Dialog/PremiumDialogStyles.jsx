@@ -3,116 +3,52 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 
-// Complete MarketDash Design System - Self-contained
-const MarketDashTokens = `
-  /* Complete MarketDash Design System */
+// Minimal Clean Design System - Ultra Restrained (from DVLADataHeader)
+const MinimalTokens = `
   :root {
-    /* Ultra Clean Color Palette */
-    --gray-900: #0f172a;
-    --gray-800: #1e293b;
-    --gray-700: #334155;
-    --gray-600: #475569;
-    --gray-500: #64748b;
-    --gray-400: #94a3b8;
-    --gray-300: #cbd5e1;
-    --gray-200: #e2e8f0;
-    --gray-100: #f1f5f9;
-    --gray-50: #f8fafc;
+    /* Ultra Clean Color Palette - Minimal */
+    --gray-900: #1a1a1a;
+    --gray-800: #2d2d2d;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #a3a3a3;
+    --gray-300: #d4d4d4;
+    --gray-200: #e5e5e5;
+    --gray-100: #f5f5f5;
+    --gray-50: #fafafa;
     --white: #ffffff;
 
-    /* Professional Brand Colors */
+    /* Minimal Accent Colors */
     --primary: #3b82f6;
-    --primary-hover: #2563eb;
-    --primary-light: #dbeafe;
+    --positive: #059669;
+    --negative: #dc2626;
+    --warning: #d97706;
 
-    /* Financial Data Colors */
-    --positive: #10b981;
-    --positive-light: #d1fae5;
-    --negative: #ef4444;
-    --negative-light: #fee2e2;
-    --warning: #f59e0b;
-    --warning-light: #fef3c7;
-    --neutral: #6b7280;
-    --neutral-light: #f3f4f6;
+    /* Clean Spacing - Generous White Space */
+    --space-xs: 0.25rem;    /* 4px */
+    --space-sm: 0.5rem;     /* 8px */
+    --space-md: 1rem;       /* 16px */
+    --space-lg: 1.5rem;     /* 24px */
+    --space-xl: 2rem;       /* 32px */
+    --space-2xl: 3rem;      /* 48px */
+    --space-3xl: 4rem;      /* 64px */
 
-    /* Modern Spacing Scale */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
+    /* Typography - Clean Hierarchy */
+    --text-xs: 0.75rem;     /* 12px */
+    --text-sm: 0.875rem;    /* 14px */
+    --text-base: 1rem;      /* 16px */
+    --text-lg: 1.125rem;    /* 18px */
+    --text-xl: 1.25rem;     /* 20px */
+    --text-2xl: 1.5rem;     /* 24px */
+    --text-3xl: 1.875rem;   /* 30px */
 
-    /* Typography Scale */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
+    /* Clean Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
 
-    /* Professional Font Stack */
-    --font-main: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-    --font-display: 'Jost', sans-serif;
-
-    /* Line Heights */
-    --leading-none: 1;
-    --leading-tight: 1.25;
-    --leading-snug: 1.375;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.625;
-    --leading-loose: 2;
-
-    /* Letter Spacing */
-    --tracking-tighter: -0.05em;
-    --tracking-tight: -0.025em;
-    --tracking-normal: 0;
-    --tracking-wide: 0.025em;
-    --tracking-wider: 0.05em;
-    --tracking-widest: 0.1em;
-
-    /* Clean Shadow System */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-    /* Professional Transitions */
-    --transition: all 0.2s ease;
-    --transition-fast: all 0.15s ease;
-    --transition-slow: all 0.3s ease;
-    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    /* Clean Border System */
-    --border-width: 1px;
-    --radius-none: 0;
-    --radius-sm: 0.125rem;
-    --radius-base: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
-    --radius-2xl: 1rem;
-    --radius-full: 9999px;
-  }
-
-  /* Essential Animation Keyframes */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes slideInUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200px 0; }
-    100% { background-position: calc(200px + 100%) 0; }
+    /* Minimal Transitions */
+    --transition: all 0.15s ease;
   }
 
   @keyframes spin {
@@ -121,221 +57,146 @@ const MarketDashTokens = `
   }
 `;
 
-// Clean Professional MarketDash Payment Modal Components
+// Ultra Clean Modal - No decorative elements (following DVLADataHeader patterns)
 export const PremiumModal = styled(Dialog)`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   & .MuiDialog-paper {
     background: var(--white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    border: 1px solid var(--gray-200);
-    overflow: visible;
-    max-width: 580px;
+    max-width: 600px;
     width: 100%;
     margin: var(--space-lg);
-    position: relative;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-hover) 100%);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-  }
-  
-  & .MuiDialog-container {
-    backdrop-filter: blur(4px);
+    /* No borders, shadows, or decorative elements - pure minimal */
   }
   
   & .MuiBackdrop-root {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(0, 0, 0, 0.5);
   }
 `;
 
 export const ModalHeader = styled(DialogTitle)`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  padding: var(--space-xl) var(--space-2xl);
+  padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  font-family: var(--font-display);
+  font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
-  color: var(--gray-800);
+  color: var(--gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   
   .title-content {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-  
-  .header-icon {
-    width: 24px;
-    height: 24px;
-    color: var(--primary);
+    /* Typography-first - no decorative icons */
   }
   
   .close-button {
     color: var(--gray-400);
     transition: var(--transition);
-    border-radius: var(--radius-base);
     
     &:hover {
       color: var(--gray-600);
-      background: var(--gray-100);
     }
   }
   
-  @media (max-width: 768px) {
-    padding: var(--space-lg);
-    
-    .title-content {
-      font-size: var(--text-xl);
-    }
-  }
-  
-  @media (max-width: 480px) {
-    padding: var(--space-md);
-    
-    .title-content {
-      font-size: var(--text-lg);
-    }
+  @media (max-width: 767px) {
+    padding: var(--space-xl) var(--space-md) var(--space-lg);
+    font-size: var(--text-xl);
   }
 `;
 
 export const ModalContent = styled(DialogContent)`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
-  padding: var(--space-2xl);
+  padding: 0 var(--space-2xl) var(--space-2xl);
   background: var(--white);
-  min-height: 400px;
   
-  @media (max-width: 768px) {
-    padding: var(--space-lg);
-    min-height: auto;
-  }
-  
-  @media (max-width: 480px) {
-    padding: var(--space-md);
+  @media (max-width: 767px) {
+    padding: 0 var(--space-md) var(--space-xl);
   }
 `;
 
 export const PremiumSection = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
-  margin-bottom: var(--space-xl);
-  padding: var(--space-xl);
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-base);
-  position: relative;
-  transition: var(--transition);
-  
-  &:hover {
-    box-shadow: var(--shadow-sm);
-    border-color: var(--gray-300);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--primary);
-    border-radius: var(--radius-base) var(--radius-base) 0 0;
-  }
+  margin-bottom: var(--space-3xl);
+  /* No background, borders, or shadows - pure minimal */
   
   .section-title {
-    font-family: var(--font-display);
+    font-family: var(--font-main);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--gray-800);
+    color: var(--gray-900);
     margin: 0 0 var(--space-lg) 0;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+    line-height: 1.3;
+    /* Typography-first - no decorative icons */
   }
   
-  .section-icon {
-    width: 20px;
-    height: 20px;
-    color: var(--primary);
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
   }
 `;
 
 export const FeatureList = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   margin: var(--space-lg) 0 0 0;
   
   .feature-item {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-sm) 0;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
     font-family: var(--font-main);
     font-size: var(--text-base);
     color: var(--gray-700);
-    line-height: var(--leading-relaxed);
-    transition: var(--transition);
-    
-    &:hover {
-      color: var(--gray-800);
-    }
+    line-height: 1.4;
     
     .check-icon {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       color: var(--positive);
       flex-shrink: 0;
+      margin-top: 2px;
     }
   }
 `;
 
 export const PricingBanner = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
-  background: var(--primary-light);
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-base);
-  padding: var(--space-xl);
+  padding: var(--space-xl) 0;
   text-align: center;
-  margin: var(--space-xl) 0;
+  margin: var(--space-2xl) 0;
+  /* No background or borders - pure minimal */
   
   .price-content {
-    /* No positioning needed - keep clean */
+    /* Clean typography-only approach */
   }
   
   .price-value {
-    font-family: var(--font-mono);
+    font-family: var(--font-main);
     font-size: var(--text-3xl);
-    font-weight: 700;
-    color: var(--primary);
+    font-weight: 600;
+    color: var(--gray-900);
     margin: var(--space-sm) 0;
-    line-height: var(--leading-none);
+    line-height: 1.2;
   }
   
   .price-description {
     font-family: var(--font-main);
     font-size: var(--text-base);
     color: var(--gray-600);
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
+    line-height: 1.4;
     
     &:first-child {
       margin-bottom: var(--space-xs);
@@ -348,50 +209,42 @@ export const PricingBanner = styled('div')`
 `;
 
 export const PaymentFormContainer = styled('form')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
+  gap: var(--space-2xl);
+  margin-top: var(--space-2xl);
 `;
 
 export const FormSection = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   .form-title {
-    font-family: var(--font-display);
+    font-family: var(--font-main);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--gray-800);
+    color: var(--gray-900);
     margin: 0 0 var(--space-lg) 0;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding-bottom: var(--space-md);
-    border-bottom: 1px solid var(--gray-200);
-  }
-  
-  .form-icon {
-    width: 18px;
-    height: 18px;
-    color: var(--primary);
+    line-height: 1.3;
+    /* Typography-first - no decorative icons or borders */
   }
 `;
 
 export const FormField = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   
   label {
     font-family: var(--font-main);
     font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--gray-700);
+    font-weight: 500;
+    color: var(--gray-600);
     margin-bottom: var(--space-xs);
+    line-height: 1.3;
   }
   
   input {
@@ -399,20 +252,15 @@ export const FormField = styled('div')`
     font-size: var(--text-base);
     padding: var(--space-md);
     border: 1px solid var(--gray-300);
-    border-radius: var(--radius-base);
     background: var(--white);
     color: var(--gray-900);
     transition: var(--transition);
-    min-height: 44px;
+    min-height: 48px;
+    line-height: 1.4;
     
     &:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    
-    &:hover {
-      border-color: var(--gray-400);
     }
     
     &::placeholder {
@@ -421,17 +269,15 @@ export const FormField = styled('div')`
     
     &.error {
       border-color: var(--negative);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
   }
 `;
 
 export const CardElementContainer = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   padding: var(--space-md);
   border: 1px solid var(--gray-300);
-  border-radius: var(--radius-base);
   background: var(--white);
   transition: var(--transition);
   min-height: 48px;
@@ -440,107 +286,83 @@ export const CardElementContainer = styled('div')`
   
   &:focus-within {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-  
-  &:hover {
-    border-color: var(--gray-400);
   }
   
   &.error {
     border-color: var(--negative);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
   }
 `;
 
 export const ErrorMessage = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
-  background: var(--negative-light);
-  border: 1px solid var(--negative);
-  border-radius: var(--radius-base);
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-sm) 0;
   font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--negative);
   display: flex;
   align-items: flex-start;
   gap: var(--space-xs);
+  line-height: 1.4;
   
   .error-icon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     flex-shrink: 0;
     margin-top: 2px;
   }
 `;
 
 export const ActionButtons = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   display: flex;
   gap: var(--space-md);
-  margin-top: var(--space-xl);
-  padding-top: var(--space-lg);
-  border-top: 1px solid var(--gray-200);
+  margin-top: var(--space-2xl);
   
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     flex-direction: column;
     gap: var(--space-sm);
-  }
-  
-  @media (max-width: 480px) {
-    margin-top: var(--space-lg);
-    padding-top: var(--space-md);
+    margin-top: var(--space-xl);
   }
 `;
 
 export const PrimaryButton = styled('button')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   flex: 1;
   padding: var(--space-md) var(--space-xl);
   background: var(--primary);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-base);
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  min-height: 52px;
+  min-height: 48px;
+  line-height: 1.4;
   
   &:hover {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  &:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
+    background: #2563eb;
   }
   
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
     
     &:hover {
       background: var(--primary);
-      transform: none;
-      box-shadow: none;
     }
   }
   
   .loading-spinner {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top-color: var(--white);
@@ -549,65 +371,56 @@ export const PrimaryButton = styled('button')`
 `;
 
 export const SecondaryButton = styled('button')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   flex: 0.5;
   padding: var(--space-md) var(--space-xl);
   background: var(--white);
   color: var(--gray-700);
   border: 1px solid var(--gray-300);
-  border-radius: var(--radius-base);
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   transition: var(--transition);
-  min-height: 52px;
+  min-height: 48px;
+  line-height: 1.4;
   
   &:hover {
-    border-color: var(--gray-400);
-    background: var(--gray-50);
-    color: var(--gray-800);
-  }
-  
-  &:active {
-    background: var(--gray-100);
+    color: var(--gray-900);
   }
 `;
 
 export const SecurityBadge = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: var(--space-md);
-  background: var(--positive-light);
-  border: 1px solid var(--positive);
-  border-radius: var(--radius-base);
+  padding: var(--space-md) 0;
   font-family: var(--font-main);
   font-size: var(--text-sm);
-  color: var(--gray-700);
+  color: var(--gray-600);
   margin-top: var(--space-lg);
+  line-height: 1.4;
   
   .security-icon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     color: var(--positive);
   }
 `;
 
 // Additional components needed for legacy compatibility
 export const GovUKButton = styled('button')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 500;
   padding: var(--space-md) var(--space-lg);
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius-base);
+  border: 1px solid var(--gray-300);
   background: var(--white);
   color: var(--gray-700);
   cursor: pointer;
@@ -617,72 +430,65 @@ export const GovUKButton = styled('button')`
   justify-content: center;
   gap: var(--space-sm);
   min-height: 48px;
+  line-height: 1.4;
   
   &:hover {
-    background: var(--gray-50);
-    border-color: var(--gray-400);
+    color: var(--gray-900);
   }
   
   &:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 `;
 
 export const GovUKBody = styled('p')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
-  line-height: var(--leading-normal);
+  line-height: 1.4;
   color: var(--gray-700);
   margin-bottom: var(--space-md);
   
-  @media (max-width: 768px) {
-    font-size: var(--text-lg);
+  @media (max-width: 767px) {
+    font-size: var(--text-base);
     margin-bottom: var(--space-lg);
   }
 `;
 
 export const PayButtonPrimary = styled('button')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 500;
   padding: var(--space-md) var(--space-lg);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  background: var(--primary);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-base);
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
   min-height: 48px;
+  line-height: 1.4;
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  &:active {
-    transform: translateY(0);
+    background: #2563eb;
   }
 `;
 
 export const BaseButton = styled('button')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 500;
   padding: var(--space-md) var(--space-lg);
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius-base);
+  border: 1px solid var(--gray-300);
   background: var(--white);
   color: var(--gray-700);
   cursor: pointer;
@@ -692,6 +498,7 @@ export const BaseButton = styled('button')`
   justify-content: center;
   gap: var(--space-sm);
   min-height: 48px;
+  line-height: 1.4;
   
   /* Variant styles */
   ${props => props.variant === 'blue' && `
@@ -700,19 +507,17 @@ export const BaseButton = styled('button')`
     border-color: var(--primary);
     
     &:hover {
-      background: var(--primary-hover);
-      border-color: var(--primary-hover);
+      background: #2563eb;
     }
   `}
   
   ${props => props.variant === 'primary' && `
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    background: var(--primary);
     color: var(--white);
     border-color: var(--primary);
     
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+      background: #2563eb;
     }
   `}
   
@@ -722,20 +527,17 @@ export const BaseButton = styled('button')`
     border-color: var(--gray-300);
     
     &:hover {
-      background: var(--gray-50);
-      border-color: var(--gray-400);
+      color: var(--gray-900);
     }
   `}
   
   &:hover {
-    background: var(--gray-50);
-    border-color: var(--gray-400);
+    color: var(--gray-900);
   }
   
   &:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
   
   &:disabled {
@@ -744,8 +546,7 @@ export const BaseButton = styled('button')`
     
     &:hover {
       background: var(--white);
-      border-color: var(--gray-300);
-      transform: none;
+      color: var(--gray-700);
     }
   }
 `;
@@ -758,17 +559,14 @@ export const inlineStyles = {
     justifyContent: 'center',
     gap: 'var(--space-md)',
     marginTop: 'var(--space-lg)',
-    padding: 'var(--space-md)',
-    background: 'var(--gray-50)',
-    borderRadius: 'var(--radius-base)',
-    border: '1px solid var(--gray-200)'
+    padding: 'var(--space-sm) 0'
   },
   
   cardBrandText: {
     fontFamily: 'var(--font-main)',
     fontSize: 'var(--text-sm)',
     color: 'var(--gray-600)',
-    fontWeight: '500'
+    fontWeight: '400'
   },
   
   cardBrandList: {
@@ -778,25 +576,24 @@ export const inlineStyles = {
   },
   
   cardBrand: {
-    padding: '4px 8px',
-    background: 'var(--white)',
-    border: '1px solid var(--gray-300)',
-    borderRadius: 'var(--radius-sm)',
+    padding: '2px 6px',
+    background: 'var(--gray-100)',
     fontSize: 'var(--text-xs)',
-    fontWeight: '600',
-    fontFamily: 'var(--font-mono)'
+    fontWeight: '500',
+    fontFamily: 'var(--font-mono)',
+    color: 'var(--gray-700)'
   },
   
   visaStyle: {
-    color: '#1a365d'
+    color: 'var(--gray-700)'
   },
   
   mastercardStyle: {
-    color: '#eb001b'
+    color: 'var(--gray-700)'
   },
   
   amexStyle: {
-    color: '#006fcf'
+    color: 'var(--gray-700)'
   },
   
   textStyles: {
@@ -805,7 +602,7 @@ export const inlineStyles = {
       fontSize: 'var(--text-base)', 
       color: 'var(--gray-700)', 
       marginBottom: 'var(--space-md)',
-      lineHeight: 'var(--leading-relaxed)'
+      lineHeight: '1.4'
     },
     
     small: {
@@ -813,20 +610,18 @@ export const inlineStyles = {
       fontSize: 'var(--text-sm)', 
       color: 'var(--gray-600)', 
       marginBottom: 'var(--space-lg)',
-      lineHeight: 'var(--leading-relaxed)',
-      fontStyle: 'italic'
+      lineHeight: '1.4'
     },
     
     emphasis: {
-      color: 'var(--gray-800)',
-      fontWeight: '600'
+      color: 'var(--gray-900)',
+      fontWeight: '500'
     }
   },
   
   priceContentStyles: {
     free: {
-      background: 'linear-gradient(135deg, var(--positive-light) 0%, var(--white) 100%)', 
-      borderColor: 'var(--positive)'
+      /* Pure minimal - no special styling */
     },
     
     freePriceValue: {
@@ -836,24 +631,19 @@ export const inlineStyles = {
   
   buttonStyles: {
     success: {
-      background: 'linear-gradient(135deg, var(--positive) 0%, #059669 100%)'
+      background: 'var(--positive)'
     }
   },
   
   infoPanel: {
     padding: 'var(--space-md)',
     background: 'var(--gray-50)',
-    borderRadius: 'var(--radius-base)',
-    border: '1px solid var(--gray-200)',
     marginBottom: 'var(--space-lg)'
   },
   
   infoHighlight: {
     padding: 'var(--space-md)',
-    background: 'var(--primary-light)',
-    borderRadius: 'var(--radius-base)',
-    border: '1px solid var(--primary)',
-    borderLeft: '4px solid var(--primary)',
+    background: 'var(--gray-50)',
     marginBottom: 'var(--space-lg)'
   }
 };

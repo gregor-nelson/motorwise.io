@@ -36,7 +36,7 @@ import {
   DetailsSummary,
   DetailsText,
 } from './ResultsStyles';
-import MotDefectDetail from './MotDefectDetail';
+import MotDefectModal from './DefectDetail/MotDefectModal';
 import Alert from '@mui/material/Alert';
 
 // Simple tooltip implementation to maintain functionality
@@ -106,9 +106,8 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
   const [motData, setMotData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [expandedDefects, setExpandedDefects] = useState({});
+  const [selectedDefect, setSelectedDefect] = useState(null);
   const abortControllerRef = useRef(null);
-  const defectRefs = useRef({}); // Keep as original object, not Map
   
   // ANIMATION STATE - Added for smooth reveal
   const [showResults, setShowResults] = useState(false);
@@ -118,18 +117,14 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
 
   const CACHE_STALE_TIME = 5 * 60 * 1000;
 
-  // ORIGINAL FUNCTIONS - Unchanged
-  const toggleExpanded = useCallback((defectKey) => (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setExpandedDefects(prev => ({
-      ...prev,
-      [defectKey]: !prev[defectKey],
-    }));
+  // Modal functions
+  const openDefectModal = useCallback((defect) => {
+    console.log('Opening defect modal with data:', defect);
+    setSelectedDefect(defect);
   }, []);
 
-  const closeAllDefects = useCallback(() => {
-    setExpandedDefects({});
+  const closeDefectModal = useCallback(() => {
+    setSelectedDefect(null);
   }, []);
 
   // COLLAPSIBLE SECTION TOGGLE
@@ -137,26 +132,7 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
     setSectionExpanded(prev => !prev);
   }, []);
 
-  // ORIGINAL CLICK OUTSIDE LOGIC - Unchanged
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const hasExpanded = Object.values(expandedDefects).some(val => val);
-      if (!hasExpanded) return;
-
-      const isOutside = Object.values(defectRefs.current).every(ref => 
-        ref && !ref.contains(event.target)
-      );
-
-      if (isOutside) {
-        closeAllDefects();
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [expandedDefects, closeAllDefects]);
+  // No longer need click outside logic for inline expansion
 
   // ORIGINAL HELPER FUNCTIONS - Unchanged
   const formatDate = useCallback((dateString) => {
@@ -276,6 +252,7 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
       setShowResults(false);
       setShowDefects({});
       setSectionExpanded(true); // Reset to expanded when loading new data
+      closeDefectModal(); // Close modal when loading new data
 
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -395,6 +372,7 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
   }
 
   return (
+    <>
     <MarketDashContainer>
       <FadeInContent show={!loading} delay={0}>
         <PageTitle>MOT History</PageTitle>
@@ -518,44 +496,29 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                               <>
                                 <SmallText>Repair immediately (major defects):</SmallText>
                                 <AnimatedDefectList as={DefectList} show={showDefects[index]}>
-                                  {mot.defects.map((defect, i) => {
-                                    const defectKey = `${index}-defect-${i}`;
-                                    return (
-                                      <li key={i}>
-                                        <ValueWithTooltip 
-                                          tooltip={`${expandedDefects[defectKey] ? 'Hide' : 'View'} MOT manual reference details`}
-                                          placement="top"
+                                  {mot.defects.map((defect, i) => (
+                                    <li key={i}>
+                                      <ValueWithTooltip 
+                                        tooltip="View MOT manual reference details"
+                                        placement="top"
+                                      >
+                                        <ClickableDefectItem
+                                          expanded={false}
+                                          onClick={() => openDefectModal(defect)}
+                                          role="button"
+                                          tabIndex={0}
+                                          onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                              e.preventDefault();
+                                              openDefectModal(defect);
+                                            }
+                                          }}
                                         >
-                                          <ClickableDefectItem
-                                            ref={el => defectRefs.current[defectKey] = el}
-                                            expanded={expandedDefects[defectKey]}
-                                            onClick={toggleExpanded(defectKey)}
-                                            aria-expanded={expandedDefects[defectKey] || false}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) => { // Fixed: Changed from onKeyPress to onKeyDown
-                                              if (e.key === 'Enter' || e.key === ' ') {
-                                                e.preventDefault();
-                                                toggleExpanded(defectKey)(e);
-                                              }
-                                              if (e.key === 'Escape') {
-                                                closeAllDefects();
-                                              }
-                                            }}
-                                          >
-                                            <strong>{defect.text}</strong>
-                                            <MotDefectDetail 
-                                              defectId={defect.id}
-                                              defectText={defect.text}
-                                              defectCategory={defect.type}
-                                              expanded={expandedDefects[defectKey]}
-                                              toggleExpanded={toggleExpanded(defectKey)}
-                                            />
-                                          </ClickableDefectItem>
-                                        </ValueWithTooltip>
-                                      </li>
-                                    );
-                                  })}
+                                          <strong>{defect.text}</strong>
+                                        </ClickableDefectItem>
+                                      </ValueWithTooltip>
+                                    </li>
+                                  ))}
                                 </AnimatedDefectList>
                               </>
                             )}
@@ -563,44 +526,29 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                               <>
                                 <SmallText>Monitor and repair if necessary (advisories):</SmallText>
                                 <AnimatedDefectList as={DefectList} show={showDefects[index]}>
-                                  {mot.advisories.map((advisory, i) => {
-                                    const advisoryKey = `${index}-advisory-${i}`;
-                                    return (
-                                      <li key={i}>
-                                        <ValueWithTooltip 
-                                          tooltip={`${expandedDefects[advisoryKey] ? 'Hide' : 'View'} MOT manual reference details`}
-                                          placement="top"
+                                  {mot.advisories.map((advisory, i) => (
+                                    <li key={i}>
+                                      <ValueWithTooltip 
+                                        tooltip="View MOT manual reference details"
+                                        placement="top"
+                                      >
+                                        <ClickableDefectItem
+                                          expanded={false}
+                                          onClick={() => openDefectModal(advisory)}
+                                          role="button"
+                                          tabIndex={0}
+                                          onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                              e.preventDefault();
+                                              openDefectModal(advisory);
+                                            }
+                                          }}
                                         >
-                                          <ClickableDefectItem
-                                            ref={el => defectRefs.current[advisoryKey] = el}
-                                            expanded={expandedDefects[advisoryKey]}
-                                            onClick={toggleExpanded(advisoryKey)}
-                                            aria-expanded={expandedDefects[advisoryKey] || false}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) => {
-                                              if (e.key === 'Enter' || e.key === ' ') {
-                                                e.preventDefault();
-                                                toggleExpanded(advisoryKey)(e);
-                                              }
-                                              if (e.key === 'Escape') {
-                                                closeAllDefects();
-                                              }
-                                            }}
-                                          >
-                                            <strong>{advisory.text}</strong>
-                                            <MotDefectDetail 
-                                              defectId={advisory.id}
-                                              defectText={advisory.text}
-                                              defectCategory={advisory.type}
-                                              expanded={expandedDefects[advisoryKey]}
-                                              toggleExpanded={toggleExpanded(advisoryKey)}
-                                            />
-                                          </ClickableDefectItem>
-                                        </ValueWithTooltip>
-                                      </li>
-                                    );
-                                  })}
+                                          <strong>{advisory.text}</strong>
+                                        </ClickableDefectItem>
+                                      </ValueWithTooltip>
+                                    </li>
+                                  ))}
                                 </AnimatedDefectList>
                               </>
                             )}
@@ -646,7 +594,15 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
             </CollapsibleSection>
           </FadeInContent>
         )}
+        
     </MarketDashContainer>
+    
+    {/* Defect Detail Modal - Using bulletins pattern for reliable positioning */}
+    <MotDefectModal 
+      selectedDefect={selectedDefect}
+      onClose={closeDefectModal}
+    />
+    </>
   );
 };
 

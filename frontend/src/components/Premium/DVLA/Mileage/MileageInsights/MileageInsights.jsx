@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-// MarketDash self-contained components - no external theme dependencies
-const MarketDashColors = {
-  POSITIVE: '#10b981',
-  NEGATIVE: '#ef4444', 
-  WARNING: '#f59e0b',
-  PRIMARY: '#3b82f6',
-  GRAY_900: '#0f172a',
-  GRAY_800: '#1e293b',
-  GRAY_600: '#475569',
-  GRAY_500: '#64748b'
+// Simple color constants for semantic use only (matches DVLADataHeader approach)
+const SEMANTIC_COLORS = {
+  POSITIVE: '#059669',
+  NEGATIVE: '#dc2626', 
+  WARNING: '#d97706',
+  PRIMARY: '#3b82f6'
 };
 
 // Import Material-UI icons
@@ -20,17 +16,14 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import HistoryIcon from '@mui/icons-material/History';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-// Simple self-contained tooltip and helper components
+// Simple tooltip component - minimal styling (matches DVLADataHeader approach)
 const SimpleTooltip = ({ children, title }) => (
-  <span title={title} style={{ 
-    borderBottom: '1px dotted var(--gray-500)', 
-    cursor: 'help',
-    fontFamily: 'var(--font-main)'
-  }}>
+  <span title={title} style={{ cursor: 'help' }}>
     {children}
   </span>
 );
 
+// Ultra Clean Loading Spinner (matches DVLADataHeader pattern)
 const LoadingSpinner = () => (
   <>
     <style>
@@ -39,31 +32,22 @@ const LoadingSpinner = () => (
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        
-        @keyframes shimmer {
-          0% { background-position: -200px 0; }
-          100% { background-position: calc(200px + 100%) 0; }
-        }
       `}
     </style>
     <div style={{
       width: '24px',
       height: '24px',
-      border: '3px solid var(--gray-200)',
+      border: '2px solid var(--gray-200)',
       borderRadius: '50%',
       borderTopColor: 'var(--primary)',
-      animation: 'mileage-spin 1s linear infinite',
-      margin: '0 auto var(--space-md)'
+      animation: 'mileage-spin 1s linear infinite'
     }} />
   </>
 );
 
+// Clean Section Spacing - No Visual Dividers (matches DVLADataHeader pattern)
 const SectionBreak = () => (
-  <hr style={{
-    border: 'none',
-    borderTop: '1px solid var(--gray-200)',
-    margin: 'var(--space-xl) 0'
-  }} />
+  <div style={{ height: 'var(--space-3xl)' }} />
 );
 
 // Import mileage tooltips
@@ -93,8 +77,7 @@ import {
   MileageMetricLabel,
   MileageMetricValue,
   MileageMetricSubtext,
-  DataQualityBadge,
-  LoadingShimmer
+  DataQualityBadge
 } from './style/style';
 
 // Import enhanced risk assessment, anomaly detection functions, and clocking warning
@@ -149,20 +132,20 @@ const DataQualityIndicator = ({
   // Determine overall data quality
   let qualityLevel = "high";
   let qualityDisplayName = "High Quality";
-  let qualityColor = MarketDashColors.POSITIVE;
+  let qualityColor = SEMANTIC_COLORS.POSITIVE;
   
   if (hasClockingIssues) {
     qualityLevel = "poor";
     qualityDisplayName = "Poor Quality";
-    qualityColor = MarketDashColors.NEGATIVE;
+    qualityColor = SEMANTIC_COLORS.NEGATIVE;
   } else if (motGapsDetected || (anomalies && anomalies.length > 0)) {
     qualityLevel = "medium";
     qualityDisplayName = "Medium Quality";
-    qualityColor = MarketDashColors.WARNING;
+    qualityColor = SEMANTIC_COLORS.WARNING;
   } else if (dataPoints < 4) {
     qualityLevel = "limited";
     qualityDisplayName = "Limited Data";
-    qualityColor = MarketDashColors.GRAY_500;
+    qualityColor = 'var(--gray-500)';
   }
   
   return (
@@ -176,15 +159,16 @@ const DataQualityIndicator = ({
         <SimpleTooltip title="Assessment of the reliability and completeness of the vehicle's history data">
           <h3 style={{
             margin: 0,
-            fontFamily: 'var(--font-display)',
-            fontSize: 'var(--text-2xl)',
+            fontFamily: 'var(--font-main)',
+            fontSize: 'var(--text-xl)',
             fontWeight: '600',
-            color: 'var(--gray-800)',
+            color: 'var(--gray-900)',
+            letterSpacing: '-0.02em',
+            lineHeight: '1.2',
             display: 'flex',
             alignItems: 'center',
             gap: 'var(--space-sm)'
           }}>
-            <AssessmentIcon style={{ color: qualityColor }} />
             Data Quality Assessment
           </h3>
         </SimpleTooltip>
@@ -197,11 +181,11 @@ const DataQualityIndicator = ({
         </DataQualityBadge>
       </div>
       
-      <MileageInsightPanel borderColor={qualityColor}>
+      <MileageInsightPanel>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 'var(--space-lg)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: 'var(--space-xl)',
           marginBottom: 'var(--space-xl)'
         }}>
           <MileageMetricCard>
@@ -227,35 +211,35 @@ const DataQualityIndicator = ({
         
         <FactorsList>
           {hasClockingIssues && (
-            <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
+            <FactorItem _iconColor={"var(--negative)"}>
               <ErrorOutlineIcon fontSize="small" />
               <span>Mileage inconsistencies detected, suggesting potential odometer tampering.</span>
             </FactorItem>
           )}
           
           {motGapsDetected && (
-            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
+            <FactorItem _iconColor={"var(--warning)"}>
               <WarningIcon fontSize="small" />
               <span>Significant gaps in MOT testing history (18+ months) detected.</span>
             </FactorItem>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'negative').length > 0 && (
-            <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
+            <FactorItem _iconColor={"var(--negative)"}>
               <ErrorOutlineIcon fontSize="small" />
               <span>{anomalies.filter(a => a.type === 'negative').length} instances of decreasing mileage detected.</span>
             </FactorItem>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
-            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
+            <FactorItem _iconColor={"var(--warning)"}>
               <WarningIcon fontSize="small" />
               <span>{anomalies.filter(a => a.type === 'spike').length} unusual mileage patterns detected.</span>
             </FactorItem>
           )}
           
           {dataPoints < 3 && (
-            <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
+            <FactorItem _iconColor={"var(--warning)"}>
               <InfoIcon fontSize="small" />
               <span>Limited data points available ({dataPoints}). Analysis may be less reliable.</span>
             </FactorItem>
@@ -263,7 +247,7 @@ const DataQualityIndicator = ({
           
           {!hasClockingIssues && !motGapsDetected && dataPoints >= 4 && 
            (!anomalies || anomalies.length === 0) && (
-            <FactorItem borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
+            <FactorItem _iconColor={"var(--positive)"}>
               <CheckCircleIcon fontSize="small" />
               <span>Complete and consistent mileage history with no detected anomalies.</span>
             </FactorItem>
@@ -791,15 +775,17 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   // Show loading state
   if (loading) {
     return (
-      <LoadingContainer>
-        <LoadingSpinner />
-        <p style={{
-          fontFamily: 'var(--font-main)',
-          fontSize: 'var(--text-base)',
-          color: 'var(--gray-600)',
-          margin: 0
-        }}>Loading vehicle mileage insights...</p>
-      </LoadingContainer>
+      <MileageInsightsContainer>
+        <LoadingContainer>
+          <LoadingSpinner />
+          <div style={{
+            fontFamily: 'var(--font-main)',
+            color: 'var(--gray-600)',
+            fontSize: 'var(--text-sm)',
+            textAlign: 'center'
+          }}>Loading vehicle mileage insights...</div>
+        </LoadingContainer>
+      </MileageInsightsContainer>
     );
   }
 
@@ -812,25 +798,26 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         </SectionTitleContainer>
         
         <ErrorContainer>
-          <h3 style={{
-            margin: '0 0 var(--space-md) 0',
+          <div style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-lg)',
-            fontWeight: '600',
-            color: 'var(--gray-800)',
+            fontWeight: 600,
+            color: 'var(--gray-900)',
+            marginBottom: 'var(--space-sm)',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 'var(--space-sm)'
           }}>
-            <ErrorOutlineIcon style={{ marginRight: 'var(--space-sm)', color: 'var(--negative)' }} />
+            <ErrorOutlineIcon style={{ color: 'var(--negative)' }} />
             Service Unavailable
-          </h3>
-          <p style={{
+          </div>
+          <div style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-base)',
-            color: 'var(--gray-700)',
-            lineHeight: '1.5',
-            margin: 0
-          }}>The vehicle mileage data service is currently unavailable. Please try again later.</p>
+            color: 'var(--negative)',
+            lineHeight: '1.5'
+          }}>The vehicle mileage data service is currently unavailable. Please try again later.</div>
         </ErrorContainer>
       </MileageInsightsContainer>
     );
@@ -845,14 +832,13 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         </SectionTitleContainer>
         
         <EmptyContainer>
-          <InfoIcon style={{ fontSize: 40, color: '#1d70b8', marginBottom: 10 }} />
-          <p style={{
+          <InfoIcon style={{ fontSize: 40, color: 'var(--primary)', marginBottom: 10 }} />
+          <div style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-base)',
             color: 'var(--gray-700)',
-            lineHeight: '1.5',
-            margin: 0
-          }}>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</p>
+            lineHeight: '1.5'
+          }}>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</div>
         </EmptyContainer>
       </MileageInsightsContainer>
     );
@@ -899,49 +885,27 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Risk Assessment Panel - Always show first for clocked vehicles */}
       {insights.riskAssessment && hasClockingIssues && (
         <MileageInsightSection>
-          <SimpleTooltip 
-            title={mileageTooltips.sectionRiskAssessment} 
-            _iconColor={
-              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
-              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
-              "var(--negative)"
-            }
-          >
+          <SimpleTooltip title={mileageTooltips.sectionRiskAssessment}>
             <h3 style={{
               margin: '0 0 var(--space-lg) 0',
               fontFamily: 'var(--font-main)',
               fontSize: 'var(--text-xl)',
               fontWeight: '600',
-              color: 'var(--gray-800)',
-              display: 'flex',
-              alignItems: 'center'
+              color: 'var(--gray-900)',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2'
             }}>
-            <AssessmentIcon /> Mileage History Risk Assessment
+            Mileage History Risk Assessment
             </h3>
           </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={
-              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
-              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
-              "var(--negative)"
-          }>
-            <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
+          <MileageInsightPanel>
+            <RiskScoreDisplay>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
                 {insights.riskAssessment.riskScore}
-                {/* Add icons for better accessibility */}
-                {insights.riskAssessment.riskCategory === 'Low' && 
-                  <CheckCircleIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
-                {insights.riskAssessment.riskCategory === 'Medium' && 
-                  <WarningIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
-                {insights.riskAssessment.riskCategory === 'High' && 
-                  <ErrorOutlineIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
               </RiskScoreCircle>
               <RiskScoreText>
                 <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
-                  {/* Add visual patterns for colour-blind users */}
-                  {insights.riskAssessment.riskCategory === 'Low' && "✓ "}
-                  {insights.riskAssessment.riskCategory === 'Medium' && "⚠ "}
-                  {insights.riskAssessment.riskCategory === 'High' && "⛔ "}
                   {insights.riskAssessment.riskCategory} Risk
                 </RiskCategory>
                 <RiskDescription>
@@ -959,7 +923,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
+                    <FactorItem key={`risk-${index}`} _iconColor={"var(--negative)"}>
                       <WarningIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -975,7 +939,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
+                    <FactorItem key={`positive-${index}`} _iconColor={"var(--positive)"}>
                       <CheckCircleIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -990,21 +954,21 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Mileage Benchmark Panel */}
       {insights.benchmarks && (
         <MileageInsightSection>
-          <SimpleTooltip title={mileageTooltips.sectionBenchmarks} _iconColor={"var(--primary)"}>
+          <SimpleTooltip title={mileageTooltips.sectionBenchmarks}>
             <h3 style={{
               margin: '0 0 var(--space-lg) 0',
               fontFamily: 'var(--font-main)',
               fontSize: 'var(--text-xl)',
               fontWeight: '600',
-              color: 'var(--gray-800)',
-              display: 'flex',
-              alignItems: 'center'
+              color: 'var(--gray-900)',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2'
             }}>
             Benchmark Analysis
             </h3>
           </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={"var(--primary)"}>
+          <MileageInsightPanel>
             <p style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-base)',
@@ -1167,23 +1131,21 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Usage Pattern Panel - Enhanced with anomaly detection */}
       {insights.usagePatterns && (
         <MileageInsightSection>
-          <SimpleTooltip 
-            title="Analysis of how the vehicle has been used over time based on mileage records" 
-                     >
+          <SimpleTooltip title="Analysis of how the vehicle has been used over time based on mileage records">
             <h3 style={{
               margin: '0 0 var(--space-lg) 0',
               fontFamily: 'var(--font-main)',
               fontSize: 'var(--text-xl)',
               fontWeight: '600',
-              color: 'var(--gray-800)',
-              display: 'flex',
-              alignItems: 'center'
+              color: 'var(--gray-900)',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2'
             }}>
             Usage Pattern Analysis
             </h3>
           </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={"var(--primary)"}>
+          <MileageInsightPanel>
             <p style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'var(--text-base)',
@@ -1301,7 +1263,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   <WarningIcon fontSize="small" /> MOT Testing Gaps
                 </FactorsHeading>
                 <FactorsList>
-                  <FactorItem borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
+                  <FactorItem _iconColor={"var(--negative)"}>
                     <WarningIcon fontSize="small" />
                     <span>
                       Significant gaps detected in MOT testing history (18+ months) - vehicle may have been untested or unregistered for periods
@@ -1321,7 +1283,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
                     .slice(0, 2)
                     .map((anomaly, index) => (
-                    <FactorItem key={`anomaly-${index}`} borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
+                    <FactorItem key={`anomaly-${index}`} _iconColor={"var(--warning)"}>
                       <WarningIcon fontSize="small" />
                       <span>
                         {anomaly.details.current.formattedDate}: {anomaly.message}
@@ -1329,7 +1291,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     </FactorItem>
                   ))}
                   {anomalies.filter(a => a.type === 'spike').length > 2 && (
-                    <FactorItem borderColor={"var(--warning)"} _iconColor={"var(--warning)"}>
+                    <FactorItem _iconColor={"var(--warning)"}>
                       <InfoIcon fontSize="small" />
                       <span>
                         {anomalies.filter(a => a.type === 'spike').length - 2} more unusual usage patterns detected
@@ -1350,7 +1312,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     .sort((a, b) => b.days - a.days)
                     .slice(0, 2)
                     .map((period, index) => (
-                    <FactorItem key={`inactivity-${index}`} borderColor={"var(--primary)"} _iconColor={"var(--primary)"}>
+                    <FactorItem key={`inactivity-${index}`} _iconColor={"var(--primary)"}>
                       <HistoryIcon fontSize="small" />
                       <span>
                         {period.start.formattedDate} to {period.end.formattedDate}: {period.description}
@@ -1358,7 +1320,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                     </FactorItem>
                   ))}
                   {inactivityPeriods.length > 2 && (
-                    <FactorItem borderColor={"var(--primary)"} _iconColor={"var(--primary)"}>
+                    <FactorItem _iconColor={"var(--primary)"}>
                       <InfoIcon fontSize="small" />
                       <span>
                         {inactivityPeriods.length - 2} more inactivity periods detected
@@ -1375,49 +1337,27 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       {/* Risk Assessment Panel - Only shown here if not a clocked vehicle */}
       {insights.riskAssessment && !hasClockingIssues && (
         <MileageInsightSection>
-          <SimpleTooltip 
-            title={mileageTooltips.sectionRiskAssessment} 
-            _iconColor={
-              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
-              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
-              "var(--negative)"
-            }
-          >
+          <SimpleTooltip title={mileageTooltips.sectionRiskAssessment}>
            <h3 style={{
               margin: '0 0 var(--space-lg) 0',
               fontFamily: 'var(--font-main)',
               fontSize: 'var(--text-xl)',
               fontWeight: '600',
-              color: 'var(--gray-800)',
-              display: 'flex',
-              alignItems: 'center'
+              color: 'var(--gray-900)',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2'
             }}>
             History Risk Assessment
             </h3>
           </SimpleTooltip>
           
-          <MileageInsightPanel borderColor={
-              insights.riskAssessment.riskCategory === 'Low' ? "var(--positive)" : 
-              insights.riskAssessment.riskCategory === 'Medium' ? "var(--warning)" : 
-              "var(--negative)"
-          }>
-            <RiskScoreDisplay riskCategory={insights.riskAssessment.riskCategory}>
+          <MileageInsightPanel>
+            <RiskScoreDisplay>
               <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
                 {insights.riskAssessment.riskScore}
-                {/* Add icons for better accessibility */}
-                {insights.riskAssessment.riskCategory === 'Low' && 
-                  <CheckCircleIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
-                {insights.riskAssessment.riskCategory === 'Medium' && 
-                  <WarningIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
-                {insights.riskAssessment.riskCategory === 'High' && 
-                  <ErrorOutlineIcon fontSize="small" style={{ position: 'absolute', right: '-10px', top: '-10px' }} />}
               </RiskScoreCircle>
               <RiskScoreText>
                 <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
-                  {/* Add visual patterns for colour-blind users */}
-                  {insights.riskAssessment.riskCategory === 'Low' && "✓ "}
-                  {insights.riskAssessment.riskCategory === 'Medium' && "⚠ "}
-                  {insights.riskAssessment.riskCategory === 'High' && "⛔ "}
                   {insights.riskAssessment.riskCategory} Risk
                 </RiskCategory>
                 <RiskDescription>
@@ -1433,7 +1373,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} borderColor={"var(--negative)"} _iconColor={"var(--negative)"}>
+                    <FactorItem key={`risk-${index}`} _iconColor={"var(--negative)"}>
                       <WarningIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -1449,7 +1389,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 </FactorsHeading>
                 <FactorsList>
                   {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} borderColor={"var(--positive)"} _iconColor={"var(--positive)"}>
+                    <FactorItem key={`positive-${index}`} _iconColor={"var(--positive)"}>
                       <CheckCircleIcon fontSize="small" />
                       <span>{factor}</span>
                     </FactorItem>
@@ -1464,7 +1404,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       <SectionBreak />
       
       <SimpleTooltip title="Information updated regularly with the latest UK vehicle data">
-        <FooterNote style={{ borderBottom: '1px dotted var(--gray-500)', cursor: 'help', display: 'inline-block' }}>
+        <FooterNote>
           Data analysis based on vehicle history and UK market trends as of March 2025
         </FooterNote>
       </SimpleTooltip>

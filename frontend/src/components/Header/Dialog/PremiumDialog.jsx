@@ -208,7 +208,6 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
     <PaymentFormContainer onSubmit={handleSubmit}>
       <FormSection>
         <div className="form-title">
-          <EmailIcon className="form-icon" />
           Contact Information
         </div>
         
@@ -238,7 +237,6 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
 
       <FormSection>
         <div className="form-title">
-          <PaymentIcon className="form-icon" />
           Payment Details
         </div>
         

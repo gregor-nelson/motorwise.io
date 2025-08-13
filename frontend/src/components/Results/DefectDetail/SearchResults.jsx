@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 
-// Ultra Clean Design System - Following DVLADataHeader patterns exactly
+// Mobile-Ready Design System - Future-proof foundation
 const MinimalTokens = `
   :root {
     --gray-900: #1a1a1a;
@@ -34,6 +34,15 @@ const MinimalTokens = `
     --text-2xl: 1.5rem;
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --transition: all 0.15s ease;
+    
+    /* Mobile-Ready Breakpoints - Future expansion ready */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+    
+    /* Touch Targets - Accessibility standard */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
   }
 `;
 
@@ -48,7 +57,7 @@ const Container = styled('div')`
   color: var(--gray-900);
   line-height: 1.4;
 
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-xl) var(--space-md);
   }
 `;
@@ -56,7 +65,7 @@ const Container = styled('div')`
 const Header = styled('div')`
   margin-bottom: var(--space-3xl);
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-2xl);
   }
 `;
@@ -70,7 +79,7 @@ const Title = styled('h2')`
   letter-spacing: -0.02em;
   line-height: 1.2;
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xl);
   }
 `;
@@ -82,7 +91,7 @@ const ResultCount = styled('p')`
   font-size: var(--text-sm);
   line-height: 1.4;
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xs);
   }
 `;
@@ -91,7 +100,7 @@ const ResultsList = styled('div')`
   display: grid;
   gap: var(--space-xl);
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     gap: var(--space-lg);
   }
 `;
@@ -102,6 +111,7 @@ const ResultCard = styled('div')`
   cursor: pointer;
   transition: var(--transition);
   background: var(--white);
+  min-height: var(--touch-target-min);
   
   &:hover {
     background: var(--gray-50);
@@ -113,8 +123,10 @@ const ResultCard = styled('div')`
     border-radius: 4px;
   }
   
-  @media (max-width: 767px) {
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-lg);
+    /* Future mobile enhancements can be added here */
   }
 `;
 
@@ -128,7 +140,7 @@ const ResultTitle = styled('h3')`
   word-wrap: break-word;
   overflow-wrap: break-word;
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-base);
   }
 `;
@@ -170,7 +182,7 @@ const DefectPreview = styled('div')`
   word-wrap: break-word;
   overflow-wrap: break-word;
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-md);
     font-size: var(--text-xs);
   }
@@ -203,7 +215,7 @@ const NoResults = styled('div')`
   font-family: var(--font-main);
   color: var(--gray-600);
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     padding: var(--space-2xl) var(--space-lg);
   }
 `;

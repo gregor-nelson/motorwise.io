@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 
-// Ultra Clean Design System - Following DVLADataHeader patterns
+// Mobile-Ready Design System - Future-proof foundation
 const MinimalTokens = `
   :root {
     --gray-900: #1a1a1a;
@@ -26,6 +26,15 @@ const MinimalTokens = `
     --text-base: 1rem;
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --transition: all 0.15s ease;
+    
+    /* Mobile-Ready Breakpoints - Future expansion ready */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+    
+    /* Touch Targets - Accessibility standard */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
   }
 `;
 
@@ -48,6 +57,7 @@ const SearchInput = styled('input')`
   color: var(--gray-900);
   background: var(--white);
   transition: var(--transition);
+  min-height: var(--touch-target-min);
   
   &:focus {
     outline: none;
@@ -64,6 +74,12 @@ const SearchInput = styled('input')`
     color: var(--gray-500);
     cursor: not-allowed;
   }
+
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
+    font-size: var(--text-base);
+    /* Future mobile enhancements can be added here */
+  }
 `;
 
 const SearchButton = styled('button')`
@@ -77,6 +93,7 @@ const SearchButton = styled('button')`
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  min-height: var(--touch-target-min);
   
   &:hover {
     background: var(--gray-800);
@@ -91,6 +108,11 @@ const SearchButton = styled('button')`
     opacity: 0.5;
     cursor: not-allowed;
     background: var(--gray-400);
+  }
+
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
+    /* Future mobile enhancements can be added here */
   }
 `;
 

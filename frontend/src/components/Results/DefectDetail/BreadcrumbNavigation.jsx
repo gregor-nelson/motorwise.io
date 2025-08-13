@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 
-// Ultra Clean Design System - Minimal approach following DVLADataHeader
+// Mobile-Ready Design System - Future-proof foundation
 const MinimalTokens = `
   :root {
     --gray-900: #1a1a1a;
@@ -29,6 +29,15 @@ const MinimalTokens = `
     --text-lg: 1.125rem;
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --transition: all 0.15s ease;
+    
+    /* Mobile-Ready Breakpoints - Future expansion ready */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+    
+    /* Touch Targets - Accessibility standard */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
   }
 `;
 
@@ -43,7 +52,7 @@ const BreadcrumbContainer = styled('div')`
   font-size: var(--text-sm);
   color: var(--gray-600);
   
-  @media (max-width: 767px) {
+  @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-md);
     font-size: var(--text-xs);
   }
@@ -62,6 +71,7 @@ const BackButton = styled('button')`
   align-items: center;
   gap: var(--space-xs);
   transition: var(--transition);
+  min-height: var(--touch-target-min);
   
   &:hover {
     background: var(--gray-100);
@@ -79,9 +89,11 @@ const BackButton = styled('button')`
     border-radius: 4px;
   }
   
-  @media (max-width: 767px) {
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xs);
-    padding: calc(var(--space-xs) * 0.5) var(--space-xs);
+    padding: var(--space-xs);
+    /* Future mobile enhancements can be added here */
   }
 `;
 
@@ -107,8 +119,11 @@ const BreadcrumbItem = styled('button')`
     border-radius: 2px;
   }
   
-  @media (max-width: 767px) {
+  /* Mobile Optimization - Future enhancement point */
+  @media (max-width: var(--mobile-max)) {
     font-size: var(--text-xs);
+    min-height: var(--touch-target-min);
+    /* Future mobile enhancements can be added here */
   }
 `;
 

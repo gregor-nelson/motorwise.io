@@ -2415,3 +2415,10 @@
 2025-08-14 13:23:36,268 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0169s
 2025-08-14 13:23:39,292 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: None, Year: 2009
 2025-08-14 13:23:39,298 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0075s
+2025-08-14 13:41:04,238 - bulletins_api - INFO - Request: OPTIONS /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0010s
+2025-08-14 13:41:04,553 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
+2025-08-14 13:41:04,553 - bulletins_api - INFO - Exact match found for HONDA CR-V
+2025-08-14 13:41:04,559 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0156s
+2025-08-14 13:41:06,667 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: None, Year: 2009
+2025-08-14 13:41:06,667 - bulletins_api - INFO - Exact match found for HONDA CR-V
+2025-08-14 13:41:06,674 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0111s

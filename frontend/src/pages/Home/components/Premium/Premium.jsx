@@ -4,8 +4,6 @@ import PremiumBackground3D from './PremiumBackground3D';
 
 const PremiumVehicleReports = () => {
 
-  // Emotional design: Features organized by user's confidence-building journey
-  // Protection (addresses fear) → Analysis (builds credibility) → Empowerment (delivers confidence)
   const premiumFeatures = {
     protection: {
       identityVerification: {

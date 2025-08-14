@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { HeadingWithTooltip } from '../../styles/tooltip';
+import { HeadingWithTooltip } from '../../../styles/tooltip';
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
-import bulletinsApi from './api/BulletinsApiClient';
+import bulletinsApi from '../api/BulletinsApiClient';
 
 import {
   BulletinsContainer,
@@ -50,7 +50,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton
-} from './styles/BulletinStyles';
+} from './BulletinStyles';
 
 
 const extractVehicleYear = (vehicleData) => {

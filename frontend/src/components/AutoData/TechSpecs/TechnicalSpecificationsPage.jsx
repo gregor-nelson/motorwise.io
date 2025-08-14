@@ -3,12 +3,12 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { styled } from '@mui/material/styles';
 
 // Import API client
-import techSpecsApi from './api/TechSpecsApiClient';
+import techSpecsApi from '../api/TechSpecsApiClient';
 
 // Import custom tooltip components
 import {
   HeadingWithTooltip,
-} from '../../styles/tooltip';
+} from '../../../styles/tooltip';
 
 // Import minimal clean styled components
 import {
@@ -63,7 +63,7 @@ import {
   CollapsibleContent,
   CollapsibleContentInner,
   TabContentContainer
-} from './styles/TechnicalSpecificationsStyles';
+} from './TechnicalSpecificationsStyles';
 
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

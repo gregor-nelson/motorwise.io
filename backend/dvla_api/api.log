@@ -9174,3 +9174,7 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-14 13:22:22,265 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:61061 - Status: 200 - Process Time: 0.0140s
 2025-08-14 13:22:23,055 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
 2025-08-14 13:22:23,056 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:61070 - Status: 200 - Process Time: 0.0040s
+2025-08-14 13:23:36,255 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-14 13:23:36,256 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:61140 - Status: 200 - Process Time: 0.0039s
+2025-08-14 13:23:37,384 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-14 13:23:37,385 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:61151 - Status: 200 - Process Time: 0.0130s

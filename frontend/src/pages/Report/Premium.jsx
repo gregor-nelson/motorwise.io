@@ -32,7 +32,7 @@ import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader
 import VehicleInsights from '../../components/Premium/DVLA/Insights/VehicleInsights';
 import MileageChart3D from '../../components/Premium/DVLA/Mileage/Chart/MileageChart3D';
 import VehicleMileageInsights from '../../components/Premium/DVLA/Mileage/MileageInsights/MileageInsights';
-import AutoDataSection from '../../components/AutoData/DataTabs';
+import AutoDataSection from '../../components/AutoData/DataTabs/DataTabs';
 
 // Configurations 
 const API_CONFIG = {

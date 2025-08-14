@@ -47,11 +47,11 @@ import {
   FilterChip,
   SortContainer,
   SortButton
-} from './styles/LabourTimesStyles';
+} from './LabourTimesStyles';
 
 
 // Import API client
-import repairTimesApi from './api/RepairTimesApiClient';
+import repairTimesApi from '../api/RepairTimesApiClient';
 
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

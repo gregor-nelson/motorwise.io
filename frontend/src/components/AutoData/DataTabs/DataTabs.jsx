@@ -1,9 +1,9 @@
 // Refactored AutoDataSection.jsx with vertical layout instead of tabs
 import React, { useState, useEffect, useMemo } from 'react';
-import TechnicalSpecificationsPage from './TechnicalSpecificationsPage';
-import VehicleRepairTimesComponent from './LabourTimes';
-import BulletinsComponent from './BulletinsComponent';
-import VehicleAnalysisComponent from './VehicleAnalysisComponent';
+import TechnicalSpecificationsPage from '../TechSpecs/TechnicalSpecificationsPage';
+import VehicleRepairTimesComponent from '../LabourTimes/LabourTimes';
+import BulletinsComponent from '../Bulletins/BulletinsComponent';
+import VehicleAnalysisComponent from '../AI/VehicleAnalysisComponent';
 import { SectionContainer, SectionContent } from './DataTabsStyles';
 
 // Extract year from various possible date fields in vehicleData

@@ -1,289 +1,336 @@
 import React from 'react';
-import { styled, css } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
-// Import theme constants to ensure consistency
-import { 
-  COLORS, 
-  SPACING, 
-  FONT_SIZES, 
-  LINE_HEIGHTS, 
-  BREAKPOINTS,
-  commonFontStyles,
-  focusStyles,
-  respondTo
-} from './theme';
-
-// Align tooltip constants with theme
-export const TOOLTIP_CONSTANTS = {
-  BORDER_WIDTH: '4px',
-  FONT_FAMILY: '"GDS Transport", arial, sans-serif', // This matches the theme
-  BORDER_RADIUS: '0',
-  PADDING: {
-    DESKTOP: SPACING.M,
-    MOBILE: SPACING.S
-  },
-  FONT_SIZE: {
-    DESKTOP: FONT_SIZES.S,
-    MOBILE: FONT_SIZES.XS,
-    TITLE: {
-      DESKTOP: FONT_SIZES.M,
-      MOBILE: FONT_SIZES.S
-    },
-    SECTION_TITLE: {
-      DESKTOP: FONT_SIZES.S,
-      MOBILE: FONT_SIZES.XS
-    },
-    CONTENT: {
-      DESKTOP: FONT_SIZES.S,
-      MOBILE: FONT_SIZES.XS
-    },
-    NOTE: {
-      DESKTOP: FONT_SIZES.XS,
-      MOBILE: FONT_SIZES.XS
-    },
-    BULLET: {
-      DESKTOP: FONT_SIZES.XS,
-      MOBILE: FONT_SIZES.XS
-    }
-  },
-  WIDTH: {
-    MIN: '280px',
-    OPTIMAL: '320px',
-    MAX_DESKTOP: '350px',
-    MAX_MOBILE: 'calc(100vw - 40px)'
-  },
-  SHADOWS: {
-    DEFAULT: '0 2px 4px rgba(0,0,0,0.2)'
-  },
-  DIVIDER: {
-    HEIGHT: '1px',
-    MARGIN: `${SPACING.XS} 0`
-  },
-  SPACING: {
-    TITLE_MARGIN: SPACING.XS,
-    ROW_MARGIN: SPACING.XS,
-    SECTION_MARGIN: SPACING.S
-  },
-  GRID: {
-    LABEL_WIDTH: '40%',
-    VALUE_WIDTH: '60%',
-    GAP: SPACING.XS
+// Ultra Clean Minimal Design System - Tooltip Tokens
+const TooltipTokens = `
+  :root {
+    /* Ultra Clean Color Palette - Tooltip */
+    --tooltip-bg: #ffffff;
+    --tooltip-text: #1a1a1a;
+    --tooltip-border: #3b82f6;
+    --tooltip-border-light: #d4d4d4;
+    --tooltip-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Semantic Colors */
+    --tooltip-positive: #059669;
+    --tooltip-negative: #dc2626;
+    --tooltip-warning: #d97706;
+    --tooltip-gray-light: #f5f5f5;
+    --tooltip-gray-mid: #737373;
+    --tooltip-gray-dark: #404040;
+    
+    /* Clean Spacing - Generous White Space */
+    --tooltip-space-xs: 0.25rem;
+    --tooltip-space-sm: 0.5rem;
+    --tooltip-space-md: 1rem;
+    --tooltip-space-lg: 1.5rem;
+    --tooltip-space-xl: 2rem;
+    
+    /* Typography - Clean Hierarchy */
+    --tooltip-text-xs: 0.75rem;
+    --tooltip-text-sm: 0.875rem;
+    --tooltip-text-base: 1rem;
+    --tooltip-text-lg: 1.125rem;
+    --tooltip-text-xl: 1.25rem;
+    --tooltip-text-2xl: 1.5rem;
+    
+    /* Clean Typography */
+    --tooltip-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --tooltip-font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    
+    /* Minimal Dimensions */
+    --tooltip-width-min: 280px;
+    --tooltip-width-optimal: 320px;
+    --tooltip-width-max: 350px;
+    --tooltip-border-width: 4px;
+    
+    /* Clean Transitions */
+    --tooltip-transition: all 0.15s ease;
   }
-};
+`;
 
-// Use theme breakpoints instead of custom ones
-const desktopMediaQuery = `@media (min-width: ${BREAKPOINTS.MOBILE})`;
-const mobileMediaQuery = `@media (max-width: ${BREAKPOINTS.MOBILE})`;
 
-// Updated GOV.UK Tooltip Component to match theme
+// Clean media queries - minimal approach
+const mobileMediaQuery = '@media (max-width: 767px)';
+const desktopMediaQuery = '@media (min-width: 768px)';
+
+// Ultra Clean Tooltip Component - CSS Variables Approach
 export const GovUKTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
-))(() => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    ...commonFontStyles.styles,
-    backgroundColor: COLORS.WHITE,
-    color: COLORS.BLACK,
-    fontWeight: 400,
-    borderLeft: `${TOOLTIP_CONSTANTS.BORDER_WIDTH} solid ${COLORS.BLUE}`,
-    borderRadius: TOOLTIP_CONSTANTS.BORDER_RADIUS,
-    boxShadow: TOOLTIP_CONSTANTS.SHADOWS.DEFAULT,
-    padding: TOOLTIP_CONSTANTS.PADDING.DESKTOP,
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.DESKTOP,
-    lineHeight: LINE_HEIGHTS.S,
-    width: TOOLTIP_CONSTANTS.WIDTH.OPTIMAL,
-    minWidth: TOOLTIP_CONSTANTS.WIDTH.MIN,
-    maxWidth: TOOLTIP_CONSTANTS.WIDTH.MAX_DESKTOP,
-    wordBreak: 'break-word',
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    [mobileMediaQuery]: {
-      padding: TOOLTIP_CONSTANTS.PADDING.MOBILE,
-      fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.MOBILE,
-      width: 'auto',
-      minWidth: TOOLTIP_CONSTANTS.WIDTH.MIN,
-      maxWidth: TOOLTIP_CONSTANTS.WIDTH.MAX_MOBILE
-    },
-    '@media print': {
-      display: 'none',
-    },
-  },
-  // No arrow - matching chart tooltip
-  [`& .${tooltipClasses.arrow}`]: {
-    display: 'none'
+))`
+  ${TooltipTokens}
+  
+  & .${tooltipClasses.tooltip} {
+    font-family: var(--tooltip-font);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    font-weight: 400;
+    border-left: var(--tooltip-border-width) solid var(--tooltip-border);
+    border-radius: 0;
+    box-shadow: 0 2px 4px var(--tooltip-shadow);
+    padding: var(--tooltip-space-md);
+    font-size: var(--tooltip-text-sm);
+    line-height: 1.25;
+    width: var(--tooltip-width-optimal);
+    min-width: var(--tooltip-width-min);
+    max-width: var(--tooltip-width-max);
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    ${mobileMediaQuery} {
+      padding: var(--tooltip-space-sm);
+      font-size: var(--tooltip-text-xs);
+      width: auto;
+      min-width: var(--tooltip-width-min);
+      max-width: calc(100vw - 40px);
+    }
+    
+    @media print {
+      display: none;
+    }
   }
-}));
-
-// Tooltip Target with theme-aligned styling
-export const TooltipTarget = styled('span')(({ underlineStyle = 'dotted' }) => ({
-  ...commonFontStyles.styles,
-  borderBottom:
-    underlineStyle === 'none'
-      ? 'none'
-      : `1px ${underlineStyle} ${COLORS.DARK_GREY}`,
-  cursor: 'pointer',
-  position: 'relative',
-  display: 'inline',
-  '&:hover': {
-    borderBottomColor: COLORS.BLACK,
-    textDecoration: 'underline',
-  },
-  '&:focus': {
-    ...focusStyles.styles,
-  },
-}));
-
-// Tooltip Cell with theme-aligned styling
-export const TooltipCell = styled('td')(() => ({
-  ...commonFontStyles.styles,
-  '&:first-of-type': {
-    fontWeight: 700,
-    borderBottom: `1px dotted ${COLORS.DARK_GREY}`,
-    cursor: 'pointer',
-    '&:hover': {
-      borderBottomColor: COLORS.BLACK,
-      textDecoration: 'underline',
-    },
-    '&:focus': {
-      ...focusStyles.styles,
-    },
-  },
-}));
-
-// Tooltip Heading with theme-aligned styling
-export const TooltipHeading = styled('span')(() => ({
-  ...commonFontStyles.styles,
-  cursor: 'pointer',
-  display: 'inline-flex',
-  alignItems: 'center',
-  fontWeight: '700',
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.DESKTOP,
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.MOBILE
-  },
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-  '&:focus': {
-    ...focusStyles.styles,
-  },
-  '& .info-icon': {
-    marginLeft: SPACING.XS,
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.DESKTOP,
-    opacity: 0.7,
-    color: 'inherit',
-    verticalAlign: 'middle',
-    [desktopMediaQuery]: {
-      fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.DESKTOP,
-    },
-  },
-}));
-
-// Components from chart tooltip - Using theme constants
-export const TooltipTitle = styled('div')({
-  fontWeight: '700',
-  marginBottom: TOOLTIP_CONSTANTS.SPACING.TITLE_MARGIN,
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.TITLE.DESKTOP,
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.TITLE.MOBILE
+  
+  & .${tooltipClasses.arrow} {
+    display: none;
   }
-});
+`;
 
-export const TooltipRow = styled('div')({
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.DESKTOP,
-  marginBottom: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN,
-  display: 'grid',
-  gridTemplateColumns: `${TOOLTIP_CONSTANTS.GRID.LABEL_WIDTH} ${TOOLTIP_CONSTANTS.GRID.VALUE_WIDTH}`,
-  columnGap: TOOLTIP_CONSTANTS.GRID.GAP,
-  rowGap: '2px',
-  alignItems: 'baseline',
-  width: '100%',
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.MOBILE
+// Clean Tooltip Target - CSS Variables
+export const TooltipTarget = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'underlineStyle'
+})`
+  ${TooltipTokens}
+  
+  font-family: var(--tooltip-font);
+  border-bottom: ${({ underlineStyle = 'dotted' }) =>
+    underlineStyle === 'none' ? 'none' : `1px ${underlineStyle} var(--tooltip-gray-dark)`};
+  cursor: pointer;
+  position: relative;
+  display: inline;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  &:hover {
+    border-bottom-color: var(--tooltip-text);
+    text-decoration: underline;
   }
-});
-
-export const TooltipLabel = styled('span')({
-  fontWeight: 'bold',
-  minWidth: '100px',
-  paddingRight: SPACING.XS
-});
-
-export const TooltipValue = styled('span')({
-  textAlign: 'left',
-  minWidth: '120px',
-  wordWrap: 'break-word'
-});
-
-export const TooltipDivider = styled('hr')({
-  border: 0,
-  height: TOOLTIP_CONSTANTS.DIVIDER.HEIGHT,
-  backgroundColor: COLORS.MID_GREY,
-  margin: TOOLTIP_CONSTANTS.DIVIDER.MARGIN,
-  width: '100%'
-});
-
-export const TooltipWarningText = styled('div')({
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.DESKTOP,
-  color: COLORS.RED,
-  fontWeight: '700',
-  marginBottom: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN,
-  width: '100%',
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.CONTENT.MOBILE
+  
+  &:focus {
+    outline: 3px solid var(--tooltip-warning);
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-warning);
+    box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
+    text-decoration: none;
   }
-});
+`;
 
-export const TooltipSectionTitle = styled('div')({
-  fontWeight: '700',
-  marginBottom: TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN,
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.DESKTOP,
-  width: '100%',
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.SECTION_TITLE.MOBILE
+// Clean Tooltip Cell - CSS Variables
+export const TooltipCell = styled('td')`
+  ${TooltipTokens}
+  
+  font-family: var(--tooltip-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  &:first-of-type {
+    font-weight: 700;
+    border-bottom: 1px dotted var(--tooltip-gray-dark);
+    cursor: pointer;
+    
+    &:hover {
+      border-bottom-color: var(--tooltip-text);
+      text-decoration: underline;
+    }
+    
+    &:focus {
+      outline: 3px solid var(--tooltip-warning);
+      color: var(--tooltip-text);
+      background-color: var(--tooltip-warning);
+      box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
+      text-decoration: none;
+    }
   }
-});
+`;
 
-export const TooltipNote = styled('div')({
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.NOTE.DESKTOP,
-  color: COLORS.BLACK,
-  marginTop: parseInt(TOOLTIP_CONSTANTS.SPACING.ROW_MARGIN) + 2,
-  width: '100%',
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.NOTE.MOBILE
+// Clean Tooltip Heading - CSS Variables
+export const TooltipHeading = styled('span')`
+  ${TooltipTokens}
+  
+  font-family: var(--tooltip-font);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: var(--tooltip-text-sm);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
   }
-});
-
-export const TooltipBulletList = styled('ul')({
-  margin: `${SPACING.XS} 0 0 14px`,
-  padding: 0,
-  fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.BULLET.DESKTOP,
-  width: '100%',
-  [mobileMediaQuery]: {
-    fontSize: TOOLTIP_CONSTANTS.FONT_SIZE.BULLET.MOBILE
+  
+  &:hover {
+    text-decoration: underline;
   }
-});
+  
+  &:focus {
+    outline: 3px solid var(--tooltip-warning);
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-warning);
+    box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
+    text-decoration: none;
+  }
+  
+  & .info-icon {
+    margin-left: var(--tooltip-space-xs);
+    font-size: var(--tooltip-text-sm);
+    opacity: 0.7;
+    color: inherit;
+    vertical-align: middle;
+    
+    ${desktopMediaQuery} {
+      font-size: var(--tooltip-text-sm);
+    }
+  }
+`;
 
-export const TooltipBulletItem = styled('li')({
-  marginBottom: '2px',
-  paddingRight: SPACING.XS
-});
+// Clean Tooltip Title - CSS Variables
+export const TooltipTitle = styled('div')`
+  ${TooltipTokens}
+  
+  font-weight: 700;
+  margin-bottom: var(--tooltip-space-xs);
+  font-size: var(--tooltip-text-base);
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-sm);
+  }
+`;
 
-// Badge component aligned with theme colors
-export const Badge = styled('span')(({ color }) => ({
-  display: 'inline-block',
-  padding: `1px ${SPACING.XS}`,
-  borderRadius: '2px',
-  backgroundColor: color,
-  color: COLORS.WHITE,
-  fontSize: '11px',
-  fontWeight: 'bold',
-  marginLeft: SPACING.XS
-}));
+export const TooltipRow = styled('div')`
+  ${TooltipTokens}
+  
+  font-size: var(--tooltip-text-sm);
+  margin-bottom: var(--tooltip-space-xs);
+  display: grid;
+  grid-template-columns: 40% 60%;
+  column-gap: var(--tooltip-space-xs);
+  row-gap: 2px;
+  align-items: baseline;
+  width: 100%;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
+  }
+`;
 
-// Helper functions with theme colors
+export const TooltipLabel = styled('span')`
+  ${TooltipTokens}
+  
+  font-weight: bold;
+  min-width: 100px;
+  padding-right: var(--tooltip-space-xs);
+`;
+
+export const TooltipValue = styled('span')`
+  ${TooltipTokens}
+  
+  text-align: left;
+  min-width: 120px;
+  word-wrap: break-word;
+`;
+
+export const TooltipDivider = styled('hr')`
+  ${TooltipTokens}
+  
+  border: 0;
+  height: 1px;
+  background-color: var(--tooltip-gray-mid);
+  margin: var(--tooltip-space-xs) 0;
+  width: 100%;
+`;
+
+export const TooltipWarningText = styled('div')`
+  ${TooltipTokens}
+  
+  font-size: var(--tooltip-text-sm);
+  color: var(--tooltip-negative);
+  font-weight: 700;
+  margin-bottom: var(--tooltip-space-xs);
+  width: 100%;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
+  }
+`;
+
+export const TooltipSectionTitle = styled('div')`
+  ${TooltipTokens}
+  
+  font-weight: 700;
+  margin-bottom: var(--tooltip-space-xs);
+  font-size: var(--tooltip-text-sm);
+  width: 100%;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
+  }
+`;
+
+export const TooltipNote = styled('div')`
+  ${TooltipTokens}
+  
+  font-size: var(--tooltip-text-xs);
+  color: var(--tooltip-text);
+  margin-top: calc(var(--tooltip-space-xs) + 2px);
+  width: 100%;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
+  }
+`;
+
+export const TooltipBulletList = styled('ul')`
+  ${TooltipTokens}
+  
+  margin: var(--tooltip-space-xs) 0 0 14px;
+  padding: 0;
+  font-size: var(--tooltip-text-xs);
+  width: 100%;
+  
+  ${mobileMediaQuery} {
+    font-size: var(--tooltip-text-xs);
+  }
+`;
+
+export const TooltipBulletItem = styled('li')`
+  ${TooltipTokens}
+  
+  margin-bottom: 2px;
+  padding-right: var(--tooltip-space-xs);
+`;
+
+// Clean Badge Component - CSS Variables
+export const Badge = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'color'
+})`
+  ${TooltipTokens}
+  
+  display: inline-block;
+  padding: 1px var(--tooltip-space-xs);
+  border-radius: 2px;
+  background-color: ${({ color }) => color || 'var(--tooltip-border)'};
+  color: var(--tooltip-bg);
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: var(--tooltip-space-xs);
+`;
+
+// Clean Helper Functions - CSS Variables
 export const getTestResultColor = (status) => {
-  return status && status.includes('PASS') ? COLORS.GREEN : COLORS.RED;
+  return status && status.includes('PASS') ? 'var(--tooltip-positive)' : 'var(--tooltip-negative)';
 };
 
 export const formatMileage = (mileage) => {
@@ -312,7 +359,7 @@ export const calculateMileageRates = (currentDate, previousDate, currentMileage,
   };
 };
 
-// Helper components with theme-aligned styling
+// Clean Helper Hook - Minimal Approach
 export const useTooltip = () => {
   const withTooltip = (text, tooltipText, options = {}) => {
     const { placement = 'top', underlineStyle = 'dotted' } = options;
@@ -333,7 +380,7 @@ export const useTooltip = () => {
   return { withTooltip };
 };
 
-// Enhanced helper component for value tooltips
+// Clean Value Tooltip Component
 export const ValueWithTooltip = ({ 
   children,
   tooltip,
@@ -367,7 +414,7 @@ export const ValueWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Enhanced helper component for table cells with tooltips
+// Clean Cell Tooltip Component
 export const CellWithTooltip = ({ 
   label, 
   tooltip, 
@@ -394,7 +441,7 @@ export const CellWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Enhanced helper component for section headings with tooltips
+// Clean Heading Tooltip Component
 export const HeadingWithTooltip = ({
   children,
   tooltip,
@@ -431,7 +478,7 @@ export const HeadingWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Enhanced tooltip content wrapper
+// Clean Complex Tooltip Content
 export const ComplexTooltipContent = ({ 
   title, 
   rows = [], 
@@ -485,7 +532,7 @@ export const ComplexTooltipContent = ({
   </div>
 );
 
-// Enhanced tooltip that supports complex content
+// Clean Enhanced Tooltip Component
 export const EnhancedTooltip = ({ 
   children, 
   content, 

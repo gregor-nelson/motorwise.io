@@ -1,6 +1,5 @@
 import React from 'react';
 import './PremiumStyles.css';
-import '../../home.css';
 import PremiumBackground3D from './PremiumBackground3D';
 
 const PremiumVehicleReports = () => {

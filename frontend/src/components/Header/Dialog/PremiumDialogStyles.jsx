@@ -3,52 +3,58 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 
-// Minimal Clean Design System - Ultra Restrained (from DVLADataHeader)
-const MinimalTokens = `
+// TTS Professional Design System - Harmonized with reference patterns
+const TTSDesignTokens = `
   :root {
-    /* Ultra Clean Color Palette - Minimal */
-    --gray-900: #1a1a1a;
-    --gray-800: #2d2d2d;
-    --gray-700: #404040;
-    --gray-600: #525252;
-    --gray-500: #737373;
-    --gray-400: #a3a3a3;
-    --gray-300: #d4d4d4;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f5;
-    --gray-50: #fafafa;
-    --white: #ffffff;
-
-    /* Minimal Accent Colors */
+    /* TTS Color Palette - Directly from reference files */
+    --gray-900: #2c2c2c;
+    --gray-800: #3a3a3a;
+    --gray-700: #4a4a4a;
+    --gray-600: #5a5a5a;
+    --gray-500: #6a6a6a;
+    --gray-400: #8a8a8a;
+    --gray-300: #a0a0a0;
+    --gray-200: #c4c4c4;
+    --gray-100: #e5e5e5;
+    --gray-50: #f4f4f4;
+    --white: #fdfdfd;
+    
+    /* TTS-specific accent colors */
     --primary: #3b82f6;
-    --positive: #059669;
-    --negative: #dc2626;
-    --warning: #d97706;
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #2563eb;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --positive: #10b981;
+    --negative: #ef4444;
+    --warning: #f59e0b;
 
-    /* Clean Spacing - Generous White Space */
-    --space-xs: 0.25rem;    /* 4px */
-    --space-sm: 0.5rem;     /* 8px */
-    --space-md: 1rem;       /* 16px */
-    --space-lg: 1.5rem;     /* 24px */
-    --space-xl: 2rem;       /* 32px */
-    --space-2xl: 3rem;      /* 48px */
-    --space-3xl: 4rem;      /* 64px */
+    /* Spacing - Same system as reference */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
 
-    /* Typography - Clean Hierarchy */
-    --text-xs: 0.75rem;     /* 12px */
-    --text-sm: 0.875rem;    /* 14px */
-    --text-base: 1rem;      /* 16px */
-    --text-lg: 1.125rem;    /* 18px */
-    --text-xl: 1.25rem;     /* 20px */
-    --text-2xl: 1.5rem;     /* 24px */
-    --text-3xl: 1.875rem;   /* 30px */
+    /* Typography - Same as reference */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
 
-    /* Clean Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Typography - Same as reference with Jost */
+    --font-main: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-
-    /* Minimal Transitions */
-    --transition: all 0.15s ease;
+    
+    /* Transitions - Same as reference */
+    --transition: all 0.2s ease;
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   @keyframes spin {
@@ -57,25 +63,76 @@ const MinimalTokens = `
   }
 `;
 
-// Ultra Clean Modal - No decorative elements (following DVLADataHeader patterns)
+// TTS Professional Modal System - Enhanced with depth and visual hierarchy
 export const PremiumModal = styled(Dialog)`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   & .MuiDialog-paper {
     background: var(--white);
-    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
     width: 100%;
     margin: var(--space-lg);
-    /* No borders, shadows, or decorative elements - pure minimal */
+    position: relative;
+    overflow: visible;
+    
+    /* Two-column specific sizing for payment flows */
+    &[class*="MuiDialog-paperWidthMd"] {
+      max-width: 900px;
+      width: 90vw;
+      
+      @media (max-width: 1024px) {
+        max-width: 600px;
+        width: 95vw;
+      }
+      
+      @media (max-width: 767px) {
+        max-width: 100%;
+        width: 100vw;
+        margin: 0;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+    
+    /* Standard dialogs maintain TTS modal pattern */
+    &[class*="MuiDialog-paperWidthSm"] {
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    /* Fullscreen dialogs - for sample reports and large content */
+    &[class*="MuiDialog-paperFullScreen"] {
+      max-width: 100%;
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
+      background: var(--gray-50);
+    }
   }
   
   & .MuiBackdrop-root {
     background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Ensure proper z-index for Stripe elements */
+  z-index: 1300;
+  
+  & .MuiDialog-container {
+    z-index: 1300;
   }
 `;
 
 export const ModalHeader = styled(DialogTitle)`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   background: var(--white);
   padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
@@ -110,18 +167,184 @@ export const ModalHeader = styled(DialogTitle)`
 `;
 
 export const ModalContent = styled(DialogContent)`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   padding: 0 var(--space-2xl) var(--space-2xl);
   background: var(--white);
   
+  /* Two-Column Layout for Premium Dialog */
+  .two-column-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 380px;
+    gap: var(--space-3xl);
+    min-height: 450px;
+    align-items: start;
+    
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      min-height: auto;
+    }
+    
+    @media (max-width: 767px) {
+      gap: var(--space-xl);
+    }
+  }
+  
+  /* Trust Column (Left) */
+  .trust-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    
+    .trust-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      
+      .security-icon {
+        width: 24px;
+        height: 24px;
+        color: var(--primary);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      
+      .trust-content {
+        flex: 1;
+        
+        h3 {
+          font-family: var(--font-main);
+          font-size: var(--text-xl);
+          font-weight: 600;
+          color: var(--gray-900);
+          margin: 0 0 var(--space-sm) 0;
+          line-height: 1.3;
+        }
+        
+        p {
+          font-family: var(--font-main);
+          font-size: var(--text-base);
+          color: var(--gray-600);
+          margin: 0;
+          line-height: 1.4;
+        }
+      }
+    }
+    
+    .professional-positioning {
+      padding: var(--space-md);
+      background: var(--gray-50);
+      text-align: center;
+      
+      .positioning-label {
+        display: block;
+        font-family: var(--font-main);
+        font-size: var(--text-sm);
+        color: var(--gray-600);
+        margin-bottom: var(--space-xs);
+      }
+      
+      .vehicle-reg {
+        font-family: var(--font-mono);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--gray-900);
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+  
+  /* Action Column (Right) */
+  .action-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: sticky;
+    top: var(--space-lg);
+    height: fit-content;
+    
+    .pricing-section {
+      text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+      background: var(--gray-50);
+      border-left: 3px solid var(--primary);
+      
+      .price-label {
+        font-family: var(--font-main);
+        font-size: var(--text-sm);
+        color: var(--gray-600);
+        margin-bottom: var(--space-xs);
+      }
+      
+      .price-value {
+        font-family: var(--font-main);
+        font-size: var(--text-3xl);
+        font-weight: 600;
+        color: var(--gray-900);
+        margin: var(--space-sm) 0;
+        line-height: 1.2;
+      }
+      
+      .price-features {
+        font-family: var(--font-main);
+        font-size: var(--text-sm);
+        color: var(--gray-600);
+        margin: 0;
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      position: static;
+      
+      .pricing-section {
+        border-left: none;
+        border-top: 3px solid var(--primary);
+      }
+    }
+  }
+  
   @media (max-width: 767px) {
     padding: 0 var(--space-md) var(--space-xl);
+    
+    .two-column-layout {
+      gap: var(--space-xl);
+    }
+    
+    .trust-column {
+      .trust-hero {
+        .trust-content {
+          h3 {
+            font-size: var(--text-lg);
+          }
+          
+          p {
+            font-size: var(--text-sm);
+          }
+        }
+      }
+      
+      .professional-positioning {
+        .vehicle-reg {
+          font-size: var(--text-base);
+        }
+      }
+    }
+    
+    .action-column {
+      .pricing-section {
+        padding: var(--space-lg);
+        
+        .price-value {
+          font-size: var(--text-2xl);
+        }
+      }
+    }
   }
 `;
 
 export const PremiumSection = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   margin-bottom: var(--space-3xl);
   /* No background, borders, or shadows - pure minimal */
@@ -142,21 +365,19 @@ export const PremiumSection = styled('div')`
 `;
 
 export const FeatureList = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   margin: var(--space-lg) 0 0 0;
   
   .feature-item {
     display: flex;
     align-items: flex-start;
     gap: var(--space-sm);
-    padding: var(--space-xs) 0;
+    padding: var(--space-sm) 0;
     font-family: var(--font-main);
-    font-size: var(--text-base);
-    color: var(--gray-700);
     line-height: 1.4;
     
     .check-icon {
@@ -166,11 +387,44 @@ export const FeatureList = styled('div')`
       flex-shrink: 0;
       margin-top: 2px;
     }
+    
+    .feature-content {
+      flex: 1;
+    }
+    
+    .feature-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .feature-description {
+      font-size: var(--text-sm);
+      color: var(--gray-600);
+      font-weight: 400;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    gap: var(--space-sm);
+    
+    .feature-item {
+      padding: var(--space-xs) 0;
+      
+      .feature-title {
+        font-size: var(--text-sm);
+      }
+      
+      .feature-description {
+        font-size: var(--text-xs);
+      }
+    }
   }
 `;
 
 export const PricingBanner = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   padding: var(--space-xl) 0;
   text-align: center;
@@ -209,16 +463,21 @@ export const PricingBanner = styled('div')`
 `;
 
 export const PaymentFormContainer = styled('form')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
-  margin-top: var(--space-2xl);
+  gap: var(--space-xl);
+  margin-top: 0;
+  
+  /* Compact version for two-column layout */
+  .two-column-layout & {
+    gap: var(--space-lg);
+  }
 `;
 
 export const FormSection = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   .form-title {
     font-family: var(--font-main);
@@ -229,10 +488,18 @@ export const FormSection = styled('div')`
     line-height: 1.3;
     /* Typography-first - no decorative icons or borders */
   }
+  
+  /* Compact version for two-column layout */
+  .two-column-layout & {
+    .form-title {
+      font-size: var(--text-base);
+      margin: 0 0 var(--space-md) 0;
+    }
+  }
 `;
 
 export const FormField = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   display: flex;
   flex-direction: column;
@@ -274,7 +541,7 @@ export const FormField = styled('div')`
 `;
 
 export const CardElementContainer = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   padding: var(--space-md);
   border: 1px solid var(--gray-300);
@@ -283,6 +550,7 @@ export const CardElementContainer = styled('div')`
   min-height: 48px;
   display: flex;
   align-items: center;
+  position: relative;
   
   &:focus-within {
     border-color: var(--primary);
@@ -291,10 +559,36 @@ export const CardElementContainer = styled('div')`
   &.error {
     border-color: var(--negative);
   }
+
+  /* Ensure Stripe CardElement is properly interactive */
+  & .StripeElement {
+    width: 100%;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Ensure input fields within CardElement are clickable and accessible */
+  & .StripeElement iframe {
+    pointer-events: auto !important;
+    z-index: 2 !important;
+  }
+
+  & .StripeElement--focus {
+    outline: none;
+  }
+
+  & .StripeElement--invalid {
+    /* Let the container handle error styling */
+  }
+
+  & .StripeElement--complete {
+    /* Let the container handle complete styling */
+  }
 `;
 
 export const ErrorMessage = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   padding: var(--space-sm) 0;
   font-family: var(--font-main);
@@ -314,11 +608,18 @@ export const ErrorMessage = styled('div')`
 `;
 
 export const ActionButtons = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   display: flex;
   gap: var(--space-md);
   margin-top: var(--space-2xl);
+  
+  /* Compact version for two-column layout */
+  .two-column-layout & {
+    margin-top: var(--space-lg);
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
   
   @media (max-width: 767px) {
     flex-direction: column;
@@ -328,11 +629,14 @@ export const ActionButtons = styled('div')`
 `;
 
 export const PrimaryButton = styled('button')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
-  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
   padding: var(--space-md) var(--space-xl);
-  background: var(--primary);
+  background: var(--gray-900);
   color: var(--white);
   border: none;
   font-family: var(--font-main);
@@ -340,15 +644,15 @@ export const PrimaryButton = styled('button')`
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  min-height: 48px;
-  line-height: 1.4;
+  text-decoration: none;
   
   &:hover {
-    background: #2563eb;
+    background: var(--gray-800);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--gray-700);
+    outline-offset: 2px;
   }
   
   &:disabled {
@@ -356,7 +660,8 @@ export const PrimaryButton = styled('button')`
     cursor: not-allowed;
     
     &:hover {
-      background: var(--primary);
+      background: var(--gray-900);
+      opacity: 0.6;
     }
   }
   
@@ -368,31 +673,49 @@ export const PrimaryButton = styled('button')`
     border-top-color: var(--white);
     animation: spin 1s linear infinite;
   }
+  
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: var(--space-md);
+  }
 `;
 
 export const SecondaryButton = styled('button')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
-  flex: 0.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
   padding: var(--space-md) var(--space-xl);
-  background: var(--white);
+  background: var(--gray-100);
   color: var(--gray-700);
   border: 1px solid var(--gray-300);
   font-family: var(--font-main);
   font-size: var(--text-base);
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
-  min-height: 48px;
-  line-height: 1.4;
+  text-decoration: none;
   
   &:hover {
-    color: var(--gray-900);
+    background: var(--gray-200);
+    color: var(--gray-800);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: var(--space-md);
   }
 `;
 
 export const SecurityBadge = styled('div')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   display: flex;
   align-items: center;
@@ -414,7 +737,7 @@ export const SecurityBadge = styled('div')`
 
 // Additional components needed for legacy compatibility
 export const GovUKButton = styled('button')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
@@ -443,7 +766,7 @@ export const GovUKButton = styled('button')`
 `;
 
 export const GovUKBody = styled('p')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
   font-family: var(--font-main);
   font-size: var(--text-base);
@@ -458,96 +781,112 @@ export const GovUKBody = styled('p')`
 `;
 
 export const PayButtonPrimary = styled('button')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
-  font-family: var(--font-main);
-  font-size: var(--text-base);
-  font-weight: 500;
-  padding: var(--space-md) var(--space-lg);
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  min-height: 48px;
-  line-height: 1.4;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--gray-900);
+  color: var(--white);
+  border: none;
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
   
   &:hover {
-    background: #2563eb;
+    background: var(--gray-800);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--gray-700);
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: var(--space-md);
   }
 `;
 
 export const BaseButton = styled('button')`
-  ${MinimalTokens}
+  ${TTSDesignTokens}
   
-  font-family: var(--font-main);
-  font-size: var(--text-base);
-  font-weight: 500;
-  padding: var(--space-md) var(--space-lg);
-  border: 1px solid var(--gray-300);
-  background: var(--white);
-  color: var(--gray-700);
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  min-height: 48px;
-  line-height: 1.4;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
   
   /* Variant styles */
   ${props => props.variant === 'blue' && `
-    background: var(--primary);
+    background: var(--gray-900);
     color: var(--white);
-    border-color: var(--primary);
+    border: none;
     
     &:hover {
-      background: #2563eb;
+      background: var(--gray-800);
     }
   `}
   
   ${props => props.variant === 'primary' && `
-    background: var(--primary);
+    background: var(--gray-900);
     color: var(--white);
-    border-color: var(--primary);
+    border: none;
     
     &:hover {
-      background: #2563eb;
+      background: var(--gray-800);
     }
   `}
   
   ${props => props.variant === 'secondary' && `
-    background: var(--white);
+    background: var(--gray-100);
     color: var(--gray-700);
-    border-color: var(--gray-300);
+    border: 1px solid var(--gray-300);
     
     &:hover {
-      color: var(--gray-900);
+      background: var(--gray-200);
+      color: var(--gray-800);
     }
   `}
   
   &:hover {
-    color: var(--gray-900);
+    background: var(--gray-200);
+    color: var(--gray-800);
   }
   
   &:focus {
-    outline: none;
-    border-color: var(--primary);
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
   }
   
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
     
     &:hover {
-      background: var(--white);
+      background: var(--gray-100);
       color: var(--gray-700);
+      opacity: 0.6;
     }
+  }
+  
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: var(--space-md);
   }
 `;
 

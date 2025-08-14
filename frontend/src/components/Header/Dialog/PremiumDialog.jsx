@@ -343,32 +343,81 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   );
 };
 
-// Enhanced Premium Report Features with MarketDash styling
-const PremiumReportFeatures = () => {
-  const features = [
-    'Full MOT history with advisories',
-    'Previous owners count',
-    'Mileage history and verification', 
-    'Detailed technical specifications',
-    'Insurance write-off status',
-    'Import/Export status'
+// Enhanced Premium Report Features with progressive disclosure
+const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
+  const coreFeatures = [
+    {
+      title: 'DVLA Identity Verification',
+      description: 'Official government records - police & agency access'
+    },
+    {
+      title: 'Mileage Fraud Protection',
+      description: 'Forensic-level odometer tampering detection'
+    },
+    {
+      title: 'Professional Repair Database',
+      description: 'Technical data trusted by BMW, Mercedes dealerships'
+    }
   ];
+
+  const additionalFeatures = [
+    {
+      title: 'Advanced Usage History',
+      description: '3D visualization exposing hidden patterns traditional reports miss'
+    },
+    {
+      title: 'Market Intelligence & Risk Assessment',
+      description: 'Compare against 40+ million UK vehicle records for confident decisions'
+    },
+    {
+      title: 'Complete Documentation Package',
+      description: 'Professional-grade reports meeting bank and insurance standards'
+    }
+  ];
+
+  const featuresToShow = showAll ? [...coreFeatures, ...additionalFeatures] : coreFeatures;
 
   return (
     <FeatureList>
-      {features.map((feature, index) => (
+      {featuresToShow.map((feature, index) => (
         <div key={index} className="feature-item">
           <CheckCircleIcon className="check-icon" />
-          {feature}
+          <div className="feature-content">
+            <div className="feature-title">{feature.title}</div>
+            <div className="feature-description">{feature.description}</div>
+          </div>
         </div>
       ))}
+      
+      {onToggle && (
+        <button 
+          type="button" 
+          className="toggle-features"
+          onClick={onToggle}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--primary)',
+            fontSize: 'var(--text-sm)',
+            fontFamily: 'var(--font-main)',
+            fontWeight: '500',
+            cursor: 'pointer',
+            padding: 'var(--space-sm) 0',
+            textAlign: 'left',
+            marginTop: 'var(--space-sm)'
+          }}
+        >
+          {showAll ? '- Show fewer features' : '+ Show 3 more professional features'}
+        </button>
+      )}
     </FeatureList>
   );
 };
 
-// Enhanced MarketDash Payment Dialog Component
+// Enhanced MarketDash Payment Dialog Component with Two-Column Layout
 export const PaymentDialog = ({ open, onClose, registration }) => {
   const navigate = useNavigate();
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
 
   // Updated to include email parameter
   const handlePaymentSuccess = (paymentIntent, email) => {
@@ -379,39 +428,57 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
     navigate(`/premium-report/${registration}?paymentId=${paymentIntent.id}&email=${encodeURIComponent(email)}`);
   };
 
+  const toggleFeatures = () => {
+    setShowAllFeatures(!showAllFeatures);
+  };
+
   return (
     <BaseDialog
       open={open}
       onClose={onClose}
       title="Premium Vehicle Report"
       headerIcon={<PaymentIcon />}
+      maxWidth="md"
     >
-      <PremiumSection>
-        <div className="section-title">
-          <CheckCircleIcon className="section-icon" />
-          What's Included
+      <div className="two-column-layout">
+        {/* LEFT COLUMN: Trust & Features */}
+        <div className="trust-column">
+          <div className="trust-hero">
+            <SecurityIcon className="security-icon" />
+            <div className="trust-content">
+              <h3>Protecting from £2.3B UK Vehicle Fraud</h3>
+              <p>Same comprehensive database used by BMW, Mercedes dealerships and government agencies</p>
+            </div>
+          </div>
+          
+          <div className="professional-positioning">
+            <span className="positioning-label">Professional-Grade Intelligence for</span>
+            <strong className="vehicle-reg">{registration}</strong>
+          </div>
+          
+          <PremiumReportFeatures 
+            showAll={showAllFeatures}
+            onToggle={toggleFeatures}
+          />
         </div>
-        <p style={inlineStyles.textStyles.base}>
-          Get a comprehensive premium report for <strong style={inlineStyles.textStyles.emphasis}>{registration}</strong> including:
-        </p>
-        <PremiumReportFeatures />
-      </PremiumSection>
 
-      <PricingBanner>
-        <div className="price-content">
-          <p className="price-description">One-time payment</p>
-          <div className="price-value">£4.95</div>
-          <p className="price-description">Instant access • No subscription</p>
+        {/* RIGHT COLUMN: Action & Payment */}
+        <div className="action-column">
+          <div className="pricing-section">
+            <div className="price-label">One-time payment</div>
+            <div className="price-value">£4.95</div>
+            <div className="price-features">Instant access • No subscription</div>
+          </div>
+          
+          <Elements stripe={stripePromise}>
+            <PaymentForm 
+              registration={registration}
+              onSuccess={handlePaymentSuccess}
+              onClose={onClose}
+            />
+          </Elements>
         </div>
-      </PricingBanner>
-      
-      <Elements stripe={stripePromise}>
-        <PaymentForm 
-          registration={registration}
-          onSuccess={handlePaymentSuccess}
-          onClose={onClose}
-        />
-      </Elements>
+      </div>
     </BaseDialog>
   );
 }
@@ -632,24 +699,19 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
   const sampleReportUrl = `${window.location.origin}/premium-report/${sampleRegistration}?paymentId=sample-report`;
 
   return (
-    <Dialog
+    <PremiumModal
       open={open}
       onClose={onClose}
       fullScreen
-      PaperProps={{
-        style: {
-          backgroundColor: '#f8f8f8'
-        }
-      }}
     >
-      <DialogTitle
+      <ModalHeader
         style={{
-          fontFamily: '"GDS Transport", arial, sans-serif',
-          fontWeight: 700,
-          fontSize: '1.5rem',
-          padding: '20px 24px',
-          backgroundColor: '#1d70b8',
-          color: '#ffffff',
+          fontFamily: 'var(--font-main)',
+          fontWeight: 600,
+          fontSize: 'var(--text-xl)',
+          padding: 'var(--space-xl) var(--space-2xl)',
+          backgroundColor: 'var(--accent-blue)',
+          color: 'var(--white)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
@@ -657,16 +719,16 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
       >
         Sample Vehicle Report - {sampleRegistration}
         <IconButton
-          edge="end"
-          color="inherit"
+          className="close-button"
           onClick={onClose}
-          aria-label="close"
+          size="small"
+          style={{ color: 'var(--white)' }}
         >
           <CloseIcon />
         </IconButton>
-      </DialogTitle>
+      </ModalHeader>
       
-      <DialogContent style={{ padding: 0, height: 'calc(100vh - 180px)' }}>
+      <ModalContent style={{ padding: 0, height: 'calc(100vh - 180px)' }}>
         {/* Render the sample report in an iframe */}
         <iframe
           src={sampleReportUrl}
@@ -677,41 +739,44 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
           }}
           title="Sample Vehicle Report"
         />
-      </DialogContent>
+      </ModalContent>
       
       <div
         style={{
-          padding: '16px 24px',
-          backgroundColor: '#f3f2f1',
-          borderTop: '1px solid #b1b4b6',
+          padding: 'var(--space-md) var(--space-2xl)',
+          backgroundColor: 'var(--white)',
+          borderTop: '1px solid var(--gray-200)',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)'
         }}
       >
-        <GovUKBody style={{ margin: 0 }}>
+        <p style={{ 
+          margin: 0,
+          fontFamily: 'var(--font-main)',
+          fontSize: 'var(--text-base)',
+          color: 'var(--gray-700)',
+          lineHeight: 1.4
+        }}>
           This is a sample report. Purchase a premium report for your vehicle to access all features.
-        </GovUKBody>
+        </p>
         
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <GovUKButton
+        <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
+          <SecondaryButton
             onClick={onClose}
-            style={{
-              backgroundColor: '#b1b4b6',
-              color: '#0b0c0c'
-            }}
           >
             Close
-          </GovUKButton>
+          </SecondaryButton>
           
-          <PayButtonPrimary
+          <PrimaryButton
             onClick={handleProceedToPayment}
           >
             Proceed to Payment
-          </PayButtonPrimary>
+          </PrimaryButton>
         </div>
       </div>
-    </Dialog>
+    </PremiumModal>
   );
 };
 

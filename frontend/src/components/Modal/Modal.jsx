@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { COLORS } from '../../styles/theme';
 
 const ModalOverlay = styled('div')(({ show }) => ({
   position: 'fixed',
@@ -28,7 +27,7 @@ const ModalOverlay = styled('div')(({ show }) => ({
 }));
 
 const ModalContent = styled('div')(({ show }) => ({
-  backgroundColor: COLORS.WHITE,
+  backgroundColor: '#ffffff',
   borderRadius: '8px',
   width: '100%',
   maxWidth: '800px',
@@ -55,7 +54,7 @@ const ModalHeader = styled('div')({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '20px 24px 16px',
-  borderBottom: `1px solid ${COLORS.LIGHT_GREY}`,
+  borderBottom: '1px solid #f3f4f6',
   flexShrink: 0,
   
   '@media (max-width: 768px)': {
@@ -67,7 +66,7 @@ const ModalTitle = styled('h2')({
   margin: 0,
   fontSize: '1.25rem',
   fontWeight: 600,
-  color: COLORS.BLACK,
+  color: '#000000',
   fontFamily: '"Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   lineHeight: 1.3,
   
@@ -85,16 +84,16 @@ const CloseButton = styled('button')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: COLORS.DARK_GREY,
+  color: '#6b7280',
   transition: 'background-color 0.15s ease, color 0.15s ease',
   
   '&:hover': {
-    backgroundColor: COLORS.LIGHT_GREY,
-    color: COLORS.BLACK
+    backgroundColor: '#f3f4f6',
+    color: '#000000'
   },
   
   '&:focus': {
-    outline: `2px solid ${COLORS.BLUE}`,
+    outline: '2px solid #3b82f6',
     outlineOffset: '2px'
   },
   

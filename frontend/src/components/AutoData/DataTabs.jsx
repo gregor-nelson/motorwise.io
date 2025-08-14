@@ -1,24 +1,10 @@
 // Refactored AutoDataSection.jsx with vertical layout instead of tabs
 import React, { useState, useEffect, useMemo } from 'react';
-import { styled } from '@mui/material/styles';
-import { commonFontStyles } from '../../styles/theme'; // Adjust import path as needed
 import TechnicalSpecificationsPage from './TechnicalSpecificationsPage';
 import VehicleRepairTimesComponent from './LabourTimes';
 import BulletinsComponent from './BulletinsComponent';
-import VehicleAnalysisComponent from './VehicleAnalysisComponent'; // Import the new component
-
-// Styled components for vertical layout
-const SectionContainer = styled('div')`
-  ${commonFontStyles}
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-
-const SectionContent = styled('div')`
-  padding-bottom: 20px;
-`;
+import VehicleAnalysisComponent from './VehicleAnalysisComponent';
+import { SectionContainer, SectionContent } from './DataTabsStyles';
 
 // Extract year from various possible date fields in vehicleData
 const extractManufactureYear = (vehicleData) => {

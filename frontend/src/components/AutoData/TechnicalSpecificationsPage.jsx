@@ -1,20 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import {
-  GovUKContainer,
-  GovUKMainWrapper,
-  GovUKHeadingM,
-  GovUKHeadingS,
-  GovUKBody,
-  GovUKBodyS,
-  GovUKLoadingSpinner,
-  PremiumInfoPanel,
-  BREAKPOINTS,
-  COLORS
-} from '../../styles/theme';
+
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 
 // Import API client
 import techSpecsApi from './api/TechSpecsApiClient';
@@ -24,19 +10,60 @@ import {
   HeadingWithTooltip,
 } from '../../styles/tooltip';
 
-// Import styled components from VehicleAnalysisComponent
+// Import minimal clean styled components
 import {
-  InsightsContainer,
+  TechSpecsContainer,
+  SectionHeader,
+  SectionDivider,
   InsightPanel,
   InsightBody,
-  InsightTable,
-  ValueHighlight,
-  FactorList,
-  FactorItem,
-  InsightNote,
-  EnhancedLoadingContainer,
-  EmptyStateContainer
-} from '../Premium/DVLA/Insights/style/style';
+  LoadingContainer,
+  LoadingSpinner,
+  LoadingText,
+  ErrorContainer,
+  ErrorHeader,
+  ErrorMessage,
+  EmptyStateContainer,
+  MinimalTabs,
+  MinimalTab,
+  TabPanel,
+  SpecGrid,
+  SpecCategoryHeader,
+  CategoryIcon,
+  CategoryTitle,
+  CategorySubtitle,
+  SpecCard,
+  SpecCardHeader,
+  SpecCardTitle,
+  SpecCardIcon,
+  SpecValue,
+  SpecUnit,
+  SpecSubtext,
+  StatusBadge,
+  WarningPanel,
+  WarningTitle,
+  WarningText,
+  NoticePanel,
+  FuelTypeBadge,
+  FooterNote,
+  GovUKHeadingS,
+  GovUKBody,
+  ProgressLabel,
+  StatusContainer,
+  SectionSpacing,
+  ErrorSpan,
+  RetryButton,
+  FlexContainer,
+  ConditionalPanel,
+  MarginContainer,
+  CollapsibleSectionContainer,
+  CollapsibleHeader,
+  CollapsibleHeaderContent,
+  CollapsibleChevron,
+  CollapsibleContent,
+  CollapsibleContentInner,
+  TabContentContainer
+} from './styles/TechnicalSpecificationsStyles';
 
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -44,179 +71,32 @@ const BROWSER_CACHE_PREFIX = 'tech_specs_';
 const STORAGE_VERSION = 'v1'; // Use this to invalidate all caches if data structure changes
 const MAX_CACHE_SIZE = 1000000; // ~1MB max size for cache entries
 
-// GDS-aligned Visual Tech Specs Styled Components
-const VisualSpecsContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.WHITE,
-  minHeight: '600px'
-}));
-
-const SpecCategoryHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '20px',
-  marginBottom: '30px',
-  padding: '20px',
-  backgroundColor: COLORS.WHITE,
-  borderLeft: `10px solid ${COLORS.BLUE}`,
-  borderBottom: `1px solid ${COLORS.MID_GREY}`
-}));
-
-const CategoryIcon = styled(Box)(({ color }) => ({
-  width: '48px',
-  height: '48px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '24px',
-  fontWeight: 700,
-  flexShrink: 0
-}));
-
-const SpecGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  gap: '20px',
-  marginBottom: '40px',
-  
-  [`@media (max-width: ${BREAKPOINTS.tablet})`]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '15px'
-  },
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    gridTemplateColumns: '1fr',
-    gap: '15px'
-  }
-}));
-
-const VisualSpecCard = styled(Box)(({ variant = 'default' }) => ({
-  backgroundColor: COLORS.WHITE,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
-  padding: '24px',
-  position: 'relative',
-  transition: 'all 0.2s ease',
-  
-  ...(variant === 'gauge' && {
-    textAlign: 'center',
-    minHeight: '200px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  }),
-  
-  ...(variant === 'bar' && {
-    minHeight: '160px'
-  }),
-  
-  '&:hover': {
-    boxShadow: '0 2px 0 0 rgba(0,0,0,0.1)',
-    borderColor: COLORS.BLACK
-  },
-  
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: '5px',
-    backgroundColor: COLORS.BLUE,
-    opacity: 0,
-    transition: 'opacity 0.2s ease'
-  },
-  
-  '&:hover:before': {
-    opacity: 1
-  }
-}));
-
-const SpecCardHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  marginBottom: '16px'
-}));
-
-const SpecCardTitle = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  fontWeight: 700,
-  color: COLORS.DARK_GREY,
-  textTransform: 'uppercase',
-  letterSpacing: '1px',
-  lineHeight: 1.4,
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-const SpecCardIcon = styled(Box)(({ color }) => ({
-  width: '30px',
-  height: '30px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '16px',
-  fontWeight: 700,
-  flexShrink: 0
-}));
-
-const SpecValue = styled(Box)(({ size = 'large' }) => ({
-  fontSize: size === 'large' ? '36px' : size === 'medium' ? '27px' : '19px',
-  fontWeight: 700,
-  color: COLORS.BLACK,
-  lineHeight: 1.1,
-  marginBottom: '8px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  [`@media (max-width: ${BREAKPOINTS.mobile})`]: {
-    fontSize: size === 'large' ? '27px' : size === 'medium' ? '24px' : '16px'
-  }
-}));
-
-const SpecUnit = styled('span')(({ theme }) => ({
-  fontSize: '16px',
-  fontWeight: 400,
-  color: COLORS.DARK_GREY,
-  marginLeft: '8px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-const SpecSubtext = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  color: COLORS.DARK_GREY,
-  marginTop: '4px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-// GDS-aligned gauge component
-const GaugeContainer = styled(Box)(({ theme }) => ({
+const GaugeContainer = styled('div')(() => ({
   position: 'relative',
   width: '120px',
   height: '120px',
-  margin: '0 auto 16px'
+  margin: '0 auto var(--space-md)'
 }));
 
-const GaugeSvg = styled('svg')(({ theme }) => ({
+const GaugeSvg = styled('svg')(() => ({
   transform: 'rotate(-90deg)'
 }));
 
-const GaugeTrack = styled('circle')(({ theme }) => ({
+const GaugeTrack = styled('circle')(() => ({
   fill: 'none',
-  stroke: COLORS.MID_GREY,
+  stroke: 'var(--gray-300)',
   strokeWidth: '10'
 }));
 
 const GaugeFill = styled('circle')(({ color }) => ({
   fill: 'none',
-  stroke: color,
+  stroke: color || 'var(--primary)',
   strokeWidth: '10',
   strokeLinecap: 'square',
-  transition: 'stroke-dashoffset 0.5s ease'
+  transition: 'var(--transition)'
 }));
 
-const GaugeCenterText = styled(Box)(({ theme }) => ({
+const GaugeCenterText = styled('div')(() => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -224,121 +104,33 @@ const GaugeCenterText = styled(Box)(({ theme }) => ({
   textAlign: 'center'
 }));
 
-// GDS-aligned progress bar component
-const ProgressContainer = styled(Box)(({ theme }) => ({
-  marginTop: '16px'
-}));
 
-const ProgressBar = styled(Box)(({ theme }) => ({
+const ProgressBar = styled('div')(() => ({
   width: '100%',
   height: '20px',
-  backgroundColor: COLORS.LIGHT_GREY,
-  border: `1px solid ${COLORS.BORDER_COLOUR}`,
+  backgroundColor: 'var(--gray-100)',
   position: 'relative'
 }));
 
-const ProgressFill = styled(Box)(({ color, width }) => ({
+const ProgressFill = styled('div')(({ color, width }) => ({
   height: '100%',
   width: `${width}%`,
-  backgroundColor: color || COLORS.BLUE,
-  transition: 'width 0.5s ease',
+  backgroundColor: color || 'var(--primary)',
+  transition: 'var(--transition)',
   position: 'relative'
 }));
 
-const ProgressLabel = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: '8px',
-  fontSize: '16px',
-  fontFamily: '"GDS Transport", arial, sans-serif'
-}));
-
-// Icon grid for multiple values
-const IconGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '12px',
-  marginTop: '16px'
-}));
-
-const IconItem = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px'
-}));
-
-const IconIndicator = styled(Box)(({ color }) => ({
-  width: '24px',
-  height: '24px',
-  backgroundColor: color || COLORS.BLUE,
-  color: COLORS.WHITE,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '14px',
-  fontWeight: 600
-}));
-
-// GDS-aligned status indicator
-const StatusBadge = styled('strong')(({ status }) => ({
-  display: 'inline-block',
-  padding: '5px 10px 4px',
-  fontSize: '14px',
-  fontWeight: 700,
-  letterSpacing: '1px',
-  textTransform: 'uppercase',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  backgroundColor: 
-    status === 'good' ? COLORS.GREEN :
-    status === 'warning' ? COLORS.ORANGE :
-    status === 'critical' ? COLORS.RED :
-    COLORS.BLUE,
-  color: COLORS.WHITE
+const ProgressContainer = styled('div')(() => ({
+  marginTop: 'var(--space-md)'
 }));
 
 // Visual divider
-const VisualDivider = styled(Box)(({ theme }) => ({
+const VisualDivider = styled('div')(() => ({
   height: '3px',
-  backgroundColor: COLORS.BORDER_COLOUR,
+  backgroundColor: 'var(--gray-200)',
   margin: '40px 0'
 }));
 
-// GDS-aligned tabs
-const VisualTabs = styled(Tabs)(({ theme }) => ({
-  borderBottom: `2px solid ${COLORS.BORDER_COLOUR}`,
-  marginBottom: '40px',
-  
-  '& .MuiTabs-indicator': {
-    height: '5px',
-    backgroundColor: COLORS.BLUE
-  }
-}));
-
-const VisualTab = styled(Tab)(({ theme }) => ({
-  textTransform: 'none',
-  fontWeight: 700,
-  fontSize: '19px',
-  color: COLORS.BLACK,
-  padding: '20px 20px',
-  minHeight: '60px',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  
-  '&.Mui-selected': {
-    color: COLORS.BLUE,
-    backgroundColor: COLORS.LIGHT_GREY
-  },
-  
-  '&:hover': {
-    color: COLORS.BLUE,
-    backgroundColor: COLORS.LIGHT_GREY
-  },
-  
-  '&:focus': {
-    outline: `3px solid ${COLORS.FOCUS}`,
-    outlineOffset: 0
-  }
-}));
 
 // Helper functions
 const getSpecIcon = (type) => {
@@ -358,15 +150,15 @@ const getSpecIcon = (type) => {
 
 const getSpecColor = (type) => {
   const colors = {
-    pressure: COLORS.BLUE,
-    temperature: COLORS.RED,
-    volume: COLORS.GREEN,
-    torque: COLORS.PURPLE,
-    electrical: COLORS.ORANGE,
-    time: COLORS.PINK,
-    distance: COLORS.DARK_BLUE,
-    speed: COLORS.BRIGHT_PURPLE,
-    default: COLORS.DARK_GREY
+    pressure: 'var(--primary)',
+    temperature: 'var(--negative)',
+    volume: 'var(--positive)',
+    torque: 'var(--warning)',
+    electrical: 'var(--warning)',
+    time: 'var(--primary)',
+    distance: 'var(--primary)',
+    speed: 'var(--primary)',
+    default: 'var(--gray-600)'
   };
   return colors[type] || colors.default;
 };
@@ -396,33 +188,33 @@ const getCategoryIcon = (category) => {
 
 const getCategoryColor = (category) => {
   const colors = {
-    'Engine Details': COLORS.BLUE,
-    'Service Information': COLORS.GREEN,
-    'Torque Specifications': COLORS.PURPLE,
-    'Brakes & A/C': COLORS.ORANGE
+    'Engine Details': 'var(--primary)',
+    'Service Information': 'var(--positive)',
+    'Torque Specifications': 'var(--warning)',
+    'Brakes & A/C': 'var(--warning)'
   };
-  return colors[category] || COLORS.DARK_GREY;
+  return colors[category] || 'var(--gray-600)';
 };
 
 // Gauge component
 const Gauge = ({ value, max, unit, label, color }) => {
   const percentage = Math.min((value / max) * 100, 100);
-  const circumference = 2 * Math.PI * 50;
+  const circumference = 2 * Math.PI * 45;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
   
   return (
-    <Box>
+    <div>
       <GaugeContainer>
-        <GaugeSvg width="120" height="120" viewBox="0 0 120 120">
+        <GaugeSvg viewBox="0 0 100 100">
           <GaugeTrack
-            cx="60"
-            cy="60"
-            r="50"
+            cx="50"
+            cy="50"
+            r="45"
           />
           <GaugeFill
-            cx="60"
-            cy="60"
-            r="50"
+            cx="50"
+            cy="50"
+            r="45"
             color={color}
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
@@ -434,7 +226,7 @@ const Gauge = ({ value, max, unit, label, color }) => {
         </GaugeCenterText>
       </GaugeContainer>
       <SpecCardTitle>{label}</SpecCardTitle>
-    </Box>
+    </div>
   );
 };
 
@@ -476,7 +268,7 @@ const renderVisualSpecs = (items, sectionTitle) => {
         if (variant === 'gauge' && hasNumericValue) {
           const maxValue = unit.includes('bar') ? 10 : 150; // Approximate max values
           return (
-            <VisualSpecCard key={index} variant="gauge">
+            <SpecCard key={index} variant="gauge">
               <Gauge
                 value={numericValue}
                 max={maxValue}
@@ -484,21 +276,21 @@ const renderVisualSpecs = (items, sectionTitle) => {
                 label={label}
                 color={color}
               />
-            </VisualSpecCard>
+            </SpecCard>
           );
         }
         
         // Render progress bar for percentage or range values
         if (hasNumericValue && (unit === '%' || label.toLowerCase().includes('range'))) {
           return (
-            <VisualSpecCard key={index} variant="bar">
+            <SpecCard key={index} variant="bar">
               <SpecCardHeader>
                 <SpecCardTitle>{label}</SpecCardTitle>
                 <SpecCardIcon color={color}>{icon}</SpecCardIcon>
               </SpecCardHeader>
               <ProgressContainer>
                 <ProgressLabel>
-                  <span style={{ fontWeight: 700 }}>{value} {unit}</span>
+                  <span>{value} {unit}</span>
                   <StatusBadge status={numericValue > 70 ? 'good' : numericValue > 40 ? 'warning' : 'critical'}>
                     {numericValue > 70 ? 'Optimal' : numericValue > 40 ? 'Acceptable' : 'Low'}
                   </StatusBadge>
@@ -507,13 +299,13 @@ const renderVisualSpecs = (items, sectionTitle) => {
                   <ProgressFill color={color} width={numericValue} />
                 </ProgressBar>
               </ProgressContainer>
-            </VisualSpecCard>
+            </SpecCard>
           );
         }
         
         // Default card layout
         return (
-          <VisualSpecCard key={index}>
+          <SpecCard key={index}>
             <SpecCardHeader>
               <SpecCardTitle>{label}</SpecCardTitle>
               <SpecCardIcon color={color}>{icon}</SpecCardIcon>
@@ -523,11 +315,11 @@ const renderVisualSpecs = (items, sectionTitle) => {
               {unit && <SpecUnit>{unit}</SpecUnit>}
             </SpecValue>
             {sectionTitle === 'Lubricants & Capacities' && (
-              <Box mt={2}>
+              <StatusContainer>
                 <StatusBadge status="good">Recommended</StatusBadge>
-              </Box>
+              </StatusContainer>
             )}
-          </VisualSpecCard>
+          </SpecCard>
         );
       })}
     </SpecGrid>
@@ -558,7 +350,7 @@ const browserCache = {
       localStorage.setItem(testKey, 'test');
       localStorage.removeItem(testKey);
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   },
@@ -645,83 +437,10 @@ const safeGet = (obj, path, defaultValue = null) => {
   return result !== undefined ? result : defaultValue;
 };
 
-// Important panels
-const WarningPanel = styled(InsightNote)(() => ({
-  backgroundColor: '#fff7ed',
-  borderColor: COLORS.ORANGE,
-  marginBottom: '20px',
-  padding: '20px',
-  borderLeftWidth: '10px',
-  position: 'relative',
-  
-  '&:before': {
-    content: '"!"',
-    position: 'absolute',
-    left: '20px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '30px',
-    height: '30px',
-    backgroundColor: COLORS.ORANGE,
-    color: COLORS.WHITE,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 700,
-    fontSize: '19px'
-  },
-  
-  '& > *': {
-    paddingLeft: '40px'
-  }
-}));
 
-const NoticePanel = styled(InsightNote)(() => ({
-  backgroundColor: COLORS.LIGHT_GREY,
-  borderColor: COLORS.BLUE,
-  marginBottom: '20px',
-  padding: '15px',
-  borderLeftWidth: '10px'
-}));
+// NoticePanel and FuelTypeBadge are imported from styles file
 
-const FuelTypeBadge = styled('strong')(({ theme }) => ({
-  display: 'inline-block',
-  backgroundColor: COLORS.BLUE,
-  color: COLORS.WHITE,
-  padding: '5px 10px 4px',
-  fontWeight: 700,
-  fontSize: '14px',
-  letterSpacing: '1px',
-  textTransform: 'uppercase',
-  fontFamily: '"GDS Transport", arial, sans-serif',
-  marginTop: '10px',
-  marginBottom: '15px'
-}));
-
-// Tab Panel function component
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Box
-      role="tabpanel"
-      hidden={value !== index}
-      id={`specs-tabpanel-${index}`}
-      aria-labelledby={`specs-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </Box>
-  );
-}
-
-// Tab props accessor function
-function a11yProps(index) {
-  return {
-    id: `specs-tab-${index}`,
-    'aria-controls': `specs-tabpanel-${index}`,
-  };
-}
+// Using TabPanel from styles with simple show/hide logic
 
 // Extract year function
 const extractVehicleYear = (vehicleData) => {
@@ -822,6 +541,42 @@ const renderNotes = (notes) => {
   );
 };
 
+// Collapsible Section Component (minimal design following DVLADataHeader patterns)
+const CollapsibleSection = ({ title, icon, children, defaultExpanded = false, priority = 'medium' }) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  const toggleExpanded = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
+  return (
+    <CollapsibleSectionContainer>
+      <CollapsibleHeader onClick={toggleExpanded} aria-expanded={isExpanded}>
+        <CollapsibleHeaderContent>
+          <CategoryIcon>{icon}</CategoryIcon>
+          <div>
+            <CategoryTitle>{title}</CategoryTitle>
+            <CategorySubtitle>
+              {priority === 'high' ? 'Essential information' : 
+               priority === 'low' ? 'Reference data' : 
+               'Technical specifications and measurements'}
+            </CategorySubtitle>
+          </div>
+        </CollapsibleHeaderContent>
+        <CollapsibleChevron expanded={isExpanded}>
+          ▼
+        </CollapsibleChevron>
+      </CollapsibleHeader>
+      
+      <CollapsibleContent expanded={isExpanded}>
+        <CollapsibleContentInner>
+          {children}
+        </CollapsibleContentInner>
+      </CollapsibleContent>
+    </CollapsibleSectionContainer>
+  );
+};
+
 const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoading = false, error: initialError = null, onDataLoad }) => {
   // States
   const [tabValue, setTabValue] = useState(0);
@@ -829,6 +584,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const [loading, setLoading] = useState(initialLoading || true);
   const [error, setError] = useState(initialError);
   const [matchConfidence, setMatchConfidence] = useState('none');
+  // Note: expandedSections state can be added later for advanced accordion management
+  // const [expandedSections, setExpandedSections] = useState(new Set());
   
   // Use refs for tracking requests and preventing race conditions
   const abortControllerRef = useRef(null);
@@ -851,10 +608,10 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return `${vehicleData.make}_${vehicleData.model}_${vehicleYear || ''}_${vehicleFuelType || ''}`;
   }, [vehicleData?.make, vehicleData?.model, vehicleYear, vehicleFuelType]);
 
-  // Memoized tab change handler
-  const handleTabChange = useCallback((event, newValue) => {
-    setTabValue(newValue);
-  }, []);
+  // Note: handleTabChange removed as we use direct onClick for minimal tabs
+  // const handleTabChange = useCallback((event, newValue) => {
+  //   setTabValue(newValue);
+  // }, []);
 
   // Data fetching effect
   useEffect(() => {
@@ -1021,7 +778,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       engineSections.push({
         title: "Vehicle Identification",
         icon: getCategoryIcon("Vehicle Identification"),
-        content: renderVisualSpecs(engineDetails, "Vehicle Identification")
+        content: renderVisualSpecs(engineDetails, "Vehicle Identification"),
+        priority: 'high'
       });
     }
     
@@ -1032,7 +790,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       engineSections.push({
         title: "Injection System",
         icon: getCategoryIcon("Injection System"),
-        content: renderVisualSpecs(injectionSpecs, "Injection System")
+        content: renderVisualSpecs(injectionSpecs, "Injection System"),
+        priority: 'medium'
       });
     }
     
@@ -1061,7 +820,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         engineSections.push({
           title: section.title,
           icon: getCategoryIcon(section.title),
-          content: renderVisualSpecs(specs, section.title)
+          content: renderVisualSpecs(specs, section.title),
+          priority: section.path === 'startingCharging' ? 'medium' : 'low'
         });
       }
     });
@@ -1085,7 +845,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       serviceSections.push({
         title: "Service Checks & Adjustments",
         icon: getCategoryIcon("Service Checks & Adjustments"),
-        content: renderVisualSpecs(serviceChecksSpecs, "Service Checks & Adjustments")
+        content: renderVisualSpecs(serviceChecksSpecs, "Service Checks & Adjustments"),
+        priority: 'high'
       });
     }
     
@@ -1102,24 +863,27 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       serviceSections.push({
         title: "Lubricants & Capacities",
         icon: getCategoryIcon("Lubricants & Capacities"),
+        priority: 'high',
         content: (
           <>
             {hasEngineOilOptions && (
-              <>
-                <GovUKHeadingS style={{ marginBottom: '20px' }}>
+              <SectionSpacing>
+                <GovUKHeadingS>
                   Engine Oil Options
                 </GovUKHeadingS>
                 {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
-              </>
+              </SectionSpacing>
             )}
             
             {hasLubricantSpecs && (
               <>
                 {hasEngineOilOptions && <VisualDivider />}
-                <GovUKHeadingS style={{ marginBottom: '20px' }}>
-                  Other Lubricants & Capacities
-                </GovUKHeadingS>
-                {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
+                <SectionSpacing>
+                  <GovUKHeadingS>
+                    Other Lubricants & Capacities
+                  </GovUKHeadingS>
+                  {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
+                </SectionSpacing>
               </>
             )}
           </>
@@ -1153,21 +917,23 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           icon: getCategoryIcon("Cylinder Head Instructions"),
           content: (
             <>
-              <InsightBody style={{ marginBottom: '20px' }}>
-                {headInstructions.map((instruction, index) => (
-                  <p key={`instr-${index}`}>{instruction}</p>
-                ))}
-              </InsightBody>
+              <SectionSpacing>
+                <InsightBody>
+                  {headInstructions.map((instruction, index) => (
+                    <p key={`instr-${index}`}>{instruction}</p>
+                  ))}
+                </InsightBody>
+              </SectionSpacing>
               
               {hasTorqueSequence && (
-                <VisualSpecCard>
+                <SpecCard>
                   <GovUKHeadingS>Tightening sequence</GovUKHeadingS>
                   <ol className="govuk-list govuk-list--number">
                     {headTorques.map((step, index) => (
                       <li key={`step-${index}`}>{step}</li>
                     ))}
                   </ol>
-                </VisualSpecCard>
+                </SpecCard>
               )}
             </>
           )
@@ -1252,65 +1018,55 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   // Loading state
   if (loading) {
     return (
-      <GovUKContainer>
-        <EnhancedLoadingContainer>
-          <GovUKLoadingSpinner />
-          <InsightBody>Loading vehicle specifications</InsightBody>
-          <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+      <TechSpecsContainer>
+        <LoadingContainer>
+          <LoadingSpinner />
+          <LoadingText>Loading vehicle specifications</LoadingText>
+          <FooterNote>
             We are retrieving the technical information for your {vehicleData?.make || ''} {vehicleData?.model || ''}
-          </GovUKBodyS>
-        </EnhancedLoadingContainer>
-      </GovUKContainer>
+          </FooterNote>
+        </LoadingContainer>
+      </TechSpecsContainer>
     );
   }
 
   // Error state
   if (error) {
     return (
-      <GovUKContainer>
-        <EmptyStateContainer>
-          <InsightBody>
-            <ValueHighlight color={COLORS.RED}>There is a problem</ValueHighlight>
-          </InsightBody>
-          <GovUKBody style={{ marginBottom: '20px' }}>
-            We cannot retrieve the technical specifications at the moment. {error}
-          </GovUKBody>
-          <button 
-            onClick={() => window.location.reload()}
-            style={{
-              backgroundColor: COLORS.BUTTON_COLOUR || COLORS.GREEN,
-              color: 'white',
-              border: 'none',
-              padding: '10px 15px',
-              fontFamily: '"GDS Transport", arial, sans-serif',
-              fontWeight: 700,
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
-          >
+      <TechSpecsContainer>
+        <ErrorContainer>
+          <ErrorHeader>
+            <ErrorSpan>There is a problem</ErrorSpan>
+          </ErrorHeader>
+          <SectionSpacing>
+            <ErrorMessage>
+              We cannot retrieve the technical specifications at the moment. {error}
+            </ErrorMessage>
+          </SectionSpacing>
+          <RetryButton onClick={() => window.location.reload()}>
             Try again
-          </button>
-        </EmptyStateContainer>
-      </GovUKContainer>
+          </RetryButton>
+        </ErrorContainer>
+      </TechSpecsContainer>
     );
   }
 
   // No data state
   if (!techSpecsData) {
     return (
-      <GovUKContainer>
-        <EmptyStateContainer>
-          <InsightBody>
+      <TechSpecsContainer>
+        <ErrorContainer>
+          <ErrorHeader>
             Technical specifications not available
-          </InsightBody>
-          <GovUKBody style={{ color: COLORS.BLACK, marginBottom: '10px' }}>
+          </ErrorHeader>
+          <ErrorMessage>
             We do not have technical specifications for this vehicle.
-          </GovUKBody>
-          <GovUKBodyS style={{ color: COLORS.DARK_GREY }}>
+          </ErrorMessage>
+          <FooterNote>
             This may be because the vehicle is a recent model, a classic vehicle, or a specialist variant.
-          </GovUKBodyS>
-        </EmptyStateContainer>
-      </GovUKContainer>
+          </FooterNote>
+        </ErrorContainer>
+      </TechSpecsContainer>
     );
   }
 
@@ -1327,103 +1083,96 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const lastUpdated = "March 2025";
 
   return (
-    <GovUKContainer>
-      <InsightsContainer>
-        <InsightPanel>
-          <HeadingWithTooltip 
-            tooltip="Technical specifications for your vehicle, based on manufacturer data"
-            iconColor={COLORS.BLUE}
-          >
-            <GovUKHeadingM>Technical Specifications for {displayMake} {displayModel}</GovUKHeadingM>
-          </HeadingWithTooltip>
-          
-          <InsightBody>
-            These specifications provide detailed technical information for servicing and maintaining your vehicle.
-          </InsightBody>
-          
-          {MatchWarning}
-          
-          <WarningPanel>
-            <GovUKHeadingS>Important</GovUKHeadingS>
-            <GovUKBody>
-              These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
-            </GovUKBody>
-          </WarningPanel>
-          
-          {displayFuelType && displayFuelType !== 'unknown' && (
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: 2, marginBottom: 2 }}>
-              <FuelTypeBadge>
-                {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
-              </FuelTypeBadge>
-            </Box>
-          )}
-        </InsightPanel>
+    <TechSpecsContainer>
+      <SectionHeader>
+        <HeadingWithTooltip 
+          tooltip="Technical specifications for your vehicle, based on manufacturer data"
+        >
+          <h2>Technical Specifications for {displayMake} {displayModel}</h2>
+        </HeadingWithTooltip>
         
-        <VisualSpecsContainer>
-          {hasTabs ? (
-            <>
-              <VisualTabs 
-                value={tabValue < tabs.length ? tabValue : 0}
-                onChange={handleTabChange} 
-                aria-label="technical specifications tabs"
-                variant="scrollable"
-                scrollButtons="auto"
-              >
-                {tabs.map((tab, index) => (
-                  <VisualTab 
-                    key={`tab-${index}`}
-                    label={tab.label}
-                    {...a11yProps(index)} 
-                  />
+        <InsightBody>
+          These specifications provide detailed technical information for servicing and maintaining your vehicle.
+        </InsightBody>
+      </SectionHeader>
+          
+      {MatchWarning}
+          
+      <WarningPanel>
+        <WarningTitle>Important</WarningTitle>
+        <WarningText>
+          These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
+        </WarningText>
+      </WarningPanel>
+          
+      {displayFuelType && displayFuelType !== 'unknown' && (
+        <FlexContainer className="justify-start">
+          <FuelTypeBadge>
+            {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
+          </FuelTypeBadge>
+        </FlexContainer>
+      )}
+      
+      <SectionDivider />
+        
+      {hasTabs ? (
+        <TabContentContainer>
+          <MinimalTabs>
+            <FlexContainer className="tabs">
+              {tabs.map((tab, index) => (
+                <MinimalTab
+                  key={`tab-${index}`}
+                  className={tabValue === index ? 'active' : ''}
+                  onClick={() => setTabValue(index)}
+                >
+                  {tab.label}
+                </MinimalTab>
                 ))}
-              </VisualTabs>
-              
-              {tabs.map((tab, tabIndex) => (
-                <CustomTabPanel key={`panel-${tabIndex}`} value={tabValue} index={tabIndex}>
+            </FlexContainer>
+          </MinimalTabs>
+          
+          {tabs.map((tab, tabIndex) => (
+            <TabPanel key={`panel-${tabIndex}`} style={{ display: tabValue === tabIndex ? 'block' : 'none' }}>
                   {tab.sections.map((section, sectionIndex) => {
                     const isLastSection = sectionIndex === tab.sections.length - 1;
+                    const sectionKey = `${tabIndex}-${sectionIndex}`;
+                    const defaultExpanded = section.priority === 'high' || sectionIndex === 0;
                     
                     return (
-                      <Box key={`section-${tabIndex}-${sectionIndex}`}>
-                        <SpecCategoryHeader>
-                          <CategoryIcon color={tab.color}>
-                            {section.icon}
-                          </CategoryIcon>
-                          <Box>
-                            <GovUKHeadingM style={{ margin: 0 }}>{section.title}</GovUKHeadingM>
-                            <GovUKBodyS style={{ margin: 0, marginTop: '4px' }}>
-                              Technical specifications and measurements
-                            </GovUKBodyS>
-                          </Box>
-                        </SpecCategoryHeader>
-                        {section.content}
-                        {!isLastSection && <VisualDivider />}
-                      </Box>
+                      <div key={`section-${sectionKey}`}>
+                        <CollapsibleSection
+                          title={section.title}
+                          icon={section.icon}
+                          defaultExpanded={defaultExpanded}
+                          priority={section.priority || 'medium'}
+                        >
+                          {section.content}
+                        </CollapsibleSection>
+                        {!isLastSection && <SectionDivider />}
+                      </div>
                     );
                   })}
-                </CustomTabPanel>
-              ))}
-            </>
-          ) : (
-            <Box my={4}>
+            </TabPanel>
+          ))}
+        </TabContentContainer>
+      ) : (
+            <MarginContainer>
               <NoticePanel>
-                <GovUKBody>
+                <InsightBody>
                   Limited specifications available for this vehicle. Try checking the manufacturer's website for more details.
-                </GovUKBody>
+                </InsightBody>
               </NoticePanel>
-            </Box>
+            </MarginContainer>
           )}
           
           <NoticePanel>
-            <GovUKBodyS>
+            <FooterNote>
               Technical specifications sourced from industry standard databases.
               <br />
               Last updated: {lastUpdated}
-            </GovUKBodyS>
+            </FooterNote>
           </NoticePanel>
-        </VisualSpecsContainer>
-      </InsightsContainer>
-    </GovUKContainer>
+    </TechSpecsContainer>
   );
 };
 

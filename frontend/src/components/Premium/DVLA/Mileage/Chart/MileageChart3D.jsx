@@ -2,14 +2,14 @@ import React, { useRef, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { 
-  GovUKHeadingS, 
-  GovUKSectionBreak, 
-  GovUKGridRow, 
-  GovUKCaptionM,
-  GovUKBody,
-  GovUKInsetText,
-  COLORS
-} from '../../../../../styles/theme';
+  ChartHeader,
+  ChartSectionBreak,
+  ChartGridRow,
+  ChartCaption,
+  ChartBody,
+  ChartInsetText,
+  CHART_COLORS
+} from './MileageChartStyles';
 
 // Helper function to analyze MOT status for additional details  
 const analyzeMotStatus = (status, hasAdvisoriesData = false) => {
@@ -38,14 +38,14 @@ const analyzeMotStatus = (status, hasAdvisoriesData = false) => {
 // Multi-factor color palette for conditional coloring
 const STATUS_COLORS = {
   // Base colors by status and condition
-  PASS_CLEAN: COLORS.POSITIVE || '#10b981',           // Bright green - clean pass
-  PASS_ADVISORY: COLORS.WARNING || '#f59e0b',         // Amber - pass with advisories
+  PASS_CLEAN: CHART_COLORS.POSITIVE || '#10b981',           // Bright green - clean pass
+  PASS_ADVISORY: CHART_COLORS.WARNING || '#f59e0b',         // Amber - pass with advisories
   FAIL_MINOR: '#fb7185',                               // Orange-red - minor failures  
-  FAIL_MAJOR: COLORS.NEGATIVE || '#ef4444',           // Deep red - major failures
-  FAIL_CONSECUTIVE: COLORS.RED_DARK || '#b91c1c',     // Very dark red - consecutive fails
+  FAIL_MAJOR: CHART_COLORS.NEGATIVE || '#ef4444',           // Deep red - major failures
+  FAIL_CONSECUTIVE: CHART_COLORS.RED_DARK || '#b91c1c',     // Very dark red - consecutive fails
   
   // Special condition colors
-  POST_INACTIVITY: COLORS.PURPLE || '#8b5cf6',        // Purple - first test after gap
+  POST_INACTIVITY: CHART_COLORS.PURPLE || '#8b5cf6',        // Purple - first test after gap
   IMPROVEMENT: '#34d399',                              // Light green - improvement trend
   DETERIORATION: '#f87171',                            // Light red - getting worse
   
@@ -102,7 +102,7 @@ const createModerateWarningSymbol = () => {
   geometry.rotateX(Math.PI);
   
   const material = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(COLORS.WARNING || '#f59e0b'),
+    color: new THREE.Color(CHART_COLORS.WARNING || '#f59e0b'),
     transparent: true,
     opacity: 0.85
   });
@@ -124,7 +124,7 @@ const createHighRiskWarningSymbol = () => {
   // Exclamation body
   const bodyGeometry = new THREE.CylinderGeometry(0.03, 0.03, 0.15, 6);
   const bodyMaterial = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(COLORS.NEGATIVE || '#ef4444'),
+    color: new THREE.Color(CHART_COLORS.NEGATIVE || '#ef4444'),
     transparent: true,
     opacity: 0.9
   });
@@ -151,10 +151,10 @@ const createHighRiskWarningSymbol = () => {
 const createCriticalWarningSymbol = () => {
   const geometry = new THREE.OctahedronGeometry(0.15);
   const material = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(COLORS.RED_DARK || '#dc2626'),
+    color: new THREE.Color(CHART_COLORS.RED_DARK || '#dc2626'),
     transparent: true,
     opacity: 1.0,
-    emissive: new THREE.Color(COLORS.RED_DARK || '#dc2626').multiplyScalar(0.1)
+    emissive: new THREE.Color(CHART_COLORS.RED_DARK || '#dc2626').multiplyScalar(0.1)
   });
   
   const symbol = new THREE.Mesh(geometry, material);
@@ -228,7 +228,7 @@ const calculateBarColor = (motTest, index, allTests) => {
   } = motTest;
   
   // 1. Base color selection by primary status
-  let baseColor = COLORS.BLUE; // fallback
+  let baseColor = CHART_COLORS.BLUE; // fallback
   let specialCondition = null;
   
   if (severity === 'pass') {
@@ -453,7 +453,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
   }, [chartData, trendLineData]);
 
   // Create HTML overlay labels system (adapted from reference)
-  const createHTMLLabel = (text, worldPosition, color = COLORS.GRAY_600, size = '11px', isTooltip = false) => {
+  const createHTMLLabel = (text, worldPosition, color = CHART_COLORS.GRAY_600, size = '11px', isTooltip = false) => {
     const labelData = {
       text,
       worldPosition: worldPosition.clone(),
@@ -540,7 +540,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     
     if (label.isTooltip) {
       element.style.background = 'rgba(15, 23, 42, 0.95)';
-      element.style.color = COLORS.WHITE;
+      element.style.color = CHART_COLORS.WHITE;
       element.style.padding = '8px 12px';
       element.style.borderRadius = '6px';
       element.style.border = `2px solid ${label.color}`;
@@ -554,7 +554,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       element.style.background = 'rgba(248, 250, 252, 0.9)';
       element.style.padding = '2px 6px';
       element.style.borderRadius = '3px';
-      element.style.border = `1px solid ${COLORS.GRAY_200}`;
+      element.style.border = `1px solid ${CHART_COLORS.GRAY_200}`;
     }
     
     label.element = element;
@@ -582,7 +582,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(COLORS.WHITE);
+    scene.background = new THREE.Color(CHART_COLORS.WHITE);
     
     // Clock for animations
     const clock = new THREE.Clock();
@@ -613,10 +613,10 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     mountRef.current.appendChild(renderer.domElement);
     
     // Lighting setup
-    const ambientLight = new THREE.AmbientLight(COLORS.WHITE, 0.6);
+    const ambientLight = new THREE.AmbientLight(CHART_COLORS.WHITE, 0.6);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(COLORS.WHITE, 0.8);
+    const directionalLight = new THREE.DirectionalLight(CHART_COLORS.WHITE, 0.8);
     directionalLight.position.set(50, 50, 50);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
@@ -893,15 +893,15 @@ const MileageChart3D = ({ motData, height = 600 }) => {
           switch (data.clockingRisk.level) {
             case 'MODERATE':
               symbolIndicator.textContent = '△';
-              symbolIndicator.style.color = COLORS.WARNING || '#f59e0b';
+              symbolIndicator.style.color = CHART_COLORS.WARNING || '#f59e0b';
               break;
             case 'HIGH':
               symbolIndicator.textContent = '!';
-              symbolIndicator.style.color = COLORS.NEGATIVE || '#ef4444';
+              symbolIndicator.style.color = CHART_COLORS.NEGATIVE || '#ef4444';
               break;
             case 'CRITICAL':
               symbolIndicator.textContent = '⬥';
-              symbolIndicator.style.color = COLORS.RED_DARK || '#dc2626';
+              symbolIndicator.style.color = CHART_COLORS.RED_DARK || '#dc2626';
               break;
           }
           
@@ -978,7 +978,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         new THREE.Vector3(-chartWidth/2, 0, 0),
         new THREE.Vector3(chartWidth/2, 0, 0)
       ]);
-      const xAxisMaterial = new THREE.LineBasicMaterial({ color: COLORS.GRAY_600, linewidth: 2 });
+      const xAxisMaterial = new THREE.LineBasicMaterial({ color: CHART_COLORS.GRAY_600, linewidth: 2 });
       const xAxis = new THREE.Line(xAxisGeometry, xAxisMaterial);
       scene.add(xAxis);
       
@@ -987,7 +987,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         new THREE.Vector3(-chartWidth/2, 0, 0),
         new THREE.Vector3(-chartWidth/2, chartHeight, 0)
       ]);
-      const yAxisMaterial = new THREE.LineBasicMaterial({ color: COLORS.GRAY_600, linewidth: 2 });
+      const yAxisMaterial = new THREE.LineBasicMaterial({ color: CHART_COLORS.GRAY_600, linewidth: 2 });
       const yAxis = new THREE.Line(yAxisGeometry, yAxisMaterial);
       scene.add(yAxis);
     };
@@ -1005,7 +1005,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         const xPos = (position - 0.5) * chartWidth;
         const labelPosition = new THREE.Vector3(xPos, -1, 1);
         const year = data.date.getFullYear();
-        createHTMLLabel(year.toString(), labelPosition, COLORS.GRAY_600, '10px');
+        createHTMLLabel(year.toString(), labelPosition, CHART_COLORS.GRAY_600, '10px');
       });
       
       // Y-axis labels (Mileage levels)
@@ -1018,14 +1018,14 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         createHTMLLabel(
           Math.round(mileage / 1000) + 'k', 
           labelPosition, 
-          COLORS.GRAY_600, 
+          CHART_COLORS.GRAY_600, 
           '10px'
         );
       });
       
       // Axis titles
-      createHTMLLabel('Timeline', new THREE.Vector3(0, -2, 2), COLORS.GRAY_800, '12px');
-      createHTMLLabel('Mileage', new THREE.Vector3(-chartWidth/2 - 4, chartHeight/2, 2), COLORS.GRAY_800, '12px');
+      createHTMLLabel('Timeline', new THREE.Vector3(0, -2, 2), CHART_COLORS.GRAY_800, '12px');
+      createHTMLLabel('Mileage', new THREE.Vector3(-chartWidth/2 - 4, chartHeight/2, 2), CHART_COLORS.GRAY_800, '12px');
     };
     
     // Create 3D mileage bars
@@ -1080,7 +1080,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         if (data.negativeMileage) {
           const warningGeometry = new THREE.PlaneGeometry(barWidth * 1.2, barHeight * 1.2);
           const warningMaterial = new THREE.MeshBasicMaterial({
-            color: COLORS.RED,
+            color: CHART_COLORS.RED,
             transparent: true,
             opacity: 0.3,
             side: THREE.DoubleSide
@@ -1093,7 +1093,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         if (data.inactivityPeriod) {
           const inactivityGeometry = new THREE.PlaneGeometry(barWidth * 1.2, barHeight * 1.2);
           const inactivityMaterial = new THREE.MeshBasicMaterial({
-            color: COLORS.GRAY_300,
+            color: CHART_COLORS.GRAY_300,
             transparent: true,
             opacity: 0.5,
             side: THREE.DoubleSide
@@ -1135,7 +1135,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       if (trendPoints.length >= 2) {
         const trendGeometry = new THREE.BufferGeometry().setFromPoints(trendPoints);
         const trendMaterial = new THREE.LineBasicMaterial({ 
-          color: COLORS.GRAY_900, 
+          color: CHART_COLORS.GRAY_900, 
           linewidth: 3 
         });
         const trendLine = new THREE.Line(trendGeometry, trendMaterial);
@@ -1156,7 +1156,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       if (ukAvgPoints.length >= 2) {
         const ukAvgGeometry = new THREE.BufferGeometry().setFromPoints(ukAvgPoints);
         const ukAvgMaterial = new THREE.LineBasicMaterial({ 
-          color: COLORS.GRAY_600,
+          color: CHART_COLORS.GRAY_600,
           linewidth: 2
         });
         const ukAvgLine = new THREE.Line(ukAvgGeometry, ukAvgMaterial);
@@ -1166,7 +1166,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     
     // Create base grid
     const createBaseGrid = () => {
-      const gridHelper = new THREE.GridHelper(chartWidth, 8, COLORS.GRAY_200, COLORS.GRAY_100);
+      const gridHelper = new THREE.GridHelper(chartWidth, 8, CHART_COLORS.GRAY_200, CHART_COLORS.GRAY_100);
       gridHelper.position.y = 0;
       scene.add(gridHelper);
     };
@@ -1342,27 +1342,27 @@ const MileageChart3D = ({ motData, height = 600 }) => {
 
   return (
     <>
-      <GovUKSectionBreak />
-      <GovUKGridRow>
-        <GovUKHeadingS>3D Mileage History</GovUKHeadingS>
+      <ChartSectionBreak />
+      <ChartGridRow>
+        <ChartHeader>3D Mileage History</ChartHeader>
         
         {!hasValidMileageData ? (
-          <GovUKInsetText>
-            <GovUKBody>
+          <ChartInsetText>
+            <ChartBody>
               Not enough mileage data is available to display a 3D chart. At least two MOT tests with recorded mileage are required.
-            </GovUKBody>
-          </GovUKInsetText>
+            </ChartBody>
+          </ChartInsetText>
         ) : (
           <>
-            <GovUKCaptionM>
+            <ChartCaption>
               Interactive 3D visualization of the vehicle's mileage history from MOT test records
-            </GovUKCaptionM>
+            </ChartCaption>
             
             <div className="mileage-3d-legend" style={{
               padding: '12px',
               marginBottom: '16px',
               backgroundColor: '#f8fafc',
-              border: `1px solid ${COLORS.GRAY_200}`,
+              border: `1px solid ${CHART_COLORS.GRAY_200}`,
               borderRadius: '8px',
               fontSize: '12px',
               fontFamily: '"Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -1414,9 +1414,9 @@ const MileageChart3D = ({ motData, height = 600 }) => {
                       gap: '12px', 
                       marginTop: '4px'
                     }}>
-                      <span style={{color: COLORS.WARNING || '#f59e0b', fontSize: '11px', whiteSpace: 'nowrap'}}>△ Review</span>
-                      <span style={{color: COLORS.NEGATIVE || '#ef4444', fontSize: '11px', whiteSpace: 'nowrap'}}>! Suspicious</span>
-                      <span style={{color: COLORS.RED_DARK || '#dc2626', fontSize: '11px', whiteSpace: 'nowrap'}}>⬥ Clocked</span>
+                      <span style={{color: CHART_COLORS.WARNING || '#f59e0b', fontSize: '11px', whiteSpace: 'nowrap'}}>△ Review</span>
+                      <span style={{color: CHART_COLORS.NEGATIVE || '#ef4444', fontSize: '11px', whiteSpace: 'nowrap'}}>! Suspicious</span>
+                      <span style={{color: CHART_COLORS.RED_DARK || '#dc2626', fontSize: '11px', whiteSpace: 'nowrap'}}>⬥ Clocked</span>
                     </div>
                   </div>
                 </div>
@@ -1425,8 +1425,8 @@ const MileageChart3D = ({ motData, height = 600 }) => {
                 <div style={{ fontSize: '11px' }}>
                   <strong style={{color: '#0f172a', fontSize: '13px', display: 'block', marginBottom: '4px'}}>Trend Lines</strong>
                   <div style={{ color: '#64748b', lineHeight: '1.4' }}>
-                    <div><span style={{color: COLORS.GRAY_900}}>■</span> Vehicle trend</div>
-                    <div><span style={{color: COLORS.GRAY_600}}>■</span> UK average</div>
+                    <div><span style={{color: CHART_COLORS.GRAY_900}}>■</span> Vehicle trend</div>
+                    <div><span style={{color: CHART_COLORS.GRAY_600}}>■</span> UK average</div>
                     <div style={{ marginTop: '4px', fontStyle: 'italic' }}>Older tests fade</div>
                   </div>
                 </div>
@@ -1438,8 +1438,8 @@ const MileageChart3D = ({ motData, height = 600 }) => {
               className="mileage-3d-container"
               style={{ 
                 height: `${height}px`,
-                background: COLORS.WHITE,
-                border: `1px solid ${COLORS.GRAY_200}`,
+                background: CHART_COLORS.WHITE,
+                border: `1px solid ${CHART_COLORS.GRAY_200}`,
                 borderRadius: '8px',
                 cursor: 'grab',
                 userSelect: 'none'
@@ -1449,17 +1449,17 @@ const MileageChart3D = ({ motData, height = 600 }) => {
               onMouseLeave={(e) => e.currentTarget.style.cursor = 'grab'}
             />
             
-            <GovUKInsetText>
-              <GovUKBody>
+            <ChartInsetText>
+              <ChartBody>
                 This 3D chart displays the vehicle's recorded mileage at each MOT test as blue bars. 
                 The height of each bar represents the mileage value. The black line shows the vehicle's 
                 mileage trend, while the gray line represents the UK national average annual mileage (7,500 miles per year).
                 Use your mouse to rotate and zoom the visualization for better analysis.
-              </GovUKBody>
-            </GovUKInsetText>
+              </ChartBody>
+            </ChartInsetText>
           </>
         )}
-      </GovUKGridRow>
+      </ChartGridRow>
     </>
   );
 };

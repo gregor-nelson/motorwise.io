@@ -2655,3 +2655,15 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-08-14 13:41:08,652 - vehicle_analysis_api - ERROR - Claude API error: Client error '400 Bad Request' for url 'https://api.anthropic.com/v1/messages'
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
 2025-08-14 13:41:08,652 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 500 - 4.4170s
+2025-08-15 09:25:13,042 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 09:25:13,043 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 09:25:13,315 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 09:25:13,316 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 11:47:30,983 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 11:47:30,985 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 11:47:31,291 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 11:47:31,298 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 12:09:08,260 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 12:09:08,262 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 12:09:08,682 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 12:09:08,683 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk

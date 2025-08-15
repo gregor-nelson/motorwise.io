@@ -2433,3 +2433,18 @@
 2025-08-15 08:01:06,143 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 145.224.88.123 - Status: 200 - Process Time: 0.0310s
 2025-08-15 08:01:45,444 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
 2025-08-15 08:01:45,449 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 145.224.88.123 - Status: 200 - Process Time: 0.0055s
+2025-08-15 09:25:13,665 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-15 09:25:13,670 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-15 09:25:13,671 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-15 09:25:13,672 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-15 09:25:13,672 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-08-15 11:47:31,746 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-15 11:47:31,753 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-15 11:47:31,754 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-15 11:47:31,755 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-15 11:47:31,755 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-08-15 12:09:08,889 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-15 12:09:08,897 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-15 12:09:08,899 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-15 12:09:08,899 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-15 12:09:08,899 - bulletins_api - INFO - API started successfully with 2 bulletin records

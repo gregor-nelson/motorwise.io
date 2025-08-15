@@ -18,6 +18,7 @@
     "@react-three/fiber": "^9.3.0",
     "@stripe/react-stripe-js": "^3.3.0",
     "@stripe/stripe-js": "^5.10.0",
+    "cannon-es": "^0.20.0",
     "pdfmake": "^0.2.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

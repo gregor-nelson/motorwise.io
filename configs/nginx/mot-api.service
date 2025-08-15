@@ -1,0 +1,19 @@
+[Unit]
+Description=MOT History API Service
+After=network.target
+
+[Service]
+User=debian
+Group=debian
+WorkingDirectory=/home/debian/Git/MotCheck-UK/backend/mot_api
+ExecStart=/home/debian/.pyenv/shims/python main.py
+# Restart on failure but with a 5-second delay in between
+Restart=on-failure
+RestartSec=5
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mot-api
+
+[Install]
+WantedBy=multi-user.target

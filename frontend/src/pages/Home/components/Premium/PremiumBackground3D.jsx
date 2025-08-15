@@ -18,17 +18,16 @@ const PremiumBackground3D = () => {
       0.1,
       200
     );
-    // Isometric gaming style camera for better depth perception
-    const cameraOffset = new THREE.Vector3(0, 15, 25); // Lower height, further back
-    const cameraTarget = new THREE.Vector3(0, 0, 5);   // Look slightly forward for isometric angle
-    camera.position.set(0, 15, 25); // Isometric position
-    camera.lookAt(0, 0, 5); // Creates ~30-45 degree viewing angle
+    const cameraOffset = new THREE.Vector3(0, 15, 25);
+    const cameraTarget = new THREE.Vector3(0, 0, 5);
+    camera.position.set(0, 15, 25);
+    camera.lookAt(0, 0, 5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // Completely transparent background
-    renderer.shadowMap.enabled = false; // Disable shadows for subtlety
+    renderer.setClearColor(0x000000, 0);
+    renderer.shadowMap.enabled = false;
     Object.assign(renderer.domElement.style, {
       position: 'absolute',
       top: '0px',
@@ -39,36 +38,42 @@ const PremiumBackground3D = () => {
     });
     containerRef.current.appendChild(renderer.domElement);
 
-    // Subtle ambient lighting only
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
     // --- Physics World Setup -------------------------------------------------
     const world = new CANNON.World();
-    world.gravity.set(0, 0, -9.82);
+    world.gravity.set(0, -9.82, 0);
     world.broadphase = new CANNON.NaiveBroadphase();
     world.allowSleep = true;
+    
+    const defaultMaterial = new CANNON.Material('default');
+    const contactMaterial = new CANNON.ContactMaterial(defaultMaterial, defaultMaterial, {
+      friction: 0.4,
+      restitution: 0.3,
+    });
+    world.addContactMaterial(contactMaterial);
+    world.defaultContactMaterial = contactMaterial;
 
     // --- Ground Plane ---------------------------------------------------------
     const groundShape = new CANNON.Plane();
-    const groundBody = new CANNON.Body({ mass: 0 });
+    const groundBody = new CANNON.Body({ mass: 0, material: defaultMaterial });
     groundBody.addShape(groundShape);
     groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+    groundBody.position.set(0, 0, 0);
     world.addBody(groundBody);
 
-    // --- Subtle Grid System ----------------------------------------------------------
+    // --- Grid System ----------------------------------------------------------
     const createSubtleGrid = () => {
       const gridGroup = new THREE.Group();
       
-      // Create a larger subtle grid to accommodate vehicle movement
-      const gridSize = 50; // Fixed size that works well with static camera
+      const gridSize = 50;
       const gridDivisions = 50;
       const gridHelper = new THREE.GridHelper(gridSize, gridDivisions, 0x888888, 0x888888);
       gridHelper.material.transparent = true;
-      gridHelper.material.opacity = 0.1; // Very subtle
+      gridHelper.material.opacity = 0.1;
       gridGroup.add(gridHelper);
       
-      // Optional: Add a few reference lines that are slightly more visible
       const centerLineGeometry = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(-gridSize/2, 0, 0),
         new THREE.Vector3(gridSize/2, 0, 0)
@@ -95,20 +100,28 @@ const PremiumBackground3D = () => {
       forward: false,
       backward: false,
       left: false,
-      right: false
+      right: false,
+      brake: false // Added explicit brake control
     };
 
-    // Vehicle Physics State
+    // --- Enhanced Vehicle Physics State (built on original) -----------------
     const vehiclePhysics = {
-      position: new THREE.Vector3(0, 0.5, 0), // Start at center
+      position: new THREE.Vector3(0, 0.5, 0),
       velocity: new THREE.Vector3(0, 0, 0),
       rotation: 0, // Y-axis rotation
       speed: 0,
-      maxSpeed: 0.4, // Slightly faster for better movement
-      acceleration: 0.015,
+      maxSpeed: 0.4, // Back to original working speed
+      acceleration: 0.015, // Original working acceleration
       deceleration: 0.008,
-      turnSpeed: 0.08,
-      friction: 0.92
+      turnSpeed: 0.08, // Original working turn speed
+      friction: 0.92, // Original working friction
+      
+      // Enhanced properties for effects
+      angularVelocity: 0, // Track turning for banking effects
+      slipAngle: 0, // Angle between velocity direction and car orientation
+      driftState: false, // Whether car is sliding/drifting
+      
+      body: null // Physics body for collisions
     };
 
     // Keyboard Event Listeners
@@ -129,6 +142,10 @@ const PremiumBackground3D = () => {
         case 'KeyD':
         case 'ArrowRight':
           controls.right = true;
+          break;
+        case 'Space':
+          controls.brake = true;
+          event.preventDefault();
           break;
       }
     };
@@ -151,15 +168,23 @@ const PremiumBackground3D = () => {
         case 'ArrowRight':
           controls.right = false;
           break;
+        case 'Space':
+          controls.brake = false;
+          event.preventDefault();
+          break;
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
 
-    // --- Fixed Vehicle Boundaries ----------------------------------------
-    // Vehicle movement area: -20 to +20 horizontal, -15 to +15 vertical
+    // --- Enhanced Vehicle Physics Functions (simplified) --------------------
 
+    // Simple sliding detection based on turn rate vs speed
+    const detectSliding = (turnRate, speed) => {
+      const maxSafeTurnRate = 0.06;
+      return Math.abs(turnRate) > maxSafeTurnRate && Math.abs(speed) > 0.2;
+    };
 
     // --- GLTF Vehicle Loading -------------------------------------------------
     const loadVehicle = async () => {
@@ -169,47 +194,33 @@ const PremiumBackground3D = () => {
         const gltf = await loader.loadAsync('/scene.gltf');
         const vehicleModel = gltf.scene;
         
-        // Scale the model bigger - make it more prominent
-        // GLTF model is ~142 units wide, scaling to make it larger and more visible
         vehicleModel.scale.setScalar(0.025);
+        vehicleModel.rotation.set(0, 0, 0);
         
-        // Fix orientation - rotate to align with ground plane and forward direction
-        vehicleModel.rotation.x = 0;           // Keep model upright (no X rotation)
-        vehicleModel.rotation.y = 0;           // Face forward (no Y rotation)
-        vehicleModel.rotation.z = 0;           // No Z rotation needed
-        
-        // Calculate model's bounding box to find center of geometry (CG)
         const box = new THREE.Box3().setFromObject(vehicleModel);
         const center = box.getCenter(new THREE.Vector3());
-        
-        // Offset the model so its center is at the origin (0,0,0)
-        // This makes the model rotate around its center instead of its original origin
         vehicleModel.position.set(-center.x, -center.y, -center.z);
         
-        // Preserve original model colors but add transparency for aesthetic consistency
         vehicleModel.traverse((child) => {
           if (child.isMesh && child.material) {
-            // Keep original material but add transparency
             if (Array.isArray(child.material)) {
               child.material.forEach(mat => {
                 mat.transparent = true;
-                mat.opacity = 0.8; // Slightly less transparent to show colors better
+                mat.opacity = 0.8;
               });
             } else {
               child.material.transparent = true;
-              child.material.opacity = 0.8; // Slightly less transparent to show colors better
+              child.material.opacity = 0.8;
             }
           }
         });
         
-        // Create a wrapper group for dynamic rotations (banking, steering)
         const vehicle = new THREE.Group();
         vehicle.add(vehicleModel);
         
-        return { vehicle, wheels: [] }; // No wheel animation for now
+        return { vehicle, wheels: [] };
       } catch (error) {
         console.error('Error loading GLTF model:', error);
-        // Fallback to simple box if model fails to load
         return createFallbackVehicle();
       }
     };
@@ -228,56 +239,351 @@ const PremiumBackground3D = () => {
       return { vehicle, wheels: [] };
     };
 
-    // Initialize grid and load vehicle
     const { gridGroup } = createSubtleGrid();
 
-    // --- Physics Objects System -----------------------------------------------
-    const createPhysicsBox = (position, size, mass = 50) => {
-      // Visual mesh
+    // --- Physics Objects System with Material Types -------------------------
+    const createPhysicsBox = (position, size, mass = 50, materialType = "normal") => {
+      // Material properties for Easy Win #4
+      const materials = {
+        soft: { color: 0x88ff88, hardness: 0.5, opacity: 0.5 },    // Light green, soft
+        normal: { color: 0x888888, hardness: 1.0, opacity: 0.6 },  // Gray, normal  
+        heavy: { color: 0xff8888, hardness: 2.0, opacity: 0.8 }    // Light red, hard
+      };
+      
+      const material = materials[materialType] || materials.normal;
+      
+      // Visual mesh with material-based appearance
       const geometry = new THREE.BoxGeometry(size.x * 2, size.y * 2, size.z * 2);
-      const material = new THREE.MeshBasicMaterial({
-        color: 0x888888,
+      const meshMaterial = new THREE.MeshBasicMaterial({
+        color: material.color,
         transparent: true,
-        opacity: 0.6
+        opacity: material.opacity
       });
-      const mesh = new THREE.Mesh(geometry, material);
+      const mesh = new THREE.Mesh(geometry, meshMaterial);
       scene.add(mesh);
 
-      // Physics body
+      // Physics body with material hardness
       const shape = new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z));
-      const body = new CANNON.Body({ mass });
+      const physicsMaterial = new CANNON.Material('boxMaterial');
+      physicsMaterial.hardness = material.hardness; // Store hardness for collision detection
+      
+      const body = new CANNON.Body({ mass: mass * material.hardness, material: physicsMaterial });
       body.addShape(shape);
-      body.position.set(position.x, position.y, position.z + size.z);
+      body.position.set(position.x, position.y + size.y, position.z);
       world.addBody(body);
+      
+      // Enhanced collision feedback with intensity-based effects
+      body.addEventListener('collide', (e) => {
+        const relativeVel = new CANNON.Vec3();
+        if (e.target === vehicleBody || e.target.target === vehicleBody) {
+          // Calculate intensity for visual feedback
+          const speed = e.contact ? 1.0 : 0.5; // Simplified for now
+          const intensity = Math.min(1.0, speed / 2.0);
+          
+          // Flash intensity based on collision severity
+          const flashColors = [
+            0xffff88, // Light flash for weak impacts
+            0xff8844, // Orange for medium impacts  
+            0xff4444  // Red for strong impacts
+          ];
+          
+          const colorIndex = Math.floor(intensity * 2.99); // 0-2 index
+          meshMaterial.color.setHex(flashColors[colorIndex]);
+          
+          // Flash duration based on intensity
+          const flashDuration = 100 + intensity * 200; // 100-300ms
+          
+          setTimeout(() => {
+            meshMaterial.color.setHex(material.color); // Back to original
+          }, flashDuration);
+        }
+      });
 
-      return { mesh, body };
+      return { mesh, body, originalColor: material.color, materialType };
     };
 
-    // Create some test physics objects
+    // Create test physics objects with different material types
     const physicsObjects = [];
-    physicsObjects.push(createPhysicsBox(new THREE.Vector3(8, 5, 0), new THREE.Vector3(1, 1, 1)));
-    physicsObjects.push(createPhysicsBox(new THREE.Vector3(-6, 8, 0), new THREE.Vector3(0.8, 0.8, 0.8)));
-    physicsObjects.push(createPhysicsBox(new THREE.Vector3(12, -4, 0), new THREE.Vector3(1.2, 0.6, 0.8)));
+    // Mix of different materials for testing Easy Win #4
+    physicsObjects.push(createPhysicsBox(new THREE.Vector3(8, 3, 5), new THREE.Vector3(1, 1, 1), 50, "normal"));
+    physicsObjects.push(createPhysicsBox(new THREE.Vector3(-6, 4, 8), new THREE.Vector3(0.8, 0.8, 0.8), 30, "soft")); // Soft/light cube
+    physicsObjects.push(createPhysicsBox(new THREE.Vector3(12, 2, -4), new THREE.Vector3(1.2, 0.6, 0.8), 80, "heavy")); // Heavy cube
+    physicsObjects.push(createPhysicsBox(new THREE.Vector3(-8, 3, -6), new THREE.Vector3(0.9, 0.9, 0.9), 45, "normal"));
+    physicsObjects.push(createPhysicsBox(new THREE.Vector3(4, 2, -8), new THREE.Vector3(0.7, 1.2, 0.7), 25, "soft")); // Another soft one
     
-    // Vehicle will be loaded asynchronously
+    const createWall = (position, size) => {
+      const shape = new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z));
+      const body = new CANNON.Body({ mass: 0, material: defaultMaterial });
+      body.addShape(shape);
+      body.position.set(position.x, position.y, position.z);
+      world.addBody(body);
+      return body;
+    };
+
+    const wallHeight = 5;
+    const wallThickness = 1;
+    const playAreaSize = 25;
+    
+    createWall(new THREE.Vector3(-playAreaSize, wallHeight, 0), new THREE.Vector3(wallThickness, wallHeight, playAreaSize));
+    createWall(new THREE.Vector3(playAreaSize, wallHeight, 0), new THREE.Vector3(wallThickness, wallHeight, playAreaSize));
+    createWall(new THREE.Vector3(0, wallHeight, -playAreaSize), new THREE.Vector3(playAreaSize, wallHeight, wallThickness));
+    createWall(new THREE.Vector3(0, wallHeight, playAreaSize), new THREE.Vector3(playAreaSize, wallHeight, wallThickness));
+    
+    // --- Vehicle Physics Body Creation ----------------------------------------
+    const createVehiclePhysicsBody = () => {
+      const vehicleSize = new CANNON.Vec3(1, 0.3, 2);
+      const vehicleShape = new CANNON.Box(vehicleSize);
+      const vehicleBody = new CANNON.Body({ 
+        mass: 100, // Back to original working mass
+        material: defaultMaterial 
+      });
+      vehicleBody.addShape(vehicleShape);
+      vehicleBody.position.set(0, 0.8, 0);
+      
+      vehicleBody.fixedRotation = false;
+      vehicleBody.updateMassProperties();
+      
+      world.addBody(vehicleBody);
+      vehiclePhysics.body = vehicleBody;
+      
+      return vehicleBody;
+    };
+    
+    const vehicleBody = createVehiclePhysicsBody();
+    
+    // Enhanced collision detection with easy wins
+    const collisionSounds = {
+      lastCollisionTime: 0,
+      lastHitObject: null, // Smart cooldown - track specific object
+      minInterval: 100
+    };
+    
+    vehicleBody.addEventListener('collide', (e) => {
+      const now = Date.now();
+      const contact = e.contact;
+      const other = e.target === vehicleBody ? e.contact.bi === vehicleBody ? e.contact.bj : e.contact.bi : e.contact.bj;
+      
+      // Easy Win #5: Smart Collision Cooldown - prevent spam with same object
+      if (collisionSounds.lastHitObject === other && now - collisionSounds.lastCollisionTime < collisionSounds.minInterval) {
+        return;
+      }
+      
+      const relativeVelocity = new CANNON.Vec3();
+      vehicleBody.velocity.vsub(other.velocity, relativeVelocity);
+      const collisionSpeed = relativeVelocity.length();
+      
+      if (collisionSpeed > 0.2) { // Lowered threshold to catch lighter impacts
+        collisionSounds.lastCollisionTime = now;
+        collisionSounds.lastHitObject = other;
+        
+        // Easy Win #2: Collision Intensity Scaling (0-100%)
+        let intensity = Math.min(1.0, collisionSpeed / 2.0); // Scale 0-2 speed to 0-100%
+        if (intensity < 0.1) intensity = 0.1; // Minimum 10% for any collision
+        
+        // Easy Win #1: Impact Angle Detection
+        const vehicleForward = new THREE.Vector3(
+          Math.sin(vehiclePhysics.rotation), 
+          0, 
+          -Math.cos(vehiclePhysics.rotation)
+        );
+        
+        const collisionNormal = new THREE.Vector3(
+          contact.ni.x,
+          contact.ni.y, 
+          contact.ni.z
+        );
+        
+        // Calculate angle between vehicle direction and collision normal
+        const impactAngle = Math.abs(vehicleForward.dot(collisionNormal));
+        const isHeadOn = impactAngle > 0.7;  // >~45 degrees = head-on
+        const isGlancing = impactAngle < 0.3; // <~17 degrees = glancing
+        
+        // Easy Win #3: Simple Vehicle Part Detection
+        const contactPoint = contact.bi === vehicleBody ? contact.ri : contact.rj;
+        const relativeContact = new THREE.Vector3(contactPoint.x, contactPoint.y, contactPoint.z);
+        
+        // Transform contact point to vehicle local coordinates
+        const vehicleMatrix = new THREE.Matrix4().makeRotationY(vehiclePhysics.rotation);
+        relativeContact.applyMatrix4(vehicleMatrix.invert());
+        
+        let impactLocation = "center";
+        if (relativeContact.z > 0.8) impactLocation = "front";
+        else if (relativeContact.z < -0.8) impactLocation = "rear"; 
+        else if (relativeContact.x > 0.5) impactLocation = "right";
+        else if (relativeContact.x < -0.5) impactLocation = "left";
+        
+        // Easy Win #4: Material-Based Cube Types (simple hardness)
+        const cubeHardness = other.material?.hardness || 1.0; // Default normal hardness
+        
+        // Scale effects based on all factors
+        let forceMultiplier = intensity;
+        if (isHeadOn) forceMultiplier *= 1.5;      // Head-on hits harder
+        if (isGlancing) forceMultiplier *= 0.6;    // Glancing blows softer
+        if (impactLocation === "front") forceMultiplier *= 1.3; // Front impacts more dramatic
+        if (impactLocation === "rear") forceMultiplier *= 0.7;  // Rear impacts gentler
+        
+        if (other.mass > 0) {
+          const pushForce = relativeVelocity.clone();
+          pushForce.normalize();
+          pushForce.scale(collisionSpeed * 100 * forceMultiplier / cubeHardness); // Harder materials move less
+          other.applyImpulse(pushForce, other.position);
+          
+          // Add spin based on impact location and type
+          let spinIntensity = intensity * 15;
+          if (impactLocation === "front" && !isHeadOn) spinIntensity *= 1.5; // Front corner hits spin more
+          if (isGlancing) spinIntensity *= 2.0; // Glancing blows create more spin
+          
+          const torque = new CANNON.Vec3(
+            (Math.random() - 0.5) * spinIntensity,
+            (Math.random() - 0.5) * spinIntensity,
+            (Math.random() - 0.5) * spinIntensity
+          );
+          other.applyTorque(torque);
+        }
+        
+        // Enhanced vehicle collision response
+        const recoilForce = relativeVelocity.clone();
+        recoilForce.normalize();
+        recoilForce.scale(-collisionSpeed * other.mass * forceMultiplier * 0.1);
+        vehicleBody.applyImpulse(recoilForce, vehicleBody.position);
+        
+        // Vehicle speed reduction based on impact type
+        let speedReduction = 0.7;
+        if (isHeadOn) speedReduction = 0.4;        // Head-on crashes stop you more
+        if (isGlancing) speedReduction = 0.85;     // Glancing blows slow you less
+        if (impactLocation === "rear") speedReduction = 0.8; // Rear hits less dramatic
+        speedReduction = speedReduction + (1.0 - speedReduction) * (1.0 - intensity); // Scale by intensity
+        
+        vehiclePhysics.speed *= speedReduction;
+        
+        // Enhanced console feedback
+        const impactType = isHeadOn ? "HEAD-ON" : isGlancing ? "GLANCING" : "SIDE";
+        console.log(`${impactType} collision at ${impactLocation}! Speed: ${collisionSpeed.toFixed(2)}, Intensity: ${(intensity*100).toFixed(0)}%, Hardness: ${cubeHardness}x`);
+      }
+    });
+    
     let vehicle = null;
     let wheels = [];
     
-    // Load the GLTF vehicle model
     loadVehicle().then(({ vehicle: loadedVehicle, wheels: loadedWheels }) => {
       vehicle = loadedVehicle;
       wheels = loadedWheels;
-      
-      // Set initial vehicle position
       vehicle.position.copy(vehiclePhysics.position);
       scene.add(vehicle);
     });
-    
-    // Vehicle will be loaded and ready shortly
 
-    // --- Vehicle Physics & Animation -----------------------------------------
+    // --- Enhanced Vehicle Physics (built on original working system) --------
+    const updateVehiclePhysics = (deltaTime) => {
+      const vp = vehiclePhysics;
+      
+      // === ORIGINAL WORKING MOVEMENT SYSTEM (RESTORED) ===
+      // Handle user input and update vehicle physics (original system)
+      if (controls.forward) {
+        // Enhanced acceleration curve - starts slow, builds up
+        const accelMultiplier = 1.0 + (1.0 - vp.speed / vp.maxSpeed) * 0.5; // More torque at low speeds
+        vp.speed = Math.min(vp.speed + vp.acceleration * accelMultiplier, vp.maxSpeed);
+      } else if (controls.backward) {
+        vp.speed = Math.max(vp.speed - vp.acceleration, -vp.maxSpeed * 0.5);
+      } else {
+        // Enhanced friction - engine braking effect
+        const frictionAmount = controls.brake ? 0.85 : vp.friction; // More aggressive deceleration when braking
+        vp.speed *= frictionAmount;
+        if (Math.abs(vp.speed) < 0.001) vp.speed = 0;
+      }
 
-    // Resize handler
+      // Enhanced steering with speed dependency
+      if (Math.abs(vp.speed) > 0.01) {
+        const speedFactor = Math.max(0.4, 1.0 - Math.abs(vp.speed) * 1.5); // Harder to turn at speed
+        const turnRate = vp.turnSpeed * 1.2 * speedFactor;
+        
+        if (controls.left) {
+          vp.rotation += turnRate;
+          vp.angularVelocity = turnRate; // Track angular velocity for effects
+        }
+        if (controls.right) {
+          vp.rotation -= turnRate;
+          vp.angularVelocity = -turnRate; // Track angular velocity for effects
+        }
+        
+        // Sliding mechanics - if turning too fast for current speed
+        const maxTurnSpeed = 0.06; // Maximum safe turn speed
+        if (Math.abs(vp.angularVelocity) > maxTurnSpeed && Math.abs(vp.speed) > 0.2) {
+          vp.driftState = true;
+          // Reduce effective turn rate when sliding
+          const slideFactor = 0.7;
+          vp.rotation -= vp.angularVelocity * (1 - slideFactor);
+          
+          // Add lateral slide to velocity
+          const slideAmount = (Math.abs(vp.angularVelocity) - maxTurnSpeed) * Math.abs(vp.speed) * 0.3;
+          const lateralDir = Math.cos(vp.rotation);
+          const lateralDirZ = Math.sin(vp.rotation);
+          
+          // Add slide momentum
+          vp.velocity.x += lateralDir * slideAmount * Math.sign(vp.angularVelocity);
+          vp.velocity.z += lateralDirZ * slideAmount * Math.sign(vp.angularVelocity);
+        } else {
+          vp.driftState = false;
+        }
+      } else {
+        vp.angularVelocity = 0;
+        vp.driftState = false;
+      }
+
+      // === ORIGINAL VELOCITY CALCULATION (RESTORED) ===
+      // Update velocity based on speed and rotation - adjusted for vehicle orientation
+      vp.velocity.x = Math.cos(vp.rotation) * vp.speed;
+      vp.velocity.z = -Math.sin(vp.rotation) * vp.speed;
+
+      // Enhanced momentum effects - preserve slide momentum
+      if (vp.driftState) {
+        // Gradual momentum decay during slides
+        vp.velocity.multiplyScalar(0.98);
+      } else {
+        // Normal momentum decay
+        vp.velocity.multiplyScalar(0.995);
+      }
+
+      // === ORIGINAL POSITION UPDATE (RESTORED) ===
+      // Update position
+      vp.position.add(vp.velocity);
+
+      // === ENHANCED BOUNDARY HANDLING ===
+      // Simple boundaries with enhanced collision response
+      if (vp.position.x < -20) {
+        vp.position.x = -20;
+        vp.velocity.x = 0;
+        vp.speed *= 0.7; // Lose speed in collision
+      } else if (vp.position.x > 20) {
+        vp.position.x = 20;
+        vp.velocity.x = 0;
+        vp.speed *= 0.7;
+      }
+      
+      if (vp.position.z < -15) {
+        vp.position.z = -15;
+        vp.velocity.z = 0;
+        vp.speed *= 0.7;
+      } else if (vp.position.z > 15) {
+        vp.position.z = 15;
+        vp.velocity.z = 0;
+        vp.speed *= 0.7;
+      }
+      
+      // === PHYSICS TRACKING FOR EFFECTS ===
+      // Calculate slip angle for visual effects
+      if (Math.abs(vp.speed) > 0.05) {
+        const velocityAngle = Math.atan2(vp.velocity.x, -vp.velocity.z);
+        vp.slipAngle = ((velocityAngle - vp.rotation) * 180) / Math.PI;
+        
+        // Normalize slip angle to [-180, 180]
+        while (vp.slipAngle > 180) vp.slipAngle -= 360;
+        while (vp.slipAngle < -180) vp.slipAngle += 360;
+      } else {
+        vp.slipAngle = 0;
+      }
+    };
+
+    // --- Resize handler -------------------------------------------------------
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -286,7 +592,7 @@ const PremiumBackground3D = () => {
 
     window.addEventListener('resize', onResize);
 
-    // --- User-Controlled Animation Loop -------------------------------------------------------
+    // --- Enhanced Animation Loop ----------------------------------------------
     const clock = new THREE.Clock();
 
     const animate = () => {
@@ -295,118 +601,113 @@ const PremiumBackground3D = () => {
 
       const deltaTime = clock.getDelta();
       
-      // Update physics world (capped at 30fps for stability)
+      // Update physics world
       world.step(Math.min(deltaTime, 1/30));
       
-      // Handle user input and update vehicle physics
-      if (controls.forward) {
-        vehiclePhysics.speed = Math.min(vehiclePhysics.speed + vehiclePhysics.acceleration, vehiclePhysics.maxSpeed);
-      } else if (controls.backward) {
-        vehiclePhysics.speed = Math.max(vehiclePhysics.speed - vehiclePhysics.acceleration, -vehiclePhysics.maxSpeed * 0.5);
-      } else {
-        // Apply friction when no input
-        vehiclePhysics.speed *= vehiclePhysics.friction;
-        if (Math.abs(vehiclePhysics.speed) < 0.001) vehiclePhysics.speed = 0;
-      }
-
-      // Handle steering (only when moving) - slower, more realistic turning
-      if (Math.abs(vehiclePhysics.speed) > 0.01) {
-        if (controls.left) {
-          vehiclePhysics.rotation += vehiclePhysics.turnSpeed * 1.2; // Slower turning
-        }
-        if (controls.right) {
-          vehiclePhysics.rotation -= vehiclePhysics.turnSpeed * 1.2; // Slower turning
-        }
-      }
-
-      // Update velocity based on speed and rotation - adjusted for vehicle orientation
-      vehiclePhysics.velocity.x = Math.cos(vehiclePhysics.rotation) * vehiclePhysics.speed;
-      vehiclePhysics.velocity.z = -Math.sin(vehiclePhysics.rotation) * vehiclePhysics.speed;
-
-      // Update position
-      vehiclePhysics.position.add(vehiclePhysics.velocity);
-
-      // Simple boundaries - only stop at screen edges, no speed reduction
-      const vehicleSize = 1;
+      // Enhanced vehicle physics update (built on original working system)
+      updateVehiclePhysics();
       
-      // Keep vehicle within reasonable bounds without speed penalties
-      if (vehiclePhysics.position.x < -20) {
-        vehiclePhysics.position.x = -20;
-        vehiclePhysics.velocity.x = 0;
-      } else if (vehiclePhysics.position.x > 20) {
-        vehiclePhysics.position.x = 20;
-        vehiclePhysics.velocity.x = 0;
-      }
-      
-      if (vehiclePhysics.position.z < -15) {
-        vehiclePhysics.position.z = -15;
-        vehiclePhysics.velocity.z = 0;
-      } else if (vehiclePhysics.position.z > 15) {
-        vehiclePhysics.position.z = 15;
-        vehiclePhysics.velocity.z = 0;
+      // Sync physics body with enhanced movement (restored original scaling)
+      if (vehiclePhysics.body) {
+        vehiclePhysics.body.position.set(
+          vehiclePhysics.position.x,
+          vehiclePhysics.position.y,
+          vehiclePhysics.position.z
+        );
+        vehiclePhysics.body.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), vehiclePhysics.rotation);
+        
+        // Set velocity for realistic collision responses (restored original scaling)
+        vehiclePhysics.body.velocity.set(
+          vehiclePhysics.velocity.x * 10, // Back to original scaling
+          0,
+          vehiclePhysics.velocity.z * 10
+        );
       }
 
-      // Update vehicle visual position and rotation (only if loaded)
+      // Enhanced vehicle visual updates with collision feedback
       if (vehicle) {
         vehicle.position.copy(vehiclePhysics.position);
         vehicle.rotation.y = vehiclePhysics.rotation;
 
-        // Banking effect for turns
-        const bankAmount = 0.2;
-        if (controls.left && Math.abs(vehiclePhysics.speed) > 0.01) {
-          vehicle.rotation.z = THREE.MathUtils.lerp(vehicle.rotation.z, bankAmount, 0.1);
-        } else if (controls.right && Math.abs(vehiclePhysics.speed) > 0.01) {
-          vehicle.rotation.z = THREE.MathUtils.lerp(vehicle.rotation.z, -bankAmount, 0.1);
-        } else {
-          vehicle.rotation.z = THREE.MathUtils.lerp(vehicle.rotation.z, 0, 0.1);
+        // Enhanced banking and weight transfer effects
+        const currentSpeed = vehiclePhysics.speed;
+        const angularVel = vehiclePhysics.angularVelocity;
+        
+        // Banking based on angular velocity and speed (enhanced)
+        const bankingAmount = Math.min(0.4, angularVel * currentSpeed * 5);
+        vehicle.rotation.z = THREE.MathUtils.lerp(vehicle.rotation.z, -bankingAmount, 0.15);
+        
+        // Pitch effects from acceleration/braking (enhanced)
+        const forwardAccel = (controls.forward ? 1 : 0) - (controls.backward ? 1 : 0);
+        let pitchAmount = forwardAccel * currentSpeed * 0.1;
+        
+        // Enhanced braking pitch when using space bar
+        if (controls.brake) {
+          pitchAmount = currentSpeed * 0.15; // Nose dive effect
+        }
+        
+        vehicle.rotation.x = THREE.MathUtils.lerp(vehicle.rotation.x, pitchAmount, 0.1);
+        
+        // Enhanced drift/slide indicators
+        if (vehiclePhysics.driftState) {
+          console.log(`DRIFTING! Slip angle: ${vehiclePhysics.slipAngle.toFixed(1)}°`);
         }
       }
 
-      // Sync physics objects with their visual representations
+      // Sync physics objects
       physicsObjects.forEach(obj => {
         obj.mesh.position.copy(obj.body.position);
         obj.mesh.quaternion.copy(obj.body.quaternion);
+        
+        if (obj.body.position.y < -10) {
+          obj.body.position.set(
+            (Math.random() - 0.5) * 20,
+            5,
+            (Math.random() - 0.5) * 20
+          );
+          obj.body.velocity.set(0, 0, 0);
+          obj.body.angularVelocity.set(0, 0, 0);
+        }
       });
 
-      // Enhanced static camera with dynamic effects for better depth perception
+      // Enhanced camera effects
       if (vehicle) {
         const vehiclePos = vehiclePhysics.position;
-        const speed = Math.abs(vehiclePhysics.speed);
+        const speed = vehiclePhysics.speed;
+        const isSliding = vehiclePhysics.driftState;
         
-        // Keep camera in fixed isometric position but add subtle dynamic effects
-        const baseHeight = 15;  // Lower height for isometric view
-        const baseDistance = 25; // Further back to maintain area coverage
+        const baseHeight = 15;
+        const baseDistance = 25;
         
-        // Add subtle camera shake/movement for speed sensation without following
-        const speedShake = speed * 0.5; // Very subtle shake when moving fast
-        const shakeX = (Math.random() - 0.5) * speedShake;
-        const shakeY = (Math.random() - 0.5) * speedShake * 0.3;
+        // Enhanced camera shake based on driving dynamics
+        const speedShake = speed * 0.8;
+        const slideShake = isSliding ? 1.5 : 0;
+        const totalShake = speedShake + slideShake;
         
-        // Add slight banking to camera during turns for cinematic effect
+        const shakeX = (Math.random() - 0.5) * totalShake;
+        const shakeY = (Math.random() - 0.5) * totalShake * 0.3;
+        
+        // Enhanced banking during turns
         let bankingOffset = 0;
-        if (controls.left && speed > 0.01) {
-          bankingOffset = -speed * 1.5; // Camera banks slightly during left turns
-        } else if (controls.right && speed > 0.01) {
-          bankingOffset = speed * 1.5;  // Camera banks slightly during right turns
+        if ((controls.left || controls.right) && speed > 0.01) {
+          bankingOffset = vehiclePhysics.angularVelocity * speed * 3;
+          if (controls.left) bankingOffset = -Math.abs(bankingOffset);
+          if (controls.right) bankingOffset = Math.abs(bankingOffset);
         }
         
-        // Calculate camera position with subtle effects
         const targetCameraPos = new THREE.Vector3(
           shakeX + bankingOffset,
           baseHeight + shakeY,
           baseDistance
         );
         
-        // Very gentle interpolation for smooth effects
         const lerpFactor = 0.1;
         camera.position.lerp(targetCameraPos, lerpFactor);
         
-        // Camera looks at isometric target point with slight vehicle-based offset for depth
-        const lookAtX = vehiclePos.x * 0.1; // Very subtle influence from vehicle position
-        const lookAtZ = 5 + vehiclePos.z * 0.1; // Look forward for isometric angle + slight vehicle influence
+        const lookAtX = vehiclePos.x * 0.1;
+        const lookAtZ = 5 + vehiclePos.z * 0.1;
         const targetLookAt = new THREE.Vector3(lookAtX, 0, lookAtZ);
         
-        // Smooth camera target interpolation
         cameraTarget.lerp(targetLookAt, lerpFactor * 0.5);
         camera.lookAt(cameraTarget);
       }
@@ -416,17 +717,14 @@ const PremiumBackground3D = () => {
     
     animate();
 
-    // --- Cleanup ---------------------------------------------------------
+    // --- Cleanup -------------------------------------------------------------
     return () => {
-      // Stop animation
       if (animate._raf) cancelAnimationFrame(animate._raf);
       
-      // Remove event listeners
       window.removeEventListener('resize', onResize);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
 
-      // Dispose geometries and materials
       scene.traverse((child) => {
         if (child.geometry) child.geometry.dispose();
         if (child.material) {
@@ -435,15 +733,13 @@ const PremiumBackground3D = () => {
         }
       });
 
-      // Dispose renderer
       renderer.dispose();
 
-      // Remove canvas from DOM
       if (containerRef.current && renderer.domElement.parentElement === containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
     };
-  }, []); // run once
+  }, []);
 
   return (
     <div

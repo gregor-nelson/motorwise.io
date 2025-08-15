@@ -2671,3 +2671,5 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-08-15 12:43:23,204 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
 2025-08-15 12:43:23,820 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-08-15 12:43:23,821 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-15 13:22:06,362 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-15 13:22:06,364 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk

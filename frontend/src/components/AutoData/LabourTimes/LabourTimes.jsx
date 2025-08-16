@@ -24,8 +24,7 @@ import {
   SharedButton
 } from '../shared/CommonElements';
 
-// Import custom tooltip components
-import { HeadingWithTooltip } from '../../../styles/tooltip';
+// Import custom tooltip components - removed HeadingWithTooltip as using SharedHeader
 
 // Import labour-specific styled components (for specific repair display)
 import {
@@ -468,51 +467,7 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
   );
 });
 
-// Enhanced CleanAccordion component that calculates filtered item count
-const CleanAccordion = memo(({ title, children, expanded, onChange, id, searchTerm, complexityFilter }) => {
-  const itemCount = useMemo(() => {
-    try {
-      const specTable = React.Children.toArray(children)
-        .find(child => child && child.type === CleanSpecTable);
-      
-      if (specTable && specTable.props && specTable.props.items) {
-        const items = specTable.props.items;
-        let filteredCount = 0;
-        
-        items.forEach((item) => {
-          const operations = parseRepairOperations(item.label);
-          const complexity = getOperationComplexity(item.value);
-          
-          const matchesSearch = !searchTerm || 
-            operations.some(op => op.toLowerCase().includes(searchTerm.toLowerCase()));
-          const matchesComplexity = complexityFilter === 'all' || complexity === complexityFilter;
-          
-          if (matchesSearch && matchesComplexity) {
-            filteredCount++;
-          }
-        });
-        
-        return filteredCount;
-      }
-      return 0;
-    } catch (e) {
-      console.warn('Error counting items:', e);
-      return 0;
-    }
-  }, [children, searchTerm, complexityFilter]);
-
-  return (
-    <SharedAccordion
-      title={title}
-      itemCount={itemCount}
-      expanded={expanded}
-      onToggle={onChange}
-      id={id}
-    >
-      {children}
-    </SharedAccordion>
-  );
-});
+// CleanAccordion removed - now using SharedAccordion directly
 
 
 
@@ -609,7 +564,7 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
   }, []);
 
   // Handle tab change
-  const handleTabChange = useCallback((event, newValue) => {
+  const handleTabChange = useCallback((newValue) => {
     setTabValue(newValue);
   }, []);
 
@@ -622,12 +577,12 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
   }, []);
 
   // Handle search and filtering
-  const handleSearchChange = useCallback((event) => {
-    setSearchTerm(event.target.value);
+  const handleSearchChange = useCallback((value) => {
+    setSearchTerm(value);
   }, []);
 
-  const handleComplexityFilter = useCallback((complexity) => {
-    setComplexityFilter(complexity);
+  const handleComplexityFilter = useCallback((filterId) => {
+    setComplexityFilter(filterId);
   }, []);
 
   const handleSortChange = useCallback((sortType) => {
@@ -638,6 +593,44 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
     setSearchTerm('');
     setComplexityFilter('all');
     setSortBy('complexity');
+  }, []);
+
+  // Define filter options for shared component
+  const filterOptions = [
+    { id: 'all', label: 'All' },
+    { id: 'low', label: 'Low' },
+    { id: 'medium', label: 'Medium' },
+    { id: 'high', label: 'High' }
+  ];
+
+  const activeFilters = complexityFilter === 'all' ? [] : [complexityFilter];
+
+  // Helper function to count items in a section for accordion display
+  const getItemCount = useCallback((content, searchTerm, complexityFilter) => {
+    try {
+      if (!content || !content.props || !content.props.items) return 0;
+      
+      const items = content.props.items;
+      let filteredCount = 0;
+      
+      items.forEach((item) => {
+        const operations = parseRepairOperations(item.label);
+        const complexity = getOperationComplexity(item.value);
+        
+        const matchesSearch = !searchTerm || 
+          operations.some(op => op.toLowerCase().includes(searchTerm.toLowerCase()));
+        const matchesComplexity = complexityFilter === 'all' || complexity === complexityFilter;
+        
+        if (matchesSearch && matchesComplexity) {
+          filteredCount++;
+        }
+      });
+      
+      return filteredCount;
+    } catch (e) {
+      console.warn('Error counting items:', e);
+      return 0;
+    }
   }, []);
 
   useEffect(() => {
@@ -890,152 +883,113 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
   const lastUpdated = "March 2025";
 
   return (
-    <LabourTimesContainer>
-      <InsightsContainer>
-        <LabourTimesPanel>
-          <HeadingWithTooltip iconColor="var(--primary)">
-            <CleanHeadingM>Repair Times for {displayMake} {displayModel}{yearRangeDisplay}</CleanHeadingM>
-          </HeadingWithTooltip>
-
-          <InsightBody>
+    <SharedContainer>
+      <SharedPanel>
+        <SharedHeader>
+          <SharedTitle>Repair Times for {displayMake} {displayModel}{yearRangeDisplay}</SharedTitle>
+          <SharedSubtitle>
             Professional repair time estimates to help you plan service work for your {displayMake} {displayModel}.
-          </InsightBody>
+          </SharedSubtitle>
+        </SharedHeader>
 
-          {/* Match warning - using shared component */}
-          <MatchWarning 
-            matchConfidence={matchConfidence} 
-            vehicleIdentification={vehicleIdentification}
-            vehicleData={vehicleData}
-          />
+        {/* Match warning - using shared component */}
+        <MatchWarning 
+          matchConfidence={matchConfidence} 
+          vehicleIdentification={vehicleIdentification}
+          vehicleData={vehicleData}
+        />
 
-          {/* Important notice - clean design system */}
-          <InsightNote>
-            <CleanHeadingS>Important</CleanHeadingS>
-            <CleanBody>
-              These repair times are industry estimates. Actual times may vary based on vehicle condition, workshop equipment, and technician experience. Always consult with a qualified professional.
-            </CleanBody>
-          </InsightNote>
+        {/* Important notice - using shared component */}
+        <SharedNoticePanel>
+          <h3>Important</h3>
+          <p>
+            These repair times are industry estimates. Actual times may vary based on vehicle condition, workshop equipment, and technician experience. Always consult with a qualified professional.
+          </p>
+        </SharedNoticePanel>
 
-          {/* Vehicle summary - clean design system */}
-          {vehicleSummary && (
-            <DetailPanel color="var(--primary)">
-              <CleanHeadingS>Repair Overview</CleanHeadingS>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-                gap: 'var(--space-lg)',
-                marginTop: 'var(--space-md)'
-              }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
-                    {vehicleSummary.totalOperations}
-                  </div>
-                  <CleanBodyS>Total Operations</CleanBodyS>
+        {/* Vehicle summary - using shared component */}
+        {vehicleSummary && (
+          <SharedNoticePanel>
+            <h3>Repair Overview</h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: 'var(--space-lg)',
+              marginTop: 'var(--space-md)'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
+                  {vehicleSummary.totalOperations}
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
-                    {vehicleSummary.avgTime}
-                  </div>
-                  <CleanBodyS>Average Time</CleanBodyS>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-semibold)', color: 'var(--gray-900)' }}>
-                    {vehicleSummary.mostComplexSystem}
-                  </div>
-                  <CleanBodyS>Most Common</CleanBodyS>
-                </div>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Total Operations</p>
               </div>
-            </DetailPanel>
-          )}
-
-
-          {/* Search and Filter Controls */}
-          <SearchContainer>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-lg)', flex: 1 }}>
-              <SearchIcon style={{ color: 'var(--gray-500)' }} />
-              <SearchInput
-                type="text"
-                placeholder="Search repair operations..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              {searchTerm && (
-                <ActionButton onClick={() => setSearchTerm('')}>
-                  <ClearIcon style={{ fontSize: 'var(--text-sm)' }} />
-                </ActionButton>
-              )}
-            </div>
-          </SearchContainer>
-
-          {/* Filter and Sort Controls */}
-          <FilterContainer>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-                <FilterListIcon style={{ color: 'var(--gray-500)', fontSize: 'var(--text-lg)' }} />
-                <CleanBodyS style={{ margin: 0, color: 'var(--gray-700)' }}>Filter:</CleanBodyS>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
+                  {vehicleSummary.avgTime}
+                </div>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Average Time</p>
               </div>
-              
-              <FilterButton 
-                active={complexityFilter === 'all'} 
-                onClick={() => handleComplexityFilter('all')}
-              >
-                All
-              </FilterButton>
-              <FilterButton 
-                active={complexityFilter === 'low'} 
-                onClick={() => handleComplexityFilter('low')}
-                style={{ color: complexityFilter === 'low' ? 'var(--positive)' : 'var(--gray-600)' }}
-              >
-                Low
-              </FilterButton>
-              <FilterButton 
-                active={complexityFilter === 'medium'} 
-                onClick={() => handleComplexityFilter('medium')}
-                style={{ color: complexityFilter === 'medium' ? 'var(--warning)' : 'var(--gray-600)' }}
-              >
-                Medium
-              </FilterButton>
-              <FilterButton 
-                active={complexityFilter === 'high'} 
-                onClick={() => handleComplexityFilter('high')}
-                style={{ color: complexityFilter === 'high' ? 'var(--negative)' : 'var(--gray-600)' }}
-              >
-                High
-              </FilterButton>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-semibold)', color: 'var(--gray-900)' }}>
+                  {vehicleSummary.mostComplexSystem}
+                </div>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Most Common</p>
+              </div>
             </div>
-            
-            <SortContainer>
-              <CleanBodyS style={{ margin: 0, color: 'var(--gray-700)' }}>Sort by:</CleanBodyS>
-              <SortButton active={sortBy === 'complexity'} onClick={() => handleSortChange('complexity')}>Complexity</SortButton>
-              <SortButton active={sortBy === 'time'} onClick={() => handleSortChange('time')}>Time</SortButton>
-              <SortButton active={sortBy === 'alphabetical'} onClick={() => handleSortChange('alphabetical')}>A-Z</SortButton>
-            </SortContainer>
-            
-            {(searchTerm || complexityFilter !== 'all' || sortBy !== 'complexity') && (
-              <ActionButton onClick={clearAllFilters} style={{ marginLeft: 'auto' }}>
-                Clear Filters
-              </ActionButton>
-            )}
-          </FilterContainer>
+          </SharedNoticePanel>
+        )}
 
-          {/* Tabs - clean design system */}
-          <TabsContainer>
-            <TabsList>
-              {tabs.map((tab, index) => (
-                <TabButton
-                  key={index}
-                  active={tabValue === index}
-                  onClick={() => handleTabChange(null, index)}
-                >
-                  {tab.label}
-                </TabButton>
-              ))}
-            </TabsList>
-          </TabsContainer>
 
-          {/* Tab content - clean design system */}
+        {/* Search and Filter Controls - using shared component */}
+        <SharedSearchAndFilters
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
+          placeholder="Search repair operations..."
+          filters={filterOptions}
+          activeFilters={activeFilters}
+          onFilterChange={handleComplexityFilter}
+          onClearFilters={clearAllFilters}
+        />
+
+        {/* Additional sort controls */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-md)',
+          marginBottom: 'var(--space-xl)',
+          padding: 'var(--space-md)',
+          background: 'var(--gray-50)',
+          borderRadius: 'var(--radius-md)'
+        }}>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-700)' }}>Sort by:</span>
+          <SharedButton 
+            variant={sortBy === 'complexity' ? 'primary' : 'secondary'} 
+            onClick={() => handleSortChange('complexity')}
+          >
+            Complexity
+          </SharedButton>
+          <SharedButton 
+            variant={sortBy === 'time' ? 'primary' : 'secondary'} 
+            onClick={() => handleSortChange('time')}
+          >
+            Time
+          </SharedButton>
+          <SharedButton 
+            variant={sortBy === 'alphabetical' ? 'primary' : 'secondary'} 
+            onClick={() => handleSortChange('alphabetical')}
+          >
+            A-Z
+          </SharedButton>
+        </div>
+
+        {/* Tabs - using shared components */}
+        <SharedTabs
+          tabs={tabs}
+          activeTab={tabValue}
+          onTabChange={handleTabChange}
+        >
           {tabs.map((tab, tabIndex) => (
-            <TabContent key={tabIndex} active={tabValue === tabIndex}>
+            <SharedTabContent key={tabIndex} active={tabValue === tabIndex}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -1045,10 +999,21 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
                 borderBottom: `2px solid ${tab.color}`
               }}>
                 <div>
-                  <CleanHeadingM style={{ margin: 0 }}>{tab.label}</CleanHeadingM>
-                  <CleanBodyS style={{ margin: 0, marginTop: 'var(--space-xs)' }}>
+                  <h3 style={{ 
+                    fontSize: 'var(--text-2xl)', 
+                    fontWeight: '600', 
+                    color: 'var(--gray-900)', 
+                    margin: 0 
+                  }}>
+                    {tab.label}
+                  </h3>
+                  <p style={{ 
+                    fontSize: 'var(--text-base)', 
+                    color: 'var(--gray-600)', 
+                    margin: 'var(--space-xs) 0 0 0' 
+                  }}>
                     Standard repair times for {tab.label.toLowerCase()} operations
-                  </CleanBodyS>
+                  </p>
                 </div>
               </div>
               
@@ -1057,29 +1022,34 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
                 const isExpanded = !!expandedSections[sectionId];
                 
                 return (
-                  <CleanAccordion
+                  <SharedAccordion
                     key={sectionId}
                     id={`section-${sectionId}`}
                     title={section.title}
                     expanded={isExpanded}
-                    onChange={() => toggleSection(sectionId)}
-                    searchTerm={searchTerm}
-                    complexityFilter={complexityFilter}
+                    onToggle={() => toggleSection(sectionId)}
+                    itemCount={section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0}
                   >
                     {section.content}
-                  </CleanAccordion>
+                  </SharedAccordion>
                 );
               })}
-            </TabContent>
+            </SharedTabContent>
           ))}
+        </SharedTabs>
 
-          {/* Footer note - following GOV.UK pattern */}
-          <StyledFooterNote>
-            Repair times sourced from industry standard databases. Last updated: {lastUpdated}
-          </StyledFooterNote>
-        </LabourTimesPanel>
-      </InsightsContainer>
-    </LabourTimesContainer>
+        {/* Footer note - following GOV.UK pattern */}
+        <div style={{
+          fontSize: 'var(--text-sm)',
+          color: 'var(--gray-500)',
+          textAlign: 'center',
+          padding: 'var(--space-lg) 0',
+          marginTop: 'var(--space-3xl)'
+        }}>
+          Repair times sourced from industry standard databases. Last updated: {lastUpdated}
+        </div>
+      </SharedPanel>
+    </SharedContainer>
   );
 };
 

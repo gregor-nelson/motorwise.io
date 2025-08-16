@@ -13,3 +13,7 @@
 2025-08-16 11:38:06,122 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
 2025-08-16 11:38:06,269 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-08-16 11:38:06,271 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-08-16 18:49:48,805 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-16 18:49:48,806 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-16 18:49:49,137 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-16 18:49:49,138 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk

@@ -45,10 +45,9 @@ import {
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 const BROWSER_CACHE_PREFIX = 'tech_specs_';
-const STORAGE_VERSION = 'v1';
+const STORAGE_VERSION = 'v1'; // Use this to invalidate all caches if data structure changes
 const MAX_CACHE_SIZE = 1000000; // ~1MB max size for cache entries
 
-// Gauge components (keeping existing gauge implementation)
 const GaugeContainer = styled('div')(() => ({
   position: 'relative',
   width: '120px',
@@ -82,6 +81,7 @@ const GaugeCenterText = styled('div')(() => ({
   textAlign: 'center'
 }));
 
+
 const ProgressBar = styled('div')(() => ({
   width: '100%',
   height: '20px',
@@ -101,7 +101,15 @@ const ProgressContainer = styled('div')(() => ({
   marginTop: 'var(--space-md)'
 }));
 
-// Helper functions (keeping existing implementations)
+// Visual divider
+const VisualDivider = styled('div')(() => ({
+  height: '3px',
+  backgroundColor: 'var(--gray-200)',
+  margin: '40px 0'
+}));
+
+
+// Helper functions
 const getSpecIcon = (type) => {
   const icons = {
     pressure: 'P',
@@ -175,7 +183,11 @@ const Gauge = ({ value, max, unit, label, color }) => {
     <div>
       <GaugeContainer>
         <GaugeSvg viewBox="0 0 100 100">
-          <GaugeTrack cx="50" cy="50" r="45" />
+          <GaugeTrack
+            cx="50"
+            cy="50"
+            r="45"
+          />
           <GaugeFill
             cx="50"
             cy="50"
@@ -195,7 +207,7 @@ const Gauge = ({ value, max, unit, label, color }) => {
   );
 };
 
-// Visual spec renderer (keeping existing implementation)
+// Visual spec renderer
 const renderVisualSpecs = (items, sectionTitle) => {
   if (!items || !Array.isArray(items) || items.length === 0) return null;
   
@@ -206,13 +218,16 @@ const renderVisualSpecs = (items, sectionTitle) => {
         let value = item.value !== undefined ? item.value : '';
         const unit = item.unit || '';
         
+        // Determine spec type
         const specType = getSpecType(label, unit);
         const color = getSpecColor(specType);
         const icon = getSpecIcon(specType);
         
+        // Parse numeric values
         const numericValue = parseFloat(value);
         const hasNumericValue = !isNaN(numericValue);
         
+        // Determine card variant
         let variant = 'default';
         if (hasNumericValue && (unit.includes('bar') || unit.includes('psi'))) {
           variant = 'gauge';
@@ -220,13 +235,15 @@ const renderVisualSpecs = (items, sectionTitle) => {
           variant = 'compact';
         }
         
+        // Handle special cases
         if (typeof value === 'string' && value.includes('Not adjustable')) {
           const parts = value.split(/(Not adjustable)/i);
           value = parts[0].trim();
         }
         
+        // Render gauge for pressure values
         if (variant === 'gauge' && hasNumericValue) {
-          const maxValue = unit.includes('bar') ? 10 : 150;
+          const maxValue = unit.includes('bar') ? 10 : 150; // Approximate max values
           return (
             <SpecCard key={index} variant="gauge">
               <Gauge
@@ -240,6 +257,7 @@ const renderVisualSpecs = (items, sectionTitle) => {
           );
         }
         
+        // Render progress bar for percentage or range values
         if (hasNumericValue && (unit === '%' || label.toLowerCase().includes('range'))) {
           return (
             <SpecCard key={index} variant="bar">
@@ -262,6 +280,7 @@ const renderVisualSpecs = (items, sectionTitle) => {
           );
         }
         
+        // Default card layout
         return (
           <SpecCard key={index}>
             <SpecCardHeader>
@@ -300,7 +319,7 @@ const getSpecType = (label, unit) => {
   return 'default';
 };
 
-// Browser storage utility functions (keeping existing)
+// Browser storage utility functions (keep existing)
 const browserCache = {
   isAvailable: () => {
     try {
@@ -362,6 +381,19 @@ const browserCache = {
       console.error('Error retrieving from browser cache:', error.name, error.message);
       return null;
     }
+  },
+
+  clearCache: (key) => {
+    if (!browserCache.isAvailable()) return false;
+    
+    try {
+      const cacheKey = `${BROWSER_CACHE_PREFIX}${key.toLowerCase().replace(/\s+/g, '_')}`;
+      localStorage.removeItem(cacheKey);
+      return true;
+    } catch (error) {
+      console.error('Error clearing cache entry:', error);
+      return false;
+    }
   }
 };
 
@@ -381,6 +413,11 @@ const safeGet = (obj, path, defaultValue = null) => {
   
   return result !== undefined ? result : defaultValue;
 };
+
+
+// NoticePanel and FuelTypeBadge are imported from styles file
+
+// Using TabPanel from styles with simple show/hide logic
 
 // Extract year function
 const extractVehicleYear = (vehicleData) => {
@@ -470,16 +507,50 @@ const renderNotes = (notes) => {
   if (!notes || !Array.isArray(notes) || notes.length === 0) return null;
   
   return (
-    <SharedNoticePanel>
-      <h3>Important notes</h3>
-      <ul style={{ margin: 0, paddingLeft: 'var(--space-lg)' }}>
+    <NoticePanel>
+      <GovUKHeadingS>Important notes</GovUKHeadingS>
+      <ul className="govuk-list govuk-list--bullet">
         {notes.map((note, index) => (
-          <li key={`note-${index}`} style={{ marginBottom: 'var(--space-sm)' }}>
-            {note || ''}
-          </li>
+          <li key={`note-${index}`}>{note || ''}</li>
         ))}
       </ul>
-    </SharedNoticePanel>
+    </NoticePanel>
+  );
+};
+
+// Collapsible Section Component (minimal design following DVLADataHeader patterns)
+const CollapsibleSection = ({ title, icon, children, defaultExpanded = false, priority = 'medium' }) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  const toggleExpanded = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
+  return (
+    <CollapsibleSectionContainer>
+      <CollapsibleHeader onClick={toggleExpanded} aria-expanded={isExpanded}>
+        <CollapsibleHeaderContent>
+          <CategoryIcon>{icon}</CategoryIcon>
+          <div>
+            <CategoryTitle>{title}</CategoryTitle>
+            <CategorySubtitle>
+              {priority === 'high' ? 'Essential information' : 
+               priority === 'low' ? 'Reference data' : 
+               'Technical specifications and measurements'}
+            </CategorySubtitle>
+          </div>
+        </CollapsibleHeaderContent>
+        <CollapsibleChevron expanded={isExpanded}>
+          ▼
+        </CollapsibleChevron>
+      </CollapsibleHeader>
+      
+      <CollapsibleContent expanded={isExpanded}>
+        <CollapsibleContentInner>
+          {children}
+        </CollapsibleContentInner>
+      </CollapsibleContent>
+    </CollapsibleSectionContainer>
   );
 };
 
@@ -514,33 +585,10 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return `${vehicleData.make}_${vehicleData.model}_${vehicleYear || ''}_${vehicleFuelType || ''}`;
   }, [vehicleData?.make, vehicleData?.model, vehicleYear, vehicleFuelType]);
 
-  // Handle tab change
-  const handleTabChange = useCallback((newTabIndex) => {
-    setTabValue(newTabIndex);
-  }, []);
-
-  // Handle accordion toggle
-  const handleAccordionToggle = useCallback((sectionId) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [sectionId]: !prev[sectionId]
-    }));
-  }, []);
-
-  // Handle search
-  const handleSearchChange = useCallback((term) => {
-    setSearchTerm(term);
-  }, []);
-
-  // Handle clear filters
-  const handleClearFilters = useCallback(() => {
-    setSearchTerm('');
-  }, []);
-
-  // Handle retry
-  const handleRetry = useCallback(() => {
-    window.location.reload();
-  }, []);
+  // Note: handleTabChange removed as we use direct onClick for minimal tabs
+  // const handleTabChange = useCallback((event, newValue) => {
+  //   setTabValue(newValue);
+  // }, []);
 
   // Data fetching effect
   useEffect(() => {
@@ -641,7 +689,59 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     
   }, [vehicleData?.make, vehicleData?.model, vehicleYear, vehicleFuelType, onDataLoad, cacheKey]);
 
-  // Visual tabs configuration (keeping existing implementation)
+  // Match warning component
+  const MatchWarning = useMemo(() => {
+    if (!techSpecsData?.vehicleIdentification || !vehicleData) return null;
+    
+    const { vehicleIdentification } = techSpecsData;
+    
+    if (matchConfidence === 'fuzzy' && vehicleIdentification?.matchedTo) {
+      const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
+        ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
+            vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
+              ? 'present' 
+              : vehicleIdentification.matchedTo.yearRange.endYear
+          })`
+        : '';
+      
+      const matchedFuelType = vehicleIdentification.matchedTo.fuelType && 
+                             vehicleIdentification.matchedTo.fuelType !== 'unknown'
+        ? ` - ${vehicleIdentification.matchedTo.fuelType.charAt(0).toUpperCase() + 
+             vehicleIdentification.matchedTo.fuelType.slice(1)} Engine`
+        : '';
+      
+      const year = extractVehicleYear(vehicleData);
+      const requestedYear = year ? ` (${year})` : '';
+      
+      const requestedFuelType = vehicleFuelType 
+        ? ` - ${vehicleFuelType.charAt(0).toUpperCase() + vehicleFuelType.slice(1)} Engine`
+        : '';
+      
+      return (
+        <WarningPanel>
+          <GovUKHeadingS>Approximate Match</GovUKHeadingS>
+          <GovUKBody>
+            We don't have exact data for your <strong>{vehicleIdentification.make} {vehicleIdentification.model}{requestedYear}{requestedFuelType}</strong>. 
+            The specifications shown are based on <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model}{matchedYearInfo}{matchedFuelType}</strong>, 
+            which is the closest match to your vehicle.
+          </GovUKBody>
+        </WarningPanel>
+      );
+    } else if (matchConfidence === 'year-match' && vehicleIdentification?.matchedTo) {
+      return (
+        <NoticePanel>
+          <GovUKHeadingS>Compatible Model Match</GovUKHeadingS>
+          <GovUKBody>
+            The specifications shown are for <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model} {vehicleIdentification.matchedTo.modelType || ''}</strong>, 
+            which is compatible with your specific vehicle variant.
+          </GovUKBody>
+        </NoticePanel>
+      );
+    }
+    return null;
+  }, [techSpecsData, vehicleData, matchConfidence, vehicleFuelType]);
+
+  // Visual tabs configuration
   const tabs = useMemo(() => {
     if (!techSpecsData) return [];
     
@@ -744,38 +844,24 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         content: (
           <>
             {hasEngineOilOptions && (
-              <div style={{ marginBottom: 'var(--space-xl)' }}>
-                <h4 style={{ 
-                  fontSize: 'var(--text-lg)', 
-                  fontWeight: '600', 
-                  color: 'var(--gray-900)', 
-                  margin: '0 0 var(--space-md) 0' 
-                }}>
+              <SectionSpacing>
+                <GovUKHeadingS>
                   Engine Oil Options
-                </h4>
+                </GovUKHeadingS>
                 {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
-              </div>
+              </SectionSpacing>
             )}
             
             {hasLubricantSpecs && (
-              <div>
-                {hasEngineOilOptions && (
-                  <div style={{ 
-                    height: '3px', 
-                    backgroundColor: 'var(--gray-200)', 
-                    margin: 'var(--space-xl) 0' 
-                  }} />
-                )}
-                <h4 style={{ 
-                  fontSize: 'var(--text-lg)', 
-                  fontWeight: '600', 
-                  color: 'var(--gray-900)', 
-                  margin: '0 0 var(--space-md) 0' 
-                }}>
-                  Other Lubricants & Capacities
-                </h4>
-                {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
-              </div>
+              <>
+                {hasEngineOilOptions && <VisualDivider />}
+                <SectionSpacing>
+                  <GovUKHeadingS>
+                    Other Lubricants & Capacities
+                  </GovUKHeadingS>
+                  {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
+                </SectionSpacing>
+              </>
             )}
           </>
         )
@@ -808,33 +894,20 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           icon: getCategoryIcon("Cylinder Head Instructions"),
           content: (
             <>
-              <div style={{ marginBottom: 'var(--space-xl)' }}>
-                {headInstructions.map((instruction, index) => (
-                  <p key={`instr-${index}`} style={{ 
-                    fontSize: 'var(--text-base)', 
-                    color: 'var(--gray-700)', 
-                    marginBottom: 'var(--space-md)' 
-                  }}>
-                    {instruction}
-                  </p>
-                ))}
-              </div>
+              <SectionSpacing>
+                <InsightBody>
+                  {headInstructions.map((instruction, index) => (
+                    <p key={`instr-${index}`}>{instruction}</p>
+                  ))}
+                </InsightBody>
+              </SectionSpacing>
               
               {hasTorqueSequence && (
                 <SpecCard>
-                  <h4 style={{ 
-                    fontSize: 'var(--text-lg)', 
-                    fontWeight: '600', 
-                    color: 'var(--gray-900)', 
-                    margin: '0 0 var(--space-md) 0' 
-                  }}>
-                    Tightening sequence
-                  </h4>
-                  <ol style={{ margin: 0, paddingLeft: 'var(--space-lg)' }}>
+                  <GovUKHeadingS>Tightening sequence</GovUKHeadingS>
+                  <ol className="govuk-list govuk-list--number">
                     {headTorques.map((step, index) => (
-                      <li key={`step-${index}`} style={{ marginBottom: 'var(--space-sm)' }}>
-                        {step}
-                      </li>
+                      <li key={`step-${index}`}>{step}</li>
                     ))}
                   </ol>
                 </SpecCard>
@@ -919,25 +992,33 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return tabsConfig.filter(tab => tab.sections.length > 0);
   }, [techSpecsData]);
 
-  // Helper function to count specs in content for accordion display
-  const getSpecCount = useCallback((content) => {
-    if (!content) return 0;
-    // Try to count items in SpecGrid or similar structures
-    if (typeof content === 'object' && content.props) {
-      if (content.props.items && Array.isArray(content.props.items)) {
-        return content.props.items.length;
-      }
-    }
-    return 0;
+  // Handle tab change
+  const handleTabChange = useCallback((newTabIndex) => {
+    setTabValue(newTabIndex);
   }, []);
 
-  // Filter specs based on search term
-  const filteredSpecsCount = useMemo(() => {
-    if (!searchTerm || !tabs[tabValue]) return null;
-    // This would need to be implemented based on the specific structure
-    // For now, return null to hide the count
-    return null;
-  }, [searchTerm, tabs, tabValue]);
+  // Handle accordion toggle
+  const handleAccordionToggle = useCallback((sectionId) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  }, []);
+
+  // Handle search
+  const handleSearchChange = useCallback((term) => {
+    setSearchTerm(term);
+  }, []);
+
+  // Handle clear filters
+  const handleClearFilters = useCallback(() => {
+    setSearchTerm('');
+  }, []);
+
+  // Handle retry
+  const handleRetry = useCallback(() => {
+    window.location.reload();
+  }, []);
 
   // Loading state
   if (loading) {
@@ -985,125 +1066,96 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const lastUpdated = "March 2025";
 
   return (
-    <SharedContainer>
-      <SharedPanel>
-        <SharedHeader>
-          <HeadingWithTooltip 
-            tooltip="Technical specifications for your vehicle, based on manufacturer data"
-          >
-            <SharedTitle>Technical Specifications for {displayMake} {displayModel}</SharedTitle>
-          </HeadingWithTooltip>
-          <SharedSubtitle>
-            These specifications provide detailed technical information for servicing and maintaining your vehicle.
-          </SharedSubtitle>
-        </SharedHeader>
-
-        <SharedMatchWarning
-          matchConfidence={matchConfidence}
-          metadata={techSpecsData?.vehicleIdentification}
-          vehicleMake={displayMake}
-          vehicleModel={displayModel}
-          requestedYear={vehicleYear}
-          requestedFuelType={vehicleFuelType}
-        />
-
-        <SharedNoticePanel>
-          <h3>Important</h3>
-          <p>
-            These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
-          </p>
-        </SharedNoticePanel>
-
-        {displayFuelType && displayFuelType !== 'unknown' && (
-          <div style={{ marginBottom: 'var(--space-xl)' }}>
-            <FuelTypeBadge>
-              {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
-            </FuelTypeBadge>
-          </div>
-        )}
-
-        {hasTabs ? (
-          <>
-            <SharedSearchAndFilters
-              searchTerm={searchTerm}
-              onSearchChange={handleSearchChange}
-              placeholder="Search specifications..."
-              onClearFilters={handleClearFilters}
-              resultCount={filteredSpecsCount}
-            />
-
-            <SharedTabs
-              tabs={tabs}
-              activeTab={tabValue}
-              onTabChange={handleTabChange}
-            >
-              {tabs.map((tab, tabIndex) => (
-                <SharedTabContent key={`content-${tabIndex}`} active={tabValue === tabIndex}>
-                  <div style={{
-                    marginBottom: 'var(--space-xl)',
-                    paddingBottom: 'var(--space-lg)',
-                    borderBottom: `2px solid ${tab.color || 'var(--primary)'}`
-                  }}>
-                    <h3 style={{ 
-                      fontSize: 'var(--text-xl)', 
-                      fontWeight: '600', 
-                      color: 'var(--gray-900)', 
-                      margin: '0 0 var(--space-sm) 0' 
-                    }}>
-                      {tab.label}
-                    </h3>
-                    <p style={{ 
-                      fontSize: 'var(--text-base)', 
-                      color: 'var(--gray-600)', 
-                      margin: 0 
-                    }}>
-                      Technical specifications and measurements for {tab.label.toLowerCase()}
-                    </p>
-                  </div>
-                  
+    <TechSpecsContainer>
+      <SectionHeader>
+        <HeadingWithTooltip 
+          tooltip="Technical specifications for your vehicle, based on manufacturer data"
+        >
+          <h2>Technical Specifications for {displayMake} {displayModel}</h2>
+        </HeadingWithTooltip>
+        
+        <InsightBody>
+          These specifications provide detailed technical information for servicing and maintaining your vehicle.
+        </InsightBody>
+      </SectionHeader>
+          
+      {MatchWarning}
+          
+      <WarningPanel>
+        <WarningTitle>Important</WarningTitle>
+        <WarningText>
+          These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
+        </WarningText>
+      </WarningPanel>
+          
+      {displayFuelType && displayFuelType !== 'unknown' && (
+        <FlexContainer className="justify-start">
+          <FuelTypeBadge>
+            {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
+          </FuelTypeBadge>
+        </FlexContainer>
+      )}
+      
+      <SectionDivider />
+        
+      {hasTabs ? (
+        <TabContentContainer>
+          <MinimalTabs>
+            <FlexContainer className="tabs">
+              {tabs.map((tab, index) => (
+                <MinimalTab
+                  key={`tab-${index}`}
+                  className={tabValue === index ? 'active' : ''}
+                  onClick={() => setTabValue(index)}
+                >
+                  {tab.label}
+                </MinimalTab>
+                ))}
+            </FlexContainer>
+          </MinimalTabs>
+          
+          {tabs.map((tab, tabIndex) => (
+            <TabPanel key={`panel-${tabIndex}`} style={{ display: tabValue === tabIndex ? 'block' : 'none' }}>
                   {tab.sections.map((section, sectionIndex) => {
-                    const sectionId = `${tabIndex}-${sectionIndex}`;
-                    const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
-                    const itemCount = getSpecCount(section.content);
+                    const isLastSection = sectionIndex === tab.sections.length - 1;
+                    const sectionKey = `${tabIndex}-${sectionIndex}`;
+                    const defaultExpanded = section.priority === 'high' || sectionIndex === 0;
                     
                     return (
-                      <SharedAccordion
-                        key={sectionId}
-                        id={sectionId}
-                        title={section.title}
-                        itemCount={itemCount}
-                        expanded={isExpanded}
-                        onToggle={handleAccordionToggle}
-                      >
-                        {section.content}
-                      </SharedAccordion>
+                      <div key={`section-${sectionKey}`}>
+                        <CollapsibleSection
+                          title={section.title}
+                          icon={section.icon}
+                          defaultExpanded={defaultExpanded}
+                          priority={section.priority || 'medium'}
+                        >
+                          {section.content}
+                        </CollapsibleSection>
+                        {!isLastSection && <SectionDivider />}
+                      </div>
                     );
                   })}
-                </SharedTabContent>
-              ))}
-            </SharedTabs>
-          </>
-        ) : (
-          <SharedNoticePanel>
-            <p>
-              Limited specifications available for this vehicle. Try checking the manufacturer's website for more details.
-            </p>
-          </SharedNoticePanel>
-        )}
-
-        <div style={{ 
-          marginTop: 'var(--space-2xl)', 
-          paddingTop: 'var(--space-lg)', 
-          borderTop: '1px solid var(--gray-200)', 
-          fontSize: 'var(--text-sm)', 
-          color: 'var(--gray-500)', 
-          textAlign: 'center' 
-        }}>
-          Technical specifications sourced from industry standard databases.<br />
-          Last updated: {lastUpdated}
-        </div>
-      </SharedPanel>
-    </SharedContainer>
+            </TabPanel>
+          ))}
+        </TabContentContainer>
+      ) : (
+            <MarginContainer>
+              <NoticePanel>
+                <InsightBody>
+                  Limited specifications available for this vehicle. Try checking the manufacturer's website for more details.
+                </InsightBody>
+              </NoticePanel>
+            </MarginContainer>
+          )}
+          
+          <NoticePanel>
+            <FooterNote>
+              Technical specifications sourced from industry standard databases.
+              <br />
+              Last updated: {lastUpdated}
+            </FooterNote>
+          </NoticePanel>
+    </TechSpecsContainer>
   );
 };
 

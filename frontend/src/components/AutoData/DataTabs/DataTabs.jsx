@@ -181,13 +181,13 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
 
       {/* Repair Times Section */}
       
-        <SectionContent>
+        {/* <SectionContent>
           <VehicleRepairTimesComponent
             registration={registration}
             vehicleData={enhancedVehicleData}
             onDataLoad={handleLabourTimesDataLoad}
           />
-        </SectionContent>
+        </SectionContent> */}
 
       {/* Technical Specifications Section */}
         <SectionContent>

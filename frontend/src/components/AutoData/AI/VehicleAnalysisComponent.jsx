@@ -233,10 +233,10 @@ const API_BASE_URL = isDevelopment
                     ? 'http://localhost:8007/api/v1'
                     : '/api/v1';
 
-// Browser cache configuration for premium reports
-const BROWSER_CACHE_TTL = null; // No expiration for premium reports - store permanently
-const BROWSER_CACHE_PREFIX = 'premium_vehicle_analysis_';
-const STORAGE_VERSION = 'v2'; // Use this to invalidate all caches if data structure changes
+// Browser cache configuration
+const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const BROWSER_CACHE_PREFIX = 'vehicle_analysis_';
+const STORAGE_VERSION = 'v1'; // Use this to invalidate all caches if data structure changes
 
 // Error message mapping to provide user-friendly messages
 const ERROR_MESSAGES = {
@@ -294,8 +294,7 @@ const browserCache = {
       const jsonString = JSON.stringify({
         data,
         timestamp: Date.now(),
-        version: STORAGE_VERSION,
-        isPermanent: true // Mark as premium report - never expires
+        version: STORAGE_VERSION
       });
       
       // Check if size is reasonable (e.g., under 2MB)
@@ -335,8 +334,8 @@ const browserCache = {
         return null;
       }
       
-      // Check if expired (skip expiration check for permanent premium reports)
-      if (!cacheEntry.isPermanent && BROWSER_CACHE_TTL && Date.now() - cacheEntry.timestamp > BROWSER_CACHE_TTL) {
+      // Check if expired
+      if (Date.now() - cacheEntry.timestamp > BROWSER_CACHE_TTL) {
         localStorage.removeItem(`${BROWSER_CACHE_PREFIX}${key}`);
         return null;
       }
@@ -393,162 +392,124 @@ const browserCache = {
   }
 };
 
-// Status indicator component
-const StatusIndicator = ({ status }) => {
-  const indicators = {
-    good: { emoji: '✓', color: 'var(--positive)' },
-    warning: { emoji: '⚠️', color: 'var(--warning)' },
-    poor: { emoji: '🔴', color: 'var(--negative)' }
-  };
-  
-  const indicator = indicators[status] || indicators.warning;
-  
-  return (
-    <span style={{ color: indicator.color, fontWeight: 'var(--font-semibold)' }}>
-      {indicator.emoji}
-    </span>
-  );
-};
+// Simple markdown parser for clean rendering
+const parseMarkdown = (markdownText) => {
+  if (!markdownText) return null;
 
-// Risk Assessment Table Component
-const RiskAssessmentTable = ({ riskAssessment }) => {
-  if (!riskAssessment || !riskAssessment.systems?.length) return null;
+  const lines = markdownText.split('\n');
+  const elements = [];
   
-  return (
-    <div style={{ marginBottom: 'var(--space-xl)' }}>
-      <h2>Risk Assessment</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>System</th>
-            <th>Status</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {riskAssessment.systems.map((system, index) => (
-            <tr key={index}>
-              <td>{system.name}</td>
-              <td><StatusIndicator status={system.status} /> {system.status}</td>
-              <td>{system.notes}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-// Key Findings Component
-const KeyFindings = ({ keyFindings }) => {
-  if (!keyFindings?.length) return null;
+  let currentParagraph = [];
   
-  return (
-    <div style={{ marginBottom: 'var(--space-xl)' }}>
-      <h2>Key Findings</h2>
-      {keyFindings.map((finding, index) => (
-        <div key={index} style={{ 
-          marginBottom: 'var(--space-lg)',
-          padding: 'var(--space-md)',
-          backgroundColor: 'var(--gray-50)',
-          borderRadius: 'var(--radius-sm)',
-          borderLeft: `4px solid ${finding.severity === 'poor' ? 'var(--negative)' : finding.severity === 'warning' ? 'var(--warning)' : 'var(--positive)'}`
-        }}>
-          <h3 style={{ margin: '0 0 var(--space-sm) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-            <StatusIndicator status={finding.severity} />
-            {finding.system}
-          </h3>
-          <ul style={{ margin: 0, paddingLeft: 'var(--space-lg)' }}>
-            {finding.issues.map((issue, issueIndex) => (
-              <li key={issueIndex}>{issue}</li>
-            ))}
-          </ul>
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    
+    // Empty line - finish current paragraph
+    if (!trimmed) {
+      if (currentParagraph.length > 0) {
+        elements.push(
+          <p key={`p-${index}`}>
+            {currentParagraph.join(' ')}
+          </p>
+        );
+        currentParagraph = [];
+      }
+      return;
+    }
+    
+    // Headers
+    if (trimmed.startsWith('# ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(<h1 key={`h1-${index}`}>{trimmed.substring(2)}</h1>);
+      return;
+    }
+    
+    if (trimmed.startsWith('## ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(<h2 key={`h2-${index}`}>{trimmed.substring(3)}</h2>);
+      return;
+    }
+    
+    if (trimmed.startsWith('### ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(<h3 key={`h3-${index}`}>{trimmed.substring(4)}</h3>);
+      return;
+    }
+    
+    // Lists
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(
+        <div key={`li-${index}`} style={{ margin: 'var(--space-sm) 0', paddingLeft: 'var(--space-lg)' }}>
+          • {trimmed.substring(2)}
         </div>
-      ))}
-    </div>
-  );
-};
-
-// Bulletin Matches Component  
-const BulletinMatches = ({ bulletinMatches }) => {
-  if (!bulletinMatches?.length) return null;
-  
-  return (
-    <div style={{ marginBottom: 'var(--space-xl)' }}>
-      <h2>Technical Bulletin Matches</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Bulletin</th>
-            <th>Title</th>
-            <th>MOT Connection</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bulletinMatches.map((match, index) => (
-            <tr key={index}>
-              <td style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)' }}>{match.bulletin}</td>
-              <td>{match.title}</td>
-              <td>{match.motConnection}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-// MOT Patterns Component
-const MotPatterns = ({ motPatterns }) => {
-  if (!motPatterns?.hasPatterns) return null;
-  
-  return (
-    <div style={{ marginBottom: 'var(--space-xl)' }}>
-      <h2>MOT Failure Patterns</h2>
-      <p>{motPatterns.description}</p>
-      {motPatterns.timeline?.length > 0 && (
-        <div>
-          <h4>Timeline:</h4>
-          <ul>
-            {motPatterns.timeline.map((event, index) => (
-              <li key={index}>{event}</li>
+      );
+      return;
+    }
+    
+    // Blockquotes
+    if (trimmed.startsWith('> ')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      elements.push(
+        <blockquote key={`quote-${index}`}>
+          {trimmed.substring(2)}
+        </blockquote>
+      );
+      return;
+    }
+    
+    // Tables - basic support
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      if (currentParagraph.length > 0) {
+        elements.push(<p key={`p-${index}`}>{currentParagraph.join(' ')}</p>);
+        currentParagraph = [];
+      }
+      
+      if (!trimmed.includes('---')) {
+        const cells = trimmed.split('|').filter(cell => cell.trim()).map(cell => cell.trim());
+        elements.push(
+          <div key={`table-row-${index}`} style={{ 
+            display: 'flex', 
+            gap: 'var(--space-md)', 
+            padding: 'var(--space-sm) 0',
+            borderBottom: '1px solid var(--gray-200)'
+          }}>
+            {cells.map((cell, cellIndex) => (
+              <div key={cellIndex} style={{ flex: 1, fontSize: 'var(--text-sm)' }}>
+                {cell}
+              </div>
             ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Summary Component
-const SummaryNotes = ({ summary }) => {
-  if (!summary?.notes?.length) return null;
+          </div>
+        );
+      }
+      return;
+    }
+    
+    // Regular text - add to current paragraph
+    currentParagraph.push(trimmed);
+  });
   
-  return (
-    <div style={{ marginBottom: 'var(--space-xl)' }}>
-      <h2>Summary</h2>
-      <ul>
-        {summary.notes.map((note, index) => (
-          <li key={index}>{note}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// Main Structured Analysis Component
-const StructuredAnalysisContent = ({ analysisData }) => {
-  if (!analysisData) return null;
+  // Handle any remaining paragraph
+  if (currentParagraph.length > 0) {
+    elements.push(<p key="final-p">{currentParagraph.join(' ')}</p>);
+  }
   
-  return (
-    <>
-      <RiskAssessmentTable riskAssessment={analysisData.riskAssessment} />
-      <KeyFindings keyFindings={analysisData.keyFindings} />
-      <BulletinMatches bulletinMatches={analysisData.bulletinMatches} />
-      <MotPatterns motPatterns={analysisData.motPatterns} />
-      <SummaryNotes summary={analysisData.summary} />
-    </>
-  );
+  return <>{elements}</>;
 };
 
 
@@ -613,14 +574,9 @@ const VehicleAnalysisComponent = ({
       abortControllerRef.current.abort();
     }
     
-    // Create new abort controller with timeout
+    // Create new abort controller
     abortControllerRef.current = new AbortController();
     const { signal } = abortControllerRef.current;
-    
-    // Set up timeout to abort request after 60 seconds
-    const timeoutId = setTimeout(() => {
-      abortControllerRef.current.abort();
-    }, 60000);
 
     try {
       setLoading(true);
@@ -685,21 +641,10 @@ const VehicleAnalysisComponent = ({
       
       console.error("Error fetching vehicle data:", err);
       
-      // Implement better retry logic for recoverable errors
-      const isRetryableError = (
-        err.message.includes('network') ||
-        err.message.includes('timeout') ||
-        err.message.includes('Service error: Internal Server Error') ||
-        err.message.includes('Service error: Bad Gateway') ||
-        err.message.includes('Service error: Service Unavailable') ||
-        err.message.includes('Service error: Gateway Timeout')
-      );
-      
-      if (isRetryableError && retryCountRef.current < maxRetries) {
+      // Implement retry logic for network errors
+      if (err.message.includes('network') && retryCountRef.current < maxRetries) {
         retryCountRef.current++;
-        const delay = Math.min(retryCountRef.current * 1000 * 2, 8000); // Exponential backoff with max 8s
-        
-        console.log(`Retrying request (${retryCountRef.current}/${maxRetries}) in ${delay}ms`);
+        const delay = retryCountRef.current * 1000; // Exponential backoff
         
         setTimeout(() => {
           fetchAnalysisFromApi();
@@ -711,9 +656,6 @@ const VehicleAnalysisComponent = ({
       // Use our error mapping function instead of displaying raw error
       setError(getErrorMessage(err.message));
     } finally {
-      // Clear the timeout
-      clearTimeout(timeoutId);
-      
       if (!signal.aborted) {
         setLoading(false);
       }
@@ -734,10 +676,10 @@ const VehicleAnalysisComponent = ({
     };
   }, [registration, fetchAnalysisFromApi]);
 
-  // Use memoization for structured content to avoid unnecessary re-renders
-  const structuredContent = useMemo(() => {
+  // Use memoization for parsed content to avoid unnecessary re-renders
+  const parsedContent = useMemo(() => {
     if (analysis?.analysis) {
-      return <StructuredAnalysisContent analysisData={analysis.analysis} />;
+      return parseMarkdown(analysis.analysis);
     }
     return null;
   }, [analysis?.analysis]);
@@ -795,7 +737,7 @@ const VehicleAnalysisComponent = ({
         </Body>
         
         <AnalysisContent>
-          {structuredContent}
+          {parsedContent}
         </AnalysisContent>
         
         <Note>

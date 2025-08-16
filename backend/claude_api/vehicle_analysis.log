@@ -9,3 +9,7 @@
 2025-08-16 11:35:53,613 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
 2025-08-16 11:36:18,010 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-08-16 11:36:18,017 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 26.8845s
+2025-08-16 11:38:06,104 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-16 11:38:06,122 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-08-16 11:38:06,269 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-16 11:38:06,271 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk

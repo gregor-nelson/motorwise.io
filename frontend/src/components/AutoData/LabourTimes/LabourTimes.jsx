@@ -5,14 +5,30 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ClearIcon from '@mui/icons-material/Clear';
 
-
-// Import clean styled components
+// Import shared components
 import {
-  LabourTimesContainer,
-  InsightsContainer,
-  LabourTimesPanel,
-  DetailPanel,
-  WarningPanel,
+  SharedContainer,
+  SharedPanel,
+  SharedHeader,
+  SharedTitle,
+  SharedSubtitle,
+  SharedTabs,
+  SharedTabContent,
+  SharedAccordion,
+  SharedSearchAndFilters,
+  SharedLoadingState,
+  SharedErrorState,
+  SharedEmptyState,
+  SharedMatchWarning,
+  SharedNoticePanel,
+  SharedButton
+} from '../shared/CommonElements';
+
+// Import custom tooltip components
+import { HeadingWithTooltip } from '../../../styles/tooltip';
+
+// Import labour-specific styled components (for specific repair display)
+import {
   RepairGrid,
   RepairCard,
   RepairHeader,
@@ -21,32 +37,7 @@ import {
   TimeValue,
   TimeUnit,
   RepairMeta,
-  ComplexityBadge,
-  ActionButton,
-  CleanHeadingM,
-  CleanHeadingS,
-  CleanBody,
-  CleanBodyS,
-  CleanLoadingSpinner,
-  EnhancedLoadingContainer,
-  EmptyStateContainer,
-  InsightBody,
-  ValueHighlight,
-  InsightNote,
-  StyledFooterNote,
-  TabsContainer,
-  TabsList,
-  TabButton,
-  TabContent,
-  HeadingWithTooltip,
-  SearchContainer,
-  SearchInput,
-  FilterContainer,
-  FilterButton,
-  ActiveFilters,
-  FilterChip,
-  SortContainer,
-  SortButton
+  ComplexityBadge
 } from './LabourTimesStyles';
 
 
@@ -477,7 +468,7 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
   );
 });
 
-// Clean Accordion component with filtered item count
+// Enhanced CleanAccordion component that calculates filtered item count
 const CleanAccordion = memo(({ title, children, expanded, onChange, id, searchTerm, complexityFilter }) => {
   const itemCount = useMemo(() => {
     try {
@@ -501,70 +492,25 @@ const CleanAccordion = memo(({ title, children, expanded, onChange, id, searchTe
           }
         });
         
-        return filteredCount.toString();
+        return filteredCount;
       }
-      return '0';
+      return 0;
     } catch (e) {
       console.warn('Error counting items:', e);
-      return '0';
+      return 0;
     }
   }, [children, searchTerm, complexityFilter]);
 
   return (
-    <DetailPanel>
-      <ActionButton 
-        onClick={onChange}
-        style={{ 
-          width: '100%', 
-          textAlign: 'left',
-          justifyContent: 'space-between',
-          padding: 'var(--space-xl) 0',
-          border: 'none',
-          background: 'transparent'
-        }}
-        aria-expanded={expanded}
-        aria-controls={`${id}-content`}
-        id={`${id}-header`}
-      >
-        <span style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 'var(--space-md)',
-          fontFamily: 'var(--font-main)',
-          fontSize: 'var(--text-lg)',
-          fontWeight: '500',
-          color: 'var(--gray-900)'
-        }}>
-          {title}
-          <span style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-sm)',
-            fontWeight: '500',
-            color: 'var(--primary)'
-          }}>
-            {itemCount} items
-          </span>
-        </span>
-        <span style={{ 
-          fontFamily: 'var(--font-main)',
-          fontSize: 'var(--text-lg)',
-          fontWeight: '400',
-          color: 'var(--primary)'
-        }}>
-          {expanded ? '−' : '+'}
-        </span>
-      </ActionButton>
-      {expanded && (
-        <div 
-          id={`${id}-content`}
-          aria-labelledby={`${id}-header`}
-          role="region"
-          style={{ paddingTop: 'var(--space-lg)' }}
-        >
-          {children}
-        </div>
-      )}
-    </DetailPanel>
+    <SharedAccordion
+      title={title}
+      itemCount={itemCount}
+      expanded={expanded}
+      onToggle={onChange}
+      id={id}
+    >
+      {children}
+    </SharedAccordion>
   );
 });
 
@@ -573,83 +519,54 @@ const CleanAccordion = memo(({ title, children, expanded, onChange, id, searchTe
 
 
 /**
- * MatchWarning Component - Following pattern from bulletins component
+ * MatchWarning Component - Using shared component
  */
 const MatchWarning = ({ matchConfidence, vehicleIdentification, vehicleData }) => {
-  if (matchConfidence !== 'fuzzy' || !vehicleIdentification?.matchedTo) return null;
-  
-  const matchedYearInfo = vehicleIdentification.matchedTo.yearRange 
-    ? ` (${vehicleIdentification.matchedTo.yearRange.startYear}-${
-        vehicleIdentification.matchedTo.yearRange.endYear === 'present' 
-          ? 'present' 
-          : vehicleIdentification.matchedTo.yearRange.endYear
-      })`
-    : '';
-  
   const year = extractVehicleYear(vehicleData);
-  const requestedYear = year ? ` (${year})` : '';
   
   return (
-    <WarningPanel>
-      <div>
-        <CleanHeadingS>Approximate Match</CleanHeadingS>
-        <CleanBodyS>
-          We don't have exact data for your <strong>{vehicleIdentification.make} {vehicleIdentification.model}{requestedYear}</strong>. 
-          The times shown are based on <strong>{vehicleIdentification.matchedTo.make} {vehicleIdentification.matchedTo.model}{matchedYearInfo}</strong>, 
-          which is the closest match to your vehicle.
-        </CleanBodyS>
-      </div>
-    </WarningPanel>
+    <SharedMatchWarning
+      matchConfidence={matchConfidence}
+      metadata={vehicleIdentification}
+      vehicleMake={vehicleIdentification?.make}
+      vehicleModel={vehicleIdentification?.model}
+      requestedYear={year}
+    />
   );
 };
 
 /**
- * Loading State Component - Following pattern from bulletins component
+ * Loading State Component - Using shared component
  */
 const LoadingState = ({ vehicleMake, vehicleModel }) => (
-  <LabourTimesContainer>
-    <EnhancedLoadingContainer>
-      <CleanLoadingSpinner />
-      <InsightBody>Loading repair times data...</InsightBody>
-      <CleanBodyS style={{ color: 'var(--gray-500)' }}>
-        Please wait while we compile repair times for {vehicleMake} {vehicleModel}
-      </CleanBodyS>
-    </EnhancedLoadingContainer>
-  </LabourTimesContainer>
+  <SharedLoadingState
+    title="Loading repair times data"
+    subtitle="Please wait while we compile repair times"
+    vehicleMake={vehicleMake}
+    vehicleModel={vehicleModel}
+  />
 );
 
 /**
- * Error State Component - Following pattern from bulletins component
+ * Error State Component - Using shared component
  */
 const ErrorState = ({ error, onRetry }) => (
-  <LabourTimesContainer>
-    <EmptyStateContainer>
-      <WarningIcon sx={{ fontSize: 40, color: 'var(--negative)', marginBottom: 'var(--space-md)' }} />
-      <InsightBody>
-        <ValueHighlight color="var(--negative)">Error Loading Repair Times:</ValueHighlight> {error}
-      </InsightBody>
-      <ActionButton className="primary" onClick={onRetry}>
-        Try again
-      </ActionButton>
-    </EmptyStateContainer>
-  </LabourTimesContainer>
+  <SharedErrorState
+    error={error}
+    onRetry={onRetry}
+    title="Error Loading Repair Times"
+  />
 );
 
 /**
- * Empty State Component - Following pattern from bulletins component
+ * Empty State Component - Using shared component
  */
 const EmptyState = ({ vehicleMake, vehicleModel }) => (
-  <LabourTimesContainer>
-    <EmptyStateContainer>
-      <InfoIcon sx={{ fontSize: 40, color: 'var(--primary)', marginBottom: 'var(--space-md)' }} />
-      <InsightBody>
-        No repair times data available for {vehicleMake} {vehicleModel}
-      </InsightBody>
-      <CleanBodyS style={{ color: 'var(--gray-500)' }}>
-        This could be because the vehicle is too new, too old, or a rare model.
-      </CleanBodyS>
-    </EmptyStateContainer>
-  </LabourTimesContainer>
+  <SharedEmptyState
+    title={`No repair times data available for ${vehicleMake} ${vehicleModel}`}
+    subtitle="This could be because the vehicle is too new, too old, or a rare model."
+    icon={InfoIcon}
+  />
 );
 
 // Main component - restructured for better alignment with bulletins component

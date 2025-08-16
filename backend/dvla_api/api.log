@@ -9204,3 +9204,121 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-16 08:20:14,383 - ves_api - INFO - Starting server in PRODUCTION mode
 2025-08-16 08:20:14,383 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-08-16 08:20:14,384 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-16 09:52:06,223 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-08-16 09:52:08,616 - ves_api - INFO - Cache MISS for VRN: A5ENK. Fetching from DVLA API.
+2025-08-16 09:52:09,839 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 09:52:09,842 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-08-16 09:52:09,843 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55917 - Status: 200 - Process Time: 1.2308s
+2025-08-16 09:52:09,878 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 09:52:09,880 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: A5ENK
+2025-08-16 09:52:09,881 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55901 - Status: 200 - Process Time: 3.6660s
+2025-08-16 09:52:14,098 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 09:52:15,578 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 09:52:16,845 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 09:52:16,846 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 09:52:16,847 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55917 - Status: 200 - Process Time: 2.7516s
+2025-08-16 09:52:16,953 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 09:52:16,955 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 09:52:16,956 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55901 - Status: 200 - Process Time: 1.3907s
+2025-08-16 09:54:01,109 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:54:01,110 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56015 - Status: 200 - Process Time: 0.0020s
+2025-08-16 09:54:01,497 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:54:01,499 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56023 - Status: 200 - Process Time: 0.0037s
+2025-08-16 09:56:17,696 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:56:17,697 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56084 - Status: 200 - Process Time: 0.0030s
+2025-08-16 09:56:18,028 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:56:18,030 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56092 - Status: 200 - Process Time: 0.0050s
+2025-08-16 09:57:12,098 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:57:12,099 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56088 - Status: 200 - Process Time: 0.0090s
+2025-08-16 09:57:12,482 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:57:12,484 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56094 - Status: 200 - Process Time: 0.0066s
+2025-08-16 09:58:40,178 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:58:40,179 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56209 - Status: 200 - Process Time: 0.0038s
+2025-08-16 09:58:40,746 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 09:58:40,747 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56218 - Status: 200 - Process Time: 0.0033s
+2025-08-16 10:04:01,161 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:04:01,162 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56452 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:04:01,749 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:04:01,751 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56460 - Status: 200 - Process Time: 0.0104s
+2025-08-16 10:21:51,985 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:21:51,986 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:57538 - Status: 200 - Process Time: 0.0040s
+2025-08-16 10:21:52,107 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:21:52,109 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:57534 - Status: 200 - Process Time: 0.0102s
+2025-08-16 10:29:21,410 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:29:21,412 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58065 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:29:21,435 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:29:21,436 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58059 - Status: 200 - Process Time: 0.0050s
+2025-08-16 10:30:05,121 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:30:05,122 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58066 - Status: 200 - Process Time: 0.0047s
+2025-08-16 10:30:06,095 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:30:06,097 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58062 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:32:29,711 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:32:29,712 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58335 - Status: 200 - Process Time: 0.0040s
+2025-08-16 10:32:30,517 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:32:30,518 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58329 - Status: 200 - Process Time: 0.0039s
+2025-08-16 10:32:53,780 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:32:53,781 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58336 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:32:54,676 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:32:54,678 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58332 - Status: 200 - Process Time: 0.0035s
+2025-08-16 10:33:58,351 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:33:58,352 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59228 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:33:58,773 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:33:58,773 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59237 - Status: 200 - Process Time: 0.0033s
+2025-08-16 10:35:24,367 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:35:24,368 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59318 - Status: 200 - Process Time: 0.0040s
+2025-08-16 10:35:24,758 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:35:24,759 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59327 - Status: 200 - Process Time: 0.0040s
+2025-08-16 10:37:12,228 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:37:12,230 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59394 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:37:13,070 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:37:13,071 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59401 - Status: 200 - Process Time: 0.0042s
+2025-08-16 10:37:40,443 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:37:40,444 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59396 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:37:41,122 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:37:41,123 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59403 - Status: 200 - Process Time: 0.0050s
+2025-08-16 10:38:52,176 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:38:52,176 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59821 - Status: 200 - Process Time: 0.0037s
+2025-08-16 10:38:52,306 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:38:52,307 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59813 - Status: 200 - Process Time: 0.0030s
+2025-08-16 10:46:39,468 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:46:39,469 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60217 - Status: 200 - Process Time: 0.0041s
+2025-08-16 10:46:40,131 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:46:40,132 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60225 - Status: 200 - Process Time: 0.0050s
+2025-08-16 10:49:29,039 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-08-16 10:49:29,039 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-08-16 10:49:29,040 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-16 10:49:31,679 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 10:49:36,391 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 10:49:37,742 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 10:49:37,745 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 10:49:37,746 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60347 - Status: 200 - Process Time: 6.2487s
+2025-08-16 10:49:37,801 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 10:49:37,803 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 10:49:37,805 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60353 - Status: 200 - Process Time: 1.4411s
+2025-08-16 10:49:42,079 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:49:42,080 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60347 - Status: 200 - Process Time: 0.0040s
+2025-08-16 10:49:43,093 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:49:43,094 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60355 - Status: 200 - Process Time: 0.0048s
+2025-08-16 10:55:55,288 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-08-16 10:55:55,289 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-08-16 10:55:55,289 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-16 10:57:36,164 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 10:57:37,868 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-16 10:57:38,677 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 10:57:38,679 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 10:57:38,681 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55430 - Status: 200 - Process Time: 0.8155s
+2025-08-16 10:57:38,776 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-16 10:57:38,779 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-16 10:57:38,780 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55422 - Status: 200 - Process Time: 2.6228s
+2025-08-16 10:58:43,464 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:58:43,465 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55470 - Status: 200 - Process Time: 0.0031s
+2025-08-16 10:58:43,808 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 10:58:43,810 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55477 - Status: 200 - Process Time: 0.0044s
+2025-08-16 11:01:08,807 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 11:01:08,808 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55616 - Status: 200 - Process Time: 0.0030s
+2025-08-16 11:01:09,215 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 11:01:09,216 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55620 - Status: 200 - Process Time: 0.0033s
+2025-08-16 11:01:34,285 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 11:01:34,285 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55618 - Status: 200 - Process Time: 0.0080s
+2025-08-16 11:01:34,801 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-16 11:01:34,801 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55621 - Status: 200 - Process Time: 0.0020s

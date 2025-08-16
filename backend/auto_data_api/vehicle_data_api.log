@@ -5810,3 +5810,17 @@
 2025-08-16 10:55:58,766 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-08-16 10:55:58,768 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-08-16 10:55:58,768 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-16 11:13:35,168 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-16 11:13:35,169 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-16 11:13:35,169 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-16 11:13:35,169 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-16 11:13:35,170 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-16 11:13:35,172 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-16 11:13:35,172 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-16 11:13:35,173 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-16 11:13:35,173 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-16 11:13:35,173 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-16 11:13:35,173 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-16 11:13:35,179 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0154s
+2025-08-16 11:25:11,894 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-16 11:25:11,898 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0060s

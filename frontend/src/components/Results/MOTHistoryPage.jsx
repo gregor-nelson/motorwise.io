@@ -39,10 +39,6 @@ import {
 import MotDefectModal from './DefectDetail/MotDefectModal';
 import Alert from '@mui/material/Alert';
 
-// Simple tooltip implementation to maintain functionality
-const useTooltip = () => ({ withTooltip: (component) => component });
-const ValueWithTooltip = ({ children, tooltip, placement }) => children;
-
 // ORIGINAL CACHE AND CONFIG - Unchanged to preserve working behavior
 const motCache = {};
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -100,7 +96,6 @@ const formatRegistration = (reg) => {
 };
 
 const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
-  const { withTooltip } = useTooltip();
   
   // ORIGINAL STATE - Unchanged
   const [motData, setMotData] = useState(null);
@@ -380,19 +375,14 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
       
       {loading && (
         <LoadingContainer>
-          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <VehicleRegistration>
-              {formatRegistration(registration)}
-            </VehicleRegistration>
-          </div>
           <LoadingSpinner />
-          <LoadingText>Loading MOT history...</LoadingText>
+          <LoadingText>Loading MOT history for {formatRegistration(registration)}...</LoadingText>
         </LoadingContainer>
       )}
       
       {!loading && error && (
         <FadeInContent show={!loading} delay={100}>
-          <Alert severity="error" style={{ marginBottom: '20px' }}>
+          <Alert severity="error" style={{ marginBottom: 'var(--space-xl)' }}>
             {error}
           </Alert>
         </FadeInContent>
@@ -498,25 +488,20 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                                 <AnimatedDefectList as={DefectList} show={showDefects[index]}>
                                   {mot.defects.map((defect, i) => (
                                     <li key={i}>
-                                      <ValueWithTooltip 
-                                        tooltip="View MOT manual reference details"
-                                        placement="top"
+                                      <ClickableDefectItem
+                                        expanded={false}
+                                        onClick={() => openDefectModal(defect)}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyDown={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            openDefectModal(defect);
+                                          }
+                                        }}
                                       >
-                                        <ClickableDefectItem
-                                          expanded={false}
-                                          onClick={() => openDefectModal(defect)}
-                                          role="button"
-                                          tabIndex={0}
-                                          onKeyDown={(e) => {
-                                            if (e.key === 'Enter' || e.key === ' ') {
-                                              e.preventDefault();
-                                              openDefectModal(defect);
-                                            }
-                                          }}
-                                        >
-                                          <strong>{defect.text}</strong>
-                                        </ClickableDefectItem>
-                                      </ValueWithTooltip>
+                                        <strong>{defect.text}</strong>
+                                      </ClickableDefectItem>
                                     </li>
                                   ))}
                                 </AnimatedDefectList>
@@ -528,25 +513,20 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                                 <AnimatedDefectList as={DefectList} show={showDefects[index]}>
                                   {mot.advisories.map((advisory, i) => (
                                     <li key={i}>
-                                      <ValueWithTooltip 
-                                        tooltip="View MOT manual reference details"
-                                        placement="top"
+                                      <ClickableDefectItem
+                                        expanded={false}
+                                        onClick={() => openDefectModal(advisory)}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyDown={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            openDefectModal(advisory);
+                                          }
+                                        }}
                                       >
-                                        <ClickableDefectItem
-                                          expanded={false}
-                                          onClick={() => openDefectModal(advisory)}
-                                          role="button"
-                                          tabIndex={0}
-                                          onKeyDown={(e) => {
-                                            if (e.key === 'Enter' || e.key === ' ') {
-                                              e.preventDefault();
-                                              openDefectModal(advisory);
-                                            }
-                                          }}
-                                        >
-                                          <strong>{advisory.text}</strong>
-                                        </ClickableDefectItem>
-                                      </ValueWithTooltip>
+                                        <strong>{advisory.text}</strong>
+                                      </ClickableDefectItem>
                                     </li>
                                   ))}
                                 </AnimatedDefectList>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   MarketDashContainer,
-  PageTitle,
+  SectionHeader,
   BodyText,
   BackLink,
   ErrorSummary,
@@ -11,9 +11,9 @@ import {
   ErrorMessage,
   Input,
   Button,
-  GridContainer,
-  GridColumn,
-  SectionBreak,
+  DataGrid,
+  MetricGroup,
+  ReportSection,
 } from './ResultsStyles';
 
 // Import the MOTHistoryPage and VehicleHeader components
@@ -75,7 +75,7 @@ const VehicleSearch = () => {
   return (
     <MarketDashContainer>
       {searchPerformed ? (
-        <>
+        <ReportSection>
           <BackLink href="#" onClick={(e) => {
             e.preventDefault();
             handleReset();
@@ -83,24 +83,20 @@ const VehicleSearch = () => {
             Search another vehicle
           </BackLink>
           
-          {/* Replace the GovUKHeadingL with VehicleHeader component */}
           <VehicleHeader registration={searchedRegistration} />
           
           <MOTHistoryPage registration={searchedRegistration} />
-        </>
+        </ReportSection>
       ) : (
-        <>
-          <PageTitle>
-            Check MOT History
-          </PageTitle>
+        <ReportSection>
+          <SectionHeader>
+            <h1>Check MOT History</h1>
+          </SectionHeader>
           
           <BodyText>
             Find information about a vehicle's MOT test history, including test date, expiry date, test location, mileage, and any advisories or failures.
           </BodyText>
           
-          <SectionBreak />
-          
-          {/* Error summary */}
           {error && (
             <ErrorSummary 
               aria-labelledby="error-summary-title" 
@@ -118,9 +114,8 @@ const VehicleSearch = () => {
             </ErrorSummary>
           )}
           
-          {/* Form */}
-          <GridContainer>
-            <GridColumn>
+          <DataGrid>
+            <MetricGroup>
               <form onSubmit={handleSearch}>
                 <FormGroup error={!!error}>
                   <Label htmlFor="registration">
@@ -149,9 +144,9 @@ const VehicleSearch = () => {
                   Check vehicle →
                 </Button>
               </form>
-            </GridColumn>
-          </GridContainer>
-        </>
+            </MetricGroup>
+          </DataGrid>
+        </ReportSection>
       )}
     </MarketDashContainer>
   );

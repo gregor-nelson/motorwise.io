@@ -1,6 +1,6 @@
 import React from 'react';
 import './PremiumStyles.css';
-import PremiumBackground3D from './PremiumBackground3D';
+// import PremiumBackground3D from './PremiumBackground3D';
 
 const PremiumVehicleReports = () => {
 
@@ -51,7 +51,7 @@ const PremiumVehicleReports = () => {
 
   return (
     <div className="premium-container" style={{ position: 'relative' }}>
-      <PremiumBackground3D />
+      {/* <PremiumBackground3D /> */}
       <div style={{ position: 'relative', zIndex: 10 }}>
       <header className="premium-section-header">
         <h1>Professional Vehicle Intelligence</h1>

@@ -1,53 +1,5 @@
 import { styled } from '@mui/material/styles';
-
-// Minimal Clean Design System - Ultra Restrained (exact copy from DVLADataHeader)
-const MinimalTokens = `
-  :root {
-    /* Ultra Clean Color Palette - Minimal */
-    --gray-900: #1a1a1a;
-    --gray-800: #2d2d2d;
-    --gray-700: #404040;
-    --gray-600: #525252;
-    --gray-500: #737373;
-    --gray-400: #a3a3a3;
-    --gray-300: #d4d4d4;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f9;
-    --gray-50: #fafafa;
-    --white: #ffffff;
-
-    /* Minimal Accent Colors */
-    --primary: #3b82f6;
-    --positive: #059669;
-    --negative: #dc2626;
-    --warning: #d97706;
-
-    /* Clean Spacing - Generous White Space */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-
-    /* Typography - Clean Hierarchy */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-
-    /* Clean Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-
-    /* Minimal Transitions */
-    --transition: all 0.15s ease;
-  }
-`;
+import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
 
 // Ultra Clean Container - No borders, minimal styling (matches DVLADataHeader pattern)
 export const TechSpecsContainer = styled('div')`

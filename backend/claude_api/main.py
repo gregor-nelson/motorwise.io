@@ -8,6 +8,8 @@ import time
 import json
 import logging
 import httpx
+import tempfile
+import fcntl
 from functools import lru_cache
 from typing import Optional, Dict, Any, List
 from datetime import datetime
@@ -72,6 +74,8 @@ class Config:
     # NEW: File-based cache settings
     CACHE_DIR = os.getenv("CACHE_DIR", "./cache/analysis")
     USE_FILE_CACHE = os.getenv("USE_FILE_CACHE", "true").lower() == "true"
+    CACHE_MAX_SIZE_MB = int(os.getenv("CACHE_MAX_SIZE_MB", "100"))  # 100MB default
+    CACHE_MAX_FILES = int(os.getenv("CACHE_MAX_FILES", "1000"))  # 1000 files default
     
     # Rate limiting settings
     RATE_LIMIT_REQUESTS = int(os.getenv("RATE_LIMIT_REQUESTS", "5"))
@@ -88,9 +92,43 @@ class HealthResponse(BaseModel):
     cache_size: int
     file_cache_entries: Optional[int] = None
 
+class SystemStatus(BaseModel):
+    name: str
+    status: str  # "good", "warning", "poor"
+    notes: str
+
+class RiskAssessment(BaseModel):
+    overall: str  # "good", "warning", "poor"
+    systems: List[SystemStatus]
+
+class KeyFinding(BaseModel):
+    system: str
+    issues: List[str]
+    severity: str  # "good", "warning", "poor"
+
+class BulletinMatch(BaseModel):
+    bulletin: str
+    title: str
+    motConnection: str
+
+class MotPatterns(BaseModel):
+    hasPatterns: bool
+    description: str
+    timeline: List[str]
+
+class Summary(BaseModel):
+    notes: List[str]
+
+class StructuredAnalysis(BaseModel):
+    riskAssessment: RiskAssessment
+    keyFindings: List[KeyFinding]
+    bulletinMatches: List[BulletinMatch]
+    motPatterns: MotPatterns
+    summary: Summary
+
 class AnalysisResponse(BaseModel):
     registration: str
-    analysis: str
+    analysis: StructuredAnalysis
     make: Optional[str] = None
     model: Optional[str] = None
     timestamp: int
@@ -98,6 +136,9 @@ class AnalysisResponse(BaseModel):
 
 # In-memory cache for analysis results
 analysis_cache = {}
+
+# Request deduplication - track pending requests to prevent duplicate API calls
+pending_requests = {}
 
 # NEW: File-based cache implementation
 class PersistentCache:
@@ -170,18 +211,38 @@ class PersistentCache:
         return None
     
     def set(self, key, data):
-        """Store an item in the persistent cache."""
-        # Update in-memory cache
+        """Store an item in the persistent cache with file locking."""
+        # Update in-memory cache first
         analysis_cache[key] = data
         
-        # Update filesystem cache
+        # Update filesystem cache with atomic write and locking
         cache_path = self._get_cache_path(key)
         try:
-            with open(cache_path, "w") as f:
+            # Write to temporary file first, then atomic move
+            temp_path = cache_path.with_suffix('.tmp')
+            
+            with open(temp_path, "w") as f:
+                # Lock the file to prevent concurrent writes
+                fcntl.flock(f.fileno(), fcntl.LOCK_EX)
                 json.dump(data, f, indent=2)
+                f.flush()
+                os.fsync(f.fileno())  # Ensure data is written to disk
+            
+            # Atomic move - this prevents partial reads
+            temp_path.replace(cache_path)
             logger.debug(f"Saved cache file for {key}")
+            
+            # Enforce cache limits after successful write
+            self.enforce_cache_limits()
+            
         except Exception as e:
             logger.error(f"Error writing cache file {cache_path}: {str(e)}")
+            # Clean up temp file if it exists
+            if temp_path.exists():
+                try:
+                    temp_path.unlink()
+                except:
+                    pass
     
     def clear(self):
         """Clear all cache entries."""
@@ -215,6 +276,71 @@ class PersistentCache:
     def get_entry_count(self):
         """Count the number of cache files on disk."""
         return len(list(self.cache_dir.glob("*.json")))
+    
+    def get_cache_size_mb(self):
+        """Get total cache size in MB."""
+        total_size = 0
+        for cache_file in self.cache_dir.glob("*.json"):
+            try:
+                total_size += cache_file.stat().st_size
+            except:
+                pass
+        return total_size / (1024 * 1024)  # Convert to MB
+    
+    def cleanup_old_entries(self):
+        """Remove oldest entries if cache exceeds limits."""
+        cache_files = list(self.cache_dir.glob("*.json"))
+        
+        # Check if we exceed file count limit
+        if len(cache_files) > Config.CACHE_MAX_FILES:
+            # Sort by modification time (oldest first)
+            cache_files.sort(key=lambda f: f.stat().st_mtime)
+            files_to_remove = len(cache_files) - Config.CACHE_MAX_FILES
+            
+            for cache_file in cache_files[:files_to_remove]:
+                try:
+                    # Remove from in-memory cache too
+                    key = f"analysis_{cache_file.stem}"
+                    if key in analysis_cache:
+                        del analysis_cache[key]
+                    
+                    cache_file.unlink()
+                    logger.debug(f"Removed old cache file: {cache_file}")
+                except Exception as e:
+                    logger.warning(f"Error removing old cache file {cache_file}: {str(e)}")
+        
+        # Check if we exceed size limit
+        current_size = self.get_cache_size_mb()
+        if current_size > Config.CACHE_MAX_SIZE_MB:
+            # Sort remaining files by modification time (oldest first)
+            remaining_files = list(self.cache_dir.glob("*.json"))
+            remaining_files.sort(key=lambda f: f.stat().st_mtime)
+            
+            # Remove files until we're under the size limit
+            for cache_file in remaining_files:
+                if current_size <= Config.CACHE_MAX_SIZE_MB * 0.8:  # Stop at 80% of limit
+                    break
+                
+                try:
+                    file_size_mb = cache_file.stat().st_size / (1024 * 1024)
+                    
+                    # Remove from in-memory cache too
+                    key = f"analysis_{cache_file.stem}"
+                    if key in analysis_cache:
+                        del analysis_cache[key]
+                    
+                    cache_file.unlink()
+                    current_size -= file_size_mb
+                    logger.debug(f"Removed cache file for size limit: {cache_file}")
+                except Exception as e:
+                    logger.warning(f"Error removing cache file {cache_file}: {str(e)}")
+    
+    def enforce_cache_limits(self):
+        """Check and enforce cache size limits after each write."""
+        try:
+            self.cleanup_old_entries()
+        except Exception as e:
+            logger.error(f"Error enforcing cache limits: {str(e)}")
 
 # Initialize persistent cache
 persistent_cache = PersistentCache()
@@ -371,23 +497,51 @@ async def analyze_with_claude(registration: str, mot_data: dict, bulletin_data: 
         mot_history = prepare_mot_history_for_analysis(mot_data)
         
         # Prepare the prompt for Claude
-        prompt = f"""I need to analyze MOT history and Technical Service Bulletins for a vehicle and produce a technical analysis component that would fit seamlessly in a premium vehicle report. 
+        prompt = f"""I need to analyze MOT history and Technical Service Bulletins for a vehicle and produce a technical analysis for a premium vehicle report.
 
 Please analyze the patterns, potential issues, and correlations between the MOT history and known manufacturer issues for this {vehicle_info.get('make')} {vehicle_info.get('model')}.
 
-Return the analysis in markdown format with these sections:
-1. A top-level risk assessment table with visual indicators (use emoji ✓, ⚠️, 🔴)
-2. Key Findings organized by vehicle system (only include systems with actual issues)
-3. Technical Bulletin Matches table showing connections between MOT issues and known bulletins
-4. MOT Failure Pattern analysis if relevant
-5. Summary Notes that are factual and concise
+Return your analysis as a JSON object with this exact structure:
+
+{{
+  "riskAssessment": {{
+    "overall": "good|warning|poor",
+    "systems": [
+      {{"name": "Engine", "status": "good|warning|poor", "notes": "Brief status description"}}
+    ]
+  }},
+  "keyFindings": [
+    {{
+      "system": "System Name (e.g., Braking System)",
+      "issues": ["List of specific issues found"],
+      "severity": "good|warning|poor"
+    }}
+  ],
+  "bulletinMatches": [
+    {{
+      "bulletin": "Bulletin ID or reference",
+      "title": "Brief title of the bulletin",
+      "motConnection": "How this relates to MOT history"
+    }}
+  ],
+  "motPatterns": {{
+    "hasPatterns": true/false,
+    "description": "Description of any patterns found",
+    "timeline": ["Key timeline events if patterns exist"]
+  }},
+  "summary": {{
+    "notes": ["Key summary points about the vehicle"]
+  }}
+}}
 
 IMPORTANT GUIDELINES:
+- Return ONLY valid JSON, no markdown or extra text
 - The analysis must be factual and ONLY based on information in the provided data
 - Do NOT include any cost estimates or timeframes for repairs
 - Do NOT make assumptions about future problems without evidence
-- Do NOT include empty sections if there is no relevant data
-- Make the analysis professional, concise, and informative
+- Only include sections with actual data - omit empty arrays/objects
+- Use "good" (✓), "warning" (⚠️), or "poor" (🔴) for status values
+- Be professional, concise, and informative
 
 MOT History:
 {json.dumps(mot_history, indent=2)}
@@ -430,9 +584,48 @@ Technical Service Bulletins:
             response_data = claude_response.json()
             
             # Extract the analysis from Claude's response
-            analysis = response_data["content"][0]["text"]
+            raw_analysis = response_data["content"][0]["text"]
             
-            return analysis
+            # Parse and validate the JSON response from Claude
+            try:
+                # Claude sometimes wraps JSON in markdown code blocks, so clean it
+                cleaned_text = raw_analysis.strip()
+                if cleaned_text.startswith('```json'):
+                    cleaned_text = cleaned_text[7:]  # Remove ```json
+                if cleaned_text.startswith('```'):
+                    cleaned_text = cleaned_text[3:]   # Remove ```
+                if cleaned_text.endswith('```'):
+                    cleaned_text = cleaned_text[:-3]  # Remove trailing ```
+                
+                cleaned_text = cleaned_text.strip()
+                
+                # Parse the JSON
+                analysis_data = json.loads(cleaned_text)
+                
+                # Validate required structure
+                required_keys = ["riskAssessment", "keyFindings", "bulletinMatches", "motPatterns", "summary"]
+                for key in required_keys:
+                    if key not in analysis_data:
+                        logger.warning(f"Missing required key '{key}' in Claude response")
+                        analysis_data[key] = {} if key in ["riskAssessment", "motPatterns", "summary"] else []
+                
+                return analysis_data
+                
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse Claude JSON response: {str(e)}")
+                logger.error(f"Raw response: {raw_analysis}")
+                
+                # Fallback: return a basic structure with error info
+                return {
+                    "riskAssessment": {
+                        "overall": "warning",
+                        "systems": [{"name": "Analysis", "status": "warning", "notes": "Analysis format error"}]
+                    },
+                    "keyFindings": [],
+                    "bulletinMatches": [],
+                    "motPatterns": {"hasPatterns": False, "description": "", "timeline": []},
+                    "summary": {"notes": ["Analysis could not be processed properly"]}
+                }
             
     except httpx.HTTPStatusError as e:
         logger.error(f"Claude API error: {str(e)}")
@@ -495,11 +688,28 @@ async def get_vehicle_analysis(registration: str, response: Response):
         cached_result["cached"] = True
         return cached_result
     
+    # Check if there's already a pending request for this registration
+    if registration in pending_requests:
+        logger.info(f"Request already pending for {registration}, waiting for completion")
+        # Wait for the pending request to complete
+        try:
+            result = await pending_requests[registration]
+            result["cached"] = False  # This was generated during this session
+            response.headers["X-Cache"] = "DEDUPED"
+            response.headers["Cache-Control"] = f"max-age={Config.CACHE_TTL}"
+            return result
+        except Exception as e:
+            # If the pending request failed, continue with new request
+            logger.warning(f"Pending request failed for {registration}: {str(e)}")
+            if registration in pending_requests:
+                del pending_requests[registration]
+    
     # Set cache headers for new analysis
     response.headers["X-Cache"] = "MISS"
     response.headers["Cache-Control"] = f"max-age={Config.CACHE_TTL}"
     
-    try:
+    # Create a task for this request to handle deduplication
+    async def process_analysis():
         # Step 1: Fetch MOT data
         mot_data = await fetch_mot_data(registration)
         
@@ -561,7 +771,13 @@ async def get_vehicle_analysis(registration: str, response: Response):
         update_analysis_cache(cache_key, result)
         
         return result
-        
+    
+    # Store the task to handle concurrent requests
+    pending_requests[registration] = process_analysis()
+    
+    try:
+        result = await pending_requests[registration]
+        return result
     except HTTPException:
         raise
     except Exception as e:
@@ -570,6 +786,10 @@ async def get_vehicle_analysis(registration: str, response: Response):
             status_code=500,
             detail=f"An error occurred while analyzing the vehicle: {str(e)}"
         )
+    finally:
+        # Clean up the pending request
+        if registration in pending_requests:
+            del pending_requests[registration]
 
 @app.post("/api/v1/cache/clear")
 async def clear_cache():

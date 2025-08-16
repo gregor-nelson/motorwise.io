@@ -2453,3 +2453,13 @@
 2025-08-15 12:43:24,374 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
 2025-08-15 12:43:24,375 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
 2025-08-15 12:43:24,375 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-08-15 13:22:07,041 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-15 13:22:07,046 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-15 13:22:07,047 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-15 13:22:07,047 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-15 13:22:07,047 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-08-16 08:20:17,782 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-16 08:20:17,807 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-16 08:20:17,835 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-16 08:20:17,835 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-16 08:20:17,836 - bulletins_api - INFO - API started successfully with 2 bulletin records

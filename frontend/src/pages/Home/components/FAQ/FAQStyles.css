@@ -14,40 +14,73 @@
   min-height: 100vh;
 }
 
-/* ===== FAQ HERO SECTION ===== */
+/* ===== FAQ HERO SECTION - CENTERED LIKE HERO COMPONENT ===== */
 .faq-hero {
   background: var(--white);
   padding: var(--space-3xl) 0;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faq-hero .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: var(--space-lg);
-  padding-right: var(--space-lg);
+  padding: 0 var(--space-lg);
+  width: 100%;
 }
 
 .hero-header {
   text-align: center;
-  margin-bottom: var(--space-3xl);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto var(--space-3xl) auto;
 }
 
 .hero-title {
   font-family: var(--font-main);
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: 600;
   color: var(--gray-900);
-  margin: 0;
-  margin-bottom: var(--space-xl);
+  margin: 0 0 var(--space-xl) 0;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-description {
   font-family: var(--font-main);
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   font-weight: 400;
   color: var(--gray-600);
   max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.4;
+  margin: 0 auto var(--space-3xl) auto;
+  line-height: 1.5;
+}
+
+/* ===== RESPONSIVE DESIGN FOR FAQ HERO - MATCHES HERO COMPONENT ===== */
+@media (max-width: 767px) {
+  .faq-hero {
+    padding: var(--space-2xl) 0;
+    min-height: 40vh;
+  }
+  
+  .faq-hero .container {
+    padding: 0 var(--space-md);
+  }
+  
+  .hero-title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .hero-description {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2xl);
+  }
 }
 
 /* ===== TAB NAVIGATION ===== */

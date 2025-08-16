@@ -4,62 +4,14 @@
    ============================================ */
 
 import { styled } from '@mui/material/styles';
+import{ MarketDashTokens as MinimalTokens } from '../../styles/styles';
 
-/* ===== MINIMAL DESIGN TOKENS (EXACT COPY FROM DVLADataHeader) ===== */
-const MinimalTokens = `
-  :root {
-    /* Ultra Clean Color Palette - Minimal */
-    --gray-900: #1a1a1a;
-    --gray-800: #2d2d2d;
-    --gray-700: #404040;
-    --gray-600: #525252;
-    --gray-500: #737373;
-    --gray-400: #a3a3a3;
-    --gray-300: #d4d4d4;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f9;
-    --gray-50: #fafafa;
-    --white: #ffffff;
-
-    /* Minimal Accent Colors */
-    --primary: #3b82f6;
-    --positive: #059669;
-    --negative: #dc2626;
-    --warning: #d97706;
-
-    /* Clean Spacing - Generous White Space */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-
-    /* Typography - Clean Hierarchy */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-
-    /* Clean Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-
-    /* Minimal Transitions */
-    --transition: all 0.15s ease;
-  }
-`;
-
-// Ultra Clean Container - No borders, minimal styling (matches DVLADataHeader pattern)
+// Ultra Clean Container - Transparent background, no borders, minimal styling (matches DVLADataHeader pattern)
 export const MarketDashContainer = styled('div')`
   ${MinimalTokens}
   
   font-family: var(--font-main);
-  background: var(--white);
+  background: transparent;
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-lg);
@@ -557,11 +509,7 @@ export const FadeInContent = styled('div')(({ show, delay = 0 }) => ({
 
 export const FormGroup = styled('div')(({ error }) => ({
   marginBottom: 'var(--space-lg)',
-  
-  ...(error && {
-    borderLeft: '4px solid var(--negative)',
-    paddingLeft: 'var(--space-md)',
-  })
+  /* Removed left border highlight for ultra-minimal design */
 }));
 
 export const Label = styled('label')`
@@ -589,8 +537,7 @@ export const Input = styled('input')(({ error }) => ({
   fontFamily: 'var(--font-main)',
   color: 'var(--gray-900)',
   background: 'var(--white)',
-  border: `2px solid ${error ? 'var(--negative)' : 'var(--gray-300)'}`,
-  borderRadius: 'var(--radius-sm)',
+  border: `1px solid ${error ? 'var(--negative)' : 'var(--gray-300)'}`,
   transition: 'var(--transition)',
   
   '&:hover': {
@@ -600,7 +547,7 @@ export const Input = styled('input')(({ error }) => ({
   '&:focus': {
     outline: 'none',
     borderColor: error ? 'var(--negative)' : 'var(--primary)',
-    boxShadow: `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}`,
+    /* Removed box shadow for ultra-minimal design */
   },
 }));
 
@@ -642,8 +589,8 @@ export const Button = styled('button')(({ variant = 'primary', size = 'normal' }
   }),
   
   '&:focus': {
-    outline: '2px solid var(--primary)',
-    outlineOffset: '2px',
+    outline: '1px solid var(--primary)',
+    outlineOffset: '1px',
   },
   
   '&:disabled': {
@@ -739,16 +686,16 @@ export const ErrorMessage = styled('div')`
 `;
 
 export const ErrorSummary = styled('div')`
-  background: var(--negative);
-  color: var(--white);
-  padding: var(--space-lg);
-  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--negative);
+  padding: var(--space-lg) 0;
   margin-bottom: var(--space-xl);
   
   h2 {
     font-size: var(--text-lg);
     font-weight: 600;
     margin: 0 0 var(--space-md) 0;
+    color: var(--negative);
   }
   
   ul {
@@ -762,7 +709,7 @@ export const ErrorSummary = styled('div')`
   }
   
   a {
-    color: var(--white);
+    color: var(--negative);
     text-decoration: underline;
     
     &:hover {

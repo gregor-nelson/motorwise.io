@@ -1,63 +1,10 @@
 import { styled } from '@mui/material/styles';
+import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
 
-// TTS Professional Design System - Harmonized with reference patterns
-const TTSDesignTokens = `
-  :root {
-    /* TTS Color Palette - Directly from reference files */
-    --gray-900: #2c2c2c;
-    --gray-800: #3a3a3a;
-    --gray-700: #4a4a4a;
-    --gray-600: #5a5a5a;
-    --gray-500: #6a6a6a;
-    --gray-400: #8a8a8a;
-    --gray-300: #a0a0a0;
-    --gray-200: #c4c4c4;
-    --gray-100: #e5e5e5;
-    --gray-50: #f4f4f4;
-    --white: #fdfdfd;
-    
-    /* TTS-specific accent colors */
-    --primary: #3b82f6;
-    --accent-blue: #3b82f6;
-    --accent-blue-hover: #2563eb;
-    --accent-green: #10b981;
-    --accent-orange: #f59e0b;
-    --accent-red: #ef4444;
-    --positive: #10b981;
-    --negative: #ef4444;
-    --warning: #f59e0b;
 
-    /* Spacing - Same system as reference */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-
-    /* Typography - Same as reference */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-
-    /* Typography - Same as reference with Jost */
-    --font-main: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-    
-    /* Transitions - Same as reference */
-    --transition: all 0.2s ease;
-    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-`;
-
-// Ultra Clean Container - No decorative elements
+// Ultra Clean Container - No decorative elements (EXACT copy from DVLADataHeader)
 export const CleanContainer = styled('div')`
-  ${TTSDesignTokens}
+  ${MinimalTokens}
 
   font-family: var(--font-main);
   background: var(--white);
@@ -360,7 +307,7 @@ export const ErrorMessage = styled('div')`
   line-height: 1.5;
 `;
 
-// Minimal Status Indicators - Just Color, No Borders (from DVLADataHeader)
+// Minimal Status Indicators - Just Color, No Borders (EXACT copy from DVLADataHeader)
 export const StatusIndicator = styled('span', {
   shouldForwardProp: prop => prop !== 'status',
 })`
@@ -373,10 +320,12 @@ export const StatusIndicator = styled('span', {
       case 'valid':
       case 'taxed':
       case 'no action required':
+      case 'no':
         return `color: var(--positive);`;
       case 'expired':
       case 'sorn':
       case 'untaxed':
+      case 'yes':
         return `color: var(--negative);`;
       case 'due soon':
       case 'advisory':

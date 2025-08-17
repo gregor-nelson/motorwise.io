@@ -8,7 +8,10 @@ import time
 import json
 import logging
 import httpx
-import fcntl
+try:
+    import fcntl
+except ImportError:
+    fcntl = None  # Windows doesn't have fcntl
 import tempfile
 from functools import lru_cache
 from typing import Optional, Dict, Any, List
@@ -228,8 +231,9 @@ class PersistentCache:
             temp_path = cache_path.with_suffix('.tmp')
             
             with open(temp_path, "w") as f:
-                # Lock the file during write
-                fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+                # Lock the file during write (if fcntl is available)
+                if fcntl:
+                    fcntl.flock(f.fileno(), fcntl.LOCK_EX)
                 json.dump(data, f, indent=2)
                 f.flush()
                 os.fsync(f.fileno())  # Force write to disk

@@ -21,3 +21,21 @@
 2025-08-17 02:48:28,605 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
 2025-08-17 02:48:28,838 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-08-17 02:48:28,844 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-17 03:16:38,650 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-17 03:16:40,663 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-17 03:16:40,665 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-17 03:16:41,846 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-17 03:16:41,848 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-17 03:17:05,227 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-17 03:17:05,235 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 26.5869s
+2025-08-17 03:53:04,819 - vehicle_analysis_api - INFO - Fetching MOT data for registration: J531WAX
+2025-08-17 03:53:06,256 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/J531WAX "HTTP/1.1 200 OK"
+2025-08-17 03:53:06,259 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA EUNOS
+2025-08-17 03:53:07,509 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-17 03:53:07,510 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-17 03:53:07,518 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/EUNOS "HTTP/1.1 404 Not Found"
+2025-08-17 03:53:07,519 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA EUNOS
+2025-08-17 03:53:07,520 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
+2025-08-17 03:53:24,794 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-17 03:53:24,799 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 19.9816s
+2025-08-17 04:22:10,351 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s

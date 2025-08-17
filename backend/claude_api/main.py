@@ -8,6 +8,8 @@ import time
 import json
 import logging
 import httpx
+import fcntl
+import tempfile
 from functools import lru_cache
 from typing import Optional, Dict, Any, List
 from datetime import datetime
@@ -119,8 +121,27 @@ class AnalysisResponse(BaseModel):
     timestamp: int
     cached: bool = False
 
-# In-memory cache for analysis results
+# In-memory cache for analysis results with size management
 analysis_cache = {}
+MEMORY_CACHE_MAX_SIZE = 100  # Maximum number of entries in memory cache
+
+def cleanup_memory_cache():
+    """Remove oldest entries when cache gets too large"""
+    if len(analysis_cache) <= MEMORY_CACHE_MAX_SIZE:
+        return
+    
+    # Sort by timestamp and remove oldest entries
+    sorted_items = sorted(
+        analysis_cache.items(), 
+        key=lambda x: x[1].get('timestamp', 0)
+    )
+    
+    # Keep only the most recent entries
+    entries_to_keep = sorted_items[-MEMORY_CACHE_MAX_SIZE:]
+    analysis_cache.clear()
+    analysis_cache.update(dict(entries_to_keep))
+    
+    logger.info(f"Cleaned up memory cache, kept {len(analysis_cache)} entries")
 
 # NEW: File-based cache implementation
 class PersistentCache:
@@ -193,18 +214,34 @@ class PersistentCache:
         return None
     
     def set(self, key, data):
-        """Store an item in the persistent cache."""
+        """Store an item in the persistent cache with file locking."""
         # Update in-memory cache
         analysis_cache[key] = data
         
-        # Update filesystem cache
+        # Clean up memory cache if it's getting too large
+        cleanup_memory_cache()
+        
+        # Update filesystem cache with atomic write
         cache_path = self._get_cache_path(key)
         try:
-            with open(cache_path, "w") as f:
+            # Use atomic write to prevent corruption
+            temp_path = cache_path.with_suffix('.tmp')
+            
+            with open(temp_path, "w") as f:
+                # Lock the file during write
+                fcntl.flock(f.fileno(), fcntl.LOCK_EX)
                 json.dump(data, f, indent=2)
+                f.flush()
+                os.fsync(f.fileno())  # Force write to disk
+            
+            # Atomic rename
+            temp_path.rename(cache_path)
             logger.debug(f"Saved cache file for {key}")
         except Exception as e:
             logger.error(f"Error writing cache file {cache_path}: {str(e)}")
+            # Clean up temp file if it exists
+            if temp_path.exists():
+                temp_path.unlink(missing_ok=True)
     
     def clear(self):
         """Clear all cache entries."""
@@ -242,6 +279,9 @@ class PersistentCache:
 # Initialize persistent cache
 persistent_cache = PersistentCache()
 
+# HTTP client configuration for external API calls
+HTTP_LIMITS = httpx.Limits(max_keepalive_connections=20, max_connections=100)
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Vehicle Analysis API",
@@ -258,6 +298,12 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["X-Cache", "Cache-Control"]
 )
+
+# App lifecycle events
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Clean up resources on app shutdown"""
+    logger.info("Application shutting down")
 
 # Add middleware to log requests
 @app.middleware("http")
@@ -303,6 +349,7 @@ def update_analysis_cache(cache_key, data):
         persistent_cache.set(cache_key, data)
     else:
         analysis_cache[cache_key] = data
+        cleanup_memory_cache()  # Clean up memory cache for non-file cache mode too
     logger.debug(f"Updated cache for {cache_key}")
 
 # Helper Functions
@@ -310,8 +357,9 @@ async def fetch_mot_data(registration: str):
     """Fetch MOT history data from the MOT API."""
     try:
         logger.info(f"Fetching MOT data for registration: {registration}")
-        async with httpx.AsyncClient(timeout=Config.TIMEOUT_SECONDS) as client:
-            mot_api_url = f"{Config.MOT_API_URL}/api/v1/vehicle/registration/{registration}"
+        mot_api_url = f"{Config.MOT_API_URL}/api/v1/vehicle/registration/{registration}"
+        
+        async with httpx.AsyncClient(timeout=Config.TIMEOUT_SECONDS, limits=HTTP_LIMITS) as client:
             response = await client.get(mot_api_url)
             response.raise_for_status()
             return response.json()
@@ -342,7 +390,7 @@ async def fetch_bulletin_data(make: str, model: str, engine_code: Optional[str] 
         if year:
             vehicle_data["year"] = year
             
-        async with httpx.AsyncClient(timeout=Config.TIMEOUT_SECONDS) as client:
+        async with httpx.AsyncClient(timeout=Config.TIMEOUT_SECONDS, limits=HTTP_LIMITS) as client:
             bulletins_api_url = f"{Config.BULLETINS_API_URL}/api/v1/bulletins/lookup"
             response = await client.post(bulletins_api_url, json=vehicle_data)
             
@@ -450,14 +498,14 @@ Technical Service Bulletins:
         }
         
         # Call Claude API
-        async with httpx.AsyncClient(timeout=Config.CLAUDE_TIMEOUT_SECONDS) as client:
-            headers = {
-                "Content-Type": "application/json",
-                "x-api-key": Config.CLAUDE_API_KEY,
-                "anthropic-version": Config.ANTHROPIC_VERSION
-            }
-            
-            claude_response = await client.post(
+        headers = {
+            "Content-Type": "application/json",
+            "x-api-key": Config.CLAUDE_API_KEY,
+            "anthropic-version": Config.ANTHROPIC_VERSION
+        }
+        
+        async with httpx.AsyncClient(timeout=Config.CLAUDE_TIMEOUT_SECONDS) as claude_client:
+            claude_response = await claude_client.post(
                 Config.CLAUDE_API_URL, 
                 json=payload, 
                 headers=headers

@@ -1,53 +1,45 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import Box from '@mui/material/Box';
 
 // Import Material-UI icons
 import WarningIcon from '@mui/icons-material/Warning';
 import InfoIcon from '@mui/icons-material/Info';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import BuildIcon from '@mui/icons-material/Build';
 import SecurityIcon from '@mui/icons-material/Security';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import SpeedIcon from '@mui/icons-material/Speed';
-import StarIcon from '@mui/icons-material/Star';
-import ShieldIcon from '@mui/icons-material/Shield';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import VerifiedIcon from '@mui/icons-material/Verified';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-// Import EXACT styled components from DVLA Insights
+// Import PRIMARY styled components from DVLADataHeader (MOST IMPORTANT)
 import {
-  VisualInsightsContainer,
-  InsightCategoryHeader,
-  CategoryIcon,
-  InsightGrid,
-  VisualInsightCard,
-  CardHeader,
-  CardTitle,
-  CardIcon,
+  DVLADataContainer,
+  SectionHeader,
+  DataGrid,
+  MetricGroup,
+  MetricRow,
+  MetricItem,
+  MetricLabel,
   MetricValue,
-  MetricUnit,
-  MetricSubtext,
-  EnhancedStatusBadge,
+  StatusIndicator,
+  LoadingContainer,
+  LoadingSpinner,
+  LoadingText,
+  ErrorContainer,
+  ErrorHeader,
+  ErrorMessage,
+  SectionDivider,
+  ResponsiveWrapper
+} from '../../Premium/DVLA/Header/DVLADataHeaderStyles';
+
+// Import selective minimal elements from insights for gauge only
+import {
   GaugeContainer,
   GaugeSvg,
   GaugeTrack,
   GaugeFill,
   GaugeCenterText,
-  VisualDivider,
-  EnhancedInsightNote,
-  EnhancedFactorList,
-  HeadingM,
-  BodyText,
-  LoadingContainer,
-  LoadingSpinner,
-  ErrorContainer
+  ProgressBar,
+  ProgressFill
 } from '../../Premium/DVLA/Insights/style/style';
 
 // API and Configuration
@@ -63,37 +55,6 @@ const CONFIG = {
     400: 'Invalid registration number.',
     404: 'Vehicle information not found.',
     default: 'Unable to process request. Please try again later.'
-  },
-  
-  STATUS_PATTERNS: {
-    good: { regex: /✓|✅|🟢|good|ok|pass|low|acceptable|fine|satisfactory|adequate/i, color: 'var(--positive)', icon: <CheckCircleIcon /> },
-    warning: { regex: /⚠️|🟡|⚠|warning|medium|moderate|caution|amber|attention|concern/i, color: 'var(--warning)', icon: <WarningIcon /> },
-    critical: { regex: /❌|✗|🔴|❗|critical|high|fail|urgent|severe|red|danger|poor|bad/i, color: 'var(--negative)', icon: <ErrorIcon /> },
-    info: { regex: /info|note|review|pending|unknown/i, color: 'var(--primary)', icon: <InfoIcon /> }
-  },
-  
-  SYSTEM_ICONS: {
-    engine: <SpeedIcon />, brake: <SecurityIcon />, suspension: <BuildIcon />, safety: <SecurityIcon />,
-    tyre: <SpeedIcon />, exhaust: <WarningIcon />, electrical: <BuildIcon />, fluid: <BuildIcon />
-  },
-  
-  SECTION_TYPES: {
-    risk: { icon: <SecurityIcon />, color: 'var(--warning)' },
-    findings: { icon: <AssessmentIcon />, color: 'var(--primary)' },
-    systems: { icon: <BuildIcon />, color: 'var(--primary)' },
-    safety: { icon: <SecurityIcon />, color: 'var(--negative)' },
-    general: { icon: <InfoIcon />, color: 'var(--primary)' }
-  },
-  
-  SECTION_DESCRIPTIONS: {
-    risk: 'Risk factors and assessment details',
-    findings: 'Key findings and analysis points',
-    systems: 'System-specific technical information',
-    issues: 'Known issues and problem patterns',
-    maintenance: 'Maintenance and service considerations',
-    safety: 'Safety-related information',
-    reliability: 'Reliability and performance data',
-    general: 'Technical details and considerations'
   }
 };
 
@@ -113,19 +74,19 @@ const getErrorMessage = (error) => {
   ];
 };
 
+// Minimal status detection - semantic color only
 const detectStatusFromText = (text) => {
   const combined = String(text || '').toLowerCase();
-  for (const [status, config] of Object.entries(CONFIG.STATUS_PATTERNS)) {
-    if (config.regex.test(combined)) {
-      return { status, text: status.charAt(0).toUpperCase() + status.slice(1), ...config };
-    }
+  if (/✓|✅|🟢|good|ok|pass|low|acceptable|fine|satisfactory|adequate/i.test(combined)) {
+    return 'good';
   }
-  return { status: 'unknown', text: 'Unknown', icon: <InfoIcon />, color: 'var(--primary)' };
-};
-
-const getSystemIcon = (text) => {
-  const t = String(text || '').toLowerCase();
-  return Object.entries(CONFIG.SYSTEM_ICONS).find(([keyword]) => t.includes(keyword))?.[1] || <InfoIcon />;
+  if (/⚠️|🟡|⚠|warning|medium|moderate|caution|amber|attention|concern/i.test(combined)) {
+    return 'warning';
+  }
+  if (/❌|✗|🔴|❗|critical|high|fail|urgent|severe|red|danger|poor|bad/i.test(combined)) {
+    return 'critical';
+  }
+  return 'unknown';
 };
 
 // Browser cache utilities
@@ -150,306 +111,281 @@ const browserCache = {
   }, null)
 };
 
-// Gauge component
-const Gauge = ({ value, max = 100, unit = '', label = 'Metric', color = 'var(--primary)', size = 140 }) => {
+// Clean Gauge component - minimal styling following DVLADataHeader patterns
+const CleanGauge = ({ value, max = 100, unit = '', label = 'Metric', status = 'unknown', size = 120 }) => {
   const numValue = parseFloat(value) || 0;
   const numMax = parseFloat(max) || 100;
   const percentage = Math.min(Math.max((numValue / numMax) * 100, 0), 100);
-  const radius = Math.max((size - 24) / 2, 10);
+  const radius = Math.max((size - 16) / 2, 10);
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
   
   return (
-    <Box>
-      <GaugeContainer style={{ width: size, height: size }}>
+    <MetricGroup>
+      <GaugeContainer style={{ width: size, height: size, margin: '0 auto var(--space-lg)' }}>
         <GaugeSvg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           <GaugeTrack cx={size/2} cy={size/2} r={radius} />
           <GaugeFill 
-            cx={size/2} cy={size/2} r={radius} color={color}
-            strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} 
+            cx={size/2} cy={size/2} r={radius}
+            strokeDasharray={circumference} strokeDashoffset={strokeDashoffset}
+            style={{
+              stroke: status === 'good' ? 'var(--positive)' : 
+                     status === 'warning' ? 'var(--warning)' : 
+                     status === 'critical' ? 'var(--negative)' : 'var(--primary)'
+            }}
           />
         </GaugeSvg>
         <GaugeCenterText>
-          <MetricValue size="medium">{Math.round(numValue)}</MetricValue>
-          <MetricSubtext>{unit}</MetricSubtext>
+          <MetricValue>{Math.round(numValue)}</MetricValue>
+          <MetricLabel style={{ marginTop: 'var(--space-xs)', fontSize: 'var(--text-xs)' }}>
+            {unit}
+          </MetricLabel>
         </GaugeCenterText>
       </GaugeContainer>
-      <CardTitle>{label}</CardTitle>
-    </Box>
+      <MetricLabel>{label}</MetricLabel>
+    </MetricGroup>
   );
 };
 
-// Streamlined table parser
-const parseMarkdownTable = (tableText) => {
-  if (!tableText?.trim()) return null;
+// Clean Progress Bar component
+const CleanProgressBar = ({ label, value, max = 100, status = 'unknown' }) => {
+  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
   
-  return safeProcess(() => {
-    const lines = tableText.split('\n')
-      .filter(line => line.includes('|') && line.trim())
-      .filter(line => !line.match(/^\|\s*[-:]+\s*\|/)); // Skip separator lines
-    
-    if (lines.length < 2) return null;
-    
-    const headerLine = lines[0];
-    const headers = headerLine.split('|')
-      .map(h => h.trim())
-      .filter(h => h && !h.match(/^-+$/));
-    
-    if (headers.length === 0) return null;
-    
-    const rows = lines.slice(1).map(line => {
-      const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-      const row = {};
-      
-      headers.forEach((header, index) => {
-        const normalizedHeader = header.toLowerCase().replace(/[^a-z0-9]/g, '_') || `col_${index + 1}`;
-        row[normalizedHeader] = cells[index] || '';
-      });
-      
-      return Object.values(row).some(Boolean) ? row : null;
-    }).filter(Boolean);
-    
-    return rows.length > 0 ? { headers, rows, columnCount: headers.length, rowCount: rows.length } : null;
-  }, null);
+  return (
+    <MetricGroup>
+      <MetricLabel>{label}</MetricLabel>
+      <MetricValue>{value} of {max}</MetricValue>
+      <div style={{ marginTop: 'var(--space-sm)' }}>
+        <ProgressBar style={{ height: '6px', borderRadius: '3px' }}>
+          <ProgressFill 
+            width={percentage}
+            color={status === 'good' ? 'var(--positive)' : 
+                  status === 'warning' ? 'var(--warning)' : 
+                  status === 'critical' ? 'var(--negative)' : 'var(--primary)'}
+          />
+        </ProgressBar>
+      </div>
+    </MetricGroup>
+  );
 };
 
-// Streamlined table-to-cards converter
-const tableRowsToCards = (tableData) => {
-  if (!tableData?.rows?.length) return [];
+// Enhanced markdown parsing - robust handling of Claude API structure
+const parseMarkdownAnalysis = (markdownText) => {
+  if (!markdownText?.trim()) return { sections: [], tables: [], summary: null };
   
   return safeProcess(() => {
-    const headers = tableData.headers || [];
-    
-    const getColumnPurpose = (header, index) => {
-      const h = String(header || '').toLowerCase();
-      if (index === 0 || h.includes('system') || h.includes('component')) return 'identifier';
-      if (h.includes('status') || h.includes('risk') || h.includes('condition')) return 'status';
-      if (h.includes('priority') || h.includes('urgency')) return 'priority';
-      if (index === headers.length - 1 || h.includes('description') || h.includes('note')) return 'description';
-      return 'additional';
-    };
-    
-    const columnMap = headers.map((header, index) => ({
-      header,
-      purpose: getColumnPurpose(header, index),
-      key: header.toLowerCase().replace(/[^a-z0-9]/g, '_') || `col_${index + 1}`
-    }));
-    
-    return tableData.rows.map((row, rowIndex) => {
-      const identifierCol = columnMap.find(c => c.purpose === 'identifier');
-      const statusCol = columnMap.find(c => c.purpose === 'status');
-      const descriptionCol = columnMap.find(c => c.purpose === 'description');
-      
-      const identifier = row[identifierCol?.key] || Object.values(row)[0] || `Item ${rowIndex + 1}`;
-      const statusValue = row[statusCol?.key] || '';
-      const description = row[descriptionCol?.key] || Object.values(row).slice(-1)[0] || '';
-      
-      const detectedStatus = detectStatusFromText(statusValue);
-      
-      return {
-        type: 'system_assessment',
-        title: String(identifier).trim(),
-        status: detectedStatus.status,
-        statusText: detectedStatus.text,
-        statusIcon: detectedStatus.icon,
-        systemIcon: getSystemIcon(identifier),
-        description: String(description).trim(),
-        color: detectedStatus.color,
-        variant: 'status'
-      };
-    }).filter(Boolean);
-  }, []);
-};
-
-// Streamlined markdown analyzer
-const analyzeMarkdownForInsights = (markdownText) => {
-  if (!markdownText) return { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] };
-  
-  return safeProcess(() => {
-    // Extract tables
-    const tables = [];
-    let processedText = markdownText;
-    const tableRegex = /\|[^\n]*\|[\s\S]*?(?=\n\s*\n|\n\s*##|$)/g;
-    
-    let match;
-    while ((match = tableRegex.exec(markdownText)) !== null) {
-      const tableText = match[0].trim();
-      const tableData = parseMarkdownTable(tableText);
-      
-      if (tableData?.rows?.length > 0) {
-        tables.push(tableData);
-        processedText = processedText.replace(tableText, `__TABLE_${tables.length - 1}__`);
-      }
-    }
-    
-    // Process content
-    const lines = processedText.split('\n');
-    const insights = [];
-    const riskFactors = [];
-    const positiveFactors = [];
+    const lines = markdownText.split('\n');
     const sections = [];
-    const tableCards = [];
-    
+    const tables = [];
     let currentSection = null;
-    const metrics = { issueCount: 0, safetyCount: 0 };
+    let summary = null;
     
-    const detectSectionType = (title) => {
-      const t = title.toLowerCase();
-      return Object.entries(CONFIG.SECTION_TYPES).find(([key]) => t.includes(key))?.[1] || CONFIG.SECTION_TYPES.general;
-    };
-    
-    const classifyContent = (text) => {
-      const t = text.toLowerCase();
-      if (t.includes('risk') || t.includes('danger') || t.includes('warning')) {
-        metrics.issueCount++;
-        return 'risk';
-      }
-      if (t.includes('good') || t.includes('excellent') || t.includes('maintained')) return 'positive';
-      if (t.includes('safety') || t.includes('critical')) {
-        metrics.safetyCount++;
-        return 'safety';
-      }
-      return 'general';
-    };
-    
-    lines.forEach(line => {
-      const originalLine = line.trim();
+    lines.forEach((line, index) => {
+      const trimmedLine = line.trim();
       
-      // Handle table placeholders
-      if (originalLine.startsWith('__TABLE_')) {
-        const tableIndex = parseInt(originalLine.match(/\d+/)[0]);
-        if (tables[tableIndex]) {
-          tableCards.push(...tableRowsToCards(tables[tableIndex]));
+      // Parse headers (## or #)
+      if (trimmedLine.match(/^#+\s+/)) {
+        if (currentSection) {
+          sections.push(currentSection);
         }
-        return;
+        
+        const level = (trimmedLine.match(/^#+/) || [''])[0].length;
+        const title = trimmedLine.replace(/^#+\s*/, '');
+        
+        currentSection = {
+          title,
+          level,
+          content: [],
+          type: detectSectionType(title)
+        };
       }
-      
-      // Headers
-      if (originalLine.match(/^#+\s+/)) {
-        if (currentSection) sections.push(currentSection);
+      // Parse table rows (contains |)
+      else if (trimmedLine.includes('|') && !trimmedLine.match(/^\|\s*[-:]+\s*\|/)) {
+        // Look for table context
+        const tableIndex = tables.length;
+        let table = tables[tableIndex] || { headers: [], rows: [] };
         
-        const title = originalLine.replace(/^#+\s*/, '');
-        const sectionInfo = detectSectionType(title);
+        const cells = trimmedLine.split('|').map(c => c.trim()).filter(Boolean);
         
-        currentSection = { title, content: [], ...sectionInfo };
-      } else if (currentSection && originalLine) {
-        const classification = classifyContent(originalLine);
-        
-        currentSection.content.push({
-          text: originalLine.replace(/^[-*]\s*/, '').replace(/\*\*/g, ''),
-          classification
-        });
-        
-        const cleanContent = originalLine.replace(/\*\*/g, '').replace(/^[-*]\s*/, '').trim();
-        if (classification === 'risk' && !riskFactors.includes(cleanContent)) {
-          riskFactors.push(cleanContent);
-        } else if (classification === 'positive' && !positiveFactors.includes(cleanContent)) {
-          positiveFactors.push(cleanContent);
+        if (table.headers.length === 0 && cells.length > 0) {
+          table.headers = cells;
+          tables[tableIndex] = table;
+        } else if (cells.length > 0) {
+          table.rows.push(cells);
+          tables[tableIndex] = table;
         }
+      }
+      // Parse content lines
+      else if (trimmedLine && currentSection) {
+        const cleanContent = trimmedLine.replace(/^[-*]\s*/, '').replace(/\*\*/g, '');
+        if (cleanContent) {
+          currentSection.content.push({
+            text: cleanContent,
+            status: detectStatusFromText(cleanContent)
+          });
+        }
+      }
+      // Parse summary (first paragraph)
+      else if (trimmedLine && !summary && !currentSection) {
+        summary = trimmedLine;
       }
     });
     
-    if (currentSection) sections.push(currentSection);
+    if (currentSection) {
+      sections.push(currentSection);
+    }
     
-    // Generate insights
-    if (tableCards.length > 0) {
-      const critical = tableCards.filter(c => c.status === 'critical').length;
-      const warning = tableCards.filter(c => c.status === 'warning').length;
-      const good = tableCards.filter(c => c.status === 'good').length;
-      const total = tableCards.length;
-      
-      if (critical + warning > 0) {
-        insights.push({
-          type: 'systems_at_risk',
-          title: 'Systems at Risk',
-          value: critical + warning,
-          unit: `of ${total}`,
-          description: critical > 0 ? 'Critical attention required' : 'Moderate attention needed',
-          color: critical > 0 ? 'var(--negative)' : 'var(--warning)',
-          icon: <WarningIcon />,
-          variant: 'status'
-        });
-      }
-      
-      if (good > 0) {
-        insights.push({
-          type: 'systems_good',
-          title: 'Systems OK',
-          value: good,
-          unit: `of ${total}`,
-          description: 'Systems in good condition',
-          color: 'var(--positive)',
-          icon: <CheckCircleIcon />,
-          variant: 'status'
-        });
-      }
-      
-      const score = Math.round(Math.max(0, (1 - (critical * 3 + warning) / (total * 3)) * 100));
-      insights.push({
-        type: 'overall_assessment',
-        title: 'Overall Assessment',
-        value: score,
-        unit: '/100',
-        description: score > 80 ? 'Low risk profile' : score > 60 ? 'Moderate risk level' : 'Higher risk considerations',
-        color: score > 80 ? 'var(--positive)' : score > 60 ? 'var(--warning)' : 'var(--negative)',
-        icon: <AssessmentIcon />,
-        variant: 'gauge'
-      });
-    } else {
-      const score = Math.max(10, 90 - (metrics.issueCount * 8) - (metrics.safetyCount * 12));
-      insights.push({
-        type: 'technical_assessment',
-        title: 'Technical Assessment',
-        value: Math.round(score),
-        unit: '/100',
-        description: score > 80 ? 'Excellent reliability' : score > 60 ? 'Good reliability' : 'Below average reliability',
-        color: score > 70 ? 'var(--positive)' : score > 50 ? 'var(--warning)' : 'var(--negative)',
-        icon: <TrendingUpIcon />,
-        variant: 'gauge'
+    return { sections, tables, summary };
+  }, { sections: [], tables: [], summary: null });
+};
+
+// Detect section type from title
+const detectSectionType = (title) => {
+  const t = title.toLowerCase();
+  if (t.includes('risk') || t.includes('assessment')) return 'risk';
+  if (t.includes('finding') || t.includes('key')) return 'findings';
+  if (t.includes('technical') || t.includes('bulletin')) return 'technical';
+  if (t.includes('mot') || t.includes('pattern')) return 'history';
+  if (t.includes('summary') || t.includes('note')) return 'summary';
+  return 'general';
+};
+
+// Clean table renderer following DVLADataHeader patterns
+const renderAnalysisTable = (table, index) => {
+  if (!table?.headers?.length || !table?.rows?.length) return null;
+  
+  return (
+    <MetricGroup key={`table-${index}`} style={{ marginBottom: 'var(--space-3xl)' }}>
+      <DataGrid style={{ gridTemplateColumns: '1fr', gap: 'var(--space-lg)' }}>
+        {table.rows.map((row, rowIndex) => (
+          <MetricRow key={`row-${rowIndex}`} style={{ 
+            gridTemplateColumns: `repeat(${table.headers.length}, 1fr)`,
+            padding: 'var(--space-lg)',
+            borderLeft: `3px solid ${
+              detectStatusFromText(row.join(' ')) === 'good' ? 'var(--positive)' :
+              detectStatusFromText(row.join(' ')) === 'warning' ? 'var(--warning)' :
+              detectStatusFromText(row.join(' ')) === 'critical' ? 'var(--negative)' :
+              'var(--gray-300)'
+            }`
+          }}>
+            {row.map((cell, cellIndex) => (
+              <MetricItem key={`cell-${cellIndex}`}>
+                <MetricLabel>{table.headers[cellIndex] || `Column ${cellIndex + 1}`}</MetricLabel>
+                <MetricValue>
+                  <StatusIndicator status={detectStatusFromText(cell)}>
+                    {cell || 'N/A'}
+                  </StatusIndicator>
+                </MetricValue>
+              </MetricItem>
+            ))}
+          </MetricRow>
+        ))}
+      </DataGrid>
+    </MetricGroup>
+  );
+};
+
+// Generate clean summary metrics from analysis data
+const generateSummaryMetrics = (analysisData) => {
+  if (!analysisData?.sections?.length && !analysisData?.tables?.length) return [];
+  
+  const metrics = [];
+  let riskCount = 0;
+  let goodCount = 0;
+  let totalItems = 0;
+  
+  // Count items from tables
+  analysisData.tables.forEach(table => {
+    table.rows.forEach(row => {
+      totalItems++;
+      const status = detectStatusFromText(row.join(' '));
+      if (status === 'critical' || status === 'warning') riskCount++;
+      if (status === 'good') goodCount++;
+    });
+  });
+  
+  // Count items from sections
+  analysisData.sections.forEach(section => {
+    section.content.forEach(item => {
+      totalItems++;
+      if (item.status === 'critical' || item.status === 'warning') riskCount++;
+      if (item.status === 'good') goodCount++;
+    });
+  });
+  
+  if (totalItems > 0) {
+    // Overall risk assessment
+    const riskPercentage = Math.round((riskCount / totalItems) * 100);
+    const overallScore = Math.max(0, 100 - riskPercentage * 1.5);
+    
+    metrics.push({
+      label: 'Overall Assessment',
+      value: overallScore,
+      max: 100,
+      status: overallScore > 80 ? 'good' : overallScore > 60 ? 'warning' : 'critical',
+      type: 'gauge'
+    });
+    
+    if (riskCount > 0) {
+      metrics.push({
+        label: 'Items Requiring Attention',
+        value: riskCount,
+        max: totalItems,
+        status: riskCount > totalItems * 0.5 ? 'critical' : 'warning',
+        type: 'progress'
       });
     }
     
-    return {
-      insights,
-      riskFactors: riskFactors.slice(0, 6),
-      positiveFactors: positiveFactors.slice(0, 6),
-      sections,
-      tableCards
-    };
-  }, { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] });
+    if (goodCount > 0) {
+      metrics.push({
+        label: 'Systems in Good Condition',
+        value: goodCount,
+        max: totalItems,
+        status: 'good',
+        type: 'progress'
+      });
+    }
+  }
+  
+  return metrics;
 };
 
-// Simplified VehicleAnalysisComponent - maintains all functionality with reduced complexity
-// Reusable render helpers
-const renderInsightCard = (insight, index) => (
-  <VisualInsightCard key={`insight-${index}`} variant={insight.variant || 'status'} status={insight.type || 'unknown'}>
-    {insight.variant === 'gauge' ? (
-      <Gauge
-        value={insight.value || 0}
-        max={100}
-        unit={insight.unit || ''}
-        label={insight.title || 'Unknown'}
-        color={insight.color || 'var(--primary)'}
-      />
-    ) : (
-      <>
-        <CardHeader>
-          <CardTitle>{insight.title || 'Unknown Metric'}</CardTitle>
-          <CardIcon color={insight.color || 'var(--primary)'}>
-            {insight.icon || <InfoIcon />}
-          </CardIcon>
-        </CardHeader>
-        <MetricValue size="large" color={insight.color || 'var(--primary)'}>
-          {insight.value ?? 'N/A'}
-          <MetricUnit>{insight.unit || ''}</MetricUnit>
-        </MetricValue>
-        <MetricSubtext>{insight.description || 'No description available'}</MetricSubtext>
-      </>
-    )}
-  </VisualInsightCard>
-);
+// Clean section renderer following DVLADataHeader patterns
+const renderAnalysisSection = (section, index) => {
+  if (!section?.content?.length) return null;
+  
+  return (
+    <MetricGroup key={`section-${index}`} style={{ marginBottom: 'var(--space-3xl)' }}>
+      <MetricLabel style={{ fontSize: 'var(--text-lg)', fontWeight: '600', marginBottom: 'var(--space-lg)' }}>
+        {section.title}
+      </MetricLabel>
+      
+      <DataGrid style={{ gridTemplateColumns: '1fr', gap: 'var(--space-lg)' }}>
+        {section.content.slice(0, 6).map((item, itemIndex) => (
+          <MetricRow key={`item-${itemIndex}`} style={{ 
+            gridTemplateColumns: '1fr',
+            padding: 'var(--space-lg)',
+            borderLeft: `3px solid ${
+              item.status === 'good' ? 'var(--positive)' :
+              item.status === 'warning' ? 'var(--warning)' :
+              item.status === 'critical' ? 'var(--negative)' :
+              'var(--gray-300)'
+            }`
+          }}>
+            <MetricItem>
+              <MetricValue>
+                <StatusIndicator status={item.status}>
+                  {item.text}
+                </StatusIndicator>
+              </MetricValue>
+            </MetricItem>
+          </MetricRow>
+        ))}
+      </DataGrid>
+    </MetricGroup>
+  );
+};
 
-// Enhanced System Assessment Cards with diagnostic-style presentation
 const renderEnhancedSystemCard = (card, index) => {
   // Enhanced status detection with diagnostic context
   const getDiagnosticStatus = (card) => {
@@ -632,7 +568,6 @@ const renderEnhancedSystemCard = (card, index) => {
   );
 };
 
-// Enhanced Risk Factor Cards with sophisticated warning presentation
 const renderRiskFactorCards = (factors) => {
   if (!factors?.length) return [];
   
@@ -704,7 +639,6 @@ const renderRiskFactorCards = (factors) => {
   });
 };
 
-// Enhanced Positive Factor Cards with achievement-style presentation
 const renderPositiveFactorCards = (factors) => {
   if (!factors?.length) return [];
   
@@ -781,21 +715,8 @@ const VehicleAnalysisComponent = ({ registration, vehicleData, onDataLoad }) => 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [analysis, setAnalysis] = useState(null);
-  const [expandedSections, setExpandedSections] = useState(new Set());
   const abortControllerRef = useRef(null);
   const retryCountRef = useRef(0);
-  
-  const toggleSection = useCallback((sectionIndex) => {
-    setExpandedSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(sectionIndex)) {
-        newSet.delete(sectionIndex);
-      } else {
-        newSet.add(sectionIndex);
-      }
-      return newSet;
-    });
-  }, []);
 
   // Enhanced Detailed Section Cards with rich information hierarchies
   const renderDetailedSectionCards = useCallback((sections) => {
@@ -1024,16 +945,16 @@ const VehicleAnalysisComponent = ({ registration, vehicleData, onDataLoad }) => 
     return () => abortControllerRef.current?.abort();
   }, [registration, fetchAnalysisFromApi]);
 
-  // Simplified data processing
+  // Clean data processing
   const analysisData = useMemo(() => {
     if (!analysis?.analysis) {
-      return { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] };
+      return { sections: [], tables: [], summary: null, metrics: [] };
     }
     
-    return safeProcess(
-      () => analyzeMarkdownForInsights(analysis.analysis),
-      { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] }
-    );
+    const parsed = parseMarkdownAnalysis(analysis.analysis);
+    const metrics = generateSummaryMetrics(parsed);
+    
+    return { ...parsed, metrics };
   }, [analysis?.analysis]);
 
   // Early returns for loading/error states

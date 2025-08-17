@@ -45,6 +45,24 @@ if missing_vars:
     logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
     raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_vars)}")
 
+# Validate Claude API key format
+def validate_claude_api_key(api_key: str) -> bool:
+    """Validate Claude API key format"""
+    if not api_key:
+        return False
+    # Claude API keys start with 'sk-ant-' and have a specific format
+    if not api_key.startswith('sk-ant-'):
+        return False
+    # Should be at least 50 characters long
+    if len(api_key) < 50:
+        return False
+    return True
+
+claude_api_key = os.getenv("CLAUDE_API_KEY")
+if not validate_claude_api_key(claude_api_key):
+    logger.error("Invalid Claude API key format")
+    raise EnvironmentError("Invalid Claude API key format")
+
 # Constants and configuration
 class Config:
     # Claude API settings
@@ -79,6 +97,11 @@ class Config:
     
     # Timeout settings
     TIMEOUT_SECONDS = int(os.getenv("TIMEOUT_SECONDS", "30"))
+    CLAUDE_TIMEOUT_SECONDS = int(os.getenv("CLAUDE_TIMEOUT_SECONDS", "45"))
+    
+    # Request size limits
+    MAX_PROMPT_SIZE = int(os.getenv("MAX_PROMPT_SIZE", "100000"))  # 100KB max prompt
+    MAX_RESPONSE_SIZE = int(os.getenv("MAX_RESPONSE_SIZE", "200000"))  # 200KB max response
 
 # Pydantic models for API requests and responses
 class HealthResponse(BaseModel):
@@ -370,6 +393,16 @@ async def analyze_with_claude(registration: str, mot_data: dict, bulletin_data: 
         
         mot_history = prepare_mot_history_for_analysis(mot_data)
         
+        # Validate input data size before processing
+        mot_history_str = json.dumps(mot_history, indent=2)
+        bulletin_data_str = json.dumps(bulletin_data, indent=2)
+        
+        if len(mot_history_str) > Config.MAX_PROMPT_SIZE // 2:
+            raise HTTPException(status_code=413, detail="MOT history data too large for analysis")
+        
+        if len(bulletin_data_str) > Config.MAX_PROMPT_SIZE // 2:
+            raise HTTPException(status_code=413, detail="Bulletin data too large for analysis")
+        
         # Prepare the prompt for Claude
         prompt = f"""I need to analyze MOT history and Technical Service Bulletins for a vehicle and produce a technical analysis component that would fit seamlessly in a premium vehicle report. 
 
@@ -390,10 +423,14 @@ IMPORTANT GUIDELINES:
 - Make the analysis professional, concise, and informative
 
 MOT History:
-{json.dumps(mot_history, indent=2)}
+{mot_history_str}
 
 Technical Service Bulletins:
-{json.dumps(bulletin_data, indent=2)}"""
+{bulletin_data_str}"""
+        
+        # Validate final prompt size
+        if len(prompt) > Config.MAX_PROMPT_SIZE:
+            raise HTTPException(status_code=413, detail="Combined data too large for analysis")
         
         # Prepare the payload for Claude
         payload = {
@@ -413,7 +450,7 @@ Technical Service Bulletins:
         }
         
         # Call Claude API
-        async with httpx.AsyncClient(timeout=60) as client:  # Longer timeout for Claude
+        async with httpx.AsyncClient(timeout=Config.CLAUDE_TIMEOUT_SECONDS) as client:
             headers = {
                 "Content-Type": "application/json",
                 "x-api-key": Config.CLAUDE_API_KEY,
@@ -429,22 +466,42 @@ Technical Service Bulletins:
             claude_response.raise_for_status()
             response_data = claude_response.json()
             
+            # Validate response structure
+            if not response_data or "content" not in response_data:
+                raise HTTPException(status_code=502, detail="Invalid response from analysis service")
+            
+            if not response_data["content"] or len(response_data["content"]) == 0:
+                raise HTTPException(status_code=502, detail="Empty response from analysis service")
+            
             # Extract the analysis from Claude's response
             analysis = response_data["content"][0]["text"]
+            
+            # Validate response size
+            if len(analysis) > Config.MAX_RESPONSE_SIZE:
+                logger.warning(f"Large response received: {len(analysis)} characters")
+                analysis = analysis[:Config.MAX_RESPONSE_SIZE] + "\n\n[Response truncated due to size]"
             
             return analysis
             
     except httpx.HTTPStatusError as e:
-        logger.error(f"Claude API error: {str(e)}")
-        try:
-            error_details = e.response.json()
-            error_message = error_details.get("error", {}).get("message", str(e))
-        except:
-            error_message = str(e)
-        raise HTTPException(status_code=500, detail=f"Claude API error: {error_message}")
+        logger.error(f"Claude API HTTP error: {e.response.status_code} - {str(e)}")
+        if e.response.status_code == 429:
+            raise HTTPException(status_code=429, detail="Service temporarily unavailable due to rate limiting")
+        elif e.response.status_code == 401:
+            raise HTTPException(status_code=500, detail="Service configuration error")
+        elif e.response.status_code >= 500:
+            raise HTTPException(status_code=503, detail="External service temporarily unavailable")
+        else:
+            raise HTTPException(status_code=500, detail="Analysis service error")
+    except httpx.TimeoutException as e:
+        logger.error(f"Claude API timeout: {str(e)}")
+        raise HTTPException(status_code=504, detail="Analysis service timeout")
+    except httpx.RequestError as e:
+        logger.error(f"Claude API request error: {str(e)}")
+        raise HTTPException(status_code=503, detail="Analysis service unavailable")
     except Exception as e:
-        logger.error(f"Error analyzing with Claude: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error analyzing with Claude: {str(e)}")
+        logger.error(f"Unexpected error analyzing with Claude: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal analysis error")
 
 # API Routes
 @app.get("/")

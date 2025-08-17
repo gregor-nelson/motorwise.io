@@ -5662,3 +5662,11 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-08-16 19:02:41,062 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
 2025-08-16 19:02:42,228 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.1660s
 2025-08-16 19:02:42,414 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-17 02:48:53,399 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0013s
+2025-08-17 02:48:53,401 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-08-17 02:48:53,712 - mot_api - INFO - Requesting new access token
+2025-08-17 02:48:54,051 - mot_api - INFO - Successfully obtained new access token
+2025-08-17 02:48:54,052 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-08-17 02:48:55,199 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.4881s
+2025-08-17 02:48:55,202 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0050s
+2025-08-17 02:49:09,915 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0006s

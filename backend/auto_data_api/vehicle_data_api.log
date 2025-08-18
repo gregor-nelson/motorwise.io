@@ -5955,3 +5955,149 @@
 2025-08-17 19:04:15,373 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
 2025-08-17 19:04:15,374 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
 2025-08-17 19:04:15,378 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0110s
+2025-08-18 11:28:33,580 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-18 11:28:33,605 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-18 11:28:33,627 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-18 11:28:33,648 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-18 11:28:33,669 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-18 11:28:33,691 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-18 11:28:33,692 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-18 11:28:33,713 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-18 11:28:33,713 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-18 11:28:33,736 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-18 11:28:33,736 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-18 11:28:33,738 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-18 11:28:33,738 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-18 11:28:51,835 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-18 11:28:51,836 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-08-18 11:28:51,836 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-08-18 11:28:51,849 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 11:28:51,850 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 11:28:51,850 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 11:28:51,851 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-18 11:28:51,851 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-18 11:28:51,852 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-18 11:28:51,852 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-18 11:28:51,853 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-18 11:28:51,853 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-18 11:28:51,853 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-18 11:28:51,853 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-18 11:28:51,859 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0300s
+2025-08-18 11:28:51,861 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0300s
+2025-08-18 12:02:15,295 - vehicle_data_api - INFO - Looking up repair times for LAND ROVER DEFENDER (year: 2007)
+2025-08-18 12:02:15,297 - vehicle_data_api - INFO - Looking up repair times for: LAND ROVER DEFENDER (year: 2007)
+2025-08-18 12:02:15,297 - vehicle_data_api - INFO - Direct year match found with key: land_rover_defender_2007
+2025-08-18 12:02:15,309 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0150s
+2025-08-18 12:02:15,329 - vehicle_data_api - INFO - Looking up tech specs for LAND ROVER DEFENDER (year: 2007, fuel: diesel)
+2025-08-18 12:02:15,330 - vehicle_data_api - INFO - Looking up tech specs for: LAND ROVER DEFENDER (year: 2007, fuel: diesel)
+2025-08-18 12:02:15,330 - vehicle_data_api - INFO - Attempting fuzzy matching for LAND ROVER DEFENDER (year: 2007, fuel: diesel)
+2025-08-18 12:02:15,330 - vehicle_data_api - INFO - Searching for: land rover defender, Year=2007, Fuel=diesel, Type=tech_specs
+2025-08-18 12:02:15,331 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:02:15,334 - vehicle_data_api - INFO - No good match found for LAND ROVER DEFENDER (Year: 2007, Fuel: diesel)
+2025-08-18 12:02:15,334 - vehicle_data_api - WARNING - No tech specs match found for LAND ROVER DEFENDER (year: 2007, fuel: diesel)
+2025-08-18 12:02:15,334 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for LAND ROVER DEFENDER (year: 2007) (fuel type: diesel)
+2025-08-18 12:02:15,334 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-18 12:03:05,562 - vehicle_data_api - INFO - Looking up repair times for MAZDA EUNOS (year: 1991)
+2025-08-18 12:03:05,562 - vehicle_data_api - INFO - Looking up repair times for: MAZDA EUNOS (year: 1991)
+2025-08-18 12:03:05,563 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991)
+2025-08-18 12:03:05,563 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=None, Type=repair_times
+2025-08-18 12:03:05,563 - vehicle_data_api - INFO - Found 2 vehicles matching make 'mazda'
+2025-08-18 12:03:05,563 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:03:05,564 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: None)
+2025-08-18 12:03:05,564 - vehicle_data_api - WARNING - No repair time match found for MAZDA EUNOS (year: 1991)
+2025-08-18 12:03:05,565 - vehicle_data_api - INFO - Similar repair time keys available: ['mazda_mx-5', 'mazda_mx', 'mazda_mx-5_2005', 'mazda_mx_2005', 'mazda_mx-5_2006', 'mazda_mx_2006', 'mazda_mx-5_2007', 'mazda_mx_2007', 'mazda_mx-5_2008', 'mazda_mx_2008', 'mazda_mx-5_2009', 'mazda_mx_2009', 'mazda_mx-5_2010', 'mazda_mx_2010', 'mazda_mx-5_2011', 'mazda_mx_2011', 'mazda_mx-5_2012', 'mazda_mx_2012', 'mazda_mx-5_2013', 'mazda_mx_2013', 'mazda_mx-5_2014', 'mazda_mx_2014', 'mazda_mx-5_2015', 'mazda_mx_2015']
+2025-08-18 12:03:05,565 - vehicle_data_api - ERROR - HTTPException: No repair time data found for MAZDA EUNOS (year: 1991)
+2025-08-18 12:03:05,566 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-18 12:03:05,573 - vehicle_data_api - INFO - Looking up tech specs for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:03:05,573 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:03:05,574 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:03:05,574 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=petrol, Type=tech_specs
+2025-08-18 12:03:05,574 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:03:05,575 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: petrol)
+2025-08-18 12:03:05,575 - vehicle_data_api - WARNING - No tech specs match found for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:03:05,575 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA EUNOS (year: 1991) (fuel type: petrol)
+2025-08-18 12:03:05,576 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-18 12:03:19,499 - vehicle_data_api - INFO - Looking up repair times for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:19,500 - vehicle_data_api - INFO - Looking up repair times for: HONDA CIVIC (year: 2003)
+2025-08-18 12:03:19,500 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:19,501 - vehicle_data_api - INFO - Searching for: honda civic, Year=2003, Fuel=None, Type=repair_times
+2025-08-18 12:03:19,501 - vehicle_data_api - INFO - Found 1 vehicles matching make 'honda'
+2025-08-18 12:03:19,503 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:03:19,504 - vehicle_data_api - INFO - No good match found for HONDA CIVIC (Year: 2003, Fuel: None)
+2025-08-18 12:03:19,504 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-v', 'honda_cr-vr20a2/2_petrol', 'honda_cr-v_petrol']
+2025-08-18 12:03:19,505 - vehicle_data_api - WARNING - No repair time match found for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:19,505 - vehicle_data_api - INFO - Similar repair time keys available: ['honda_cr-v', 'honda_cr-v_2007', 'honda_cr-v_2008', 'honda_cr-v_2009', 'honda_cr-v_2010', 'honda_cr-v_2011', 'honda_cr-v_2012']
+2025-08-18 12:03:19,505 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:19,506 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-18 12:03:19,512 - vehicle_data_api - INFO - Looking up tech specs for HONDA CIVIC (year: 2003, fuel: petrol)
+2025-08-18 12:03:19,512 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CIVIC (year: 2003, fuel: petrol)
+2025-08-18 12:03:19,512 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CIVIC (year: 2003, fuel: petrol)
+2025-08-18 12:03:19,513 - vehicle_data_api - INFO - Searching for: honda civic, Year=2003, Fuel=petrol, Type=tech_specs
+2025-08-18 12:03:19,513 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-18 12:03:19,513 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-18 12:03:19,513 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 0.51
+2025-08-18 12:03:19,514 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.23
+2025-08-18 12:03:19,514 - vehicle_data_api - INFO - Lowered threshold to 0.44999999999999996 due to excellent fuel match
+2025-08-18 12:03:19,514 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 0.51
+2025-08-18 12:03:19,514 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-18 12:03:19,518 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0080s
+2025-08-18 12:03:26,218 - vehicle_data_api - INFO - Looking up repair times for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:26,219 - vehicle_data_api - INFO - Looking up repair times for: HONDA CIVIC (year: 2003)
+2025-08-18 12:03:26,219 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:26,220 - vehicle_data_api - INFO - Searching for: honda civic, Year=2003, Fuel=None, Type=repair_times
+2025-08-18 12:03:26,220 - vehicle_data_api - INFO - Found 1 vehicles matching make 'honda'
+2025-08-18 12:03:26,220 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:03:26,221 - vehicle_data_api - INFO - No good match found for HONDA CIVIC (Year: 2003, Fuel: None)
+2025-08-18 12:03:26,221 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-v', 'honda_cr-vr20a2/2_petrol', 'honda_cr-v_petrol']
+2025-08-18 12:03:26,222 - vehicle_data_api - WARNING - No repair time match found for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:26,222 - vehicle_data_api - INFO - Similar repair time keys available: ['honda_cr-v', 'honda_cr-v_2007', 'honda_cr-v_2008', 'honda_cr-v_2009', 'honda_cr-v_2010', 'honda_cr-v_2011', 'honda_cr-v_2012']
+2025-08-18 12:03:26,222 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CIVIC (year: 2003)
+2025-08-18 12:03:26,222 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-08-18 12:03:59,281 - vehicle_data_api - INFO - Looking up repair times for HONDA CIVIC (year: 2004)
+2025-08-18 12:03:59,281 - vehicle_data_api - INFO - Looking up repair times for: HONDA CIVIC (year: 2004)
+2025-08-18 12:03:59,282 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CIVIC (year: 2004)
+2025-08-18 12:03:59,282 - vehicle_data_api - INFO - Searching for: honda civic, Year=2004, Fuel=None, Type=repair_times
+2025-08-18 12:03:59,282 - vehicle_data_api - INFO - Found 1 vehicles matching make 'honda'
+2025-08-18 12:03:59,283 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:03:59,283 - vehicle_data_api - INFO - No good match found for HONDA CIVIC (Year: 2004, Fuel: None)
+2025-08-18 12:03:59,284 - vehicle_data_api - INFO - Similar tech spec keys available: ['honda_cr-vr20a2/2', 'honda_cr-v', 'honda_cr-vr20a2/2_petrol', 'honda_cr-v_petrol']
+2025-08-18 12:03:59,284 - vehicle_data_api - WARNING - No repair time match found for HONDA CIVIC (year: 2004)
+2025-08-18 12:03:59,284 - vehicle_data_api - INFO - Similar repair time keys available: ['honda_cr-v', 'honda_cr-v_2007', 'honda_cr-v_2008', 'honda_cr-v_2009', 'honda_cr-v_2010', 'honda_cr-v_2011', 'honda_cr-v_2012']
+2025-08-18 12:03:59,284 - vehicle_data_api - ERROR - HTTPException: No repair time data found for HONDA CIVIC (year: 2004)
+2025-08-18 12:03:59,285 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-18 12:03:59,291 - vehicle_data_api - INFO - Looking up tech specs for HONDA CIVIC (year: 2004, fuel: petrol)
+2025-08-18 12:03:59,292 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CIVIC (year: 2004, fuel: petrol)
+2025-08-18 12:03:59,292 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CIVIC (year: 2004, fuel: petrol)
+2025-08-18 12:03:59,292 - vehicle_data_api - INFO - Searching for: honda civic, Year=2004, Fuel=petrol, Type=tech_specs
+2025-08-18 12:03:59,292 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-18 12:03:59,293 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-18 12:03:59,293 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 0.55
+2025-08-18 12:03:59,293 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.23
+2025-08-18 12:03:59,293 - vehicle_data_api - INFO - Lowered threshold to 0.44999999999999996 due to excellent fuel match
+2025-08-18 12:03:59,294 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 0.55
+2025-08-18 12:03:59,294 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-18 12:03:59,298 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s
+2025-08-18 12:07:27,015 - vehicle_data_api - INFO - Looking up repair times for MAZDA EUNOS (year: 1991)
+2025-08-18 12:07:27,015 - vehicle_data_api - INFO - Looking up repair times for: MAZDA EUNOS (year: 1991)
+2025-08-18 12:07:27,016 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991)
+2025-08-18 12:07:27,017 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=None, Type=repair_times
+2025-08-18 12:07:27,017 - vehicle_data_api - INFO - Found 2 vehicles matching make 'mazda'
+2025-08-18 12:07:27,019 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:07:27,020 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: None)
+2025-08-18 12:07:27,020 - vehicle_data_api - WARNING - No repair time match found for MAZDA EUNOS (year: 1991)
+2025-08-18 12:07:27,021 - vehicle_data_api - INFO - Similar repair time keys available: ['mazda_mx-5', 'mazda_mx', 'mazda_mx-5_2005', 'mazda_mx_2005', 'mazda_mx-5_2006', 'mazda_mx_2006', 'mazda_mx-5_2007', 'mazda_mx_2007', 'mazda_mx-5_2008', 'mazda_mx_2008', 'mazda_mx-5_2009', 'mazda_mx_2009', 'mazda_mx-5_2010', 'mazda_mx_2010', 'mazda_mx-5_2011', 'mazda_mx_2011', 'mazda_mx-5_2012', 'mazda_mx_2012', 'mazda_mx-5_2013', 'mazda_mx_2013', 'mazda_mx-5_2014', 'mazda_mx_2014', 'mazda_mx-5_2015', 'mazda_mx_2015']
+2025-08-18 12:07:27,022 - vehicle_data_api - ERROR - HTTPException: No repair time data found for MAZDA EUNOS (year: 1991)
+2025-08-18 12:07:27,023 - vehicle_data_api - INFO - Looking up tech specs for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:07:27,023 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:07:27,023 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:07:27,024 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=petrol, Type=tech_specs
+2025-08-18 12:07:27,024 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 12:07:27,024 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: petrol)
+2025-08-18 12:07:27,025 - vehicle_data_api - WARNING - No tech specs match found for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-08-18 12:07:27,025 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA EUNOS (year: 1991) (fuel type: petrol)
+2025-08-18 12:07:27,025 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0140s
+2025-08-18 12:07:27,026 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0130s
+2025-08-18 12:20:57,516 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-18 12:20:57,527 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0130s
+2025-08-18 12:20:57,539 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 12:20:57,553 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0200s

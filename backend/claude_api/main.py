@@ -105,8 +105,8 @@ class Config:
     CLAUDE_TIMEOUT_SECONDS = int(os.getenv("CLAUDE_TIMEOUT_SECONDS", "45"))
     
     # Request size limits
-    MAX_PROMPT_SIZE = int(os.getenv("MAX_PROMPT_SIZE", "100000"))  # 100KB max prompt
-    MAX_RESPONSE_SIZE = int(os.getenv("MAX_RESPONSE_SIZE", "200000"))  # 200KB max response
+    MAX_PROMPT_SIZE = int(os.getenv("MAX_PROMPT_SIZE", "1000000"))  # 100KB max prompt
+    MAX_RESPONSE_SIZE = int(os.getenv("MAX_RESPONSE_SIZE", "2000000"))  # 200KB max response
 
 # Pydantic models for API requests and responses
 class HealthResponse(BaseModel):
@@ -456,29 +456,77 @@ async def analyze_with_claude(registration: str, mot_data: dict, bulletin_data: 
             raise HTTPException(status_code=413, detail="Bulletin data too large for analysis")
         
         # Prepare the prompt for Claude
-        prompt = f"""I need to analyze MOT history and Technical Service Bulletins for a vehicle and produce a technical analysis component that would fit seamlessly in a premium vehicle report. 
+        prompt = f"""Analyse the MOT history and Technical Service Bulletins for this {vehicle_info.get('make')} {vehicle_info.get('model')}.
 
-Please analyze the patterns, potential issues, and correlations between the MOT history and known manufacturer issues for this {vehicle_info.get('make')} {vehicle_info.get('model')}.
+  First, identify ALL vehicle systems that have issues, defects, advisories, or bulletins from the provided data. Then analyse each system
+  found.
 
-Return the analysis in markdown format with these sections:
-1. A top-level risk assessment table with visual indicators (use emoji ✓, ⚠️, 🔴)
-2. Key Findings organized by vehicle system (only include systems with actual issues)
-3. Technical Bulletin Matches table showing connections between MOT issues and known bulletins
-4. MOT Failure Pattern analysis if relevant
-5. Summary Notes that are factual and concise
+  Return analysis using this EXACT format:
 
-IMPORTANT GUIDELINES:
-- The analysis must be factual and ONLY based on information in the provided data
-- Do NOT include any cost estimates or timeframes for repairs
-- Do NOT make assumptions about future problems without evidence
-- Do NOT include empty sections if there is no relevant data
-- Make the analysis professional, concise, and informative
+  OVERALL_SCORE: <number 0-100>
+  OVERALL_RISK: <LOW|MEDIUM|HIGH>
+  SYSTEMS_ANALYSED: <number>
+  SYSTEMS_WITH_ISSUES: <number>
 
-MOT History:
-{mot_history_str}
+  SYSTEM_ANALYSIS_START
 
-Technical Service Bulletins:
-{bulletin_data_str}"""
+  For each system found in the data, use this format:
+  SYSTEM: <System Name>
+  CATEGORY:
+  <SUSPENSION|BRAKING|ENGINE|TRANSMISSION|ELECTRICAL|STRUCTURE|EXHAUST|TYRES|LIGHTING|STEERING|FUEL|COOLING|HVAC|BODYWORK|SAFETY|OTHER>
+  STATUS: <GOOD|WARNING|CRITICAL>
+  ISSUE_COUNT: <number>
+  RECENT_ACTIVITY: <YES|NO>
+  SUMMARY: <one line summary>
+  FINDINGS:
+  - <specific finding 1>
+  - <specific finding 2>
+  - <specific finding 3>
+  SYSTEM_END
+
+  SYSTEM_ANALYSIS_END
+
+  PATTERN_ANALYSIS_START
+  RECURRING_ISSUES:
+  - <pattern 1>
+  - <pattern 2>
+
+  PROGRESSIVE_DETERIORATION:
+  - <deterioration pattern 1>
+
+  BULLETIN_CORRELATIONS:
+  - <correlation 1>
+  PATTERN_ANALYSIS_END
+
+  RISK_FACTORS_START
+  - <risk factor 1>
+  - <risk factor 2>
+  RISK_FACTORS_END
+
+  POSITIVE_FACTORS_START
+  - <positive factor 1>
+  POSITIVE_FACTORS_END
+
+  MAINTENANCE_INSIGHTS_START
+  - <maintenance insight 1>
+  - <maintenance insight 2>
+  MAINTENANCE_INSIGHTS_END
+
+  SUMMARY: <professional summary paragraph>
+
+  GUIDELINES:
+  - Only include systems that appear in the actual MOT/bulletin data
+  - Map all issues to appropriate system categories
+  - Be specific about what was found in each system
+  - Include advisory items, failures, and bulletin matches
+  - System names should be descriptive (e.g., "Front Suspension Components", "Brake Hydraulics", "Engine Oil System")
+  - Use British English throughout (e.g., "tyre" not "tire", "colour" not "color", "centre" not "center")
+  - Reference UK-specific terms (MOT, DVSA, advisory items, major defects, dangerous defects)
+  - Mention mileage in miles, not kilometres
+  - Reference UK driving conditions and usage patterns where relevant
+
+  MOT History: {mot_history_str}
+  Technical Bulletins: {bulletin_data_str}"""
         
         # Validate final prompt size
         if len(prompt) > Config.MAX_PROMPT_SIZE:

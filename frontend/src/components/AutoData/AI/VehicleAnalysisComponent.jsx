@@ -1,1149 +1,650 @@
-import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+// VehicleAnalysisMinimal.jsx
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 
-// Import Material-UI icons
-import WarningIcon from '@mui/icons-material/Warning';
-import InfoIcon from '@mui/icons-material/Info';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import BuildIcon from '@mui/icons-material/Build';
-import SecurityIcon from '@mui/icons-material/Security';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import SpeedIcon from '@mui/icons-material/Speed';
-import StarIcon from '@mui/icons-material/Star';
-import ShieldIcon from '@mui/icons-material/Shield';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import VerifiedIcon from '@mui/icons-material/Verified';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+/* ===============================
+   MinimalTokens — exact copy from DVLADataHeader (as specified)
+================================ */
+const MinimalTokens = `
+  :root {
+    /* Ultra Clean Color Palette - Minimal */
+    --gray-900: #1a1a1a;
+    --gray-800: #2d2d2d;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #a3a3a3;
+    --gray-300: #d4d4d4;
+    --gray-200: #e5e5e5;
+    --gray-100: #f5f5f5;
+    --gray-50: #fafafa;
+    --white: #ffffff;
 
-// Import EXACT styled components from DVLA Insights
-import {
-  VisualInsightsContainer,
-  InsightCategoryHeader,
-  CategoryIcon,
-  InsightGrid,
-  VisualInsightCard,
-  CardHeader,
-  CardTitle,
-  CardIcon,
-  MetricValue,
-  MetricUnit,
-  MetricSubtext,
-  EnhancedStatusBadge,
-  GaugeContainer,
-  GaugeSvg,
-  GaugeTrack,
-  GaugeFill,
-  GaugeCenterText,
-  VisualDivider,
-  EnhancedInsightNote,
-  EnhancedFactorList,
-  HeadingM,
-  BodyText,
-  LoadingContainer,
-  LoadingSpinner,
-  ErrorContainer
-} from '../../Premium/DVLA/Insights/style/style';
+    /* Minimal Accent Colors */
+    --primary: #3b82f6;
+    --positive: #059669;
+    --negative: #dc2626;
+    --warning: #d97706;
 
-// API and Configuration
-const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
-  ? 'http://localhost:8007/api/v1' : '/api/v1';
+    /* Clean Spacing - Generous White Space */
+    --space-xs: 0.25rem;    /* 4px */
+    --space-sm: 0.5rem;     /* 8px */
+    --space-md: 1rem;       /* 16px */
+    --space-lg: 1.5rem;     /* 24px */
+    --space-xl: 2rem;       /* 32px */
+    --space-2xl: 3rem;      /* 48px */
+    --space-3xl: 4rem;      /* 64px */
 
-const CONFIG = {
-  CACHE: { TTL: 24 * 60 * 60 * 1000, PREFIX: 'vehicle_analysis_', VERSION: 'v1' },
-  
-  ERROR_MESSAGES: {
-    network: 'Service problem. Please try again later.',
-    timeout: 'Service timeout. Please try again later.',
-    400: 'Invalid registration number.',
-    404: 'Vehicle information not found.',
-    default: 'Unable to process request. Please try again later.'
-  },
-  
-  STATUS_PATTERNS: {
-    good: { regex: /✓|✅|🟢|good|ok|pass|low|acceptable|fine|satisfactory|adequate/i, color: 'var(--positive)', icon: <CheckCircleIcon /> },
-    warning: { regex: /⚠️|🟡|⚠|warning|medium|moderate|caution|amber|attention|concern/i, color: 'var(--warning)', icon: <WarningIcon /> },
-    critical: { regex: /❌|✗|🔴|❗|critical|high|fail|urgent|severe|red|danger|poor|bad/i, color: 'var(--negative)', icon: <ErrorIcon /> },
-    info: { regex: /info|note|review|pending|unknown/i, color: 'var(--primary)', icon: <InfoIcon /> }
-  },
-  
-  SYSTEM_ICONS: {
-    engine: <SpeedIcon />, brake: <SecurityIcon />, suspension: <BuildIcon />, safety: <SecurityIcon />,
-    tyre: <SpeedIcon />, exhaust: <WarningIcon />, electrical: <BuildIcon />, fluid: <BuildIcon />
-  },
-  
-  SECTION_TYPES: {
-    risk: { icon: <SecurityIcon />, color: 'var(--warning)' },
-    findings: { icon: <AssessmentIcon />, color: 'var(--primary)' },
-    systems: { icon: <BuildIcon />, color: 'var(--primary)' },
-    safety: { icon: <SecurityIcon />, color: 'var(--negative)' },
-    general: { icon: <InfoIcon />, color: 'var(--primary)' }
-  },
-  
-  SECTION_DESCRIPTIONS: {
-    risk: 'Risk factors and assessment details',
-    findings: 'Key findings and analysis points',
-    systems: 'System-specific technical information',
-    issues: 'Known issues and problem patterns',
-    maintenance: 'Maintenance and service considerations',
-    safety: 'Safety-related information',
-    reliability: 'Reliability and performance data',
-    general: 'Technical details and considerations'
+    /* Typography - Clean Hierarchy */
+    --text-xs: 0.75rem;     /* 12px */
+    --text-sm: 0.875rem;    /* 14px */
+    --text-base: 1rem;      /* 16px */
+    --text-lg: 1.125rem;    /* 18px */
+    --text-xl: 1.25rem;     /* 20px */
+    --text-2xl: 1.5rem;     /* 24px */
+    --text-3xl: 1.875rem;   /* 30px */
+
+    /* Clean Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+    /* Minimal Transitions */
+    --transition: all 0.15s ease;
   }
-};
+`;
 
-// Utility functions
-const safeProcess = (fn, fallback = null) => {
-  try { return fn(); }
-  catch (error) {
-    console.debug('Processing error:', error);
-    return fallback;
+/* ===============================
+   Layout & Typography — DVLADataHeader/Premium patterns
+================================ */
+const CleanContainer = styled('div')`
+  ${MinimalTokens}
+
+  font-family: var(--font-main);
+  background: var(--white);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+  color: var(--gray-900);
+
+  @media (max-width: 767px) {
+    padding: var(--space-xl) var(--space-md);
   }
-};
+`;
 
-const getErrorMessage = (error) => {
-  const errorStr = String(error || '');
-  return CONFIG.ERROR_MESSAGES[
-    ['network', 'timeout', '400', '404'].find(key => errorStr.includes(key)) || 'default'
-  ];
-};
+const SectionHeader = styled('div')`
+  margin-bottom: var(--space-3xl);
 
-const detectStatusFromText = (text) => {
-  const combined = String(text || '').toLowerCase();
-  for (const [status, config] of Object.entries(CONFIG.STATUS_PATTERNS)) {
-    if (config.regex.test(combined)) {
-      return { status, text: status.charAt(0).toUpperCase() + status.slice(1), ...config };
+  & h1, & h2 {
+    margin: 0;
+    font-family: var(--font-main);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+
+    & h1, & h2 {
+      font-size: var(--text-xl);
     }
   }
-  return { status: 'unknown', text: 'Unknown', icon: <InfoIcon />, color: 'var(--primary)' };
+`;
+
+const DataGrid = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+`;
+
+const ReportSection = styled('section')`
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
+`;
+
+/* content groups are invisible – no borders, no backgrounds */
+const MetricGroup = styled('div')``;
+
+const LabelRow = styled('div')`
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+`;
+
+const MetricLabel = styled('div')`
+  font-family: var(--font-main);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  line-height: 1.3;
+`;
+
+const MetricValue = styled('div')`
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--gray-900);
+  line-height: 1.4;
+  word-break: break-word;
+
+  @media (max-width: 767px) {
+    font-size: var(--text-sm);
+  }
+`;
+
+const StatusIndicator = styled('span')(({ status }) => {
+  const s = String(status || '').toLowerCase();
+  let color = 'var(--gray-700)';
+  if (['valid', 'taxed', 'no action required', 'good', 'low', 'compliant'].includes(s)) color = 'var(--positive)';
+  else if (['expired', 'sorn', 'untaxed', 'critical', 'high', 'non-compliant'].includes(s)) color = 'var(--negative)';
+  else if (['due soon', 'advisory', 'warning', 'medium'].includes(s)) color = 'var(--warning)';
+  return `
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: ${color};
+  `;
+});
+
+const Small = styled('div')`
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+  line-height: 1.5;
+`;
+
+const Mono = styled('pre')`
+  background: var(--gray-50);
+  padding: var(--space-xl);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin: 0;
+  max-height: 400px;
+  overflow: auto;
+`;
+
+/* ===============================
+   API base
+================================ */
+const API_BASE_URL =
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8007/api/v1'
+    : '/api/v1';
+
+/* ===============================
+   Parser (unchanged logic)
+================================ */
+const SYSTEM_CATEGORIES = {
+  SUSPENSION: { displayName: 'Suspension & Dampers', color: 'var(--primary)' },
+  BRAKING: { displayName: 'Braking System', color: 'var(--negative)' },
+  ENGINE: { displayName: 'Engine & Ancillaries', color: 'var(--positive)' },
+  TRANSMISSION: { displayName: 'Transmission & Drivetrain', color: 'var(--primary)' },
+  ELECTRICAL: { displayName: 'Electrical Systems', color: 'var(--warning)' },
+  STRUCTURE: { displayName: 'Body Structure & Corrosion', color: 'var(--negative)' },
+  EXHAUST: { displayName: 'Exhaust & Emissions', color: 'var(--warning)' },
+  TYRES: { displayName: 'Tyres & Wheels', color: 'var(--primary)' },
+  LIGHTING: { displayName: 'Lighting & Signalling', color: 'var(--primary)' },
+  STEERING: { displayName: 'Steering System', color: 'var(--primary)' },
+  FUEL: { displayName: 'Fuel System', color: 'var(--warning)' },
+  COOLING: { displayName: 'Cooling System', color: 'var(--warning)' },
+  HVAC: { displayName: 'Climate Control', color: 'var(--primary)' },
+  BODYWORK: { displayName: 'Bodywork & Trim', color: 'var(--primary)' },
+  SAFETY: { displayName: 'Safety Systems', color: 'var(--negative)' },
+  OTHER: { displayName: 'Other Systems', color: 'var(--primary)' }
 };
 
-const getSystemIcon = (text) => {
-  const t = String(text || '').toLowerCase();
-  return Object.entries(CONFIG.SYSTEM_ICONS).find(([keyword]) => t.includes(keyword))?.[1] || <InfoIcon />;
+const STATUS_COLORS = {
+  critical: 'var(--negative)',
+  warning: 'var(--warning)',
+  good: 'var(--positive)',
+  info: 'var(--primary)'
 };
 
-// Browser cache utilities
-const browserCache = {
-  saveToCache: (key, data) => safeProcess(() => {
-    const jsonString = JSON.stringify({ data, timestamp: Date.now(), version: CONFIG.CACHE.VERSION });
-    if (new Blob([jsonString]).size > 2 * 1024 * 1024) return false;
-    localStorage.setItem(`${CONFIG.CACHE.PREFIX}${key}`, jsonString);
-    return true;
-  }, false),
-
-  getFromCache: (key) => safeProcess(() => {
-    const cached = localStorage.getItem(`${CONFIG.CACHE.PREFIX}${key}`);
-    if (!cached) return null;
-    
-    const entry = JSON.parse(cached);
-    if (entry.version !== CONFIG.CACHE.VERSION || Date.now() - entry.timestamp > CONFIG.CACHE.TTL) {
-      localStorage.removeItem(`${CONFIG.CACHE.PREFIX}${key}`);
-      return null;
-    }
-    return entry.data;
-  }, null)
+const extractValue = (text, key) => {
+  const regex = new RegExp(`${key}:\\s*(.+?)(?=\\n|$)`, 'i');
+  const match = text.match(regex);
+  return match ? match[1].trim() : null;
 };
-
-// Gauge component
-const Gauge = ({ value, max = 100, unit = '', label = 'Metric', color = 'var(--primary)', size = 140 }) => {
-  const numValue = parseFloat(value) || 0;
-  const numMax = parseFloat(max) || 100;
-  const percentage = Math.min(Math.max((numValue / numMax) * 100, 0), 100);
-  const radius = Math.max((size - 24) / 2, 10);
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
-  
-  return (
-    <Box>
-      <GaugeContainer style={{ width: size, height: size }}>
-        <GaugeSvg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          <GaugeTrack cx={size/2} cy={size/2} r={radius} />
-          <GaugeFill 
-            cx={size/2} cy={size/2} r={radius} color={color}
-            strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} 
-          />
-        </GaugeSvg>
-        <GaugeCenterText>
-          <MetricValue size="medium">{Math.round(numValue)}</MetricValue>
-          <MetricSubtext>{unit}</MetricSubtext>
-        </GaugeCenterText>
-      </GaugeContainer>
-      <CardTitle>{label}</CardTitle>
-    </Box>
-  );
+const extractNumericValue = (text, key) => {
+  const value = extractValue(text, key);
+  return value ? parseInt(value, 10) || 0 : 0;
 };
-
-// Streamlined table parser
-const parseMarkdownTable = (tableText) => {
-  if (!tableText?.trim()) return null;
-  
-  return safeProcess(() => {
-    const lines = tableText.split('\n')
-      .filter(line => line.includes('|') && line.trim())
-      .filter(line => !line.match(/^\|\s*[-:]+\s*\|/)); // Skip separator lines
-    
-    if (lines.length < 2) return null;
-    
-    const headerLine = lines[0];
-    const headers = headerLine.split('|')
-      .map(h => h.trim())
-      .filter(h => h && !h.match(/^-+$/));
-    
-    if (headers.length === 0) return null;
-    
-    const rows = lines.slice(1).map(line => {
-      const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-      const row = {};
-      
-      headers.forEach((header, index) => {
-        const normalizedHeader = header.toLowerCase().replace(/[^a-z0-9]/g, '_') || `col_${index + 1}`;
-        row[normalizedHeader] = cells[index] || '';
-      });
-      
-      return Object.values(row).some(Boolean) ? row : null;
-    }).filter(Boolean);
-    
-    return rows.length > 0 ? { headers, rows, columnCount: headers.length, rowCount: rows.length } : null;
-  }, null);
+const extractSection = (text, startMarker, endMarker) => {
+  const startIndex = text.indexOf(startMarker);
+  if (startIndex === -1) return '';
+  const endIndex = endMarker ? text.indexOf(endMarker, startIndex) : text.length;
+  if (endIndex === -1) return text.substring(startIndex + startMarker.length);
+  return text.substring(startIndex + startMarker.length, endIndex);
 };
+const parseListItems = (text) =>
+  text.split('\n').map(l => l.replace(/^-\s*/, '').trim()).filter(Boolean);
 
-// Streamlined table-to-cards converter
-const tableRowsToCards = (tableData) => {
-  if (!tableData?.rows?.length) return [];
-  
-  return safeProcess(() => {
-    const headers = tableData.headers || [];
-    
-    const getColumnPurpose = (header, index) => {
-      const h = String(header || '').toLowerCase();
-      if (index === 0 || h.includes('system') || h.includes('component')) return 'identifier';
-      if (h.includes('status') || h.includes('risk') || h.includes('condition')) return 'status';
-      if (h.includes('priority') || h.includes('urgency')) return 'priority';
-      if (index === headers.length - 1 || h.includes('description') || h.includes('note')) return 'description';
-      return 'additional';
-    };
-    
-    const columnMap = headers.map((header, index) => ({
-      header,
-      purpose: getColumnPurpose(header, index),
-      key: header.toLowerCase().replace(/[^a-z0-9]/g, '_') || `col_${index + 1}`
-    }));
-    
-    return tableData.rows.map((row, rowIndex) => {
-      const identifierCol = columnMap.find(c => c.purpose === 'identifier');
-      const statusCol = columnMap.find(c => c.purpose === 'status');
-      const descriptionCol = columnMap.find(c => c.purpose === 'description');
-      
-      const identifier = row[identifierCol?.key] || Object.values(row)[0] || `Item ${rowIndex + 1}`;
-      const statusValue = row[statusCol?.key] || '';
-      const description = row[descriptionCol?.key] || Object.values(row).slice(-1)[0] || '';
-      
-      const detectedStatus = detectStatusFromText(statusValue);
-      
+class VehicleAnalysisParser {
+  parse(analysisText) {
+    try {
+      const overallScore = extractNumericValue(analysisText, 'OVERALL_SCORE');
+      const overallRisk = extractValue(analysisText, 'OVERALL_RISK')?.toLowerCase() || 'medium';
+      const systemsAnalysed = extractNumericValue(analysisText, 'SYSTEMS_ANALYSED');
+      const systemsWithIssues = extractNumericValue(analysisText, 'SYSTEMS_WITH_ISSUES');
+
+      const systemsSection = extractSection(analysisText, 'SYSTEM_ANALYSIS_START', 'SYSTEM_ANALYSIS_END');
+      const systems = this.parseSystems(systemsSection);
+
+      const patternsSection = extractSection(analysisText, 'PATTERN_ANALYSIS_START', 'PATTERN_ANALYSIS_END');
+      const patterns = this.parsePatterns(patternsSection);
+
+      const riskFactorsSection = extractSection(analysisText, 'RISK_FACTORS_START', 'RISK_FACTORS_END');
+      const riskFactors = parseListItems(riskFactorsSection);
+
+      const positiveFactorsSection = extractSection(analysisText, 'POSITIVE_FACTORS_START', 'POSITIVE_FACTORS_END');
+      const positiveFactors = parseListItems(positiveFactorsSection);
+
+      const maintenanceSection = extractSection(analysisText, 'MAINTENANCE_INSIGHTS_START', 'MAINTENANCE_INSIGHTS_END');
+      const maintenanceInsights = parseListItems(maintenanceSection);
+
+      const summary = extractValue(analysisText, 'SUMMARY') || 'Technical analysis completed.';
+
       return {
-        type: 'system_assessment',
-        title: String(identifier).trim(),
-        status: detectedStatus.status,
-        statusText: detectedStatus.text,
-        statusIcon: detectedStatus.icon,
-        systemIcon: getSystemIcon(identifier),
-        description: String(description).trim(),
-        color: detectedStatus.color,
-        variant: 'status'
+        overallScore,
+        overallRisk,
+        systemsAnalysed,
+        systemsWithIssues,
+        systems,
+        patterns,
+        riskFactors,
+        positiveFactors,
+        maintenanceInsights,
+        summary,
+        criticalSystems: systems.filter(s => s.status === 'critical').length,
+        warningSystems: systems.filter(s => s.status === 'warning').length,
+        recentIssues: systems.filter(s => s.recentActivity).length
       };
-    }).filter(Boolean);
-  }, []);
-};
-
-// Streamlined markdown analyzer
-const analyzeMarkdownForInsights = (markdownText) => {
-  if (!markdownText) return { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] };
-  
-  return safeProcess(() => {
-    // Extract tables
-    const tables = [];
-    let processedText = markdownText;
-    const tableRegex = /\|[^\n]*\|[\s\S]*?(?=\n\s*\n|\n\s*##|$)/g;
-    
-    let match;
-    while ((match = tableRegex.exec(markdownText)) !== null) {
-      const tableText = match[0].trim();
-      const tableData = parseMarkdownTable(tableText);
-      
-      if (tableData?.rows?.length > 0) {
-        tables.push(tableData);
-        processedText = processedText.replace(tableText, `__TABLE_${tables.length - 1}__`);
-      }
+    } catch (e) {
+      return this.createFallback(analysisText);
     }
-    
-    // Process content
-    const lines = processedText.split('\n');
-    const insights = [];
-    const riskFactors = [];
-    const positiveFactors = [];
-    const sections = [];
-    const tableCards = [];
-    
-    let currentSection = null;
-    const metrics = { issueCount: 0, safetyCount: 0 };
-    
-    const detectSectionType = (title) => {
-      const t = title.toLowerCase();
-      return Object.entries(CONFIG.SECTION_TYPES).find(([key]) => t.includes(key))?.[1] || CONFIG.SECTION_TYPES.general;
-    };
-    
-    const classifyContent = (text) => {
-      const t = text.toLowerCase();
-      if (t.includes('risk') || t.includes('danger') || t.includes('warning')) {
-        metrics.issueCount++;
-        return 'risk';
-      }
-      if (t.includes('good') || t.includes('excellent') || t.includes('maintained')) return 'positive';
-      if (t.includes('safety') || t.includes('critical')) {
-        metrics.safetyCount++;
-        return 'safety';
-      }
-      return 'general';
-    };
-    
-    lines.forEach(line => {
-      const originalLine = line.trim();
-      
-      // Handle table placeholders
-      if (originalLine.startsWith('__TABLE_')) {
-        const tableIndex = parseInt(originalLine.match(/\d+/)[0]);
-        if (tables[tableIndex]) {
-          tableCards.push(...tableRowsToCards(tables[tableIndex]));
-        }
-        return;
-      }
-      
-      // Headers
-      if (originalLine.match(/^#+\s+/)) {
-        if (currentSection) sections.push(currentSection);
-        
-        const title = originalLine.replace(/^#+\s*/, '');
-        const sectionInfo = detectSectionType(title);
-        
-        currentSection = { title, content: [], ...sectionInfo };
-      } else if (currentSection && originalLine) {
-        const classification = classifyContent(originalLine);
-        
-        currentSection.content.push({
-          text: originalLine.replace(/^[-*]\s*/, '').replace(/\*\*/g, ''),
-          classification
-        });
-        
-        const cleanContent = originalLine.replace(/\*\*/g, '').replace(/^[-*]\s*/, '').trim();
-        if (classification === 'risk' && !riskFactors.includes(cleanContent)) {
-          riskFactors.push(cleanContent);
-        } else if (classification === 'positive' && !positiveFactors.includes(cleanContent)) {
-          positiveFactors.push(cleanContent);
-        }
-      }
+  }
+
+  parseSystems(systemsText) {
+    if (!systemsText) return [];
+    const systemBlocks = systemsText.split('SYSTEM_END').filter(block => block.trim());
+
+    return systemBlocks.map(block => {
+      const name = extractValue(block, 'SYSTEM') || 'Unknown System';
+      const category = extractValue(block, 'CATEGORY') || 'OTHER';
+      const status = extractValue(block, 'STATUS')?.toLowerCase() || 'unknown';
+      const issueCount = extractNumericValue(block, 'ISSUE_COUNT');
+      const recentActivity = extractValue(block, 'RECENT_ACTIVITY') === 'YES';
+      const summary = extractValue(block, 'SUMMARY') || '';
+
+      const findingsMatch = block.match(/FINDINGS:[\s\S]*?(?=SYSTEM_END|$)/);
+      const findings = findingsMatch ? parseListItems(findingsMatch[0].replace('FINDINGS:', '')) : [];
+
+      const categoryInfo = SYSTEM_CATEGORIES[category] || SYSTEM_CATEGORIES.OTHER;
+
+      return {
+        name,
+        category,
+        status,
+        issueCount,
+        recentActivity,
+        summary,
+        findings,
+        displayName: categoryInfo.displayName,
+        color: STATUS_COLORS[status] || categoryInfo.color
+      };
     });
-    
-    if (currentSection) sections.push(currentSection);
-    
-    // Generate insights
-    if (tableCards.length > 0) {
-      const critical = tableCards.filter(c => c.status === 'critical').length;
-      const warning = tableCards.filter(c => c.status === 'warning').length;
-      const good = tableCards.filter(c => c.status === 'good').length;
-      const total = tableCards.length;
-      
-      if (critical + warning > 0) {
-        insights.push({
-          type: 'systems_at_risk',
-          title: 'Systems at Risk',
-          value: critical + warning,
-          unit: `of ${total}`,
-          description: critical > 0 ? 'Critical attention required' : 'Moderate attention needed',
-          color: critical > 0 ? 'var(--negative)' : 'var(--warning)',
-          icon: <WarningIcon />,
-          variant: 'status'
-        });
-      }
-      
-      if (good > 0) {
-        insights.push({
-          type: 'systems_good',
-          title: 'Systems OK',
-          value: good,
-          unit: `of ${total}`,
-          description: 'Systems in good condition',
-          color: 'var(--positive)',
-          icon: <CheckCircleIcon />,
-          variant: 'status'
-        });
-      }
-      
-      const score = Math.round(Math.max(0, (1 - (critical * 3 + warning) / (total * 3)) * 100));
-      insights.push({
-        type: 'overall_assessment',
-        title: 'Overall Assessment',
-        value: score,
-        unit: '/100',
-        description: score > 80 ? 'Low risk profile' : score > 60 ? 'Moderate risk level' : 'Higher risk considerations',
-        color: score > 80 ? 'var(--positive)' : score > 60 ? 'var(--warning)' : 'var(--negative)',
-        icon: <AssessmentIcon />,
-        variant: 'gauge'
-      });
-    } else {
-      const score = Math.max(10, 90 - (metrics.issueCount * 8) - (metrics.safetyCount * 12));
-      insights.push({
-        type: 'technical_assessment',
-        title: 'Technical Assessment',
-        value: Math.round(score),
-        unit: '/100',
-        description: score > 80 ? 'Excellent reliability' : score > 60 ? 'Good reliability' : 'Below average reliability',
-        color: score > 70 ? 'var(--positive)' : score > 50 ? 'var(--warning)' : 'var(--negative)',
-        icon: <TrendingUpIcon />,
-        variant: 'gauge'
-      });
-    }
-    
-    return {
-      insights,
-      riskFactors: riskFactors.slice(0, 6),
-      positiveFactors: positiveFactors.slice(0, 6),
-      sections,
-      tableCards
-    };
-  }, { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] });
-};
+  }
 
-// Simplified VehicleAnalysisComponent - maintains all functionality with reduced complexity
-// Reusable render helpers
-const renderInsightCard = (insight, index) => (
-  <VisualInsightCard key={`insight-${index}`} variant={insight.variant || 'status'} status={insight.type || 'unknown'}>
-    {insight.variant === 'gauge' ? (
-      <Gauge
-        value={insight.value || 0}
-        max={100}
-        unit={insight.unit || ''}
-        label={insight.title || 'Unknown'}
-        color={insight.color || 'var(--primary)'}
-      />
-    ) : (
-      <>
-        <CardHeader>
-          <CardTitle>{insight.title || 'Unknown Metric'}</CardTitle>
-          <CardIcon color={insight.color || 'var(--primary)'}>
-            {insight.icon || <InfoIcon />}
-          </CardIcon>
-        </CardHeader>
-        <MetricValue size="large" color={insight.color || 'var(--primary)'}>
-          {insight.value ?? 'N/A'}
-          <MetricUnit>{insight.unit || ''}</MetricUnit>
-        </MetricValue>
-        <MetricSubtext>{insight.description || 'No description available'}</MetricSubtext>
-      </>
-    )}
-  </VisualInsightCard>
+  parsePatterns(text) {
+    if (!text) return {};
+    const recurring = extractSection(text, 'RECURRING_ISSUES:', 'PROGRESSIVE_DETERIORATION:');
+    const deterioration = extractSection(text, 'PROGRESSIVE_DETERIORATION:', 'BULLETIN_CORRELATIONS:');
+    const bulletins = extractSection(text, 'BULLETIN_CORRELATIONS:', '');
+    return {
+      recurringIssues: parseListItems(recurring),
+      progressiveDeterioration: parseListItems(deterioration),
+      bulletinCorrelations: parseListItems(bulletins)
+    };
+  }
+
+  createFallback(rawText) {
+    return {
+      overallScore: 75,
+      overallRisk: 'medium',
+      systemsAnalysed: 0,
+      systemsWithIssues: 0,
+      systems: [],
+      patterns: {},
+      riskFactors: [],
+      positiveFactors: [],
+      maintenanceInsights: [],
+      summary: 'Analysis parsing encountered an issue. Raw content available below.',
+      rawText,
+      fallbackMode: true
+    };
+  }
+}
+
+/* ===============================
+   Minimal components
+================================ */
+const Row = ({ label, value, after }) => (
+  <MetricGroup>
+    <LabelRow>
+      <MetricLabel>{label}</MetricLabel>
+      {after}
+    </LabelRow>
+    <MetricValue>{value}</MetricValue>
+  </MetricGroup>
 );
 
-// Enhanced System Assessment Cards with diagnostic-style presentation
-const renderEnhancedSystemCard = (card, index) => {
-  // Enhanced status detection with diagnostic context
-  const getDiagnosticStatus = (card) => {
-    const status = card.status || 'unknown';
-    const description = String(card.description || '').toLowerCase();
-    
-    if (status === 'critical' || description.includes('fail') || description.includes('critical')) {
-      return {
-        level: 'critical',
-        color: 'var(--negative)',
-        bgColor: 'rgba(239, 68, 68, 0.1)',
-        borderColor: 'var(--negative)',
-        label: 'CRITICAL',
-        icon: <ErrorIcon />,
-        action: 'Immediate attention required'
-      };
-    }
-    if (status === 'warning' || description.includes('warning') || description.includes('moderate')) {
-      return {
-        level: 'warning',
-        color: 'var(--warning)',
-        bgColor: 'rgba(245, 158, 11, 0.1)',
-        borderColor: 'var(--warning)',
-        label: 'WARNING',
-        icon: <WarningIcon />,
-        action: 'Service recommended'
-      };
-    }
-    if (status === 'good' || description.includes('pass') || description.includes('ok')) {
-      return {
-        level: 'good',
-        color: 'var(--positive)',
-        bgColor: 'rgba(34, 197, 94, 0.1)',
-        borderColor: 'var(--positive)',
-        label: 'OK',
-        icon: <CheckCircleIcon />,
-        action: 'System functioning well'
-      };
-    }
-    return {
-      level: 'unknown',
-      color: 'var(--gray-500)',
-      bgColor: 'var(--gray-50)',
-      borderColor: 'var(--gray-300)',
-      label: 'PENDING',
-      icon: <InfoIcon />,
-      action: 'Assessment in progress'
-    };
-  };
-  
-  // System category detection for better iconography
-  const getSystemCategory = (title) => {
-    const t = String(title || '').toLowerCase();
-    if (t.includes('engine') || t.includes('motor')) return { icon: <SpeedIcon />, category: 'Powertrain' };
-    if (t.includes('brake') || t.includes('braking')) return { icon: <SecurityIcon />, category: 'Safety' };
-    if (t.includes('suspension') || t.includes('steering')) return { icon: <BuildIcon />, category: 'Chassis' };
-    if (t.includes('electrical') || t.includes('battery')) return { icon: <BuildIcon />, category: 'Electrical' };
-    if (t.includes('emission') || t.includes('exhaust')) return { icon: <WarningIcon />, category: 'Emissions' };
-    if (t.includes('tyre') || t.includes('tire') || t.includes('wheel')) return { icon: <SpeedIcon />, category: 'Wheels' };
-    return { icon: <InfoIcon />, category: 'System' };
-  };
-  
-  const diagnostic = getDiagnosticStatus(card);
-  const systemInfo = getSystemCategory(card.title);
-  
-  return (
-    <VisualInsightCard key={`system-${index}`} variant="status" status={card.status || 'unknown'}>
-      {/* Diagnostic Header with Status Indicator */}
-      <Box style={{
-        borderLeft: `4px solid ${diagnostic.borderColor}`,
-        paddingLeft: 'var(--space-md)',
-        marginBottom: 'var(--space-md)'
-      }}>
-        <CardHeader style={{ marginBottom: 'var(--space-sm)' }}>
-          <Box style={{ flex: 1 }}>
-            <CardTitle>{card.title || `System ${index + 1}`}</CardTitle>
-            <BodyText style={{
-              fontSize: 'var(--text-xs)',
-              color: 'var(--gray-500)',
-              marginTop: '2px'
-            }}>
-              {systemInfo.category}
-            </BodyText>
-          </Box>
-          <CardIcon color={diagnostic.color}>
-            {systemInfo.icon}
-          </CardIcon>
-        </CardHeader>
-        
-        {/* Diagnostic Status Display */}
-        <Box style={{
-          background: diagnostic.bgColor,
-          padding: 'var(--space-md)',
-          borderRadius: 'var(--radius-sm)',
-          border: `1px solid ${diagnostic.borderColor}`,
-          marginBottom: 'var(--space-md)'
-        }}>
-          <Box style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 'var(--space-sm)'
-          }}>
-            <EnhancedStatusBadge status={card.status || 'unknown'} size="large">
-              {diagnostic.icon}
-              {diagnostic.label}
-            </EnhancedStatusBadge>
-            
-            {/* Diagnostic Code/ID (if available) */}
-            <BodyText style={{
-              fontSize: 'var(--text-xs)',
-              color: 'var(--gray-500)',
-              fontFamily: 'monospace',
-              background: 'var(--white)',
-              padding: '2px 6px',
-              borderRadius: '3px'
-            }}>
-              SYS-{String(index + 1).padStart(3, '0')}
-            </BodyText>
-          </Box>
-          
-          <BodyText style={{
-            fontSize: 'var(--text-xs)',
-            color: diagnostic.color,
-            fontWeight: '500'
-          }}>
-            {diagnostic.action}
-          </BodyText>
-        </Box>
-      </Box>
-      
-      {/* System Description/Details */}
-      <MetricSubtext style={{ 
-        lineHeight: 1.5,
-        marginBottom: 'var(--space-md)'
-      }}>
-        {card.description || 'System assessment data not available'}
-      </MetricSubtext>
-      
-      {/* Technical Indicators */}
-      <Box style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingTop: 'var(--space-sm)',
-        borderTop: '1px solid var(--gray-100)',
-        marginTop: 'auto'
-      }}>
-        <Box style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-xs)'
-        }}>
-          <AssessmentIcon style={{ fontSize: '14px', color: 'var(--gray-400)' }} />
-          <BodyText style={{
-            fontSize: 'var(--text-xs)',
-            color: 'var(--gray-500)'
-          }}>
-            Diagnostic scan
-          </BodyText>
-        </Box>
-        
-        {/* Performance Indicator */}
-        <Box style={{
-          width: '40px',
-          height: '6px',
-          background: 'var(--gray-200)',
-          borderRadius: '3px',
-          overflow: 'hidden'
-        }}>
-          <Box style={{
-            width: diagnostic.level === 'good' ? '100%' : diagnostic.level === 'warning' ? '60%' : '30%',
-            height: '100%',
-            background: diagnostic.color,
-            transition: 'width 0.6s ease'
-          }} />
-        </Box>
-      </Box>
-    </VisualInsightCard>
-  );
-};
+const BulletList = styled('ul')`
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0 0;
 
-// Enhanced Risk Factor Cards with sophisticated warning presentation
-const renderRiskFactorCards = (factors) => {
-  if (!factors?.length) return [];
-  
-  // Determine severity based on content keywords
-  const getSeverity = (factor) => {
-    const text = String(factor).toLowerCase();
-    if (text.includes('critical') || text.includes('urgent') || text.includes('danger') || text.includes('fail')) {
-      return { level: 'critical', color: 'var(--negative)', badge: 'Critical', icon: <ErrorIcon /> };
-    }
-    if (text.includes('high') || text.includes('severe') || text.includes('major')) {
-      return { level: 'high', color: 'var(--negative)', badge: 'High Risk', icon: <PriorityHighIcon /> };
-    }
-    if (text.includes('moderate') || text.includes('medium') || text.includes('concern')) {
-      return { level: 'moderate', color: 'var(--warning)', badge: 'Moderate', icon: <WarningIcon /> };
-    }
-    return { level: 'low', color: 'var(--warning)', badge: 'Monitor', icon: <ReportProblemIcon /> };
-  };
-  
-  return factors.slice(0, 6).map((factor, index) => {
-    const severity = getSeverity(factor);
-    
-    return (
-      <VisualInsightCard key={`risk-${index}`} variant="status" status="warning">
-        <CardHeader>
-          <CardTitle>Risk Factor {index + 1}</CardTitle>
-          <CardIcon color={severity.color}>
-            <SecurityIcon />
-          </CardIcon>
-        </CardHeader>
-        
-        {/* Severity Badge with Icon */}
-        <Box style={{ marginBottom: 'var(--space-md)' }}>
-          <EnhancedStatusBadge status="warning" size="large">
-            {severity.icon}
-            {severity.badge}
-          </EnhancedStatusBadge>
-        </Box>
-        
-        {/* Risk Description */}
-        <MetricSubtext style={{ 
-          lineHeight: 1.6, 
-          marginBottom: 'var(--space-sm)',
-          fontWeight: '400',
-          color: 'var(--gray-700)'
-        }}>
-          {String(factor).slice(0, 180)}{String(factor).length > 180 ? '...' : ''}
-        </MetricSubtext>
-        
-        {/* Impact Indicator */}
-        <Box style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 'var(--space-xs)',
-          marginTop: 'auto',
-          paddingTop: 'var(--space-sm)',
-          borderTop: '1px solid var(--gray-100)'
-        }}>
-          <WarningIcon style={{ fontSize: '14px', color: severity.color }} />
-          <BodyText style={{ 
-            fontSize: 'var(--text-xs)', 
-            color: severity.color,
-            fontWeight: '500'
-          }}>
-            Requires attention
-          </BodyText>
-        </Box>
-      </VisualInsightCard>
-    );
-  });
-};
+  & li {
+    margin: 0 0 var(--space-sm) 0;
+    font-size: var(--text-base);
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+`;
 
-// Enhanced Positive Factor Cards with achievement-style presentation
-const renderPositiveFactorCards = (factors) => {
-  if (!factors?.length) return [];
-  
-  // Determine strength level based on content
-  const getStrength = (factor) => {
-    const text = String(factor).toLowerCase();
-    if (text.includes('excellent') || text.includes('outstanding') || text.includes('exceptional')) {
-      return { level: 'excellent', color: 'var(--positive)', badge: 'Excellent', icon: <EmojiEventsIcon /> };
-    }
-    if (text.includes('good') || text.includes('well maintained') || text.includes('reliable')) {
-      return { level: 'good', color: 'var(--positive)', badge: 'Good', icon: <VerifiedIcon /> };
-    }
-    if (text.includes('maintained') || text.includes('serviced') || text.includes('updated')) {
-      return { level: 'maintained', color: 'var(--positive)', badge: 'Maintained', icon: <CheckCircleIcon /> };
-    }
-    return { level: 'positive', color: 'var(--positive)', badge: 'Positive', icon: <StarIcon /> };
-  };
-  
-  return factors.slice(0, 6).map((factor, index) => {
-    const strength = getStrength(factor);
-    
-    return (
-      <VisualInsightCard key={`positive-${index}`} variant="status" status="good">
-        <CardHeader>
-          <CardTitle>Strength {index + 1}</CardTitle>
-          <CardIcon color={strength.color}>
-            <ShieldIcon />
-          </CardIcon>
-        </CardHeader>
-        
-        {/* Achievement Badge */}
-        <Box style={{ marginBottom: 'var(--space-md)' }}>
-          <EnhancedStatusBadge status="good" size="large">
-            {strength.icon}
-            {strength.badge}
-          </EnhancedStatusBadge>
-        </Box>
-        
-        {/* Strength Description */}
-        <MetricSubtext style={{ 
-          lineHeight: 1.6, 
-          marginBottom: 'var(--space-sm)',
-          fontWeight: '400',
-          color: 'var(--gray-700)'
-        }}>
-          {String(factor).slice(0, 180)}{String(factor).length > 180 ? '...' : ''}
-        </MetricSubtext>
-        
-        {/* Confidence Indicator */}
-        <Box style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 'var(--space-xs)',
-          marginTop: 'auto',
-          paddingTop: 'var(--space-sm)',
-          borderTop: '1px solid var(--gray-100)'
-        }}>
-          <CheckCircleIcon style={{ fontSize: '14px', color: strength.color }} />
-          <BodyText style={{ 
-            fontSize: 'var(--text-xs)', 
-            color: strength.color,
-            fontWeight: '500'
-          }}>
-            Reliable indicator
-          </BodyText>
-        </Box>
-      </VisualInsightCard>
-    );
-  });
-};
-
-
-const VehicleAnalysisComponent = ({ registration, vehicleData, onDataLoad }) => {
+/* ===============================
+   Main component (minimal UI)
+================================ */
+const VehicleAnalysisMinimal = ({ registration, vehicleData, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [analysis, setAnalysis] = useState(null);
-  const [expandedSections, setExpandedSections] = useState(new Set());
-  const abortControllerRef = useRef(null);
-  const retryCountRef = useRef(0);
-  
-  const toggleSection = useCallback((sectionIndex) => {
-    setExpandedSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(sectionIndex)) {
-        newSet.delete(sectionIndex);
-      } else {
-        newSet.add(sectionIndex);
-      }
-      return newSet;
-    });
-  }, []);
+  const [analysisData, setAnalysisData] = useState(null);
+  const parser = useMemo(() => new VehicleAnalysisParser(), []);
 
-  // Enhanced Detailed Section Cards with rich information hierarchies
-  const renderDetailedSectionCards = useCallback((sections) => {
-    if (!sections?.length) return [];
-    
-    // Enhanced section type detection with better categorization
-    const getSectionCategory = (section) => {
-      const title = String(section.title || '').toLowerCase();
-      const contentSample = section.content?.slice(0, 3).map(c => String(c?.text || c || '')).join(' ').toLowerCase() || '';
-      
-      if (title.includes('safety') || contentSample.includes('safety') || contentSample.includes('airbag')) {
-        return { type: 'safety', icon: <SecurityIcon />, color: 'var(--negative)', label: 'Safety Critical' };
-      }
-      if (title.includes('maintenance') || contentSample.includes('service') || contentSample.includes('maintenance')) {
-        return { type: 'maintenance', icon: <BuildIcon />, color: 'var(--warning)', label: 'Maintenance' };
-      }
-      if (title.includes('engine') || title.includes('performance') || contentSample.includes('engine')) {
-        return { type: 'performance', icon: <SpeedIcon />, color: 'var(--primary)', label: 'Performance' };
-      }
-      if (title.includes('electrical') || contentSample.includes('electrical') || contentSample.includes('battery')) {
-        return { type: 'electrical', icon: <BuildIcon />, color: 'var(--primary)', label: 'Electrical' };
-      }
-      return { type: 'technical', icon: <InfoIcon />, color: 'var(--primary)', label: 'Technical' };
-    };
-    
-    const getContentPriority = (content) => {
-      const text = String(content?.text || content || '').toLowerCase();
-      if (text.includes('critical') || text.includes('urgent') || text.includes('immediate')) {
-        return { level: 'high', color: 'var(--negative)', icon: <PriorityHighIcon /> };
-      }
-      if (text.includes('important') || text.includes('recommend') || text.includes('should')) {
-        return { level: 'medium', color: 'var(--warning)', icon: <WarningIcon /> };
-      }
-      return { level: 'normal', color: 'var(--gray-600)', icon: <InfoIcon /> };
-    };
-    
-    return sections
-      .filter(section => section?.content?.length > 0)
-      .map((section, index) => {
-        const category = getSectionCategory(section);
-        const isExpanded = expandedSections.has(index);
-        const previewCount = 3;
-        const hasMoreContent = section.content.length > previewCount;
-        
-        return (
-          <VisualInsightCard key={`section-${index}`} variant="status" status={category.type}>
-            <CardHeader>
-              <Box style={{ flex: 1 }}>
-                <CardTitle>{section.title || `Section ${index + 1}`}</CardTitle>
-                <Box style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 'var(--space-xs)',
-                  marginTop: 'var(--space-xs)'
-                }}>
-                  <EnhancedStatusBadge status={category.type} size="medium">
-                    {category.icon}
-                    {category.label}
-                  </EnhancedStatusBadge>
-                  <BodyText style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--gray-500)'
-                  }}>
-                    {section.content.length} items
-                  </BodyText>
-                </Box>
-              </Box>
-              <CardIcon color={category.color}>
-                {category.icon}
-              </CardIcon>
-            </CardHeader>
-            
-            {/* Content Preview */}
-            <Box style={{ marginBottom: 'var(--space-md)' }}>
-              <MetricSubtext style={{ marginBottom: 'var(--space-sm)' }}>
-                {(section.type && CONFIG.SECTION_DESCRIPTIONS[section.type]) || 'Detailed technical information and findings'}
-              </MetricSubtext>
-            </Box>
-            
-            {/* Top Findings Preview */}
-            <Box style={{ 
-              background: 'var(--gray-50)', 
-              padding: 'var(--space-md)',
-              borderRadius: 'var(--radius-sm)',
-              marginBottom: 'var(--space-md)'
-            }}>
-              <BodyText style={{
-                fontSize: 'var(--text-xs)',
-                fontWeight: '600',
-                color: 'var(--gray-700)',
-                marginBottom: 'var(--space-sm)'
-              }}>
-                Key Findings:
-              </BodyText>
-              
-              {section.content.slice(0, isExpanded ? section.content.length : previewCount).map((content, contentIndex) => {
-                const contentText = content?.text || String(content || '');
-                const priority = getContentPriority(content);
-                if (!contentText.trim()) return null;
-                
-                return (
-                  <Box key={`content-${contentIndex}`} style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 'var(--space-sm)',
-                    marginBottom: 'var(--space-sm)',
-                    paddingBottom: 'var(--space-sm)',
-                    borderBottom: contentIndex < (isExpanded ? section.content.length - 1 : Math.min(previewCount - 1, section.content.length - 1)) ? '1px solid var(--gray-200)' : 'none'
-                  }}>
-                    <Box style={{ marginTop: '2px', flexShrink: 0 }}>
-                      {React.cloneElement(priority.icon, {
-                        style: { fontSize: '12px', color: priority.color }
-                      })}
-                    </Box>
-                    <BodyText style={{
-                      fontSize: 'var(--text-xs)',
-                      lineHeight: 1.4,
-                      color: 'var(--gray-700)',
-                      flex: 1
-                    }}>
-                      {contentText.slice(0, isExpanded ? 300 : 120)}
-                      {contentText.length > (isExpanded ? 300 : 120) ? '...' : ''}
-                    </BodyText>
-                  </Box>
-                );
-              }).filter(Boolean)}
-            </Box>
-            
-            {/* Expand/Collapse Toggle */}
-            {hasMoreContent && (
-              <Box 
-                onClick={() => toggleSection(index)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'var(--space-xs)',
-                  padding: 'var(--space-sm)',
-                  background: 'var(--gray-50)',
-                  borderRadius: 'var(--radius-sm)',
-                  cursor: 'pointer',
-                  border: '1px solid var(--gray-200)',
-                  transition: 'all 0.2s ease',
-                  marginTop: 'auto'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = 'var(--gray-100)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'var(--gray-50)';
-                }}
-              >
-                {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                <BodyText style={{
-                  fontSize: 'var(--text-xs)',
-                  fontWeight: '500',
-                  color: 'var(--primary)'
-                }}>
-                  {isExpanded ? 'Show less' : `View all ${section.content.length} details`}
-                </BodyText>
-              </Box>
-            )}
-          </VisualInsightCard>
-        );
-      });
-  }, [expandedSections, toggleSection]);
-
-  // Simplified API fetch
-  const fetchAnalysisFromApi = useCallback(async () => {
+  const fetchAnalysis = useCallback(async () => {
     if (!registration) {
-      setError("Vehicle registration is required");
+      setError('Vehicle registration is required');
       setLoading(false);
       return;
     }
-
-    const normalizedReg = registration.toUpperCase().trim();
-    
-    // Check cache first
-    const cachedData = browserCache.getFromCache(normalizedReg);
-    if (cachedData) {
-      setAnalysis(cachedData);
-      setLoading(false);
-      onDataLoad?.(cachedData);
-      return;
-    }
-
-    // Abort previous request
-    abortControllerRef.current?.abort();
-    abortControllerRef.current = new AbortController();
-
     try {
       setLoading(true);
       setError(null);
-      
-      const response = await fetch(`${API_BASE_URL}/vehicle-analysis/${normalizedReg}`, {
-        signal: abortControllerRef.current.signal
-      });
-      
-      if (!response.ok) {
-        throw new Error(response.status === 404 ? 'Vehicle information not found' : 'Service error');
-      }
-      
-      const data = await response.json();
-      retryCountRef.current = 0;
-      setAnalysis(data);
-      browserCache.saveToCache(normalizedReg, data);
+      const res = await fetch(`${API_BASE_URL}/vehicle-analysis/${registration.toUpperCase()}`);
+      if (!res.ok) throw new Error(res.status === 404 ? 'Vehicle analysis not available' : 'Service error');
+      const data = await res.json();
+      const parsed = parser.parse(data.analysis);
+      setAnalysisData(parsed);
       onDataLoad?.(data);
-      
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-      
-      if (err.message.includes('network') && retryCountRef.current < 2) {
-        retryCountRef.current++;
-        setTimeout(fetchAnalysisFromApi, retryCountRef.current * 1000);
-        return;
-      }
-      
-      setError(getErrorMessage(err.message));
+    } catch (e) {
+      setError(e.message || 'Failed to load vehicle analysis');
     } finally {
       setLoading(false);
     }
-  }, [registration, onDataLoad]);
+  }, [registration, parser, onDataLoad]);
 
   useEffect(() => {
-    if (registration) fetchAnalysisFromApi();
-    return () => abortControllerRef.current?.abort();
-  }, [registration, fetchAnalysisFromApi]);
+    if (registration) fetchAnalysis();
+  }, [registration, fetchAnalysis]);
 
-  // Simplified data processing
-  const analysisData = useMemo(() => {
-    if (!analysis?.analysis) {
-      return { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] };
-    }
-    
-    return safeProcess(
-      () => analyzeMarkdownForInsights(analysis.analysis),
-      { insights: [], riskFactors: [], positiveFactors: [], sections: [], tableCards: [] }
-    );
-  }, [analysis?.analysis]);
-
-  // Early returns for loading/error states
   if (loading) {
     return (
-      <VisualInsightsContainer>
-        <LoadingContainer>
-          <LoadingSpinner />
-          <HeadingM style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-sm)' }}>
-            Loading Vehicle Analysis
-          </HeadingM>
-          <BodyText>We're analyzing your vehicle data to provide detailed insights...</BodyText>
-        </LoadingContainer>
-      </VisualInsightsContainer>
+      <CleanContainer>
+        <ReportSection>
+          <Small>Analyzing vehicle data…</Small>
+        </ReportSection>
+      </CleanContainer>
     );
   }
 
   if (error) {
     return (
-      <VisualInsightsContainer>
-        <ErrorContainer>
-          <WarningIcon style={{ fontSize: 60, color: 'var(--negative)' }} />
-          <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>Analysis Unavailable</HeadingM>
-          <BodyText style={{ marginBottom: 'var(--space-lg)' }}>{error}</BodyText>
-          <button 
-            onClick={fetchAnalysisFromApi}
+      <CleanContainer>
+        <ReportSection>
+          <SectionHeader>
+            <h2>Analysis Temporarily Unavailable</h2>
+          </SectionHeader>
+          <Small style={{ marginBottom: 'var(--space-xl)' }}>{error}</Small>
+          <button
+            onClick={fetchAnalysis}
             style={{
-              background: 'var(--negative)', color: 'var(--white)', border: 'none',
-              padding: 'var(--space-md) var(--space-xl)', cursor: 'pointer',
-              borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-main)'
+              appearance: 'none',
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              fontFamily: 'var(--font-main)',
+              fontSize: 'var(--text-base)',
+              color: 'var(--primary)',
+              cursor: 'pointer'
             }}
           >
-            Try again
+            Retry analysis
           </button>
-        </ErrorContainer>
-      </VisualInsightsContainer>
+        </ReportSection>
+      </CleanContainer>
     );
   }
 
-  if (!analysis) {
+  if (!analysisData) {
     return (
-      <VisualInsightsContainer>
-        <ErrorContainer>
-          <InfoIcon style={{ fontSize: 60, color: 'var(--primary)' }} />
-          <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>No Analysis Available</HeadingM>
-          <BodyText>The requested vehicle analysis cannot be displayed at this time.</BodyText>
-        </ErrorContainer>
-      </VisualInsightsContainer>
+      <CleanContainer>
+        <ReportSection>
+          <SectionHeader><h2>No Analysis Available</h2></SectionHeader>
+          <Small>The requested vehicle analysis cannot be displayed at this time.</Small>
+        </ReportSection>
+      </CleanContainer>
     );
   }
 
-  // Main render
-  const vehicleInfo = analysis?.make && analysis?.model 
-    ? `${analysis.make} ${analysis.model}`
-    : vehicleData?.make !== 'Unknown' 
+  const vehicleInfo =
+    vehicleData?.make !== 'Unknown'
       ? `${vehicleData?.make || 'Unknown'} ${vehicleData?.model || 'Vehicle'}`
       : registration || 'this vehicle';
 
   return (
-    <VisualInsightsContainer>
+    <CleanContainer>
       {/* Header */}
-      <InsightCategoryHeader>
-        <CategoryIcon color="var(--primary)"><AssessmentIcon /></CategoryIcon>
-        <Box>
-          <HeadingM style={{ margin: 0 }}>Vehicle Analysis Report</HeadingM>
-          <BodyText style={{ margin: 0, marginTop: '4px' }}>
-            Comprehensive analysis for {vehicleInfo}
-            {analysis?.timestamp && (
-              <><br />Analysis generated: {new Date(analysis.timestamp * 1000).toLocaleDateString('en-GB')}</>
-            )}
-          </BodyText>
-        </Box>
-      </InsightCategoryHeader>
+      <SectionHeader>
+        <h1>Vehicle Technical Analysis</h1>
+        <Small style={{ marginTop: 'var(--space-sm)' }}>
+          Comprehensive technical assessment for {vehicleInfo}
+        </Small>
+      </SectionHeader>
 
-      {/* All Analysis Content in Card Grid Format */}
-      <InsightGrid>
-        {/* Summary Insights */}
-        {analysisData.insights?.map(renderInsightCard)}
-        
-        {/* Enhanced System Assessment Cards */}
-        {analysisData.tableCards?.map(renderEnhancedSystemCard)}
-        
-        {/* Enhanced Risk Factor Cards */}
-        {renderRiskFactorCards(analysisData.riskFactors)}
-        
-        {/* Enhanced Positive Factor Cards */}
-        {renderPositiveFactorCards(analysisData.positiveFactors)}
-        
-        {/* Enhanced Detailed Section Cards */}
-        {renderDetailedSectionCards(analysisData.sections)}
-      </InsightGrid>
-      
-      {/* Show message if no content */}
-      {(!analysisData.insights?.length && !analysisData.tableCards?.length && 
-        !analysisData.riskFactors?.length && !analysisData.positiveFactors?.length && 
-        !analysisData.sections?.length) && (
-        <EnhancedInsightNote variant="info">
-          <InfoIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-          No analysis content is available for this vehicle.
-        </EnhancedInsightNote>
+      {/* Summary */}
+      <ReportSection>
+        <DataGrid>
+          <MetricGroup>
+            <MetricLabel>Overall Assessment Score</MetricLabel>
+            <MetricValue>{Math.round(analysisData.overallScore)} / 100</MetricValue>
+            <Small>
+              <StatusIndicator status={analysisData.overallRisk}>
+                {analysisData.overallRisk.charAt(0).toUpperCase() + analysisData.overallRisk.slice(1)} risk
+              </StatusIndicator>
+            </Small>
+          </MetricGroup>
+
+          <MetricGroup>
+            <MetricLabel>Systems With Issues</MetricLabel>
+            <MetricValue>
+              {analysisData.systemsWithIssues} <span style={{ color: 'var(--gray-600)' }}>
+                of {analysisData.systemsAnalysed}
+              </span>
+            </MetricValue>
+            {(analysisData.criticalSystems > 0 || analysisData.warningSystems > 0) && (
+              <Small style={{ marginTop: 'var(--space-xs)' }}>
+                {analysisData.criticalSystems > 0 && (
+                  <StatusIndicator status="critical">{analysisData.criticalSystems} critical</StatusIndicator>
+                )}
+                {analysisData.criticalSystems > 0 && analysisData.warningSystems > 0 && ' · '}
+                {analysisData.warningSystems > 0 && (
+                  <StatusIndicator status="warning">{analysisData.warningSystems} warnings</StatusIndicator>
+                )}
+              </Small>
+            )}
+          </MetricGroup>
+
+          {analysisData.recentIssues > 0 && (
+            <MetricGroup>
+              <MetricLabel>Recent Activity</MetricLabel>
+              <MetricValue>{analysisData.recentIssues} systems</MetricValue>
+              <Small>Recent issues or changes detected</Small>
+            </MetricGroup>
+          )}
+        </DataGrid>
+      </ReportSection>
+
+      {/* Detailed Findings (condensed, typography-only) */}
+      {analysisData.systems.some(s => s.findings.length > 0) && (
+        <ReportSection>
+          <SectionHeader><h2>Detailed Findings</h2></SectionHeader>
+          {analysisData.systems
+            .filter(s => s.findings.length > 0)
+            .map((s, idx) => (
+              <MetricGroup key={`${s.category}-${idx}`} style={{ marginBottom: 'var(--space-xl)' }}>
+                <MetricLabel style={{ color: s.color, marginBottom: 'var(--space-xs)' }}>
+                  {s.name}
+                </MetricLabel>
+                <BulletList>
+                  {s.findings.map((f, i) => <li key={i}>{f}</li>)}
+                </BulletList>
+              </MetricGroup>
+            ))}
+        </ReportSection>
       )}
 
-      {/* Footer note */}
-      <EnhancedInsightNote variant="info">
-        <InfoIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-        This analysis is based on manufacturer data and vehicle records. 
-        Individual vehicle experiences may vary based on specific usage patterns and maintenance history.
-      </EnhancedInsightNote>
-    </VisualInsightsContainer>
+      {/* System Overview – invisible grid, no cards */}
+      {analysisData.systems.length > 0 && (
+        <ReportSection>
+          <SectionHeader><h2>Systems Overview</h2></SectionHeader>
+          <DataGrid>
+            {analysisData.systems.map((s, i) => (
+              <MetricGroup key={`${s.category}-${i}`}>
+                <Row
+                  label="System"
+                  value={
+                    <span>
+                      {s.name}{' '}
+                      <span style={{ color: 'var(--gray-500)' }}>· {s.displayName}</span>
+                    </span>
+                  }
+                />
+                <Row
+                  label="Status"
+                  value={<StatusIndicator status={s.status}>
+                    {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
+                  </StatusIndicator>}
+                />
+                <Row label="Issues" value={`${s.issueCount}`} />
+                {s.recentActivity && (
+                  <Small style={{ color: 'var(--warning)' }}>Recent activity detected</Small>
+                )}
+                {s.summary && (
+                  <Small style={{ marginTop: 'var(--space-sm)' }}>
+                    {s.summary}
+                  </Small>
+                )}
+              </MetricGroup>
+            ))}
+          </DataGrid>
+        </ReportSection>
+      )}
+
+      {/* Assessment Factors */}
+      {(analysisData.riskFactors.length > 0 || analysisData.positiveFactors.length > 0) && (
+        <ReportSection>
+          <SectionHeader><h2>Assessment Factors</h2></SectionHeader>
+          {analysisData.riskFactors.length > 0 && (
+            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
+              <MetricLabel>Risk Factors</MetricLabel>
+              <BulletList>
+                {analysisData.riskFactors.map((r, i) => <li key={`r-${i}`}>{r}</li>)}
+              </BulletList>
+            </MetricGroup>
+          )}
+          {analysisData.positiveFactors.length > 0 && (
+            <MetricGroup>
+              <MetricLabel>Positive Factors</MetricLabel>
+              <BulletList>
+                {analysisData.positiveFactors.map((p, i) => <li key={`p-${i}`}>{p}</li>)}
+              </BulletList>
+            </MetricGroup>
+          )}
+        </ReportSection>
+      )}
+
+      {/* Pattern Analysis */}
+      {(analysisData.patterns?.recurringIssues?.length ||
+        analysisData.patterns?.progressiveDeterioration?.length ||
+        analysisData.patterns?.bulletinCorrelations?.length) && (
+        <ReportSection>
+          <SectionHeader><h2>Pattern Analysis</h2></SectionHeader>
+          {analysisData.patterns?.recurringIssues?.length > 0 && (
+            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
+              <MetricLabel>Recurring Issues</MetricLabel>
+              <BulletList>
+                {analysisData.patterns.recurringIssues.map((t, i) => <li key={`ri-${i}`}>{t}</li>)}
+              </BulletList>
+            </MetricGroup>
+          )}
+          {analysisData.patterns?.progressiveDeterioration?.length > 0 && (
+            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
+              <MetricLabel>Progressive Deterioration</MetricLabel>
+              <BulletList>
+                {analysisData.patterns.progressiveDeterioration.map((t, i) => <li key={`pd-${i}`}>{t}</li>)}
+              </BulletList>
+            </MetricGroup>
+          )}
+          {analysisData.patterns?.bulletinCorrelations?.length > 0 && (
+            <MetricGroup>
+              <MetricLabel>Technical Bulletin Correlations</MetricLabel>
+              <BulletList>
+                {analysisData.patterns.bulletinCorrelations.map((t, i) => <li key={`bc-${i}`}>{t}</li>)}
+              </BulletList>
+            </MetricGroup>
+          )}
+        </ReportSection>
+      )}
+
+      {/* Summary */}
+      <ReportSection>
+        <SectionHeader><h2>Analysis Summary</h2></SectionHeader>
+        <Small style={{ color: 'var(--gray-800)' }}>
+          {analysisData.summary}
+        </Small>
+      </ReportSection>
+
+      {/* Raw analysis (fallback) */}
+      {analysisData.fallbackMode && (
+        <ReportSection>
+          <SectionHeader><h2>Raw Analysis Content</h2></SectionHeader>
+          <Mono>{analysisData.rawText}</Mono>
+        </ReportSection>
+      )}
+
+      {/* Professional note */}
+      <ReportSection>
+        <Small style={{ color: 'var(--gray-700)' }}>
+          <strong>Important:</strong> This analysis is based on manufacturer data, vehicle records, and historical maintenance inputs.
+          Actual condition may vary with usage, maintenance history, and environment. Consult a qualified professional for critical decisions.
+        </Small>
+      </ReportSection>
+    </CleanContainer>
   );
 };
 
-export default React.memo(VehicleAnalysisComponent);
+export default React.memo(VehicleAnalysisMinimal);

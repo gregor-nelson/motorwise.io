@@ -39,3 +39,108 @@
 2025-08-17 03:53:24,794 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-08-17 03:53:24,799 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 19.9816s
 2025-08-17 04:22:10,351 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-18 11:28:33,908 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 11:28:33,949 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-18 11:28:34,250 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 11:28:34,251 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-18 11:28:51,516 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-18 11:28:53,694 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-18 11:28:53,696 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-18 11:28:54,582 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 11:28:54,584 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-18 11:29:15,933 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 11:29:15,950 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 24.4345s
+2025-08-18 12:02:15,294 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SV57GVL
+2025-08-18 12:02:16,548 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SV57GVL "HTTP/1.1 200 OK"
+2025-08-18 12:02:16,549 - vehicle_analysis_api - INFO - Fetching bulletins for LAND ROVER DEFENDER
+2025-08-18 12:02:17,439 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-18 12:02:17,442 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-18 12:02:17,448 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/LAND%20ROVER/DEFENDER "HTTP/1.1 404 Not Found"
+2025-08-18 12:02:17,450 - vehicle_analysis_api - WARNING - No bulletins found for LAND ROVER DEFENDER
+2025-08-18 12:02:17,450 - vehicle_analysis_api - INFO - Analyzing data for SV57GVL with Claude API
+2025-08-18 12:02:38,460 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 12:02:38,469 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SV57GVL - 200 - 23.1752s
+2025-08-18 12:03:05,553 - vehicle_analysis_api - INFO - Fetching MOT data for registration: J531WAX
+2025-08-18 12:03:06,439 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/J531WAX "HTTP/1.1 200 OK"
+2025-08-18 12:03:06,440 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA EUNOS
+2025-08-18 12:03:07,203 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-18 12:03:07,204 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-18 12:03:07,208 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/EUNOS "HTTP/1.1 404 Not Found"
+2025-08-18 12:03:07,209 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA EUNOS
+2025-08-18 12:03:07,209 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
+2025-08-18 12:03:19,794 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SP53WUY
+2025-08-18 12:03:20,955 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SP53WUY "HTTP/1.1 200 OK"
+2025-08-18 12:03:20,956 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:03:21,804 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:03:21,812 - vehicle_analysis_api - INFO - Analyzing data for SP53WUY with Claude API
+2025-08-18 12:03:21,820 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:03:21,821 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SP53WUY - 500 - 2.0280s
+2025-08-18 12:03:26,207 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SP53WUY
+2025-08-18 12:03:27,605 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SP53WUY "HTTP/1.1 200 OK"
+2025-08-18 12:03:27,607 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:03:28,638 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 12:03:28,648 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 23.0948s
+2025-08-18 12:03:28,914 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:03:28,916 - vehicle_analysis_api - INFO - Analyzing data for SP53WUY with Claude API
+2025-08-18 12:03:28,925 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:03:28,926 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SP53WUY - 500 - 2.7203s
+2025-08-18 12:03:58,969 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA53OEZ
+2025-08-18 12:04:00,183 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA53OEZ "HTTP/1.1 200 OK"
+2025-08-18 12:04:00,186 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:04:01,369 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:04:01,387 - vehicle_analysis_api - INFO - Analyzing data for SA53OEZ with Claude API
+2025-08-18 12:04:01,404 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:04:01,405 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA53OEZ - 500 - 2.4370s
+2025-08-18 12:04:11,861 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA53OEZ
+2025-08-18 12:04:12,596 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA53OEZ "HTTP/1.1 200 OK"
+2025-08-18 12:04:12,598 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:04:13,318 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:04:13,324 - vehicle_analysis_api - INFO - Analyzing data for SA53OEZ with Claude API
+2025-08-18 12:04:13,330 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:04:13,331 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA53OEZ - 500 - 1.4698s
+2025-08-18 12:04:29,276 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA53OEZ
+2025-08-18 12:04:30,024 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA53OEZ "HTTP/1.1 200 OK"
+2025-08-18 12:04:30,025 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:04:30,729 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:04:30,736 - vehicle_analysis_api - INFO - Analyzing data for SA53OEZ with Claude API
+2025-08-18 12:04:30,743 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:04:30,744 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA53OEZ - 500 - 1.4678s
+2025-08-18 12:04:58,956 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA53OEZ
+2025-08-18 12:04:59,707 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA53OEZ "HTTP/1.1 200 OK"
+2025-08-18 12:04:59,708 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:05:00,652 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:05:00,656 - vehicle_analysis_api - INFO - Analyzing data for SA53OEZ with Claude API
+2025-08-18 12:05:00,666 - vehicle_analysis_api - ERROR - Unexpected error analyzing with Claude: 413: Bulletin data too large for analysis
+2025-08-18 12:05:00,666 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA53OEZ - 500 - 1.7097s
+2025-08-18 12:06:02,939 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 12:06:02,957 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-08-18 12:06:03,121 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 12:06:03,122 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-08-18 12:06:04,167 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA53OEZ
+2025-08-18 12:06:05,419 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA53OEZ "HTTP/1.1 200 OK"
+2025-08-18 12:06:05,423 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CIVIC
+2025-08-18 12:06:06,287 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:06:06,289 - vehicle_analysis_api - INFO - Analyzing data for SA53OEZ with Claude API
+2025-08-18 12:06:36,333 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 12:06:36,349 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA53OEZ - 200 - 32.1830s
+2025-08-18 12:07:27,011 - vehicle_analysis_api - INFO - Fetching MOT data for registration: J531WAX
+2025-08-18 12:07:27,996 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/J531WAX "HTTP/1.1 200 OK"
+2025-08-18 12:07:27,998 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA EUNOS
+2025-08-18 12:07:28,771 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-18 12:07:28,772 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-18 12:07:28,775 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/EUNOS "HTTP/1.1 404 Not Found"
+2025-08-18 12:07:28,776 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA EUNOS
+2025-08-18 12:07:28,776 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
+2025-08-18 12:07:47,491 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 12:07:47,497 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 20.4865s
+2025-08-18 12:20:10,746 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 12:20:10,747 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-18 12:20:10,869 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-18 12:20:10,870 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-18 12:20:57,216 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-18 12:20:58,942 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-18 12:20:58,944 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-18 12:20:59,734 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-18 12:20:59,736 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-18 12:21:33,576 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-18 12:21:33,597 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 36.3826s

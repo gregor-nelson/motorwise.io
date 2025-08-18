@@ -6145,3 +6145,16 @@
 2025-08-18 17:39:38,367 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
 2025-08-18 17:39:38,368 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0110s
 2025-08-18 17:39:38,368 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s
+2025-08-18 18:57:01,020 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-18 18:57:01,049 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-18 18:57:01,074 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-18 18:57:01,100 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-18 18:57:01,128 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-18 18:57:01,166 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-18 18:57:01,171 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-18 18:57:01,196 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-18 18:57:01,197 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-18 18:57:01,227 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-18 18:57:01,229 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-18 18:57:01,232 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-18 18:57:01,233 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records

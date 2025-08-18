@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './HeaderStyles.css';
 
 const Header = () => {
@@ -67,6 +68,7 @@ const Header = () => {
   ];
 
   const additionalLinks = [
+    { label: 'Contact', href: '/contact' },
     { label: 'Cookies', href: '/cookies' },
     { label: 'Terms and conditions', href: '/terms' },
     { label: 'Accessibility statement', href: '/accessibility' },
@@ -98,14 +100,14 @@ const Header = () => {
         <div className="header-container">
           <div className="header-content">
             <div className="header-brand">
-              <a 
-                href="/" 
+              <Link 
+                to="/" 
                 className="brand-link"
                 aria-label="MotCheck UK - Vehicle MOT history and tax status checker"
               >
                 <h1 className="brand-title">MotCheck UK</h1>
                 <span className="brand-subtitle">Vehicle Checks</span>
-              </a>
+              </Link>
             </div>
             
             {/* Desktop Navigation */}
@@ -113,9 +115,9 @@ const Header = () => {
               <ul className="nav-list">
                 {primaryNavigationItems.map((item, index) => (
                   <li key={index} className="nav-item">
-                    <a href={item.href} className="nav-link">
+                    <Link to={item.href} className="nav-link">
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
                 
@@ -140,13 +142,13 @@ const Header = () => {
                     <ul className="dropdown-list">
                       {additionalLinks.map((item, index) => (
                         <li key={index} className="dropdown-item">
-                          <a 
-                            href={item.href}
+                          <Link 
+                            to={item.href}
                             className="dropdown-link"
                             onClick={handleDropdownLinkClick}
                           >
                             {item.label}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -180,13 +182,13 @@ const Header = () => {
                 <ul className="mobile-menu-list">
                   {primaryNavigationItems.map((item, index) => (
                     <li key={index} className="mobile-menu-item">
-                      <a 
-                        href={item.href}
+                      <Link 
+                        to={item.href}
                         className="mobile-menu-link"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -197,13 +199,13 @@ const Header = () => {
                 <ul className="mobile-menu-list">
                   {additionalLinks.map((item, index) => (
                     <li key={index} className="mobile-menu-item">
-                      <a 
-                        href={item.href}
+                      <Link 
+                        to={item.href}
                         className="mobile-menu-link"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -218,7 +220,7 @@ const Header = () => {
           <strong className="phase-tag">BETA</strong>
           <p className="phase-text">
             This is a new service – your{' '}
-            <a href="/feedback">feedback</a>{' '}
+            <Link to="/contact">feedback</Link>{' '}
             will help us to improve it.
           </p>
         </div>

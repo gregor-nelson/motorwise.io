@@ -9805,3 +9805,149 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-18 18:56:56,700 - ves_api - INFO - Starting server in PRODUCTION mode
 2025-08-18 18:56:56,701 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-08-18 18:56:56,701 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-18 18:57:22,405 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-18 18:57:23,938 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-18 18:57:24,892 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-18 18:57:24,896 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-18 18:57:24,898 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50816 - Status: 200 - Process Time: 2.5263s
+2025-08-18 18:57:24,910 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-18 18:57:24,912 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-18 18:57:24,913 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50806 - Status: 200 - Process Time: 0.9782s
+2025-08-18 19:12:25,805 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:12:25,806 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52706 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:12:26,197 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:12:26,197 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52713 - Status: 200 - Process Time: 0.0010s
+2025-08-18 19:19:03,823 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:03,824 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53115 - Status: 200 - Process Time: 0.0033s
+2025-08-18 19:19:04,598 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:04,600 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53122 - Status: 200 - Process Time: 0.0053s
+2025-08-18 19:19:20,412 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:20,413 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53118 - Status: 200 - Process Time: 0.0110s
+2025-08-18 19:19:21,075 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:21,075 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53123 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:19:27,151 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:27,155 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53191 - Status: 200 - Process Time: 0.0060s
+2025-08-18 19:19:31,807 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:31,808 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53191 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:19:32,258 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:32,259 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53196 - Status: 200 - Process Time: 0.0032s
+2025-08-18 19:19:42,542 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:42,543 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53193 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:19:43,272 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:19:43,272 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53228 - Status: 200 - Process Time: 0.0060s
+2025-08-18 19:20:41,577 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:20:41,579 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53303 - Status: 200 - Process Time: 0.0021s
+2025-08-18 19:20:41,622 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:20:41,624 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53229 - Status: 200 - Process Time: 0.0040s
+2025-08-18 19:22:32,190 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:22:32,191 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53405 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:22:32,547 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:22:32,547 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53414 - Status: 200 - Process Time: 0.0010s
+2025-08-18 19:22:37,635 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:22:37,635 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53411 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:22:37,954 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:22:37,956 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53416 - Status: 200 - Process Time: 0.0060s
+2025-08-18 19:23:28,806 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:28,806 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53468 - Status: 200 - Process Time: 0.0034s
+2025-08-18 19:23:29,135 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:29,135 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53474 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:23:36,121 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:36,121 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53471 - Status: 200 - Process Time: 0.0039s
+2025-08-18 19:23:36,515 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:36,515 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53475 - Status: 200 - Process Time: 0.0040s
+2025-08-18 19:23:56,293 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:56,294 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53516 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:23:56,607 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:23:56,607 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53522 - Status: 200 - Process Time: 0.0010s
+2025-08-18 19:25:21,193 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:21,194 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53583 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:25:21,573 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:21,573 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53589 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:25:46,494 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:46,496 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53586 - Status: 200 - Process Time: 0.0025s
+2025-08-18 19:25:47,155 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:47,156 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53590 - Status: 200 - Process Time: 0.0028s
+2025-08-18 19:25:52,848 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:52,848 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53634 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:25:53,442 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:25:53,443 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53640 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:26:06,758 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:06,758 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53636 - Status: 200 - Process Time: 0.0040s
+2025-08-18 19:26:07,124 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:07,127 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53641 - Status: 200 - Process Time: 0.0080s
+2025-08-18 19:26:15,036 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:15,036 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53692 - Status: 200 - Process Time: 0.0042s
+2025-08-18 19:26:15,638 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:15,639 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53698 - Status: 200 - Process Time: 0.0061s
+2025-08-18 19:26:34,779 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:34,780 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53694 - Status: 200 - Process Time: 0.0029s
+2025-08-18 19:26:35,377 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:35,378 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53699 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:26:38,898 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:38,899 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53694 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:26:39,488 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:26:39,488 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53699 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:27:09,325 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:09,326 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53847 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:27:11,149 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:11,151 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53857 - Status: 200 - Process Time: 0.0080s
+2025-08-18 19:27:16,754 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:16,755 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53850 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:27:17,677 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:17,678 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53858 - Status: 200 - Process Time: 0.0039s
+2025-08-18 19:27:26,059 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:26,061 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53897 - Status: 200 - Process Time: 0.0053s
+2025-08-18 19:27:27,499 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:27:27,500 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:53904 - Status: 200 - Process Time: 0.0130s
+2025-08-18 19:33:55,242 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:33:55,243 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54325 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:33:56,036 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:33:56,037 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54331 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:35:26,478 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:35:26,478 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54578 - Status: 200 - Process Time: 0.0020s
+2025-08-18 19:35:27,725 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:35:27,726 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54584 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:37:11,175 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:11,176 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54763 - Status: 200 - Process Time: 0.0061s
+2025-08-18 19:37:11,947 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:11,951 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54770 - Status: 200 - Process Time: 0.0072s
+2025-08-18 19:37:37,695 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:37,695 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54766 - Status: 200 - Process Time: 0.0051s
+2025-08-18 19:37:38,364 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:38,365 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54780 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:37:54,073 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:54,075 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54869 - Status: 200 - Process Time: 0.0058s
+2025-08-18 19:37:54,713 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:37:54,714 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54875 - Status: 200 - Process Time: 0.0047s
+2025-08-18 19:38:15,379 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:15,381 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54871 - Status: 200 - Process Time: 0.0070s
+2025-08-18 19:38:16,098 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:16,099 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54877 - Status: 200 - Process Time: 0.0101s
+2025-08-18 19:38:19,309 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:19,309 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54871 - Status: 200 - Process Time: 0.0040s
+2025-08-18 19:38:19,958 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:19,958 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54877 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:38:38,473 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:38,474 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54976 - Status: 200 - Process Time: 0.0031s
+2025-08-18 19:38:39,303 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:38:39,304 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:54982 - Status: 200 - Process Time: 0.0040s
+2025-08-18 19:39:51,673 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:39:51,674 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55084 - Status: 200 - Process Time: 0.0041s
+2025-08-18 19:39:52,351 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:39:52,351 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55090 - Status: 200 - Process Time: 0.0038s
+2025-08-18 19:40:45,489 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:40:45,491 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55086 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:40:46,031 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:40:46,034 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55091 - Status: 200 - Process Time: 0.0063s
+2025-08-18 19:41:02,392 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:41:02,392 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55227 - Status: 200 - Process Time: 0.0031s
+2025-08-18 19:41:03,027 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:41:03,028 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55234 - Status: 200 - Process Time: 0.0070s
+2025-08-18 19:48:33,971 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:48:33,972 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55829 - Status: 200 - Process Time: 0.0061s
+2025-08-18 19:48:34,595 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:48:34,596 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:55835 - Status: 200 - Process Time: 0.0030s
+2025-08-18 19:51:39,223 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:51:39,224 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56125 - Status: 200 - Process Time: 0.0036s
+2025-08-18 19:51:39,936 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-18 19:51:39,936 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:56131 - Status: 200 - Process Time: 0.0029s

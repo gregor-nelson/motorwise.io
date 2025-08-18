@@ -32,6 +32,7 @@ import {
   GovUKBody,
   PayButtonPrimary,
   BaseButton,
+  SimpleModalFooter,
   inlineStyles
 } from './PremiumDialogStyles';
 
@@ -66,6 +67,8 @@ const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm", headerIco
           className="close-button"
           onClick={onClose}
           size="small"
+          aria-label="Close dialog"
+          title="Close dialog"
         >
           <CloseIcon />
         </IconButton>
@@ -89,6 +92,17 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+
+  // Update mobile state on resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -217,8 +231,12 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
           </label>
           
           {emailError && (
-            <ErrorMessage>
-              <span className="error-icon">⚠</span>
+            <ErrorMessage 
+              id="email-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span className="error-icon" aria-hidden="true">⚠</span>
               {emailError}
             </ErrorMessage>
           )}
@@ -231,6 +249,8 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
             placeholder="your.email@example.com"
             className={emailError ? 'error' : ''}
             aria-describedby={emailError ? "email-error" : undefined}
+            inputMode="email"
+            autoComplete="email"
           />
         </FormField>
       </FormSection>
@@ -246,8 +266,12 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
           </label>
           
           {(error || cardError) && (
-            <ErrorMessage>
-              <span className="error-icon">⚠</span>
+            <ErrorMessage 
+              id="payment-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span className="error-icon" aria-hidden="true">⚠</span>
               {error || cardError}
             </ErrorMessage>
           )}
@@ -318,16 +342,20 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
         <PrimaryButton 
           type="submit" 
           disabled={!stripe || loading}
+          aria-busy={loading}
+          aria-describedby={error ? "payment-error" : undefined}
         >
           {loading ? (
             <>
-              <div className="loading-spinner" />
-              {processing ? 'Processing Payment...' : 'Preparing...'}
+              <div className="loading-spinner" aria-hidden="true" />
+              <span aria-live="polite">
+                {processing ? (isMobile ? 'Processing...' : 'Processing Payment...') : 'Preparing...'}
+              </span>
             </>
           ) : (
             <>
-              <SecurityIcon />
-              Pay £4.95 Securely
+              <SecurityIcon aria-hidden="true" />
+              {isMobile ? 'Pay £4.95' : 'Pay £4.95 Securely'}
             </>
           )}
         </PrimaryButton>
@@ -345,33 +373,45 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
 
 // Enhanced Premium Report Features with progressive disclosure
 const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  
+  // Update mobile state on resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const coreFeatures = [
     {
       title: 'DVLA Identity Verification',
-      description: 'Official government records - police & agency access'
+      description: isMobile ? 'Official government records' : 'Official government records - police & agency access'
     },
     {
       title: 'Mileage Fraud Protection',
-      description: 'Forensic-level odometer tampering detection'
+      description: isMobile ? 'Forensic odometer detection' : 'Forensic-level odometer tampering detection'
     },
     {
       title: 'Professional Repair Database',
-      description: 'Technical data trusted by BMW, Mercedes dealerships'
+      description: isMobile ? 'BMW, Mercedes dealer data' : 'Technical data trusted by BMW, Mercedes dealerships'
     }
   ];
 
   const additionalFeatures = [
     {
       title: 'Advanced Usage History',
-      description: '3D visualization exposing hidden patterns traditional reports miss'
+      description: isMobile ? '3D visualization & hidden patterns' : '3D visualization exposing hidden patterns traditional reports miss'
     },
     {
       title: 'Market Intelligence & Risk Assessment',
-      description: 'Compare against 40+ million UK vehicle records for confident decisions'
+      description: isMobile ? '40+ million UK vehicle records' : 'Compare against 40+ million UK vehicle records for confident decisions'
     },
     {
       title: 'Complete Documentation Package',
-      description: 'Professional-grade reports meeting bank and insurance standards'
+      description: isMobile ? 'Bank & insurance standards' : 'Professional-grade reports meeting bank and insurance standards'
     }
   ];
 
@@ -407,7 +447,10 @@ const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
             marginTop: 'var(--space-sm)'
           }}
         >
-          {showAll ? '- Show fewer features' : '+ Show 3 more professional features'}
+          {showAll 
+            ? (isMobile ? '- Show less' : '- Show fewer features') 
+            : (isMobile ? '+ Show 3 more' : '+ Show 3 more professional features')
+          }
         </button>
       )}
     </FeatureList>
@@ -418,6 +461,17 @@ const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
 export const PaymentDialog = ({ open, onClose, registration }) => {
   const navigate = useNavigate();
   const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+
+  // Update mobile state on resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Updated to include email parameter
   const handlePaymentSuccess = (paymentIntent, email) => {
@@ -437,7 +491,6 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
       open={open}
       onClose={onClose}
       title="Premium Vehicle Report"
-      headerIcon={<PaymentIcon />}
       maxWidth="md"
     >
       <div className="two-column-layout">
@@ -446,13 +499,13 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
           <div className="trust-hero">
             <SecurityIcon className="security-icon" />
             <div className="trust-content">
-              <h3>Protecting from £2.3B UK Vehicle Fraud</h3>
-              <p>Same comprehensive database used by BMW, Mercedes dealerships and government agencies</p>
+              <h3>{isMobile ? 'Protecting from £2.3B Fraud' : 'Protecting from £2.3B UK Vehicle Fraud'}</h3>
+              <p>{isMobile ? 'BMW, Mercedes & government agency database' : 'Same comprehensive database used by BMW, Mercedes dealerships and government agencies'}</p>
             </div>
           </div>
           
           <div className="professional-positioning">
-            <span className="positioning-label">Professional-Grade Intelligence for</span>
+            <span className="positioning-label">{isMobile ? 'Professional Intelligence for' : 'Professional-Grade Intelligence for'}</span>
             <strong className="vehicle-reg">{registration}</strong>
           </div>
           
@@ -707,14 +760,16 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
       <ModalHeader
         style={{
           fontFamily: 'var(--font-main)',
-          fontWeight: 600,
-          fontSize: 'var(--text-xl)',
-          padding: 'var(--space-xl) var(--space-2xl)',
-          backgroundColor: 'var(--accent-blue)',
-          color: 'var(--white)',
+          fontWeight: 500,
+          fontSize: 'var(--text-sm)',
+          padding: 'var(--space-sm) var(--space-md)',
+          backgroundColor: 'transparent',
+          color: 'var(--gray-900)',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          borderBottom: '1px solid var(--gray-200)',
+          minHeight: '48px'
         }}
       >
         Sample Vehicle Report - {sampleRegistration}
@@ -722,13 +777,13 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
           className="close-button"
           onClick={onClose}
           size="small"
-          style={{ color: 'var(--white)' }}
+          style={{ color: 'var(--gray-600)' }}
         >
           <CloseIcon />
         </IconButton>
       </ModalHeader>
       
-      <ModalContent style={{ padding: 0, height: 'calc(100vh - 180px)' }}>
+      <ModalContent style={{ padding: 0, height: 'calc(100vh - 104px)' }}>
         {/* Render the sample report in an iframe */}
         <iframe
           src={sampleReportUrl}
@@ -741,41 +796,18 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
         />
       </ModalContent>
       
-      <div
-        style={{
-          padding: 'var(--space-md) var(--space-2xl)',
-          backgroundColor: 'var(--white)',
-          borderTop: '1px solid var(--gray-200)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)'
-        }}
-      >
-        <p style={{ 
-          margin: 0,
-          fontFamily: 'var(--font-main)',
-          fontSize: 'var(--text-base)',
-          color: 'var(--gray-700)',
-          lineHeight: 1.4
-        }}>
+      <SimpleModalFooter>
+        <p className="footer-text">
           This is a sample report. Purchase a premium report for your vehicle to access all features.
         </p>
         
-        <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
-          <SecondaryButton
-            onClick={onClose}
-          >
-            Close
-          </SecondaryButton>
-          
-          <PrimaryButton
-            onClick={handleProceedToPayment}
-          >
-            Proceed to Payment
-          </PrimaryButton>
-        </div>
-      </div>
+        <PrimaryButton
+          className="footer-action"
+          onClick={handleProceedToPayment}
+        >
+          Get Premium Report
+        </PrimaryButton>
+      </SimpleModalFooter>
     </PremiumModal>
   );
 };

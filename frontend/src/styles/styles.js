@@ -35,6 +35,7 @@ export const MarketDashTokens = `
   --space-lg: 1.5rem;
   --space-xl: 2rem;
   --space-2xl: 3rem;
+  --space-3xl: 4rem;
 
   /* Typography Scale */
   --text-xs: 0.75rem;

@@ -300,7 +300,6 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
       <CleanContainer>
         <ReportSection>
           <SkeletonTitle />
-          <Divider />
           <SkeletonRow />
           <SkeletonRow />
           <SkeletonRow />

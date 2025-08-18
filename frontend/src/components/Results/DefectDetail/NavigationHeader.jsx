@@ -239,7 +239,7 @@ const NavigationHeader = ({
             {searchQuery && (
               <>
                 <p>No matches found for "{searchQuery}"</p>
-                <p style={{ fontSize: '0.875rem', marginTop: '1rem' }}>
+                <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-md)' }}>
                   Try using different keywords or searching for specific defect codes
                 </p>
               </>
@@ -264,7 +264,7 @@ const NavigationHeader = ({
               key={`${result.id}-${index}`}
               onClick={() => onNavigateToResult(result.id)}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}>
                 <ResultType type={result.type}>
                   {result.type}
                 </ResultType>

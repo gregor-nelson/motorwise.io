@@ -21,20 +21,23 @@ import { fetchSection, fetchSubsection, fetchAllSections } from './apiUtils';
 
 import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
 
-// Custom header for subsection view - preserving exact styling from SubsectionView
+// Clean Subsection Header - Following minimal design system
 const SubsectionHeader = styled('div')`
   ${MinimalTokens}
   
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #eee;
+  margin-bottom: var(--space-3xl);
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
 `;
 
-// Custom defect item styling - preserving exact styling from SubsectionView
+// Clean Defect Item - Following minimal design tokens
 const DefectItem = styled('div')`
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin-bottom: 0.25rem;
+  font-family: var(--font-main);
+  font-size: var(--text-xs);
+  color: var(--gray-600);
+  margin-bottom: var(--space-xs);
   
   &:last-child {
     margin-bottom: 0;
@@ -149,7 +152,7 @@ const ContentView = ({
         </ItemsList>
         
         {(!contentData.sections || contentData.sections.length === 0) && (
-          <p style={{ textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+          <p style={{ textAlign: 'center', color: 'var(--gray-600)', fontStyle: 'italic' }}>
             No sections found in the manual.
           </p>
         )}
@@ -200,7 +203,7 @@ const ContentView = ({
         </ItemsList>
         
         {(!contentData.subsections || contentData.subsections.length === 0) && (
-          <p style={{ textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+          <p style={{ textAlign: 'center', color: 'var(--gray-600)', fontStyle: 'italic' }}>
             No subsections found in this section.
           </p>
         )}
@@ -262,7 +265,7 @@ const ContentView = ({
                     </DefectItem>
                   ))}
                   {item.defects.length > 3 && (
-                    <DefectItem style={{ fontStyle: 'italic', marginTop: '0.5rem' }}>
+                    <DefectItem style={{ fontStyle: 'italic', marginTop: 'var(--space-sm)' }}>
                       ... and {item.defects.length - 3} more defects
                     </DefectItem>
                   )}
@@ -273,7 +276,7 @@ const ContentView = ({
         </ItemsList>
         
         {(!contentData.items || contentData.items.length === 0) && (
-          <p style={{ textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+          <p style={{ textAlign: 'center', color: 'var(--gray-600)', fontStyle: 'italic' }}>
             No items found in this subsection.
           </p>
         )}

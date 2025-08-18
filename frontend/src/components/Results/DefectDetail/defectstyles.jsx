@@ -1,7 +1,11 @@
 import { styled } from '@mui/material/styles';
 import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
 
+// ULTRA CLEAN MINIMAL DESIGN SYSTEM
+// Following DVLADataHeader exact patterns - No borders, shadows, or decorative elements
+// Uses existing MarketDashTokens for consistency
 
+// Ultra Clean Container - Following DVLADataHeader exact pattern
 export const DefectDetailContainer = styled('div')`
   ${MinimalTokens}
   
@@ -11,14 +15,13 @@ export const DefectDetailContainer = styled('div')`
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-lg);
   color: var(--gray-900);
-  line-height: 1.4;
 
-  @media (max-width: var(--mobile-max)) {
+  @media (max-width: 767px) {
     padding: var(--space-xl) var(--space-md);
   }
 `;
 
-// Generic container for different content areas
+// Ultra Clean Content Container - Minimal
 export const ContentContainer = styled('div')`
   font-family: var(--font-main);
   background: var(--white);
@@ -26,57 +29,56 @@ export const ContentContainer = styled('div')`
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-lg);
   color: var(--gray-900);
-  line-height: 1.6;
 
-  @media (max-width: var(--mobile-max)) {
+  @media (max-width: 767px) {
     padding: var(--space-xl) var(--space-md);
   }
 `;
 
-// =============== TYPOGRAPHY COMPONENTS ===============
+// =============== MINIMAL TYPOGRAPHY COMPONENTS ===============
+// Following DVLADataHeader exact patterns
 
-// Main section header
+// Minimal Section Header - Clean Typography Only
 export const SectionHeader = styled('div')`
   margin-bottom: var(--space-3xl);
 
-  @media (max-width: var(--mobile-max)) {
+  @media (max-width: 767px) {
     margin-bottom: var(--space-2xl);
   }
 `;
 
-// Primary title
+// Clean Title - Exact DVLADataHeader pattern
 export const SectionTitle = styled('h1')`
+  margin: 0;
   font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--gray-900);
-  margin: 0 0 var(--space-lg) 0;
-  line-height: 1.2;
   letter-spacing: -0.02em;
+  line-height: 1.2;
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (max-width: var(--mobile-max)) {
+  @media (max-width: 767px) {
     font-size: var(--text-xl);
-    margin-bottom: var(--space-md);
   }
 `;
 
-// Secondary title
+// Clean Subtitle - Minimal spacing
 export const SubTitle = styled('h2')`
   font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gray-900);
-  margin: var(--space-xl) 0 var(--space-lg) 0;
+  margin: var(--space-2xl) 0 var(--space-lg) 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (max-width: var(--mobile-max)) {
+  @media (max-width: 767px) {
     font-size: var(--text-lg);
-    margin: var(--space-lg) 0 var(--space-md) 0;
+    margin: var(--space-xl) 0 var(--space-md) 0;
   }
 `;
 

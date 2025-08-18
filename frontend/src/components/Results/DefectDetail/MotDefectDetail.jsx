@@ -263,14 +263,14 @@ const MotDefectDetail = ({ defectId, defectText, defectCategory, onNavigateToPat
                   const pathParts = pathItem.id.split('.');
                   onNavigateToPath(pathParts);
                 }}
-                style={{
+style={{
                   background: 'none',
                   border: 'none',
                   color: 'var(--primary)',
                   textDecoration: 'underline',
                   cursor: 'pointer',
                   padding: 0,
-                  font: 'inherit'
+                  fontFamily: 'var(--font-main)'
                 }}
               >
                 {pathItem.title}

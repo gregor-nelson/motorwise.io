@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import { 
   NavigationHeaderContainer,
   BreadcrumbContainer, 
-  SecondaryButton as BackButton, 
   BreadcrumbSeparator,
   FlexContainer as SearchContainer, 
   Input as SearchInput, 
@@ -56,6 +55,11 @@ const BreadcrumbItem = styled('button')`
     font-size: var(--text-xs);
     min-height: var(--touch-target-min);
     padding: var(--space-xs) var(--space-sm);
+    flex-shrink: 0;
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -63,8 +67,6 @@ const NavigationHeader = ({
   // Breadcrumb props
   currentPath, 
   onNavigateToPath, 
-  canGoBack, 
-  onGoBack,
   // Search props  
   onSearch,
   contextPath,
@@ -306,12 +308,6 @@ const NavigationHeader = ({
   return (
     <NavigationHeaderContainer>
       <BreadcrumbContainer>
-        {canGoBack && (
-          <BackButton onClick={onGoBack} title="Go back to previous view">
-            ← Back
-          </BackButton>
-        )}
-        
         {renderBreadcrumbs()}
       </BreadcrumbContainer>
       

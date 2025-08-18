@@ -733,6 +733,63 @@ export const NavigationHeaderContainer = styled('div')`
   }
 `;
 
+// =============== MODAL HEADER COMPONENTS ===============
+
+// Modal header container - contains action buttons and navigation
+export const ModalHeader = styled('div')`
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  z-index: 100;
+  padding: var(--space-lg) var(--space-2xl) var(--space-md) var(--space-2xl);
+  
+  @media (max-width: var(--mobile-max)) {
+    padding: var(--space-md) var(--space-md) var(--space-sm) var(--space-md);
+  }
+`;
+
+// Action buttons row - close and back buttons
+export const ActionButtonsRow = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  min-height: var(--touch-target-min);
+  
+  @media (max-width: var(--mobile-max)) {
+    margin-bottom: var(--space-sm);
+    min-height: var(--touch-target-comfortable);
+  }
+`;
+
+// Left action buttons container
+export const LeftActions = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+`;
+
+// Right action buttons container  
+export const RightActions = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+`;
+
+// Navigation content row - breadcrumbs and search
+export const NavigationRow = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  
+  @media (max-width: var(--mobile-max)) {
+    gap: var(--space-sm);
+  }
+`;
+
 // =============== BREADCRUMB COMPONENTS ===============
 
 // Breadcrumb container
@@ -750,13 +807,47 @@ export const BreadcrumbContainer = styled('div')`
     margin-bottom: var(--space-md);
     font-size: var(--text-xs);
     gap: var(--space-xs);
-    /* Allow breadcrumbs to stack on very small screens */
-    flex-direction: column;
-    align-items: flex-start;
+    /* Horizontal scrolling for mobile to prevent overlap */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--space-xs);
+    position: relative;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Add fade effect at edges to indicate scrollable content */
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, var(--background, white), transparent);
+    }
+    
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, var(--background, white), transparent);
+    }
   }
   
   @media (max-width: 480px) {
-    /* Single column layout for very small screens */
     gap: var(--space-xs);
   }
 `;
@@ -932,28 +1023,27 @@ export const ModalContent = styled('div')`
   }
 `;
 
-// Modal close button
+// Modal close button - now inline in header
 export const ModalCloseButton = styled('button')`
-  position: absolute;
-  top: var(--space-2xl);
-  right: var(--space-2xl);
   background: var(--white);
-  border: none;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
   width: var(--touch-target-min);
   height: var(--touch-target-min);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   color: var(--gray-600);
-  z-index: 1;
   transition: var(--transition);
   font-family: var(--font-main);
+  flex-shrink: 0;
   
   &:hover {
     color: var(--gray-900);
     background: var(--gray-50);
+    border-color: var(--gray-400);
   }
   
   &:focus {
@@ -961,15 +1051,11 @@ export const ModalCloseButton = styled('button')`
     outline-offset: 2px;
   }
 
-  @media (max-width: 767px) {
-    top: var(--space-md);
-    right: var(--space-md);
+  @media (max-width: var(--mobile-max)) {
     width: var(--touch-target-comfortable);
     height: var(--touch-target-comfortable);
-    font-size: 20px;
-    border-radius: 50%;
-    box-shadow: var(--shadow-md);
-    z-index: 1001;
+    font-size: 18px;
+    box-shadow: var(--shadow-sm);
   }
 `;
 

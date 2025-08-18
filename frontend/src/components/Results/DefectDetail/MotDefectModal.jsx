@@ -6,7 +6,13 @@ import ContentView from './ContentView';
 import { 
   ModalOverlay as MotDefectModalOverlay, 
   ModalContent as MotDefectModalContent, 
-  ModalCloseButton as MotDefectModalCloseButton 
+  ModalCloseButton as MotDefectModalCloseButton,
+  ModalHeader,
+  ActionButtonsRow,
+  LeftActions,
+  RightActions,
+  NavigationRow,
+  SecondaryButton as BackButton
 } from './defectstyles';
 
 const MotDefectModal = ({ 
@@ -207,30 +213,46 @@ const MotDefectModal = ({
   return createPortal(
     <MotDefectModalOverlay onClick={handleOverlayClick}>
       <MotDefectModalContent>
-        <MotDefectModalCloseButton 
-          onClick={onClose} 
-          aria-label="Close defect detail modal"
-          title="Close modal (Press Escape)"
-        >
-          ×
-        </MotDefectModalCloseButton>
-        
-        {/* Navigation Header with Breadcrumbs and Search */}
-        <NavigationHeader 
-          currentPath={modalState.currentPath}
-          onNavigateToPath={navigateToPath}
-          canGoBack={modalState.navigationHistory.length > 0}
-          onGoBack={navigateBack}
-          onSearch={showSearch}
-          contextPath={modalState.currentPath}
-          searchResults={modalState.view === 'search' ? modalState.searchResults : null}
-          isDefectView={modalState.view === 'defect'}
-          activeDefectId={modalState.activeDefectId}
-          onNavigateToResult={(resultId) => {
-            // Navigate directly to the defect when a search result is clicked
-            navigateToDefect(resultId);
-          }}
-        />
+        {/* Modal Header with Action Buttons and Navigation */}
+        <ModalHeader>
+          {/* Action Buttons Row */}
+          <ActionButtonsRow>
+            <LeftActions>
+              {modalState.navigationHistory.length > 0 && (
+                <BackButton onClick={navigateBack} title="Go back to previous view">
+                  ← Back
+                </BackButton>
+              )}
+            </LeftActions>
+            
+            <RightActions>
+              <MotDefectModalCloseButton 
+                onClick={onClose} 
+                aria-label="Close defect detail modal"
+                title="Close modal (Press Escape)"
+              >
+                ×
+              </MotDefectModalCloseButton>
+            </RightActions>
+          </ActionButtonsRow>
+          
+          {/* Navigation Row */}
+          <NavigationRow>
+            <NavigationHeader 
+              currentPath={modalState.currentPath}
+              onNavigateToPath={navigateToPath}
+              onSearch={showSearch}
+              contextPath={modalState.currentPath}
+              searchResults={modalState.view === 'search' ? modalState.searchResults : null}
+              isDefectView={modalState.view === 'defect'}
+              activeDefectId={modalState.activeDefectId}
+              onNavigateToResult={(resultId) => {
+                // Navigate directly to the defect when a search result is clicked
+                navigateToDefect(resultId);
+              }}
+            />
+          </NavigationRow>
+        </ModalHeader>
         
         {/* Dynamic Content Area */}
         {renderModalContent()}

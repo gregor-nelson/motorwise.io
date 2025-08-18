@@ -20,6 +20,18 @@ export const MarketDashContainer = styled('div')`
   @media (max-width: 767px) {
     padding: var(--space-xl) var(--space-md);
   }
+
+  @media (max-width: 480px) {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  @media (max-width: 375px) {
+    padding: var(--space-md) var(--space-xs);
+  }
+
+  @media (max-width: 320px) {
+    padding: var(--space-sm) var(--space-xs);
+  }
 `;
 
 /* ===== TYPOGRAPHY COMPONENTS (MATCHES DVLADataHeader) ===== */
@@ -539,6 +551,8 @@ export const Input = styled('input')(({ error }) => ({
   background: 'var(--white)',
   border: `1px solid ${error ? 'var(--negative)' : 'var(--gray-300)'}`,
   transition: 'var(--transition)',
+  minHeight: '44px', /* Touch-friendly minimum */
+  boxSizing: 'border-box',
   
   '&:hover': {
     borderColor: error ? 'var(--negative)' : 'var(--gray-400)',
@@ -549,9 +563,25 @@ export const Input = styled('input')(({ error }) => ({
     borderColor: error ? 'var(--negative)' : 'var(--primary)',
     /* Removed box shadow for ultra-minimal design */
   },
+  
+  /* Mobile optimizations */
+  '@media (max-width: 480px)': {
+    fontSize: '16px', /* Prevent zoom on iOS */
+    minHeight: '48px',
+    padding: 'var(--space-md) var(--space-sm)',
+  },
+  
+  '@media (max-width: 375px)': {
+    padding: 'var(--space-sm)',
+  },
+  
+  '@media (max-width: 320px)': {
+    padding: 'var(--space-xs) var(--space-sm)',
+    fontSize: '16px',
+  },
 }));
 
-// Minimal button - cleaner styling
+// Minimal button - cleaner styling with mobile optimizations
 export const Button = styled('button')(({ variant = 'primary', size = 'normal' }) => ({
   fontFamily: 'var(--font-main)',
   fontSize: size === 'large' ? 'var(--text-lg)' : 'var(--text-base)',
@@ -565,6 +595,8 @@ export const Button = styled('button')(({ variant = 'primary', size = 'normal' }
   cursor: 'pointer',
   transition: 'var(--transition)',
   textDecoration: 'none',
+  minHeight: '44px', /* Touch-friendly minimum */
+  boxSizing: 'border-box',
   
   ...(variant === 'primary' && {
     background: 'var(--primary)',
@@ -596,6 +628,24 @@ export const Button = styled('button')(({ variant = 'primary', size = 'normal' }
   '&:disabled': {
     opacity: 0.6,
     cursor: 'not-allowed',
+  },
+  
+  /* Mobile optimizations */
+  '@media (max-width: 480px)': {
+    minHeight: '48px',
+    fontSize: size === 'large' ? 'var(--text-base)' : 'var(--text-sm)',
+    padding: size === 'large' ? 'var(--space-md) var(--space-lg)' : 'var(--space-sm) var(--space-md)',
+  },
+  
+  '@media (max-width: 375px)': {
+    fontSize: 'var(--text-sm)',
+    padding: 'var(--space-sm) var(--space-md)',
+  },
+  
+  '@media (max-width: 320px)': {
+    fontSize: 'var(--text-xs)',
+    padding: 'var(--space-xs) var(--space-sm)',
+    minHeight: '44px',
   },
 }));
 

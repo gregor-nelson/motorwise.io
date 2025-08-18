@@ -1,27 +1,70 @@
-// VehicleAnalysisStyles.jsx
+// VehicleAnalysisStyles.jsx - Ultra-Clean Minimal Design System
 import { styled } from '@mui/material/styles';
-import { MarketDashTokens } from '../../../styles/styles';
+
+// Exact MinimalTokens from DVLADataHeader (PRIMARY REFERENCE)
+const MinimalTokens = `
+  :root {
+    /* Ultra Clean Color Palette - Minimal */
+    --gray-900: #1a1a1a;
+    --gray-800: #2d2d2d;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #a3a3a3;
+    --gray-300: #d4d4d4;
+    --gray-200: #e5e5e5;
+    --gray-100: #f5f5f5;
+    --gray-50: #fafafa;
+    --white: #ffffff;
+
+    /* Minimal Accent Colors */
+    --primary: #3b82f6;
+    --positive: #059669;
+    --negative: #dc2626;
+    --warning: #d97706;
+
+    /* Clean Spacing - Generous White Space */
+    --space-xs: 0.25rem;    /* 4px */
+    --space-sm: 0.5rem;     /* 8px */
+    --space-md: 1rem;       /* 16px */
+    --space-lg: 1.5rem;     /* 24px */
+    --space-xl: 2rem;       /* 32px */
+    --space-2xl: 3rem;      /* 48px */
+    --space-3xl: 4rem;      /* 64px */
+
+    /* Typography - Clean Hierarchy */
+    --text-xs: 0.75rem;     /* 12px */
+    --text-sm: 0.875rem;    /* 14px */
+    --text-base: 1rem;      /* 16px */
+    --text-lg: 1.125rem;    /* 18px */
+    --text-xl: 1.25rem;     /* 20px */
+    --text-2xl: 1.5rem;     /* 24px */
+    --text-3xl: 1.875rem;   /* 30px */
+
+    /* Clean Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+    /* Minimal Transitions */
+    --transition: all 0.15s ease;
+  }
+`;
 
 /* ===============================
-   Foundations
+   Ultra Clean Container - DVLADataHeader Pattern
 ================================ */
 export const CleanContainer = styled('div')`
-  ${MarketDashTokens}
+  ${MinimalTokens}
+  
   font-family: var(--font-main);
   background: var(--white);
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-3xl) var(--space-lg);
+  padding: var(--space-2xl) var(--space-lg);
   color: var(--gray-900);
-  
-  /* Professional mobile optimization */
+
   @media (max-width: 767px) {
     padding: var(--space-xl) var(--space-md);
-    margin: 0 auto;
-  }
-  
-  @media (max-width: 480px) {
-    padding: var(--space-lg) var(--space-sm);
   }
 `;
 
@@ -37,46 +80,37 @@ export const ReportSection = styled('section')`
   }
 `;
 
-export const SectionHeader = styled('header')`
+// Minimal Section Header - DVLADataHeader Pattern
+export const SectionHeader = styled('div')`
   margin-bottom: var(--space-3xl);
+
   @media (max-width: 767px) {
     margin-bottom: var(--space-2xl);
   }
 `;
 
 export const SectionTitle = styled('h1')`
-  margin: 0 0 var(--space-sm) 0;
+  margin: 0;
+  font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
-  letter-spacing: -0.025em;
   color: var(--gray-900);
-  line-height: 1.25;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 
   @media (max-width: 767px) {
     font-size: var(--text-xl);
-    line-height: 1.3;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: var(--text-lg);
-    margin-bottom: var(--space-xs);
   }
 `;
 
 export const SectionSub = styled('p')`
-  margin: 0;
+  margin: var(--space-sm) 0 0 0;
   font-size: var(--text-lg);
   color: var(--gray-600);
   line-height: 1.375;
   
   @media (max-width: 767px) {
     font-size: var(--text-base);
-    line-height: 1.4;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-sm);
   }
 `;
 

@@ -6114,3 +6114,34 @@
 2025-08-18 14:24:26,399 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-08-18 14:24:26,403 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-08-18 14:24:26,403 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-18 17:38:30,284 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-18 17:38:30,290 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-18 17:38:30,291 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-18 17:38:30,293 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-18 17:38:30,300 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-18 17:38:30,302 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-18 17:38:30,303 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-18 17:38:30,304 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-18 17:38:30,305 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-18 17:38:30,307 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-18 17:38:30,307 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-18 17:38:30,309 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-18 17:38:30,309 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-18 17:39:38,361 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-18 17:39:38,362 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-18 17:39:38,362 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-18 17:39:38,362 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-18 17:39:38,362 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 17:39:38,363 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-18 17:39:38,363 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-18 17:39:38,364 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-18 17:39:38,366 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-18 17:39:38,366 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-18 17:39:38,366 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-18 17:39:38,366 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-18 17:39:38,366 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 17:39:38,367 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-18 17:39:38,367 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-18 17:39:38,367 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-18 17:39:38,368 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0110s
+2025-08-18 17:39:38,368 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0100s

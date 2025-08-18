@@ -103,6 +103,11 @@
   cursor: pointer;
   transition: var(--transition);
   text-align: center;
+  min-height: 44px; /* Apple touch target guidelines */
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tab-button:hover {
@@ -319,7 +324,7 @@
   text-align: left;
   background: var(--white);
   border: none;
-  padding: 0;
+  padding: var(--space-md);
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -327,6 +332,8 @@
   align-items: flex-start;
   gap: var(--space-lg);
   color: var(--gray-900);
+  min-height: 44px; /* Touch-friendly minimum */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1); /* Mobile tap feedback */
 }
 
 .accordion-button:hover {
@@ -651,6 +658,7 @@
   background: var(--white);
   color: var(--gray-900);
   transition: var(--transition);
+  min-height: 44px; /* Touch-friendly minimum */
 }
 
 .form-input:focus {
@@ -887,7 +895,43 @@
   .glossary-section {
     padding: var(--space-2xl) var(--space-md);
   }
-  
+}
+
+/* Small mobile optimizations */
+@media (max-width: 480px) {
+  .faq-hero,
+  .faq-section,
+  .how-to-section,
+  .support-section,
+  .glossary-section {
+    padding: var(--space-xl) var(--space-sm);
+  }
+}
+
+/* iPhone SE and small phones */
+@media (max-width: 375px) {
+  .faq-hero,
+  .faq-section,
+  .how-to-section,
+  .support-section,
+  .glossary-section {
+    padding: var(--space-lg) var(--space-xs);
+  }
+}
+
+/* Ultra-small screens */
+@media (max-width: 320px) {
+  .faq-hero,
+  .faq-section,
+  .how-to-section,
+  .support-section,
+  .glossary-section {
+    padding: var(--space-md) var(--space-xs);
+  }
+}
+
+/* Continue existing mobile styles */
+@media (max-width: 767px) {  
   .hero-title,
   .section-title {
     font-size: var(--text-xl);
@@ -899,17 +943,39 @@
   }
   
   .tab-navigation {
-    gap: var(--space-md);
+    gap: var(--space-sm);
+    flex-direction: column;
+    width: 100%;
   }
   
   .tab-button {
     font-size: var(--text-xs);
-    padding: var(--space-sm);
+    padding: var(--space-md) var(--space-sm);
+    width: 100%;
+    min-height: 48px; /* Larger touch target on mobile */
+    border: 1px solid var(--gray-200);
+    margin-bottom: var(--space-xs);
+  }
+  
+  .tab-button.active {
+    background: var(--gray-50);
+    border-color: var(--primary);
   }
   
   .search-group {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--space-sm);
+  }
+  
+  .search-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: var(--space-md) var(--space-sm);
+  }
+  
+  .btn {
+    min-height: 48px; /* Touch-friendly */
+    padding: var(--space-md) var(--space-lg);
   }
   
   .support-layout {
@@ -938,6 +1004,39 @@
     gap: var(--space-md);
   }
   
+  /* Mobile accordion optimizations */
+  .accordion-item {
+    margin-bottom: var(--space-lg);
+  }
+  
+  .accordion-button {
+    padding: var(--space-lg) var(--space-md);
+    min-height: 48px; /* Larger touch target */
+    font-size: var(--text-base);
+    gap: var(--space-md);
+  }
+  
+  .accordion-icon {
+    font-size: var(--text-lg);
+    min-width: 20px; /* Ensure icon has minimum size */
+  }
+  
+  .accordion-body {
+    padding-top: var(--space-md);
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+  
+  .answer {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-md);
+  }
+  
+  .feedback-buttons .btn {
+    min-height: 36px;
+    padding: var(--space-sm) var(--space-md);
+  }
+  
   .alphabet-nav {
     gap: var(--space-xs);
   }
@@ -950,6 +1049,154 @@
   
   .glossary-item {
     padding: var(--space-lg) 0;
+  }
+  
+  /* Mobile form optimizations */
+  .form-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+    min-height: 48px;
+    padding: var(--space-md) var(--space-sm);
+  }
+  
+  .form-input.textarea {
+    min-height: 120px;
+  }
+  
+  .support-form {
+    gap: var(--space-md);
+  }
+}
+
+/* Small mobile form optimizations */
+@media (max-width: 480px) {
+  .search-group {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  /* Small mobile accordion optimizations */
+  .accordion-item {
+    margin-bottom: var(--space-md);
+  }
+  
+  .accordion-button {
+    padding: var(--space-md) var(--space-sm);
+    font-size: var(--text-sm);
+    line-height: 1.3;
+    gap: var(--space-sm);
+  }
+  
+  .accordion-body {
+    padding-top: var(--space-sm);
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+  
+  .answer {
+    font-size: var(--text-xs);
+    line-height: 1.4;
+  }
+  
+  .form-field {
+    gap: var(--space-xs);
+  }
+  
+  .form-label {
+    font-size: var(--text-xs);
+  }
+  
+  .form-input {
+    padding: var(--space-sm);
+    font-size: 16px;
+  }
+  
+  .btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--text-sm);
+  }
+}
+
+/* iPhone SE and small phones */
+@media (max-width: 375px) {
+  .form-input {
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .support-layout {
+    gap: var(--space-lg);
+  }
+  
+  /* iPhone SE accordion optimizations */
+  .accordion-button {
+    padding: var(--space-sm);
+    font-size: var(--text-xs);
+    gap: var(--space-xs);
+  }
+  
+  .accordion-icon {
+    font-size: var(--text-sm);
+    min-width: 16px;
+  }
+  
+  .accordion-body {
+    padding: var(--space-xs);
+  }
+  
+  .answer {
+    font-size: var(--text-xs);
+    line-height: 1.3;
+  }
+}
+
+/* Ultra-small screens */
+@media (max-width: 320px) {
+  .search-group {
+    gap: var(--space-xs);
+  }
+  
+  .form-field {
+    gap: calc(var(--space-xs) / 2);
+  }
+  
+  .support-form {
+    gap: var(--space-sm);
+  }
+  
+  /* Ultra-small accordion optimizations */
+  .accordion-item {
+    margin-bottom: var(--space-sm);
+  }
+  
+  .accordion-button {
+    padding: calc(var(--space-xs) / 2) var(--space-xs);
+    font-size: var(--text-xs);
+    line-height: 1.2;
+    gap: calc(var(--space-xs) / 2);
+  }
+  
+  .accordion-icon {
+    font-size: var(--text-xs);
+    min-width: 14px;
+  }
+  
+  .accordion-body {
+    padding: calc(var(--space-xs) / 2);
+  }
+  
+  .answer {
+    font-size: var(--text-xs);
+    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+  }
+  
+  .feedback-section {
+    gap: var(--space-xs);
+  }
+  
+  .feedback-buttons .btn {
+    min-height: 32px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-xs);
   }
 }
 

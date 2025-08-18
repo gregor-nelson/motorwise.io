@@ -5808,3 +5808,25 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-08-18 15:06:12,778 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
 2025-08-18 15:06:14,109 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.3310s
 2025-08-18 15:06:14,448 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0010s
+2025-08-18 15:42:35,711 - mot_api - INFO - Requesting new access token
+2025-08-18 15:42:36,081 - mot_api - INFO - Successfully obtained new access token
+2025-08-18 15:42:36,082 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-18 15:42:37,623 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.9131s
+2025-08-18 15:42:37,861 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-18 15:57:32,775 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-18 15:57:34,330 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.5560s
+2025-08-18 15:57:34,812 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-18 16:01:22,032 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-18 16:01:22,495 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-18 17:39:32,699 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/OCA479P - 200 - 0.0010s
+2025-08-18 17:39:32,701 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/OCA479P - 200 - 0.0020s
+2025-08-18 17:39:33,011 - mot_api - INFO - Requesting new access token
+2025-08-18 17:39:33,446 - mot_api - INFO - Successfully obtained new access token
+2025-08-18 17:39:33,447 - mot_api - INFO - Fetching vehicle data for registration: OCA479P
+2025-08-18 17:39:34,613 - mot_api - INFO - GET /api/v1/vehicle/registration/OCA479P - 200 - 1.6020s
+2025-08-18 17:39:34,614 - mot_api - INFO - GET /api/v1/vehicle/registration/OCA479P - 200 - 0.0030s
+2025-08-18 17:39:37,644 - mot_api - INFO - GET /api/v1/vehicle/registration/OCA479P - 200 - 0.0030s
+2025-08-18 17:39:39,506 - mot_api - INFO - GET /api/v1/vehicle/registration/OCA479P - 200 - 0.0000s
+2025-08-18 17:40:05,291 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-18 17:40:05,949 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.6580s
+2025-08-18 17:40:05,953 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s

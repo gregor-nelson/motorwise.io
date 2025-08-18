@@ -2836,3 +2836,35 @@
 2025-08-18 14:29:16,816 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0100s
 2025-08-18 15:06:14,537 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
 2025-08-18 15:06:14,544 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s
+2025-08-18 15:42:38,020 - bulletins_api - INFO - Request: OPTIONS /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0010s
+2025-08-18 15:42:38,338 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
+2025-08-18 15:42:38,339 - bulletins_api - INFO - Exact match found for HONDA CR-V
+2025-08-18 15:42:38,342 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0050s
+2025-08-18 15:57:34,746 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
+2025-08-18 15:57:34,751 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0070s
+2025-08-18 16:01:22,544 - bulletins_api - INFO - Request: OPTIONS /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0010s
+2025-08-18 16:01:22,858 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
+2025-08-18 16:01:22,866 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0100s
+2025-08-18 17:38:31,051 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-08-18 17:38:31,055 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-08-18 17:38:31,057 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-08-18 17:38:31,057 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-08-18 17:38:31,058 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-08-18 17:39:38,052 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: TRIUMPH, Model: SPITFIRE, ID: None, Engine: None, Year: 1973
+2025-08-18 17:39:38,053 - bulletins_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 17:39:38,053 - bulletins_api - INFO - No good match found for TRIUMPH SPITFIRE
+2025-08-18 17:39:38,053 - bulletins_api - ERROR - HTTPException: No bulletins found for TRIUMPH SPITFIRE (Year: 1973)
+2025-08-18 17:39:38,054 - bulletins_api - WARNING - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0170s
+2025-08-18 17:39:40,346 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: TRIUMPH, Model: SPITFIRE, ID: None, Engine: None, Year: 1973
+2025-08-18 17:39:40,346 - bulletins_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 17:39:40,347 - bulletins_api - INFO - No good match found for TRIUMPH SPITFIRE
+2025-08-18 17:39:40,347 - bulletins_api - ERROR - HTTPException: No bulletins found for TRIUMPH SPITFIRE (Year: 1973)
+2025-08-18 17:39:40,347 - bulletins_api - WARNING - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-08-18 17:39:40,352 - bulletins_api - INFO - Looking up bulletins for TRIUMPH SPITFIRE, Category: None, Bulletin ID: None
+2025-08-18 17:39:40,352 - bulletins_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-18 17:39:40,354 - bulletins_api - INFO - No good match found for TRIUMPH SPITFIRE
+2025-08-18 17:39:40,354 - bulletins_api - ERROR - HTTPException: No bulletins found for TRIUMPH SPITFIRE
+2025-08-18 17:39:40,354 - bulletins_api - WARNING - Request: GET /api/v1/bulletins/lookup/TRIUMPH/SPITFIRE from 127.0.0.1 - Status: 404 - Process Time: 0.0022s
+2025-08-18 17:40:06,072 - bulletins_api - INFO - Enhanced POST lookup for bulletins - Make: HONDA, Model: CR-V, ID: None, Engine: 2204, Year: 2009
+2025-08-18 17:40:06,072 - bulletins_api - INFO - Exact match found for HONDA CR-V
+2025-08-18 17:40:06,078 - bulletins_api - INFO - Request: POST /api/v1/bulletins/lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s

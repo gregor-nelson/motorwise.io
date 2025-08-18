@@ -76,7 +76,8 @@ const MotDefectModal = ({
   }, [selectedDefect, onClose]);
 
   const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
+    // Only allow overlay click to close on desktop
+    if (e.target === e.currentTarget && window.innerWidth > 767) {
       onClose();
     }
   };

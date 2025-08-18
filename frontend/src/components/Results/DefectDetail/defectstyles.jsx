@@ -365,7 +365,7 @@ export const AlertBox = styled('div', {
 
 // =============== INTERACTIVE COMPONENTS ===============
 
-// Standard button
+// Standard button - Enhanced mobile support
 export const Button = styled('button')`
   padding: var(--space-sm) var(--space-lg);
   background: var(--primary);
@@ -393,9 +393,18 @@ export const Button = styled('button')`
     cursor: not-allowed;
     background: var(--gray-400);
   }
+  
+  @media (max-width: var(--mobile-max)) {
+    font-size: var(--text-sm);
+    padding: var(--space-md) var(--space-lg);
+    min-height: 48px;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;
 
-// Secondary button style
+// Secondary button style - Enhanced mobile support
 export const SecondaryButton = styled('button')`
   background: none;
   border: 1px solid var(--gray-300);
@@ -428,8 +437,12 @@ export const SecondaryButton = styled('button')`
   }
 
   @media (max-width: var(--mobile-max)) {
-    font-size: var(--text-xs);
-    padding: var(--space-xs);
+    font-size: var(--text-sm);
+    padding: var(--space-md);
+    min-height: 48px;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
   }
 `;
 
@@ -462,7 +475,7 @@ export const LinkButton = styled('button')`
   }
 `;
 
-// Standard input
+// Standard input - Enhanced mobile support
 export const Input = styled('input')`
   flex: 1;
   padding: var(--space-sm) var(--space-md);
@@ -492,7 +505,11 @@ export const Input = styled('input')`
   }
 
   @media (max-width: var(--mobile-max)) {
-    font-size: var(--text-base);
+    font-size: 16px; /* Prevent zoom on iOS */
+    min-height: 48px; /* Larger touch target */
+    padding: var(--space-md);
+    width: 100%;
+    box-sizing: border-box;
   }
 `;
 
@@ -668,12 +685,19 @@ export const HeaderSection = styled('div')`
   }
 `;
 
-// Flex container
+// Flex container - Enhanced for search input area
 export const FlexContainer = styled('div')`
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   margin-top: var(--space-sm);
+  
+  @media (max-width: var(--mobile-max)) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
 `;
 
 // Section spacing
@@ -689,6 +713,26 @@ export const Section = styled('div')`
   }
 `;
 
+// =============== NAVIGATION HEADER COMPONENTS ===============
+
+// Navigation header container - Mobile responsive
+export const NavigationHeaderContainer = styled('div')`
+  padding: var(--space-2xl) var(--space-2xl) var(--space-xl) var(--space-2xl);
+  border-bottom: 1px solid var(--gray-200);
+  background-color: var(--white);
+  
+  @media (max-width: var(--mobile-max)) {
+    padding: var(--space-lg) var(--space-md) var(--space-md) var(--space-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  @media (max-width: 480px) {
+    padding: var(--space-md) var(--space-sm) var(--space-sm) var(--space-sm);
+  }
+`;
+
 // =============== BREADCRUMB COMPONENTS ===============
 
 // Breadcrumb container
@@ -700,10 +744,20 @@ export const BreadcrumbContainer = styled('div')`
   font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
+  flex-wrap: wrap;
   
   @media (max-width: var(--mobile-max)) {
     margin-bottom: var(--space-md);
     font-size: var(--text-xs);
+    gap: var(--space-xs);
+    /* Allow breadcrumbs to stack on very small screens */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  @media (max-width: 480px) {
+    /* Single column layout for very small screens */
+    gap: var(--space-xs);
   }
 `;
 
@@ -791,7 +845,7 @@ export const ErrorMessage = styled('div')`
 
 // =============== MODAL COMPONENTS ===============
 
-// Modal overlay
+// Modal overlay - Full viewport on mobile
 export const ModalOverlay = styled('div')`
   position: fixed;
   top: 0;
@@ -800,33 +854,41 @@ export const ModalOverlay = styled('div')`
   bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  
+  /* Desktop styles */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-2xl);
-  animation: fadeIn 0.2s ease;
   
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
 
-  @media (max-width: var(--mobile-max)) {
-    padding: var(--space-md);
-    align-items: stretch;
+  /* Mobile styles - complete override */
+  @media (max-width: 767px) {
+    display: block;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    overflow: hidden;
   }
 `;
 
-// Modal content
+// Modal content - Full viewport on mobile
 export const ModalContent = styled('div')`
   background: var(--white);
+  font-family: var(--font-main);
+  
+  /* Desktop styles */
   width: 100%;
   max-width: 1200px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   animation: slideIn 0.3s ease;
-  font-family: var(--font-main);
   
   @keyframes slideIn {
     from { transform: translateY(20px); opacity: 0; }
@@ -850,8 +912,23 @@ export const ModalContent = styled('div')`
     background: var(--gray-400);
   }
 
-  @media (max-width: var(--mobile-max)) {
-    max-height: 100vh;
+  /* Mobile styles - complete full screen */
+  @media (max-width: 767px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    animation: none;
+    transform: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 
@@ -884,12 +961,15 @@ export const ModalCloseButton = styled('button')`
     outline-offset: 2px;
   }
 
-  @media (max-width: var(--mobile-max)) {
-    top: var(--space-xl);
-    right: var(--space-xl);
+  @media (max-width: 767px) {
+    top: var(--space-md);
+    right: var(--space-md);
     width: var(--touch-target-comfortable);
     height: var(--touch-target-comfortable);
     font-size: 20px;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    z-index: 1001;
   }
 `;
 

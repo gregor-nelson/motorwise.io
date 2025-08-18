@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { 
+  NavigationHeaderContainer,
   BreadcrumbContainer, 
   SecondaryButton as BackButton, 
   BreadcrumbSeparator,
@@ -303,11 +304,7 @@ const NavigationHeader = ({
 
   // Default navigation header
   return (
-    <div style={{ 
-      padding: 'var(--space-2xl) var(--space-2xl) var(--space-xl) var(--space-2xl)',
-      borderBottom: '1px solid var(--gray-200)', 
-      backgroundColor: 'var(--white)'
-    }}>
+    <NavigationHeaderContainer>
       <BreadcrumbContainer>
         {canGoBack && (
           <BackButton onClick={onGoBack} title="Go back to previous view">
@@ -342,7 +339,7 @@ const NavigationHeader = ({
           {getContextHint()}
         </ContextHint>
       </form>
-    </div>
+    </NavigationHeaderContainer>
   );
 };
 

@@ -91,6 +91,16 @@ export const MarketDashTokens = `
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
   --radius-full: 9999px;
+  
+  /* Mobile Responsive Breakpoints */
+  --mobile-xs: 320px;
+  --mobile-sm: 375px;
+  --mobile-md: 414px;
+  --mobile-max: 767px;
+  
+  /* Touch Target Sizes */
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
 }
 
 /* Essential Animation Keyframes */

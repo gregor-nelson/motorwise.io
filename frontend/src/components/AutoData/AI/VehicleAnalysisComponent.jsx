@@ -1,218 +1,83 @@
-// VehicleAnalysisMinimal.jsx
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+// VehicleAnalysis.jsx
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import {
+  CleanContainer,
+  SectionHeader,
+  SectionTitle,
+  SectionSub,
+  MicroNav,
+  MicroNavLink,
+  ReportSection,
+  DataGrid,
+  MetricGroup,
+  LabelRow,
+  MetricLabel,
+  MetricValue,
+  SubtleText,
+  StatusChip,
+  BulletList,
+  PillCloud,
+  Pill,
+  PanelGrid,
+  Panel,
+  PanelTitle,
+  Divider,
+  SkeletonRow,
+  SkeletonTitle,
+  ErrorBanner,
+  RetryLink,
+  HeroArea,
+  HeroGrid,
+  HeroTile,
+  HeroNumber,
+  HeroUnit,
+  HeroLabel,
+  ArcWrap,
+  ThinArcSvg,
+  ThinArcTrack,
+  ThinArcValue,
+  CountdownWrap,
+  CountdownValue,
+  CountdownBar,
+  CountdownFill,
+  RowList,
+  RowItem,
+  RowLeft,
+  RowRight,
+  RowTitle,
+  RowMeta,
+  ShowMore,
+  MonoBlock,
+} from './VehicleAnalysisStyles';
 
-/* ===============================
-   MinimalTokens — exact copy from DVLADataHeader (as specified)
-================================ */
-const MinimalTokens = `
-  :root {
-    /* Ultra Clean Color Palette - Minimal */
-    --gray-900: #1a1a1a;
-    --gray-800: #2d2d2d;
-    --gray-700: #404040;
-    --gray-600: #525252;
-    --gray-500: #737373;
-    --gray-400: #a3a3a3;
-    --gray-300: #d4d4d4;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f5;
-    --gray-50: #fafafa;
-    --white: #ffffff;
-
-    /* Minimal Accent Colors */
-    --primary: #3b82f6;
-    --positive: #059669;
-    --negative: #dc2626;
-    --warning: #d97706;
-
-    /* Clean Spacing - Generous White Space */
-    --space-xs: 0.25rem;    /* 4px */
-    --space-sm: 0.5rem;     /* 8px */
-    --space-md: 1rem;       /* 16px */
-    --space-lg: 1.5rem;     /* 24px */
-    --space-xl: 2rem;       /* 32px */
-    --space-2xl: 3rem;      /* 48px */
-    --space-3xl: 4rem;      /* 64px */
-
-    /* Typography - Clean Hierarchy */
-    --text-xs: 0.75rem;     /* 12px */
-    --text-sm: 0.875rem;    /* 14px */
-    --text-base: 1rem;      /* 16px */
-    --text-lg: 1.125rem;    /* 18px */
-    --text-xl: 1.25rem;     /* 20px */
-    --text-2xl: 1.5rem;     /* 24px */
-    --text-3xl: 1.875rem;   /* 30px */
-
-    /* Clean Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-
-    /* Minimal Transitions */
-    --transition: all 0.15s ease;
-  }
-`;
-
-/* ===============================
-   Layout & Typography — DVLADataHeader/Premium patterns
-================================ */
-const CleanContainer = styled('div')`
-  ${MinimalTokens}
-
-  font-family: var(--font-main);
-  background: var(--white);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--space-2xl) var(--space-lg);
-  color: var(--gray-900);
-
-  @media (max-width: 767px) {
-    padding: var(--space-xl) var(--space-md);
-  }
-`;
-
-const SectionHeader = styled('div')`
-  margin-bottom: var(--space-3xl);
-
-  & h1, & h2 {
-    margin: 0;
-    font-family: var(--font-main);
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    color: var(--gray-900);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-
-  @media (max-width: 767px) {
-    margin-bottom: var(--space-2xl);
-
-    & h1, & h2 {
-      font-size: var(--text-xl);
-    }
-  }
-`;
-
-const DataGrid = styled('div')`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-3xl);
-  margin-bottom: var(--space-3xl);
-
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    margin-bottom: var(--space-2xl);
-  }
-`;
-
-const ReportSection = styled('section')`
-  margin-bottom: var(--space-3xl);
-
-  @media (max-width: 767px) {
-    margin-bottom: var(--space-2xl);
-  }
-`;
-
-/* content groups are invisible – no borders, no backgrounds */
-const MetricGroup = styled('div')``;
-
-const LabelRow = styled('div')`
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-`;
-
-const MetricLabel = styled('div')`
-  font-family: var(--font-main);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--gray-600);
-  line-height: 1.3;
-`;
-
-const MetricValue = styled('div')`
-  font-family: var(--font-main);
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--gray-900);
-  line-height: 1.4;
-  word-break: break-word;
-
-  @media (max-width: 767px) {
-    font-size: var(--text-sm);
-  }
-`;
-
-const StatusIndicator = styled('span')(({ status }) => {
-  const s = String(status || '').toLowerCase();
-  let color = 'var(--gray-700)';
-  if (['valid', 'taxed', 'no action required', 'good', 'low', 'compliant'].includes(s)) color = 'var(--positive)';
-  else if (['expired', 'sorn', 'untaxed', 'critical', 'high', 'non-compliant'].includes(s)) color = 'var(--negative)';
-  else if (['due soon', 'advisory', 'warning', 'medium'].includes(s)) color = 'var(--warning)';
-  return `
-    font-family: var(--font-main);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: ${color};
-  `;
-});
-
-const Small = styled('div')`
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-  line-height: 1.5;
-`;
-
-const Mono = styled('pre')`
-  background: var(--gray-50);
-  padding: var(--space-xl);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  white-space: pre-wrap;
-  margin: 0;
-  max-height: 400px;
-  overflow: auto;
-`;
-
-/* ===============================
-   API base
-================================ */
+// ------------------------------------
+// API base (same logic as your existing component)
+// ------------------------------------
 const API_BASE_URL =
   (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:8007/api/v1'
     : '/api/v1';
 
-/* ===============================
-   Parser (unchanged logic)
-================================ */
+// ------------------------------------
+// Helpers (parsing preserved from previous file)
+// ------------------------------------
 const SYSTEM_CATEGORIES = {
-  SUSPENSION: { displayName: 'Suspension & Dampers', color: 'var(--primary)' },
-  BRAKING: { displayName: 'Braking System', color: 'var(--negative)' },
-  ENGINE: { displayName: 'Engine & Ancillaries', color: 'var(--positive)' },
-  TRANSMISSION: { displayName: 'Transmission & Drivetrain', color: 'var(--primary)' },
-  ELECTRICAL: { displayName: 'Electrical Systems', color: 'var(--warning)' },
-  STRUCTURE: { displayName: 'Body Structure & Corrosion', color: 'var(--negative)' },
-  EXHAUST: { displayName: 'Exhaust & Emissions', color: 'var(--warning)' },
-  TYRES: { displayName: 'Tyres & Wheels', color: 'var(--primary)' },
-  LIGHTING: { displayName: 'Lighting & Signalling', color: 'var(--primary)' },
-  STEERING: { displayName: 'Steering System', color: 'var(--primary)' },
-  FUEL: { displayName: 'Fuel System', color: 'var(--warning)' },
-  COOLING: { displayName: 'Cooling System', color: 'var(--warning)' },
-  HVAC: { displayName: 'Climate Control', color: 'var(--primary)' },
-  BODYWORK: { displayName: 'Bodywork & Trim', color: 'var(--primary)' },
-  SAFETY: { displayName: 'Safety Systems', color: 'var(--negative)' },
-  OTHER: { displayName: 'Other Systems', color: 'var(--primary)' }
-};
-
-const STATUS_COLORS = {
-  critical: 'var(--negative)',
-  warning: 'var(--warning)',
-  good: 'var(--positive)',
-  info: 'var(--primary)'
+  SUSPENSION: { displayName: 'Suspension & Dampers' },
+  BRAKING: { displayName: 'Braking System' },
+  ENGINE: { displayName: 'Engine & Ancillaries' },
+  TRANSMISSION: { displayName: 'Transmission & Drivetrain' },
+  ELECTRICAL: { displayName: 'Electrical Systems' },
+  STRUCTURE: { displayName: 'Body Structure & Corrosion' },
+  EXHAUST: { displayName: 'Exhaust & Emissions' },
+  TYRES: { displayName: 'Tyres & Wheels' },
+  LIGHTING: { displayName: 'Lighting & Signalling' },
+  STEERING: { displayName: 'Steering System' },
+  FUEL: { displayName: 'Fuel System' },
+  COOLING: { displayName: 'Cooling System' },
+  HVAC: { displayName: 'Climate Control' },
+  BODYWORK: { displayName: 'Bodywork & Trim' },
+  SAFETY: { displayName: 'Safety Systems' },
+  OTHER: { displayName: 'Other Systems' }
 };
 
 const extractValue = (text, key) => {
@@ -221,8 +86,8 @@ const extractValue = (text, key) => {
   return match ? match[1].trim() : null;
 };
 const extractNumericValue = (text, key) => {
-  const value = extractValue(text, key);
-  return value ? parseInt(value, 10) || 0 : 0;
+  const v = extractValue(text, key);
+  return v ? parseInt(v, 10) || 0 : 0;
 };
 const extractSection = (text, startMarker, endMarker) => {
   const startIndex = text.indexOf(startMarker);
@@ -281,7 +146,7 @@ class VehicleAnalysisParser {
 
   parseSystems(systemsText) {
     if (!systemsText) return [];
-    const systemBlocks = systemsText.split('SYSTEM_END').filter(block => block.trim());
+    const systemBlocks = systemsText.split('SYSTEM_END').filter(b => b.trim());
 
     return systemBlocks.map(block => {
       const name = extractValue(block, 'SYSTEM') || 'Unknown System';
@@ -305,7 +170,6 @@ class VehicleAnalysisParser {
         summary,
         findings,
         displayName: categoryInfo.displayName,
-        color: STATUS_COLORS[status] || categoryInfo.color
       };
     });
   }
@@ -340,39 +204,63 @@ class VehicleAnalysisParser {
   }
 }
 
-/* ===============================
-   Minimal components
-================================ */
-const Row = ({ label, value, after }) => (
-  <MetricGroup>
-    <LabelRow>
-      <MetricLabel>{label}</MetricLabel>
-      {after}
-    </LabelRow>
-    <MetricValue>{value}</MetricValue>
-  </MetricGroup>
-);
+// ------------------------------------
+// Thin Hero Arc component (visual impact, minimal style)
+// ------------------------------------
+const ThinArc = ({ value = 0, max = 100, size = 140, strokeWidth = 6, status = 'medium', unit = '/100' }) => {
+  const v = Math.max(0, Math.min(Number(value) || 0, max));
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const pct = v / max;
+  const dash = circumference * pct;
+  const offset = circumference - dash;
 
-const BulletList = styled('ul')`
-  list-style: none;
-  padding: 0;
-  margin: var(--space-lg) 0 0 0;
+  return (
+    <ArcWrap $size={size}>
+      <ThinArcSvg viewBox={`0 0 ${size} ${size}`}>
+        <ThinArcTrack cx={size/2} cy={size/2} r={radius} $strokeWidth={strokeWidth} />
+        <ThinArcValue
+          cx={size/2}
+          cy={size/2}
+          r={radius}
+          $strokeWidth={strokeWidth}
+          $circumference={circumference}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          $status={status}
+        />
+      </ThinArcSvg>
+      <HeroNumber>{Math.round(v)}<HeroUnit>{unit}</HeroUnit></HeroNumber>
+    </ArcWrap>
+  );
+};
 
-  & li {
-    margin: 0 0 var(--space-sm) 0;
-    font-size: var(--text-base);
-    color: var(--gray-700);
-    line-height: 1.5;
-  }
-`;
+// ------------------------------------
+// Countdown (e.g., MOT days) – optional input prop
+// ------------------------------------
+const Countdown = ({ days, label = 'MOT Due In' }) => {
+  if (typeof days !== 'number') return null;
+  const status = days < 0 ? 'critical' : days <= 30 ? 'warning' : 'good';
+  const capped = Math.max(0, Math.min(100, days)); // simple normalization if you map 0-100
+  return (
+    <CountdownWrap>
+      <CountdownValue><strong>{days < 0 ? 'Expired' : `${days} days`}</strong></CountdownValue>
+      <CountdownBar>
+        <CountdownFill $width={days < 0 ? 100 : capped} $status={status} />
+      </CountdownBar>
+      <SubtleText as="div">{label}</SubtleText>
+    </CountdownWrap>
+  );
+};
 
-/* ===============================
-   Main component (minimal UI)
-================================ */
-const VehicleAnalysisMinimal = ({ registration, vehicleData, onDataLoad }) => {
+// ------------------------------------
+// Main Component
+// ------------------------------------
+const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaining }) => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
+  const [error, setError] = useState(null);
+  const [expanded, setExpanded] = useState({});
   const parser = useMemo(() => new VehicleAnalysisParser(), []);
 
   const fetchAnalysis = useCallback(async () => {
@@ -401,39 +289,35 @@ const VehicleAnalysisMinimal = ({ registration, vehicleData, onDataLoad }) => {
     if (registration) fetchAnalysis();
   }, [registration, fetchAnalysis]);
 
+  const vehicleInfo =
+    vehicleData?.make !== 'Unknown'
+      ? `${vehicleData?.make || 'Unknown'} ${vehicleData?.model || 'Vehicle'}`
+      : registration || 'this vehicle';
+
+  // ---------------- Loading ----------------
   if (loading) {
     return (
       <CleanContainer>
         <ReportSection>
-          <Small>Analyzing vehicle data…</Small>
+          <SkeletonTitle />
+          <Divider />
+          <SkeletonRow />
+          <SkeletonRow />
+          <SkeletonRow />
         </ReportSection>
       </CleanContainer>
     );
   }
 
+  // ---------------- Error ----------------
   if (error) {
     return (
       <CleanContainer>
         <ReportSection>
-          <SectionHeader>
-            <h2>Analysis Temporarily Unavailable</h2>
-          </SectionHeader>
-          <Small style={{ marginBottom: 'var(--space-xl)' }}>{error}</Small>
-          <button
-            onClick={fetchAnalysis}
-            style={{
-              appearance: 'none',
-              background: 'transparent',
-              border: 'none',
-              padding: 0,
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-base)',
-              color: 'var(--primary)',
-              cursor: 'pointer'
-            }}
-          >
-            Retry analysis
-          </button>
+          <ErrorBanner role="alert">
+            <strong>Analysis Temporarily Unavailable.</strong> {error}
+            <RetryLink onClick={fetchAnalysis}>Retry</RetryLink>
+          </ErrorBanner>
         </ReportSection>
       </CleanContainer>
     );
@@ -443,147 +327,174 @@ const VehicleAnalysisMinimal = ({ registration, vehicleData, onDataLoad }) => {
     return (
       <CleanContainer>
         <ReportSection>
-          <SectionHeader><h2>No Analysis Available</h2></SectionHeader>
-          <Small>The requested vehicle analysis cannot be displayed at this time.</Small>
+          <ErrorBanner role="status">
+            No analysis is available at this time.
+            <RetryLink onClick={fetchAnalysis}>Retry</RetryLink>
+          </ErrorBanner>
         </ReportSection>
       </CleanContainer>
     );
   }
 
-  const vehicleInfo =
-    vehicleData?.make !== 'Unknown'
-      ? `${vehicleData?.make || 'Unknown'} ${vehicleData?.model || 'Vehicle'}`
-      : registration || 'this vehicle';
+  // ---------------- Derived ----------------
+  const { overallScore, overallRisk, systemsAnalysed, systemsWithIssues, recentIssues, criticalSystems, warningSystems } = analysisData;
 
+  // ---------------- Micro Nav targets ----------------
+  const anchors = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'systems', label: 'Systems' },
+    { id: 'factors', label: 'Factors' },
+    { id: 'patterns', label: 'Patterns' },
+    { id: 'maintenance', label: 'Maintenance' },
+    { id: 'summary', label: 'Summary' },
+  ];
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // ---------------- UI ----------------
   return (
     <CleanContainer>
       {/* Header */}
       <SectionHeader>
-        <h1>Vehicle Technical Analysis</h1>
-        <Small style={{ marginTop: 'var(--space-sm)' }}>
-          Comprehensive technical assessment for {vehicleInfo}
-        </Small>
+        <SectionTitle>Vehicle Technical Analysis</SectionTitle>
+        <SectionSub>Comprehensive technical assessment for {vehicleInfo}</SectionSub>
+
+        <MicroNav aria-label="Section navigation">
+          {anchors.map(a => (
+            <MicroNavLink key={a.id} onClick={() => scrollTo(a.id)}>{a.label}</MicroNavLink>
+          ))}
+        </MicroNav>
       </SectionHeader>
 
-      {/* Summary */}
-      <ReportSection>
-        <DataGrid>
-          <MetricGroup>
-            <MetricLabel>Overall Assessment Score</MetricLabel>
-            <MetricValue>{Math.round(analysisData.overallScore)} / 100</MetricValue>
-            <Small>
-              <StatusIndicator status={analysisData.overallRisk}>
-                {analysisData.overallRisk.charAt(0).toUpperCase() + analysisData.overallRisk.slice(1)} risk
-              </StatusIndicator>
-            </Small>
-          </MetricGroup>
+      {/* Hero */}
+      <ReportSection id="overview">
+        <HeroArea>
+          <HeroGrid>
+            <HeroTile>
+              <ThinArc value={overallScore} max={100} status={overallRisk} />
+              <HeroLabel>Overall Assessment Score</HeroLabel>
+              <StatusChip $status={overallRisk} aria-label={`Overall risk ${overallRisk}`}>
+                {overallRisk.charAt(0).toUpperCase() + overallRisk.slice(1)} risk
+              </StatusChip>
+            </HeroTile>
 
-          <MetricGroup>
-            <MetricLabel>Systems With Issues</MetricLabel>
-            <MetricValue>
-              {analysisData.systemsWithIssues} <span style={{ color: 'var(--gray-600)' }}>
-                of {analysisData.systemsAnalysed}
-              </span>
-            </MetricValue>
-            {(analysisData.criticalSystems > 0 || analysisData.warningSystems > 0) && (
-              <Small style={{ marginTop: 'var(--space-xs)' }}>
-                {analysisData.criticalSystems > 0 && (
-                  <StatusIndicator status="critical">{analysisData.criticalSystems} critical</StatusIndicator>
-                )}
-                {analysisData.criticalSystems > 0 && analysisData.warningSystems > 0 && ' · '}
-                {analysisData.warningSystems > 0 && (
-                  <StatusIndicator status="warning">{analysisData.warningSystems} warnings</StatusIndicator>
-                )}
-              </Small>
+            <HeroTile>
+              <HeroNumber>{systemsWithIssues}<HeroUnit> / {systemsAnalysed}</HeroUnit></HeroNumber>
+              <HeroLabel>Systems with Issues</HeroLabel>
+              {(criticalSystems > 0 || warningSystems > 0) && (
+                <SubtleText>
+                  {criticalSystems > 0 && <StatusChip as="span" $status="critical">{criticalSystems} critical</StatusChip>}
+                  {(criticalSystems > 0 && warningSystems > 0) && <span> · </span>}
+                  {warningSystems > 0 && <StatusChip as="span" $status="warning">{warningSystems} warnings</StatusChip>}
+                </SubtleText>
+              )}
+            </HeroTile>
+
+            <HeroTile>
+              <HeroNumber>{recentIssues}<HeroUnit> systems</HeroUnit></HeroNumber>
+              <HeroLabel>Recent Activity</HeroLabel>
+              <SubtleText>Systems with recent issues or changes</SubtleText>
+            </HeroTile>
+
+            {typeof motDaysRemaining === 'number' && (
+              <HeroTile>
+                <Countdown days={motDaysRemaining} label="MOT Status" />
+              </HeroTile>
             )}
-          </MetricGroup>
-
-          {analysisData.recentIssues > 0 && (
-            <MetricGroup>
-              <MetricLabel>Recent Activity</MetricLabel>
-              <MetricValue>{analysisData.recentIssues} systems</MetricValue>
-              <Small>Recent issues or changes detected</Small>
-            </MetricGroup>
-          )}
-        </DataGrid>
+          </HeroGrid>
+        </HeroArea>
       </ReportSection>
 
-      {/* Detailed Findings (condensed, typography-only) */}
-      {analysisData.systems.some(s => s.findings.length > 0) && (
-        <ReportSection>
-          <SectionHeader><h2>Detailed Findings</h2></SectionHeader>
-          {analysisData.systems
-            .filter(s => s.findings.length > 0)
-            .map((s, idx) => (
-              <MetricGroup key={`${s.category}-${idx}`} style={{ marginBottom: 'var(--space-xl)' }}>
-                <MetricLabel style={{ color: s.color, marginBottom: 'var(--space-xs)' }}>
-                  {s.name}
-                </MetricLabel>
-                <BulletList>
-                  {s.findings.map((f, i) => <li key={i}>{f}</li>)}
-                </BulletList>
-              </MetricGroup>
-            ))}
+      {/* Systems matrix */}
+      {analysisData.systems?.length > 0 && (
+        <ReportSection id="systems">
+          <SectionTitle as="h2">Systems Overview</SectionTitle>
+          <SubtleText>Scan all key systems at a glance. Select a system to expand findings.</SubtleText>
+
+          <Divider />
+
+          <RowList role="list">
+            {analysisData.systems.map((s, idx) => {
+              const isOpen = !!expanded[idx];
+              const hasExtra = s.findings.length > 2;
+
+              return (
+                <RowItem key={`${s.category}-${idx}`} role="listitem">
+                  <RowLeft>
+                    <RowTitle>{s.name}</RowTitle>
+                    <RowMeta>{s.displayName}</RowMeta>
+                  </RowLeft>
+
+                  <RowRight>
+                    <StatusChip $status={s.status} aria-label={`Status ${s.status}`}>
+                      {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
+                    </StatusChip>
+                    <SubtleText>{s.issueCount} issues</SubtleText>
+                    {s.recentActivity && <StatusChip as="span" $status="warning" $soft>Recent</StatusChip>}
+                  </RowRight>
+
+                  {s.findings.length > 0 && (
+                    <MetricGroup>
+                      <BulletList $dense>
+                        {s.findings.slice(0, isOpen ? s.findings.length : 2).map((f, i) => (
+                          <li key={i}>{f}</li>
+                        ))}
+                      </BulletList>
+                      {hasExtra && (
+                        <ShowMore
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => setExpanded(prev => ({ ...prev, [idx]: !isOpen }))}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') setExpanded(prev => ({ ...prev, [idx]: !isOpen }));
+                          }}
+                          aria-expanded={isOpen}
+                          aria-controls={`system-details-${idx}`}
+                        >
+                          {isOpen ? 'Show fewer findings' : `Show ${s.findings.length - 2} more findings`}
+                        </ShowMore>
+                      )}
+                    </MetricGroup>
+                  )}
+
+                  {s.summary && <SubtleText id={`system-details-${idx}`}>{s.summary}</SubtleText>}
+                </RowItem>
+              );
+            })}
+          </RowList>
         </ReportSection>
       )}
 
-      {/* System Overview – invisible grid, no cards */}
-      {analysisData.systems.length > 0 && (
-        <ReportSection>
-          <SectionHeader><h2>Systems Overview</h2></SectionHeader>
+      {/* Factors */}
+      {(analysisData.riskFactors?.length > 0 || analysisData.positiveFactors?.length > 0) && (
+        <ReportSection id="factors">
+          <SectionTitle as="h2">Assessment Factors</SectionTitle>
+          <Divider />
           <DataGrid>
-            {analysisData.systems.map((s, i) => (
-              <MetricGroup key={`${s.category}-${i}`}>
-                <Row
-                  label="System"
-                  value={
-                    <span>
-                      {s.name}{' '}
-                      <span style={{ color: 'var(--gray-500)' }}>· {s.displayName}</span>
-                    </span>
-                  }
-                />
-                <Row
-                  label="Status"
-                  value={<StatusIndicator status={s.status}>
-                    {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
-                  </StatusIndicator>}
-                />
-                <Row label="Issues" value={`${s.issueCount}`} />
-                {s.recentActivity && (
-                  <Small style={{ color: 'var(--warning)' }}>Recent activity detected</Small>
-                )}
-                {s.summary && (
-                  <Small style={{ marginTop: 'var(--space-sm)' }}>
-                    {s.summary}
-                  </Small>
-                )}
+            {analysisData.riskFactors?.length > 0 && (
+              <MetricGroup>
+                <MetricLabel>Risk Factors</MetricLabel>
+                <PillCloud>
+                  {analysisData.riskFactors.map((r, i) => (
+                    <Pill key={`rf-${i}`} $status="warning" aria-label={`Risk factor: ${r}`}>{r}</Pill>
+                  ))}
+                </PillCloud>
               </MetricGroup>
-            ))}
+            )}
+            {analysisData.positiveFactors?.length > 0 && (
+              <MetricGroup>
+                <MetricLabel>Positive Factors</MetricLabel>
+                <PillCloud>
+                  {analysisData.positiveFactors.map((p, i) => (
+                    <Pill key={`pf-${i}`} $status="good" aria-label={`Positive factor: ${p}`}>{p}</Pill>
+                  ))}
+                </PillCloud>
+              </MetricGroup>
+            )}
           </DataGrid>
-        </ReportSection>
-      )}
-
-      {/* Assessment Factors */}
-      {(analysisData.riskFactors.length > 0 || analysisData.positiveFactors.length > 0) && (
-        <ReportSection>
-          <SectionHeader><h2>Assessment Factors</h2></SectionHeader>
-          {analysisData.riskFactors.length > 0 && (
-            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
-              <MetricLabel>Risk Factors</MetricLabel>
-              <BulletList>
-                {analysisData.riskFactors.map((r, i) => <li key={`r-${i}`}>{r}</li>)}
-              </BulletList>
-            </MetricGroup>
-          )}
-          {analysisData.positiveFactors.length > 0 && (
-            <MetricGroup>
-              <MetricLabel>Positive Factors</MetricLabel>
-              <BulletList>
-                {analysisData.positiveFactors.map((p, i) => <li key={`p-${i}`}>{p}</li>)}
-              </BulletList>
-            </MetricGroup>
-          )}
         </ReportSection>
       )}
 
@@ -591,60 +502,68 @@ const VehicleAnalysisMinimal = ({ registration, vehicleData, onDataLoad }) => {
       {(analysisData.patterns?.recurringIssues?.length ||
         analysisData.patterns?.progressiveDeterioration?.length ||
         analysisData.patterns?.bulletinCorrelations?.length) && (
-        <ReportSection>
-          <SectionHeader><h2>Pattern Analysis</h2></SectionHeader>
-          {analysisData.patterns?.recurringIssues?.length > 0 && (
-            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
-              <MetricLabel>Recurring Issues</MetricLabel>
-              <BulletList>
-                {analysisData.patterns.recurringIssues.map((t, i) => <li key={`ri-${i}`}>{t}</li>)}
-              </BulletList>
-            </MetricGroup>
-          )}
-          {analysisData.patterns?.progressiveDeterioration?.length > 0 && (
-            <MetricGroup style={{ marginBottom: 'var(--space-2xl)' }}>
-              <MetricLabel>Progressive Deterioration</MetricLabel>
-              <BulletList>
-                {analysisData.patterns.progressiveDeterioration.map((t, i) => <li key={`pd-${i}`}>{t}</li>)}
-              </BulletList>
-            </MetricGroup>
-          )}
-          {analysisData.patterns?.bulletinCorrelations?.length > 0 && (
-            <MetricGroup>
-              <MetricLabel>Technical Bulletin Correlations</MetricLabel>
-              <BulletList>
-                {analysisData.patterns.bulletinCorrelations.map((t, i) => <li key={`bc-${i}`}>{t}</li>)}
-              </BulletList>
-            </MetricGroup>
-          )}
+        <ReportSection id="patterns">
+          <SectionTitle as="h2">Pattern Analysis</SectionTitle>
+          <Divider />
+          <PanelGrid>
+            {analysisData.patterns?.recurringIssues?.length > 0 && (
+              <Panel>
+                <PanelTitle>Recurring Issues</PanelTitle>
+                <BulletList>
+                  {analysisData.patterns.recurringIssues.map((t, i) => <li key={`ri-${i}`}>{t}</li>)}
+                </BulletList>
+              </Panel>
+            )}
+            {analysisData.patterns?.progressiveDeterioration?.length > 0 && (
+              <Panel>
+                <PanelTitle>Progressive Deterioration</PanelTitle>
+                <BulletList>
+                  {analysisData.patterns.progressiveDeterioration.map((t, i) => <li key={`pd-${i}`}>{t}</li>)}
+                </BulletList>
+              </Panel>
+            )}
+            {analysisData.patterns?.bulletinCorrelations?.length > 0 && (
+              <Panel>
+                <PanelTitle>Technical Bulletin Correlations</PanelTitle>
+                <BulletList>
+                  {analysisData.patterns.bulletinCorrelations.map((t, i) => <li key={`bc-${i}`}>{t}</li>)}
+                </BulletList>
+              </Panel>
+            )}
+          </PanelGrid>
+        </ReportSection>
+      )}
+
+      {/* Maintenance */}
+      {analysisData.maintenanceInsights?.length > 0 && (
+        <ReportSection id="maintenance">
+          <SectionTitle as="h2">Maintenance Insights</SectionTitle>
+          <Divider />
+          <PillCloud>
+            {analysisData.maintenanceInsights.map((m, i) => (
+              <Pill key={`mi-${i}`} $status="info">{m}</Pill>
+            ))}
+          </PillCloud>
         </ReportSection>
       )}
 
       {/* Summary */}
-      <ReportSection>
-        <SectionHeader><h2>Analysis Summary</h2></SectionHeader>
-        <Small style={{ color: 'var(--gray-800)' }}>
-          {analysisData.summary}
-        </Small>
+      <ReportSection id="summary">
+        <SectionTitle as="h2">Analysis Summary</SectionTitle>
+        <Divider />
+        <SubtleText>{analysisData.summary}</SubtleText>
       </ReportSection>
 
-      {/* Raw analysis (fallback) */}
+      {/* Raw content (fallback) */}
       {analysisData.fallbackMode && (
         <ReportSection>
-          <SectionHeader><h2>Raw Analysis Content</h2></SectionHeader>
-          <Mono>{analysisData.rawText}</Mono>
+          <SectionTitle as="h2">Raw Analysis Content</SectionTitle>
+          <Divider />
+          <MonoBlock>{analysisData.rawText}</MonoBlock>
         </ReportSection>
       )}
-
-      {/* Professional note */}
-      <ReportSection>
-        <Small style={{ color: 'var(--gray-700)' }}>
-          <strong>Important:</strong> This analysis is based on manufacturer data, vehicle records, and historical maintenance inputs.
-          Actual condition may vary with usage, maintenance history, and environment. Consult a qualified professional for critical decisions.
-        </Small>
-      </ReportSection>
     </CleanContainer>
   );
 };
 
-export default React.memo(VehicleAnalysisMinimal);
+export default React.memo(VehicleAnalysis);

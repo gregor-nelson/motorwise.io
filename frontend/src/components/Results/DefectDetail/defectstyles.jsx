@@ -23,6 +23,8 @@ export const DefectDetailContainer = styled('div')`
 
 // Ultra Clean Content Container - Minimal
 export const ContentContainer = styled('div')`
+  ${MinimalTokens}
+  
   font-family: var(--font-main);
   background: var(--white);
   max-width: 1200px;
@@ -40,6 +42,8 @@ export const ContentContainer = styled('div')`
 
 // Minimal Section Header - Clean Typography Only
 export const SectionHeader = styled('div')`
+  ${MinimalTokens}
+  
   margin-bottom: var(--space-3xl);
 
   @media (max-width: 767px) {
@@ -49,6 +53,8 @@ export const SectionHeader = styled('div')`
 
 // Clean Title - Exact DVLADataHeader pattern
 export const SectionTitle = styled('h1')`
+  ${MinimalTokens}
+  
   margin: 0;
   font-family: var(--font-main);
   font-size: var(--text-2xl);
@@ -66,6 +72,8 @@ export const SectionTitle = styled('h1')`
 
 // Clean Subtitle - Minimal spacing
 export const SubTitle = styled('h2')`
+  ${MinimalTokens}
+  
   font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 600;
@@ -84,6 +92,8 @@ export const SubTitle = styled('h2')`
 
 // Tertiary title
 export const CardTitle = styled('h3')`
+  ${MinimalTokens}
+  
   margin: 0 0 var(--space-sm) 0;
   font-family: var(--font-main);
   font-size: var(--text-lg);
@@ -100,6 +110,8 @@ export const CardTitle = styled('h3')`
 
 // Body text
 export const BodyText = styled('p')`
+  ${MinimalTokens}
+  
   font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 400;
@@ -139,45 +151,49 @@ export const TinyText = styled('span')`
 
 // =============== ENHANCED DEFECT DETAIL COMPONENTS ===============
 
-// Expandable section container
+// Clean Section - No visual containers, pure spacing
 export const ExpandableSection = styled('div')`
-  margin-bottom: var(--space-xl);
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--white);
+  ${MinimalTokens}
+  
+  margin-bottom: var(--space-3xl);
+  /* No borders, shadows, or backgrounds - pure minimal */
+
+  @media (max-width: 767px) {
+    margin-bottom: var(--space-2xl);
+  }
 `;
 
-// Expandable section header (clickable)
+// Minimal Section Toggle - Clean typography only
 export const SectionToggle = styled('button')`
+  ${MinimalTokens}
+  
   width: 100%;
-  padding: var(--space-lg);
-  background: var(--gray-50);
+  padding: 0;
+  background: none;
   border: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   font-family: var(--font-main);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gray-900);
   transition: var(--transition);
   text-align: left;
-  min-height: var(--touch-target-min);
+  margin-bottom: var(--space-lg);
   
   &:hover {
-    background: var(--gray-100);
+    color: var(--gray-700);
   }
   
   &:focus {
     outline: 2px solid var(--primary);
-    outline-offset: -2px;
+    outline-offset: 2px;
   }
 
-  @media (max-width: var(--mobile-max)) {
-    padding: var(--space-md);
-    font-size: var(--text-base);
+  @media (max-width: 767px) {
+    font-size: var(--text-lg);
   }
 `;
 

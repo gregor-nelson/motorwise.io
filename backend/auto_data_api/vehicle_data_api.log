@@ -6171,3 +6171,45 @@
 2025-08-18 21:16:08,411 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-08-18 21:16:08,413 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-08-18 21:16:08,413 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-18 21:19:07,097 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-18 21:19:07,104 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-18 21:19:07,106 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-18 21:19:07,109 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-18 21:19:07,110 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-18 21:19:07,112 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-18 21:19:07,113 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-18 21:19:07,114 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-18 21:19:07,114 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-18 21:19:07,115 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-18 21:19:07,116 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-18 21:19:07,117 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-18 21:19:07,117 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-18 21:24:08,346 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-18 21:24:08,346 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-08-18 21:24:08,346 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-08-18 21:24:08,354 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0102s
+2025-08-18 21:24:08,364 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 21:24:08,365 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 21:24:08,365 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-18 21:24:08,366 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-18 21:24:08,366 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-18 21:24:08,366 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-18 21:24:08,367 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-18 21:24:08,367 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-18 21:24:08,367 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-18 21:24:08,367 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-18 21:24:08,367 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-18 21:24:08,373 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0124s
+2025-08-19 09:42:48,237 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-19 09:42:48,256 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-19 09:42:48,272 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-19 09:42:48,287 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-19 09:42:48,303 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-19 09:42:48,319 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-19 09:42:48,320 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-19 09:42:48,336 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-19 09:42:48,336 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-19 09:42:48,350 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-19 09:42:48,351 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-19 09:42:48,352 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-19 09:42:48,352 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records

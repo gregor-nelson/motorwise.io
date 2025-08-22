@@ -5904,3 +5904,18 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-08-18 21:16:34,192 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
 2025-08-18 21:16:35,326 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.5078s
 2025-08-18 21:16:35,327 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.5088s
+2025-08-18 21:22:17,045 - mot_api - INFO - Requesting new access token
+2025-08-18 21:22:17,443 - mot_api - INFO - Successfully obtained new access token
+2025-08-18 21:22:17,444 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-08-18 21:22:18,440 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.3961s
+2025-08-18 21:22:18,441 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0020s
+2025-08-18 21:24:07,526 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-18 21:24:07,876 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-19 09:43:05,842 - mot_api - INFO - Requesting new access token
+2025-08-19 09:43:05,848 - mot_api - ERROR - Failed to authenticate with MOT API: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /a455b827-244f-4c97-b5b4-ce5d13b4d00c/oauth2/v2.0/token (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000024A406815D0>: Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-19 09:43:05,848 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 500 - 0.0070s
+2025-08-19 09:44:02,978 - mot_api - INFO - Requesting new access token
+2025-08-19 09:44:03,269 - mot_api - INFO - Successfully obtained new access token
+2025-08-19 09:44:03,270 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-19 09:44:04,403 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.4251s
+2025-08-19 09:44:05,995 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0033s

@@ -9957,3 +9957,25 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-18 21:19:03,533 - ves_api - INFO - Starting server in PRODUCTION mode
 2025-08-18 21:19:03,533 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-08-18 21:19:03,533 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-18 21:24:08,050 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-18 21:24:09,021 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-18 21:24:09,638 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-18 21:24:09,639 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-18 21:24:09,640 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-18 21:24:09,641 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-18 21:24:09,642 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60550 - Status: 200 - Process Time: 1.6087s
+2025-08-18 21:24:09,643 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:60569 - Status: 200 - Process Time: 0.6217s
+2025-08-19 09:42:46,252 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-08-19 09:42:46,252 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-08-19 09:42:46,252 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-19 09:44:06,021 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-19 09:44:07,056 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-19 09:44:07,696 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-19 09:44:07,698 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-19 09:44:07,701 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50590 - Status: 200 - Process Time: 0.6480s
+2025-08-19 09:44:07,793 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-19 09:44:07,794 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-19 09:44:07,794 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50573 - Status: 200 - Process Time: 1.7773s
+2025-08-22 19:26:36,081 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-08-22 19:26:36,082 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-08-22 19:26:36,082 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']

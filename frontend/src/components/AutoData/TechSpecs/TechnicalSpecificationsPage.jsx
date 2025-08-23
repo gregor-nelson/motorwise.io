@@ -1,46 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { styled } from '@mui/material/styles';
 
 // Import API client
 import techSpecsApi from '../api/TechSpecsApiClient';
 
-// Import shared components
-import {
-  SharedContainer,
-  SharedPanel,
-  SharedHeader,
-  SharedTitle,
-  SharedSubtitle,
-  SharedTabs,
-  SharedTabContent,
-  SharedAccordion,
-  SharedSearchAndFilters,
-  SharedLoadingState,
-  SharedErrorState,
-  SharedEmptyState,
-  SharedMatchWarning,
-  SharedNoticePanel,
-  SharedButton
-} from '../shared/CommonElements';
-
 // Import custom tooltip components
 import { HeadingWithTooltip } from '../../../styles/tooltip';
-
-// Keep existing styled components for spec-specific UI
-import {
-  SpecGrid,
-  SpecCard,
-  SpecCardHeader,
-  SpecCardTitle,
-  SpecCardIcon,
-  SpecValue,
-  SpecUnit,
-  SpecSubtext,
-  StatusBadge,
-  ProgressLabel,
-  StatusContainer,
-  FuelTypeBadge
-} from './TechnicalSpecificationsStyles';
 
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -48,58 +12,6 @@ const BROWSER_CACHE_PREFIX = 'tech_specs_';
 const STORAGE_VERSION = 'v1';
 const MAX_CACHE_SIZE = 1000000; // ~1MB max size for cache entries
 
-// Gauge components (keeping existing gauge implementation)
-const GaugeContainer = styled('div')(() => ({
-  position: 'relative',
-  width: '120px',
-  height: '120px',
-  margin: '0 auto var(--space-md)'
-}));
-
-const GaugeSvg = styled('svg')(() => ({
-  transform: 'rotate(-90deg)'
-}));
-
-const GaugeTrack = styled('circle')(() => ({
-  fill: 'none',
-  stroke: 'var(--gray-300)',
-  strokeWidth: '10'
-}));
-
-const GaugeFill = styled('circle')(({ color }) => ({
-  fill: 'none',
-  stroke: color || 'var(--primary)',
-  strokeWidth: '10',
-  strokeLinecap: 'square',
-  transition: 'var(--transition)'
-}));
-
-const GaugeCenterText = styled('div')(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  textAlign: 'center'
-}));
-
-const ProgressBar = styled('div')(() => ({
-  width: '100%',
-  height: '20px',
-  backgroundColor: 'var(--gray-100)',
-  position: 'relative'
-}));
-
-const ProgressFill = styled('div')(({ color, width }) => ({
-  height: '100%',
-  width: `${width}%`,
-  backgroundColor: color || 'var(--primary)',
-  transition: 'var(--transition)',
-  position: 'relative'
-}));
-
-const ProgressContainer = styled('div')(() => ({
-  marginTop: 'var(--space-md)'
-}));
 
 // Helper functions (keeping existing implementations)
 const getSpecIcon = (type) => {
@@ -119,15 +31,15 @@ const getSpecIcon = (type) => {
 
 const getSpecColor = (type) => {
   const colors = {
-    pressure: 'var(--primary)',
-    temperature: 'var(--negative)',
-    volume: 'var(--positive)',
-    torque: 'var(--warning)',
-    electrical: 'var(--warning)',
-    time: 'var(--primary)',
-    distance: 'var(--primary)',
-    speed: 'var(--primary)',
-    default: 'var(--gray-600)'
+    pressure: 'rgb(37 99 235)',
+    temperature: 'rgb(239 68 68)',
+    volume: 'rgb(34 197 94)',
+    torque: 'rgb(245 158 11)',
+    electrical: 'rgb(245 158 11)',
+    time: 'rgb(37 99 235)',
+    distance: 'rgb(37 99 235)',
+    speed: 'rgb(37 99 235)',
+    default: 'rgb(75 85 99)'
   };
   return colors[type] || colors.default;
 };
@@ -157,12 +69,12 @@ const getCategoryIcon = (category) => {
 
 const getCategoryColor = (category) => {
   const colors = {
-    'Engine Details': 'var(--primary)',
-    'Service Information': 'var(--positive)',
-    'Torque Specifications': 'var(--warning)',
-    'Brakes & A/C': 'var(--warning)'
+    'Engine Details': 'rgb(37 99 235)',
+    'Service Information': 'rgb(34 197 94)',
+    'Torque Specifications': 'rgb(245 158 11)',
+    'Brakes & A/C': 'rgb(245 158 11)'
   };
-  return colors[category] || 'var(--gray-600)';
+  return colors[category] || 'rgb(75 85 99)';
 };
 
 // Gauge component
@@ -173,34 +85,45 @@ const Gauge = ({ value, max, unit, label, color }) => {
   
   return (
     <div>
-      <GaugeContainer>
-        <GaugeSvg viewBox="0 0 100 100">
-          <GaugeTrack cx="50" cy="50" r="45" />
-          <GaugeFill
+      <div className="relative w-32 h-32 mx-auto mb-4">
+        <svg className="transform -rotate-90" viewBox="0 0 100 100">
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="45" 
+            fill="none" 
+            stroke="rgb(209 213 219)" 
+            strokeWidth="10"
+          />
+          <circle
             cx="50"
             cy="50"
             r="45"
-            color={color}
+            fill="none"
+            stroke={color || 'rgb(37 99 235)'}
+            strokeWidth="10"
+            strokeLinecap="square"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-300"
           />
-        </GaugeSvg>
-        <GaugeCenterText>
-          <SpecValue size="medium">{value}</SpecValue>
-          <SpecSubtext>{unit}</SpecSubtext>
-        </GaugeCenterText>
-      </GaugeContainer>
-      <SpecCardTitle>{label}</SpecCardTitle>
+        </svg>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+          <div className="text-lg font-bold text-neutral-900">{value}</div>
+          <div className="text-xs text-neutral-600">{unit}</div>
+        </div>
+      </div>
+      <div className="text-sm font-medium text-neutral-900">{label}</div>
     </div>
   );
 };
 
-// Visual spec renderer (keeping existing implementation)
+// Visual spec renderer
 const renderVisualSpecs = (items, sectionTitle) => {
   if (!items || !Array.isArray(items) || items.length === 0) return null;
   
   return (
-    <SpecGrid>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
       {items.map((item, index) => {
         const label = item.label || item.name || '';
         let value = item.value !== undefined ? item.value : '';
@@ -228,7 +151,7 @@ const renderVisualSpecs = (items, sectionTitle) => {
         if (variant === 'gauge' && hasNumericValue) {
           const maxValue = unit.includes('bar') ? 10 : 150;
           return (
-            <SpecCard key={index} variant="gauge">
+            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
               <Gauge
                 value={numericValue}
                 max={maxValue}
@@ -236,51 +159,68 @@ const renderVisualSpecs = (items, sectionTitle) => {
                 label={label}
                 color={color}
               />
-            </SpecCard>
+            </div>
           );
         }
         
         if (hasNumericValue && (unit === '%' || label.toLowerCase().includes('range'))) {
+          const statusColor = numericValue > 70 ? 'text-green-600' : numericValue > 40 ? 'text-yellow-600' : 'text-red-600';
+          const statusText = numericValue > 70 ? 'Optimal' : numericValue > 40 ? 'Acceptable' : 'Low';
+          
           return (
-            <SpecCard key={index} variant="bar">
-              <SpecCardHeader>
-                <SpecCardTitle>{label}</SpecCardTitle>
-                <SpecCardIcon color={color}>{icon}</SpecCardIcon>
-              </SpecCardHeader>
-              <ProgressContainer>
-                <ProgressLabel>
-                  <span>{value} {unit}</span>
-                  <StatusBadge status={numericValue > 70 ? 'good' : numericValue > 40 ? 'warning' : 'critical'}>
-                    {numericValue > 70 ? 'Optimal' : numericValue > 40 ? 'Acceptable' : 'Low'}
-                  </StatusBadge>
-                </ProgressLabel>
-                <ProgressBar>
-                  <ProgressFill color={color} width={numericValue} />
-                </ProgressBar>
-              </ProgressContainer>
-            </SpecCard>
+            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-start justify-between mb-3">
+                <div className="text-sm font-medium text-neutral-900">{label}</div>
+                <div 
+                  className="w-8 h-8 rounded flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                  style={{ backgroundColor: color || 'rgb(37 99 235)' }}
+                >
+                  {icon}
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold">{value} {unit}</span>
+                  <span className={`text-sm font-medium ${statusColor}`}>{statusText}</span>
+                </div>
+                <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-300"
+                    style={{ 
+                      width: `${numericValue}%`,
+                      backgroundColor: color || 'rgb(37 99 235)'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
           );
         }
         
         return (
-          <SpecCard key={index}>
-            <SpecCardHeader>
-              <SpecCardTitle>{label}</SpecCardTitle>
-              <SpecCardIcon color={color}>{icon}</SpecCardIcon>
-            </SpecCardHeader>
-            <SpecValue size={variant === 'compact' ? 'medium' : 'large'}>
+          <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="text-sm font-medium text-neutral-900">{label}</div>
+              <div 
+                className="w-8 h-8 rounded flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                style={{ backgroundColor: color || 'rgb(37 99 235)' }}
+              >
+                {icon}
+              </div>
+            </div>
+            <div className={`font-bold text-neutral-900 mb-1 ${variant === 'compact' ? 'text-lg' : 'text-2xl'}`}>
               {value}
-              {unit && <SpecUnit>{unit}</SpecUnit>}
-            </SpecValue>
+              {unit && <span className="text-base font-normal text-neutral-600 ml-1">{unit}</span>}
+            </div>
             {sectionTitle === 'Lubricants & Capacities' && (
-              <StatusContainer>
-                <StatusBadge status="good">Recommended</StatusBadge>
-              </StatusContainer>
+              <div className="mt-4">
+                <span className="text-sm font-medium text-green-600">Recommended</span>
+              </div>
             )}
-          </SpecCard>
+          </div>
         );
       })}
-    </SpecGrid>
+    </div>
   );
 };
 
@@ -470,16 +410,16 @@ const renderNotes = (notes) => {
   if (!notes || !Array.isArray(notes) || notes.length === 0) return null;
   
   return (
-    <SharedNoticePanel>
-      <h3>Important notes</h3>
-      <ul style={{ margin: 0, paddingLeft: 'var(--space-lg)' }}>
+    <div className="bg-blue-50 rounded-lg p-4 shadow-sm mb-6">
+      <h3 className="text-lg font-medium text-neutral-900 mb-4">Important notes</h3>
+      <ul className="pl-6 m-0">
         {notes.map((note, index) => (
-          <li key={`note-${index}`} style={{ marginBottom: 'var(--space-sm)' }}>
+          <li key={`note-${index}`} className="text-xs text-neutral-700 mb-2">
             {note || ''}
           </li>
         ))}
       </ul>
-    </SharedNoticePanel>
+    </div>
   );
 };
 
@@ -744,13 +684,8 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         content: (
           <>
             {hasEngineOilOptions && (
-              <div style={{ marginBottom: 'var(--space-xl)' }}>
-                <h4 style={{ 
-                  fontSize: 'var(--text-lg)', 
-                  fontWeight: '600', 
-                  color: 'var(--gray-900)', 
-                  margin: '0 0 var(--space-md) 0' 
-                }}>
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-4">
                   Engine Oil Options
                 </h4>
                 {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
@@ -760,18 +695,9 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
             {hasLubricantSpecs && (
               <div>
                 {hasEngineOilOptions && (
-                  <div style={{ 
-                    height: '3px', 
-                    backgroundColor: 'var(--gray-200)', 
-                    margin: 'var(--space-xl) 0' 
-                  }} />
+                  <div className="h-1 bg-neutral-200 my-8" />
                 )}
-                <h4 style={{ 
-                  fontSize: 'var(--text-lg)', 
-                  fontWeight: '600', 
-                  color: 'var(--gray-900)', 
-                  margin: '0 0 var(--space-md) 0' 
-                }}>
+                <h4 className="text-lg font-semibold text-neutral-900 mb-4">
                   Other Lubricants & Capacities
                 </h4>
                 {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
@@ -808,36 +734,27 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           icon: getCategoryIcon("Cylinder Head Instructions"),
           content: (
             <>
-              <div style={{ marginBottom: 'var(--space-xl)' }}>
+              <div className="mb-8">
                 {headInstructions.map((instruction, index) => (
-                  <p key={`instr-${index}`} style={{ 
-                    fontSize: 'var(--text-base)', 
-                    color: 'var(--gray-700)', 
-                    marginBottom: 'var(--space-md)' 
-                  }}>
+                  <p key={`instr-${index}`} className="text-sm text-neutral-700 mb-4">
                     {instruction}
                   </p>
                 ))}
               </div>
               
               {hasTorqueSequence && (
-                <SpecCard>
-                  <h4 style={{ 
-                    fontSize: 'var(--text-lg)', 
-                    fontWeight: '600', 
-                    color: 'var(--gray-900)', 
-                    margin: '0 0 var(--space-md) 0' 
-                  }}>
+                <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+                  <h4 className="text-lg font-semibold text-neutral-900 mb-4">
                     Tightening sequence
                   </h4>
-                  <ol style={{ margin: 0, paddingLeft: 'var(--space-lg)' }}>
+                  <ol className="list-decimal pl-6 m-0">
                     {headTorques.map((step, index) => (
-                      <li key={`step-${index}`} style={{ marginBottom: 'var(--space-sm)' }}>
+                      <li key={`step-${index}`} className="text-xs text-neutral-700 mb-2">
                         {step}
                       </li>
                     ))}
                   </ol>
-                </SpecCard>
+                </div>
               )}
             </>
           )
@@ -922,7 +839,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   // Helper function to count specs in content for accordion display
   const getSpecCount = useCallback((content) => {
     if (!content) return 0;
-    // Try to count items in SpecGrid or similar structures
+    // Try to count items in grid or similar structures
     if (typeof content === 'object' && content.props) {
       if (content.props.items && Array.isArray(content.props.items)) {
         return content.props.items.length;
@@ -942,33 +859,57 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   // Loading state
   if (loading) {
     return (
-      <SharedLoadingState
-        title="Loading vehicle specifications"
-        subtitle="We are retrieving the technical information for your vehicle"
-        vehicleMake={vehicleData?.make}
-        vehicleModel={vehicleData?.model}
-      />
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+          <div className="flex flex-col items-center justify-center min-h-48 gap-4">
+            <div className="w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <div className="text-center">
+              <div className="text-lg font-medium text-neutral-900 mb-2">Loading vehicle specifications</div>
+              <div className="text-sm text-neutral-600">We are retrieving the technical information for {vehicleData?.make} {vehicleData?.model}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
   // Error state
   if (error) {
     return (
-      <SharedErrorState
-        error={error}
-        onRetry={handleRetry}
-        title="Cannot retrieve technical specifications"
-      />
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+          <div className="text-center py-8">
+            <div className="text-lg font-medium text-neutral-900 mb-2 flex items-center justify-center gap-2">
+              <i className="ph ph-warning text-red-600"></i>
+              Cannot retrieve technical specifications
+            </div>
+            <div className="text-base text-red-600 mb-4">{error}</div>
+            <button 
+              onClick={handleRetry}
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
     );
   }
 
   // No data state
   if (!techSpecsData) {
     return (
-      <SharedEmptyState
-        title="Technical specifications not available"
-        subtitle="We do not have technical specifications for this vehicle. This may be because the vehicle is a recent model, a classic vehicle, or a specialist variant."
-      />
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+          <div className="flex flex-col items-center justify-center min-h-48 gap-4 text-center">
+            <i className="ph ph-database text-4xl text-neutral-400"></i>
+            <div>
+              <div className="text-lg font-medium text-neutral-900 mb-2">Technical specifications not available</div>
+              <div className="text-sm text-neutral-600">We do not have technical specifications for this vehicle. This may be because the vehicle is a recent model, a classic vehicle, or a specialist variant.</div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -985,125 +926,149 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const lastUpdated = "March 2025";
 
   return (
-    <SharedContainer>
-      <SharedPanel>
-        <SharedHeader>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+        <div className="mb-8">
           <HeadingWithTooltip 
             tooltip="Technical specifications for your vehicle, based on manufacturer data"
           >
-            <SharedTitle>Technical Specifications for {displayMake} {displayModel}</SharedTitle>
+            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              Technical Specifications for {displayMake} {displayModel}
+            </h1>
           </HeadingWithTooltip>
-          <SharedSubtitle>
+          <p className="text-sm text-neutral-600">
             These specifications provide detailed technical information for servicing and maintaining your vehicle.
-          </SharedSubtitle>
-        </SharedHeader>
+          </p>
+        </div>
 
-        <SharedMatchWarning
-          matchConfidence={matchConfidence}
-          metadata={techSpecsData?.vehicleIdentification}
-          vehicleMake={displayMake}
-          vehicleModel={displayModel}
-          requestedYear={vehicleYear}
-          requestedFuelType={vehicleFuelType}
-        />
+        {matchConfidence !== 'exact' && (
+          <div className="bg-yellow-50 rounded-lg p-4 shadow-sm mb-6">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-warning text-yellow-600 text-lg mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900 mb-1">Vehicle Match Information</div>
+                <div className="text-xs text-neutral-700">
+                  {matchConfidence === 'fuzzy' ? 
+                    'These specifications are based on a similar vehicle variant. Please verify compatibility.' :
+                    'Unable to find exact specifications for this vehicle configuration.'
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
-        <SharedNoticePanel>
-          <h3>Important</h3>
-          <p>
+        <div className="bg-blue-50 rounded-lg p-4 shadow-sm mb-6">
+          <h3 className="text-lg font-medium text-neutral-900 mb-4">Important</h3>
+          <p className="text-xs text-neutral-700">
             These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
           </p>
-        </SharedNoticePanel>
+        </div>
 
         {displayFuelType && displayFuelType !== 'unknown' && (
-          <div style={{ marginBottom: 'var(--space-xl)' }}>
-            <FuelTypeBadge>
+          <div className="mb-8">
+            <span className="inline-block bg-blue-600 text-white px-3 py-1 text-xs font-medium rounded-full">
               {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
-            </FuelTypeBadge>
+            </span>
           </div>
         )}
 
         {hasTabs ? (
           <>
-            <SharedSearchAndFilters
-              searchTerm={searchTerm}
-              onSearchChange={handleSearchChange}
-              placeholder="Search specifications..."
-              onClearFilters={handleClearFilters}
-              resultCount={filteredSpecsCount}
-            />
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <input
+                  type="text"
+                  placeholder="Search specifications..."
+                  value={searchTerm}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={handleClearFilters}
+                    className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            </div>
 
-            <SharedTabs
-              tabs={tabs}
-              activeTab={tabValue}
-              onTabChange={handleTabChange}
-            >
-              {tabs.map((tab, tabIndex) => (
-                <SharedTabContent key={`content-${tabIndex}`} active={tabValue === tabIndex}>
-                  <div style={{
-                    marginBottom: 'var(--space-xl)',
-                    paddingBottom: 'var(--space-lg)',
-                    borderBottom: `2px solid ${tab.color || 'var(--primary)'}`
-                  }}>
-                    <h3 style={{ 
-                      fontSize: 'var(--text-xl)', 
-                      fontWeight: '600', 
-                      color: 'var(--gray-900)', 
-                      margin: '0 0 var(--space-sm) 0' 
-                    }}>
-                      {tab.label}
-                    </h3>
-                    <p style={{ 
-                      fontSize: 'var(--text-base)', 
-                      color: 'var(--gray-600)', 
-                      margin: 0 
-                    }}>
-                      Technical specifications and measurements for {tab.label.toLowerCase()}
-                    </p>
-                  </div>
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex bg-neutral-100 rounded-lg p-1">
+                {tabs.map((tab, tabIndex) => (
+                  <button
+                    key={tabIndex}
+                    onClick={() => handleTabChange(tabIndex)}
+                    className={`
+                      flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300
+                      ${tabValue === tabIndex
+                        ? 'bg-white text-blue-600 shadow-sm'
+                        : 'text-neutral-600 hover:text-neutral-900'
+                      }
+                    `}
+                  >
+                    <i className="ph ph-database text-lg"></i>
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {tabs.map((tab, tabIndex) => (
+              <div key={`content-${tabIndex}`} className={tabValue === tabIndex ? 'block' : 'hidden'}>
+                <div className="mb-8 pb-4 border-b-2" style={{ borderColor: tab.color || 'rgb(37 99 235)' }}>
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">{tab.label}</h3>
+                  <p className="text-sm text-neutral-600">
+                    Technical specifications and measurements for {tab.label.toLowerCase()}
+                  </p>
+                </div>
+                
+                {tab.sections.map((section, sectionIndex) => {
+                  const sectionId = `${tabIndex}-${sectionIndex}`;
+                  const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
                   
-                  {tab.sections.map((section, sectionIndex) => {
-                    const sectionId = `${tabIndex}-${sectionIndex}`;
-                    const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
-                    const itemCount = getSpecCount(section.content);
-                    
-                    return (
-                      <SharedAccordion
-                        key={sectionId}
-                        id={sectionId}
-                        title={section.title}
-                        itemCount={itemCount}
-                        expanded={isExpanded}
-                        onToggle={handleAccordionToggle}
+                  return (
+                    <div key={sectionId} className="mb-8">
+                      <button
+                        onClick={() => handleAccordionToggle(sectionId)}
+                        className="w-full flex items-center justify-between bg-neutral-50 rounded-lg p-4 text-left hover:bg-neutral-100 transition-colors duration-200"
                       >
-                        {section.content}
-                      </SharedAccordion>
-                    );
-                  })}
-                </SharedTabContent>
-              ))}
-            </SharedTabs>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-blue-600 text-white rounded flex items-center justify-center text-sm font-bold">
+                            {section.icon || '•'}
+                          </div>
+                          <span className="text-lg font-medium text-neutral-900">{section.title}</span>
+                        </div>
+                        <i className={`ph ph-caret-down transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
+                      </button>
+                      
+                      {isExpanded && (
+                        <div className="mt-4">
+                          {section.content}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </>
         ) : (
-          <SharedNoticePanel>
-            <p>
+          <div className="bg-blue-50 rounded-lg p-4 shadow-sm">
+            <p className="text-xs text-neutral-700">
               Limited specifications available for this vehicle. Try checking the manufacturer's website for more details.
             </p>
-          </SharedNoticePanel>
+          </div>
         )}
 
-        <div style={{ 
-          marginTop: 'var(--space-2xl)', 
-          paddingTop: 'var(--space-lg)', 
-          borderTop: '1px solid var(--gray-200)', 
-          fontSize: 'var(--text-sm)', 
-          color: 'var(--gray-500)', 
-          textAlign: 'center' 
-        }}>
+        <div className="mt-16 pt-4 border-t border-neutral-200 text-xs text-neutral-500 text-center">
           Technical specifications sourced from industry standard databases.<br />
           Last updated: {lastUpdated}
         </div>
-      </SharedPanel>
-    </SharedContainer>
+      </div>
+    </div>
   );
 };
 

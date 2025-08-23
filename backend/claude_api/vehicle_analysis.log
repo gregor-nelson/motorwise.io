@@ -237,3 +237,4 @@
 2025-08-23 23:55:10,957 - vehicle_analysis_api - INFO - Analyzing data for OCA479P with Claude API
 2025-08-23 23:55:22,385 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-08-23 23:55:22,398 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 14.2182s
+2025-08-24 00:12:56,287 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0017s

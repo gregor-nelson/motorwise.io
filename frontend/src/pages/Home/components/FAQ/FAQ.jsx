@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import './FAQStyles.css';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { FAQ_ITEMS, GLOSSARY_ITEMS, GUIDE_STEPS } from './helpData';
 
 // Custom hooks for cleaner code
@@ -75,26 +74,53 @@ const FormField = ({ id, name, label, type = 'text', value, error, onChange, req
   const Tag = type === 'textarea' ? 'textarea' : type === 'select' ? 'select' : 'input';
 
   return (
-    <div className="form-field">
-      <label htmlFor={fieldId} className="form-label">
-        {label} {required && <span className="required" aria-hidden="true">*</span>}
+    <div className="space-y-2">
+      <label htmlFor={fieldId} className="text-sm font-medium text-neutral-600">
+        {label} {required && <span className="text-red-600 ml-1" aria-hidden="true">*</span>}
       </label>
-      <Tag
-        id={fieldId}
-        name={name}
-        type={type !== 'textarea' && type !== 'select' ? type : undefined}
-        value={value}
-        onChange={onChange}
-        className={`form-input ${type} ${error ? 'error' : ''}`}
-        aria-invalid={!!error}
-        aria-describedby={error ? errorId : undefined}
-        aria-required={required}
-        {...props}
-      >
-        {children}
-      </Tag>
+      {type === 'select' ? (
+        <div className="relative">
+          <Tag
+            id={fieldId}
+            name={name}
+            value={value}
+            onChange={onChange}
+            className={`w-full px-3 py-2 pr-10 text-sm rounded-lg bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 cursor-pointer appearance-none ${
+              error ? 'ring-2 ring-red-500 bg-red-50' : ''
+            }`}
+            aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
+            aria-required={required}
+            {...props}
+          >
+            {children}
+          </Tag>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <i className="ph ph-caret-down text-neutral-500"></i>
+          </div>
+        </div>
+      ) : (
+        <Tag
+          id={fieldId}
+          name={name}
+          type={type !== 'textarea' ? type : undefined}
+          value={value}
+          onChange={onChange}
+          className={`w-full px-3 py-2 text-sm rounded-lg bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ${
+            type === 'textarea' ? 'resize-y min-h-[120px]' : ''
+          } ${
+            error ? 'ring-2 ring-red-500 bg-red-50' : ''
+          }`}
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
+          aria-required={required}
+          {...props}
+        >
+          {children}
+        </Tag>
+      )}
       {error && (
-        <p id={errorId} className="form-error" role="alert">
+        <p id={errorId} className="text-sm text-red-600" role="alert">
           {error}
         </p>
       )}
@@ -106,49 +132,48 @@ const AccordionItem = ({ item, isExpanded, onToggle }) => {
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   
   return (
-    <div className="accordion-item">
-      <h3 className="accordion-header">
+    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 mb-4">
+      <h3>
         <button 
-          className={`accordion-button ${isExpanded ? 'expanded' : ''}`}
+          className="w-full flex items-center justify-between text-left cursor-pointer group"
           onClick={() => onToggle(item.id)}
           aria-expanded={isExpanded}
           aria-controls={`content-${item.id}`}
           id={`heading-${item.id}`}
         >
-          <span className="accordion-question">{item.question}</span>
-          <span className="accordion-icon" aria-hidden="true">
-            {isExpanded ? '−' : '+'}
-          </span>
+          <span className="text-sm font-medium text-neutral-900 group-hover:text-blue-600 transition-colors duration-200 pr-4">{item.question}</span>
+          <div className={`text-lg text-blue-600 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}>
+            <i className="ph ph-caret-down"></i>
+          </div>
         </button>
       </h3>
-      <div 
-        className={`accordion-content ${isExpanded ? 'expanded' : ''}`}
-        id={`content-${item.id}`}
-        role="region"
-        aria-labelledby={`heading-${item.id}`}
-        hidden={!isExpanded}
-      >
-        <div className="accordion-body">
-          <p className="answer">{item.answer}</p>
+      {isExpanded && (
+        <div 
+          id={`content-${item.id}`}
+          role="region"
+          aria-labelledby={`heading-${item.id}`}
+          className="pt-4 border-t border-neutral-200 mt-4 transition-all duration-300 ease-out"
+        >
+          <p className="text-xs text-neutral-700 leading-relaxed mb-4">{item.answer}</p>
           
-          <div className="feedback-section">
+          <div className="flex items-center justify-between pt-3">
             {feedbackGiven ? (
-              <div className="success-message" role="status">
-                <span className="success-icon">✓</span>
-                Thank you for your feedback
+              <div className="flex items-center space-x-2 text-green-600" role="status">
+                <i className="ph ph-check-circle text-lg"></i>
+                <span className="text-xs font-medium">Thank you for your feedback</span>
               </div>
             ) : (
               <>
-                <p className="feedback-prompt">Was this helpful?</p>
-                <div className="feedback-buttons">
+                <span className="text-xs text-neutral-600">Was this helpful?</span>
+                <div className="flex space-x-2">
                   <button 
-                    className="btn btn-secondary btn-sm"
+                    className="px-3 py-1 text-xs font-medium bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors duration-200"
                     onClick={() => setFeedbackGiven(true)}
                   >
                     Yes
                   </button>
                   <button 
-                    className="btn btn-secondary btn-sm"
+                    className="px-3 py-1 text-xs font-medium bg-neutral-50 text-neutral-600 rounded-full hover:bg-neutral-100 transition-colors duration-200"
                     onClick={() => setFeedbackGiven(true)}
                   >
                     No
@@ -158,7 +183,7 @@ const AccordionItem = ({ item, isExpanded, onToggle }) => {
             )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
@@ -187,91 +212,133 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="faq-section">
-      <div className="container">
-        <header className="section-header">
-          <h2 className="section-title">Frequently Asked Questions</h2>
-          <p className="section-description">
-            Find answers to common questions about our vehicle information service.
-          </p>
-        </header>
-        
-        <div className="search-panel">
-          <form onSubmit={handleSearch} className="search-form">
-            <div className="search-group">
-              <label htmlFor="faq-search" className="sr-only">Search frequently asked questions</label>
+    <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <header className="text-center mb-12">
+        <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-xs text-neutral-700 leading-relaxed max-w-2xl mx-auto">
+          Find answers to common questions about our vehicle information service.
+        </p>
+      </header>
+      
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-8">
+        <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1 relative">
+            <label htmlFor="faq-search" className="absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0">
+              Search frequently asked questions
+            </label>
+            <div className="relative">
+              <i className="ph ph-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"></i>
               <input
                 id="faq-search"
                 type="text"
                 placeholder="Search for answers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
+                className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
               />
-              <button type="submit" className="btn btn-primary">
-                Search
-              </button>
             </div>
-          </form>
-          
-          {searchTerm && (
-            <div className="search-results-info">
+          </div>
+          <button 
+            type="submit" 
+            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
+          >
+            <i className="ph ph-magnifying-glass"></i>
+            <span>Search</span>
+          </button>
+        </form>
+        
+        {searchTerm && (
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-xs text-blue-700">
               {results.length === 0 
                 ? 'No results found. Please try different terms.' 
                 : `Showing ${results.length} result${results.length !== 1 ? 's' : ''}`}
+            </p>
+          </div>
+        )}
+      </div>
+      
+      {results.length > 0 ? (
+        <div className="space-y-6">
+          <h3 className="text-lg font-medium text-neutral-900 mb-4 flex items-center">
+            <i className="ph ph-list-magnifying-glass text-lg text-blue-600 mr-2"></i>
+            Search Results
+          </h3>
+          <div className="space-y-4">
+            {results.map(item => (
+              <AccordionItem
+                key={item.id}
+                item={item}
+                isExpanded={expandedId === item.id}
+                onToggle={toggleAccordion}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (!searchTerm || results.length === 0) && categories.map((category, index) => (
+        <div 
+          key={category} 
+          className="space-y-4 mb-12"
+        >
+          <h3 className="text-lg font-medium text-neutral-900 mb-6 flex items-center">
+            <i className="ph ph-folder text-lg text-blue-600 mr-2"></i>
+            {category}
+          </h3>
+          <div className="space-y-4">
+            {itemsByCategory[category].map(item => (
+              <AccordionItem
+                key={item.id}
+                item={item}
+                isExpanded={expandedId === item.id}
+                onToggle={toggleAccordion}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+        <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="flex items-start mb-3">
+            <i className="ph ph-headset text-lg text-green-600 mr-3 mt-0.5"></i>
+            <div className="flex-1">
+              <h4 className="text-sm font-medium text-neutral-900 mb-2">Need More Help?</h4>
+              <p className="text-xs text-neutral-700 leading-relaxed mb-4">
+                Our support team is available Monday to Friday, 9am to 5pm.
+              </p>
+              <button 
+                className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center space-x-2"
+                onClick={() => document.getElementById('tab-support')?.click()}
+              >
+                <i className="ph ph-chat-circle"></i>
+                <span>Contact Support</span>
+              </button>
             </div>
-          )}
+          </div>
         </div>
         
-        {results.length > 0 ? (
-          <div className="search-results">
-            <h3 className="results-title">Search Results</h3>
-            <div className="accordion">
-              {results.map(item => (
-                <AccordionItem
-                  key={item.id}
-                  item={item}
-                  isExpanded={expandedId === item.id}
-                  onToggle={toggleAccordion}
-                />
-              ))}
+        <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="flex items-start">
+            <i className="ph ph-info text-lg text-blue-600 mr-3 mt-0.5"></i>
+            <div className="flex-1">
+              <h4 className="text-sm font-medium text-neutral-900 mb-3">Service Information</h4>
+              <div className="space-y-2">
+                <div className="flex items-center text-xs text-neutral-700">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                  <span>Official DVLA and DVSA data</span>
+                </div>
+                <div className="flex items-center text-xs text-neutral-700">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                  <span>Updated daily</span>
+                </div>
+                <div className="flex items-center text-xs text-neutral-700">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                  <span>Secure and GDPR compliant</span>
+                </div>
+              </div>
             </div>
-          </div>
-        ) : (!searchTerm || results.length === 0) && categories.map(category => (
-          <div key={category} className="category-section">
-            <h3 className="category-title">{category}</h3>
-            <div className="accordion">
-              {itemsByCategory[category].map(item => (
-                <AccordionItem
-                  key={item.id}
-                  item={item}
-                  isExpanded={expandedId === item.id}
-                  onToggle={toggleAccordion}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-        
-        <div className="help-cards">
-          <div className="help-card success">
-            <h4>Need More Help?</h4>
-            <p>Our support team is available Monday to Friday, 9am to 5pm.</p>
-            <button 
-              className="btn btn-success"
-              onClick={() => document.getElementById('tab-support')?.click()}
-            >
-              Contact Support
-            </button>
-          </div>
-          
-          <div className="help-card info">
-            <h4>Service Information</h4>
-            <ul className="info-list">
-              <li>Official DVLA and DVSA data</li>
-              <li>Updated daily</li>
-              <li>Secure and GDPR compliant</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -279,37 +346,54 @@ const FAQSection = () => {
   );
 };
 
-const HowToUseSection = () => (
-  <section className="how-to-section">
-    <div className="container">
-      <header className="section-header">
-        <h2 className="section-title">How to Use This Service</h2>
-        <p className="section-description">
+const HowToUseSection = () => {
+  return (
+    <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <header className="text-center mb-12">
+        <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          How to Use This Service
+        </h2>
+        <p className="text-xs text-neutral-700 leading-relaxed max-w-2xl mx-auto">
           Follow these simple steps to check a vehicle's MOT and tax status.
         </p>
       </header>
       
-      <div className="steps-container">
-        {GUIDE_STEPS.map((step) => (
-          <div key={step.number} className="step-item">
-            <div className="step-number">{step.number}</div>
-            <div className="step-content">
-              <h3 className="step-title">{step.title}</h3>
-              <p className="step-description">{step.description}</p>
+      <div className="space-y-8">
+        {GUIDE_STEPS.map((step, index) => (
+          <div 
+            key={step.number} 
+            className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+          >
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center text-lg font-bold">
+                {step.number}
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-neutral-900 mb-2">{step.title}</h3>
+                <p className="text-xs text-neutral-700 leading-relaxed">{step.description}</p>
+              </div>
+              <div className="flex-shrink-0">
+                <i className="ph ph-arrow-right text-lg text-blue-600"></i>
+              </div>
             </div>
           </div>
         ))}
       </div>
       
-      <div className="info-box warning">
-        <h4>Accessibility Features</h4>
-        <p>
-          This service is designed to be accessible to all users. We comply with WCAG 2.1 AA standards.
-        </p>
+      <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm mt-12">
+        <div className="flex items-start">
+          <i className="ph ph-universal-access text-lg text-yellow-600 mr-3 mt-0.5"></i>
+          <div>
+            <h4 className="text-sm font-medium text-neutral-900 mb-2">Accessibility Features</h4>
+            <p className="text-xs text-neutral-700 leading-relaxed">
+              This service is designed to be accessible to all users. We comply with WCAG 2.1 AA standards.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const SupportSection = () => {
   const { values, errors, isSubmitting, isSubmitted, handleChange, handleSubmit } = useFormValidation({
@@ -326,33 +410,46 @@ const SupportSection = () => {
   };
 
   return (
-    <section className="support-section">
-      <div className="container">
-        <header className="section-header">
-          <h2 className="section-title">Get Support</h2>
-          <p className="section-description">
-            Contact our support team or access self-help resources.
-          </p>
-        </header>
-        
-        <div className="support-layout">
-          <div className="support-form-container">
-            <h3>Contact Our Support Team</h3>
+    <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <header className="text-center mb-12">
+        <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          Get Support
+        </h2>
+        <p className="text-xs text-neutral-700 leading-relaxed max-w-2xl mx-auto">
+          Contact our support team or access self-help resources.
+        </p>
+      </header>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="flex items-center mb-6">
+              <i className="ph ph-envelope text-lg text-blue-600 mr-3"></i>
+              <h3 className="text-lg font-medium text-neutral-900">Contact Our Support Team</h3>
+            </div>
             
             {isSubmitted && (
-              <div className="success-alert" role="alert">
-                <h4>Support Request Submitted</h4>
-                <p>We will respond within 2 working hours.</p>
+              <div className="bg-green-50 rounded-lg p-4 mb-6" role="alert">
+                <div className="flex items-start">
+                  <i className="ph ph-check-circle text-lg text-green-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <h4 className="text-sm font-medium text-green-900 mb-1">Support Request Submitted</h4>
+                    <p className="text-xs text-green-700">We will respond within 2 working hours.</p>
+                  </div>
+                </div>
               </div>
             )}
             
             {errors.submit && (
-              <div className="error-alert" role="alert">
-                <p>{errors.submit}</p>
+              <div className="bg-red-50 rounded-lg p-4 mb-6" role="alert">
+                <div className="flex items-start">
+                  <i className="ph ph-warning-circle text-lg text-red-600 mr-3 mt-0.5"></i>
+                  <p className="text-xs text-red-700">{errors.submit}</p>
+                </div>
               </div>
             )}
           
-            <form onSubmit={(e) => handleSubmit(e, onSubmit)} noValidate className="support-form">
+            <form onSubmit={(e) => handleSubmit(e, onSubmit)} noValidate className="space-y-6">
               <FormField
                 id="name"
                 name="name"
@@ -407,31 +504,51 @@ const SupportSection = () => {
               
               <button 
                 type="submit" 
-                className="btn btn-primary btn-lg"
+                className="w-full px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <i className="ph ph-paper-plane-tilt"></i>
+                    <span>Submit Request</span>
+                  </>
+                )}
               </button>
             </form>
           </div>
-          
-          <aside className="support-sidebar">
-            <div className="support-card">
-              <h4>Operating Hours</h4>
-              <p>Monday to Friday: 9am to 5pm</p>
-              <h4>Contact Methods</h4>
-              <p>Email: support@vehiclecheck.gov.uk</p>
-            </div>
-            
-            <div className="support-card status">
-              <h4>Service Status</h4>
-              <div className="status-indicator operational">
-                <span className="status-dot"></span>
-                All systems operational
-              </div>
-            </div>
-          </aside>
         </div>
+        
+        <aside className="space-y-6">
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="flex items-center mb-4">
+              <i className="ph ph-clock text-lg text-blue-600 mr-3"></i>
+              <h4 className="text-sm font-medium text-neutral-900">Operating Hours</h4>
+            </div>
+            <p className="text-xs text-neutral-700 mb-6">Monday to Friday: 9am to 5pm</p>
+            
+            <div className="flex items-center mb-2">
+              <i className="ph ph-envelope text-lg text-blue-600 mr-3"></i>
+              <h4 className="text-sm font-medium text-neutral-900">Contact Methods</h4>
+            </div>
+            <p className="text-xs text-neutral-700">support@vehiclecheck.gov.uk</p>
+          </div>
+          
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="flex items-center mb-4">
+              <i className="ph ph-activity text-lg text-blue-600 mr-3"></i>
+              <h4 className="text-sm font-medium text-neutral-900">Service Status</h4>
+            </div>
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+              <span className="text-xs text-neutral-700">All systems operational</span>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
   );
@@ -453,44 +570,63 @@ const GlossarySection = () => {
   }, []);
 
   return (
-    <section className="glossary-section">
-      <div className="container">
-        <header className="section-header">
-          <h2 className="section-title">Glossary of Terms</h2>
-          <p className="section-description">
-            Common terminology used in vehicle testing and documentation.
-          </p>
-        </header>
-        
-        <div className="glossary-content">
-          <div className="alphabet-nav">
-            {Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map(letter => (
-              <a 
-                key={letter}
-                href={availableLetters.has(letter) ? `#glossary-${letter}` : undefined}
-                className={`alphabet-link ${availableLetters.has(letter) ? 'active' : 'inactive'}`}
-                aria-disabled={!availableLetters.has(letter)}
-                tabIndex={availableLetters.has(letter) ? 0 : -1}
-              >
-                {letter}
-              </a>
-            ))}
-          </div>
-          
-          {Object.entries(groupedItems).map(([letter, items]) => (
-            <div key={letter} id={`glossary-${letter}`} className="glossary-section-letter">
-              <h3 className="glossary-letter-header">{letter}</h3>
-              <dl className="glossary-list">
-                {items.map(item => (
-                  <div key={item.term} className="glossary-item">
-                    <dt className="glossary-term">{item.term}</dt>
-                    <dd className="glossary-definition">{item.definition}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+    <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <header className="text-center mb-12">
+        <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          Glossary of Terms
+        </h2>
+        <p className="text-xs text-neutral-700 leading-relaxed max-w-2xl mx-auto">
+          Common terminology used in vehicle testing and documentation.
+        </p>
+      </header>
+      
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-8">
+        <div className="flex items-center mb-4">
+          <i className="ph ph-list-dashes text-lg text-blue-600 mr-3"></i>
+          <h3 className="text-sm font-medium text-neutral-900">Quick Navigation</h3>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map(letter => (
+            <a 
+              key={letter}
+              href={availableLetters.has(letter) ? `#glossary-${letter}` : undefined}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-colors duration-200 ${
+                availableLetters.has(letter)
+                  ? 'bg-blue-50 text-blue-600 hover:bg-blue-100 cursor-pointer'
+                  : 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
+              }`}
+              aria-disabled={!availableLetters.has(letter)}
+              tabIndex={availableLetters.has(letter) ? 0 : -1}
+            >
+              {letter}
+            </a>
           ))}
         </div>
+      </div>
+      
+      <div className="space-y-8">
+        {Object.entries(groupedItems).map(([letter, items], index) => (
+          <div 
+            key={letter} 
+            id={`glossary-${letter}`} 
+            className="bg-white rounded-lg p-4 md:p-6 shadow-sm"
+          >
+            <div className="flex items-center mb-6">
+              <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mr-3">
+                {letter}
+              </div>
+              <h3 className="text-lg font-medium text-neutral-900">Terms starting with {letter}</h3>
+            </div>
+            <dl className="space-y-4">
+              {items.map(item => (
+                <div key={item.term} className="border-l-2 border-blue-200 pl-4">
+                  <dt className="text-sm font-medium text-neutral-900 mb-1">{item.term}</dt>
+                  <dd className="text-xs text-neutral-700 leading-relaxed">{item.definition}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -501,48 +637,55 @@ const FAQ = () => {
   const [activeTab, setActiveTab] = useState('faqs');
   
   const tabs = [
-    { id: 'faqs', label: 'Frequently Asked Questions', component: FAQSection },
-    { id: 'guide', label: 'How to Use This Service', component: HowToUseSection },
-    { id: 'support', label: 'Get Support', component: SupportSection },
-    { id: 'glossary', label: 'Glossary', component: GlossarySection }
+    { id: 'faqs', label: 'FAQs', icon: 'ph-question', component: FAQSection },
+    { id: 'guide', label: 'How to Use', icon: 'ph-list-numbers', component: HowToUseSection },
+    { id: 'support', label: 'Support', icon: 'ph-headset', component: SupportSection },
+    { id: 'glossary', label: 'Glossary', icon: 'ph-book', component: GlossarySection }
   ];
 
   const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || FAQSection;
 
   return (
-    <div className="faq-wrapper">
-      <section className="faq-hero">
-        <div className="container">
-          <header className="hero-header">
-            <h1 className="hero-title">Help & Support</h1>
-            <p className="hero-description">
-              Find information about our vehicle history service and get the help you need.
-            </p>
-          </header>
-          
-          <nav className="tab-navigation" role="tablist">
+    <div className="space-y-12 mb-16">
+      <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-center">
+        <header className="mb-8">
+          <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+            Help & Support
+          </h1>
+          <p className="text-xs text-neutral-700 leading-relaxed max-w-2xl mx-auto">
+            Find information about our vehicle history service and get the help you need.
+          </p>
+        </header>
+        
+        <nav className="flex justify-center mb-8" role="tablist">
+          <div className="inline-flex bg-neutral-100 rounded-lg p-1">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-neutral-600 hover:text-neutral-900'
+                }`}
                 role="tab"
                 id={`tab-${tab.id}`}
                 aria-selected={activeTab === tab.id}
                 aria-controls={`panel-${tab.id}`}
               >
-                {tab.label}
+                <i className={`ph ${tab.icon}`}></i>
+                <span>{tab.label}</span>
               </button>
             ))}
-          </nav>
-        </div>
+          </div>
+        </nav>
       </section>
       
       <main 
-        className="tab-content" 
         id={`panel-${activeTab}`}
         role="tabpanel" 
         aria-labelledby={`tab-${activeTab}`}
+        className="transition-all duration-300 ease-out"
       >
         <ActiveComponent />
       </main>

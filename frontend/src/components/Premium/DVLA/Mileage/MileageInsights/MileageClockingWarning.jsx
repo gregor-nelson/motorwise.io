@@ -1,174 +1,9 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import WarningIcon from '@mui/icons-material/Warning';
-import InfoIcon from '@mui/icons-material/Info';
-
-// Ultra Clean Minimal Design System - Copied from DVLADataHeaderStyles.jsx
-const MinimalTokens = `
-  :root {
-    /* Ultra Clean Color Palette - Minimal */
-    --gray-900: #1a1a1a;
-    --gray-800: #2d2d2d;
-    --gray-700: #404040;
-    --gray-600: #525252;
-    --gray-500: #737373;
-    --gray-400: #a3a3a3;
-    --gray-300: #d4d4d4;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f5;
-    --gray-50: #fafafa;
-    --white: #ffffff;
-
-    /* Minimal Accent Colors */
-    --primary: #3b82f6;
-    --positive: #059669;
-    --negative: #dc2626;
-    --warning: #d97706;
-
-    /* Clean Spacing - Generous White Space */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-
-    /* Typography - Clean Hierarchy */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-
-    /* Clean Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-
-    /* Minimal Transitions */
-    --transition: all 0.15s ease;
-  }
-`;
-
-// Minimal Warning Section - No borders, shadows or decorations (matches DVLADataHeader pattern)
-const WarningBanner = styled('div')`
-  ${MinimalTokens}
-  
-  font-family: var(--font-main);
-  margin-bottom: var(--space-3xl);
-  
-  @media (max-width: 767px) {
-    margin-bottom: var(--space-2xl);
-  }
-`;
-
-// Clean Warning Title - Typography only (matches DVLADataHeader pattern)
-const WarningTitle = styled('h3')`
-  margin: 0 0 var(--space-lg) 0;
-  font-family: var(--font-main);
-  font-size: var(--text-xl);
-  font-weight: 600;
-  color: var(--negative);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  
-  @media (max-width: 767px) {
-    font-size: var(--text-lg);
-  }
-`;
-
-// Clean Grid Layout (matches DVLADataHeader pattern)
-const WarningMetricsGrid = styled('div')`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-xl);
-  margin-top: var(--space-xl);
-  
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-`;
-
-// Minimal Metric Group - No cards (matches DVLADataHeader MetricGroup pattern)
-const WarningMetricCard = styled('div')`
-  /* No background, borders, or shadows - pure minimal */
-`;
-
-// Clean Metric Label (matches DVLADataHeader MetricLabel pattern)
-const MetricLabel = styled('div')`
-  font-family: var(--font-main);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--gray-600);
-  margin-bottom: var(--space-xs);
-  line-height: 1.3;
-`;
-
-// Clean Metric Value (matches DVLADataHeader MetricValue pattern)
-const MetricValue = styled('div')`
-  font-family: var(--font-main);
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--negative);
-  line-height: 1.4;
-  word-break: break-word;
-
-  @media (max-width: 767px) {
-    font-size: var(--text-sm);
-  }
-`;
-
-// Clean Metric Subtext (matches DVLADataHeader pattern)
-const MetricSubtext = styled('div')`
-  font-family: var(--font-main);
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-  line-height: 1.4;
-  margin-top: var(--space-xs);
-`;
-
-// Clean Legal Notice - Simple layout (matches DVLADataHeader pattern)
-const LegalNotice = styled('div')`
-  margin-top: var(--space-xl);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
-  
-  & svg {
-    color: var(--gray-500);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  
-  @media (max-width: 767px) {
-    margin-top: var(--space-lg);
-  }
-`;
-
-// Clean Legal Text (matches DVLADataHeader typography pattern)
-const LegalText = styled('p')`
-  margin: 0;
-  font-family: var(--font-main);
-  font-size: var(--text-sm);
-  color: var(--gray-700);
-  line-height: 1.4;
-  
-  & strong {
-    color: var(--gray-900);
-    font-weight: 600;
-  }
-`;
 
 /**
  * MileageClockingWarning Component
  * Displays a warning banner for vehicles with detected clocking
- * Styled to match GOV.UK design patterns and integrate with main insights
+ * Styled with Tailwind CSS following the Universal Component Design System
  */
 const MileageClockingWarning = ({ anomalies, mileageStats }) => {
   if (!anomalies || anomalies.length === 0 || !anomalies.some(a => a.type === 'decrease')) {
@@ -188,64 +23,103 @@ const MileageClockingWarning = ({ anomalies, mileageStats }) => {
   );
 
   return (
-    <WarningBanner>
-      <WarningTitle>
-        <WarningIcon /> Mileage Inconsistency Detected
-      </WarningTitle>
+    <section className="space-y-12 mb-16">
+      <div className="mb-12">
+        <h3 className="text-2xl font-semibold text-red-600 leading-tight tracking-tight mb-3 flex items-center gap-2">
+          <i className="ph ph-warning-circle text-lg"></i> Mileage Inconsistency Detected
+        </h3>
+        <p className="text-sm text-neutral-600 mb-8">
+          Critical issue requiring immediate attention - potential odometer tampering detected
+        </p>
+      </div>
       
-      <p style={{
-        fontFamily: 'var(--font-main)',
-        fontSize: 'var(--text-base)',
-        color: 'var(--gray-900)',
-        lineHeight: '1.4',
-        margin: '0 0 var(--space-lg) 0'
-      }}>
-        This vehicle has <strong style={{ color: 'var(--negative)' }}>
-          {anomalies.filter(a => a.type === 'decrease').length > 1 ? 
-            `${anomalies.filter(a => a.type === 'decrease').length} instances` : 
-            'an instance'}
-        </strong> where the recorded mileage has decreased between MOT tests. 
-        This could indicate <strong>odometer tampering (clocking)</strong>, instrument cluster replacement, or MOT data entry errors.
-      </p>
+      {/* Alert Summary Card */}
+      <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+        <div className="flex items-start gap-3 mb-4">
+          <i className="ph ph-x-circle text-lg text-red-600 mt-0.5"></i>
+          <div>
+            <div className="text-sm font-medium text-red-900 mb-2">Critical Alert</div>
+            <p className="text-xs text-red-700 leading-relaxed">
+              This vehicle has <span className="font-semibold text-red-600">
+                {anomalies.filter(a => a.type === 'decrease').length > 1 ? 
+                  `${anomalies.filter(a => a.type === 'decrease').length} instances` : 
+                  'an instance'}
+              </span> where the recorded mileage has decreased between MOT tests. 
+              This could indicate <span className="font-semibold">odometer tampering (clocking)</span>, instrument cluster replacement, or MOT data entry errors.
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <WarningMetricsGrid>
-        <WarningMetricCard>
-          <MetricLabel>Total Mileage Discrepancy</MetricLabel>
-          <MetricValue>{totalClocking.toLocaleString()} miles</MetricValue>
-          <MetricSubtext>
-            Combined total of all detected decreases
-          </MetricSubtext>
-        </WarningMetricCard>
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-start">
+              <i className="ph ph-x-circle text-lg text-red-600 mr-3 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Total Discrepancy</div>
+                <div className="text-xs text-neutral-600">Combined decreases</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-end">
+              <div className="text-2xl font-bold text-red-600">{totalClocking.toLocaleString()}</div>
+              <div className="text-xs text-red-600">miles</div>
+            </div>
+          </div>
+        </div>
         
-        <WarningMetricCard>
-          <MetricLabel>Largest Single Discrepancy</MetricLabel>
-          <MetricValue>{largestClocking.toLocaleString()} miles</MetricValue>
-          <MetricSubtext>
-            Biggest single mileage decrease detected
-          </MetricSubtext>
-        </WarningMetricCard>
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-start">
+              <i className="ph ph-warning-circle text-lg text-red-600 mr-3 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Largest Instance</div>
+                <div className="text-xs text-neutral-600">Single biggest decrease</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-end">
+              <div className="text-2xl font-bold text-red-600">{largestClocking.toLocaleString()}</div>
+              <div className="text-xs text-red-600">miles</div>
+            </div>
+          </div>
+        </div>
         
         {mileageStats && mileageStats.adjustedValues && (
-          <WarningMetricCard>
-            <MetricLabel>Adjusted Annual Mileage</MetricLabel>
-            <MetricValue style={{ color: 'var(--gray-900)' }}>
-              {mileageStats.averageAnnualMileage?.toLocaleString() || 'Unknown'}
-            </MetricValue>
-            <MetricSubtext>
-              miles/year (excluding inconsistent periods)
-            </MetricSubtext>
-          </WarningMetricCard>
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className="ph ph-chart-line text-lg text-blue-600 mr-3 mt-0.5"></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">Adjusted Average</div>
+                  <div className="text-xs text-neutral-600">Excluding inconsistencies</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <div className="text-2xl font-bold text-blue-600">
+                  {mileageStats.averageAnnualMileage?.toLocaleString() || 'Unknown'}
+                </div>
+                <div className="text-xs text-blue-600">miles/year</div>
+              </div>
+            </div>
+          </div>
         )}
-      </WarningMetricsGrid>
+      </div>
 
-      <LegalNotice>
-        <InfoIcon fontSize="small" />
-        <LegalText>
-          <strong>Legal Notice:</strong> Selling a vehicle with incorrect mileage is illegal under the Consumer Protection from Unfair Trading Regulations. 
-          Buyers should verify mileage independently and sellers must disclose any known discrepancies.
-        </LegalText>
-      </LegalNotice>
-    </WarningBanner>
+      {/* Legal Notice Card */}
+      <div className="bg-neutral-50 rounded-lg p-4 shadow-sm">
+        <div className="flex items-start gap-2">
+          <i className="ph ph-scales text-lg text-neutral-600 mt-0.5 flex-shrink-0"></i>
+          <div>
+            <div className="text-sm font-medium text-neutral-900 mb-2">Legal Notice</div>
+            <div className="text-xs text-neutral-700 leading-relaxed">
+              Selling a vehicle with incorrect mileage is illegal under the Consumer Protection from Unfair Trading Regulations. 
+              Buyers should verify mileage independently and sellers must disclose any known discrepancies.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

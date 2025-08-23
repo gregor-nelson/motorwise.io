@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+
 // Simple color constants for semantic use only (matches DVLADataHeader approach)
 const SEMANTIC_COLORS = {
   POSITIVE: '#059669',
@@ -7,78 +8,29 @@ const SEMANTIC_COLORS = {
   PRIMARY: '#3b82f6'
 };
 
-// Import Material-UI icons
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import WarningIcon from '@mui/icons-material/Warning';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import InfoIcon from '@mui/icons-material/Info';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import HistoryIcon from '@mui/icons-material/History';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+// Phosphor icons used throughout the component
 
 // Simple tooltip component - minimal styling (matches DVLADataHeader approach)
 const SimpleTooltip = ({ children, title }) => (
-  <span title={title} style={{ cursor: 'help' }}>
+  <span title={title} className="cursor-help">
     {children}
   </span>
 );
 
 // Ultra Clean Loading Spinner (matches DVLADataHeader pattern)
 const LoadingSpinner = () => (
-  <>
-    <style>
-      {`
-        @keyframes mileage-spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}
-    </style>
-    <div style={{
-      width: '24px',
-      height: '24px',
-      border: '2px solid var(--gray-200)',
-      borderRadius: '50%',
-      borderTopColor: 'var(--primary)',
-      animation: 'mileage-spin 1s linear infinite'
-    }} />
-  </>
+  <div className="w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin" />
 );
 
 // Clean Section Spacing - No Visual Dividers (matches DVLADataHeader pattern)
 const SectionBreak = () => (
-  <div style={{ height: 'var(--space-3xl)' }} />
+  <div className="h-16" />
 );
 
 // Import mileage tooltips
 import { mileageTooltips } from './mileageTooltips';
 
-// Import styled components
-import {
-  MileageInsightsContainer,
-  MileageInsightSection,
-  MileageInsightPanel,
-  MileageTable,
-  RiskScoreDisplay,
-  RiskScoreCircle,
-  RiskScoreText,
-  RiskCategory,
-  RiskDescription,
-  FactorsHeading,
-  FactorsList,
-  FactorItem,
-  FooterNote,
-  ValueDisplay,
-  LoadingContainer,
-  ErrorContainer,
-  EmptyContainer,
-  SectionTitleContainer,
-  MileageMetricCard,
-  MileageMetricLabel,
-  MileageMetricValue,
-  MileageMetricSubtext,
-  DataQualityBadge
-} from './style/style';
+// Components now use Tailwind CSS classes directly
 
 // Import enhanced risk assessment, anomaly detection functions, and clocking warning
 import { calculateRiskScore, checkForMOTGaps } from './enhancedRiskAssessment';
@@ -132,129 +84,201 @@ const DataQualityIndicator = ({
   // Determine overall data quality
   let qualityLevel = "high";
   let qualityDisplayName = "High Quality";
-  let qualityColor = SEMANTIC_COLORS.POSITIVE;
   
   if (hasClockingIssues) {
     qualityLevel = "poor";
     qualityDisplayName = "Poor Quality";
-    qualityColor = SEMANTIC_COLORS.NEGATIVE;
   } else if (motGapsDetected || (anomalies && anomalies.length > 0)) {
     qualityLevel = "medium";
     qualityDisplayName = "Medium Quality";
-    qualityColor = SEMANTIC_COLORS.WARNING;
   } else if (dataPoints < 4) {
     qualityLevel = "limited";
     qualityDisplayName = "Limited Data";
-    qualityColor = 'var(--gray-500)';
   }
   
   return (
-    <MileageInsightSection>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 'var(--space-lg)'
-      }}>
-        <SimpleTooltip title="Assessment of the reliability and completeness of the vehicle's history data">
-          <h3 style={{
-            margin: 0,
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-xl)',
-            fontWeight: '600',
-            color: 'var(--gray-900)',
-            letterSpacing: '-0.02em',
-            lineHeight: '1.2',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--space-sm)'
-          }}>
-            Data Quality Assessment
-          </h3>
-        </SimpleTooltip>
-        <DataQualityBadge quality={qualityLevel}>
-          {qualityLevel === "high" && <CheckCircleIcon fontSize="small" />}
-          {qualityLevel === "medium" && <WarningIcon fontSize="small" />}
-          {qualityLevel === "poor" && <ErrorOutlineIcon fontSize="small" />}
-          {qualityLevel === "limited" && <InfoIcon fontSize="small" />}
-          {qualityDisplayName}
-        </DataQualityBadge>
+    <section className="space-y-12 mb-16">
+      <div className="mb-12">
+        <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          Data Quality Assessment
+        </h3>
+        <p className="text-sm text-neutral-600 mb-8">
+          Assessment of the reliability and completeness of the vehicle's history data
+        </p>
       </div>
       
-      <MileageInsightPanel>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: 'var(--space-xl)',
-          marginBottom: 'var(--space-xl)'
-        }}>
-          <MileageMetricCard>
-            <MileageMetricLabel>Data Points Available</MileageMetricLabel>
-            <MileageMetricValue>{dataPoints}</MileageMetricValue>
-            <MileageMetricSubtext>
-              {dataPoints >= 4 ? 'Sufficient for comprehensive analysis' : 'Limited data may affect analysis accuracy'}
-            </MileageMetricSubtext>
-          </MileageMetricCard>
-          
-          <MileageMetricCard>
-            <MileageMetricLabel>Assessment Status</MileageMetricLabel>
-            <MileageMetricValue style={{ color: qualityColor }}>{qualityDisplayName}</MileageMetricValue>
-            <MileageMetricSubtext>
+      {/* Main Quality Status Card */}
+      <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer ${
+        qualityLevel === 'high' ? 'bg-green-50' :
+        qualityLevel === 'medium' ? 'bg-yellow-50' :
+        qualityLevel === 'poor' ? 'bg-red-50' :
+        'bg-neutral-50'
+      }`}>
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-start">
+            <i className={`ph ${
+              qualityLevel === "high" ? "ph-check-circle" :
+              qualityLevel === "medium" ? "ph-warning-circle" :
+              qualityLevel === "poor" ? "ph-x-circle" :
+              "ph-info"
+            } text-lg ${
+              qualityLevel === 'high' ? 'text-green-600' :
+              qualityLevel === 'medium' ? 'text-yellow-600' :
+              qualityLevel === 'poor' ? 'text-red-600' :
+              'text-neutral-700'
+            } mr-3 mt-0.5`}></i>
+            <div>
+              <div className="text-sm font-medium text-neutral-900">Data Quality</div>
+              <div className="text-xs text-neutral-600">Overall assessment</div>
+            </div>
+          </div>
+          <div className="flex flex-col items-end">
+            <div className={`text-2xl font-bold ${
+              qualityLevel === 'high' ? 'text-green-600' :
+              qualityLevel === 'medium' ? 'text-yellow-600' :
+              qualityLevel === 'poor' ? 'text-red-600' :
+              'text-neutral-900'
+            }`}>{qualityDisplayName}</div>
+            <div className={`text-xs ${
+              qualityLevel === 'high' ? 'text-green-600' :
+              qualityLevel === 'medium' ? 'text-yellow-600' :
+              qualityLevel === 'poor' ? 'text-red-600' :
+              'text-neutral-600'
+            }`}>
               {hasClockingIssues
-                ? "Significant inconsistencies detected"
+                ? "Inconsistencies detected"
                 : motGapsDetected
-                ? "Testing gaps may impact completeness"
-                : "Complete and reliable history available"}
-            </MileageMetricSubtext>
-          </MileageMetricCard>
+                ? "Testing gaps detected"
+                : "Complete history"}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Data Points and Assessment Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-start">
+              <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Data Points</div>
+                <div className="text-xs text-neutral-600">Available records</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-end">
+              <div className="text-2xl font-bold text-blue-600">{dataPoints}</div>
+              <div className="text-xs text-blue-600">MOT records</div>
+            </div>
+          </div>
+          <div className="text-xs text-neutral-700">
+            {dataPoints >= 4 ? 'Sufficient for comprehensive analysis' : 'Limited data may affect analysis accuracy'}
+          </div>
         </div>
         
-        <FactorsList>
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-start">
+              <i className="ph ph-detective text-lg text-purple-600 mr-3 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Analysis Status</div>
+                <div className="text-xs text-neutral-600">Processing result</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-end">
+              <div className={`text-lg font-bold ${
+                qualityLevel === 'high' ? 'text-green-600' :
+                qualityLevel === 'medium' ? 'text-yellow-600' :
+                qualityLevel === 'poor' ? 'text-red-600' :
+                'text-neutral-900'
+              }`}>
+                {dataPoints >= 4 ? 'Complete' : 'Partial'}
+              </div>
+              <div className="text-xs text-purple-600">Assessment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Issues Summary Cards */}
+      {(hasClockingIssues || motGapsDetected || (anomalies && anomalies.length > 0) || dataPoints < 3) && (
+        <div className="space-y-3">
           {hasClockingIssues && (
-            <FactorItem _iconColor={"var(--negative)"}>
-              <ErrorOutlineIcon fontSize="small" />
-              <span>Mileage inconsistencies detected, suggesting potential odometer tampering.</span>
-            </FactorItem>
+            <div className="bg-red-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-start gap-2">
+                <i className="ph ph-x-circle text-lg text-red-600 mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <div className="text-sm font-medium text-red-900 mb-1">Critical Issue Detected</div>
+                  <div className="text-xs text-red-700">Mileage inconsistencies detected, suggesting potential odometer tampering.</div>
+                </div>
+              </div>
+            </div>
           )}
           
           {motGapsDetected && (
-            <FactorItem _iconColor={"var(--warning)"}>
-              <WarningIcon fontSize="small" />
-              <span>Significant gaps in MOT testing history (18+ months) detected.</span>
-            </FactorItem>
+            <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-start gap-2">
+                <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <div className="text-sm font-medium text-yellow-900 mb-1">Testing Gaps Found</div>
+                  <div className="text-xs text-yellow-700">Significant gaps in MOT testing history (18+ months) detected.</div>
+                </div>
+              </div>
+            </div>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'negative').length > 0 && (
-            <FactorItem _iconColor={"var(--negative)"}>
-              <ErrorOutlineIcon fontSize="small" />
-              <span>{anomalies.filter(a => a.type === 'negative').length} instances of decreasing mileage detected.</span>
-            </FactorItem>
+            <div className="bg-red-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-start gap-2">
+                <i className="ph ph-x-circle text-lg text-red-600 mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <div className="text-sm font-medium text-red-900 mb-1">Decreasing Mileage</div>
+                  <div className="text-xs text-red-700">{anomalies.filter(a => a.type === 'negative').length} instances of decreasing mileage detected.</div>
+                </div>
+              </div>
+            </div>
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
-            <FactorItem _iconColor={"var(--warning)"}>
-              <WarningIcon fontSize="small" />
-              <span>{anomalies.filter(a => a.type === 'spike').length} unusual mileage patterns detected.</span>
-            </FactorItem>
+            <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-start gap-2">
+                <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <div className="text-sm font-medium text-yellow-900 mb-1">Unusual Patterns</div>
+                  <div className="text-xs text-yellow-700">{anomalies.filter(a => a.type === 'spike').length} unusual mileage patterns detected.</div>
+                </div>
+              </div>
+            </div>
           )}
           
           {dataPoints < 3 && (
-            <FactorItem _iconColor={"var(--warning)"}>
-              <InfoIcon fontSize="small" />
-              <span>Limited data points available ({dataPoints}). Analysis may be less reliable.</span>
-            </FactorItem>
+            <div className="bg-blue-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-start gap-2">
+                <i className="ph ph-info text-lg text-blue-600 mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <div className="text-sm font-medium text-blue-900 mb-1">Limited Data</div>
+                  <div className="text-xs text-blue-700">Limited data points available ({dataPoints}). Analysis may be less reliable.</div>
+                </div>
+              </div>
+            </div>
           )}
-          
-          {!hasClockingIssues && !motGapsDetected && dataPoints >= 4 && 
-           (!anomalies || anomalies.length === 0) && (
-            <FactorItem _iconColor={"var(--positive)"}>
-              <CheckCircleIcon fontSize="small" />
-              <span>Complete and consistent mileage history with no detected anomalies.</span>
-            </FactorItem>
-          )}
-        </FactorsList>
-      </MileageInsightPanel>
-    </MileageInsightSection>
+        </div>
+      )}
+      
+      {/* Positive Status Card - only show when no issues */}
+      {!hasClockingIssues && !motGapsDetected && dataPoints >= 4 && 
+       (!anomalies || anomalies.length === 0) && (
+        <div className="bg-green-50 rounded-lg p-4 shadow-sm">
+          <div className="flex items-start gap-2">
+            <i className="ph ph-check-circle text-lg text-green-600 mt-0.5 flex-shrink-0"></i>
+            <div>
+              <div className="text-sm font-medium text-green-900 mb-1">Excellent Data Quality</div>
+              <div className="text-xs text-green-700">Complete and consistent mileage history with no detected anomalies.</div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 
@@ -775,72 +799,57 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   // Show loading state
   if (loading) {
     return (
-      <MileageInsightsContainer>
-        <LoadingContainer>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-neutral-900">
+        <div className="flex justify-center items-center min-h-[200px] flex-col gap-6">
           <LoadingSpinner />
-          <div style={{
-            fontFamily: 'var(--font-main)',
-            color: 'var(--gray-600)',
-            fontSize: 'var(--text-sm)',
-            textAlign: 'center'
-          }}>Loading vehicle mileage insights...</div>
-        </LoadingContainer>
-      </MileageInsightsContainer>
+          <div className="text-sm text-neutral-600 text-center">
+            Loading vehicle mileage insights...
+          </div>
+        </div>
+      </div>
     );
   }
 
   // Show error state
   if (error) {
     return (
-      <MileageInsightsContainer>
-        <SectionTitleContainer>
-          <h2>Mileage Insights</h2>
-        </SectionTitleContainer>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-neutral-900">
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+            Mileage Insights
+          </h2>
+        </div>
         
-        <ErrorContainer>
-          <div style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-lg)',
-            fontWeight: 600,
-            color: 'var(--gray-900)',
-            marginBottom: 'var(--space-sm)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 'var(--space-sm)'
-          }}>
-            <ErrorOutlineIcon style={{ color: 'var(--negative)' }} />
+        <div className="text-center p-8">
+          <div className="text-lg font-semibold text-neutral-900 mb-2 flex items-center justify-center gap-2">
+            <i className="ph ph-x-circle text-lg text-red-600"></i>
             Service Unavailable
           </div>
-          <div style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-base)',
-            color: 'var(--negative)',
-            lineHeight: '1.5'
-          }}>The vehicle mileage data service is currently unavailable. Please try again later.</div>
-        </ErrorContainer>
-      </MileageInsightsContainer>
+          <div className="text-base text-red-600 leading-relaxed">
+            The vehicle mileage data service is currently unavailable. Please try again later.
+          </div>
+        </div>
+      </div>
     );
   }
 
   // Show data unavailable state
   if (dataUnavailable || !mileageData || mileageData.length < 2) {
     return (
-      <MileageInsightsContainer>
-        <SectionTitleContainer>
-          <h2>Mileage Insights</h2>
-        </SectionTitleContainer>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-neutral-900">
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+            Mileage Insights
+          </h2>
+        </div>
         
-        <EmptyContainer>
-          <InfoIcon style={{ fontSize: 40, color: 'var(--primary)', marginBottom: 10 }} />
-          <div style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-base)',
-            color: 'var(--gray-700)',
-            lineHeight: '1.5'
-          }}>Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.</div>
-        </EmptyContainer>
-      </MileageInsightsContainer>
+        <div className="text-center p-8">
+          <i className="ph ph-info text-4xl text-blue-600 mb-3 block"></i>
+          <div className="text-base text-neutral-700 leading-relaxed">
+            Insufficient mileage data available for this vehicle. A minimum of two MOT test records with mileage readings is required to provide insights.
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -849,18 +858,14 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
 
   // Render insights
   return (
-    <MileageInsightsContainer>
-      <SectionTitleContainer>
-        <h2>Mileage Insights</h2>
-      </SectionTitleContainer>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-neutral-900">
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          Mileage Insights
+        </h2>
+      </div>
       
-      <p style={{ 
-        marginBottom: 'var(--space-xl)', 
-        color: 'var(--gray-600)',
-        fontFamily: 'var(--font-main)',
-        fontSize: 'var(--text-sm)',
-        lineHeight: '1.5'
-      }}>
+      <p className="mb-8 text-neutral-600 text-sm leading-relaxed">
         Advanced analysis of vehicle mileage patterns and usage history
       </p>
       
@@ -884,531 +889,720 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
       
       {/* Risk Assessment Panel - Always show first for clocked vehicles */}
       {insights.riskAssessment && hasClockingIssues && (
-        <MileageInsightSection>
-          <SimpleTooltip title={mileageTooltips.sectionRiskAssessment}>
-            <h3 style={{
-              margin: '0 0 var(--space-lg) 0',
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-xl)',
-              fontWeight: '600',
-              color: 'var(--gray-900)',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.2'
-            }}>
-            Mileage History Risk Assessment
+        <section className="space-y-12 mb-16">
+          <div className="mb-12">
+            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              Mileage History Risk Assessment
             </h3>
-          </SimpleTooltip>
+            <p className="text-sm text-neutral-600 mb-8">
+              Comprehensive risk analysis based on detected mileage inconsistencies
+            </p>
+          </div>
           
-          <MileageInsightPanel>
-            <RiskScoreDisplay>
-              <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
-                {insights.riskAssessment.riskScore}
-              </RiskScoreCircle>
-              <RiskScoreText>
-                <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
-                  {insights.riskAssessment.riskCategory} Risk
-                </RiskCategory>
-                <RiskDescription>
-                  {hasClockingIssues 
-                    ? "Based on detected mileage inconsistencies and usage patterns" 
-                    : "Based on comprehensive analysis of mileage patterns and vehicle history"}
-                </RiskDescription>
-              </RiskScoreText>
-            </RiskScoreDisplay>
-            
-            {insights.riskAssessment.riskFactors.length > 0 && (
-              <div style={{ marginBottom: '20px' }}>
-                <FactorsHeading color={"var(--negative)"}>
-                  <WarningIcon fontSize="small" /> Risk Factors
-                </FactorsHeading>
-                <FactorsList>
-                  {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} _iconColor={"var(--negative)"}>
-                      <WarningIcon fontSize="small" />
-                      <span>{factor}</span>
-                    </FactorItem>
-                  ))}
-                </FactorsList>
+          {/* Risk Score Card */}
+          <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ${
+            insights.riskAssessment.riskCategory === 'Low' ? 'bg-green-50' :
+            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-yellow-50' :
+            'bg-red-50'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className={`ph ph-shield-check text-lg mr-3 mt-0.5 ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">Risk Assessment</div>
+                  <div className="text-xs text-neutral-600">Overall risk level</div>
+                </div>
               </div>
-            )}
-            
-            {insights.riskAssessment.positiveFactors.length > 0 && (
-              <div>
-                <FactorsHeading color={"var(--positive)"}>
-                  <CheckCircleIcon fontSize="small" /> Positive Factors
-                </FactorsHeading>
-                <FactorsList>
-                  {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} _iconColor={"var(--positive)"}>
-                      <CheckCircleIcon fontSize="small" />
-                      <span>{factor}</span>
-                    </FactorItem>
-                  ))}
-                </FactorsList>
+              <div className="flex flex-col items-end">
+                <div className={`text-2xl font-bold ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>{insights.riskAssessment.riskScore}</div>
+                <div className={`text-xs ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>{insights.riskAssessment.riskCategory} Risk</div>
               </div>
-            )}
-          </MileageInsightPanel>
-        </MileageInsightSection>
+            </div>
+            <div className="text-xs text-neutral-700">
+              Based on detected mileage inconsistencies and usage patterns
+            </div>
+          </div>
+          
+          {/* Risk Factors Cards */}
+          {insights.riskAssessment.riskFactors.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-6">
+                <i className="ph ph-warning-circle text-lg text-red-600"></i>
+                <h4 className="text-lg font-semibold text-red-600">Identified Risk Factors</h4>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                {insights.riskAssessment.riskFactors.map((factor, index) => {
+                  // Categorize risk factors for better visual treatment
+                  let riskCategory = "general";
+                  let riskIcon = "ph-warning-circle";
+                  let riskTitle = "Risk Factor";
+                  
+                  if (factor.toLowerCase().includes("mileage discrepancy") || factor.toLowerCase().includes("rolled back")) {
+                    riskCategory = "critical";
+                    riskIcon = "ph-x-circle";
+                    riskTitle = "Critical Issue";
+                  } else if (factor.toLowerCase().includes("legal risk") || factor.toLowerCase().includes("illegal")) {
+                    riskCategory = "legal";
+                    riskIcon = "ph-scales";
+                    riskTitle = "Legal Risk";
+                  } else if (factor.toLowerCase().includes("possible causes") || factor.toLowerCase().includes("tampering")) {
+                    riskCategory = "causes";
+                    riskIcon = "ph-detective";
+                    riskTitle = "Potential Causes";
+                  } else if (factor.toLowerCase().includes("inactive") || factor.toLowerCase().includes("low usage")) {
+                    riskCategory = "usage";
+                    riskIcon = "ph-clock-clockwise";
+                    riskTitle = "Usage Pattern";
+                  } else if (factor.toLowerCase().includes("mot failure") || factor.toLowerCase().includes("maintenance")) {
+                    riskCategory = "maintenance";
+                    riskIcon = "ph-wrench";
+                    riskTitle = "Maintenance Risk";
+                  }
+                  
+                  const cardStyles = {
+                    critical: "bg-red-50 border-l-4 border-red-600",
+                    legal: "bg-purple-50 border-l-4 border-purple-600",
+                    causes: "bg-orange-50 border-l-4 border-orange-600", 
+                    usage: "bg-blue-50 border-l-4 border-blue-600",
+                    maintenance: "bg-yellow-50 border-l-4 border-yellow-600",
+                    general: "bg-red-50 border-l-4 border-red-600"
+                  };
+                  
+                  const iconStyles = {
+                    critical: "text-red-600",
+                    legal: "text-purple-600", 
+                    causes: "text-orange-600",
+                    usage: "text-blue-600",
+                    maintenance: "text-yellow-600",
+                    general: "text-red-600"
+                  };
+                  
+                  const textStyles = {
+                    critical: "text-red-900",
+                    legal: "text-purple-900",
+                    causes: "text-orange-900", 
+                    usage: "text-blue-900",
+                    maintenance: "text-yellow-900",
+                    general: "text-red-900"
+                  };
+                  
+                  const subtextStyles = {
+                    critical: "text-red-700",
+                    legal: "text-purple-700",
+                    causes: "text-orange-700",
+                    usage: "text-blue-700", 
+                    maintenance: "text-yellow-700",
+                    general: "text-red-700"
+                  };
+                  
+                  return (
+                    <div key={`risk-${index}`} className={`${cardStyles[riskCategory]} rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300`}>
+                      <div className="flex items-start gap-3">
+                        <i className={`ph ${riskIcon} text-lg ${iconStyles[riskCategory]} mt-0.5 flex-shrink-0`}></i>
+                        <div className="flex-1">
+                          <div className={`text-sm font-medium ${textStyles[riskCategory]} mb-1`}>{riskTitle}</div>
+                          <div className={`text-xs ${subtextStyles[riskCategory]} leading-relaxed`}>{factor}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {/* Positive Factors Cards */}
+          {insights.riskAssessment.positiveFactors.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-6">
+                <i className="ph ph-check-circle text-lg text-green-600"></i>
+                <h4 className="text-lg font-semibold text-green-600">Positive Factors</h4>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                {insights.riskAssessment.positiveFactors.map((factor, index) => (
+                  <div key={`positive-${index}`} className="bg-green-50 rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-check-circle text-lg text-green-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-green-900 mb-1">Positive Factor {index + 1}</div>
+                        <div className="text-xs text-green-700 leading-relaxed">{factor}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
       )}
       
       {/* Mileage Benchmark Panel */}
       {insights.benchmarks && (
-        <MileageInsightSection>
-          <SimpleTooltip title={mileageTooltips.sectionBenchmarks}>
-            <h3 style={{
-              margin: '0 0 var(--space-lg) 0',
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-xl)',
-              fontWeight: '600',
-              color: 'var(--gray-900)',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.2'
-            }}>
-            Benchmark Analysis
+        <section className="space-y-12 mb-16">
+          <div className="mb-12">
+            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              Benchmark Analysis
             </h3>
-          </SimpleTooltip>
-          
-          <MileageInsightPanel>
-            <p style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-base)',
-            color: 'var(--gray-700)',
-            lineHeight: '1.5',
-            margin: 0
-          }}>
-              This vehicle has <SimpleTooltip title={mileageTooltips.currentMileage}>
-                <ValueDisplay>{mileageData[mileageData.length-1].formattedMileage} miles</ValueDisplay>
-              </SimpleTooltip>
-              {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
-                <span style={{ 
-                  fontStyle: 'italic', 
-                  marginLeft: '5px', 
-                  color: "var(--negative)",
-                  backgroundColor: `${"var(--negative)"}10`,
-                  padding: '2px 5px',
-                  borderRadius: '3px'
-                }}>
-                  (adjusted for inconsistencies)
-                </span>
-              )}, 
-              which is <SimpleTooltip title={mileageTooltips.mileageCategory}>
-                <ValueDisplay>{insights.benchmarks.mileageCategory}</ValueDisplay>
-              </SimpleTooltip> for a vehicle of this age and type.
+            <p className="text-sm text-neutral-600 mb-8">
+              Comparison with UK vehicle usage patterns and expected values
             </p>
-            
-            <MileageTable>
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <SimpleTooltip title="Time since vehicle registration date">
-                      Vehicle Age
-                    </SimpleTooltip>
-                  </td>
-                  <td>{insights.benchmarks.vehicleAgeYears} years</td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip title={mileageTooltips.averageAnnualMileage}>
-                      Average Annual Mileage
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    {insights.benchmarks.averageAnnualMileage.toLocaleString()} miles/year
-                    {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
-                      <span style={{ 
-                        display: 'inline-block', 
-                        fontSize: '0.85em', 
-                        color: 'white',
-                        backgroundColor: "var(--negative)",
-                        padding: '1px 5px',
-                        borderRadius: '3px',
-                        marginLeft: '5px'
-                      }}>
-                        Adjusted
-                      </span>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip title={hasClockingIssues ? 
-                      "Calculated by summing only positive mileage increments" : 
-                      "Total mileage added since first record"}>
-                      {hasClockingIssues ? "Adjusted Total Mileage" : "Total Mileage"}
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    {insights.benchmarks.totalMileage.toLocaleString()} miles
-                    {hasClockingIssues && (
-                      <span style={{ 
-                        display: 'block', 
-                        fontSize: '0.85em', 
-                        color: "var(--negative)",
-                        fontWeight: 'bold'
-                      }}>
-                        Excludes negative readings
-                      </span>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip title="Calculated based on vehicle age, type and typical usage">
-                      Expected Mileage
-                    </SimpleTooltip>
-                  </td>
-                  <td>{insights.benchmarks.expectedTotalMileage.toLocaleString()} miles</td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip 
-                      title="How much the vehicle's mileage deviates from expected" 
-                    >
-                      Variance From Expected
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    <ValueDisplay 
-                      color={insights.benchmarks.mileageRatio < 1 ? "var(--positive)" : 
-                            insights.benchmarks.mileageRatio > 1.35 ? "var(--negative)" : undefined}
-                    >
-                      {insights.benchmarks.mileageRatio < 1 ? "-" : "+"}{Math.abs(Math.round((insights.benchmarks.mileageRatio - 1) * 100))}%
-                    </ValueDisplay>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip 
-                      title="Estimated miles and years remaining based on current usage patterns" 
-                    >
-                      Estimated Remaining Life
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    <ValueDisplay>{insights.benchmarks.remainingMilesEstimate.toLocaleString()} miles</ValueDisplay>
-                    <br />
-                    <span style={{ fontSize: '0.9em', color: "var(--gray-600)" }}>
-                      (approx. {insights.benchmarks.remainingYearsEstimate} years at current usage rate)
+          </div>
+          
+          {/* Summary Statement Card */}
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start gap-3 mb-4">
+              <i className="ph ph-chart-bar text-lg text-blue-600 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900 mb-2">Current Status</div>
+                <p className="text-xs text-neutral-700 leading-relaxed">
+                  This vehicle has <span className="font-semibold text-neutral-900">{mileageData[mileageData.length-1].formattedMileage} miles</span>
+                  {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
+                    <span className="italic ml-1 text-red-600 bg-red-50 px-1 py-0.5 rounded text-xs">
+                      (adjusted for inconsistencies)
                     </span>
-                  </td>
-                </tr>
-              </tbody>
-            </MileageTable>
+                  )}, which is <span className="font-semibold text-blue-600">{insights.benchmarks.mileageCategory}</span> for a vehicle of this age and type.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Vehicle Age */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-clock text-lg text-green-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Vehicle Age</div>
+                    <div className="text-xs text-neutral-600">Since registration</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-green-600">{insights.benchmarks.vehicleAgeYears}</div>
+                  <div className="text-xs text-green-600">years</div>
+                </div>
+              </div>
+            </div>
             
-            <SimpleTooltip title={mileageTooltips.dataSource}>
-              <FactorsHeading color="var(--primary)" style={{ borderBottom: '1px dotted var(--gray-500)', display: 'inline-flex', cursor: 'help' }}>
-                <InfoIcon fontSize="small" /> Data Context:
-              </FactorsHeading>
-            </SimpleTooltip>
-            <FactorsList>
-              <FactorItem _iconColor={"var(--primary)"}>
-                <InfoIcon fontSize="small" />
-                <span>
+            {/* Average Annual Mileage */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-chart-line text-lg text-blue-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Annual Average</div>
+                    <div className="text-xs text-neutral-600">Miles per year</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-blue-600">{insights.benchmarks.averageAnnualMileage.toLocaleString()}</div>
+                  <div className="text-xs text-blue-600">miles/year</div>
+                </div>
+              </div>
+              {hasClockingIssues && insights.benchmarks.hasAdjustedMileage && (
+                <div className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded mt-2">
+                  Adjusted for inconsistencies
+                </div>
+              )}
+            </div>
+            
+            {/* Total Mileage */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-target text-lg text-purple-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">{hasClockingIssues ? "Adjusted Total" : "Total Mileage"}</div>
+                    <div className="text-xs text-neutral-600">{hasClockingIssues ? "Excluding negative readings" : "Cumulative distance"}</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-purple-600">{insights.benchmarks.totalMileage.toLocaleString()}</div>
+                  <div className="text-xs text-purple-600">miles</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Comparison Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Expected vs Actual */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-scales text-lg text-yellow-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Expected Mileage</div>
+                    <div className="text-xs text-neutral-600">Age and type based</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-yellow-600">{insights.benchmarks.expectedTotalMileage.toLocaleString()}</div>
+                  <div className="text-xs text-yellow-600">miles</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Variance */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-trending-up text-lg text-neutral-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Variance</div>
+                    <div className="text-xs text-neutral-600">From expected</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className={`text-2xl font-bold ${
+                    insights.benchmarks.mileageRatio < 1 ? 'text-green-600' : 
+                    insights.benchmarks.mileageRatio > 1.35 ? 'text-red-600' : 'text-neutral-900'
+                  }`}>
+                    {insights.benchmarks.mileageRatio < 1 ? "-" : "+"}{Math.abs(Math.round((insights.benchmarks.mileageRatio - 1) * 100))}%
+                  </div>
+                  <div className="text-xs text-neutral-600">difference</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Remaining Life Estimate */}
+          <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className="ph ph-battery-medium text-lg text-blue-600 mr-3 mt-0.5"></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">Estimated Remaining Life</div>
+                  <div className="text-xs text-neutral-600">Based on current usage patterns</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <div className="text-2xl font-bold text-blue-600">{insights.benchmarks.remainingMilesEstimate.toLocaleString()}</div>
+                <div className="text-xs text-blue-600">miles (~{insights.benchmarks.remainingYearsEstimate} years)</div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Context Information */}
+          <div className="bg-neutral-50 rounded-lg p-4 shadow-sm">
+            <div className="flex items-start gap-2 mb-3">
+              <i className="ph ph-info text-lg text-blue-600 mt-0.5 flex-shrink-0"></i>
+              <div>
+                <div className="text-sm font-medium text-blue-900 mb-2">UK Market Context</div>
+                <div className="text-xs text-blue-700 leading-relaxed">
                   UK average annual mileage is {insights.benchmarks.ukAverageAnnualMileage.toLocaleString()} miles. 
                   {insights.benchmarks.typeSpecificAnnualMileage !== insights.benchmarks.ukAverageAnnualMileage &&
                   ` For ${vehicleInfo.fuelType} ${vehicleInfo.bodyType} vehicles, the typical annual mileage is ${insights.benchmarks.typeSpecificAnnualMileage.toLocaleString()} miles.`}
-                </span>
-              </FactorItem>
-              {hasClockingIssues && (
-                <FactorItem _iconColor={"var(--negative)"}>
-                  <WarningIcon fontSize="small" />
-                  <span>
+                </div>
+                {hasClockingIssues && (
+                  <div className="text-xs text-red-700 mt-2 bg-red-50 p-2 rounded">
+                    <i className="ph ph-warning-circle text-red-600 mr-1"></i>
                     Due to detected mileage inconsistencies, average and total figures have been adjusted.
-                  </span>
-                </FactorItem>
-              )}
-            </FactorsList>
-          </MileageInsightPanel>
-        </MileageInsightSection>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
       )}
       
       {/* Usage Pattern Panel - Enhanced with anomaly detection */}
       {insights.usagePatterns && (
-        <MileageInsightSection>
-          <SimpleTooltip title="Analysis of how the vehicle has been used over time based on mileage records">
-            <h3 style={{
-              margin: '0 0 var(--space-lg) 0',
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-xl)',
-              fontWeight: '600',
-              color: 'var(--gray-900)',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.2'
-            }}>
-            Usage Pattern Analysis
+        <section className="space-y-12 mb-16">
+          <div className="mb-12">
+            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              Usage Pattern Analysis
             </h3>
-          </SimpleTooltip>
-          
-          <MileageInsightPanel>
-            <p style={{
-            fontFamily: 'var(--font-main)',
-            fontSize: 'var(--text-base)',
-            color: 'var(--gray-700)',
-            lineHeight: '1.5',
-            margin: 0
-          }}>
-              This vehicle shows a <ValueDisplay color={"var(--primary)"}>
-                {insights.usagePatterns.usagePattern}
-              </ValueDisplay> usage pattern 
-              with an average of <ValueDisplay color={"var(--primary)"}>
-                {insights.usagePatterns.averageAnnualRate.toLocaleString()} miles per year
-              </ValueDisplay>.
-              {hasClockingIssues && insights.usagePatterns.dataQuality === "adjusted" && (
-                <span style={{ 
-                  fontStyle: 'italic', 
-                  marginLeft: '5px', 
-                  color: "var(--negative)",
-                  backgroundColor: `${"var(--negative)"}10`,
-                  padding: '2px 5px',
-                  borderRadius: '3px' 
-                }}>
-                  (excludes periods with inconsistent mileage)
-                </span>
-              )}
+            <p className="text-sm text-neutral-600 mb-8">
+              Analysis of how the vehicle has been used over time based on mileage records
             </p>
-            
-            <MileageTable>
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <SimpleTooltip 
-                      title="Period with the highest annualised mileage rate" 
-                    >
-                      Highest Usage Period
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    {insights.usagePatterns.highestUsagePeriod.period}
-                    <br />
-                    <span style={{ color: "var(--gray-600)" }}>
-                      ({insights.usagePatterns.highestUsagePeriod.annualizedRate.toLocaleString()} miles/year)
+          </div>
+          
+          {/* Summary Statement Card */}
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start gap-3 mb-4">
+              <i className="ph ph-chart-line text-lg text-blue-600 mt-0.5"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900 mb-2">Usage Pattern Summary</div>
+                <p className="text-xs text-neutral-700 leading-relaxed">
+                  This vehicle shows a <span className="font-semibold text-blue-600">{insights.usagePatterns.usagePattern}</span> usage pattern 
+                  with an average of <span className="font-semibold text-blue-600">{insights.usagePatterns.averageAnnualRate.toLocaleString()} miles per year</span>.
+                  {hasClockingIssues && insights.usagePatterns.dataQuality === "adjusted" && (
+                    <span className="italic ml-1 text-red-600 bg-red-50 px-1 py-0.5 rounded text-xs">
+                      (excludes periods with inconsistent mileage)
                     </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip 
-                      title="Period with the lowest annualised mileage rate" 
-                    >
-                      Lowest Usage Period
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    {insights.usagePatterns.lowestUsagePeriod.period}
-                    <br />
-                    <span style={{ color: "var(--gray-600)" }}>
-                      ({insights.usagePatterns.lowestUsagePeriod.annualizedRate.toLocaleString()} miles/year)
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <SimpleTooltip 
-                      title="Difference between highest and lowest annual rates" 
-                    >
-                      Usage Variability
-                    </SimpleTooltip>
-                  </td>
-                  <td>
-                    <ValueDisplay>
-                      {insights.usagePatterns.usageVariance.toLocaleString()} miles/year
-                    </ValueDisplay>
-                  </td>
-                </tr>
-                {insights.usagePatterns.potentialCommercialUse && (
-                  <tr>
-                    <td>
-                      <SimpleTooltip 
-                        title="Indicators that suggest potential commercial use" 
-                      >
-                        Commercial Usage
-                      </SimpleTooltip>
-                    </td>
-                    <td>
-                      <span style={{ 
-                        color: "var(--negative)", 
-                        fontWeight: 'bold', 
-                        display: 'flex', 
-                        alignItems: 'center',
-                        padding: '3px 6px',
-                        backgroundColor: `${"var(--negative)"}10`,
-                        borderRadius: '3px',
-                        width: 'fit-content'
-                      }}>
-                        <WarningIcon fontSize="small" style={{ marginRight: '5px' }} />
-                        Potential commercial use detected
-                      </span>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </MileageTable>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Usage Metrics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Highest Usage Period */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-trending-up text-lg text-green-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Peak Usage</div>
+                    <div className="text-xs text-neutral-600">Highest period</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-lg font-bold text-green-600">{insights.usagePatterns.highestUsagePeriod.annualizedRate.toLocaleString()}</div>
+                  <div className="text-xs text-green-600">miles/year</div>
+                </div>
+              </div>
+              <div className="text-xs text-neutral-700">
+                {insights.usagePatterns.highestUsagePeriod.period}
+              </div>
+            </div>
             
-            {/* MOT Gaps - Direct utilization of checkForMOTGaps */}
+            {/* Lowest Usage Period */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-trending-down text-lg text-blue-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Low Usage</div>
+                    <div className="text-xs text-neutral-600">Lowest period</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-lg font-bold text-blue-600">{insights.usagePatterns.lowestUsagePeriod.annualizedRate.toLocaleString()}</div>
+                  <div className="text-xs text-blue-600">miles/year</div>
+                </div>
+              </div>
+              <div className="text-xs text-neutral-700">
+                {insights.usagePatterns.lowestUsagePeriod.period}
+              </div>
+            </div>
+            
+            {/* Usage Variability */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-waves text-lg text-purple-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Variability</div>
+                    <div className="text-xs text-neutral-600">Usage range</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-lg font-bold text-purple-600">{insights.usagePatterns.usageVariance.toLocaleString()}</div>
+                  <div className="text-xs text-purple-600">difference</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Commercial Use Warning */}
+          {insights.usagePatterns.potentialCommercialUse && (
+            <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className="ph ph-warning-circle text-lg text-red-600 mr-3 mt-0.5"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Commercial Use Detected</div>
+                    <div className="text-xs text-neutral-600">Usage patterns suggest commercial activity</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-lg font-bold text-red-600">High</div>
+                  <div className="text-xs text-red-600">Risk</div>
+                </div>
+              </div>
+              <div className="text-xs text-red-700">
+                High mileage usage patterns may indicate commercial or business use, which can affect vehicle valuation and insurance requirements.
+              </div>
+            </div>
+          )}
+            
+          {/* Additional Findings Cards */}
+          <div className="space-y-4">
+            {/* MOT Gaps Card */}
             {motGapsDetected && (
-              <>
-                <FactorsHeading color={"var(--negative)"}>
-                  <WarningIcon fontSize="small" /> MOT Testing Gaps
-                </FactorsHeading>
-                <FactorsList>
-                  <FactorItem _iconColor={"var(--negative)"}>
-                    <WarningIcon fontSize="small" />
-                    <span>
+              <div className="bg-red-50 rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300">
+                <div className="flex items-start gap-2 mb-3">
+                  <i className="ph ph-warning-circle text-lg text-red-600 mt-0.5 flex-shrink-0"></i>
+                  <div>
+                    <div className="text-sm font-medium text-red-900 mb-2">MOT Testing Gaps</div>
+                    <div className="text-xs text-red-700 leading-relaxed">
                       Significant gaps detected in MOT testing history (18+ months) - vehicle may have been untested or unregistered for periods
-                    </span>
-                  </FactorItem>
-                </FactorsList>
-              </>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
             
+            {/* Unusual Patterns Cards */}
             {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
-              <>
-                <FactorsHeading color={"var(--warning)"}>
-                  <WarningIcon fontSize="small" /> Unusual Mileage Patterns
-                </FactorsHeading>
-                <FactorsList>
-                  {anomalies.filter(a => a.type === 'spike')
-                    .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
-                    .slice(0, 2)
-                    .map((anomaly, index) => (
-                    <FactorItem key={`anomaly-${index}`} _iconColor={"var(--warning)"}>
-                      <WarningIcon fontSize="small" />
-                      <span>
-                        {anomaly.details.current.formattedDate}: {anomaly.message}
-                      </span>
-                    </FactorItem>
-                  ))}
-                  {anomalies.filter(a => a.type === 'spike').length > 2 && (
-                    <FactorItem _iconColor={"var(--warning)"}>
-                      <InfoIcon fontSize="small" />
-                      <span>
-                        {anomalies.filter(a => a.type === 'spike').length - 2} more unusual usage patterns detected
-                      </span>
-                    </FactorItem>
-                  )}
-                </FactorsList>
-              </>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-4">
+                  <i className="ph ph-warning-circle text-lg text-yellow-600"></i>
+                  <h4 className="text-sm font-semibold text-yellow-900">Unusual Mileage Patterns</h4>
+                </div>
+                
+                {anomalies.filter(a => a.type === 'spike')
+                  .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
+                  .slice(0, 2)
+                  .map((anomaly, index) => (
+                  <div key={`anomaly-${index}`} className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-yellow-900 mb-1">{anomaly.details.current.formattedDate}</div>
+                        <div className="text-xs text-yellow-700 leading-relaxed">{anomaly.message}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {anomalies.filter(a => a.type === 'spike').length > 2 && (
+                  <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-info text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-yellow-900 mb-1">Additional Patterns</div>
+                        <div className="text-xs text-yellow-700 leading-relaxed">
+                          {anomalies.filter(a => a.type === 'spike').length - 2} more unusual usage patterns detected
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
             
+            {/* Inactivity Periods Cards */}
             {inactivityPeriods && inactivityPeriods.length > 0 && (
-              <>
-                <FactorsHeading color={"var(--primary)"}>
-                  <InfoIcon fontSize="small" /> Detected Inactivity Periods
-                </FactorsHeading>
-                <FactorsList>
-                  {inactivityPeriods
-                    .sort((a, b) => b.days - a.days)
-                    .slice(0, 2)
-                    .map((period, index) => (
-                    <FactorItem key={`inactivity-${index}`} _iconColor={"var(--primary)"}>
-                      <HistoryIcon fontSize="small" />
-                      <span>
-                        {period.start.formattedDate} to {period.end.formattedDate}: {period.description}
-                      </span>
-                    </FactorItem>
-                  ))}
-                  {inactivityPeriods.length > 2 && (
-                    <FactorItem _iconColor={"var(--primary)"}>
-                      <InfoIcon fontSize="small" />
-                      <span>
-                        {inactivityPeriods.length - 2} more inactivity periods detected
-                      </span>
-                    </FactorItem>
-                  )}
-                </FactorsList>
-              </>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-4">
+                  <i className="ph ph-clock-clockwise text-lg text-blue-600"></i>
+                  <h4 className="text-sm font-semibold text-blue-900">Detected Inactivity Periods</h4>
+                </div>
+                
+                {inactivityPeriods
+                  .sort((a, b) => b.days - a.days)
+                  .slice(0, 2)
+                  .map((period, index) => (
+                  <div key={`inactivity-${index}`} className="bg-blue-50 rounded-lg p-4 shadow-sm">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-clock-clockwise text-lg text-blue-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-blue-900 mb-1">{period.start.formattedDate} to {period.end.formattedDate}</div>
+                        <div className="text-xs text-blue-700 leading-relaxed">{period.description}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {inactivityPeriods.length > 2 && (
+                  <div className="bg-blue-50 rounded-lg p-4 shadow-sm">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-info text-lg text-blue-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-blue-900 mb-1">Additional Periods</div>
+                        <div className="text-xs text-blue-700 leading-relaxed">
+                          {inactivityPeriods.length - 2} more inactivity periods detected
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
-          </MileageInsightPanel>
-        </MileageInsightSection>
+          </div>
+        </section>
       )}
       
       {/* Risk Assessment Panel - Only shown here if not a clocked vehicle */}
       {insights.riskAssessment && !hasClockingIssues && (
-        <MileageInsightSection>
-          <SimpleTooltip title={mileageTooltips.sectionRiskAssessment}>
-           <h3 style={{
-              margin: '0 0 var(--space-lg) 0',
-              fontFamily: 'var(--font-main)',
-              fontSize: 'var(--text-xl)',
-              fontWeight: '600',
-              color: 'var(--gray-900)',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.2'
-            }}>
-            History Risk Assessment
+        <section className="space-y-12 mb-16">
+          <div className="mb-12">
+            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              History Risk Assessment
             </h3>
-          </SimpleTooltip>
+            <p className="text-sm text-neutral-600 mb-8">
+              Comprehensive analysis of mileage patterns and vehicle history
+            </p>
+          </div>
           
-          <MileageInsightPanel>
-            <RiskScoreDisplay>
-              <RiskScoreCircle riskCategory={insights.riskAssessment.riskCategory}>
-                {insights.riskAssessment.riskScore}
-              </RiskScoreCircle>
-              <RiskScoreText>
-                <RiskCategory riskCategory={insights.riskAssessment.riskCategory}>
-                  {insights.riskAssessment.riskCategory} Risk
-                </RiskCategory>
-                <RiskDescription>
-                  Based on comprehensive analysis of mileage patterns and vehicle history
-                </RiskDescription>
-              </RiskScoreText>
-            </RiskScoreDisplay>
-            
-            {insights.riskAssessment.riskFactors.length > 0 && (
-              <div style={{ marginBottom: '20px' }}>
-                <FactorsHeading color={"var(--negative)"}>
-                  <WarningIcon fontSize="small" /> Risk Factors
-                </FactorsHeading>
-                <FactorsList>
-                  {insights.riskAssessment.riskFactors.map((factor, index) => (
-                    <FactorItem key={`risk-${index}`} _iconColor={"var(--negative)"}>
-                      <WarningIcon fontSize="small" />
-                      <span>{factor}</span>
-                    </FactorItem>
-                  ))}
-                </FactorsList>
+          {/* Risk Score Card */}
+          <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ${
+            insights.riskAssessment.riskCategory === 'Low' ? 'bg-green-50' :
+            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-yellow-50' :
+            'bg-red-50'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className={`ph ph-shield-check text-lg mr-3 mt-0.5 ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">Risk Assessment</div>
+                  <div className="text-xs text-neutral-600">Overall risk level</div>
+                </div>
               </div>
-            )}
-            
-            {insights.riskAssessment.positiveFactors.length > 0 && (
-              <div>
-                <FactorsHeading color={"var(--positive)"}>
-                  <CheckCircleIcon fontSize="small" /> Positive Factors
-                </FactorsHeading>
-                <FactorsList>
-                  {insights.riskAssessment.positiveFactors.map((factor, index) => (
-                    <FactorItem key={`positive-${index}`} _iconColor={"var(--positive)"}>
-                      <CheckCircleIcon fontSize="small" />
-                      <span>{factor}</span>
-                    </FactorItem>
-                  ))}
-                </FactorsList>
+              <div className="flex flex-col items-end">
+                <div className={`text-2xl font-bold ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>{insights.riskAssessment.riskScore}</div>
+                <div className={`text-xs ${
+                  insights.riskAssessment.riskCategory === 'Low' ? 'text-green-600' :
+                  insights.riskAssessment.riskCategory === 'Medium' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>{insights.riskAssessment.riskCategory} Risk</div>
               </div>
-            )}
-          </MileageInsightPanel>
-        </MileageInsightSection>
+            </div>
+            <div className="text-xs text-neutral-700">
+              Based on comprehensive analysis of mileage patterns and vehicle history
+            </div>
+          </div>
+          
+          {/* Risk Factors Cards */}
+          {insights.riskAssessment.riskFactors.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-6">
+                <i className="ph ph-warning-circle text-lg text-red-600"></i>
+                <h4 className="text-lg font-semibold text-red-600">Identified Risk Factors</h4>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                {insights.riskAssessment.riskFactors.map((factor, index) => {
+                  // Categorize risk factors for better visual treatment
+                  let riskCategory = "general";
+                  let riskIcon = "ph-warning-circle";
+                  let riskTitle = "Risk Factor";
+                  
+                  if (factor.toLowerCase().includes("mileage discrepancy") || factor.toLowerCase().includes("rolled back")) {
+                    riskCategory = "critical";
+                    riskIcon = "ph-x-circle";
+                    riskTitle = "Critical Issue";
+                  } else if (factor.toLowerCase().includes("legal risk") || factor.toLowerCase().includes("illegal")) {
+                    riskCategory = "legal";
+                    riskIcon = "ph-scales";
+                    riskTitle = "Legal Risk";
+                  } else if (factor.toLowerCase().includes("possible causes") || factor.toLowerCase().includes("tampering")) {
+                    riskCategory = "causes";
+                    riskIcon = "ph-detective";
+                    riskTitle = "Potential Causes";
+                  } else if (factor.toLowerCase().includes("inactive") || factor.toLowerCase().includes("low usage")) {
+                    riskCategory = "usage";
+                    riskIcon = "ph-clock-clockwise";
+                    riskTitle = "Usage Pattern";
+                  } else if (factor.toLowerCase().includes("mot failure") || factor.toLowerCase().includes("maintenance")) {
+                    riskCategory = "maintenance";
+                    riskIcon = "ph-wrench";
+                    riskTitle = "Maintenance Risk";
+                  }
+                  
+                  const cardStyles = {
+                    critical: "bg-red-50 border-l-4 border-red-600",
+                    legal: "bg-purple-50 border-l-4 border-purple-600",
+                    causes: "bg-orange-50 border-l-4 border-orange-600", 
+                    usage: "bg-blue-50 border-l-4 border-blue-600",
+                    maintenance: "bg-yellow-50 border-l-4 border-yellow-600",
+                    general: "bg-red-50 border-l-4 border-red-600"
+                  };
+                  
+                  const iconStyles = {
+                    critical: "text-red-600",
+                    legal: "text-purple-600", 
+                    causes: "text-orange-600",
+                    usage: "text-blue-600",
+                    maintenance: "text-yellow-600",
+                    general: "text-red-600"
+                  };
+                  
+                  const textStyles = {
+                    critical: "text-red-900",
+                    legal: "text-purple-900",
+                    causes: "text-orange-900", 
+                    usage: "text-blue-900",
+                    maintenance: "text-yellow-900",
+                    general: "text-red-900"
+                  };
+                  
+                  const subtextStyles = {
+                    critical: "text-red-700",
+                    legal: "text-purple-700",
+                    causes: "text-orange-700",
+                    usage: "text-blue-700", 
+                    maintenance: "text-yellow-700",
+                    general: "text-red-700"
+                  };
+                  
+                  return (
+                    <div key={`risk-${index}`} className={`${cardStyles[riskCategory]} rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300`}>
+                      <div className="flex items-start gap-3">
+                        <i className={`ph ${riskIcon} text-lg ${iconStyles[riskCategory]} mt-0.5 flex-shrink-0`}></i>
+                        <div className="flex-1">
+                          <div className={`text-sm font-medium ${textStyles[riskCategory]} mb-1`}>{riskTitle}</div>
+                          <div className={`text-xs ${subtextStyles[riskCategory]} leading-relaxed`}>{factor}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {/* Positive Factors Cards */}
+          {insights.riskAssessment.positiveFactors.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-6">
+                <i className="ph ph-check-circle text-lg text-green-600"></i>
+                <h4 className="text-lg font-semibold text-green-600">Positive Factors</h4>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                {insights.riskAssessment.positiveFactors.map((factor, index) => (
+                  <div key={`positive-${index}`} className="bg-green-50 rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start gap-2">
+                      <i className="ph ph-check-circle text-lg text-green-600 mt-0.5 flex-shrink-0"></i>
+                      <div>
+                        <div className="text-sm font-medium text-green-900 mb-1">Positive Factor {index + 1}</div>
+                        <div className="text-xs text-green-700 leading-relaxed">{factor}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
       )}
       
       <SectionBreak />
       
       <SimpleTooltip title="Information updated regularly with the latest UK vehicle data">
-        <FooterNote>
+        <p className="text-xs text-neutral-500 text-center mt-8 leading-relaxed">
           Data analysis based on vehicle history and UK market trends as of March 2025
-        </FooterNote>
+        </p>
       </SimpleTooltip>
-    </MileageInsightsContainer>
+    </div>
   );
 };
 

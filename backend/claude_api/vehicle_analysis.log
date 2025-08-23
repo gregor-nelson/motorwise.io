@@ -214,3 +214,26 @@
 2025-08-23 19:59:36,184 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0014s
 2025-08-23 22:48:57,722 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-08-23 22:48:58,075 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-08-23 22:48:59,878 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-23 22:48:59,887 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-08-23 22:50:09,775 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-23 23:36:05,312 - vehicle_analysis_api - INFO - Fetching MOT data for registration: J531WAX
+2025-08-23 23:36:07,579 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/J531WAX "HTTP/1.1 200 OK"
+2025-08-23 23:36:07,584 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA EUNOS
+2025-08-23 23:36:08,735 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-23 23:36:08,737 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-23 23:36:08,747 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/EUNOS "HTTP/1.1 404 Not Found"
+2025-08-23 23:36:08,748 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA EUNOS
+2025-08-23 23:36:08,749 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
+2025-08-23 23:36:44,794 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-23 23:36:44,805 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 39.4935s
+2025-08-23 23:55:08,182 - vehicle_analysis_api - INFO - Fetching MOT data for registration: OCA479P
+2025-08-23 23:55:09,676 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/OCA479P "HTTP/1.1 200 OK"
+2025-08-23 23:55:09,679 - vehicle_analysis_api - INFO - Fetching bulletins for TRIUMPH SPITFIRE
+2025-08-23 23:55:10,944 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-23 23:55:10,945 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-23 23:55:10,953 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/TRIUMPH/SPITFIRE "HTTP/1.1 404 Not Found"
+2025-08-23 23:55:10,954 - vehicle_analysis_api - WARNING - No bulletins found for TRIUMPH SPITFIRE
+2025-08-23 23:55:10,957 - vehicle_analysis_api - INFO - Analyzing data for OCA479P with Claude API
+2025-08-23 23:55:22,385 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-23 23:55:22,398 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 14.2182s

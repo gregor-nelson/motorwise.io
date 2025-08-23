@@ -1,31 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 
-// MarketDash Professional Styled Components
-import {
-  PremiumContainer,
-  ReportHeader,
-  PremiumBadgeContainer,
-  ReportTitle,
-  VehicleRegistration,
-  VehicleMakeModel,
-  ReportSection,
-  SectionHeader,
-  DataPanel,
-  DataTable,
-  MetricsGrid,
-  MetricCard,
-  MetricLabel,
-  MetricValue,
-  MetricDescription,
-  StatusIndicator,
-  RiskScore,
-  Alert,
-  LoadingContainer,
-  LoadingSpinner,
-  LoadingText,
-  ReportFooter
-} from './PremiumStyles';
+// Removed styled-components - using Tailwind classes directly
 
 // Import components directly to maintain original behavior
 import DVLAVehicleData from '../../components/Premium/DVLA/Header/DVLADataHeader';
@@ -46,13 +22,42 @@ const API_CONFIG = {
 };
 
 // Professional Error Message Component
-const ErrorMessage = ({ message, variant = "info" }) => (
-  <Alert variant={variant}>
-    <div className="alert-content">
-      <div className="alert-message">{message}</div>
+const ErrorMessage = ({ message, variant = "info" }) => {
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'success':
+        return 'bg-green-50 text-green-700';
+      case 'warning':
+        return 'bg-yellow-50 text-yellow-700';
+      case 'error':
+        return 'bg-red-50 text-red-700';
+      default:
+        return 'bg-blue-50 text-blue-700';
+    }
+  };
+
+  const getIconClasses = () => {
+    switch (variant) {
+      case 'success':
+        return 'text-green-600';
+      case 'warning':
+        return 'text-yellow-600';
+      case 'error':
+        return 'text-red-600';
+      default:
+        return 'text-blue-600';
+    }
+  };
+
+  return (
+    <div className={`rounded-lg p-4 md:p-6 mb-6 shadow-sm ${getVariantClasses()}`}>
+      <div className="flex items-start">
+        <i className={`ph ph-info text-lg mr-3 mt-0.5 ${getIconClasses()}`}></i>
+        <div className="text-sm leading-relaxed">{message}</div>
+      </div>
     </div>
-  </Alert>
-);
+  );
+};
 
 const PremiumReportPage = () => {
   // Route handling
@@ -309,63 +314,84 @@ const PremiumReportPage = () => {
     setPdfDataReady(!!reportData && !!motData);
   }, [reportData, motData]);
   
-  // Loading state - MarketDash styling
+  // Loading state
   if (loading) {
     return (
-      <PremiumContainer>
-        <LoadingContainer>
-          <LoadingSpinner />
-          <LoadingText>Preparing your vehicle report. This may take a moment...</LoadingText>
-        </LoadingContainer>
-      </PremiumContainer>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="bg-white rounded-lg p-8 shadow-sm">
+          <div className="flex flex-col items-center justify-center text-center min-h-[200px]">
+            <div className="w-8 h-8 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+            <div className="text-lg font-medium text-neutral-900 mb-2">Preparing Your Report</div>
+            <p className="text-sm text-neutral-600">Analyzing vehicle data and generating insights...</p>
+          </div>
+        </div>
+      </div>
     );
   }
   
-  // Error state - MarketDash styling
+  // Error state
   if (error) {
     return (
-      <PremiumContainer>
-        <ErrorMessage variant="error" message={`We are unable to retrieve your vehicle report at this time. ${error}`} />
-        <ReportFooter>
-          <a href="/">Return to the homepage</a>
-        </ReportFooter>
-      </PremiumContainer>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="bg-white rounded-lg shadow-sm">
+          <ErrorMessage variant="error" message={`We are unable to retrieve your vehicle report at this time. ${error}`} />
+          <div className="p-6 text-center border-t border-neutral-100">
+            <a href="/" className="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors duration-200">
+              Return to the homepage
+            </a>
+          </div>
+        </div>
+      </div>
     );
   }
   
-  // Render report - MarketDash professional layout
+  // Render report
   if (reportData) {
     return (
-      <PremiumContainer>
-        <div ref={reportContainerRef}>
-          {/* Professional Report Header */}
-          <ReportHeader>
-            <PremiumBadgeContainer>
-              {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
-            </PremiumBadgeContainer>
-            <ReportTitle>Vehicle Report</ReportTitle>
-            <VehicleRegistration data-test-id="premium-vehicle-registration">
-              {reportData.registration}
-            </VehicleRegistration>
-            <VehicleMakeModel>{reportData.makeModel}</VehicleMakeModel>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div ref={reportContainerRef} className="space-y-12">
+          {/* Report Header */}
+          <div className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <div className="inline-flex items-center bg-neutral-900 text-white px-3 py-1.5 text-xs font-medium uppercase tracking-wider rounded-full">
+                <i className="ph ph-star text-sm mr-2"></i>
+                {reportData.isFreeReport ? "ENHANCED" : "PREMIUM"}
+              </div>
+            </div>
+            <div className="mb-6">
+              <h1 className="text-2xl font-semibold text-neutral-900 mb-3 leading-tight tracking-tight">
+                Vehicle Report
+              </h1>
+              <div className="font-mono text-2xl font-bold text-blue-600 mb-2 tracking-wide" data-test-id="premium-vehicle-registration">
+                {reportData.registration}
+              </div>
+              <div className="text-lg font-medium text-neutral-900">
+                {reportData.makeModel}
+              </div>
+            </div>
             {reportData.isFreeReport && (
-              <Alert variant="info">
-                <div className="alert-content">
-                  <div className="alert-message">
+              <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm">
+                <div className="flex items-start">
+                  <i className="ph ph-info text-lg text-blue-600 mr-3 mt-0.5"></i>
+                  <div className="text-sm text-blue-700 leading-relaxed">
                     {reportData.reportType === 'classic'
                       ? "Enhanced vehicle information is provided at no cost for vehicles registered before 1996."
                       : "Enhanced vehicle information is provided at no cost for vehicles registered from 2018 onwards."}
                   </div>
                 </div>
-              </Alert>
+              </div>
             )}
-          </ReportHeader>
+          </div>
             
           {/* DVLA Vehicle Data Section */}
-          <ReportSection>
-            <SectionHeader>
-              <h2>Vehicle Overview</h2>
-            </SectionHeader>
+          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
+              <div>
+                <h2 className="text-lg font-medium text-neutral-900">Vehicle Overview</h2>
+                <div className="text-xs text-neutral-600">Official DVLA registration data</div>
+              </div>
+            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -374,13 +400,17 @@ const PremiumReportPage = () => {
             }>
               <DVLAVehicleData registration={reportData.registration} paymentId={paymentId} />
             </ErrorBoundary>
-          </ReportSection>
+          </section>
 
           {/* Vehicle Insights Section */}
-          <ReportSection>
-            <SectionHeader>
-              <h2>Vehicle Insights</h2>
-            </SectionHeader>
+          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <i className="ph ph-brain text-lg text-blue-600 mr-3 mt-0.5"></i>
+              <div>
+                <h2 className="text-lg font-medium text-neutral-900">Vehicle Insights</h2>
+                <div className="text-xs text-neutral-600">AI-powered analysis and recommendations</div>
+              </div>
+            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -394,13 +424,17 @@ const PremiumReportPage = () => {
                 onDataLoad={handleVehicleInsightsData}
               />
             </ErrorBoundary>
-          </ReportSection>
+          </section>
             
           {/* Technical Specifications Section */}
-          <ReportSection>
-            <SectionHeader>
-              <h2>Technical Specifications</h2>
-            </SectionHeader>
+          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <i className="ph ph-gear text-lg text-blue-600 mr-3 mt-0.5"></i>
+              <div>
+                <h2 className="text-lg font-medium text-neutral-900">Technical Specifications</h2>
+                <div className="text-xs text-neutral-600">Detailed vehicle technical data</div>
+              </div>
+            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -414,13 +448,25 @@ const PremiumReportPage = () => {
                 registration={registration}
               />
             </ErrorBoundary>
-          </ReportSection>
+          </section>
             
           {/* 3D Mileage History Section */}
-          <ReportSection>
-            <SectionHeader>
-              <h2>3D Mileage History</h2>
-            </SectionHeader>
+          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <i className="ph ph-chart-line text-lg text-blue-600 mr-3 mt-0.5"></i>
+                <div>
+                  <h2 className="text-lg font-medium text-neutral-900">3D Mileage History</h2>
+                  <div className="text-xs text-neutral-600">Interactive MOT mileage visualization</div>
+                </div>
+              </div>
+              {motData && motData.length > 0 && (
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-blue-600">{motData.length}</div>
+                  <div className="text-xs text-blue-600">MOT Records</div>
+                </div>
+              )}
+            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -433,13 +479,17 @@ const PremiumReportPage = () => {
                 <ErrorMessage variant="info" message="No MOT mileage history is available for this vehicle." />
               )}
             </ErrorBoundary>
-          </ReportSection>
+          </section>
             
           {/* Mileage Insights Section */}
-          <ReportSection>
-            <SectionHeader>
-              <h2>Mileage Insights</h2>
-            </SectionHeader>
+          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <i className="ph ph-detective text-lg text-blue-600 mr-3 mt-0.5"></i>
+              <div>
+                <h2 className="text-lg font-medium text-neutral-900">Mileage Insights</h2>
+                <div className="text-xs text-neutral-600">Advanced mileage analysis and fraud detection</div>
+              </div>
+            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -452,15 +502,22 @@ const PremiumReportPage = () => {
                 onDataLoad={handleMileageInsightsData}
               />
             </ErrorBoundary>
-          </ReportSection>
+          </section>
         </div>
           
-        <ReportFooter>
-          <a href={`/vehicle/${reportData.registration}`}>
-            Return to standard vehicle details
-          </a>
-        </ReportFooter>
-      </PremiumContainer>
+          {/* Footer Navigation */}
+          <div className="bg-neutral-50 rounded-lg p-6 shadow-sm text-center">
+            <div className="flex items-center justify-center mb-3">
+              <i className="ph ph-arrow-left text-sm text-blue-600 mr-2"></i>
+              <a href={`/vehicle/${reportData.registration}`} className="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors duration-200">
+                Return to standard vehicle details
+              </a>
+            </div>
+            <div className="text-xs text-neutral-500">
+              Or search for another vehicle from the homepage
+            </div>
+          </div>
+      </div>
     );
   }
   

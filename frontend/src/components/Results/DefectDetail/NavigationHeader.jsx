@@ -22,14 +22,10 @@ import {
   NoResults,
   HighlightText
 } from './defectstyles';
-import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
-
 import { fetchPathTitles, searchManual } from './apiUtils';
 
 // Custom breadcrumb item component
 const BreadcrumbItem = styled('button')`
-  ${MinimalTokens}
-  
   background: none;
   border: none;
   font-family: var(--font-main);

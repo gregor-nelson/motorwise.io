@@ -9980,3 +9980,16 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-22 19:26:36,082 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
 2025-08-22 19:26:36,082 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
 2025-08-23 13:34:37,083 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-08-23 15:45:09,798 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-08-23 15:45:09,798 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-08-23 15:45:09,798 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-08-23 15:47:24,636 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-08-23 15:47:24,970 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-08-23 15:47:24,971 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-08-23 15:47:24,971 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58270 - Status: 200 - Process Time: 0.3376s
+2025-08-23 15:47:25,095 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-23 15:47:25,096 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:58266 - Status: 200 - Process Time: 0.0018s
+2025-08-23 16:16:21,671 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-23 16:16:21,672 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59132 - Status: 200 - Process Time: 0.0029s
+2025-08-23 16:16:22,100 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-23 16:16:22,100 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:59146 - Status: 200 - Process Time: 0.0032s

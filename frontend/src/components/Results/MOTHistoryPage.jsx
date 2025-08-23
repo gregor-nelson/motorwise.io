@@ -1,43 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  MarketDashContainer,
-  PageTitle,
-  SectionTitle,
-  SubTitle,
-  BodyText,
-  SmallText,
-  MonoText,
-  Link,
-  ResultsSection,
-  GridContainer,
-  GridColumn,
-  FlexRow,
-  FlexColumn,
-  MotResultCard,
-  CollapsibleSection,
-  CollapsibleHeader,
-  CollapsibleIcon,
-  CollapsibleContent,
-  ResultsSummary,
-  VehicleRegistration,
-  DefectLabel,
-  DefectList,
-  AnimatedDefectList,
-  ClickableDefectItem,
-  FadeInContent,
-  LoadingContainer,
-  LoadingSpinner,
-  LoadingText,
-  ErrorContainer,
-  ErrorText,
-  InsetText,
-  SectionBreak,
-  Details,
-  DetailsSummary,
-  DetailsText,
-} from './ResultsStyles';
 import MotDefectModal from './DefectDetail/MotDefectModal';
-import Alert from '@mui/material/Alert';
 
 // ORIGINAL CACHE AND CONFIG - Unchanged to preserve working behavior
 const motCache = {};
@@ -368,128 +330,189 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
 
   return (
     <>
-    <MarketDashContainer>
-      <FadeInContent show={!loading} delay={0}>
-        <PageTitle>MOT History</PageTitle>
-      </FadeInContent>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className={`transition-all duration-500 ease-out ${
+        !loading ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}>
+        <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-8">
+          <i className="ph ph-wrench text-lg text-blue-600 mr-3"></i>
+          MOT History
+        </h1>
+      </div>
       
       {loading && (
-        <LoadingContainer>
-          <LoadingSpinner />
-          <LoadingText>Loading MOT history for {formatRegistration(registration)}...</LoadingText>
-        </LoadingContainer>
+        <div className="flex flex-col items-center justify-center min-h-[200px] gap-4">
+          <div className="w-8 h-8 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <div className="text-neutral-600 text-sm text-center">
+            Loading MOT history for {formatRegistration(registration)}...
+          </div>
+        </div>
       )}
       
       {!loading && error && (
-        <FadeInContent show={!loading} delay={100}>
-          <Alert severity="error" style={{ marginBottom: 'var(--space-xl)' }}>
-            {error}
-          </Alert>
-        </FadeInContent>
+        <div className={`transition-all duration-500 ease-out ${
+          !loading ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        } mb-8`}>
+          <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-warning-circle text-lg text-red-600 mt-0.5"></i>
+              <div className="text-red-800">{error}</div>
+            </div>
+          </div>
+        </div>
       )}
       
       {!loading && !error && motData && motData.length === 0 && (
-        <FadeInContent show={!loading} delay={100}>
-          <InsetText>
-            <BodyText>No MOT history found for this vehicle. It may be exempt from MOT testing or too new to require an MOT test.</BodyText>
-          </InsetText>
-        </FadeInContent>
+        <div className={`transition-all duration-500 ease-out ${
+          !loading ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`} style={{ animationDelay: '100ms' }}>
+          <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-info text-lg text-blue-600 mt-0.5"></i>
+              <p className="text-xs text-neutral-700 leading-relaxed">
+                No MOT history found for this vehicle. It may be exempt from MOT testing or too new to require an MOT test.
+              </p>
+            </div>
+          </div>
+        </div>
       )}
         
         {!loading && !error && motData && motData.length > 0 && (
-          <FadeInContent show={showResults} delay={200}>
-            <CollapsibleSection expanded={sectionExpanded}>
-              <CollapsibleHeader 
-                expanded={sectionExpanded} 
+          <div className={`transition-all duration-500 ease-out ${
+            showResults ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`} style={{ animationDelay: '200ms' }}>
+            <div className="mb-8">
+              <button
+                className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-lg hover:bg-blue-50 transition-all duration-300 cursor-pointer"
                 onClick={toggleSectionExpanded}
                 aria-expanded={sectionExpanded}
                 aria-controls="mot-results-content"
               >
-                {(() => {
-                  const summary = generateSummary(motData);
-                  return summary && (
-                    <ResultsSummary>
-                      <div className="summary-item">
-                        <span className="count">{summary.totalTests}</span>
-                        <span className="label">test{summary.totalTests !== 1 ? 's' : ''}</span>
+                <div className="flex items-center gap-6 flex-wrap text-left">
+                  {(() => {
+                    const summary = generateSummary(motData);
+                    return summary && (
+                      <div className="flex items-center gap-6 flex-wrap text-sm">
+                        <div className="flex items-center gap-2">
+                          <i className="ph ph-check-circle text-lg text-blue-600"></i>
+                          <span className="font-semibold text-neutral-900">{summary.totalTests}</span>
+                          <span className="text-neutral-600">test{summary.totalTests !== 1 ? 's' : ''}</span>
+                        </div>
+                        
+                        <div className="w-px h-4 bg-neutral-300"></div>
+                        
+                        <div className="flex items-center gap-2">
+                          <span className="text-neutral-700">Latest result:</span>
+                          <span className={`font-semibold ${
+                            summary.latestTest.status.toLowerCase() === 'pass' 
+                              ? 'text-green-600' 
+                              : 'text-red-600'
+                          }`}>
+                            {summary.latestTest.status}
+                          </span>
+                        </div>
+                        
+                        {(summary.totalDefects > 0 || summary.totalAdvisories > 0) && (
+                          <>
+                            <div className="w-px h-4 bg-neutral-300"></div>
+                            <div className="flex items-center gap-3">
+                              {summary.totalDefects > 0 && (
+                                <span className="text-yellow-600 font-medium text-sm">
+                                  <i className="ph ph-warning text-sm mr-1"></i>
+                                  {summary.totalDefects} defect{summary.totalDefects !== 1 ? 's' : ''}
+                                </span>
+                              )}
+                              {summary.totalAdvisories > 0 && (
+                                <span className="text-blue-600 font-medium text-sm">
+                                  <i className="ph ph-info text-sm mr-1"></i>
+                                  {summary.totalAdvisories} advisor{summary.totalAdvisories !== 1 ? 'ies' : 'y'}
+                                </span>
+                              )}
+                            </div>
+                          </>
+                        )}
                       </div>
-                      
-                      <span className="divider"></span>
-                      
-                      <div className="summary-item">
-                        <span>Latest result:</span>
-                        <span className={`status-tag ${summary.latestTest.status.toLowerCase()}`}>
-                          {summary.latestTest.status}
-                        </span>
-                      </div>
-                      
-                      {(summary.totalDefects > 0 || summary.totalAdvisories > 0) && (
-                        <>
-                          <span className="divider"></span>
-                          <div className="summary-item">
-                            {summary.totalDefects > 0 && (
-                              <span className="issue-tag">
-                                {summary.totalDefects} defect{summary.totalDefects !== 1 ? 's' : ''}
-                              </span>
-                            )}
-                            {summary.totalAdvisories > 0 && (
-                              <span className="issue-tag">
-                                {summary.totalAdvisories} advisor{summary.totalAdvisories !== 1 ? 'ies' : 'y'}
-                              </span>
-                            )}
-                          </div>
-                        </>
-                      )}
-                    </ResultsSummary>
-                  );
-                })()}
-                <CollapsibleIcon expanded={sectionExpanded}>
-                  {sectionExpanded ? 'Hide' : 'Show'} details
-                </CollapsibleIcon>
-              </CollapsibleHeader>
+                    );
+                  })()}
+                </div>
+                <div className="flex items-center gap-2 text-blue-600 font-medium text-sm">
+                  <span>{sectionExpanded ? 'Hide' : 'Show'} details</span>
+                  <i className={`ph ph-caret-down transition-transform duration-300 ${
+                    sectionExpanded ? 'rotate-180' : 'rotate-0'
+                  }`}></i>
+                </div>
+              </button>
               
-              <CollapsibleContent expanded={sectionExpanded} id="mot-results-content">
-                {motData.map((mot, index) => (
-                  <MotResultCard key={index} show={showResults} index={index}>
-                    <GridContainer>
-                      <GridColumn>
-                        <SmallText>Date tested</SmallText>
-                        <SubTitle>{mot.date}</SubTitle>
-                        <SectionTitle style={{
-                          color: mot.status === 'PASS' ? 'var(--positive)' : 'var(--negative)'
-                        }}>{mot.status}</SectionTitle>
-                      </GridColumn>
-                      <GridColumn style={{ flex: 2 }}>
-                        <GridContainer>
-                          <GridColumn>
-                            <SmallText>Mileage</SmallText>
-                            <SubTitle>{mot.mileage}</SubTitle>
-                            <SmallText>Test location</SmallText>
-                            <BodyText>
-                              <Link href="#">{mot.location}</Link>
-                            </BodyText>
-                          </GridColumn>
-                          <GridColumn>
-                            <SmallText>MOT test number</SmallText>
-                            <SubTitle>{mot.testNumber}</SubTitle>
-                            {mot.expiry && (
-                              <>
-                                <SmallText>Expiry date</SmallText>
-                                <SubTitle>{mot.expiry}</SubTitle>
-                              </>
-                            )}
-                          </GridColumn>
-                        </GridContainer>
+              <div 
+                className={`overflow-hidden transition-all duration-300 ease-out ${
+                  sectionExpanded ? 'max-h-none opacity-100' : 'max-h-0 opacity-0'
+                }`}
+                id="mot-results-content"
+              >
+                <div className="pt-6">
+                  {motData.map((mot, index) => (
+                    <div 
+                      key={index} 
+                      className={`bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 mb-8 ${
+                        showResults ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                      }`}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="flex flex-col">
+                          <div className="text-xs text-neutral-500 mb-1">Date tested</div>
+                          <div className="text-sm font-medium text-neutral-900 mb-3">{mot.date}</div>
+                          <div className={`text-lg font-medium mb-4 ${
+                            mot.status === 'PASS' ? 'text-green-600' : 'text-red-600'
+                          }`}>
+                            <i className={`ph ${
+                              mot.status === 'PASS' ? 'ph-check-circle' : 'ph-x-circle'
+                            } text-lg mr-2`}></i>
+                            {mot.status}
+                          </div>
+                        </div>
+                        <div className="md:col-span-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="flex flex-col">
+                              <div className="text-xs text-neutral-500 mb-1">Mileage</div>
+                              <div className="text-sm font-medium text-neutral-900 mb-3">{mot.mileage}</div>
+                              <div className="text-xs text-neutral-500 mb-1">Test location</div>
+                              <div className="text-xs text-neutral-700 leading-relaxed">
+                                <a href="#" className="text-blue-600 hover:text-blue-700 hover:underline">
+                                  <i className="ph ph-map-pin text-sm mr-1"></i>
+                                  {mot.location}
+                                </a>
+                              </div>
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="text-xs text-neutral-500 mb-1">MOT test number</div>
+                              <div className="text-sm font-medium text-neutral-900 mb-3">{mot.testNumber}</div>
+                              {mot.expiry && (
+                                <>
+                                  <div className="text-xs text-neutral-500 mb-1">Expiry date</div>
+                                  <div className="text-sm font-medium text-neutral-900">{mot.expiry}</div>
+                                </>
+                              )}
+                            </div>
+                          </div>
                         {(mot.defects || mot.advisories) && (
-                          <FadeInContent show={showDefects[index]} delay={0}>
+                          <div className={`mt-6 transition-all duration-300 ease-out ${
+                            showDefects[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                          }`}>
                             {mot.defects && (
                               <>
-                                <SmallText>Repair immediately (major defects):</SmallText>
-                                <AnimatedDefectList as={DefectList} show={showDefects[index]}>
+                                <div className="text-xs text-neutral-500 mb-3">
+                                  <i className="ph ph-warning-circle text-sm text-red-600 mr-2"></i>
+                                  Repair immediately (major defects):
+                                </div>
+                                <ul className="list-none space-y-2 mb-4">
                                   {mot.defects.map((defect, i) => (
                                     <li key={i}>
-                                      <ClickableDefectItem
-                                        expanded={false}
+                                      <div
+                                        className={`cursor-pointer p-3 rounded-lg bg-red-50 hover:bg-red-100 hover:scale-[1.02] transition-all duration-200 ${
+                                          showDefects[index] ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
+                                        }`}
+                                        style={{ transitionDelay: `${i * 50}ms` }}
                                         onClick={() => openDefectModal(defect)}
                                         role="button"
                                         tabIndex={0}
@@ -500,21 +523,30 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                                           }
                                         }}
                                       >
-                                        <strong>{defect.text}</strong>
-                                      </ClickableDefectItem>
+                                        <div className="flex items-start gap-3">
+                                          <i className="ph ph-arrow-square-out text-sm text-red-600 mt-1 flex-shrink-0"></i>
+                                          <strong className="text-xs text-red-800 leading-relaxed">{defect.text}</strong>
+                                        </div>
+                                      </div>
                                     </li>
                                   ))}
-                                </AnimatedDefectList>
+                                </ul>
                               </>
                             )}
                             {mot.advisories && (
                               <>
-                                <SmallText>Monitor and repair if necessary (advisories):</SmallText>
-                                <AnimatedDefectList as={DefectList} show={showDefects[index]}>
+                                <div className="text-xs text-neutral-500 mb-3">
+                                  <i className="ph ph-info text-sm text-blue-600 mr-2"></i>
+                                  Monitor and repair if necessary (advisories):
+                                </div>
+                                <ul className="list-none space-y-2 mb-4">
                                   {mot.advisories.map((advisory, i) => (
                                     <li key={i}>
-                                      <ClickableDefectItem
-                                        expanded={false}
+                                      <div
+                                        className={`cursor-pointer p-3 rounded-lg bg-blue-50 hover:bg-blue-100 hover:scale-[1.02] transition-all duration-200 ${
+                                          showDefects[index] ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
+                                        }`}
+                                        style={{ transitionDelay: `${(mot.defects?.length || 0) * 50 + i * 50}ms` }}
                                         onClick={() => openDefectModal(advisory)}
                                         role="button"
                                         tabIndex={0}
@@ -525,57 +557,77 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
                                           }
                                         }}
                                       >
-                                        <strong>{advisory.text}</strong>
-                                      </ClickableDefectItem>
+                                        <div className="flex items-start gap-3">
+                                          <i className="ph ph-arrow-square-out text-sm text-blue-600 mt-1 flex-shrink-0"></i>
+                                          <strong className="text-xs text-blue-800 leading-relaxed">{advisory.text}</strong>
+                                        </div>
+                                      </div>
                                     </li>
                                   ))}
-                                </AnimatedDefectList>
+                                </ul>
                               </>
                             )}
-                            <Details>
-                              <DetailsSummary>
+                            <details className="bg-neutral-50 rounded-lg p-4 mt-4">
+                              <summary className="cursor-pointer text-xs font-medium text-neutral-800 hover:text-blue-600 transition-colors duration-200">
+                                <i className="ph ph-question text-sm mr-2"></i>
                                 What are {mot.defects && mot.advisories ? 'defects and advisories' : mot.defects ? 'defects' : 'advisories'}?
-                              </DetailsSummary>
-                              <DetailsText>
+                              </summary>
+                              <div className="mt-3 space-y-2">
                                 {mot.defects && (
-                                  <BodyText>
+                                  <p className="text-xs text-neutral-700 leading-relaxed">
                                     Major defects may compromise the safety of the vehicle, put other road users at risk, or harm the environment. A vehicle with a major defect will fail the test.
-                                  </BodyText>
+                                  </p>
                                 )}
                                 {mot.advisories && (
-                                  <BodyText>
+                                  <p className="text-xs text-neutral-700 leading-relaxed">
                                     Advisories are given for guidance. Some of these may need to be monitored in case they become more serious and need immediate repairs.
-                                  </BodyText>
+                                  </p>
                                 )}
-                              </DetailsText>
-                            </Details>
-                          </FadeInContent>
+                              </div>
+                            </details>
+                          </div>
                         )}
-                      </GridColumn>
-                    </GridContainer>
-                    {index < motData.length - 1 && <SectionBreak />}
-                  </MotResultCard>
-                ))}
+                        </div>
+                      </div>
+                      {index < motData.length - 1 && <hr className="border-none border-t border-neutral-200 mt-6" />}
+                    </div>
+                  ))}
                 
-                <FadeInContent show={showResults} delay={motData.length * 150 + 300}>
-                  <InsetText>
-                    <BodyText style={{ fontWeight: '600' }}>
-                      The MOT test changed on 20 May 2018
-                    </BodyText>
-                    <BodyText>
-                      Defects are now categorised according to their severity - dangerous, major, and minor.{' '}
-                      <Link href="https://www.gov.uk/government/news/mot-changes-20-may-2018">
-                        Find out more
-                      </Link>
-                    </BodyText>
-                  </InsetText>
-                </FadeInContent>
-              </CollapsibleContent>
-            </CollapsibleSection>
-          </FadeInContent>
+                  <div 
+                    className={`transition-all duration-500 ease-out ${
+                      showResults ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}
+                    style={{ animationDelay: `${motData.length * 150 + 300}ms` }}
+                  >
+                    <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm mt-8">
+                      <div className="flex items-start gap-3">
+                        <i className="ph ph-info text-lg text-blue-600 mt-0.5"></i>
+                        <div>
+                          <p className="text-xs text-neutral-700 leading-relaxed font-semibold mb-2">
+                            The MOT test changed on 20 May 2018
+                          </p>
+                          <p className="text-xs text-neutral-700 leading-relaxed">
+                            Defects are now categorised according to their severity - dangerous, major, and minor.{' '}
+                            <a 
+                              href="https://www.gov.uk/government/news/mot-changes-20-may-2018" 
+                              className="text-blue-600 hover:text-blue-700 hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Find out more
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
         
-    </MarketDashContainer>
+    </div>
     
     {/* Defect Detail Modal - Using bulletins pattern for reliable positioning */}
     <MotDefectModal 

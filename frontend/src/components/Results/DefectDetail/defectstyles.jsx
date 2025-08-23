@@ -1,15 +1,11 @@
 import { styled } from '@mui/material/styles';
-import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
 
 // ULTRA CLEAN MINIMAL DESIGN SYSTEM
 // Following DVLADataHeader exact patterns - No borders, shadows, or decorative elements
-// Uses existing MarketDashTokens for consistency
 
 // Ultra Clean Container - Following DVLADataHeader exact pattern
 export const DefectDetailContainer = styled('div')`
-  ${MinimalTokens}
   
-  font-family: var(--font-main);
   background: var(--white);
   max-width: 1200px;
   margin: 0 auto;
@@ -23,9 +19,7 @@ export const DefectDetailContainer = styled('div')`
 
 // Ultra Clean Content Container - Minimal
 export const ContentContainer = styled('div')`
-  ${MinimalTokens}
   
-  font-family: var(--font-main);
   background: var(--white);
   max-width: 1200px;
   margin: 0 auto;
@@ -42,7 +36,6 @@ export const ContentContainer = styled('div')`
 
 // Minimal Section Header - Clean Typography Only
 export const SectionHeader = styled('div')`
-  ${MinimalTokens}
   
   margin-bottom: var(--space-3xl);
 
@@ -53,10 +46,8 @@ export const SectionHeader = styled('div')`
 
 // Clean Title - Exact DVLADataHeader pattern
 export const SectionTitle = styled('h1')`
-  ${MinimalTokens}
   
   margin: 0;
-  font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--gray-900);
@@ -72,9 +63,7 @@ export const SectionTitle = styled('h1')`
 
 // Clean Subtitle - Minimal spacing
 export const SubTitle = styled('h2')`
-  ${MinimalTokens}
   
-  font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gray-900);
@@ -92,10 +81,8 @@ export const SubTitle = styled('h2')`
 
 // Tertiary title
 export const CardTitle = styled('h3')`
-  ${MinimalTokens}
   
   margin: 0 0 var(--space-sm) 0;
-  font-family: var(--font-main);
   font-size: var(--text-lg);
   font-weight: 600;
   color: var(--gray-900);
@@ -110,9 +97,7 @@ export const CardTitle = styled('h3')`
 
 // Body text
 export const BodyText = styled('p')`
-  ${MinimalTokens}
   
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 400;
   color: var(--gray-900);
@@ -132,7 +117,6 @@ export const SmallText = styled('p')`
   margin: 0 0 var(--space-md) 0;
   color: var(--gray-600);
   font-size: var(--text-sm);
-  font-family: var(--font-main);
   line-height: 1.4;
 
   @media (max-width: var(--mobile-max)) {
@@ -142,7 +126,6 @@ export const SmallText = styled('p')`
 
 // Extra small text for annotations
 export const TinyText = styled('span')`
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   font-weight: 400;
   color: var(--gray-600);
@@ -153,7 +136,6 @@ export const TinyText = styled('span')`
 
 // Clean Section - No visual containers, pure spacing
 export const ExpandableSection = styled('div')`
-  ${MinimalTokens}
   
   margin-bottom: var(--space-3xl);
   /* No borders, shadows, or backgrounds - pure minimal */
@@ -165,7 +147,6 @@ export const ExpandableSection = styled('div')`
 
 // Minimal Section Toggle - Clean typography only
 export const SectionToggle = styled('button')`
-  ${MinimalTokens}
   
   width: 100%;
   padding: 0;
@@ -175,7 +156,6 @@ export const SectionToggle = styled('button')`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gray-900);
@@ -276,7 +256,6 @@ export const CategoryIcon = styled('span', {
 // Category title
 export const CategoryTitle = styled('h4')`
   margin: 0;
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 600;
   text-transform: uppercase;
@@ -335,7 +314,6 @@ export const CrossReference = styled('button')`
   color: var(--primary);
   text-decoration: underline;
   cursor: pointer;
-  font-family: var(--font-main);
   font-size: inherit;
   padding: 0;
   transition: var(--transition);
@@ -390,7 +368,6 @@ export const Button = styled('button')`
   color: var(--white);
   border: none;
   border-radius: 4px;
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
@@ -430,7 +407,6 @@ export const SecondaryButton = styled('button')`
   padding: var(--space-xs) var(--space-sm);
   color: var(--gray-700);
   cursor: pointer;
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   display: flex;
   align-items: center;
@@ -468,7 +444,6 @@ export const SecondaryButton = styled('button')`
 export const LinkButton = styled('button')`
   background: none;
   border: none;
-  font-family: var(--font-main);
   color: var(--primary);
   cursor: pointer;
   text-decoration: underline;
@@ -499,7 +474,6 @@ export const Input = styled('input')`
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--gray-300);
   border-radius: 4px;
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-900);
   background: var(--white);
@@ -575,8 +549,7 @@ export const List = styled('ul')`
   margin: var(--space-md) 0;
   
   & li {
-    font-family: var(--font-main);
-    font-size: var(--text-base);
+      font-size: var(--text-base);
     color: var(--gray-700);
     line-height: 1.5;
     margin-bottom: var(--space-sm);
@@ -600,8 +573,7 @@ export const OrderedList = styled('ol')`
   margin: var(--space-md) 0;
   
   & li {
-    font-family: var(--font-main);
-    font-size: var(--text-base);
+      font-size: var(--text-base);
     color: var(--gray-700);
     line-height: 1.5;
     margin-bottom: var(--space-sm);
@@ -625,7 +597,6 @@ export const OrderedList = styled('ol')`
 export const CategoryBadge = styled('span', {
   shouldForwardProp: prop => prop !== 'category',
 })`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 500;
   display: inline-block;
@@ -651,7 +622,6 @@ export const TypeBadge = styled('span', {
   shouldForwardProp: prop => prop !== 'type',
 })`
   display: inline-block;
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   font-weight: 500;
   text-transform: capitalize;
@@ -672,7 +642,6 @@ export const SmallCategoryBadge = styled('span', {
   shouldForwardProp: prop => prop !== 'category',
 })`
   display: inline-block;
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   font-weight: 500;
   text-transform: uppercase;
@@ -816,7 +785,6 @@ export const BreadcrumbContainer = styled('div')`
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
   flex-wrap: wrap;
@@ -872,7 +840,6 @@ export const BreadcrumbContainer = styled('div')`
 
 // Breadcrumb path text
 export const BreadcrumbPath = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
   margin-bottom: var(--space-2xl);
@@ -900,7 +867,6 @@ export const BreadcrumbPath = styled('div')`
 export const BreadcrumbSeparator = styled('span')`
   color: var(--gray-400);
   user-select: none;
-  font-family: var(--font-main);
 `;
 
 // =============== LOADING AND ERROR STATES ===============
@@ -932,7 +898,6 @@ export const LoadingSpinner = styled('div')`
 
 // Loading text
 export const LoadingText = styled('div')`
-  font-family: var(--font-main);
   color: var(--gray-600);
   font-size: var(--text-sm);
   text-align: center;
@@ -946,7 +911,6 @@ export const ErrorContainer = styled('div')`
 
 // Error message
 export const ErrorMessage = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-base);
   color: var(--negative);
   line-height: 1.5;
@@ -989,7 +953,6 @@ export const ModalOverlay = styled('div')`
 // Modal content - Full viewport on mobile
 export const ModalContent = styled('div')`
   background: var(--white);
-  font-family: var(--font-main);
   
   /* Desktop styles */
   width: 100%;
@@ -1055,7 +1018,6 @@ export const ModalCloseButton = styled('button')`
   font-size: 20px;
   color: var(--gray-600);
   transition: var(--transition);
-  font-family: var(--font-main);
   flex-shrink: 0;
   
   &:hover {
@@ -1092,7 +1054,6 @@ export const PreviewContainer = styled('div')`
   margin-top: var(--space-sm);
   padding: var(--space-lg);
   background: var(--gray-50);
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-700);
   line-height: 1.5;
@@ -1153,7 +1114,6 @@ export const SectionDivider = styled('div')`
 
 // Context hint for forms
 export const ContextHint = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   color: var(--gray-600);
   margin-top: var(--space-xs);
@@ -1164,12 +1124,10 @@ export const CountDisplay = styled('div')`
   font-size: var(--text-xs);
   color: var(--gray-500);
   font-weight: 500;
-  font-family: var(--font-main);
 `;
 
 // Match type display
 export const MatchType = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   color: var(--gray-500);
   margin-bottom: var(--space-sm);
@@ -1179,7 +1137,6 @@ export const MatchType = styled('div')`
 export const NoResults = styled('div')`
   text-align: center;
   padding: var(--space-3xl) var(--space-2xl);
-  font-family: var(--font-main);
   color: var(--gray-600);
   
   @media (max-width: var(--mobile-max)) {

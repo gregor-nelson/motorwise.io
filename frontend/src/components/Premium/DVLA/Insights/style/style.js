@@ -3,16 +3,11 @@
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import{ MarketDashTokens as MinimalTokens } from '../../../../../styles/styles';
-
-
 
 // =============== MAIN LAYOUT COMPONENTS ===============
 
 // Ultra Clean Main Wrapper
 export const InsightsWrapper = styled(Box)(({ theme }) => `
-  ${MinimalTokens}
-  
   font-family: var(--font-main);
   background: var(--white);
   min-height: 100vh;

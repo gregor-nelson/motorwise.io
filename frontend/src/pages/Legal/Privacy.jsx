@@ -1,40 +1,68 @@
 import React from 'react';
 import Header from '../Home/components/Header/Header';
 import Footer from '../Home/components/Footer/Footer';
-import './LegalPageStyles.css';
 
 const Privacy = () => {
   return (
     <>
       <Header />
-      <div className="legal-page-wrapper">
-      <div className="legal-page-container">
-        <header className="legal-page-header">
-          <h1 className="legal-page-title">Privacy notice</h1>
-          <p className="legal-page-subtitle">
-            How we use your personal information
-          </p>
-        </header>
-
-        <main className="legal-page-content">
-          <section className="legal-section">
-            <h2>Who we are</h2>
-            <p>
-              MotCheck UK provides access to official vehicle data from government sources including the Driver & Vehicle Standards Agency (DVSA) and Driver & Vehicle Licensing Agency (DVLA).
+      <div className="min-h-screen bg-neutral-50">
+        <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-12">
+          <header className="text-center mb-12 md:mb-16">
+            <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 leading-tight tracking-tight">Privacy notice</h1>
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+              How we use your personal information
             </p>
-          </section>
+          </header>
 
-          <section className="legal-section">
-            <h2>What personal information we collect</h2>
-            <p>We may collect the following types of personal information:</p>
-            <ul>
-              <li>Vehicle registration numbers you search for</li>
-              <li>Your IP address and browser information</li>
-              <li>Payment information when using premium services</li>
-              <li>Email address if you contact us</li>
-              <li>Cookies and similar tracking technologies</li>
-            </ul>
-          </section>
+          <main className="space-y-8">
+            <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center mb-6">
+                <div className="bg-blue-50 rounded-lg p-2 mr-4">
+                  <i className="ph ph-buildings text-xl text-blue-600"></i>
+                </div>
+                <h2 className="text-xl font-semibold text-neutral-900">Who we are</h2>
+              </div>
+              <div className="prose prose-neutral max-w-none">
+                <p className="text-neutral-700 leading-relaxed">
+                  MotCheck UK provides access to official vehicle data from government sources including the Driver & Vehicle Standards Agency (DVSA) and Driver & Vehicle Licensing Agency (DVLA).
+                </p>
+              </div>
+            </section>
+
+            <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center mb-6">
+                <div className="bg-purple-50 rounded-lg p-2 mr-4">
+                  <i className="ph ph-database text-xl text-purple-600"></i>
+                </div>
+                <h2 className="text-xl font-semibold text-neutral-900">What personal information we collect</h2>
+              </div>
+              <div className="prose prose-neutral max-w-none">
+                <p className="text-neutral-700 leading-relaxed mb-4">We may collect the following types of personal information:</p>
+                <ul className="space-y-2 text-neutral-700">
+                  <li className="flex items-start">
+                    <i className="ph ph-dot text-purple-600 mr-2 mt-2 flex-shrink-0"></i>
+                    Vehicle registration numbers you search for
+                  </li>
+                  <li className="flex items-start">
+                    <i className="ph ph-dot text-purple-600 mr-2 mt-2 flex-shrink-0"></i>
+                    Your IP address and browser information
+                  </li>
+                  <li className="flex items-start">
+                    <i className="ph ph-dot text-purple-600 mr-2 mt-2 flex-shrink-0"></i>
+                    Payment information when using premium services
+                  </li>
+                  <li className="flex items-start">
+                    <i className="ph ph-dot text-purple-600 mr-2 mt-2 flex-shrink-0"></i>
+                    Email address if you contact us
+                  </li>
+                  <li className="flex items-start">
+                    <i className="ph ph-dot text-purple-600 mr-2 mt-2 flex-shrink-0"></i>
+                    Cookies and similar tracking technologies
+                  </li>
+                </ul>
+              </div>
+            </section>
 
           <section className="legal-section">
             <h2>Why we collect personal information</h2>
@@ -130,13 +158,16 @@ const Privacy = () => {
           </section>
         </main>
 
-        <footer className="legal-page-footer">
-          <p className="legal-page-meta">
-            Last updated: <time>August 2025</time>
-          </p>
-        </footer>
+          <footer className="mt-12 pt-8 border-t border-neutral-200 text-center">
+            <div className="bg-neutral-100 rounded-lg p-4 inline-block">
+              <p className="text-sm text-neutral-600 flex items-center justify-center">
+                <i className="ph ph-calendar text-neutral-500 mr-2"></i>
+                Last updated: <time className="font-medium ml-1">August 2025</time>
+              </p>
+            </div>
+          </footer>
+        </div>
       </div>
-    </div>
     <Footer />
     </>
   );

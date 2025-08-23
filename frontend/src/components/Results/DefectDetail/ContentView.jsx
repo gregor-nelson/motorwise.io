@@ -19,12 +19,8 @@ import {
 } from './defectstyles';
 import { fetchSection, fetchSubsection, fetchAllSections } from './apiUtils';
 
-import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
-
 // Clean Subsection Header - Following minimal design system
 const SubsectionHeader = styled('div')`
-  ${MinimalTokens}
-  
   margin-bottom: var(--space-3xl);
 
   @media (max-width: 767px) {

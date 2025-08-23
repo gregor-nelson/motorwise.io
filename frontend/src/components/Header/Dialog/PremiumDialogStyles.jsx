@@ -2,13 +2,9 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import { MarketDashTokens as MinimalTokens } from '../../../styles/styles';
-
 
 // Ultra Clean Modal System - No Decorative Elements (DVLADataHeader Pattern)
 export const PremiumModal = styled(Dialog)`
-  ${MinimalTokens}
-  
   & .MuiDialog-paper {
     background: var(--white);
     border-radius: 0;
@@ -88,8 +84,6 @@ export const PremiumModal = styled(Dialog)`
 `;
 
 export const ModalHeader = styled(DialogTitle)`
-  ${MinimalTokens}
-  
   background: var(--white);
   padding: var(--space-3xl) var(--space-2xl) var(--space-2xl);
   margin: 0;
@@ -158,8 +152,6 @@ export const ModalHeader = styled(DialogTitle)`
 `;
 
 export const ModalContent = styled(DialogContent)`
-  ${MinimalTokens}
-  
   padding: 0 var(--space-2xl) var(--space-3xl);
   background: var(--white);
   
@@ -343,8 +335,6 @@ export const ModalContent = styled(DialogContent)`
 `;
 
 export const PremiumSection = styled('div')`
-  ${MinimalTokens}
-  
   margin-bottom: var(--space-3xl);
   /* No background, borders, or shadows - pure minimal (DVLADataHeader pattern) */
   
@@ -364,8 +354,6 @@ export const PremiumSection = styled('div')`
 `;
 
 export const FeatureList = styled('div')`
-  ${MinimalTokens}
-  
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -423,8 +411,6 @@ export const FeatureList = styled('div')`
 `;
 
 export const PricingBanner = styled('div')`
-  ${MinimalTokens}
-  
   padding: var(--space-xl) 0;
   text-align: center;
   margin: var(--space-2xl) 0;
@@ -462,8 +448,6 @@ export const PricingBanner = styled('div')`
 `;
 
 export const PaymentFormContainer = styled('form')`
-  ${MinimalTokens}
-  
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -476,8 +460,6 @@ export const PaymentFormContainer = styled('form')`
 `;
 
 export const FormSection = styled('div')`
-  ${MinimalTokens}
-  
   .form-title {
     font-family: var(--font-main);
     font-size: var(--text-lg);
@@ -498,8 +480,6 @@ export const FormSection = styled('div')`
 `;
 
 export const FormField = styled('div')`
-  ${MinimalTokens}
-  
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -569,8 +549,6 @@ export const FormField = styled('div')`
 `;
 
 export const CardElementContainer = styled('div')`
-  ${MinimalTokens}
-  
   padding: var(--space-md);
   border: 1px solid var(--gray-300);
   border-radius: 0;
@@ -629,8 +607,6 @@ export const CardElementContainer = styled('div')`
 `;
 
 export const ErrorMessage = styled('div')`
-  ${MinimalTokens}
-  
   padding: var(--space-sm) 0;
   font-family: var(--font-main);
   font-size: var(--text-sm);
@@ -672,8 +648,6 @@ export const ErrorMessage = styled('div')`
 `;
 
 export const ActionButtons = styled('div')`
-  ${MinimalTokens}
-  
   display: flex;
   gap: var(--space-md);
   margin-top: var(--space-2xl);
@@ -703,8 +677,6 @@ export const ActionButtons = styled('div')`
 `;
 
 export const PrimaryButton = styled('button')`
-  ${MinimalTokens}
-  
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -800,8 +772,6 @@ export const PrimaryButton = styled('button')`
 `;
 
 export const SecondaryButton = styled('button')`
-  ${MinimalTokens}
-  
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -864,8 +834,6 @@ export const SecondaryButton = styled('button')`
 `;
 
 export const SecurityBadge = styled('div')`
-  ${MinimalTokens}
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -918,8 +886,6 @@ export const SecurityBadge = styled('div')`
 
 // Additional components needed for legacy compatibility
 export const GovUKButton = styled('button')`
-  ${MinimalTokens}
-  
   font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 500;
@@ -947,8 +913,6 @@ export const GovUKButton = styled('button')`
 `;
 
 export const GovUKBody = styled('p')`
-  ${MinimalTokens}
-  
   font-family: var(--font-main);
   font-size: var(--text-base);
   line-height: 1.4;
@@ -962,8 +926,6 @@ export const GovUKBody = styled('p')`
 `;
 
 export const PayButtonPrimary = styled('button')`
-  ${MinimalTokens}
-  
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -996,8 +958,6 @@ export const PayButtonPrimary = styled('button')`
 
 // Ultra Clean Modal Footer - DVLADataHeader Pattern
 export const SimpleModalFooter = styled('div')`
-  ${MinimalTokens}
-  
   /* Clean minimal footer with generous spacing */
   padding: var(--space-2xl) var(--space-2xl);
   background: var(--white);
@@ -1090,8 +1050,6 @@ export const SimpleModalFooter = styled('div')`
 `;
 
 export const CompactButton = styled('button')`
-  ${MinimalTokens}
-  
   font-family: var(--font-main);
   font-size: var(--text-sm);
   padding: var(--space-xs) var(--space-sm);
@@ -1121,8 +1079,6 @@ export const CompactButton = styled('button')`
 `;
 
 export const BaseButton = styled('button')`
-  ${MinimalTokens}
-  
   display: inline-flex;
   align-items: center;
   justify-content: center;

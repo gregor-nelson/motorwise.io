@@ -1,7 +1,5 @@
 import { styled } from '@mui/material/styles';
 
-import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
-
 // ======================================================
 // Container Components - Ultra Clean Minimal
 // ======================================================
@@ -10,8 +8,6 @@ import{ MarketDashTokens as MinimalTokens } from '../../../styles/styles';
  * Clean Container Pattern - Ultra Minimal
  */
 export const BulletinsContainer = styled('div')`
-  ${MinimalTokens}
-
   font-family: var(--font-main);
   background: var(--white);
   color: var(--gray-900);

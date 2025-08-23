@@ -1,31 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { 
-  CleanContainer,
-  SectionHeader,
-  DataGrid,
-  MetricRow,
-  MetricItem,
-  MetricLabel,
-  MetricValue,
-  VehicleRegistrationDisplay,
-  VehicleTitle,
-  ActionButtonsContainer,
-  PremiumActionButton,
-  MOTSection,
-  MOTCaption,
-  MOTDate,
-  NavigationLinks,
-  NavigationLink,
-  LoadingContainer,
-  LoadingSpinner,
-  LoadingText,
-  ErrorContainer,
-  ErrorMessage,
-  StatusIndicator,
-  SectionDivider,
-  ResponsiveWrapper
-} from './ResultsHeaderStyles';
-import Alert from '@mui/material/Alert';
 
 // Import the refactored dialog components, including the new FullScreenSampleReportButton
 import { 
@@ -54,6 +27,28 @@ const CACHE_STALE_TIME = 5 * 60 * 1000;
 // Constants for free report eligibility
 const CLASSIC_VEHICLE_YEAR_THRESHOLD = 1996; // Vehicles older than this get free reports
 const MODERN_VEHICLE_YEAR_THRESHOLD = 2018;  // Vehicles newer than or equal to this get free reports
+
+// Helper function for StatusIndicator styling
+const getStatusClassName = (status) => {
+  const baseClasses = "text-sm font-medium";
+  switch (status?.toLowerCase()) {
+    case 'valid':
+    case 'taxed':
+    case 'no action required':
+    case 'no':
+      return `${baseClasses} text-green-600`;
+    case 'expired':
+    case 'sorn':
+    case 'untaxed':
+    case 'yes':
+      return `${baseClasses} text-red-600`;
+    case 'due soon':
+    case 'advisory':
+      return `${baseClasses} text-yellow-600`;
+    default:
+      return `${baseClasses} text-neutral-700`;
+  }
+};
 
 const VehicleHeader = ({ registration }) => {
   const [vehicleData, setVehicleData] = useState(null);
@@ -392,130 +387,206 @@ const VehicleHeader = ({ registration }) => {
   };
 
   return (
-    <ResponsiveWrapper>
-      <CleanContainer>
+    <div>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 bg-white text-neutral-900">
         {loading && (
-          <LoadingContainer>
-            <LoadingSpinner />
-            <LoadingText>Loading vehicle information...</LoadingText>
-          </LoadingContainer>
+          <div className="flex justify-center items-center min-h-[200px] flex-col gap-4">
+            <div className="w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <div className="text-neutral-600 text-sm text-center">Loading vehicle information...</div>
+          </div>
         )}
         
         {error && (
-          <ErrorContainer>
-            <ErrorMessage>{error}</ErrorMessage>
-          </ErrorContainer>
+          <div className="text-center p-8">
+            <div className="text-red-600 text-base leading-relaxed">{error}</div>
+          </div>
         )}
         
         {vehicleData && !loading && (
           <>
-            <SectionHeader>
-              <VehicleRegistrationDisplay data-test-id="vehicle-registration">
+            <div className="mb-12 md:mb-16">
+              <div className="font-mono text-2xl font-bold text-neutral-900 uppercase mb-4 tracking-tight leading-tight" data-test-id="vehicle-registration">
                 {formatRegistration(vehicleData.registration)}
-              </VehicleRegistrationDisplay>
+              </div>
 
-              <VehicleTitle data-test-id="vehicle-make-model">
+              <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3" data-test-id="vehicle-make-model">
                 {vehicleData.makeModel}
-              </VehicleTitle>
-            </SectionHeader>
+              </h1>
+            </div>
 
-            <ActionButtonsContainer>
+            <div className="flex gap-4 my-8 flex-wrap md:flex-row flex-col">
               <FullScreenSampleReportButton 
                 onProceedToPayment={handlePremiumButtonClick}
               />
               
-              <PremiumActionButton
+              <button
                 onClick={handlePremiumButtonClick}
                 data-test-id="premium-report-button"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
               >
                 {isEligibleForFreeReport(vehicleData) 
                   ? "View Enhanced Vehicle Report" 
                   : "Get Premium Vehicle Report - £4.95"}
-              </PremiumActionButton>
-            </ActionButtonsContainer>
+              </button>
+            </div>
 
-            <DataGrid>
-              <MetricRow data-test-id="colour-fuel-date-details">
-                <MetricItem>
-                  <MetricLabel>Colour</MetricLabel>
-                  <MetricValue data-test-id="vehicle-colour">
-                    {vehicleData.colour}
-                  </MetricValue>
-                </MetricItem>
-                <MetricItem>
-                  <MetricLabel>Fuel type</MetricLabel>
-                  <MetricValue data-test-id="vehicle-fuel-type">
-                    {vehicleData.fuelType}
-                  </MetricValue>
-                </MetricItem>
-                <MetricItem>
-                  <MetricLabel>Date registered</MetricLabel>
-                  <MetricValue data-test-id="vehicle-date-registered">
-                    {vehicleData.dateRegistered}
-                  </MetricValue>
-                </MetricItem>
-              </MetricRow>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" data-test-id="colour-fuel-date-details">
+                <div className="flex items-center mb-6">
+                  <i className="ph ph-info text-lg text-blue-600 mr-3"></i>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-neutral-900">Vehicle Details</div>
+                    <div className="text-xs text-neutral-600">Basic vehicle information</div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Colour</div>
+                    <div className="text-sm text-neutral-900 font-medium" data-test-id="vehicle-colour">
+                      {vehicleData.colour}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Fuel type</div>
+                    <div className="text-sm text-neutral-900 font-medium" data-test-id="vehicle-fuel-type">
+                      {vehicleData.fuelType}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Date registered</div>
+                    <div className="text-sm text-neutral-900 font-medium" data-test-id="vehicle-date-registered">
+                      {vehicleData.dateRegistered}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <MetricRow data-test-id="additional-details">
-                <MetricItem>
-                  <MetricLabel>Engine size</MetricLabel>
-                  <MetricValue data-test-id="vehicle-engine-size">
-                    {vehicleData.engineSize}
-                  </MetricValue>
-                </MetricItem>
-                <MetricItem>
-                  <MetricLabel>Manufacture date</MetricLabel>
-                  <MetricValue data-test-id="vehicle-manufacture-date">
-                    {vehicleData.manufactureDate}
-                  </MetricValue>
-                </MetricItem>
-                <MetricItem>
-                  <MetricLabel>Outstanding recall</MetricLabel>
-                  <MetricValue data-test-id="vehicle-recall-status">
-                    <StatusIndicator status={vehicleData.hasOutstandingRecall}>
-                      {vehicleData.hasOutstandingRecall}
-                    </StatusIndicator>
-                  </MetricValue>
-                </MetricItem>
-              </MetricRow>
-            </DataGrid>
+              <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" data-test-id="additional-details">
+                <div className="flex items-center mb-6">
+                  <i className="ph ph-gear text-lg text-blue-600 mr-3"></i>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-neutral-900">Technical Details</div>
+                    <div className="text-xs text-neutral-600">Engine and safety information</div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Engine size</div>
+                    <div className="text-sm text-neutral-900 font-medium" data-test-id="vehicle-engine-size">
+                      {vehicleData.engineSize}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Manufacture date</div>
+                    <div className="text-sm text-neutral-900 font-medium" data-test-id="vehicle-manufacture-date">
+                      {vehicleData.manufactureDate}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-medium text-neutral-600">Outstanding recall</div>
+                    <div className="flex items-center" data-test-id="vehicle-recall-status">
+                      <span className={getStatusClassName(vehicleData.hasOutstandingRecall)}>
+                        <i className={`ph ${vehicleData.hasOutstandingRecall?.toLowerCase() === 'yes' ? 'ph-warning-circle' : 'ph-check-circle'} mr-1`}></i>
+                        {vehicleData.hasOutstandingRecall}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <MOTSection>
-              <MetricItem>
-                <MetricLabel data-test-id="mot-expiry-text">
-                  MOT valid until
-                </MetricLabel>
-                <MetricValue data-test-id="mot-due-date">
-                  {vehicleData.motDueDate}
-                </MetricValue>
-              </MetricItem>
-            </MOTSection>
+            <div className="my-12 md:my-16">
+              <div className="bg-blue-50 rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <i className="ph ph-shield-check text-lg text-blue-600 mr-3"></i>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900">MOT Status</div>
+                      <div className="text-xs text-neutral-600">Ministry of Transport test validity</div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <div className="text-lg font-bold text-blue-600" data-test-id="mot-due-date">
+                      {vehicleData.motDueDate}
+                    </div>
+                    <div className="text-xs text-blue-600" data-test-id="mot-expiry-text">
+                      Valid until
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <SectionDivider />
-
-            <NavigationLinks>
-              <NavigationLink href="/">
-                Check another vehicle
-              </NavigationLink>
+            <div className="mt-8 md:mt-10 pt-6 border-t border-neutral-200">
+              <div className="mb-6">
+                <h2 className="text-lg font-medium text-neutral-900 mb-2">What would you like to do next?</h2>
+                <p className="text-sm text-neutral-600">Choose from the options below to continue</p>
+              </div>
               
-              <NavigationLink href="https://www.gov.uk/mot-reminder">
-                Get an MOT reminder
-              </NavigationLink>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a 
+                  href="/"
+                  className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-neutral-100 group"
+                >
+                  <div className="flex items-center">
+                    <div className="bg-blue-50 rounded-lg p-2 mr-3 group-hover:bg-blue-100 transition-colors duration-300">
+                      <i className="ph ph-magnifying-glass text-lg text-blue-600"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900 group-hover:text-blue-600 transition-colors duration-300">Check another vehicle</div>
+                      <div className="text-xs text-neutral-600">Search for a different vehicle registration</div>
+                    </div>
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://www.gov.uk/mot-reminder"
+                  className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-neutral-100 group"
+                >
+                  <div className="flex items-center">
+                    <div className="bg-green-50 rounded-lg p-2 mr-3 group-hover:bg-green-100 transition-colors duration-300">
+                      <i className="ph ph-bell text-lg text-green-600"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900 group-hover:text-green-600 transition-colors duration-300">Get an MOT reminder</div>
+                      <div className="text-xs text-neutral-600">Set up email or text reminders</div>
+                    </div>
+                  </div>
+                </a>
 
-              <NavigationLink 
-                href={`/enter-document-reference?registration=${vehicleData.registration}`}
-                data-test-id="download-certificates-link"
-              >
-                Download test certificates
-              </NavigationLink>
+                <a 
+                  href={`/enter-document-reference?registration=${vehicleData.registration}`}
+                  data-test-id="download-certificates-link"
+                  className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-neutral-100 group"
+                >
+                  <div className="flex items-center">
+                    <div className="bg-purple-50 rounded-lg p-2 mr-3 group-hover:bg-purple-100 transition-colors duration-300">
+                      <i className="ph ph-download text-lg text-purple-600"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900 group-hover:text-purple-600 transition-colors duration-300">Download test certificates</div>
+                      <div className="text-xs text-neutral-600">Get official MOT certificates</div>
+                    </div>
+                  </div>
+                </a>
 
-              <NavigationLink 
-                href="https://www.gov.uk/getting-an-mot/correcting-mot-certificate-mistakes"
-                data-test-id="expiry-date-guidance"
-              >
-                Contact DVSA about incorrect details
-              </NavigationLink>
-            </NavigationLinks>
+                <a 
+                  href="https://www.gov.uk/getting-an-mot/correcting-mot-certificate-mistakes"
+                  data-test-id="expiry-date-guidance"
+                  className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-neutral-100 group"
+                >
+                  <div className="flex items-center">
+                    <div className="bg-orange-50 rounded-lg p-2 mr-3 group-hover:bg-orange-100 transition-colors duration-300">
+                      <i className="ph ph-envelope text-lg text-orange-600"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900 group-hover:text-orange-600 transition-colors duration-300">Contact DVSA about incorrect details</div>
+                      <div className="text-xs text-neutral-600">Report errors or get help</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
             
             {/* Payment Dialog for non-classic vehicles */}
             <PaymentDialog 
@@ -543,8 +614,8 @@ const VehicleHeader = ({ registration }) => {
             />
           </>
         )}
-      </CleanContainer>
-    </ResponsiveWrapper>
+      </div>
+    </div>
   );
 };
 

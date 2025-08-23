@@ -4,13 +4,10 @@
    ============================================ */
 
 import { styled } from '@mui/material/styles';
-import{ MarketDashTokens as MinimalTokens } from '../../styles/styles';
 
 // Ultra Clean Container - Transparent background, no borders, minimal styling (matches DVLADataHeader pattern)
 export const MarketDashContainer = styled('div')`
-  ${MinimalTokens}
   
-  font-family: var(--font-main);
   background: transparent;
   max-width: 1200px;
   margin: 0 auto;
@@ -42,8 +39,7 @@ export const SectionHeader = styled('div')`
 
   & h1, & h2 {
     margin: 0;
-    font-family: var(--font-main);
-    font-size: var(--text-2xl);
+      font-size: var(--text-2xl);
     font-weight: 600;
     color: var(--gray-900);
     letter-spacing: -0.02em;
@@ -61,7 +57,6 @@ export const SectionHeader = styled('div')`
 
 export const PageTitle = styled('h1')`
   margin: 0;
-  font-family: var(--font-main);
   font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--gray-900);
@@ -77,7 +72,6 @@ export const PageTitle = styled('h1')`
 
 export const SectionTitle = styled('h2')`
   margin: 0;
-  font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gray-900);
@@ -93,7 +87,6 @@ export const SectionTitle = styled('h2')`
 
 export const SubTitle = styled('h3')`
   margin: 0;
-  font-family: var(--font-main);
   font-size: var(--text-lg);
   font-weight: 500;
   color: var(--gray-900);
@@ -109,7 +102,6 @@ export const SubTitle = styled('h3')`
 
 // Metric Label Pattern (from DVLADataHeader)
 export const MetricLabel = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--gray-600);
@@ -119,7 +111,6 @@ export const MetricLabel = styled('div')`
 
 // Metric Value Pattern (from DVLADataHeader)
 export const MetricValue = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 400;
   color: var(--gray-900);
@@ -132,7 +123,6 @@ export const MetricValue = styled('div')`
 `;
 
 export const BodyText = styled('p')`
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 400;
   color: var(--gray-700);
@@ -147,7 +137,6 @@ export const BodyText = styled('p')`
 `;
 
 export const SmallText = styled('span')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 400;
   color: var(--gray-600);
@@ -172,7 +161,6 @@ export const MonoText = styled('span')`
 
 // Clean link styling (semantic color only, matches DVLADataHeader)
 export const Link = styled('a')`
-  font-family: var(--font-main);
   color: var(--primary);
   text-decoration: none;
   transition: var(--transition);
@@ -447,7 +435,6 @@ export const VehicleRegistration = styled('div')`
 `;
 
 export const DefectLabel = styled('span')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--gray-700);
@@ -526,7 +513,6 @@ export const FormGroup = styled('div')(({ error }) => ({
 
 export const Label = styled('label')`
   display: block;
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--gray-800);
@@ -535,7 +521,6 @@ export const Label = styled('label')`
 `;
 
 export const HintText = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-500);
   margin-bottom: var(--space-sm);
@@ -653,7 +638,6 @@ export const BackLink = styled('a')`
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--primary);
   text-decoration: none;
@@ -704,7 +688,6 @@ export const LoadingSpinner = styled('div')`
 `;
 
 export const LoadingText = styled('div')`
-  font-family: var(--font-main);
   color: var(--gray-600);
   font-size: var(--text-sm);
   text-align: center;
@@ -722,14 +705,12 @@ export const ErrorContainer = styled('div')`
 
 export const ErrorText = styled('p')`
   color: var(--negative);
-  font-family: var(--font-main);
   font-size: var(--text-base);
   margin: 0;
 `;
 
 export const ErrorMessage = styled('div')`
   color: var(--negative);
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 600;
   margin-top: var(--space-xs);
@@ -783,7 +764,6 @@ export const DetailContent = styled('div')`
 
 // Clean breadcrumb path - minimal
 export const BreadcrumbPath = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
   margin-bottom: var(--space-lg);
@@ -824,7 +804,6 @@ export const DefectSection = styled('div')`
 export const CategoryTag = styled('span', {
   shouldForwardProp: prop => prop !== 'category',
 })`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 600;
   display: inline-block;
@@ -855,8 +834,7 @@ export const InsetText = styled('div')`
   overflow-x: auto;
   
   & p {
-    font-family: var(--font-main);
-    font-size: var(--text-base);
+      font-size: var(--text-base);
     color: var(--gray-700);
     line-height: 1.5;
     margin: 0;
@@ -899,7 +877,6 @@ export const Details = styled('details')`
 `;
 
 export const DetailsSummary = styled('summary')`
-  font-family: var(--font-main);
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--gray-800);
@@ -938,7 +915,6 @@ export const DetailsSummary = styled('summary')`
 `;
 
 export const DetailsText = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--gray-700);

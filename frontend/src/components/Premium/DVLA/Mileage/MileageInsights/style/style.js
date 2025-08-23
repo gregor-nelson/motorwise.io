@@ -1,11 +1,7 @@
 import { styled } from '@mui/material/styles';
-import{ MarketDashTokens as MinimalTokens } from '../../../../../../styles/styles';
-
 
 // Ultra Clean Container - Matches DVLADataHeader pattern
 export const MileageInsightsContainer = styled('div')`
-  ${MinimalTokens}
-  
   font-family: var(--font-main);
   background: var(--white);
   max-width: 1200px;

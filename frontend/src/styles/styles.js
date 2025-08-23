@@ -47,10 +47,6 @@ export const MarketDashTokens = `
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
 
-  /* Professional Font Stack */
-  --font-main: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-  --font-display: 'Jost', sans-serif;
 
   /* Line Heights */
   --leading-none: 1;

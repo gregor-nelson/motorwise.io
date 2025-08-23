@@ -1,5 +1,4 @@
 import { styled } from '@mui/material/styles';
-import { MarketDashTokens } from '../../styles/styles';
 /* ============================================
    MarketDash Premium Report Styles
    ============================================ */
@@ -7,9 +6,6 @@ import { MarketDashTokens } from '../../styles/styles';
 
 // Premium Container - Clean & Minimal
 export const PremiumContainer = styled('div')`
-  ${MarketDashTokens}
-  
-  font-family: var(--font-main);
   background: var(--white);
   color: var(--gray-900);
   max-width: 1200px;
@@ -39,7 +35,6 @@ export const PremiumBadgeContainer = styled('div')`
   background: var(--gray-900);
   color: var(--white);
   padding: var(--space-xs) var(--space-md);
-  font-family: var(--font-main);
   font-size: var(--text-xs);
   font-weight: 500;
   text-transform: uppercase;
@@ -70,7 +65,6 @@ export const VehicleRegistration = styled('div')`
 `;
 
 export const VehicleMakeModel = styled('h2')`
-  font-family: var(--font-main);
   font-size: var(--text-xl);
   font-weight: 400;
   color: var(--gray-600);
@@ -131,7 +125,6 @@ export const DataTable = styled('table')`
 
   & th {
     color: var(--gray-600);
-    font-family: var(--font-main);
     font-weight: 500;
     font-size: var(--text-sm);
     padding: var(--space-md) 0;
@@ -142,7 +135,6 @@ export const DataTable = styled('table')`
   & td {
     padding: var(--space-md) 0;
     border-bottom: 1px solid var(--gray-100);
-    font-family: var(--font-main);
     font-size: var(--text-base);
     color: var(--gray-900);
   }
@@ -180,7 +172,6 @@ export const MetricCard = styled('div')`
 `;
 
 export const MetricLabel = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 400;
   color: var(--gray-600);
@@ -197,7 +188,6 @@ export const MetricValue = styled('div')`
 `;
 
 export const MetricDescription = styled('div')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-500);
   line-height: var(--leading-relaxed);
@@ -208,7 +198,6 @@ export const StatusIndicator = styled('div', {
   shouldForwardProp: prop => !['status', 'size'].includes(prop),
 })`
   display: inline-block;
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   font-weight: 500;
   
@@ -247,7 +236,6 @@ export const Alert = styled('div', {
 })`
   padding: var(--space-lg) 0;
   margin-bottom: var(--space-lg);
-  font-family: var(--font-main);
   
   ${({ variant = 'info' }) => {
     switch (variant) {
@@ -294,7 +282,6 @@ export const LoadingSpinner = styled('div')`
 `;
 
 export const LoadingText = styled('p')`
-  font-family: var(--font-main);
   font-size: var(--text-sm);
   color: var(--gray-600);
   margin: 0;

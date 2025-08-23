@@ -10004,3 +10004,7 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-23 16:51:19,963 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
 2025-08-23 16:51:19,964 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
 2025-08-23 16:51:19,965 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:50930 - Status: 200 - Process Time: 0.3448s
+2025-08-23 17:47:01,627 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-23 17:47:01,627 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:48964 - Status: 200 - Process Time: 0.0033s
+2025-08-23 17:47:02,073 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-23 17:47:02,073 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:48978 - Status: 200 - Process Time: 0.0010s

@@ -3,6 +3,10 @@ import { fetchPathTitles, searchManual } from './apiUtils';
 import { 
   getCategoryColors,
   getResultTypeColors,
+  cardClasses,
+  animationClasses,
+  interactionClasses,
+  inputClasses,
   cn 
 } from './styleUtils';
 
@@ -182,11 +186,11 @@ const NavigationHeader = ({
         <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
           <div className="mt-8 mb-12">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center">
+              <div className={interactionClasses.iconContainer('bg-neutral')}>
                 <i className="ph ph-magnifying-glass text-xl text-neutral-600"></i>
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-neutral-900 leading-tight tracking-tight">Search Results</h1>
+                <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Search Results</h1>
                 <p className="text-sm text-neutral-600 mt-1">
                   {searchQuery ? `No results found for "${searchQuery}"` : 'No search performed'}
                 </p>
@@ -194,14 +198,14 @@ const NavigationHeader = ({
             </div>
           </div>
           
-          <div className="bg-neutral-50 rounded-lg p-12 text-center border-l-4 border-l-neutral-400">
+          <div className="bg-neutral-50 rounded-lg p-12 text-center shadow-sm">
             <div className="flex flex-col items-center gap-4">
               <i className="ph ph-file-search text-4xl text-neutral-400"></i>
               {searchQuery ? (
                 <div>
                   <h3 className="text-lg font-semibold text-neutral-900 mb-2">No matches found</h3>
                   <p className="text-neutral-600 mb-4">No results found for "{searchQuery}"</p>
-                  <div className="bg-blue-50 rounded-lg p-4 border-l-4 border-l-blue-500">
+                  <div className="bg-blue-50 rounded-lg p-4 shadow-sm">
                     <p className="text-sm text-blue-800 font-medium flex items-center gap-2">
                       <i className="ph ph-lightbulb text-lg"></i>
                       Try using different keywords or searching for specific defect codes
@@ -221,18 +225,18 @@ const NavigationHeader = ({
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="mt-8 mb-12">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
+            <div className={interactionClasses.iconContainer('bg-green')}>
               <i className="ph ph-check-circle text-xl text-green-600"></i>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900 leading-tight tracking-tight">Search Results</h1>
+              <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Search Results</h1>
               <p className="text-sm text-neutral-600 mt-1">
                 {results.length} result{results.length !== 1 ? 's' : ''} found for "{searchQuery}"
               </p>
             </div>
           </div>
           
-          <div className="bg-green-50 rounded-lg p-4 border-l-4 border-l-green-500 mb-8">
+          <div className="bg-green-50 rounded-lg p-4 shadow-sm mb-8">
             <p className="text-sm text-green-800 font-medium flex items-center gap-2">
               <i className="ph ph-info text-lg"></i>
               Click any result to view detailed information
@@ -244,8 +248,9 @@ const NavigationHeader = ({
           {results.map((result, index) => (
             <div
               key={`${result.id}-${index}`}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer border-l-4 border-l-blue-500"
+              className={cardClasses.interactive}
               onClick={() => onNavigateToResult(result.id)}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -263,12 +268,12 @@ const NavigationHeader = ({
                 </span>
               </div>
               
-              <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+              <h3 className="text-sm font-medium text-neutral-900 mb-3">
                 {result.id}: {highlightText(result.title, searchQuery)}
               </h3>
               
               {result.defect && (
-                <div className="bg-neutral-50 rounded-lg p-4 border border-neutral-200">
+                <div className="bg-neutral-50 rounded-lg p-4 shadow-sm">
                   {result.category && (
                     <div className="flex items-center gap-2 mb-2">
                       <i className={`ph ph-${getCategoryIcon(result.category)} text-sm`}></i>
@@ -277,7 +282,7 @@ const NavigationHeader = ({
                       </span>
                     </div>
                   )}
-                  <p className="text-sm text-neutral-700 leading-relaxed">
+                  <p className="text-xs text-neutral-700 leading-relaxed">
                     {highlightText(
                       result.defect.length > 180 
                         ? `${result.defect.substring(0, 180)}...` 
@@ -288,9 +293,9 @@ const NavigationHeader = ({
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-4 border-t border-neutral-100 mt-4">
+              <div className="flex items-center justify-between pt-4 mt-4">
                 <span className="text-xs text-neutral-500">{result.id}</span>
-                <i className="ph ph-arrow-right text-sm text-blue-600"></i>
+                <i className="ph ph-arrow-right text-lg text-blue-600"></i>
               </div>
             </div>
           ))}
@@ -306,7 +311,7 @@ const NavigationHeader = ({
 
   // Default navigation header
   return (
-    <div className="bg-white border-b-2 border-neutral-200 md:sticky md:top-0 md:z-10 shadow-sm">
+    <div className="bg-white shadow-sm md:sticky md:top-0 md:z-10">
       <div className="max-w-6xl mx-auto p-6">
         {/* Breadcrumb Section */}
         <div className="mb-6">
@@ -314,7 +319,7 @@ const NavigationHeader = ({
             <i className="ph ph-navigation-arrow text-lg text-blue-600"></i>
             <span className="text-sm font-medium text-neutral-900">Navigation</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-neutral-600 flex-wrap bg-neutral-50 rounded-lg p-3">
+          <div className="flex items-center gap-2 text-sm text-neutral-600 flex-wrap bg-neutral-50 rounded-lg p-3 shadow-sm">
             {renderBreadcrumbs()}
           </div>
         </div>
@@ -337,7 +342,7 @@ const NavigationHeader = ({
                   disabled={isSearching}
                   aria-label="Search MOT manual content"
                   aria-describedby="search-hint"
-                  className="w-full px-4 py-3 text-sm rounded-lg bg-neutral-50 border-2 border-neutral-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors duration-200"
+                  className={inputClasses.search}
                 />
               </div>
               
@@ -345,8 +350,8 @@ const NavigationHeader = ({
                 type="submit" 
                 disabled={isSearching || !query.trim()}
                 className={cn(
-                  'px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer flex items-center gap-2',
-                  (isSearching || !query.trim()) && 'opacity-50 cursor-not-allowed'
+                  'px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-all duration-300 cursor-pointer flex items-center gap-2 hover:shadow-lg hover:scale-105',
+                  (isSearching || !query.trim()) && 'opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-none'
                 )}
               >
                 {isSearching ? (
@@ -363,7 +368,7 @@ const NavigationHeader = ({
               </button>
             </div>
             
-            <div className="flex items-center gap-2 mt-3 text-xs text-neutral-600 bg-blue-50 rounded p-2" id="search-hint">
+            <div className="flex items-center gap-2 mt-3 text-xs text-neutral-600 bg-blue-50 rounded-lg p-3 shadow-sm" id="search-hint">
               <i className="ph ph-info text-sm text-blue-600"></i>
               {getContextHint()}
             </div>

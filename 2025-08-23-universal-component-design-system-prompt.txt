@@ -1,0 +1,2269 @@
+╭───────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                         │
+│                                                   │
+│   /help for help, /status for your current setup  │
+│                                                   │
+│   cwd: /home/gregor/Downloads/Dev/MotCheck-UK     │
+╰───────────────────────────────────────────────────╯
+
+> Universal Component Design System Prompt
+
+   Overview
+
+   This prompt defines the complete design system and 
+  implementation standards for creating ultra-minimal, highly 
+  interactive,
+   and emotionally engaging components that match the 
+  established visual hierarchy and user experience patterns.
+
+   Design Philosophy
+
+   Ultra-Minimal Visual Language: Maximum visual impact through 
+  minimal elements - borderless design with strategic use of
+   shadows, spacing, and color to create depth and hierarchy 
+  without clutter.
+
+   Emotionally-Driven Interactions: Every interactive element 
+  should feel premium and responsive, using smooth animations 
+  and
+   hover states that invite exploration and build user 
+  confidence.
+
+   Professional Authority: Visual design that conveys technical 
+  sophistication and trustworthiness through clean typography,
+   consistent spacing, and authentic data presentation.
+
+   Core Design Standards
+
+   1. Layout & Structure
+
+   // Container patterns
+   "max-w-6xl mx-auto p-4 md:p-6 lg:p-8"         // Main 
+  containers
+   "grid grid-cols-1 md:grid-cols-2 gap-8"        // Card grids 
+    
+   "space-y-12 mb-16"                             // Section 
+  spacing
+   "mt-16 mb-12"                                  // Major 
+  section breaks
+
+   2. Card Design System
+
+   // Primary cards (NO BORDERS EVER)
+   "bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg 
+  hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+
+   // Secondary containers
+   "bg-neutral-50 rounded-lg p-4 shadow-sm"
+
+   // Colored state cards
+   "bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg 
+  hover:scale-[1.02] transition-all duration-300"
+   "bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg 
+  hover:scale-[1.02] transition-all duration-300"
+   "bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg 
+  hover:scale-[1.02] transition-all duration-300"
+
+   3. Typography Hierarchy
+
+   /* Main Headers */
+   text-2xl font-semibold text-neutral-900 leading-tight 
+  tracking-tight mb-3
+
+   /* Section Headers */
+   text-lg font-medium text-neutral-900 mb-4
+
+   /* Card Titles */
+   text-sm font-medium text-neutral-900
+
+   /* Card Subtitles */
+   text-xs text-neutral-600
+
+   /* Body Text */
+   text-xs text-neutral-700 leading-relaxed
+
+   /* Meta/Supporting Text */
+   text-xs text-neutral-500
+
+   /* Large Metrics */
+   text-2xl font-bold text-[color]-600
+
+   /* Small Metrics */
+   text-lg font-bold text-[color]-600
+
+   4. Color System
+
+   /* Background Colors */
+   bg-white                    // Primary cards/containers
+   bg-neutral-50              // Secondary areas, input fields
+   bg-blue-50, bg-green-50    // Positive state backgrounds
+   bg-red-50, bg-yellow-50    // Warning/error state backgrounds
+
+   /* Text Colors */
+   text-neutral-900           // Primary headings, important 
+  text
+   text-neutral-700           // Body text, descriptions
+   text-neutral-600           // Secondary text, subtitles
+   text-neutral-500           // Meta text, placeholders
+
+   /* Accent Colors */
+   text-blue-600              // Primary brand, links, info 
+  states
+   text-green-600             // Success, positive metrics
+   text-yellow-600            // Warning, caution states
+   text-red-600               // Error, critical states
+   text-purple-600            // Premium, advanced features
+
+   5. Icon System (Phosphor Icons Only)
+
+   // Standard icon implementation
+   <i className="ph ph-icon-name text-lg text-blue-600 mr-2 
+  mt-0.5"></i>
+
+   // Common icons by category:
+   // Status & Actions
+   ph-check-circle, ph-warning-circle, ph-x-circle, ph-info
+
+   // Technical & Data
+   ph-database, ph-wrench, ph-gear, ph-chart-bar, ph-brain
+
+   // Security & Protection   
+   ph-shield-check, ph-detective, ph-lock
+
+   // Interface & Navigation
+   ph-caret-down, ph-caret-up, ph-flow-arrow
+
+   // Business & Analytics
+   ph-chart-pie, ph-chart-line, ph-calculator, ph-target
+
+   6. Interactive States & Animations
+
+   // Standard hover effects for cards
+   "hover:shadow-lg hover:scale-[1.02] transition-all 
+  duration-300"
+
+   // Small element hover effects
+   "hover:scale-110 transition-all duration-300"
+
+   // Click/active states
+   "cursor-pointer"
+
+   // Expandable content transitions
+   "transition-all duration-300 ease-out"
+
+   // Scroll-triggered animations
+   "opacity-0 translate-y-4" → "opacity-100 translate-y-0"
+
+   // Staggered animation delays
+   style={{ animationDelay: `${index * 100}ms` }}
+
+   7. Status Indicators & Badges
+
+   // Status dots
+   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+   <div className="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+
+   // Status badges
+   "px-2 py-1 bg-orange-100 text-orange-700 text-xs 
+  rounded-full"
+   "px-3 py-1 text-xs font-medium bg-blue-50 text-blue-600 
+  rounded-full"
+
+   // Progress bars
+   "w-full bg-neutral-200 rounded-full h-2 overflow-hidden"
+   "h-full bg-gradient-to-r from-blue-500 to-green-500 
+  rounded-full"
+
+   8. Form Elements
+
+   // Input fields
+   "w-full px-3 py-2 text-sm rounded-lg bg-white border-none 
+  focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+
+   // Buttons
+   "text-xs text-blue-600 hover:text-blue-700 font-medium 
+  cursor-pointer"
+   "px-4 py-2 bg-blue-600 text-white text-sm font-medium 
+  rounded-lg hover:bg-blue-700 transition-colors duration-200"
+
+   Implementation Patterns
+
+   1. Expandable Content Cards
+
+   const [expandedCards, setExpandedCards] = useState({});
+
+   const toggleCard = (cardId) => {
+     setExpandedCards(prev => ({
+       ...prev,
+       [cardId]: !prev[cardId]
+     }));
+   };
+
+   // In render:
+   <div  
+     className="bg-white rounded-lg p-4 md:p-6 shadow-sm 
+  hover:shadow-lg hover:scale-[1.02] transition-all duration-300
+    
+   cursor-pointer"
+     onClick={() => toggleCard('unique-card-id')}
+   >
+     {/* Card header with icon and title */}
+     <div className="flex items-center justify-between mb-3">
+       <div className="flex items-start">
+         <i className="ph ph-icon text-lg text-blue-600 mr-3 
+  mt-0.5"></i>
+         <div>
+           <div className="text-sm font-medium 
+  text-neutral-900">Card Title</div>
+           <div className="text-xs text-neutral-600">Subtitle or
+   category</div>
+         </div>
+       </div>
+       <div className="flex flex-col items-end">
+         <div className="text-2xl font-bold 
+  text-blue-600">Value</div>
+         <div className="text-xs text-blue-600">Unit/Label</div>
+       </div>
+     </div>
+
+     {/* Expandable content */}
+     {expandedCards['unique-card-id'] && (
+       <div className="pt-3 border-t border-blue-200 space-y-2 
+  text-xs text-neutral-700">
+         {/* Detailed content here */}
+       </div>
+     )}
+
+     {/* Expand indicator */}
+     <div className={`text-center mt-3 text-blue-600 
+  transition-transform duration-300 ${
+       expandedCards['unique-card-id'] ? 'rotate-180' : 
+  'rotate-0'
+     }`}>
+       <i className="ph ph-caret-down"></i>
+     </div>
+   </div>
+
+   2. Scroll-Triggered Animations
+
+   const [isVisible, setIsVisible] = useState(false);
+   const componentRef = useRef(null);
+
+   useEffect(() => {
+     const observer = new IntersectionObserver(
+       ([entry]) => {
+         if (entry.isIntersecting) {
+           setIsVisible(true);
+         }
+       },
+       { threshold: 0.3 }
+     );
+
+     if (componentRef.current) {
+       observer.observe(componentRef.current);
+     }
+
+     return () => observer.disconnect();
+   }, []);
+
+   // In render:
+   <div  
+     ref={componentRef}
+     className={`
+       transition-all duration-500 ease-out
+       ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 
+  translate-y-4'}
+     `}
+   >
+
+   3. Progress Indicators & Metrics
+
+   // Circular progress
+   const circumference = 2 * Math.PI * 45;
+   const strokeDashoffset = circumference - (value / 100) * 
+  circumference;
+
+   <svg className="w-32 h-32 -rotate-90" viewBox="0 0 100 100">
+     <circle cx="50" cy="50" r="45" stroke="currentColor" 
+  strokeWidth="8"  
+             fill="none" className="text-neutral-200" />
+     <circle cx="50" cy="50" r="45" stroke="currentColor" 
+  strokeWidth="8"
+             fill="none" strokeDasharray={circumference}  
+             strokeDashoffset={strokeDashoffset}
+             className="text-blue-600 transition-all 
+  duration-2000 ease-out" />
+   </svg>
+
+   // Linear progress bars
+   <div className="w-full bg-neutral-200 rounded-full h-2 
+  overflow-hidden">
+     <div  
+       className="h-full bg-gradient-to-r from-blue-500 
+  to-green-500 rounded-full transition-all duration-1000 
+  ease-out"
+       style={{ width: `${percentage}%` }}
+     />
+   </div>
+
+   4. Section Navigation
+
+   const [activeSection, setActiveSection] = 
+  useState('overview');
+
+   // Navigation component
+   <div className="flex justify-center mb-8">
+     <div className="inline-flex bg-neutral-100 rounded-lg p-1">
+       {sections.map((section) => (
+         <button
+           key={section.id}
+           onClick={() => setActiveSection(section.id)}
+           className={`
+             flex items-center space-x-2 px-4 py-2 rounded-md 
+  text-sm font-medium transition-all duration-300
+             ${activeSection === section.id
+               ? 'bg-white text-blue-600 shadow-sm'
+               : 'text-neutral-600 hover:text-neutral-900'
+             }
+           `}
+         >
+           <i className={`ph ${section.icon}`}></i>
+           <span>{section.label}</span>
+         </button>
+       ))}
+     </div>
+   </div>
+
+   Content Guidelines
+
+   1. Text-to-Visual Conversion
+
+   - Replace paragraphs with icon + title + metric combinations
+   - Use visual indicators (dots, progress bars, badges) instead
+   of text descriptions
+   - Convert lists into interactive card grids
+   - Transform statistics into prominent numerical displays
+
+   2. Emotional Engagement Techniques
+
+   - Use smooth, premium-feeling animations (300-500ms duration)
+   - Implement hover states that provide immediate visual 
+  feedback
+   - Create progressive disclosure through expandable sections
+   - Include subtle scale effects that feel responsive and alive
+
+   3. Professional Authority Signals
+
+   - Display real metrics and data prominently
+   - Use consistent technical terminology
+   - Reference professional tools and standards
+   - Maintain clean, uncluttered layouts that convey 
+  sophistication
+
+   Required React Patterns
+
+   1. State Management
+
+   // Always include these state hooks for interactive 
+  components
+   const [isVisible, setIsVisible] = useState(false);
+   const [expandedItems, setExpandedItems] = useState({});
+   const [activeSection, setActiveSection] = useState(null);
+
+   2. Refs for Animations
+
+   const componentRef = useRef(null);
+   const progressRef = useRef(null);
+
+   3. Intersection Observer
+
+   // Standard implementation for scroll-triggered animations
+   useEffect(() => {
+     const observer = new IntersectionObserver(
+       ([entry]) => {
+         if (entry.isIntersecting) {
+           setIsVisible(true);
+         }
+       },
+       { threshold: 0.3 }
+     );
+
+     if (componentRef.current) {
+       observer.observe(componentRef.current);
+     }
+
+     return () => observer.disconnect();
+   }, []);
+
+   Quality Checklist
+
+   ✅ Visual Standards
+
+   - No borders anywhere (use shadows and spacing for 
+  separation)
+   - Consistent rounded corners (rounded-lg)
+   - Proper hover states on all interactive elements
+   - Phosphor icons used throughout
+   - Typography hierarchy follows established patterns
+
+   ✅ Interaction Design
+
+   - Smooth transitions (300-500ms duration)
+   - Cursor pointer on clickable elements
+   - Scale effects on hover (scale-[1.02] for cards)
+   - Progressive disclosure for detailed content
+   - Loading states and animations where appropriate
+
+   ✅ Professional Polish
+
+   - Real data/metrics prominently displayed
+   - Consistent spacing using established patterns
+   - Responsive design (mobile-first approach)
+   - Performance-optimized animations
+   - Accessibility considerations (proper ARIA labels)
+
+   ✅ Code Quality
+
+   - Pure Tailwind CSS (no custom styles)
+   - Clean component structure with proper state management
+   - Reusable patterns and consistent naming
+   - Proper TypeScript/PropTypes if applicable
+   - Commented code for complex interactions
+
+   Success Criteria
+
+   A component built with this system should:
+
+   1. Feel Premium: Smooth animations and interactions that 
+  convey quality
+   2. Invite Exploration: Subtle hover cues that encourage user 
+  engagement
+   3. Build Trust: Clean, professional appearance with real 
+  data/metrics
+   4. Maintain Consistency: Visual harmony with existing 
+  components
+   5. Perform Well: Optimized animations and responsive design
+
+   This design system ensures every component contributes to a 
+  cohesive, sophisticated user experience that builds confidence
+   and
+    demonstrates technical authority through visual excellence.
+
+● I see you've shared a comprehensive universal component design
+   system prompt. This appears to be a detailed style guide for
+  creating ultra-minimal, interactive React components using
+  Tailwind CSS and Phosphor icons.
+
+  The design system covers:
+
+  - Visual Philosophy: Borderless design with shadows, minimal
+  elements, premium interactions
+  - Technical Standards: Specific Tailwind classes, typography
+  hierarchy, color system
+  - Component Patterns: Expandable cards, animations, form
+  elements, progress indicators
+  - Implementation Details: React hooks, state management,
+  intersection observers
+
+  Is there a specific component you'd like me to implement using
+   this design system, or would you like me to help refactor
+  existing components in your codebase to follow these
+  standards?
+
+> these are the components id like to implement using the design
+   system :  frontend/src/components/Results/DefectDetail noting
+   the requirement to keep all functions and features as is, 
+  please no code yet we need to come up with a well considered 
+  approach and plan
+
+● I'll analyze the DefectDetail components to understand their
+  current functionality and create a comprehensive plan for
+  implementing the design system. Let me start by examining the
+  existing components.
+
+● Update Todos
+  ⎿  ☐ Analyze existing DefectDetail components to understand   
+       current functionality
+     ☐ Map current features and interactions to design system
+       patterns
+     ☐ Create comprehensive refactoring plan maintaining all
+       functionality
+
+● Read(frontend/src/components/Results/DefectDetail/ContentView.
+      jsx)
+  ⎿  Read 345 lines (ctrl+r to expand)
+
+● Read(frontend/src/components/Results/DefectDetail/MotDefectDet
+      ail.jsx)
+  ⎿  Read 587 lines (ctrl+r to expand)
+
+● Read(frontend/src/components/Results/DefectDetail/MotDefectMod
+      al.jsx)
+  ⎿  Read 268 lines (ctrl+r to expand)
+
+● Read(frontend/src/components/Results/DefectDetail/NavigationHe
+      ader.jsx)
+  ⎿  Read 377 lines (ctrl+r to expand)
+
+● Read(frontend/src/components/Results/DefectDetail/styleUtils.j
+      s)
+  ⎿  Read 259 lines (ctrl+r to expand)
+
+● Search(pattern: "**/apiUtils.js", path:
+        "frontend/src/components/Results/DefectDetail")
+  ⎿  Found 1 file (ctrl+r to expand)
+
+● Read(frontend/src/components/Results/DefectDetail/apiUtils.js)
+  ⎿  Read 272 lines (ctrl+r to expand)
+
+● Update Todos
+  ⎿  ☒ Analyze existing DefectDetail components to understand   
+       current functionality
+     ☐ Map current features and interactions to design system 
+       patterns
+     ☐ Create comprehensive refactoring plan maintaining all
+       functionality
+
+● Based on my analysis, here's the current functionality I've
+  identified across the DefectDetail components:
+
+  Current Component Architecture & Features
+
+  1. ContentView.jsx - Multi-view Content Browser
+
+  - Root View: Shows all MOT manual sections in a grid
+  - Section View: Shows subsections within a section
+  - Subsection View: Shows inspection items with defect previews
+  - Features: Loading states, error handling, click navigation,
+  defect previews with category badges
+
+  2. MotDefectDetail.jsx - Detailed Defect Inspector
+
+  - Advanced Content Parsing: Breaks down defect descriptions
+  into structured sections (overview, procedures, defects)
+  - Interactive Sections: Expandable/collapsible sections with
+  toggle states
+  - Cross-Reference Links: Clickable "Section X.Y.Z" references
+  for navigation
+  - Defect Categorization: Groups defects by severity
+  (Dangerous, Major, Minor, Advisory)
+  - Path Breadcrumbs: Shows location within manual hierarchy
+
+  3. MotDefectModal.jsx - Modal Container with State Management
+
+  - Complex State Management: Handles view type, navigation
+  history, active defect tracking
+  - Smart Navigation: Back/forward functionality, path-based
+  routing
+  - Search Integration: Handles search results display within
+  modal
+  - Responsive Behavior: Different behaviors for desktop/mobile
+
+  4. NavigationHeader.jsx - Navigation & Search Interface
+
+  - Dynamic Breadcrumbs: Context-aware path display with
+  clickable navigation
+  - Advanced Search: Manual search with result highlighting and
+  filtering
+  - Search Results Rendering: Complete search results display
+  with categorization
+  - Context-Aware Search: Scoped search within current section
+
+  5. styleUtils.js - Comprehensive Styling System
+
+  - Category-based Colors: Defect severity color schemes
+  - Responsive Classes: Mobile-first design utilities
+  - Component Classes: Modular styling for cards, buttons,
+  modals
+  - Animation Classes: Subtle transitions and hover effects
+
+  Mapping to Design System Patterns
+
+● Update Todos
+  ⎿  ☒ Analyze existing DefectDetail components to understand   
+       current functionality
+     ☒ Map current features and interactions to design system 
+       patterns
+     ☐ Create comprehensive refactoring plan maintaining all 
+       functionality
+
+● Comprehensive Refactoring Plan
+
+  Phase 1: Enhanced Card System Implementation
+
+  1.1 ContentView Refactoring
+
+  - Convert static cards to expandable card pattern: Apply
+  hover:scale-[1.02] effects and expandable content for defect
+  previews
+  - Implement section navigation tabs: Use design system's
+  section navigation pattern for view switching
+  - Add scroll-triggered animations: Implement intersection
+  observer for card entrance animations
+  - Enhance loading states: Replace basic spinners with skeleton
+   loading cards
+
+  1.2 MotDefectDetail Enhancements
+
+  - Premium expandable sections: Convert existing toggles to
+  design system's expandable card pattern with icons
+  - Progressive disclosure: Enhanced visual hierarchy with
+  proper spacing and premium animations
+  - Interactive procedure steps: Convert numbered steps to
+  interactive cards with hover states
+  - Cross-reference enhancement: Style links with premium button
+   design and hover effects
+
+  Phase 2: Emotional Engagement & Interactivity
+
+  2.1 Animation & Transitions
+
+  - Staggered card animations: Add entrance animations with
+  index-based delays
+  - Smooth section transitions: 300-500ms duration transitions
+  with proper easing
+  - Hover state enhancements: Scale effects and shadow
+  transitions
+  - Modal entrance animations: Subtle scale and fade effects
+
+  2.2 Visual Hierarchy Improvements
+
+  - Typography consolidation: Apply design system typography
+  hierarchy consistently
+  - Icon system enhancement: Standardize all icons to Phosphor
+  with proper sizing
+  - Color system refinement: Remove any remaining borders, rely
+  on shadows and color backgrounds
+  - Metric display enhancement: Make defect counts and
+  statistics more prominent
+
+  Phase 3: Professional Authority Signals
+
+  3.1 Data Presentation Enhancement
+
+  - Metric cards: Convert defect counts to prominent numerical
+  displays with icons
+  - Status indicators: Enhanced badges with proper color coding
+  and animations
+  - Progress visualization: Add progress bars for defect
+  severity breakdown
+  - Technical requirements: Better presentation of efficiency
+  percentages and thresholds
+
+  3.2 Navigation & Search Improvements
+
+  - Premium search interface: Enhanced search with better visual
+   feedback
+  - Contextual breadcrumbs: Improved path display with better
+  typography
+  - Search results enhancement: Cards with better highlighting
+  and categorization
+  - Smart navigation: Preserve current back/forward
+  functionality but enhance visually
+
+  Phase 4: Implementation Strategy
+
+  4.1 Component-by-Component Approach
+
+  1. styleUtils.js - Update with design system classes, remove
+  border dependencies
+  2. ContentView.jsx - Apply new card patterns, add animations,
+  enhance loading states
+  3. MotDefectDetail.jsx - Implement expandable sections,
+  enhance text formatting
+  4. NavigationHeader.jsx - Apply new typography, enhance search
+   interface
+  5. MotDefectModal.jsx - Update modal styling, enhance
+  responsive behavior
+
+  4.2 Preserved Functionality Requirements
+
+  - All API integrations: Keep exact same API calls and caching
+  logic
+  - State management: Preserve all existing state patterns and
+  navigation logic
+  - Search functionality: Maintain search logic, result
+  filtering, and highlighting
+  - Cross-references: Keep clickable section references and
+  navigation
+  - Responsive behavior: Maintain mobile-first approach and
+  responsive patterns
+  - Modal behavior: Preserve escape key, overlay click, and
+  scroll prevention
+  - Error handling: Keep all loading and error states
+
+  4.3 Quality Assurance Checklist
+
+  - Visual consistency: All components follow borderless design
+  with shadows
+  - Interaction polish: Smooth hover states and transitions on
+  all interactive elements
+  - Professional presentation: Prominent metrics, clean
+  typography, authentic data display
+  - Performance: Optimized animations and efficient re-renders
+  - Accessibility: Maintain ARIA labels and keyboard navigation
+
+  Expected Outcomes
+
+  - Premium feel: Every interaction feels smooth and responsive
+  - Visual cohesion: Consistent design language across all
+  components
+  - Enhanced usability: Better information hierarchy and
+  progressive disclosure
+  - Maintained functionality: All existing features preserved
+  with enhanced presentation
+  - Professional appearance: Conveys technical authority through
+   clean, sophisticated design
+
+● Update Todos
+  ⎿  ☒ Analyze existing DefectDetail components to understand   
+       current functionality
+     ☒ Map current features and interactions to design system 
+       patterns
+     ☒ Create comprehensive refactoring plan maintaining all 
+       functionality
+
+● This plan maintains all existing functionality while
+  implementing the ultra-minimal, emotionally engaging design
+  system. The phased approach ensures we can implement changes
+  systematically while preserving the complex state management,
+  API integrations, and user interactions that make these
+  components highly functional.
+
+  Ready to proceed with implementation when you give the
+  go-ahead!
+
+> ok looks good lets go ahead
+
+● Update Todos
+  ⎿  ☐ Update styleUtils.js with enhanced design system classes 
+     ☐ Refactor ContentView.jsx with expandable cards and
+       animations
+     ☐ Enhance MotDefectDetail.jsx with premium expandable
+       sections
+     ☐ Upgrade NavigationHeader.jsx with improved typography and
+       search
+     ☐ Polish MotDefectModal.jsx with enhanced styling
+
+● Update(frontend/src/components/Results/DefectDetail/styleUtils
+        .js)
+  ⎿  Updated                                                    
+     frontend/src/components/Results/DefectDetail/styleUtils.js
+     with 63 additions and 25 removals
+       138    };
+       139    
+       140    /**
+       141 -   * Card classes following ultra-minimal design 
+     system
+           - system
+       141 +   * Card classes following ultra-minimal design 
+     system - NO BORDERS
+           + system - NO BORDERS
+       142     */
+       143    export const cardClasses = {
+       144 -    base: 'bg-white rounded-lg p-6 shadow-sm 
+     hover:shadow-md transition-shadow duration-200',
+           - hover:shadow-md transition-shadow duration-200',
+       145 -    interactive: 'bg-white rounded-lg p-6 shadow-sm 
+     hover:shadow-md transition-shadow duration-200 
+     cursor-pointer',
+           - hover:shadow-md transition-shadow duration-200 
+           - cursor-pointer',
+       144 +    base: 'bg-white rounded-lg p-4 md:p-6 shadow-sm 
+     hover:shadow-lg hover:scale-[1.02] transition-all 
+     duration-300',
+           + hover:shadow-lg hover:scale-[1.02] transition-all 
+           + duration-300',
+       145 +    interactive: 'bg-white rounded-lg p-4 md:p-6 
+     shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all 
+     duration-300 cursor-pointer',
+           + shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           + transition-all duration-300 cursor-pointer',
+       146      secondary: 'bg-neutral-50 rounded-lg p-4 
+             shadow-sm',
+       147 -    section: 'bg-white rounded-lg p-6 shadow-sm 
+     border-l-4',
+           - border-l-4',
+       147 +    expandable: 'bg-white rounded-lg p-4 md:p-6 
+     shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all
+     duration-300 cursor-pointer',
+           + shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           + transition-all duration-300 cursor-pointer',
+       148 +    section: (category) => {
+       149 +      const colors = getCategoryColors(category);
+       150 +      return `${colors.bg} rounded-lg p-4 md:p-6 
+           + shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           + transition-all duration-300`;
+       151 +    },
+       152      category: (category) => {
+       153        const colors = getCategoryColors(category);
+       154 -      return `${colors.bg} rounded-lg p-6 border-l-4 
+     ${colors.border}`;
+           - ${colors.border}`;
+       154 +      return `${colors.bg} rounded-lg p-4 md:p-6 
+     shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all
+     duration-300`;
+           + shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           + transition-all duration-300`;
+       155      }
+       156    };
+       157    
+     ...
+       161    };
+       162    
+       163    /**
+       164 -   * Loading and error state classes
+       164 +   * Loading and error state classes - NO BORDERS
+       165     */
+       166    export const stateClasses = {
+       167 -    loading: 'flex justify-center items-center 
+     min-h-48 flex-col gap-4',
+           - min-h-48 flex-col gap-4',
+       167 +    loading: 'flex justify-center items-center 
+     min-h-48 flex-col gap-6',
+           + min-h-48 flex-col gap-6',
+       168      spinner: 'w-8 h-8 border-3 border-neutral-200 
+             border-t-blue-600 rounded-full animate-spin',
+       169 -    error: 'bg-red-50 rounded-lg p-6 shadow-sm 
+     text-red-600 text-center border-l-4 border-l-red-500',
+           - text-red-600 text-center border-l-4 
+           - border-l-red-500',
+       170 -    infoBox: 'bg-blue-50 rounded-lg p-4 border-l-4 
+     border-l-blue-500'
+           - border-l-blue-500'
+       169 +    error: 'bg-red-50 rounded-lg p-4 md:p-6 
+     shadow-sm text-red-600 text-center',
+           +  text-red-600 text-center',
+       170 +    infoBox: 'bg-blue-50 rounded-lg p-4 shadow-sm'
+       171    };
+       172    
+       173    /**
+       174 -   * Modal classes for full-screen mobile behavior
+       174 +   * Modal classes for full-screen mobile behavior - 
+     NO BORDERS
+           + NO BORDERS
+       175     */
+       176    export const modalClasses = {
+       177      overlay: 'fixed inset-0 bg-black/80 z-50 flex 
+             items-center justify-center p-8 md:p-0 
+             md:bg-transparent',
+       178      content: 'bg-white w-full max-w-6xl max-h-[90vh] 
+             overflow-y-auto relative rounded-lg md:fixed 
+             md:inset-0 md:max-w-none md:max-h-none 
+             md:rounded-none',
+       179 -    header: 'sticky top-0 left-0 right-0 bg-white 
+     border-b border-neutral-200 z-10 p-6',
+           - border-b border-neutral-200 z-10 p-6',
+       180 -    closeButton: 'w-12 h-12 bg-white border-2 
+     border-neutral-300 rounded-full flex items-center 
+     justify-center text-neutral-600 hover:text-neutral-900
+     hover:bg-neutral-50 hover:border-neutral-400 
+     transition-colors duration-200 hover:shadow-sm'
+           - border-neutral-300 rounded-full flex items-center 
+           - justify-center text-neutral-600 
+           - hover:text-neutral-900 hover:bg-neutral-50 
+           - hover:border-neutral-400 transition-colors 
+           - duration-200 hover:shadow-sm'
+       179 +    header: 'sticky top-0 left-0 right-0 bg-white 
+     shadow-sm z-10 p-6',
+           + shadow-sm z-10 p-6',
+       180 +    closeButton: 'w-12 h-12 bg-white rounded-full 
+     flex items-center justify-center text-neutral-600
+     hover:text-neutral-900 hover:bg-neutral-50 transition-all 
+     duration-300 hover:shadow-lg hover:scale-110 shadow-sm'
+           + flex items-center justify-center text-neutral-600 
+           + hover:text-neutral-900 hover:bg-neutral-50 
+           + transition-all duration-300 hover:shadow-lg 
+           + hover:scale-110 shadow-sm'
+       181    };
+       182    
+       183    /**
+       184 -   * Form input classes
+       184 +   * Form input classes - NO BORDERS
+       185     */
+       186    export const inputClasses = {
+       187 -    base: 'w-full px-3 py-2 text-sm rounded-lg 
+     bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 
+     focus:outline-none shadow-sm',
+           - bg-neutral-50 border-none focus:ring-2 
+           - focus:ring-blue-500 focus:outline-none shadow-sm',
+       188 -    search: 'flex-1 px-3 py-2 text-sm rounded-lg 
+     bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 
+     focus:outline-none shadow-sm'
+           - bg-neutral-50 border-none focus:ring-2 
+           - focus:ring-blue-500 focus:outline-none shadow-sm'
+       187 +    base: 'w-full px-3 py-2 text-sm rounded-lg 
+     bg-white focus:ring-2 focus:ring-blue-500 
+     focus:outline-none shadow-sm',
+           + bg-white focus:ring-2 focus:ring-blue-500 
+           + focus:outline-none shadow-sm',
+       188 +    search: 'w-full px-4 py-3 text-sm rounded-lg 
+     bg-neutral-50 focus:ring-2 focus:ring-blue-500 
+     focus:outline-none shadow-sm transition-all duration-200'
+           + bg-neutral-50 focus:ring-2 focus:ring-blue-500 
+           + focus:outline-none shadow-sm transition-all 
+           + duration-200'
+       189    };
+       190    
+       191    /**
+     ...
+       208    };
+       209    
+       210    /**
+       211 -   * Animation and transition classes - subtle and 
+     performance-focused
+           - performance-focused
+       211 +   * Animation and transition classes - premium and 
+     emotionally engaging
+           + emotionally engaging
+       212     */
+       213    export const animationClasses = {
+       214 -    // Simple hover effects
+       215 -    hover: 'hover:shadow-md transition-shadow 
+     duration-200',
+           - duration-200',
+       216 -    smooth: 'transition-all duration-200 ease-out',
+       217 -    // Modal animations - subtle
+       218 -    modalEnter: 
+     'animate-[modalFadeIn_0.2s_ease-out]',
+           - 'animate-[modalFadeIn_0.2s_ease-out]',
+       219 -    // Expandable content - using CSS transitions 
+     only
+           - only
+       220 -    expandable: 'transition-transform duration-200 
+     ease-out',
+           - ease-out',
+       221 -    // Section toggles
+       222 -    sectionToggle: 'transition-transform 
+     duration-200'
+           - duration-200'
+       214 +    // Premium hover effects
+       215 +    hover: 'hover:shadow-lg hover:scale-[1.02] 
+     transition-all duration-300',
+           + transition-all duration-300',
+       216 +    hoverSmall: 'hover:scale-110 transition-all 
+     duration-300',
+           + duration-300',
+       217 +    smooth: 'transition-all duration-300 ease-out',
+       218 +    // Modal animations - premium
+       219 +    modalEnter: 
+     'animate-[modalFadeIn_0.3s_ease-out]',
+           + 'animate-[modalFadeIn_0.3s_ease-out]',
+       220 +    // Expandable content with premium feel
+       221 +    expandable: 'transition-all duration-300 
+     ease-out',
+           + ease-out',
+       222 +    // Section toggles with smooth rotation
+       223 +    sectionToggle: 'transition-transform 
+           + duration-300',
+       224 +    // Staggered entrance animations
+       225 +    staggered: (index) => `opacity-0 translate-y-4 
+           + animate-[fadeInUp_0.5s_ease-out_${index * 
+           + 100}ms_forwards]`
+       226    };
+       227    
+       228    /**
+     ...
+       239    };
+       240    
+       241    /**
+       242 +   * Premium interaction patterns
+       243 +   */
+       244 +  export const interactionClasses = {
+       245 +    // Expandable card header
+       246 +    expandableHeader: 'flex items-center 
+           + justify-between cursor-pointer',
+       247 +    // Icon containers with premium styling
+       248 +    iconContainer: (color) => `w-12 h-12 ${color}-50 
+           + rounded-full flex items-center justify-center`,
+       249 +    iconContainerSmall: (color) => `w-8 h-8 
+           + ${color}-50 rounded-full flex items-center 
+           + justify-center`,
+       250 +    // Status indicators
+       251 +    statusDot: (color) => `w-3 h-3 ${color} 
+           + rounded-full`,
+       252 +    statusDotSmall: (color) => `w-2 h-2 ${color} 
+           + rounded-full`,
+       253 +    // Progress indicators
+       254 +    progressBar: 'w-full bg-neutral-200 rounded-full 
+           + h-2 overflow-hidden',
+       255 +    progressFill: 'h-full bg-gradient-to-r 
+           + from-blue-500 to-green-500 rounded-full 
+           + transition-all duration-1000 ease-out'
+       256 +  };
+       257 +  
+       258 +  /**
+       259 +   * Scroll-triggered animation utilities
+       260 +   */
+       261 +  export const scrollAnimationClasses = {
+       262 +    hidden: 'opacity-0 translate-y-4',
+       263 +    visible: 'opacity-100 translate-y-0',
+       264 +    transition: 'transition-all duration-500 
+           + ease-out'
+       265 +  };
+       266 +  
+       267 +  /**
+       268     * Additional CSS animations for Tailwind
+       269     * Add these to your tailwind.config.js or global 
+             CSS
+       270     */
+     ...
+       248        to { opacity: 1; transform: scale(1); }
+       249      }
+       250      
+       251 +    @keyframes fadeInUp {
+       252 +      from { opacity: 0; transform: 
+     translateY(16px);
+           +  }
+       253 +      to { opacity: 1; transform: translateY(0); }
+       254 +    }
+       255 +    
+       256      .scrollbar-none {
+       257        scrollbar-width: none;
+       258        -ms-overflow-style: none;
+
+● Update Todos
+  ⎿  ☒ Update styleUtils.js with enhanced design system classes 
+     ☐ Refactor ContentView.jsx with expandable cards and 
+       animations
+     ☐ Enhance MotDefectDetail.jsx with premium expandable
+       sections
+     ☐ Upgrade NavigationHeader.jsx with improved typography and
+       search
+     ☐ Polish MotDefectModal.jsx with enhanced styling
+
+● Update(frontend/src/components/Results/DefectDetail/ContentVie
+        w.jsx)
+  ⎿  Error editing file
+
+● Update(frontend/src/components/Results/DefectDetail/ContentVie
+        w.jsx)
+  ⎿  Updated                                                    
+     frontend/src/components/Results/DefectDetail/ContentView.jsx
+      with 20 additions and 12 removals
+        1 -  import React, { useState, useEffect } from 'react';
+        1 +  import React, { useState, useEffect, useRef } from 
+     'react';
+          + 'react';
+        2    import { fetchSection, fetchSubsection, 
+            fetchAllSections } from './apiUtils';
+        3    import { 
+        4      getCategoryColors,
+        5      getCategoryIcon,
+        6 +    cardClasses,
+        7 +    animationClasses,
+        8 +    scrollAnimationClasses,
+        9 +    interactionClasses,
+       10      cn 
+       11    } from './styleUtils';
+       12    
+     ...
+       63      if (error) {
+       64        return (
+       65          <div className="max-w-6xl mx-auto p-4 md:p-6 
+            lg:p-8">
+       66 -          <div className="bg-red-50 rounded-lg p-6 
+     shadow-sm text-red-600 text-center border-l-4 
+     border-l-red-500">
+          - shadow-sm text-red-600 text-center border-l-4 
+          - border-l-red-500">
+       66 +          <div className="bg-red-50 rounded-lg p-4 
+     md:p-6 shadow-sm text-red-600 text-center">
+          + md:p-6 shadow-sm text-red-600 text-center">
+       67              <div className="flex items-center 
+            justify-center gap-3 mb-2">
+       68                <i className="ph ph-warning-circle 
+            text-2xl text-red-600"></i>
+       69                <h3 className="text-lg font-semibold 
+            text-red-900">Error Loading Content</h3>
+     ...
+       77      if (!contentData) {
+       78        return (
+       79          <div className="max-w-6xl mx-auto p-4 md:p-6 
+            lg:p-8">
+       80 -          <div className="bg-neutral-50 rounded-lg 
+     p-6 shadow-sm text-center border-l-4 border-l-neutral-400">
+          -  shadow-sm text-center border-l-4 
+          - border-l-neutral-400">
+       80 +          <div className="bg-neutral-50 rounded-lg 
+     p-4 md:p-6 shadow-sm text-center">
+          +  md:p-6 shadow-sm text-center">
+       81              <div className="flex items-center 
+            justify-center gap-3 mb-2">
+       82                <i className="ph ph-file-x text-2xl 
+            text-neutral-600"></i>
+       83                <h3 className="text-lg font-semibold 
+            text-neutral-900">No Data Found</h3>
+     ...
+        94          <div className="max-w-6xl mx-auto p-4 md:p-6 
+             lg:p-8">
+        95            <div className="mt-8 mb-12">
+        96              <div className="flex items-center gap-4 
+             mb-6">
+        97 -              <div className="w-12 h-12 bg-blue-50 
+     rounded-full flex items-center justify-center">
+           - rounded-full flex items-center justify-center">
+        97 +              <div 
+     className={interactionClasses.iconContainer('bg-blue')}>
+           + Container('bg-blue')}>
+        98                  <i className="ph ph-book-open 
+     text-xl
+              text-blue-600"></i>
+        99                </div>
+       100                <div>
+       101 -                <h1 className="text-3xl font-bold 
+     text-neutral-900 leading-tight tracking-tight">
+           - text-neutral-900 leading-tight tracking-tight">
+       101 +                <h1 className="text-2xl font-semibold
+      text-neutral-900 leading-tight tracking-tight mb-3">
+
+           +  text-neutral-900 leading-tight tracking-tight 
+           + mb-3">
+       102                    {contentData.title || 'MOT 
+     Manual'}
+       103                  </h1>
+       104                  <p className="text-sm 
+             text-neutral-600 mt-1">
+     ...
+       112              {contentData.sections?.map((section, 
+             index) => (
+       113                <div
+       114                  key={section.id}
+       115 -                className="bg-white rounded-lg p-6 
+     shadow-sm hover:shadow-md transition-shadow duration-200
+     cursor-pointer border-l-4 border-l-blue-500"
+           - shadow-sm hover:shadow-md transition-shadow 
+           - duration-200 cursor-pointer border-l-4 
+           - border-l-blue-500"
+       115 +                className={cardClasses.interactive}
+       116                  onClick={() => 
+             onNavigateToSection(section.id)}
+       117 +                style={{ animationDelay: `${index * 
+           + 100}ms` }}
+       118                >
+       119                  <div className="flex items-start 
+             gap-4 mb-4">
+       120                    <div className="w-10 h-10 
+             bg-blue-50 rounded-full flex items-center 
+             justify-center flex-shrink-0">
+       121                      <span className="text-sm 
+             font-bold text-blue-600">{section.id}</span>
+       122                    </div>
+       123                    <div className="flex-1">
+       124 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900 mb-2">
+           - font-semibold text-neutral-900 mb-2">
+       124 +                    <h3 className="text-sm 
+     font-medium text-neutral-900 mb-2">
+           + font-medium text-neutral-900 mb-2">
+       125                        {section.title}
+       126                      </h3>
+       127                      
+       128                      {section.description && (
+       129 -                      <p className="text-sm 
+     text-neutral-700 leading-relaxed mb-4">
+           - text-neutral-700 leading-relaxed mb-4">
+       129 +                      <p className="text-xs 
+     text-neutral-700 leading-relaxed mb-4">
+           + text-neutral-700 leading-relaxed mb-4">
+       130                          {(section.description || 
+             '').length > 180 
+       131                            ? `${(section.description 
+             || '').substring(0, 180)}...` 
+       132                            : (section.description || 
+             '')
+     ...
+       135                      
+       136                      <div className="flex 
+     items-center
+              gap-2">
+       137                        <i className="ph ph-folder 
+             text-sm text-neutral-500"></i>
+       138 -                      <span className="text-sm 
+     text-neutral-600 font-medium">
+           - text-neutral-600 font-medium">
+       138 +                      <span className="text-xs 
+     text-neutral-600 font-medium">
+           + text-neutral-600 font-medium">
+       139                          {section.subsections?.length 
+             || 0} subsection{(section.subsections?.length || 0) 
+             !== 1 ? 's' : ''}
+       140                        </span>
+       141                      </div>
+       142                    </div>
+       143                  </div>
+       144                  
+       145 -                <div className="flex items-center 
+     justify-between pt-4 border-t border-neutral-100">
+           - justify-between pt-4 border-t border-neutral-100">
+       146 -                  <span className="text-xs 
+     text-neutral-500">Section {section.id}</span>
+           - text-neutral-500">Section {section.id}</span>
+       147 -                  <i className="ph ph-arrow-right 
+     text-sm text-blue-600"></i>
+           - text-sm text-blue-600"></i>
+       145 +                <div className="flex items-center 
+     justify-between pt-4 mt-4">
+           + justify-between pt-4 mt-4">
+       146 +                  <div className="flex items-end 
+     gap-2">
+           + gap-2">
+       147 +                    <div className="text-2xl 
+     font-bold text-blue-600">{section.subsections?.length ||
+     0}</div>
+           + font-bold 
+           + text-blue-600">{section.subsections?.length || 
+           + 0}</div>
+       148 +                    <div className="text-xs 
+           + text-blue-600">subsections</div>
+       149 +                  </div>
+       150 +                  <i className="ph ph-arrow-right 
+           + text-lg text-blue-600"></i>
+       151                  </div>
+       152                </div>
+       153              ))}
+
+● Update(frontend/src/components/Results/DefectDetail/ContentVie
+        w.jsx)
+  ⎿  Updated                                                    
+     frontend/src/components/Results/DefectDetail/ContentView.jsx
+      with 13 additions and 9 removals
+       173          <div className="max-w-6xl mx-auto p-4 md:p-6 
+             lg:p-8">
+       174            <div className="mt-8 mb-12">
+       175              <div className="flex items-center gap-4 
+             mb-6">
+       176 -              <div className="w-12 h-12 bg-green-50 
+     rounded-full flex items-center justify-center">
+           - rounded-full flex items-center justify-center">
+       176 +              <div 
+     className={interactionClasses.iconContainer('bg-green')}>
+           + Container('bg-green')}>
+       177                  <i className="ph ph-folder-open 
+             text-xl text-green-600"></i>
+       178                </div>
+       179                <div>
+       180 -                <h1 className="text-3xl font-bold 
+     text-neutral-900 leading-tight tracking-tight">
+           - text-neutral-900 leading-tight tracking-tight">
+       180 +                <h1 className="text-2xl font-semibold
+      text-neutral-900 leading-tight tracking-tight mb-3">
+
+           +  text-neutral-900 leading-tight tracking-tight 
+           + mb-3">
+       181                    Section {contentData.id}: 
+             {contentData.title}
+       182                  </h1>
+       183                  {contentData.description && (
+     ...
+       193              
+             {contentData.subsections?.map((subsection, index) 
+     =>
+              (
+       194                <div
+       195                  key={subsection.id}
+       196 -                className="bg-white rounded-lg p-6 
+     shadow-sm hover:shadow-md transition-shadow duration-200
+     cursor-pointer border-l-4 border-l-green-500"
+           - shadow-sm hover:shadow-md transition-shadow 
+           - duration-200 cursor-pointer border-l-4 
+           - border-l-green-500"
+       196 +                
+     className={cardClasses.section('green')}
+           + className={cardClasses.section('green')}
+       197                  onClick={() => 
+             onNavigateToSubsection(subsection.id)}
+       198 +                style={{ animationDelay: `${index * 
+           + 100}ms` }}
+       199                >
+       200                  <div className="flex items-start 
+             gap-4 mb-4">
+       201                    <div className="w-10 h-10 
+             bg-green-50 rounded-full flex items-center 
+             justify-center flex-shrink-0">
+       202                      <span className="text-sm 
+             font-bold 
+             
+     text-green-600">{subsection.id.split('.')[1]}</span>
+       203                    </div>
+       204                    <div className="flex-1">
+       205 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900 mb-2">
+           - font-semibold text-neutral-900 mb-2">
+       205 +                    <h3 className="text-sm 
+     font-medium text-neutral-900 mb-2">
+           + font-medium text-neutral-900 mb-2">
+       206                        {subsection.title}
+       207                      </h3>
+       208                      
+       209                      {subsection.description && (
+       210 -                      <p className="text-sm 
+     text-neutral-700 leading-relaxed mb-4">
+           - text-neutral-700 leading-relaxed mb-4">
+       210 +                      <p className="text-xs 
+     text-neutral-700 leading-relaxed mb-4">
+           + text-neutral-700 leading-relaxed mb-4">
+       211                          {(subsection.description || 
+             '').length > 180 
+       212                            ? 
+             `${(subsection.description || '').substring(0, 
+             180)}...` 
+       213                            : (subsection.description 
+             || '')
+     ...
+       216                      
+       217                      <div className="flex 
+     items-center
+              gap-2">
+       218                        <i className="ph ph-list 
+             text-sm text-neutral-500"></i>
+       219 -                      <span className="text-sm 
+     text-neutral-600 font-medium">
+           - text-neutral-600 font-medium">
+       219 +                      <span className="text-xs 
+     text-neutral-600 font-medium">
+           + text-neutral-600 font-medium">
+       220                          {subsection.items?.length || 
+             0} inspection item{(subsection.items?.length || 0) 
+             !== 1 ? 's' : ''}
+       221                        </span>
+       222                      </div>
+       223                    </div>
+       224                  </div>
+       225                  
+       226 -                <div className="flex items-center 
+     justify-between pt-4 border-t border-neutral-100">
+           - justify-between pt-4 border-t border-neutral-100">
+       227 -                  <span className="text-xs 
+     text-neutral-500">Subsection {subsection.id}</span>
+           - text-neutral-500">Subsection {subsection.id}</span>
+       228 -                  <i className="ph ph-arrow-right 
+     text-sm text-green-600"></i>
+           - text-sm text-green-600"></i>
+       226 +                <div className="flex items-center 
+     justify-between pt-4 mt-4">
+           + justify-between pt-4 mt-4">
+       227 +                  <div className="flex items-end 
+     gap-2">
+           + gap-2">
+       228 +                    <div className="text-2xl 
+     font-bold text-green-600">{subsection.items?.length ||
+     0}</div>
+           + font-bold text-green-600">{subsection.items?.length 
+           + || 0}</div>
+       229 +                    <div className="text-xs 
+           + text-green-600">items</div>
+       230 +                  </div>
+       231 +                  <i className="ph ph-arrow-right 
+           + text-lg text-green-600"></i>
+       232                  </div>
+       233                </div>
+       234              ))}
+
+● Update(frontend/src/components/Results/DefectDetail/ContentVie
+        w.jsx)
+  ⎿  Updated                                                    
+     frontend/src/components/Results/DefectDetail/ContentView.jsx
+      with 15 additions and 11 removals
+       250          <div className="max-w-6xl mx-auto p-4 md:p-6 
+             lg:p-8">
+       251            <div className="mt-8 mb-12">
+       252              <div className="flex items-center gap-4 
+             mb-6">
+       253 -              <div className="w-12 h-12 bg-orange-50 
+     rounded-full flex items-center justify-center">
+           - rounded-full flex items-center justify-center">
+       253 +              <div 
+     className={interactionClasses.iconContainer('bg-orange')}>
+           + Container('bg-orange')}>
+       254                  <i className="ph ph-list-checks 
+             text-xl text-orange-600"></i>
+       255                </div>
+       256                <div>
+       257 -                <h1 className="text-3xl font-bold 
+     text-neutral-900 leading-tight tracking-tight">
+           - text-neutral-900 leading-tight tracking-tight">
+       257 +                <h1 className="text-2xl font-semibold
+      text-neutral-900 leading-tight tracking-tight mb-3">
+
+           +  text-neutral-900 leading-tight tracking-tight 
+           + mb-3">
+       258                    Subsection {contentData.id}: 
+             {contentData.title}
+       259                  </h1>
+       260                  {contentData.description && (
+     ...
+       270              {contentData.items?.map((item, index) => 
+             (
+       271                <div
+       272                  key={item.id}
+       273 -                className="bg-white rounded-lg p-6 
+     shadow-sm hover:shadow-md transition-shadow duration-200
+     cursor-pointer border-l-4 border-l-orange-500"
+           - shadow-sm hover:shadow-md transition-shadow 
+           - duration-200 cursor-pointer border-l-4 
+           - border-l-orange-500"
+       273 +                
+     className={cardClasses.section('orange')}
+           + className={cardClasses.section('orange')}
+       274                  onClick={() => 
+             onNavigateToItem(item.id)}
+       275 +                style={{ animationDelay: `${index * 
+           + 100}ms` }}
+       276                >
+       277                  <div className="flex items-start 
+             gap-4 mb-4">
+       278                    <div className="w-10 h-10 
+             bg-orange-50 rounded-full flex items-center 
+             justify-center flex-shrink-0">
+       279                      <span className="text-sm 
+             font-bold 
+             text-orange-600">{item.id.split('.')[2]}</span>
+       280                    </div>
+       281                    <div className="flex-1">
+       282 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900 mb-2">
+           - font-semibold text-neutral-900 mb-2">
+       282 +                    <h3 className="text-sm 
+     font-medium text-neutral-900 mb-2">
+           + font-medium text-neutral-900 mb-2">
+       283                        {item.title}
+       284                      </h3>
+       285                      
+       286                      {item.description && (
+       287 -                      <p className="text-sm 
+     text-neutral-700 leading-relaxed mb-4">
+           - text-neutral-700 leading-relaxed mb-4">
+       287 +                      <p className="text-xs 
+     text-neutral-700 leading-relaxed mb-4">
+           + text-neutral-700 leading-relaxed mb-4">
+       288                          {(item.description || 
+             '').length > 160 
+       289                            ? `${(item.description || 
+             '').substring(0, 160)}...` 
+       290                            : (item.description || '')
+     ...
+       293                      
+       294                      <div className="flex 
+     items-center
+              gap-2 mb-4">
+       295                        <i className="ph ph-warning 
+             text-sm text-neutral-500"></i>
+       296 -                      <span className="text-sm 
+     text-neutral-600 font-medium">
+           - text-neutral-600 font-medium">
+       296 +                      <span className="text-xs 
+     text-neutral-600 font-medium">
+           + text-neutral-600 font-medium">
+       297                          {item.defects?.length || 0} 
+             possible defect{(item.defects?.length || 0) !== 1 ? 
+             's' : ''}
+       298                        </span>
+       299                      </div>
+     ...
+       307                        {item.defects.slice(0, 
+             2).map((defect, index) => {
+       308                          const colors = 
+             getCategoryColors(defect.category);
+       309                          return (
+       310 -                          <div key={index} 
+     className="bg-white rounded p-3 border border-neutral-200">
+           - className="bg-white rounded p-3 border 
+           - border-neutral-200">
+       310 +                          <div key={index} 
+     className="bg-white rounded-lg p-3 shadow-sm">
+           + className="bg-white rounded-lg p-3 shadow-sm">
+       311                              <div className="flex 
+             items-center gap-2 mb-2">
+       312                                <i className={`ph 
+             ph-${getCategoryIcon(defect.category)} 
+             text-sm`}></i>
+       313                                <span 
+             className={cn('px-2 py-1 rounded-full text-xs 
+             font-medium', colors.badge)}>
+       314                                  {defect.category}
+       315                                </span>
+       316                              </div>
+       317 -                            <p className="text-sm 
+     text-neutral-700 leading-relaxed">
+           - text-neutral-700 leading-relaxed">
+       317 +                            <p className="text-xs 
+     text-neutral-700 leading-relaxed">
+           + text-neutral-700 leading-relaxed">
+       318                                {(defect.description 
+     ||
+              '').length > 120 
+       319                                  ? 
+             `${(defect.description || '').substring(0, 
+     120)}...`
+              
+       320                                  : 
+     (defect.description
+              || '')
+     ...
+       334                    </div>
+       335                  )}
+       336                  
+       337 -                <div className="flex items-center 
+     justify-between pt-4 border-t border-neutral-100">
+           - justify-between pt-4 border-t border-neutral-100">
+       338 -                  <span className="text-xs 
+     text-neutral-500">Item {item.id}</span>
+           - text-neutral-500">Item {item.id}</span>
+       339 -                  <i className="ph ph-arrow-right 
+     text-sm text-orange-600"></i>
+           - text-sm text-orange-600"></i>
+       337 +                <div className="flex items-center 
+     justify-between pt-4 mt-4">
+           + justify-between pt-4 mt-4">
+       338 +                  <div className="flex items-end 
+     gap-2">
+           + gap-2">
+       339 +                    <div className="text-2xl 
+     font-bold text-orange-600">{item.defects?.length ||
+     0}</div>
+           + font-bold text-orange-600">{item.defects?.length || 
+           + 0}</div>
+       340 +                    <div className="text-xs 
+           + text-orange-600">defects</div>
+       341 +                  </div>
+       342 +                  <i className="ph ph-arrow-right 
+           + text-lg text-orange-600"></i>
+       343                  </div>
+       344                </div>
+       345              ))}
+
+● Update Todos
+  ⎿  ☒ Update styleUtils.js with enhanced design system classes 
+     ☒ Refactor ContentView.jsx with expandable cards and 
+       animations
+     ☐ Enhance MotDefectDetail.jsx with premium expandable 
+       sections
+     ☐ Upgrade NavigationHeader.jsx with improved typography and
+       search
+     ☐ Polish MotDefectModal.jsx with enhanced styling
+
+● Update(frontend/src/components/Results/DefectDetail/MotDefectD
+        etail.jsx)
+  ⎿  Updated frontend/src/components/Results/DefectDetail/MotDef
+     ctDetail.jsx with 102 additions and 101 removals
+        1 -  import React, { useState, useEffect, Fragment } 
+     from 'react';
+          -  'react';
+        1 +  import React, { useState, useEffect, Fragment, 
+     useRef } from 'react';
+          + useRef } from 'react';
+        2    import { extractDefectId, formatCategory, 
+            fetchDefectDetail } from './apiUtils';
+        3    import { 
+        4      getCategoryColors,
+        5      getCategoryIcon,
+        6 +    cardClasses,
+        7 +    animationClasses,
+        8 +    interactionClasses,
+        9      cn
+       10    } from './styleUtils';
+       11    
+     ...
+       227        if (!path?.length) return null;
+       228        
+       229        return (
+       230 -        <div className="bg-neutral-50 rounded-lg p-4 
+     mb-8 border-l-4 border-l-blue-500">
+           - mb-8 border-l-4 border-l-blue-500">
+       230 +        <div className="bg-blue-50 rounded-lg p-4 
+     mb-8 shadow-sm">
+           + mb-8 shadow-sm">
+       231            <div className="flex items-start gap-3">
+       232              <i className="ph ph-map-pin text-lg 
+             text-blue-600 mt-0.5"></i>
+       233              <div>
+     ...
+       301          <div className="mt-8 mb-12">
+       302            {defectDetail.data?.title && (
+       303              <div className="mb-6">
+       304 -              <h1 className="text-3xl font-bold 
+     text-neutral-900 leading-tight tracking-tight mb-4">
+           - text-neutral-900 leading-tight tracking-tight 
+     mb-4">
+       304 +              <h1 className="text-2xl font-semibold 
+     text-neutral-900 leading-tight tracking-tight mb-3">
+           + text-neutral-900 leading-tight tracking-tight 
+     mb-3">
+       305                  {defectDetail.id}: 
+             {defectDetail.data.title}
+       306                </h1>
+       307                
+     ...
+       322              
+       323            {/* Overview Section */}
+       324            {parsedContent.overview && (
+       325 -            <div className="bg-white rounded-lg p-6 
+     shadow-sm border-l-4 border-l-blue-500 mb-8">
+           - shadow-sm border-l-4 border-l-blue-500 mb-8">
+       326 -              <div 
+       327 -                className="flex items-center 
+     justify-between cursor-pointer"
+           - justify-between cursor-pointer"
+       328 -                onClick={() => 
+     toggleSection('overview')}
+           - toggleSection('overview')}
+       329 -              >
+       330 -                <div className="flex items-center 
+           - gap-4">
+       331 -                  <div className="w-12 h-12 
+           - bg-blue-50 rounded-full flex items-center 
+           - justify-center">
+       332 -                    <i className="ph 
+           - ph-magnifying-glass text-xl text-blue-600"></i>
+       333 -                  </div>
+       325 +            <div className={cardClasses.expandable} 
+     onClick={() => toggleSection('overview')}>
+           + onClick={() => toggleSection('overview')}>
+       326 +              <div 
+     className={interactionClasses.expandableHeader}>
+           + className={interactionClasses.expandableHeader}>
+       327 +                <div className="flex items-start">
+       328 +                  <i className="ph 
+     ph-magnifying-glass text-lg text-blue-600 mr-3 mt-0.5"></i>
+           + ph-magnifying-glass text-lg text-blue-600 mr-3 
+           + mt-0.5"></i>
+       329                    <div>
+       330 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900">Inspection Overview</h3>
+           - font-semibold text-neutral-900">Inspection 
+           - Overview</h3>
+       331 -                    <p className="text-sm 
+     text-neutral-600">Detailed inspection requirements</p>
+           - text-neutral-600">Detailed inspection 
+           - requirements</p>
+       330 +                    <div className="text-sm 
+     font-medium text-neutral-900">Inspection Overview</div>
+           + font-medium text-neutral-900">Inspection 
+           + Overview</div>
+       331 +                    <div className="text-xs 
+     text-neutral-600">Detailed inspection requirements</div>
+           + text-neutral-600">Detailed inspection 
+           + requirements</div>
+       332                    </div>
+       333                  </div>
+       334 -                <div className={`text-blue-600 
+     transition-transform duration-200 ${
+           - transition-transform duration-200 ${
+       335 -                  expandedSections.overview ? 
+     'rotate-180' : 'rotate-0'
+           - 'rotate-180' : 'rotate-0'
+       336 -                }`}>
+       337 -                  <i className="ph ph-caret-down 
+     text-lg"></i>
+           - text-lg"></i>
+       334 +                <div className="flex flex-col 
+     items-end">
+           + items-end">
+       335 +                  <div className={`text-blue-600 
+     transition-transform duration-300 ${
+           + transition-transform duration-300 ${
+       336 +                    expandedSections.overview ? 
+     'rotate-180' : 'rotate-0'
+           + 'rotate-180' : 'rotate-0'
+       337 +                  }`}>
+       338 +                    <i className="ph 
+           + ph-caret-down"></i>
+       339 +                  </div>
+       340                  </div>
+       341                </div>
+       342    
+       343                {expandedSections.overview && (
+       344 -                <div className="mt-6 pt-6 border-t 
+     border-neutral-200">
+           - border-neutral-200">
+       344 +                <div className="pt-3 border-t 
+     border-blue-200 space-y-2 text-xs text-neutral-700">
+           + border-blue-200 space-y-2 text-xs 
+     text-neutral-700">
+       345                    <div className="prose prose-sm 
+             max-w-none text-neutral-700">
+       346                      
+             {formatText(parsedContent.overview, 
+             onNavigateToPath)}
+       347                    </div>
+     ...
+       355    
+       356            {/* Testing Procedures Section */}
+       357            {parsedContent.sections.length > 0 && (
+       358 -            <div className="bg-white rounded-lg p-6 
+     shadow-sm border-l-4 border-l-green-500 mb-8">
+           - shadow-sm border-l-4 border-l-green-500 mb-8">
+       359 -              <div 
+       360 -                className="flex items-center 
+     justify-between cursor-pointer"
+           - justify-between cursor-pointer"
+       361 -                onClick={() => 
+     toggleSection('procedures')}
+           - toggleSection('procedures')}
+       362 -              >
+       363 -                <div className="flex items-center 
+           - gap-4">
+       364 -                  <div className="w-12 h-12 
+           - bg-green-50 rounded-full flex items-center 
+           - justify-center">
+       365 -                    <i className="ph 
+           - ph-clipboard-text text-xl text-green-600"></i>
+       366 -                  </div>
+       358 +            <div className={cardClasses.expandable} 
+     onClick={() => toggleSection('procedures')}>
+           + onClick={() => toggleSection('procedures')}>
+       359 +              <div 
+     className={interactionClasses.expandableHeader}>
+           + className={interactionClasses.expandableHeader}>
+       360 +                <div className="flex items-start">
+       361 +                  <i className="ph ph-clipboard-text 
+     text-lg text-green-600 mr-3 mt-0.5"></i>
+           + text-lg text-green-600 mr-3 mt-0.5"></i>
+       362                    <div>
+       363 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900">Testing Procedures</h3>
+           - font-semibold text-neutral-900">Testing 
+           - Procedures</h3>
+       364 -                    <p className="text-sm 
+     text-neutral-600">{parsedContent.sections.length}
+     procedure{parsedContent.sections.length !== 1 ? 's' :
+     ''}</p>
+           - text-neutral-600">{parsedContent.sections.length} 
+           - procedure{parsedContent.sections.length !== 1 ? 's' 
+           - : ''}</p>
+       363 +                    <div className="text-sm 
+     font-medium text-neutral-900">Testing Procedures</div>
+           + font-medium text-neutral-900">Testing 
+           + Procedures</div>
+       364 +                    <div className="text-xs 
+     text-neutral-600">{parsedContent.sections.length}
+     procedure{parsedContent.sections.length !== 1 ? 's' :
+     ''}</div>
+           + text-neutral-600">{parsedContent.sections.length} 
+           + procedure{parsedContent.sections.length !== 1 ? 's' 
+           + : ''}</div>
+       365                    </div>
+       366                  </div>
+       367 -                <div className={`text-green-600 
+     transition-transform duration-200 ${
+           - transition-transform duration-200 ${
+       368 -                  expandedSections.procedures ? 
+     'rotate-180' : 'rotate-0'
+           - 'rotate-180' : 'rotate-0'
+       369 -                }`}>
+       370 -                  <i className="ph ph-caret-down 
+     text-lg"></i>
+           - text-lg"></i>
+       367 +                <div className="flex flex-col 
+     items-end">
+           + items-end">
+       368 +                  <div className="text-2xl font-bold 
+     text-green-600">{parsedContent.sections.length}</div>
+           + 
+     text-green-600">{parsedContent.sections.length}</div
+           + >
+       369 +                  <div className="text-xs 
+     text-green-600">procedures</div>
+           + text-green-600">procedures</div>
+       370 +                  <div className={`text-green-600 
+     transition-transform duration-300 ${
+           + transition-transform duration-300 ${
+       371 +                    expandedSections.procedures ? 
+           + 'rotate-180' : 'rotate-0'
+       372 +                  }`}>
+       373 +                    <i className="ph 
+           + ph-caret-down"></i>
+       374 +                  </div>
+       375                  </div>
+       376                </div>
+       377                {expandedSections.procedures && (
+       378 -                <div className="mt-6 pt-6 border-t 
+     border-neutral-200">
+           - border-neutral-200">
+       378 +                <div className="pt-3 border-t 
+     border-green-200 space-y-2 text-xs text-neutral-700">
+           + border-green-200 space-y-2 text-xs 
+           + text-neutral-700">
+       379                    <div className="space-y-8">
+       380                      
+             {parsedContent.sections.map((section, index) => (
+       381                        <div key={index} 
+             className="bg-neutral-50 rounded-lg p-6">
+     ...
+       389                          {section.content.length > 0 
+             && (
+       390                            <div 
+     className="space-y-4">
+       391                              
+             {parseProcedures(section.content).map((step, 
+             stepIndex) => (
+       392 -                              <div key={stepIndex} 
+     className="bg-white rounded-lg p-4 border 
+     border-neutral-200">
+           - className="bg-white rounded-lg p-4 border 
+           - border-neutral-200">
+       392 +                              <div key={stepIndex} 
+     className="bg-white rounded-lg p-4 shadow-sm">
+           + className="bg-white rounded-lg p-4 shadow-sm">
+       393                                  <div className="flex 
+             gap-3">
+       394                                    <div 
+             className="flex-shrink-0 w-8 h-8 bg-blue-600 
+             text-white rounded-full flex items-center 
+             justify-center text-sm font-semibold">
+       395                                      {step.number || 
+             stepIndex + 1}
+     ...
+       399                                        {step.title}
+       400                                      </p>
+       401                                      
+             {step.details.map((detail, detailIndex) => (
+       402 -                                      <p 
+     key={detailIndex} className="text-sm text-neutral-700 
+     leading-relaxed mb-1 last:mb-0">
+           - key={detailIndex} className="text-sm 
+           - text-neutral-700 leading-relaxed mb-1 last:mb-0">
+       402 +                                      <p 
+     key={detailIndex} className="text-xs text-neutral-700 
+     leading-relaxed mb-1 last:mb-0">
+           + key={detailIndex} className="text-xs 
+           + text-neutral-700 leading-relaxed mb-1 last:mb-0">
+       403                                          
+             {formatCrossReferences(detail, onNavigateToPath)}
+       404                                        </p>
+       405                                      ))}
+     ...
+       419    
+       420            {/* Defect Categories Section */}
+       421            {defectDetail.data?.defects && 
+             defectDetail.data.defects.length > 0 && (
+       422 -            <div className="bg-white rounded-lg p-6 
+     shadow-sm border-l-4 border-l-orange-500 mb-8">
+           - shadow-sm border-l-4 border-l-orange-500 mb-8">
+       423 -              <div 
+       424 -                className="flex items-center 
+     justify-between cursor-pointer"
+           - justify-between cursor-pointer"
+       425 -                onClick={() => 
+     toggleSection('defects')}
+           - toggleSection('defects')}
+       426 -              >
+       427 -                <div className="flex items-center 
+           - gap-4">
+       428 -                  <div className="w-12 h-12 
+           - bg-orange-50 rounded-full flex items-center 
+           - justify-center">
+       429 -                    <i className="ph 
+           - ph-warning-circle text-xl text-orange-600"></i>
+       430 -                  </div>
+       422 +            <div className={cardClasses.expandable} 
+     onClick={() => toggleSection('defects')}>
+           + onClick={() => toggleSection('defects')}>
+       423 +              <div 
+     className={interactionClasses.expandableHeader}>
+           + className={interactionClasses.expandableHeader}>
+       424 +                <div className="flex items-start">
+       425 +                  <i className="ph ph-warning-circle 
+     text-lg text-orange-600 mr-3 mt-0.5"></i>
+           + text-lg text-orange-600 mr-3 mt-0.5"></i>
+       426                    <div>
+       427 -                    <h3 className="text-lg 
+     font-semibold text-neutral-900">Defect Categories</h3>
+           - font-semibold text-neutral-900">Defect 
+           - Categories</h3>
+       428 -                    <p className="text-sm 
+     text-neutral-600">{defectDetail.data.defects.length}
+     possible defect{defectDetail.data.defects.length !== 1 ?
+     's' : ''}</p>
+           - 
+     text-neutral-600">{defectDetail.data.defects.length}
+           -  possible defect{defectDetail.data.defects.length 
+           - !== 1 ? 's' : ''}</p>
+       427 +                    <div className="text-sm 
+     font-medium text-neutral-900">Defect Categories</div>
+           + font-medium text-neutral-900">Defect 
+           + Categories</div>
+       428 +                    <div className="text-xs 
+     text-neutral-600">{defectDetail.data.defects.length}
+     possible defect{defectDetail.data.defects.length !== 1 ?
+     's' : ''}</div>
+           + 
+     text-neutral-600">{defectDetail.data.defects.length}
+           +  possible defect{defectDetail.data.defects.length 
+           + !== 1 ? 's' : ''}</div>
+       429                    </div>
+       430                  </div>
+       431 -                <div className={`text-orange-600 
+     transition-transform duration-200 ${
+           - transition-transform duration-200 ${
+       432 -                  expandedSections.defects ? 
+     'rotate-180' : 'rotate-0'
+           - 'rotate-180' : 'rotate-0'
+       433 -                }`}>
+       434 -                  <i className="ph ph-caret-down 
+     text-lg"></i>
+           - text-lg"></i>
+       431 +                <div className="flex flex-col 
+     items-end">
+           + items-end">
+       432 +                  <div className="text-2xl font-bold 
+     text-orange-600">{defectDetail.data.defects.length}</div>
+           + 
+     text-orange-600">{defectDetail.data.defects.length}<
+           + /div>
+       433 +                  <div className="text-xs 
+     text-orange-600">defects</div>
+           + text-orange-600">defects</div>
+       434 +                  <div className={`text-orange-600 
+     transition-transform duration-300 ${
+           + transition-transform duration-300 ${
+       435 +                    expandedSections.defects ? 
+           + 'rotate-180' : 'rotate-0'
+       436 +                  }`}>
+       437 +                    <i className="ph 
+           + ph-caret-down"></i>
+       438 +                  </div>
+       439                  </div>
+       440                </div>
+       441    
+       442                {expandedSections.defects && (
+       443 -                <div className="mt-6 pt-6 border-t 
+     border-neutral-200">
+           - border-neutral-200">
+       444 -                  <div className="bg-blue-50 
+     rounded-lg p-4 mb-6 border-l-4 border-l-blue-500">
+           - rounded-lg p-4 mb-6 border-l-4 border-l-blue-500">
+       443 +                <div className="pt-3 border-t 
+     border-orange-200 space-y-2 text-xs text-neutral-700">
+           + border-orange-200 space-y-2 text-xs 
+           + text-neutral-700">
+       444 +                  <div className="bg-blue-50 
+     rounded-lg p-4 mb-6 shadow-sm">
+           + rounded-lg p-4 mb-6 shadow-sm">
+       445                      <p className="text-sm 
+             text-blue-800 font-medium flex items-center gap-2">
+       446                        <i className="ph ph-info 
+             text-lg"></i>
+       447                        All possible defect categories 
+             and their specific criteria for this inspection 
+     item
+     ...
+       461                        const colors = 
+             getCategoryColors(category);
+       462                        
+       463                        return (
+       464 -                        <div key={category} 
+     className={`${colors.bg} rounded-lg p-6 border-l-4 
+     ${colors.border}`}>
+           - className={`${colors.bg} rounded-lg p-6 border-l-4 
+           - ${colors.border}`}>
+       464 +                        <div key={category} 
+     className={`${colors.bg} rounded-lg p-4 md:p-6 shadow-sm 
+     hover:shadow-lg hover:scale-[1.02] transition-all 
+     duration-300`}>
+           + className={`${colors.bg} rounded-lg p-4 md:p-6 
+           + shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           + transition-all duration-300`}>
+       465                            <div className="flex 
+             items-center gap-3 mb-4">
+       466                              <div className={`w-8 h-8 
+             ${colors.text.replace('text-', 'bg-')} rounded-full 
+             flex items-center justify-center`}>
+       467                                <i className={`ph 
+             ph-${getCategoryIcon(category)} text-white 
+             text-lg`}></i>
+     ...
+       476                            
+       477                            <div 
+     className="space-y-3">
+       478                              
+             {categoryDefects.map((defect, index) => (
+       479 -                              <div key={index} 
+     className="bg-white/70 rounded-lg p-4 border 
+     border-white/50">
+           - className="bg-white/70 rounded-lg p-4 border 
+           - border-white/50">
+       480 -                                <p 
+     className="text-sm text-neutral-700 leading-relaxed">
+           -  text-neutral-700 leading-relaxed">
+       479 +                              <div key={index} 
+     className="bg-white/70 rounded-lg p-4 shadow-sm">
+           + className="bg-white/70 rounded-lg p-4 shadow-sm">
+       480 +                                <p 
+     className="text-xs text-neutral-700 leading-relaxed">
+           +  text-neutral-700 leading-relaxed">
+       481                                    
+             {formatCrossReferences(defect.description, 
+             onNavigateToPath)}
+       482                                  </p>
+       483                                </div>
+     ...
+       494    
+       495            {/* Technical Requirements Section */}
+       496            {(defectDetail.type === 'item' && 
+             defectDetail.data?.description?.includes('%')) && (
+       497 -            <div 
+       498 -              className="bg-white rounded-lg p-4 
+     md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02]
+     transition-all duration-300 cursor-pointer mb-8"
+           - md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] 
+           - transition-all duration-300 cursor-pointer mb-8"
+       499 -              onClick={() => 
+           - toggleSection('technical')}
+       500 -            >
+       501 -              <div className="flex items-center 
+           - justify-between mb-3">
+       497 +            <div className={cardClasses.expandable} 
+     onClick={() => toggleSection('technical')}>
+           + onClick={() => toggleSection('technical')}>
+       498 +              <div 
+     className={interactionClasses.expandableHeader}>
+           + className={interactionClasses.expandableHeader}>
+       499                  <div className="flex items-start">
+       500 -                  <i className="ph ph-chart-bar 
+     text-lg text-blue-600 mr-3 mt-0.5"></i>
+           - text-lg text-blue-600 mr-3 mt-0.5"></i>
+       500 +                  <i className="ph ph-chart-bar 
+     text-lg text-purple-600 mr-3 mt-0.5"></i>
+           + text-lg text-purple-600 mr-3 mt-0.5"></i>
+       501                    <div>
+       502                      <div className="text-sm 
+             font-medium text-neutral-900">Technical 
+     Requirements
+              & Calculations</div>
+       503                      <div className="text-xs 
+             text-neutral-600">Efficiency percentages and 
+             technical thresholds</div>
+       504                    </div>
+       505                  </div>
+       506 -                <div className={`text-blue-600 
+     transition-transform duration-300 ${
+           - transition-transform duration-300 ${
+       507 -                  expandedSections.technical ? 
+     'rotate-180' : 'rotate-0'
+           - 'rotate-180' : 'rotate-0'
+       508 -                }`}>
+       509 -                  <i className="ph 
+     ph-caret-down"></i>
+           - ph-caret-down"></i>
+       506 +                <div className="flex flex-col 
+     items-end">
+           + items-end">
+       507 +                  <div className={`text-purple-600 
+     transition-transform duration-300 ${
+           + transition-transform duration-300 ${
+       508 +                    expandedSections.technical ? 
+     'rotate-180' : 'rotate-0'
+           + 'rotate-180' : 'rotate-0'
+       509 +                  }`}>
+       510 +                    <i className="ph 
+           + ph-caret-down"></i>
+       511 +                  </div>
+       512                  </div>
+       513                </div>
+       514    
+       515                {expandedSections.technical && (
+       516 -                <div className="pt-3 border-t 
+     border-blue-200 space-y-2 text-xs text-neutral-700">
+           - border-blue-200 space-y-2 text-xs 
+     text-neutral-700">
+       517 -                  <div className="bg-neutral-50 p-4 
+     md:p-6 rounded-lg border border-neutral-200">
+           - md:p-6 rounded-lg border border-neutral-200">
+       516 +                <div className="pt-3 border-t 
+     border-purple-200 space-y-2 text-xs text-neutral-700">
+           + border-purple-200 space-y-2 text-xs 
+           + text-neutral-700">
+       517 +                  <div className="bg-neutral-50 p-4 
+     md:p-6 rounded-lg shadow-sm">
+           + md:p-6 rounded-lg shadow-sm">
+       518                      <h4 className="text-lg 
+             font-medium text-neutral-900 mb-4">Efficiency 
+             Requirements</h4>
+       519                      <p className="text-xs 
+             text-neutral-700 leading-relaxed">
+       520                        Specific efficiency 
+     percentages
+              and technical thresholds are detailed in the 
+             inspection procedures above.
+     ...
+       528    
+       529            {/* Fallback for other content types */}
+       530            {defectDetail.type === 'subsection' && 
+             defectDetail.data && (
+       531 -            <div className={"space-y-12 mb-16"}>
+       531 +            <div className="space-y-12 mb-16">
+       532                {defectDetail.data.items?.length > 0 
+     &&
+              (
+       533 -                <>
+       533 +                <div className={cardClasses.base}>
+       534                    <h3 className="text-lg font-medium 
+             text-neutral-900 mb-4">Items in this 
+     subsection</h3>
+       535 -                  <ul className="list-disc pl-5 
+     md:pl-4 space-y-2">
+           - md:pl-4 space-y-2">
+       535 +                  <div className="space-y-3">
+       536                      
+             {defectDetail.data.items.map((item, index) => (
+       537 -                      <li key={index} 
+     className="text-sm md:text-xs text-neutral-700
+     leading-relaxed">
+           - className="text-sm md:text-xs text-neutral-700 
+           - leading-relaxed">
+       538 -                        <strong>{item.id}:</strong> 
+     {item.title}
+           - {item.title}
+       539 -                      </li>
+       537 +                      <div key={index} 
+     className="bg-neutral-50 rounded-lg p-3">
+           + className="bg-neutral-50 rounded-lg p-3">
+       538 +                        <span className="text-xs 
+     font-medium text-neutral-900">{item.id}:</span>
+           + font-medium text-neutral-900">{item.id}:</span>
+       539 +                        <span className="text-xs 
+     text-neutral-700 ml-2">{item.title}</span>
+           + text-neutral-700 ml-2">{item.title}</span>
+       540 +                      </div>
+       541                      ))}
+       542 -                  </ul>
+       543 -                </>
+       542 +                  </div>
+       543 +                </div>
+       544                )}
+       545              </div>
+       546            )}
+       547            
+       548            {defectDetail.type === 'section' && 
+             defectDetail.data && (
+       549 -            <div className={"space-y-12 mb-16"}>
+       549 +            <div className="space-y-12 mb-16">
+       550                {defectDetail.data.subsections?.length 
+             > 0 && (
+       551 -                <>
+       551 +                <div className={cardClasses.base}>
+       552                    <h3 className="text-lg font-medium 
+             text-neutral-900 mb-4">Subsections</h3>
+       553 -                  <ul className="list-disc pl-5 
+     md:pl-4 space-y-2">
+           - md:pl-4 space-y-2">
+       553 +                  <div className="space-y-3">
+       554                      
+             {defectDetail.data.subsections.map((subsection, 
+             index) => (
+       555 -                      <li key={index} 
+     className="text-sm md:text-xs text-neutral-700
+     leading-relaxed">
+           - className="text-sm md:text-xs text-neutral-700 
+           - leading-relaxed">
+       556 -                        
+     <strong>{subsection.id}:</strong> {subsection.title}
+           - <strong>{subsection.id}:</strong> 
+     {subsection.title}
+       557 -                      </li>
+       555 +                      <div key={index} 
+     className="bg-neutral-50 rounded-lg p-3">
+           + className="bg-neutral-50 rounded-lg p-3">
+       556 +                        <span className="text-xs 
+     font-medium text-neutral-900">{subsection.id}:</span>
+           + font-medium 
+           + text-neutral-900">{subsection.id}:</span>
+       557 +                        <span className="text-xs 
+     text-neutral-700 ml-2">{subsection.title}</span>
+           + text-neutral-700 ml-2">{subsection.title}</span>
+       558 +                      </div>
+       559                      ))}
+       560 -                  </ul>
+       561 -                </>
+       560 +                  </div>
+       561 +                </div>
+       562                )}
+       563              </div>
+       564            )}
+       565            
+       566            {defectDetail.matches && (
+       567 -            <div className={"space-y-12 mb-16"}>
+       568 -              <h3 className="text-lg font-medium 
+     text-neutral-900 mb-4">Multiple entries found</h3>
+           - text-neutral-900 mb-4">Multiple entries found</h3>
+       569 -              <p className="text-xs text-neutral-700 
+     leading-relaxed">Please select a specific entry below:</p>
+           - leading-relaxed">Please select a specific entry 
+           - below:</p>
+       570 -              <ul className="list-none space-y-6">
+       571 -                {defectDetail.matches.map((match, 
+     index) => (
+           - index) => (
+       572 -                  <li key={match.id || index}>
+       573 -                    <h4 className="text-lg 
+     font-medium text-neutral-900 mb-4 text-base">{match.id}:
+     {match.title}</h4>
+           - font-medium text-neutral-900 mb-4 
+           - text-base">{match.id}: {match.title}</h4>
+       574 -                    {match.data?.description && (
+       575 -                      <p className="text-xs 
+     text-neutral-700 leading-relaxed text-neutral-600">
+           - text-neutral-700 leading-relaxed text-neutral-600">
+       576 -                        {(match.data.description || 
+     '').substring(0, 150)}
+           - '').substring(0, 150)}
+       577 -                        {(match.data.description || 
+     '').length > 150 ? '...' : ''}
+           - '').length > 150 ? '...' : ''}
+       578 -                      </p>
+       579 -                    )}
+       580 -                  </li>
+       581 -                ))}
+       582 -              </ul>
+       567 +            <div className="space-y-12 mb-16">
+       568 +              <div className={cardClasses.base}>
+       569 +                <h3 className="text-lg font-medium 
+     text-neutral-900 mb-4">Multiple entries found</h3>
+           + text-neutral-900 mb-4">Multiple entries found</h3>
+       570 +                <p className="text-xs 
+     text-neutral-700 leading-relaxed mb-6">Please select a
+     specific entry below:</p>
+           + text-neutral-700 leading-relaxed mb-6">Please 
+     select
+           +  a specific entry below:</p>
+       571 +                <div className="space-y-6">
+       572 +                  {defectDetail.matches.map((match, 
+     index) => (
+           + index) => (
+       573 +                    <div key={match.id || index} 
+     className="bg-neutral-50 rounded-lg p-4">
+           + className="bg-neutral-50 rounded-lg p-4">
+       574 +                      <h4 className="text-sm 
+     font-medium text-neutral-900 mb-2">{match.id}:
+     {match.title}</h4>
+           + font-medium text-neutral-900 mb-2">{match.id}: 
+           + {match.title}</h4>
+       575 +                      {match.data?.description && (
+       576 +                        <p className="text-xs 
+     text-neutral-600 leading-relaxed">
+           + text-neutral-600 leading-relaxed">
+       577 +                          {(match.data.description 
+     || '').substring(0, 150)}
+           +  '').substring(0, 150)}
+       578 +                          {(match.data.description 
+     || '').length > 150 ? '...' : ''}
+           +  '').length > 150 ? '...' : ''}
+       579 +                        </p>
+       580 +                      )}
+       581 +                    </div>
+       582 +                  ))}
+       583 +                </div>
+       584 +              </div>
+       585              </div>
+       586            )}
+       587        </div>
+  ⎿  Credit balance too low · Add funds: 
+
+> /model 
+  ⎿  Set model to Default (claude-sonnet-4-20250514)
+
+> continue
+  ⎿  Credit balance too low · Add funds: 
+

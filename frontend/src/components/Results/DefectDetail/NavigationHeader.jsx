@@ -1,63 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import { 
-  NavigationHeaderContainer,
-  BreadcrumbContainer, 
-  BreadcrumbSeparator,
-  FlexContainer as SearchContainer, 
-  Input as SearchInput, 
-  Button as SearchButton, 
-  ContextHint,
-  ContentContainer as Container,
-  SectionHeader as Header, 
-  SectionTitle as Title,
-  SmallText as ResultCount,
-  CardGrid as ResultsList,
-  Card as ResultCard,
-  CardTitle as ResultTitle,
-  TypeBadge as ResultType,
-  MatchType,
-  PreviewContainer as DefectPreview,
-  SmallCategoryBadge as CategoryBadge,
-  NoResults,
-  HighlightText
-} from './defectstyles';
 import { fetchPathTitles, searchManual } from './apiUtils';
-
-// Custom breadcrumb item component
-const BreadcrumbItem = styled('button')`
-  background: none;
-  border: none;
-  font-family: var(--font-main);
-  color: ${props => props.isActive ? 'var(--gray-900)' : 'var(--primary)'};
-  cursor: ${props => props.isActive ? 'default' : 'pointer'};
-  text-decoration: ${props => props.isActive ? 'none' : 'underline'};
-  font-weight: ${props => props.isActive ? '600' : '400'};
-  font-size: var(--text-sm);
-  padding: 0;
-  transition: var(--transition);
-  
-  &:hover {
-    color: ${props => props.isActive ? 'var(--gray-900)' : 'var(--gray-700)'};
-  }
-  
-  &:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-  
-  @media (max-width: var(--mobile-max)) {
-    font-size: var(--text-xs);
-    min-height: var(--touch-target-min);
-    padding: var(--space-xs) var(--space-sm);
-    flex-shrink: 0;
-    white-space: nowrap;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
+import { 
+  getCategoryColors,
+  getResultTypeColors,
+  cn 
+} from './styleUtils';
 
 const NavigationHeader = ({ 
   // Breadcrumb props
@@ -150,28 +97,37 @@ const NavigationHeader = ({
       breadcrumbs.push(title);
     }
 
-    return breadcrumbs.map((title, index) => (
-      <React.Fragment key={index}>
-        {index > 0 && <BreadcrumbSeparator>›</BreadcrumbSeparator>}
-        
-        <BreadcrumbItem
-          isActive={index === breadcrumbs.length - 1}
-          onClick={() => {
-            if (index === 0) {
-              onNavigateToPath([]);
-            } else {
-              const targetPath = currentPath.slice(0, index);
-              onNavigateToPath(targetPath);
-            }
-          }}
-          disabled={index === breadcrumbs.length - 1}
-          aria-label={index === 0 ? 'Navigate to MOT Manual home' : `Navigate to ${title}`}
-          title={index === 0 ? 'Return to manual overview' : `Go to ${title}`}
-        >
-          {pathLoading && index === breadcrumbs.length - 1 ? 'Loading...' : title}
-        </BreadcrumbItem>
-      </React.Fragment>
-    ));
+    return breadcrumbs.map((title, index) => {
+      const isActive = index === breadcrumbs.length - 1;
+      
+      return (
+        <React.Fragment key={index}>
+          {index > 0 && <span className="text-neutral-400 select-none">›</span>}
+          
+          <button
+            onClick={() => {
+              if (index === 0) {
+                onNavigateToPath([]);
+              } else {
+                const targetPath = currentPath.slice(0, index);
+                onNavigateToPath(targetPath);
+              }
+            }}
+            disabled={isActive}
+            aria-label={index === 0 ? 'Navigate to MOT Manual home' : `Navigate to ${title}`}
+            title={index === 0 ? 'Return to manual overview' : `Go to ${title}`}
+            className={cn(
+              'bg-none border-none p-0 text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:rounded md:text-xs md:min-h-10 md:px-2 md:flex-shrink-0 md:whitespace-nowrap md:max-w-48 md:overflow-hidden md:text-ellipsis',
+              isActive 
+                ? 'text-neutral-900 font-semibold cursor-default' 
+                : 'text-blue-600 underline cursor-pointer hover:text-blue-700'
+            )}
+          >
+            {pathLoading && isActive ? 'Loading...' : title}
+          </button>
+        </React.Fragment>
+      );
+    });
   };
 
   // Get context hint - preserving exact logic from SearchInterface
@@ -206,9 +162,9 @@ const NavigationHeader = ({
     
     return parts.map((part, index) => 
       regex.test(part) ? (
-        <HighlightText key={index}>
+        <mark key={index} className="bg-neutral-100 px-1 font-semibold text-neutral-900">
           {part}
-        </HighlightText>
+        </mark>
       ) : (
         part
       )
@@ -223,75 +179,123 @@ const NavigationHeader = ({
 
     if (!results || results.length === 0) {
       return (
-        <Container>
-          <Header>
-            <Title>Search Results</Title>
-            <ResultCount>
-              {searchQuery ? `No results found for "${searchQuery}"` : 'No search performed'}
-            </ResultCount>
-          </Header>
-          
-          <NoResults>
-            {searchQuery && (
-              <>
-                <p>No matches found for "{searchQuery}"</p>
-                <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-md)' }}>
-                  Try using different keywords or searching for specific defect codes
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="mt-8 mb-12">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center">
+                <i className="ph ph-magnifying-glass text-xl text-neutral-600"></i>
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-neutral-900 leading-tight tracking-tight">Search Results</h1>
+                <p className="text-sm text-neutral-600 mt-1">
+                  {searchQuery ? `No results found for "${searchQuery}"` : 'No search performed'}
                 </p>
-              </>
-            )}
-          </NoResults>
-        </Container>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-neutral-50 rounded-lg p-12 text-center border-l-4 border-l-neutral-400">
+            <div className="flex flex-col items-center gap-4">
+              <i className="ph ph-file-search text-4xl text-neutral-400"></i>
+              {searchQuery ? (
+                <div>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">No matches found</h3>
+                  <p className="text-neutral-600 mb-4">No results found for "{searchQuery}"</p>
+                  <div className="bg-blue-50 rounded-lg p-4 border-l-4 border-l-blue-500">
+                    <p className="text-sm text-blue-800 font-medium flex items-center gap-2">
+                      <i className="ph ph-lightbulb text-lg"></i>
+                      Try using different keywords or searching for specific defect codes
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-neutral-600">Enter a search term to find relevant content</p>
+              )}
+            </div>
+          </div>
+        </div>
       );
     }
 
     return (
-      <Container>
-        <Header>
-          <Title>Search Results</Title>
-          <ResultCount>
-            {results.length} result{results.length !== 1 ? 's' : ''} found for "{searchQuery}"
-          </ResultCount>
-        </Header>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="mt-8 mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
+              <i className="ph ph-check-circle text-xl text-green-600"></i>
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-neutral-900 leading-tight tracking-tight">Search Results</h1>
+              <p className="text-sm text-neutral-600 mt-1">
+                {results.length} result{results.length !== 1 ? 's' : ''} found for "{searchQuery}"
+              </p>
+            </div>
+          </div>
+          
+          <div className="bg-green-50 rounded-lg p-4 border-l-4 border-l-green-500 mb-8">
+            <p className="text-sm text-green-800 font-medium flex items-center gap-2">
+              <i className="ph ph-info text-lg"></i>
+              Click any result to view detailed information
+            </p>
+          </div>
+        </div>
 
-        <ResultsList>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {results.map((result, index) => (
-            <ResultCard
+            <div
               key={`${result.id}-${index}`}
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer border-l-4 border-l-blue-500"
               onClick={() => onNavigateToResult(result.id)}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}>
-                <ResultType type={result.type}>
-                  {result.type}
-                </ResultType>
-                <MatchType>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${result.type === 'section' ? 'bg-orange-50' : result.type === 'subsection' ? 'bg-blue-50' : 'bg-green-50'}`}>
+                    <i className={`ph ph-${result.type === 'section' ? 'folder' : result.type === 'subsection' ? 'folder-open' : 'file-text'} text-sm ${getResultTypeColors(result.type)}`}></i>
+                  </div>
+                  <div>
+                    <span className={cn('px-2 py-1 rounded-full text-xs font-medium capitalize bg-neutral-100', getResultTypeColors(result.type))}>
+                      {result.type}
+                    </span>
+                  </div>
+                </div>
+                <span className="text-xs text-neutral-500 bg-neutral-50 px-2 py-1 rounded">
                   {getMatchTypeDescription(result.match_type)}
-                </MatchType>
+                </span>
               </div>
               
-              <ResultTitle>
+              <h3 className="text-lg font-semibold text-neutral-900 mb-3">
                 {result.id}: {highlightText(result.title, searchQuery)}
-              </ResultTitle>
+              </h3>
               
               {result.defect && (
-                <DefectPreview>
+                <div className="bg-neutral-50 rounded-lg p-4 border border-neutral-200">
                   {result.category && (
-                    <CategoryBadge category={result.category}>
-                      {result.category}
-                    </CategoryBadge>
+                    <div className="flex items-center gap-2 mb-2">
+                      <i className={`ph ph-${getCategoryIcon(result.category)} text-sm`}></i>
+                      <span className={cn('px-2 py-1 rounded-full text-xs font-medium', getCategoryColors(result.category).badge)}>
+                        {result.category}
+                      </span>
+                    </div>
                   )}
-                  {highlightText(
-                    result.defect.length > 200 
-                      ? `${result.defect.substring(0, 200)}...` 
-                      : result.defect, 
-                    searchQuery
-                  )}
-                </DefectPreview>
+                  <p className="text-sm text-neutral-700 leading-relaxed">
+                    {highlightText(
+                      result.defect.length > 180 
+                        ? `${result.defect.substring(0, 180)}...` 
+                        : result.defect, 
+                      searchQuery
+                    )}
+                  </p>
+                </div>
               )}
-            </ResultCard>
+              
+              <div className="flex items-center justify-between pt-4 border-t border-neutral-100 mt-4">
+                <span className="text-xs text-neutral-500">{result.id}</span>
+                <i className="ph ph-arrow-right text-sm text-blue-600"></i>
+              </div>
+            </div>
           ))}
-        </ResultsList>
-      </Container>
+        </div>
+      </div>
     );
   };
 
@@ -302,36 +306,71 @@ const NavigationHeader = ({
 
   // Default navigation header
   return (
-    <NavigationHeaderContainer>
-      <BreadcrumbContainer>
-        {renderBreadcrumbs()}
-      </BreadcrumbContainer>
-      
-      <form onSubmit={handleSearch}>
-        <SearchContainer>
-          <SearchInput
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search manual content..."
-            disabled={isSearching}
-            aria-label="Search MOT manual content"
-            aria-describedby="search-hint"
-          />
-          
-          <SearchButton 
-            type="submit" 
-            disabled={isSearching || !query.trim()}
-          >
-            {isSearching ? 'Searching...' : 'Search'}
-          </SearchButton>
-        </SearchContainer>
+    <div className="bg-white border-b-2 border-neutral-200 md:sticky md:top-0 md:z-10 shadow-sm">
+      <div className="max-w-6xl mx-auto p-6">
+        {/* Breadcrumb Section */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <i className="ph ph-navigation-arrow text-lg text-blue-600"></i>
+            <span className="text-sm font-medium text-neutral-900">Navigation</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-neutral-600 flex-wrap bg-neutral-50 rounded-lg p-3">
+            {renderBreadcrumbs()}
+          </div>
+        </div>
         
-        <ContextHint id="search-hint">
-          {getContextHint()}
-        </ContextHint>
-      </form>
-    </NavigationHeaderContainer>
+        {/* Search Section */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <i className="ph ph-magnifying-glass text-lg text-green-600"></i>
+            <span className="text-sm font-medium text-neutral-900">Search Manual</span>
+          </div>
+          
+          <form onSubmit={handleSearch}>
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search manual content, defect codes, procedures..."
+                  disabled={isSearching}
+                  aria-label="Search MOT manual content"
+                  aria-describedby="search-hint"
+                  className="w-full px-4 py-3 text-sm rounded-lg bg-neutral-50 border-2 border-neutral-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors duration-200"
+                />
+              </div>
+              
+              <button 
+                type="submit" 
+                disabled={isSearching || !query.trim()}
+                className={cn(
+                  'px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer flex items-center gap-2',
+                  (isSearching || !query.trim()) && 'opacity-50 cursor-not-allowed'
+                )}
+              >
+                {isSearching ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    Searching...
+                  </>
+                ) : (
+                  <>
+                    <i className="ph ph-magnifying-glass"></i>
+                    Search
+                  </>
+                )}
+              </button>
+            </div>
+            
+            <div className="flex items-center gap-2 mt-3 text-xs text-neutral-600 bg-blue-50 rounded p-2" id="search-hint">
+              <i className="ph ph-info text-sm text-blue-600"></i>
+              {getContextHint()}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -102,11 +102,12 @@ const Header = () => {
               <Link 
                 to="/" 
                 className="inline-flex items-center text-decoration-none transition-colors duration-200 hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-4"
-                aria-label="MotCheck UK - Vehicle MOT history and tax status checker"
+                aria-label="motorwise - Vehicle intelligence platform"
               >
-                <h1 className="text-base md:text-lg lg:text-xl xl:text-2xl font-semibold text-neutral-900 leading-tight tracking-tight m-0">motorwise
+                <h1 className="text-base md:text-lg lg:text-xl xl:text-2xl font-medium text-neutral-900 leading-tight tracking-tight m-0 font-jost">
+                  motor<span className="text-blue-600 relative inline-block">w<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-80"></span></span>ise
                 </h1>
-                <span className="hidden md:block text-sm text-neutral-600 ml-2">Clear data. Wise choices</span>
+                <span className="hidden md:block text-sm text-neutral-600 ml-2 font-jost">Clear data. Wise choices</span>
               </Link>
             </div>
             
@@ -115,7 +116,7 @@ const Header = () => {
               <ul className="flex items-center gap-6 lg:gap-8 list-none m-0 p-0">
                 {primaryNavigationItems.map((item, index) => (
                   <li key={index} className="m-0 relative">
-                    <Link to={item.href} className="text-base font-medium text-neutral-600 hover:text-neutral-900 py-2 transition-colors duration-200 relative whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2">
+                    <Link to={item.href} className="text-base font-medium text-neutral-600 hover:text-neutral-900 py-2 transition-colors duration-200 relative whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost">
                       {item.label}
                     </Link>
                   </li>
@@ -124,7 +125,7 @@ const Header = () => {
                 {/* Desktop Dropdown */}
                 <li className="m-0 relative" ref={dropdownRef}>
                   <button
-                    className="text-base font-medium text-neutral-600 hover:text-neutral-900 bg-transparent border-none py-2 pr-4 cursor-pointer flex items-center gap-2 transition-colors duration-200 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                    className="text-base font-medium text-neutral-600 hover:text-neutral-900 bg-transparent border-none py-2 pr-4 cursor-pointer flex items-center gap-2 transition-colors duration-200 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost"
                     onClick={toggleDropdown}
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
@@ -144,7 +145,7 @@ const Header = () => {
                         <li key={index} className="m-0">
                           <Link 
                             to={item.href}
-                            className="text-sm text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 px-4 py-2 block transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-[-2px] focus-visible:bg-neutral-50 focus-visible:text-neutral-900"
+                            className="text-sm text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 px-4 py-2 block transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-[-2px] focus-visible:bg-neutral-50 focus-visible:text-neutral-900 font-jost"
                             onClick={handleDropdownLinkClick}
                           >
                             {item.label}
@@ -159,7 +160,7 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className={`flex md:hidden items-center justify-center gap-2 border-2 ${mobileMenuOpen ? 'bg-blue-600 border-blue-600 text-white' : 'bg-transparent border-neutral-300 text-neutral-700 hover:border-neutral-700 hover:text-neutral-900'} px-3 py-2 cursor-pointer transition-all duration-200 text-sm font-medium min-h-[44px] min-w-[44px] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2`}
+              className={`flex md:hidden items-center justify-center gap-2 border-2 ${mobileMenuOpen ? 'bg-blue-600 border-blue-600 text-white' : 'bg-transparent border-neutral-300 text-neutral-700 hover:border-neutral-700 hover:text-neutral-900'} px-3 py-2 cursor-pointer transition-all duration-200 text-sm font-medium min-h-[44px] min-w-[44px] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost`}
               onClick={toggleMobileMenu}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -184,7 +185,7 @@ const Header = () => {
                     <li key={index} className="m-0">
                       <Link 
                         to={item.href}
-                        className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900"
+                        className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900 font-jost"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.label}
@@ -201,7 +202,7 @@ const Header = () => {
                     <li key={index} className="m-0">
                       <Link 
                         to={item.href}
-                        className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900"
+                        className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900 font-jost"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.label}
@@ -217,8 +218,8 @@ const Header = () => {
       
       <div className="bg-neutral-50 py-3">
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 flex items-center gap-2 md:gap-3 flex-wrap md:flex-nowrap">
-          <strong className="inline-block text-xs font-semibold uppercase tracking-wider px-2 py-1 bg-blue-600 text-white flex-shrink-0">BETA</strong>
-          <p className="text-xs text-neutral-600 m-0 leading-relaxed">
+          <strong className="inline-block text-xs font-semibold uppercase tracking-wider px-2 py-1 bg-blue-600 text-white flex-shrink-0 font-jost">BETA</strong>
+          <p className="text-xs text-neutral-600 m-0 leading-relaxed font-jost">
             This is a new service – your{' '}
             <Link to="/contact" className="text-blue-600 underline underline-offset-2 hover:text-neutral-900 hover:decoration-2 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:bg-neutral-50 focus-visible:no-underline">feedback</Link>{' '}
             will help us to improve it.

@@ -10313,3 +10313,11 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-08-24 17:55:57,638 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
 2025-08-24 17:55:57,638 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:57393 - Status: 200 - Process Time: 0.7643s
 2025-08-24 17:55:57,639 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:57402 - Status: 200 - Process Time: 1.4246s
+2025-08-24 18:14:53,489 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-24 18:14:53,489 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64817 - Status: 200 - Process Time: 0.0019s
+2025-08-24 18:14:54,465 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-24 18:14:54,465 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64824 - Status: 200 - Process Time: 0.0007s
+2025-08-24 18:18:31,031 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-24 18:18:31,032 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64880 - Status: 200 - Process Time: 0.0020s
+2025-08-24 18:18:31,551 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
+2025-08-24 18:18:31,552 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:64886 - Status: 200 - Process Time: 0.0020s

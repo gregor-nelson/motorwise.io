@@ -1,29 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
 
-// Import shared components
-import {
-  SharedContainer,
-  SharedPanel,
-  SharedHeader,
-  SharedTitle,
-  SharedSubtitle,
-  SharedTabs,
-  SharedTabContent,
-  SharedAccordion,
-  SharedSearchAndFilters,
-  SharedLoadingState,
-  SharedErrorState,
-  SharedEmptyState,
-  SharedMatchWarning,
-  SharedNoticePanel,
-  SharedButton
-} from '../shared/CommonElements';
-
-// Import custom tooltip components - removed HeadingWithTooltip as using SharedHeader
-
-// Labour-specific components now use Tailwind classes directly
-
-
 // Import API client
 import repairTimesApi from '../api/RepairTimesApiClient';
 
@@ -374,55 +350,71 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
   });
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
       {processedItems.map((item) => {
         const hours = parseFloat(item.value) || 0;
         const maxHours = 8;
         const percentage = Math.min((hours / maxHours) * 100, 100);
         
         return (
-          <div key={item.id} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
-            <div className="flex justify-between items-start mb-3 gap-3">
-              <div className="text-sm font-medium text-neutral-900 flex-1">
-                {item.isMultiOperation ? (
-                  <div>
-                    {item.operations.map((op, i) => (
-                      <div 
-                        key={`${item.id}-op-${i}`} 
-                        className={`${
-                          i === 0 ? 'font-semibold' : 'font-normal'
-                        } ${i < item.operations.length - 1 ? 'mb-1' : ''}`}
-                      >
-                        {op}
+          <div key={item.id} className={`rounded-lg p-4 md:p-6 shadow-sm cursor-pointer ${
+            item.complexity === 'high' ? 'bg-red-50' :
+            item.complexity === 'medium' ? 'bg-yellow-50' :
+            'bg-green-50'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className={`ph ${
+                  item.complexity === 'high' ? 'ph-warning-circle text-red-600' :
+                  item.complexity === 'medium' ? 'ph-info text-yellow-600' :
+                  'ph-check-circle text-green-600'
+                } text-lg mr-3 mt-0.5 flex-shrink-0`}></i>
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-neutral-900">
+                    {item.isMultiOperation ? (
+                      <div className="space-y-1">
+                        {item.operations.map((op, i) => (
+                          <div 
+                            key={`${item.id}-op-${i}`} 
+                            className={i === 0 ? 'font-semibold' : 'font-normal'}
+                          >
+                            {op}
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      item.operations[0]
+                    )}
                   </div>
-                ) : (
-                  item.operations[0]
-                )}
+                  <div className="text-xs text-neutral-600 mt-1">
+                    {item.complexity} complexity
+                  </div>
+                </div>
               </div>
-              <div className="flex items-baseline gap-2 flex-shrink-0">
-                <span className="text-2xl font-bold text-neutral-900">{formatValue(item.value)}</span>
-                <span className="text-sm text-neutral-600">{item.unit || 'hours'}</span>
+              <div className="flex flex-col items-end">
+                <div className={`text-2xl font-bold ${
+                  item.complexity === 'high' ? 'text-red-600' :
+                  item.complexity === 'medium' ? 'text-yellow-600' :
+                  'text-green-600'
+                }`}>
+                  {formatValue(item.value)}
+                </div>
+                <div className={`text-xs ${
+                  item.complexity === 'high' ? 'text-red-600' :
+                  item.complexity === 'medium' ? 'text-yellow-600' :
+                  'text-green-600'
+                }`}>
+                  {item.unit || 'hours'}
+                </div>
               </div>
             </div>
             
-            <div className="flex justify-between items-center mb-4">
-              <span className={`px-2 py-1 text-xs rounded-full ${
-                item.complexity === 'high' ? 'bg-red-100 text-red-700' :
-                item.complexity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-green-100 text-green-700'
-              }`}>
-                {item.complexity} complexity
-              </span>
-            </div>
-            
-            <div className="w-full bg-neutral-200 rounded-full h-1 overflow-hidden">
+            <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
               <div 
-                className={`h-full rounded-full transition-all duration-300 ${
-                  item.complexity === 'high' ? 'bg-red-500' :
-                  item.complexity === 'medium' ? 'bg-yellow-500' :
-                  'bg-green-500'
+                className={`h-full rounded-full ${
+                  item.complexity === 'high' ? 'bg-gradient-to-r from-red-500 to-red-600' :
+                  item.complexity === 'medium' ? 'bg-gradient-to-r from-yellow-500 to-yellow-600' :
+                  'bg-gradient-to-r from-green-500 to-green-600'
                 }`}
                 style={{ width: `${percentage}%` }}
               />
@@ -445,54 +437,100 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
 
 
 /**
- * MatchWarning Component - Using shared component
+ * MatchWarning Component - Pure Tailwind design
  */
 const MatchWarning = ({ matchConfidence, vehicleIdentification, vehicleData }) => {
   const year = extractVehicleYear(vehicleData);
   
+  if (matchConfidence === 'exact' || matchConfidence === 'none') return null;
+  
   return (
-    <SharedMatchWarning
-      matchConfidence={matchConfidence}
-      metadata={vehicleIdentification}
-      vehicleMake={vehicleIdentification?.make}
-      vehicleModel={vehicleIdentification?.model}
-      requestedYear={year}
-    />
+    <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
+      <div className="flex items-start">
+        <i className="ph ph-warning-circle text-yellow-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+        <div className="flex-1">
+          <div className="text-sm font-medium text-neutral-900 mb-2">
+            Vehicle Match Information
+          </div>
+          <div className="text-xs text-neutral-700 leading-relaxed">
+            The repair times shown are for a similar {vehicleIdentification?.make} {vehicleIdentification?.model} model.
+            Actual times may vary based on your specific vehicle configuration.
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 /**
- * Loading State Component - Using shared component
+ * Loading State Component - Pure Tailwind design
  */
 const LoadingState = ({ vehicleMake, vehicleModel }) => (
-  <SharedLoadingState
-    title="Loading repair times data"
-    subtitle="Please wait while we compile repair times"
-    vehicleMake={vehicleMake}
-    vehicleModel={vehicleModel}
-  />
+  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4">
+            <div className="w-full h-full border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          </div>
+          <div className="text-lg font-medium text-neutral-900 mb-2">
+            Loading repair times data
+          </div>
+          <div className="text-xs text-neutral-600">
+            Please wait while we compile repair times for {vehicleMake} {vehicleModel}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 );
 
 /**
- * Error State Component - Using shared component
+ * Error State Component - Pure Tailwind design
  */
 const ErrorState = ({ error, onRetry }) => (
-  <SharedErrorState
-    error={error}
-    onRetry={onRetry}
-    title="Error Loading Repair Times"
-  />
+  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+    <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm">
+      <div className="flex items-start">
+        <i className="ph ph-x-circle text-red-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+        <div className="flex-1">
+          <div className="text-sm font-medium text-neutral-900 mb-2">
+            Error Loading Repair Times
+          </div>
+          <div className="text-xs text-neutral-700 leading-relaxed mb-4">
+            {error || 'An unexpected error occurred while loading repair times data.'}
+          </div>
+          <button 
+            onClick={onRetry}
+            className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 );
 
 /**
- * Empty State Component - Using shared component
+ * Empty State Component - Pure Tailwind design
  */
 const EmptyState = ({ vehicleMake, vehicleModel }) => (
-  <SharedEmptyState
-    title={`No repair times data available for ${vehicleMake} ${vehicleModel}`}
-    subtitle="This could be because the vehicle is too new, too old, or a rare model."
-    icon={() => <i className="ph ph-info text-lg"></i>}
-  />
+  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+    <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm">
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <i className="ph ph-info text-4xl text-neutral-400 mb-4"></i>
+          <div className="text-lg font-medium text-neutral-900 mb-2">
+            No repair times data available for {vehicleMake} {vehicleModel}
+          </div>
+          <div className="text-xs text-neutral-600">
+            This could be because the vehicle is too new, too old, or a rare model.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 );
 
 // Main component - restructured for better alignment with bulletins component
@@ -854,138 +892,226 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
   const lastUpdated = "March 2025";
 
   return (
-    <SharedContainer>
-      <SharedPanel>
-        <SharedHeader>
-          <SharedTitle>Repair Times for {displayMake} {displayModel}{yearRangeDisplay}</SharedTitle>
-          <SharedSubtitle>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-8">
+        {/* Header */}
+        <div className="mb-8 pb-6">
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+            Repair Times for {displayMake} {displayModel}{yearRangeDisplay}
+          </h2>
+          <p className="text-sm text-neutral-600 leading-relaxed">
             Professional repair time estimates to help you plan service work for your {displayMake} {displayModel}.
-          </SharedSubtitle>
-        </SharedHeader>
+          </p>
+        </div>
 
-        {/* Match warning - using shared component */}
+        {/* Match warning */}
         <MatchWarning 
           matchConfidence={matchConfidence} 
           vehicleIdentification={vehicleIdentification}
           vehicleData={vehicleData}
         />
 
-        {/* Important notice - using shared component */}
-        <SharedNoticePanel>
-          <h3>Important</h3>
-          <p>
-            These repair times are industry estimates. Actual times may vary based on vehicle condition, workshop equipment, and technician experience. Always consult with a qualified professional.
-          </p>
-        </SharedNoticePanel>
-
-        {/* Vehicle summary - using shared component */}
-        {vehicleSummary && (
-          <SharedNoticePanel>
-            <h3>Repair Overview</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
-                  {vehicleSummary.totalOperations}
-                </div>
-                <p className="text-sm text-neutral-600 m-0">Total Operations</p>
+        {/* Important notice */}
+        <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
+          <div className="flex items-start">
+            <i className="ph ph-info text-blue-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-neutral-900 mb-2">
+                Important
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
-                  {vehicleSummary.avgTime}
-                </div>
-                <p className="text-sm text-neutral-600 m-0">Average Time</p>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-semibold text-neutral-900">
-                  {vehicleSummary.mostComplexSystem}
-                </div>
-                <p className="text-sm text-neutral-600 m-0">Most Common</p>
+              <div className="text-xs text-neutral-700 leading-relaxed">
+                These repair times are industry estimates. Actual times may vary based on vehicle condition, workshop equipment, and technician experience. Always consult with a qualified professional.
               </div>
             </div>
-          </SharedNoticePanel>
-        )}
-
-
-        {/* Search and Filter Controls - using shared component */}
-        <SharedSearchAndFilters
-          searchTerm={searchTerm}
-          onSearchChange={handleSearchChange}
-          placeholder="Search repair operations..."
-          filters={filterOptions}
-          activeFilters={activeFilters}
-          onFilterChange={handleComplexityFilter}
-          onClearFilters={clearAllFilters}
-        />
-
-        {/* Additional sort controls */}
-        <div className="flex items-center gap-4 mb-8 p-4 bg-neutral-50 rounded-lg">
-          <span className="text-sm text-neutral-700">Sort by:</span>
-          <SharedButton 
-            variant={sortBy === 'complexity' ? 'primary' : 'secondary'} 
-            onClick={() => handleSortChange('complexity')}
-          >
-            Complexity
-          </SharedButton>
-          <SharedButton 
-            variant={sortBy === 'time' ? 'primary' : 'secondary'} 
-            onClick={() => handleSortChange('time')}
-          >
-            Time
-          </SharedButton>
-          <SharedButton 
-            variant={sortBy === 'alphabetical' ? 'primary' : 'secondary'} 
-            onClick={() => handleSortChange('alphabetical')}
-          >
-            A-Z
-          </SharedButton>
+          </div>
         </div>
 
-        {/* Tabs - using shared components */}
-        <SharedTabs
-          tabs={tabs}
-          activeTab={tabValue}
-          onTabChange={handleTabChange}
-        >
-          {tabs.map((tab, tabIndex) => (
-            <SharedTabContent key={tabIndex} active={tabValue === tabIndex}>
-              <div className="flex items-center gap-4 mb-8 pb-4 border-b-2" style={{ borderBottomColor: tab.color }}>
-                <div>
-                  <h3 className="text-2xl font-semibold text-neutral-900 m-0">
-                    {tab.label}
-                  </h3>
-                  <p className="text-base text-neutral-600 mt-1 mb-0">
-                    Standard repair times for {tab.label.toLowerCase()} operations
-                  </p>
+        {/* Vehicle summary */}
+        {vehicleSummary && (
+          <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
+            <div className="flex items-start">
+              <i className="ph ph-chart-bar text-blue-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-neutral-900 mb-4">
+                  Repair Overview
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {vehicleSummary.totalOperations}
+                    </div>
+                    <div className="text-xs text-neutral-600">Total Operations</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {vehicleSummary.avgTime}
+                    </div>
+                    <div className="text-xs text-neutral-600">Average Time</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-semibold text-neutral-900">
+                      {vehicleSummary.mostComplexSystem}
+                    </div>
+                    <div className="text-xs text-neutral-600">Most Common</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Search and Filter Controls */}
+        <div className="bg-neutral-50 rounded-lg p-4 mb-8">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <i className="ph ph-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"></i>
+                <input
+                  type="text"
+                  placeholder="Search repair operations..."
+                  value={searchTerm}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                />
+              </div>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {filterOptions.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => handleComplexityFilter(filter.id)}
+                  className={`px-3 py-1 text-xs font-medium rounded-full ${
+                    complexityFilter === filter.id
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white text-blue-600'
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+              {(searchTerm || complexityFilter !== 'all') && (
+                <button
+                  onClick={clearAllFilters}
+                  className="px-3 py-1 text-xs font-medium bg-neutral-200 text-neutral-700 rounded-full"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Sort controls */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8 p-4 bg-neutral-50 rounded-lg">
+          <span className="text-sm text-neutral-700 font-medium">Sort by:</span>
+          <div className="flex gap-2 flex-wrap">
+            <button 
+              onClick={() => handleSortChange('complexity')}
+              className={`px-3 py-1 text-xs font-medium rounded-full ${
+                sortBy === 'complexity'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-blue-600'
+              }`}
+            >
+              Complexity
+            </button>
+            <button 
+              onClick={() => handleSortChange('time')}
+              className={`px-3 py-1 text-xs font-medium rounded-full ${
+                sortBy === 'time'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-blue-600'
+              }`}
+            >
+              Time
+            </button>
+            <button 
+              onClick={() => handleSortChange('alphabetical')}
+              className={`px-3 py-1 text-xs font-medium rounded-full ${
+                sortBy === 'alphabetical'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-blue-600'
+              }`}
+            >
+              A-Z
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="mb-8">
+          <div className="flex overflow-x-auto pb-2 mb-8">
+            <div className="flex gap-2 min-w-max">
+              {tabs.map((tab, tabIndex) => (
+                <button
+                  key={tabIndex}
+                  onClick={() => handleTabChange(tabIndex)}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${
+                    tabValue === tabIndex
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-neutral-100 text-neutral-700'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {tabs.map((tab, tabIndex) => (
+            <div key={tabIndex} className={`${tabValue === tabIndex ? 'block' : 'hidden'}`}>
+              <div className="mb-8 pb-4">
+                <h3 className="text-lg font-medium text-neutral-900 mb-1">
+                  {tab.label}
+                </h3>
+                <p className="text-xs text-neutral-600">
+                  Standard repair times for {tab.label.toLowerCase()} operations
+                </p>
               </div>
               
               {tab.sections.map((section, sectionIndex) => {
                 const sectionId = `${tabIndex}-${sectionIndex}`;
                 const isExpanded = !!expandedSections[sectionId];
+                const itemCount = section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0;
                 
                 return (
-                  <SharedAccordion
-                    key={sectionId}
-                    id={`section-${sectionId}`}
-                    title={section.title}
-                    expanded={isExpanded}
-                    onToggle={() => toggleSection(sectionId)}
-                    itemCount={section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0}
-                  >
-                    {section.content}
-                  </SharedAccordion>
+                  <div key={sectionId} className="bg-neutral-50 rounded-lg mb-4">
+                    <button
+                      onClick={() => toggleSection(sectionId)}
+                      className="w-full flex items-center justify-between p-4 text-left"
+                    >
+                      <div className="flex items-center">
+                        <i className="ph ph-wrench text-blue-600 text-lg mr-3"></i>
+                        <div>
+                          <div className="text-sm font-medium text-neutral-900">
+                            {section.title}
+                          </div>
+                          <div className="text-xs text-neutral-600">
+                            {itemCount} operations
+                          </div>
+                        </div>
+                      </div>
+                      <i className={`ph ph-caret-down text-blue-600 transform ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
+                    </button>
+                    
+                    {isExpanded && section.content && (
+                      <div className="px-4 pb-4">
+                        {section.content}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
-            </SharedTabContent>
+            </div>
           ))}
-        </SharedTabs>
+        </div>
 
-        {/* Footer note - following GOV.UK pattern */}
-        <div className="text-sm text-neutral-500 text-center py-4 mt-12">
+        {/* Footer note */}
+        <div className="text-xs text-neutral-500 text-center py-4 mt-12 border-t border-neutral-200">
           Repair times sourced from industry standard databases. Last updated: {lastUpdated}
         </div>
-      </SharedPanel>
-    </SharedContainer>
+      </div>
+    </div>
   );
 };
 

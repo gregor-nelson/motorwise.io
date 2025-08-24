@@ -6085,3 +6085,52 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-08-24 00:48:54,643 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
 2025-08-24 00:48:55,549 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.9070s
 2025-08-24 00:48:56,073 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-24 01:06:42,084 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 01:06:43,681 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.5973s
+2025-08-24 01:06:44,323 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0031s
+2025-08-24 01:11:57,437 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 01:11:58,379 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.9429s
+2025-08-24 01:11:58,826 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0010s
+2025-08-24 01:18:05,278 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 01:18:06,953 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.6763s
+2025-08-24 01:18:07,374 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-24 13:21:30,723 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-08-24 13:21:30,727 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-08-24 13:21:31,031 - mot_api - INFO - Requesting new access token
+2025-08-24 13:21:31,436 - mot_api - INFO - Successfully obtained new access token
+2025-08-24 13:21:31,437 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-08-24 13:21:32,902 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.8714s
+2025-08-24 13:21:32,905 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0019s
+2025-08-24 13:37:37,888 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 13:37:39,063 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.1760s
+2025-08-24 13:37:39,371 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0024s
+2025-08-24 13:48:31,186 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 13:48:32,578 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.3923s
+2025-08-24 13:48:33,164 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-24 14:03:22,602 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 14:03:23,795 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.1924s
+2025-08-24 14:03:24,423 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0023s
+2025-08-24 14:10:56,281 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 14:10:57,092 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.8115s
+2025-08-24 14:10:57,353 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0010s
+2025-08-24 14:28:46,447 - mot_api - INFO - Requesting new access token
+2025-08-24 14:28:46,451 - mot_api - ERROR - Failed to authenticate with MOT API: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /a455b827-244f-4c97-b5b4-ce5d13b4d00c/oauth2/v2.0/token (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000012479E6F6D0>: Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-24 14:28:46,452 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 500 - 0.0050s
+2025-08-24 14:29:15,637 - mot_api - INFO - Requesting new access token
+2025-08-24 14:29:16,043 - mot_api - INFO - Successfully obtained new access token
+2025-08-24 14:29:16,044 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 14:29:17,106 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.4706s
+2025-08-24 14:29:17,733 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-24 14:31:46,780 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0030s
+2025-08-24 14:31:47,172 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s
+2025-08-24 17:54:20,089 - mot_api - INFO - Requesting new access token
+2025-08-24 17:54:20,092 - mot_api - ERROR - Failed to authenticate with MOT API: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /a455b827-244f-4c97-b5b4-ce5d13b4d00c/oauth2/v2.0/token (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000012479E8DE90>: Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-24 17:54:20,093 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 500 - 0.0050s
+2025-08-24 17:54:23,723 - mot_api - INFO - Requesting new access token
+2025-08-24 17:54:23,726 - mot_api - ERROR - Failed to authenticate with MOT API: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /a455b827-244f-4c97-b5b4-ce5d13b4d00c/oauth2/v2.0/token (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000012479E9C1D0>: Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-24 17:54:23,727 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 500 - 0.0050s
+2025-08-24 17:55:53,813 - mot_api - INFO - Requesting new access token
+2025-08-24 17:55:54,196 - mot_api - INFO - Successfully obtained new access token
+2025-08-24 17:55:54,197 - mot_api - INFO - Fetching vehicle data for registration: cn09jej
+2025-08-24 17:55:55,439 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 1.6257s
+2025-08-24 17:55:55,804 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0020s

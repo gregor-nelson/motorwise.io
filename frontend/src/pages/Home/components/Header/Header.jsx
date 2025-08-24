@@ -104,8 +104,9 @@ const Header = () => {
                 className="inline-flex items-center text-decoration-none transition-colors duration-200 hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-4"
                 aria-label="MotCheck UK - Vehicle MOT history and tax status checker"
               >
-                <h1 className="text-base md:text-lg lg:text-xl xl:text-2xl font-semibold text-neutral-900 leading-tight tracking-tight m-0">MotCheck UK</h1>
-                <span className="hidden md:block text-sm text-neutral-600 ml-2">Vehicle Checks</span>
+                <h1 className="text-base md:text-lg lg:text-xl xl:text-2xl font-semibold text-neutral-900 leading-tight tracking-tight m-0">motorwise
+                </h1>
+                <span className="hidden md:block text-sm text-neutral-600 ml-2">Clear data. Wise choices</span>
               </Link>
             </div>
             

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from 'react';
-import Box from '@mui/material/Box';
 
 // Import calculator components 
 import EmissionsInsightsCalculator from '../Tax/EmissionsInsightsCalculator';
@@ -7,45 +6,14 @@ import OwnershipInsightsCalculator from '../Ownership/OwnershipInsightsCalculato
 import StatusInsightsCalculator from '../Status/StatusInsightsCalculator';
 import FuelEfficiencyInsightsCalculator from '../MPG/FuelEfficiencyInsightsCalculator';
 
-// Import Material-UI icons
-import WarningIcon from '@mui/icons-material/Warning';
-import InfoIcon from '@mui/icons-material/Info';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import SpeedIcon from '@mui/icons-material/Speed';
-import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import Co2Icon from '@mui/icons-material/Co2';
 
-// Import styled components from centralized styles
-import {
-  InsightsWrapper,
-  InsightsHeader,
-  HeaderContent,
-  HeaderIcon,
-  HeaderText,
-  InsightsContent,
-  LoadingContainer,
-  EmptyStateContainer,
-  ErrorContainer,
-  SummaryGrid,
-  SummaryCard,
-  SummaryIcon,
-  SummaryContent,
-  SummaryTitle,
-  SummaryValue,
-  InsightSection,
-  LoadingSpinner,
-  HeadingL,
-  HeadingM,
-  BodyText
-} from './style/style';
+// Phosphor Icons (no imports needed, using classes directly)
 
 // API configuration
 const API_BASE_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8004/api'
   : '/api';
 
-// All styled components now imported from centralized styles
 
 // Lazy load panel components with error handling
 const OwnershipPanelComponent = lazy(() => 
@@ -53,7 +21,7 @@ const OwnershipPanelComponent = lazy(() =>
     default: module.OwnershipPanelComponent 
   })).catch(err => {
     console.error('Failed to load OwnershipPanelComponent:', err);
-    return { default: () => <ErrorContainer>Failed to load component</ErrorContainer> };
+    return { default: () => <div className="p-6 text-center text-red-600">Failed to load component</div> };
   })
 );
 
@@ -62,7 +30,7 @@ const StatusPanelComponent = lazy(() =>
     default: module.StatusPanelComponent 
   })).catch(err => {
     console.error('Failed to load StatusPanelComponent:', err);
-    return { default: () => <ErrorContainer>Failed to load component</ErrorContainer> };
+    return { default: () => <div className="p-6 text-center text-red-600">Failed to load component</div> };
   })
 );
 
@@ -71,7 +39,7 @@ const EmissionsPanelComponent = lazy(() =>
     default: module.EmissionsPanelComponent 
   })).catch(err => {
     console.error('Failed to load EmissionsPanelComponent:', err);
-    return { default: () => <ErrorContainer>Failed to load component</ErrorContainer> };
+    return { default: () => <div className="p-6 text-center text-red-600">Failed to load component</div> };
   })
 );
 
@@ -80,7 +48,7 @@ const FuelEfficiencyPanelComponent = lazy(() =>
     default: module.FuelEfficiencyPanelComponent 
   })).catch(err => {
     console.error('Failed to load FuelEfficiencyPanelComponent:', err);
-    return { default: () => <ErrorContainer>Failed to load component</ErrorContainer> };
+    return { default: () => <div className="p-6 text-center text-red-600">Failed to load component</div> };
   })
 );
 
@@ -104,7 +72,7 @@ const calculateInsightQuality = (insightType, data) => {
   }
 };
 
-// MarketDash error boundary component
+// Error boundary component
 class InsightErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -122,10 +90,10 @@ class InsightErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Box p={3} textAlign="center">
-          <WarningIcon style={{ fontSize: 30, color: 'var(--negative)', marginBottom: 10 }} />
-          <BodyText>Error displaying this insight section</BodyText>
-        </Box>
+        <div className="p-6 text-center">
+          <i className="ph ph-warning-circle text-3xl text-red-600 mb-3 block"></i>
+          <p className="text-sm text-neutral-700">Error displaying this insight section</p>
+        </div>
       );
     }
 
@@ -133,11 +101,11 @@ class InsightErrorBoundary extends React.Component {
   }
 }
 
-// MarketDash loading fallback component
+// Loading fallback component
 const LoadingFallback = () => (
-  <Box p={4} textAlign="center">
-    <LoadingSpinner />
-  </Box>
+  <div className="p-8 text-center">
+    <div className="inline-block w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
+  </div>
 );
 
 // Custom hook for vehicle data fetching
@@ -386,8 +354,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     
     if (insights.ownershipInsights) {
       cards.push({
-        icon: <DirectionsCarIcon />,
-        color: 'var(--primary)',
+        icon: 'ph-car',
         title: 'Ownership',
         value: `${insights.ownershipInsights.yearsWithCurrentOwner} years`,
         status: insights.ownershipInsights.ownershipRiskLevel === 'Low' ? 'good' : 
@@ -398,8 +365,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     
     if (insights.statusInsights) {
       cards.push({
-        icon: <SpeedIcon />,
-        color: 'var(--neutral)',
+        icon: 'ph-gauge',
         title: 'Status',
         value: insights.statusInsights.driveabilityStatus,
         status: ['Legal to drive', 'Fully Road Legal'].includes(insights.statusInsights.driveabilityStatus) 
@@ -410,8 +376,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     
     if (insights.emissionsInsights) {
       cards.push({
-        icon: <Co2Icon />,
-        color: 'var(--positive)',
+        icon: 'ph-leaf',
         title: 'Emissions',
         value: `${insights.emissionsInsights.co2Emissions || 0}g/km`,
         status: insights.emissionsInsights.isULEZCompliant ? 'good' : 'critical',
@@ -421,8 +386,7 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
     
     if (insights.fuelEfficiencyInsights) {
       cards.push({
-        icon: <LocalGasStationIcon />,
-        color: 'var(--warning)',
+        icon: 'ph-drop',
         title: 'Fuel Economy',
         value: insights.fuelEfficiencyInsights.isElectric 
           ? `${insights.fuelEfficiencyInsights.estimatedMilesPerKWh} mi/kWh`
@@ -478,78 +442,49 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
   // Loading state
   if (loading) {
     return (
-      <InsightsWrapper>
-        <InsightsContent>
-          <LoadingContainer>
-            <LoadingSpinner />
-            <HeadingM style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-sm)' }}>
-              Loading Vehicle Insights
-            </HeadingM>
-            <BodyText>
-              We're analyzing your vehicle data to provide detailed insights...
-            </BodyText>
-          </LoadingContainer>
-        </InsightsContent>
-      </InsightsWrapper>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-6">
+          <div className="inline-block w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Loading Vehicle Insights</h2>
+          <p className="text-xs text-neutral-700 leading-relaxed">We're analyzing your vehicle data to provide detailed insights...</p>
+        </div>
+      </div>
     );
   }
   
   // Error state
   if (error) {
     return (
-      <InsightsWrapper>
-        <InsightsContent>
-          <ErrorContainer>
-            <WarningIcon style={{ fontSize: 60, color: 'var(--negative)' }} />
-            <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>
-              Unable to Load Insights
-            </HeadingM>
-            <BodyText style={{ marginBottom: 'var(--space-lg)' }}>
-              {error}
-            </BodyText>
-            <button 
-              onClick={() => window.location.reload()}
-              style={{
-                background: 'var(--negative)',
-                color: 'var(--white)',
-                border: 'none',
-                padding: 'var(--space-md) var(--space-xl)',
-                fontFamily: 'var(--font-main)',
-                fontWeight: 'var(--font-medium)',
-                fontSize: 'var(--text-base)',
-                cursor: 'pointer',
-                borderRadius: 'var(--radius-sm)',
-                transition: 'var(--transition)'
-              }}
-              onMouseOver={(e) => e.target.style.background = 'var(--negative-hover)'}
-              onMouseOut={(e) => e.target.style.background = 'var(--negative)'}
-            >
-              Try again
-            </button>
-          </ErrorContainer>
-        </InsightsContent>
-      </InsightsWrapper>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-6">
+          <i className="ph ph-warning-circle text-6xl text-red-600"></i>
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Unable to Load Insights</h2>
+          <p className="text-xs text-neutral-700 leading-relaxed mb-6">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors duration-200"
+          >
+            Try again
+          </button>
+        </div>
+      </div>
     );
   }
   
   // No data state
   if (!vehicleData || availableInsights.length === 0) {
     return (
-      <InsightsWrapper>
-        <InsightsContent>
-          <EmptyStateContainer>
-            <InfoIcon style={{ fontSize: 60, color: 'var(--primary)' }} />
-            <HeadingM style={{ marginBottom: 'var(--space-sm)' }}>
-              Limited Data Available
-            </HeadingM>
-            <BodyText>
-              {vehicleData ? 
-                "We don't have enough data to generate meaningful insights for this vehicle." :
-                "No vehicle data available for analysis."}
-            </BodyText>
-          </EmptyStateContainer>
-        </InsightsContent>
-      </InsightsWrapper>
+      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-6">
+          <i className="ph ph-info text-6xl text-blue-600"></i>
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Limited Data Available</h2>
+          <p className="text-xs text-neutral-700 leading-relaxed">
+            {vehicleData ? 
+              "We don't have enough data to generate meaningful insights for this vehicle." :
+              "No vehicle data available for analysis."}
+          </p>
+        </div>
+      </div>
     );
   }
   
@@ -558,56 +493,67 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
   const displayModel = vehicleData?.model || 'Vehicle';
   
   return (
-    <InsightsWrapper>
-      <InsightsHeader>
-        <HeaderContent>
-          <HeaderIcon>
-            <AssessmentIcon />
-          </HeaderIcon>
-          <HeaderText>
-            <HeadingL>
-              Vehicle Insights
-            </HeadingL>
-            <BodyText style={{ margin: 'var(--space-xs) 0 0 0' }}>
-              Comprehensive analysis for {displayMake} {displayModel}
-            </BodyText>
-          </HeaderText>
-        </HeaderContent>
-      </InsightsHeader>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      {/* Header */}
+      <div className="mb-12">
+        <div className="flex items-center mb-3">
+          <i className="ph ph-chart-bar text-lg text-blue-600 mr-3"></i>
+          <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+            Vehicle Insights
+          </h1>
+        </div>
+        <p className="text-xs text-neutral-600">
+          Comprehensive analysis for {displayMake} {displayModel}
+        </p>
+      </div>
       
-      <InsightsContent>
-        {/* Summary Cards */}
-        {summaryData.length > 0 && (
-          <SummaryGrid>
-            {summaryData.map((card, index) => (
-              <SummaryCard 
-                key={index} 
-                status={card.status}
-                onClick={() => handleSummaryCardClick(card.sectionId)}
-                tabIndex={0}
-                role="button"
-                aria-label={`Navigate to ${card.title} section`}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    handleSummaryCardClick(card.sectionId);
-                  }
-                }}
-              >
-                <SummaryIcon style={{ backgroundColor: card.color }}>
-                  {card.icon}
-                </SummaryIcon>
-                <SummaryContent>
-                  <SummaryTitle>{card.title}</SummaryTitle>
-                  <SummaryValue>{card.value}</SummaryValue>
-                </SummaryContent>
-              </SummaryCard>
-            ))}
-          </SummaryGrid>
-        )}
-        
-        {/* Vertically Stacked Sections */}
+      {/* Summary Cards */}
+      {summaryData.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {summaryData.map((card, index) => (
+            <div 
+              key={index}
+              onClick={() => handleSummaryCardClick(card.sectionId)}
+              tabIndex={0}
+              role="button"
+              aria-label={`Navigate to ${card.title} section`}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleSummaryCardClick(card.sectionId);
+                }
+              }}
+              className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-start">
+                  <i className={`${card.icon} text-lg mr-3 mt-0.5 ${
+                    card.status === 'good' ? 'text-green-600' :
+                    card.status === 'warning' ? 'text-yellow-600' :
+                    card.status === 'critical' ? 'text-red-600' :
+                    'text-blue-600'
+                  }`}></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">{card.title}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className={`text-2xl font-bold ${
+                    card.status === 'good' ? 'text-green-600' :
+                    card.status === 'warning' ? 'text-yellow-600' :
+                    card.status === 'critical' ? 'text-red-600' :
+                    'text-blue-600'
+                  }`}>{card.value}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      {/* Insight Sections */}
+      <div className="space-y-12">
         {sections.map((section) => (
-          <InsightSection key={section.id} id={section.id}>
+          <div key={section.id} id={section.id} className="mt-16 mb-12">
             <InsightErrorBoundary>
               <Suspense fallback={<LoadingFallback />}>
                 <section.component 
@@ -616,10 +562,10 @@ const EnhancedVehicleInsights = React.memo(({ registration, vin, paymentId, onDa
                 />
               </Suspense>
             </InsightErrorBoundary>
-          </InsightSection>
+          </div>
         ))}
-      </InsightsContent>
-    </InsightsWrapper>
+      </div>
+    </div>
   );
 });
 

@@ -1,9 +1,4 @@
 import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
-import InfoIcon from '@mui/icons-material/Info';
-import WarningIcon from '@mui/icons-material/Warning';
-import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import ClearIcon from '@mui/icons-material/Clear';
 
 // Import shared components
 import {
@@ -26,18 +21,7 @@ import {
 
 // Import custom tooltip components - removed HeadingWithTooltip as using SharedHeader
 
-// Import labour-specific styled components (for specific repair display)
-import {
-  RepairGrid,
-  RepairCard,
-  RepairHeader,
-  RepairTitle,
-  RepairTime,
-  TimeValue,
-  TimeUnit,
-  RepairMeta,
-  ComplexityBadge
-} from './LabourTimesStyles';
+// Labour-specific components now use Tailwind classes directly
 
 
 // Import API client
@@ -336,15 +320,7 @@ const getOperationComplexity = (time) => {
   return 'low';
 };
 
-// Helper function to get complexity color
-const getComplexityColor = (complexity) => {
-  switch (complexity) {
-    case 'high': return 'var(--negative)';
-    case 'medium': return 'var(--warning)';
-    case 'low': return 'var(--positive)';
-    default: return 'var(--primary)';
-  }
-};
+// Helper function to get complexity color - now handled by Tailwind classes
 
 
 
@@ -398,23 +374,25 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
   });
   
   return (
-    <RepairGrid>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
       {processedItems.map((item) => {
         const hours = parseFloat(item.value) || 0;
         const maxHours = 8;
         const percentage = Math.min((hours / maxHours) * 100, 100);
         
         return (
-          <RepairCard key={item.id} complexity={item.complexity}>
-            <RepairHeader>
-              <RepairTitle>
+          <div key={item.id} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex justify-between items-start mb-3 gap-3">
+              <div className="text-sm font-medium text-neutral-900 flex-1">
                 {item.isMultiOperation ? (
                   <div>
                     {item.operations.map((op, i) => (
-                      <div key={`${item.id}-op-${i}`} style={{
-                        fontWeight: i === 0 ? 'var(--font-bold)' : 'var(--font-regular)',
-                        marginBottom: i < item.operations.length - 1 ? 'var(--space-xs)' : 0
-                      }}>
+                      <div 
+                        key={`${item.id}-op-${i}`} 
+                        className={`${
+                          i === 0 ? 'font-semibold' : 'font-normal'
+                        } ${i < item.operations.length - 1 ? 'mb-1' : ''}`}
+                      >
                         {op}
                       </div>
                     ))}
@@ -422,48 +400,41 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
                 ) : (
                   item.operations[0]
                 )}
-              </RepairTitle>
-              <RepairTime>
-                <TimeValue>{formatValue(item.value)}</TimeValue>
-                <TimeUnit>{item.unit || 'hours'}</TimeUnit>
-              </RepairTime>
-            </RepairHeader>
-            
-            <RepairMeta>
-              <ComplexityBadge complexity={item.complexity}>
-                {item.complexity} complexity
-              </ComplexityBadge>
-            </RepairMeta>
-            
-            <div style={{
-              width: '100%',
-              height: '4px',
-              background: 'var(--gray-200)',
-              marginTop: 'var(--space-lg)',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                height: '100%',
-                width: `${percentage}%`,
-                background: getComplexityColor(item.complexity),
-                transition: 'width 0.3s ease'
-              }} />
+              </div>
+              <div className="flex items-baseline gap-2 flex-shrink-0">
+                <span className="text-2xl font-bold text-neutral-900">{formatValue(item.value)}</span>
+                <span className="text-sm text-neutral-600">{item.unit || 'hours'}</span>
+              </div>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: 'var(--space-sm)',
-              fontSize: 'var(--text-xs)',
-              color: 'var(--gray-500)',
-              fontFamily: 'var(--font-main)'
-            }}>
+            
+            <div className="flex justify-between items-center mb-4">
+              <span className={`px-2 py-1 text-xs rounded-full ${
+                item.complexity === 'high' ? 'bg-red-100 text-red-700' :
+                item.complexity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                'bg-green-100 text-green-700'
+              }`}>
+                {item.complexity} complexity
+              </span>
+            </div>
+            
+            <div className="w-full bg-neutral-200 rounded-full h-1 overflow-hidden">
+              <div 
+                className={`h-full rounded-full transition-all duration-300 ${
+                  item.complexity === 'high' ? 'bg-red-500' :
+                  item.complexity === 'medium' ? 'bg-yellow-500' :
+                  'bg-green-500'
+                }`}
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+            <div className="flex justify-between mt-2 text-xs text-neutral-500">
               <span>0h</span>
               <span>{maxHours}h</span>
             </div>
-          </RepairCard>
+          </div>
         );
       })}
-    </RepairGrid>
+    </div>
   );
 });
 
@@ -520,7 +491,7 @@ const EmptyState = ({ vehicleMake, vehicleModel }) => (
   <SharedEmptyState
     title={`No repair times data available for ${vehicleMake} ${vehicleModel}`}
     subtitle="This could be because the vehicle is too new, too old, or a rare model."
-    icon={InfoIcon}
+    icon={() => <i className="ph ph-info text-lg"></i>}
   />
 );
 
@@ -911,29 +882,24 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
         {vehicleSummary && (
           <SharedNoticePanel>
             <h3>Repair Overview</h3>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-              gap: 'var(--space-lg)',
-              marginTop: 'var(--space-md)'
-            }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
                   {vehicleSummary.totalOperations}
                 </div>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Total Operations</p>
+                <p className="text-sm text-neutral-600 m-0">Total Operations</p>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--primary)' }}>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
                   {vehicleSummary.avgTime}
                 </div>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Average Time</p>
+                <p className="text-sm text-neutral-600 m-0">Average Time</p>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-semibold)', color: 'var(--gray-900)' }}>
+              <div className="text-center">
+                <div className="text-lg font-semibold text-neutral-900">
                   {vehicleSummary.mostComplexSystem}
                 </div>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', margin: 0 }}>Most Common</p>
+                <p className="text-sm text-neutral-600 m-0">Most Common</p>
               </div>
             </div>
           </SharedNoticePanel>
@@ -952,16 +918,8 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
         />
 
         {/* Additional sort controls */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-md)',
-          marginBottom: 'var(--space-xl)',
-          padding: 'var(--space-md)',
-          background: 'var(--gray-50)',
-          borderRadius: 'var(--radius-md)'
-        }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-700)' }}>Sort by:</span>
+        <div className="flex items-center gap-4 mb-8 p-4 bg-neutral-50 rounded-lg">
+          <span className="text-sm text-neutral-700">Sort by:</span>
           <SharedButton 
             variant={sortBy === 'complexity' ? 'primary' : 'secondary'} 
             onClick={() => handleSortChange('complexity')}
@@ -990,28 +948,12 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
         >
           {tabs.map((tab, tabIndex) => (
             <SharedTabContent key={tabIndex} active={tabValue === tabIndex}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-md)',
-                marginBottom: 'var(--space-xl)',
-                paddingBottom: 'var(--space-lg)',
-                borderBottom: `2px solid ${tab.color}`
-              }}>
+              <div className="flex items-center gap-4 mb-8 pb-4 border-b-2" style={{ borderBottomColor: tab.color }}>
                 <div>
-                  <h3 style={{ 
-                    fontSize: 'var(--text-2xl)', 
-                    fontWeight: '600', 
-                    color: 'var(--gray-900)', 
-                    margin: 0 
-                  }}>
+                  <h3 className="text-2xl font-semibold text-neutral-900 m-0">
                     {tab.label}
                   </h3>
-                  <p style={{ 
-                    fontSize: 'var(--text-base)', 
-                    color: 'var(--gray-600)', 
-                    margin: 'var(--space-xs) 0 0 0' 
-                  }}>
+                  <p className="text-base text-neutral-600 mt-1 mb-0">
                     Standard repair times for {tab.label.toLowerCase()} operations
                   </p>
                 </div>
@@ -1039,13 +981,7 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
         </SharedTabs>
 
         {/* Footer note - following GOV.UK pattern */}
-        <div style={{
-          fontSize: 'var(--text-sm)',
-          color: 'var(--gray-500)',
-          textAlign: 'center',
-          padding: 'var(--space-lg) 0',
-          marginTop: 'var(--space-3xl)'
-        }}>
+        <div className="text-sm text-neutral-500 text-center py-4 mt-12">
           Repair times sourced from industry standard databases. Last updated: {lastUpdated}
         </div>
       </SharedPanel>

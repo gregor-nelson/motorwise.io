@@ -13,18 +13,18 @@ const STORAGE_VERSION = 'v1';
 const MAX_CACHE_SIZE = 1000000; // ~1MB max size for cache entries
 
 
-// Helper functions (keeping existing implementations)
+// Helper functions with Phosphor icons
 const getSpecIcon = (type) => {
   const icons = {
-    pressure: 'P',
-    temperature: 'T',
-    volume: 'V',
-    torque: 'τ',
-    electrical: 'E',
-    time: 't',
-    distance: 'D',
-    speed: 'S',
-    default: '•'
+    pressure: 'ph ph-gauge',
+    temperature: 'ph ph-thermometer',
+    volume: 'ph ph-flask',
+    torque: 'ph ph-gear',
+    electrical: 'ph ph-lightning',
+    time: 'ph ph-clock',
+    distance: 'ph ph-ruler',
+    speed: 'ph ph-speedometer',
+    default: 'ph ph-info'
   };
   return icons[type] || icons.default;
 };
@@ -46,25 +46,25 @@ const getSpecColor = (type) => {
 
 const getCategoryIcon = (category) => {
   const icons = {
-    'Engine Details': 'E',
-    'Service Information': 'S',
-    'Torque Specifications': 'T',
-    'Brakes & A/C': 'B',
-    'Vehicle Identification': 'V',
-    'Injection System': 'I',
-    'Tuning & Emissions': 'TE',
-    'Spark Plugs': 'SP',
-    'Fuel System': 'F',
-    'Starting & Charging': 'SC',
-    'Lubricants & Capacities': 'L',
-    'Service Checks & Adjustments': 'SA',
-    'Cylinder Head Instructions': 'CH',
-    'Engine Tightening Torques': 'ET',
-    'Chassis Tightening Torques': 'CT',
-    'Brake Disc & Drum Dimensions': 'BD',
-    'Air Conditioning': 'AC'
+    'Engine Details': 'ph ph-engine',
+    'Service Information': 'ph ph-wrench',
+    'Torque Specifications': 'ph ph-gear',
+    'Brakes & A/C': 'ph ph-disc',
+    'Vehicle Identification': 'ph ph-identification-card',
+    'Injection System': 'ph ph-syringe',
+    'Tuning & Emissions': 'ph ph-plant',
+    'Spark Plugs': 'ph ph-lightning',
+    'Fuel System': 'ph ph-drop',
+    'Starting & Charging': 'ph ph-battery-charging',
+    'Lubricants & Capacities': 'ph ph-drop',
+    'Service Checks & Adjustments': 'ph ph-check-circle',
+    'Cylinder Head Instructions': 'ph ph-list-numbers',
+    'Engine Tightening Torques': 'ph ph-wrench',
+    'Chassis Tightening Torques': 'ph ph-car',
+    'Brake Disc & Drum Dimensions': 'ph ph-disc',
+    'Air Conditioning': 'ph ph-snowflake'
   };
-  return icons[category] || '?';
+  return icons[category] || 'ph ph-question';
 };
 
 const getCategoryColor = (category) => {
@@ -168,24 +168,28 @@ const renderVisualSpecs = (items, sectionTitle) => {
           const statusText = numericValue > 70 ? 'Optimal' : numericValue > 40 ? 'Acceptable' : 'Low';
           
           return (
-            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
-              <div className="flex items-start justify-between mb-3">
-                <div className="text-sm font-medium text-neutral-900">{label}</div>
-                <div 
-                  className="w-8 h-8 rounded flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                  style={{ backgroundColor: color || 'rgb(37 99 235)' }}
-                >
-                  {icon}
+            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start">
+                  <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5`}></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">{label}</div>
+                    <div className="text-xs text-neutral-600">Performance metric</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-blue-600">{value}</div>
+                  <div className="text-xs text-blue-600">{unit}</div>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="pt-3 border-t border-blue-200 mt-3">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-bold">{value} {unit}</span>
-                  <span className={`text-sm font-medium ${statusColor}`}>{statusText}</span>
+                  <span className="text-xs text-neutral-700">Status</span>
+                  <span className={`text-xs font-medium ${statusColor}`}>{statusText}</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-300"
+                    className="h-full rounded-full transition-all duration-1000 ease-out"
                     style={{ 
                       width: `${numericValue}%`,
                       backgroundColor: color || 'rgb(37 99 235)'
@@ -198,23 +202,25 @@ const renderVisualSpecs = (items, sectionTitle) => {
         }
         
         return (
-          <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
-            <div className="flex items-start justify-between mb-3">
-              <div className="text-sm font-medium text-neutral-900">{label}</div>
-              <div 
-                className="w-8 h-8 rounded flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                style={{ backgroundColor: color || 'rgb(37 99 235)' }}
-              >
-                {icon}
+          <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-start">
+                <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5`}></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">{label}</div>
+                  <div className="text-xs text-neutral-600">{sectionTitle}</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <div className={`font-bold text-blue-600 ${variant === 'compact' ? 'text-lg' : 'text-2xl'}`}>
+                  {value}
+                </div>
+                {unit && <div className="text-xs text-blue-600">{unit}</div>}
               </div>
             </div>
-            <div className={`font-bold text-neutral-900 mb-1 ${variant === 'compact' ? 'text-lg' : 'text-2xl'}`}>
-              {value}
-              {unit && <span className="text-base font-normal text-neutral-600 ml-1">{unit}</span>}
-            </div>
             {sectionTitle === 'Lubricants & Capacities' && (
-              <div className="mt-4">
-                <span className="text-sm font-medium text-green-600">Recommended</span>
+              <div className="pt-3 border-t border-green-200 mt-3">
+                <span className="text-xs font-medium text-green-600">✓ Recommended</span>
               </div>
             )}
           </div>
@@ -685,9 +691,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           <>
             {hasEngineOilOptions && (
               <div className="mb-8">
-                <h4 className="text-lg font-semibold text-neutral-900 mb-4">
-                  Engine Oil Options
-                </h4>
+                <div className="flex items-center gap-2 mb-4">
+                  <i className="ph ph-drop text-lg text-green-600"></i>
+                  <h4 className="text-lg font-medium text-neutral-900">
+                    Engine Oil Options
+                  </h4>
+                </div>
                 {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
               </div>
             )}
@@ -697,9 +706,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
                 {hasEngineOilOptions && (
                   <div className="h-1 bg-neutral-200 my-8" />
                 )}
-                <h4 className="text-lg font-semibold text-neutral-900 mb-4">
-                  Other Lubricants & Capacities
-                </h4>
+                <div className="flex items-center gap-2 mb-4">
+                  <i className="ph ph-flask text-lg text-blue-600"></i>
+                  <h4 className="text-lg font-medium text-neutral-900">
+                    Other Lubricants & Capacities
+                  </h4>
+                </div>
                 {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
               </div>
             )}
@@ -744,9 +756,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
               
               {hasTorqueSequence && (
                 <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-                  <h4 className="text-lg font-semibold text-neutral-900 mb-4">
-                    Tightening sequence
-                  </h4>
+                  <div className="flex items-center gap-2 mb-4">
+                    <i className="ph ph-list-numbers text-lg text-blue-600"></i>
+                    <h4 className="text-lg font-medium text-neutral-900">
+                      Tightening Sequence
+                    </h4>
+                  </div>
                   <ol className="list-decimal pl-6 m-0">
                     {headTorques.map((step, index) => (
                       <li key={`step-${index}`} className="text-xs text-neutral-700 mb-2">
@@ -927,24 +942,29 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-        <div className="mb-8">
-          <HeadingWithTooltip 
-            tooltip="Technical specifications for your vehicle, based on manufacturer data"
-          >
-            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
-              Technical Specifications for {displayMake} {displayModel}
-            </h1>
-          </HeadingWithTooltip>
-          <p className="text-sm text-neutral-600">
-            These specifications provide detailed technical information for servicing and maintaining your vehicle.
-          </p>
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <i className="ph ph-wrench text-3xl text-blue-600"></i>
+            <div>
+              <HeadingWithTooltip 
+                tooltip="Technical specifications for your vehicle, based on manufacturer data"
+              >
+                <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-1">
+                  Technical Specifications
+                </h1>
+              </HeadingWithTooltip>
+              <p className="text-sm text-neutral-600">
+                {displayMake} {displayModel} - Detailed technical information for servicing and maintenance
+              </p>
+            </div>
+          </div>
         </div>
 
         {matchConfidence !== 'exact' && (
-          <div className="bg-yellow-50 rounded-lg p-4 shadow-sm mb-6">
+          <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-6">
             <div className="flex items-start gap-3">
-              <i className="ph ph-warning text-yellow-600 text-lg mt-0.5"></i>
+              <i className="ph ph-warning text-lg text-yellow-600 mt-0.5"></i>
               <div>
                 <div className="text-sm font-medium text-neutral-900 mb-1">Vehicle Match Information</div>
                 <div className="text-xs text-neutral-700">
@@ -958,18 +978,24 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           </div>
         )}
 
-        <div className="bg-blue-50 rounded-lg p-4 shadow-sm mb-6">
-          <h3 className="text-lg font-medium text-neutral-900 mb-4">Important</h3>
-          <p className="text-xs text-neutral-700">
-            These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
-          </p>
+        <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-6">
+          <div className="flex items-start gap-3">
+            <i className="ph ph-info text-lg text-blue-600 mt-0.5"></i>
+            <div>
+              <div className="text-sm font-medium text-neutral-900 mb-1">Important Notice</div>
+              <div className="text-xs text-neutral-700">
+                These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
+              </div>
+            </div>
+          </div>
         </div>
 
         {displayFuelType && displayFuelType !== 'unknown' && (
           <div className="mb-8">
-            <span className="inline-block bg-blue-600 text-white px-3 py-1 text-xs font-medium rounded-full">
-              {displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine
-            </span>
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1 text-xs font-medium rounded-full">
+              <i className="ph ph-drop"></i>
+              <span>{displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine</span>
+            </div>
           </div>
         )}
 
@@ -977,17 +1003,20 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           <>
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-4">
-                <input
-                  type="text"
-                  placeholder="Search specifications..."
-                  value={searchTerm}
-                  onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
-                />
+                <div className="relative flex-1">
+                  <i className="ph ph-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                  <input
+                    type="text"
+                    placeholder="Search specifications..."
+                    value={searchTerm}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-neutral-50 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                  />
+                </div>
                 {searchTerm && (
                   <button
                     onClick={handleClearFilters}
-                    className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                    className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer hover:scale-110 transition-all duration-300"
                   >
                     Clear
                   </button>
@@ -1009,7 +1038,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
                       }
                     `}
                   >
-                    <i className="ph ph-database text-lg"></i>
+                    <i className={`${getCategoryIcon(tab.label)} text-lg`}></i>
                     <span>{tab.label}</span>
                   </button>
                 ))}
@@ -1018,11 +1047,16 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
 
             {tabs.map((tab, tabIndex) => (
               <div key={`content-${tabIndex}`} className={tabValue === tabIndex ? 'block' : 'hidden'}>
-                <div className="mb-8 pb-4 border-b-2" style={{ borderColor: tab.color || 'rgb(37 99 235)' }}>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">{tab.label}</h3>
-                  <p className="text-sm text-neutral-600">
-                    Technical specifications and measurements for {tab.label.toLowerCase()}
-                  </p>
+                <div className="mb-12">
+                  <div className="flex items-center gap-3 mb-4">
+                    <i className={`${getCategoryIcon(tab.label)} text-2xl text-blue-600`}></i>
+                    <div>
+                      <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-1">{tab.label}</h2>
+                      <p className="text-sm text-neutral-600">
+                        Technical specifications and measurements for {tab.label.toLowerCase()}
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 
                 {tab.sections.map((section, sectionIndex) => {
@@ -1036,9 +1070,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
                         className="w-full flex items-center justify-between bg-neutral-50 rounded-lg p-4 text-left hover:bg-neutral-100 transition-colors duration-200"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-blue-600 text-white rounded flex items-center justify-center text-sm font-bold">
-                            {section.icon || '•'}
-                          </div>
+                          <i className={`${section.icon || 'ph-question'} text-lg text-blue-600`}></i>
                           <span className="text-lg font-medium text-neutral-900">{section.title}</span>
                         </div>
                         <i className={`ph ph-caret-down transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
@@ -1063,9 +1095,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           </div>
         )}
 
-        <div className="mt-16 pt-4 border-t border-neutral-200 text-xs text-neutral-500 text-center">
-          Technical specifications sourced from industry standard databases.<br />
-          Last updated: {lastUpdated}
+        <div className="mt-16 mb-12">
+          <div className="h-1 bg-neutral-200 mb-8"></div>
+          <div className="flex items-center justify-center gap-2 text-xs text-neutral-500">
+            <i className="ph ph-database"></i>
+            <span>Technical specifications sourced from industry standard databases • Last updated: {lastUpdated}</span>
+          </div>
         </div>
       </div>
     </div>

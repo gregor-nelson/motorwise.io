@@ -80,7 +80,7 @@ const browserCache = {
         try {
           const item = JSON.parse(localStorage.getItem(key));
           return { key, timestamp: item.timestamp };
-        } catch (e) {
+        } catch (error) {
           return { key, timestamp: 0 };
         }
       })
@@ -100,21 +100,7 @@ const formatValue = (value) => {
   return value.replace(/([a-z\)])([A-Z])/g, '$1 $2');
 };
 
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(amount);
-};
-
-const formatTime = (hours) => {
-  if (hours < 1) {
-    return `${Math.round(hours * 60)} min`;
-  }
-  return `${hours}h`;
-};
+// Removed unused utility functions
 
 
 const parseRepairOperations = (text) => {
@@ -174,7 +160,7 @@ const extractYearRangeFromModelType = (modelType) => {
   const yearPatterns = [
     /\((\d{2})-(\d{2})\)/,
     /\((\d{4})-(\d{4})\)/,
-    /\((\d{4})[\-\+](\d{4})\)/,
+    /\((\d{4})[-+](\d{4})\)/,
     /(\d{4})-(\d{4})/,
     /\((\d{4})\+\)/,
     /(\d{4})\+/,
@@ -439,8 +425,7 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
 /**
  * MatchWarning Component - Pure Tailwind design
  */
-const MatchWarning = ({ matchConfidence, vehicleIdentification, vehicleData }) => {
-  const year = extractVehicleYear(vehicleData);
+const MatchWarning = ({ matchConfidence, vehicleIdentification }) => {
   
   if (matchConfidence === 'exact' || matchConfidence === 'none') return null;
   
@@ -534,7 +519,7 @@ const EmptyState = ({ vehicleMake, vehicleModel }) => (
 );
 
 // Main component - restructured for better alignment with bulletins component
-const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) => {
+const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [repairData, setRepairData] = useState(null);
@@ -612,7 +597,6 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
     { id: 'high', label: 'High' }
   ];
 
-  const activeFilters = complexityFilter === 'all' ? [] : [complexityFilter];
 
   // Helper function to count items in a section for accordion display
   const getItemCount = useCallback((content, searchTerm, complexityFilter) => {
@@ -636,8 +620,8 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
       });
       
       return filteredCount;
-    } catch (e) {
-      console.warn('Error counting items:', e);
+    } catch (error) {
+      console.warn('Error counting items:', error);
       return 0;
     }
   }, []);
@@ -721,7 +705,7 @@ const VehicleRepairTimesComponent = ({ registration, vehicleData, onDataLoad }) 
       }
     };
     
-  }, [vehicleData?.make, vehicleData?.model, onDataLoad, checkBrowserCache]);
+  }, [vehicleData, onDataLoad, checkBrowserCache]);
 
   const getYearRangeDisplay = useCallback(() => {
     if (!repairData || !repairData.vehicleIdentification) return '';

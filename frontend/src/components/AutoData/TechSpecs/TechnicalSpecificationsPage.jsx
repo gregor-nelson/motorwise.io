@@ -84,16 +84,16 @@ const Gauge = ({ value, max, unit, label, color }) => {
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
   
   return (
-    <div className="text-center">
-      <div className="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-3">
-        <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+    <div>
+      <div className="relative w-32 h-32 mx-auto mb-4">
+        <svg className="transform -rotate-90" viewBox="0 0 100 100">
           <circle 
             cx="50" 
             cy="50" 
             r="45" 
             fill="none" 
             stroke="rgb(209 213 219)" 
-            strokeWidth="8"
+            strokeWidth="10"
           />
           <circle
             cx="50"
@@ -101,17 +101,16 @@ const Gauge = ({ value, max, unit, label, color }) => {
             r="45"
             fill="none"
             stroke={color || 'rgb(37 99 235)'}
-            strokeWidth="8"
-            strokeLinecap="round"
+            strokeWidth="10"
+            strokeLinecap="square"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-300"
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-lg sm:text-xl font-bold text-neutral-900">{value}</div>
-            <div className="text-xs text-neutral-600">{unit}</div>
-          </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+          <div className="text-lg font-bold text-neutral-900">{value}</div>
+          <div className="text-xs text-neutral-600">{unit}</div>
         </div>
       </div>
       <div className="text-sm font-medium text-neutral-900">{label}</div>
@@ -152,7 +151,7 @@ const renderVisualSpecs = (items, sectionTitle) => {
         if (variant === 'gauge' && hasNumericValue) {
           const maxValue = unit.includes('bar') ? 10 : 150;
           return (
-            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
               <Gauge
                 value={numericValue}
                 max={maxValue}
@@ -171,26 +170,26 @@ const renderVisualSpecs = (items, sectionTitle) => {
           return (
             <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
               <div className="flex items-center justify-between mb-3">
-                <div className="flex items-start flex-1 min-w-0">
-                  <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5 flex-shrink-0`}></i>
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium text-neutral-900 truncate">{label}</div>
+                <div className="flex items-start">
+                  <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5`}></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">{label}</div>
                     <div className="text-xs text-neutral-600">Performance metric</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end ml-4 flex-shrink-0">
-                  <div className="text-xl sm:text-2xl font-bold text-blue-600">{value}</div>
+                <div className="flex flex-col items-end">
+                  <div className="text-2xl font-bold text-blue-600">{value}</div>
                   <div className="text-xs text-blue-600">{unit}</div>
                 </div>
               </div>
-              <div className="pt-3 border-t border-blue-200">
+              <div className="pt-3 border-t border-blue-200 mt-3">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-xs text-neutral-700">Status</span>
                   <span className={`text-xs font-medium ${statusColor}`}>{statusText}</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
                   <div
-                    className="h-full rounded-full"
+                    className="h-full rounded-full transition-all duration-1000 ease-out"
                     style={{ 
                       width: `${numericValue}%`,
                       backgroundColor: color || 'rgb(37 99 235)'
@@ -205,22 +204,22 @@ const renderVisualSpecs = (items, sectionTitle) => {
         return (
           <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-start flex-1 min-w-0">
-                <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5 flex-shrink-0`}></i>
-                <div className="min-w-0">
-                  <div className="text-sm font-medium text-neutral-900 truncate">{label}</div>
+              <div className="flex items-start">
+                <i className={`${icon} text-lg text-blue-600 mr-3 mt-0.5`}></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">{label}</div>
                   <div className="text-xs text-neutral-600">{sectionTitle}</div>
                 </div>
               </div>
-              <div className="flex flex-col items-end ml-4 flex-shrink-0">
-                <div className={`font-bold text-blue-600 ${variant === 'compact' ? 'text-lg' : 'text-xl sm:text-2xl'}`}>
+              <div className="flex flex-col items-end">
+                <div className={`font-bold text-blue-600 ${variant === 'compact' ? 'text-lg' : 'text-2xl'}`}>
                   {value}
                 </div>
                 {unit && <div className="text-xs text-blue-600">{unit}</div>}
               </div>
             </div>
             {sectionTitle === 'Lubricants & Capacities' && (
-              <div className="pt-3 border-t border-green-200">
+              <div className="pt-3 border-t border-green-200 mt-3">
                 <span className="text-xs font-medium text-green-600">✓ Recommended</span>
               </div>
             )}
@@ -879,7 +878,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
           <div className="flex flex-col items-center justify-center min-h-48 gap-4">
             <div className="w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin"></div>
-            <div className="text-center max-w-md">
+            <div className="text-center">
               <div className="text-lg font-medium text-neutral-900 mb-2">Loading vehicle specifications</div>
               <div className="text-sm text-neutral-600">We are retrieving the technical information for {vehicleData?.make} {vehicleData?.model}</div>
             </div>
@@ -894,12 +893,12 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-          <div className="text-center py-8 max-w-md mx-auto">
+          <div className="text-center py-8">
             <div className="text-lg font-medium text-neutral-900 mb-2 flex items-center justify-center gap-2">
               <i className="ph ph-warning text-red-600"></i>
               Cannot retrieve technical specifications
             </div>
-            <div className="text-sm text-red-600 mb-4">{error}</div>
+            <div className="text-base text-red-600 mb-4">{error}</div>
             <button 
               onClick={handleRetry}
               className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
@@ -917,7 +916,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-          <div className="flex flex-col items-center justify-center min-h-48 gap-4 text-center max-w-md mx-auto">
+          <div className="flex flex-col items-center justify-center min-h-48 gap-4 text-center">
             <i className="ph ph-database text-4xl text-neutral-400"></i>
             <div>
               <div className="text-lg font-medium text-neutral-900 mb-2">Technical specifications not available</div>
@@ -963,7 +962,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         </div>
 
         {matchConfidence !== 'exact' && (
-          <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-6">
+          <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-6">
             <div className="flex items-start gap-3">
               <i className="ph ph-warning text-lg text-yellow-600 mt-0.5"></i>
               <div>

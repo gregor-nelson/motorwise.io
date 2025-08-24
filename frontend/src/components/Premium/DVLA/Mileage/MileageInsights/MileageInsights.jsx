@@ -110,7 +110,7 @@ const DataQualityIndicator = ({
       {/* Main Quality Status Card */}
       <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer ${
         qualityLevel === 'high' ? 'bg-green-50' :
-        qualityLevel === 'medium' ? 'bg-yellow-50' :
+        qualityLevel === 'medium' ? 'bg-transparent' :
         qualityLevel === 'poor' ? 'bg-red-50' :
         'bg-neutral-50'
       }`}>
@@ -216,7 +216,7 @@ const DataQualityIndicator = ({
           )}
           
           {motGapsDetected && (
-            <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+            <div className="bg-transparent rounded-lg p-4 shadow-sm">
               <div className="flex items-start gap-2">
                 <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
                 <div>
@@ -240,7 +240,7 @@ const DataQualityIndicator = ({
           )}
           
           {anomalies && anomalies.filter(a => a.type === 'spike').length > 0 && (
-            <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+            <div className="bg-transparent rounded-lg p-4 shadow-sm">
               <div className="flex items-start gap-2">
                 <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
                 <div>
@@ -902,7 +902,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
           {/* Risk Score Card */}
           <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ${
             insights.riskAssessment.riskCategory === 'Low' ? 'bg-green-50' :
-            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-yellow-50' :
+            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-transparent' :
             'bg-red-50'
           }`}>
             <div className="flex items-center justify-between mb-3">
@@ -975,9 +975,9 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   const cardStyles = {
                     critical: "bg-red-50 border-l-4 border-red-600",
                     legal: "bg-purple-50 border-l-4 border-purple-600",
-                    causes: "bg-orange-50 border-l-4 border-orange-600", 
+                    causes: "bg-transparent border-l-4 border-orange-600", 
                     usage: "bg-blue-50 border-l-4 border-blue-600",
-                    maintenance: "bg-yellow-50 border-l-4 border-yellow-600",
+                    maintenance: "bg-transparent border-l-4 border-yellow-600",
                     general: "bg-red-50 border-l-4 border-red-600"
                   };
                   
@@ -1363,7 +1363,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   .sort((a, b) => b.details.annualizedMileage - a.details.annualizedMileage)
                   .slice(0, 2)
                   .map((anomaly, index) => (
-                  <div key={`anomaly-${index}`} className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+                  <div key={`anomaly-${index}`} className="bg-transparent rounded-lg p-4 shadow-sm">
                     <div className="flex items-start gap-2">
                       <i className="ph ph-warning-circle text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
                       <div>
@@ -1375,7 +1375,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                 ))}
                 
                 {anomalies.filter(a => a.type === 'spike').length > 2 && (
-                  <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+                  <div className="bg-transparent rounded-lg p-4 shadow-sm">
                     <div className="flex items-start gap-2">
                       <i className="ph ph-info text-lg text-yellow-600 mt-0.5 flex-shrink-0"></i>
                       <div>
@@ -1447,7 +1447,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
           {/* Risk Score Card */}
           <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ${
             insights.riskAssessment.riskCategory === 'Low' ? 'bg-green-50' :
-            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-yellow-50' :
+            insights.riskAssessment.riskCategory === 'Medium' ? 'bg-transparent' :
             'bg-red-50'
           }`}>
             <div className="flex items-center justify-between mb-3">
@@ -1520,9 +1520,9 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
                   const cardStyles = {
                     critical: "bg-red-50 border-l-4 border-red-600",
                     legal: "bg-purple-50 border-l-4 border-purple-600",
-                    causes: "bg-orange-50 border-l-4 border-orange-600", 
+                    causes: "bg-transparent border-l-4 border-orange-600", 
                     usage: "bg-blue-50 border-l-4 border-blue-600",
-                    maintenance: "bg-yellow-50 border-l-4 border-yellow-600",
+                    maintenance: "bg-transparent border-l-4 border-yellow-600",
                     general: "bg-red-50 border-l-4 border-red-600"
                   };
                   

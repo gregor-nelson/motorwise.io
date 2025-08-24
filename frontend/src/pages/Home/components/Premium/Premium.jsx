@@ -147,7 +147,7 @@ const PremiumVehicleReports = () => {
   };
 
   return (
-    <div ref={componentRef} className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 bg-white text-neutral-900 relative overflow-hidden min-h-screen">
+    <div id="services" ref={componentRef} className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 bg-white text-neutral-900 relative overflow-hidden min-h-screen">
       {/* <PremiumBackground3D /> */}
       <div className="relative z-10">
       <header className="mb-16">

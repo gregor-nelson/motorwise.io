@@ -1,336 +1,221 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import React, { useState, useRef, useEffect } from 'react';
 
-// Ultra Clean Minimal Design System - Tooltip Tokens
-const TooltipTokens = `
-  :root {
-    /* Ultra Clean Color Palette - Tooltip */
-    --tooltip-bg: #ffffff;
-    --tooltip-text: #1a1a1a;
-    --tooltip-border: #3b82f6;
-    --tooltip-border-light: #d4d4d4;
-    --tooltip-shadow: rgba(0, 0, 0, 0.1);
-    
-    /* Semantic Colors */
-    --tooltip-positive: #059669;
-    --tooltip-negative: #dc2626;
-    --tooltip-warning: #d97706;
-    --tooltip-gray-light: #f5f5f5;
-    --tooltip-gray-mid: #737373;
-    --tooltip-gray-dark: #404040;
-    
-    /* Clean Spacing - Generous White Space */
-    --tooltip-space-xs: 0.25rem;
-    --tooltip-space-sm: 0.5rem;
-    --tooltip-space-md: 1rem;
-    --tooltip-space-lg: 1.5rem;
-    --tooltip-space-xl: 2rem;
-    
-    /* Typography - Clean Hierarchy */
-    --tooltip-text-xs: 0.75rem;
-    --tooltip-text-sm: 0.875rem;
-    --tooltip-text-base: 1rem;
-    --tooltip-text-lg: 1.125rem;
-    --tooltip-text-xl: 1.25rem;
-    --tooltip-text-2xl: 1.5rem;
-    
-    /* Clean Typography */
-    --tooltip-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --tooltip-font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-    
-    /* Minimal Dimensions */
-    --tooltip-width-min: 280px;
-    --tooltip-width-optimal: 320px;
-    --tooltip-width-max: 350px;
-    --tooltip-border-width: 4px;
-    
-    /* Clean Transitions */
-    --tooltip-transition: all 0.15s ease;
-  }
-`;
+// Core Tooltip Component with positioning logic
+export const GovUKTooltip = ({ children, title, placement = 'top', arrow = false, ...props }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef(null);
+  const tooltipRef = useRef(null);
 
+  const calculatePosition = () => {
+    if (!triggerRef.current || !tooltipRef.current) return;
 
-// Clean media queries - minimal approach
-const mobileMediaQuery = '@media (max-width: 767px)';
-const desktopMediaQuery = '@media (min-width: 768px)';
+    const triggerRect = triggerRef.current.getBoundingClientRect();
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
-// Ultra Clean Tooltip Component - CSS Variables Approach
-export const GovUKTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))`
-  ${TooltipTokens}
-  
-  & .${tooltipClasses.tooltip} {
-    font-family: var(--tooltip-font);
-    background: var(--tooltip-bg);
-    color: var(--tooltip-text);
-    font-weight: 400;
-    border-left: var(--tooltip-border-width) solid var(--tooltip-border);
-    border-radius: 0;
-    box-shadow: 0 2px 4px var(--tooltip-shadow);
-    padding: var(--tooltip-space-md);
-    font-size: var(--tooltip-text-sm);
-    line-height: 1.25;
-    width: var(--tooltip-width-optimal);
-    min-width: var(--tooltip-width-min);
-    max-width: var(--tooltip-width-max);
-    word-break: break-word;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
-    ${mobileMediaQuery} {
-      padding: var(--tooltip-space-sm);
-      font-size: var(--tooltip-text-xs);
-      width: auto;
-      min-width: var(--tooltip-width-min);
-      max-width: calc(100vw - 40px);
+    let top, left;
+
+    switch (placement) {
+      case 'top':
+        top = triggerRect.top - tooltipRect.height - 8;
+        left = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+        break;
+      case 'bottom':
+        top = triggerRect.bottom + 8;
+        left = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+        break;
+      case 'left':
+        top = triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+        left = triggerRect.left - tooltipRect.width - 8;
+        break;
+      case 'right':
+        top = triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+        left = triggerRect.right + 8;
+        break;
+      default:
+        top = triggerRect.top - tooltipRect.height - 8;
+        left = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
     }
-    
-    @media print {
-      display: none;
+
+    // Viewport boundary checks
+    if (left < 8) left = 8;
+    if (left + tooltipRect.width > viewportWidth - 8) left = viewportWidth - tooltipRect.width - 8;
+    if (top < 8) top = triggerRect.bottom + 8;
+    if (top + tooltipRect.height > viewportHeight - 8) top = triggerRect.top - tooltipRect.height - 8;
+
+    setPosition({ top, left });
+  };
+
+  const handleMouseEnter = () => {
+    setIsVisible(true);
+    setTimeout(calculatePosition, 0);
+  };
+
+  const handleMouseLeave = () => {
+    setIsVisible(false);
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      calculatePosition();
+      window.addEventListener('scroll', calculatePosition);
+      window.addEventListener('resize', calculatePosition);
     }
-  }
-  
-  & .${tooltipClasses.arrow} {
-    display: none;
-  }
-`;
 
-// Clean Tooltip Target - CSS Variables
-export const TooltipTarget = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'underlineStyle'
-})`
-  ${TooltipTokens}
-  
-  font-family: var(--tooltip-font);
-  border-bottom: ${({ underlineStyle = 'dotted' }) =>
-    underlineStyle === 'none' ? 'none' : `1px ${underlineStyle} var(--tooltip-gray-dark)`};
-  cursor: pointer;
-  position: relative;
-  display: inline;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  &:hover {
-    border-bottom-color: var(--tooltip-text);
-    text-decoration: underline;
-  }
-  
-  &:focus {
-    outline: 3px solid var(--tooltip-warning);
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-warning);
-    box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
-    text-decoration: none;
-  }
-`;
+    return () => {
+      window.removeEventListener('scroll', calculatePosition);
+      window.removeEventListener('resize', calculatePosition);
+    };
+  }, [isVisible]);
 
-// Clean Tooltip Cell - CSS Variables
-export const TooltipCell = styled('td')`
-  ${TooltipTokens}
-  
-  font-family: var(--tooltip-font);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  &:first-of-type {
-    font-weight: 700;
-    border-bottom: 1px dotted var(--tooltip-gray-dark);
-    cursor: pointer;
-    
-    &:hover {
-      border-bottom-color: var(--tooltip-text);
-      text-decoration: underline;
-    }
-    
-    &:focus {
-      outline: 3px solid var(--tooltip-warning);
-      color: var(--tooltip-text);
-      background-color: var(--tooltip-warning);
-      box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
-      text-decoration: none;
-    }
-  }
-`;
+  return (
+    <>
+      <span
+        ref={triggerRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleMouseEnter}
+        onBlur={handleMouseLeave}
+        {...props}
+      >
+        {children}
+      </span>
+      
+      {isVisible && (
+        <div
+          ref={tooltipRef}
+          className="fixed z-50 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-neutral-700 leading-relaxed w-64 sm:w-72 md:w-80 lg:w-96 max-w-[calc(100vw-16px)] break-words print:hidden"
+          style={{
+            top: `${position.top + window.scrollY}px`,
+            left: `${position.left + window.scrollX}px`,
+          }}
+        >
+          {title}
+        </div>
+      )}
+    </>
+  );
+};
 
-// Clean Tooltip Heading - CSS Variables
-export const TooltipHeading = styled('span')`
-  ${TooltipTokens}
+// Tooltip Target Component
+export const TooltipTarget = ({ children, underlineStyle = 'dotted', className = '', ...props }) => {
+  const borderClass = underlineStyle === 'none' ? '' : 'border-b border-dotted border-neutral-600';
   
-  font-family: var(--tooltip-font);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  font-weight: 700;
-  font-size: var(--tooltip-text-sm);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-  
-  &:hover {
-    text-decoration: underline;
-  }
-  
-  &:focus {
-    outline: 3px solid var(--tooltip-warning);
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-warning);
-    box-shadow: 0 -2px var(--tooltip-warning), 0 4px var(--tooltip-text);
-    text-decoration: none;
-  }
-  
-  & .info-icon {
-    margin-left: var(--tooltip-space-xs);
-    font-size: var(--tooltip-text-sm);
-    opacity: 0.7;
-    color: inherit;
-    vertical-align: middle;
-    
-    ${desktopMediaQuery} {
-      font-size: var(--tooltip-text-sm);
-    }
-  }
-`;
+  return (
+    <span
+      className={`inline cursor-pointer relative ${borderClass} hover:border-neutral-900 hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:bg-yellow-600 focus:text-neutral-900 focus:no-underline ${className}`}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
 
-// Clean Tooltip Title - CSS Variables
-export const TooltipTitle = styled('div')`
-  ${TooltipTokens}
-  
-  font-weight: 700;
-  margin-bottom: var(--tooltip-space-xs);
-  font-size: var(--tooltip-text-base);
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-sm);
-  }
-`;
+// Tooltip Cell Component
+export const TooltipCell = ({ children, className = '', ...props }) => {
+  return (
+    <td
+      className={`first:font-bold first:border-b first:border-dotted first:border-neutral-600 first:cursor-pointer first:hover:border-neutral-900 first:hover:underline first:focus:outline-none first:focus:ring-2 first:focus:ring-yellow-600 first:focus:bg-yellow-600 first:focus:text-neutral-900 first:focus:no-underline ${className}`}
+      {...props}
+    >
+      {children}
+    </td>
+  );
+};
 
-export const TooltipRow = styled('div')`
-  ${TooltipTokens}
-  
-  font-size: var(--tooltip-text-sm);
-  margin-bottom: var(--tooltip-space-xs);
-  display: grid;
-  grid-template-columns: 40% 60%;
-  column-gap: var(--tooltip-space-xs);
-  row-gap: 2px;
-  align-items: baseline;
-  width: 100%;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-`;
+// Tooltip Heading Component
+export const TooltipHeading = ({ children, style, className = '', ...props }) => {
+  return (
+    <span
+      className={`inline-flex items-center cursor-pointer font-bold text-xs md:text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:bg-yellow-600 focus:text-neutral-900 focus:no-underline ${className}`}
+      style={style}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
 
-export const TooltipLabel = styled('span')`
-  ${TooltipTokens}
-  
-  font-weight: bold;
-  min-width: 100px;
-  padding-right: var(--tooltip-space-xs);
-`;
+// Tooltip Content Components
+export const TooltipTitle = ({ children, className = '', ...props }) => (
+  <div className={`font-bold mb-1 text-sm md:text-base ${className}`} {...props}>
+    {children}
+  </div>
+);
 
-export const TooltipValue = styled('span')`
-  ${TooltipTokens}
-  
-  text-align: left;
-  min-width: 120px;
-  word-wrap: break-word;
-`;
+export const TooltipRow = ({ children, className = '', ...props }) => (
+  <div className={`grid grid-cols-[40%_60%] gap-x-1 gap-y-0.5 items-baseline w-full mb-1 text-xs md:text-sm ${className}`} {...props}>
+    {children}
+  </div>
+);
 
-export const TooltipDivider = styled('hr')`
-  ${TooltipTokens}
-  
-  border: 0;
-  height: 1px;
-  background-color: var(--tooltip-gray-mid);
-  margin: var(--tooltip-space-xs) 0;
-  width: 100%;
-`;
+export const TooltipLabel = ({ children, className = '', ...props }) => (
+  <span className={`font-bold min-w-[100px] pr-1 ${className}`} {...props}>
+    {children}
+  </span>
+);
 
-export const TooltipWarningText = styled('div')`
-  ${TooltipTokens}
-  
-  font-size: var(--tooltip-text-sm);
-  color: var(--tooltip-negative);
-  font-weight: 700;
-  margin-bottom: var(--tooltip-space-xs);
-  width: 100%;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-`;
+export const TooltipValue = ({ children, className = '', ...props }) => (
+  <span className={`text-left min-w-[120px] break-words ${className}`} {...props}>
+    {children}
+  </span>
+);
 
-export const TooltipSectionTitle = styled('div')`
-  ${TooltipTokens}
-  
-  font-weight: 700;
-  margin-bottom: var(--tooltip-space-xs);
-  font-size: var(--tooltip-text-sm);
-  width: 100%;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-`;
+export const TooltipDivider = ({ className = '', ...props }) => (
+  <hr className={`border-0 h-px bg-neutral-500 my-1 w-full ${className}`} {...props} />
+);
 
-export const TooltipNote = styled('div')`
-  ${TooltipTokens}
-  
-  font-size: var(--tooltip-text-xs);
-  color: var(--tooltip-text);
-  margin-top: calc(var(--tooltip-space-xs) + 2px);
-  width: 100%;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-`;
+export const TooltipWarningText = ({ children, className = '', ...props }) => (
+  <div className={`text-xs md:text-sm text-red-600 font-bold mb-1 w-full ${className}`} {...props}>
+    {children}
+  </div>
+);
 
-export const TooltipBulletList = styled('ul')`
-  ${TooltipTokens}
-  
-  margin: var(--tooltip-space-xs) 0 0 14px;
-  padding: 0;
-  font-size: var(--tooltip-text-xs);
-  width: 100%;
-  
-  ${mobileMediaQuery} {
-    font-size: var(--tooltip-text-xs);
-  }
-`;
+export const TooltipSectionTitle = ({ children, className = '', ...props }) => (
+  <div className={`font-bold mb-1 text-xs md:text-sm w-full ${className}`} {...props}>
+    {children}
+  </div>
+);
 
-export const TooltipBulletItem = styled('li')`
-  ${TooltipTokens}
-  
-  margin-bottom: 2px;
-  padding-right: var(--tooltip-space-xs);
-`;
+export const TooltipNote = ({ children, className = '', ...props }) => (
+  <div className={`text-xs text-neutral-700 mt-1.5 w-full ${className}`} {...props}>
+    {children}
+  </div>
+);
 
-// Clean Badge Component - CSS Variables
-export const Badge = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'color'
-})`
-  ${TooltipTokens}
-  
-  display: inline-block;
-  padding: 1px var(--tooltip-space-xs);
-  border-radius: 2px;
-  background-color: ${({ color }) => color || 'var(--tooltip-border)'};
-  color: var(--tooltip-bg);
-  font-size: 11px;
-  font-weight: bold;
-  margin-left: var(--tooltip-space-xs);
-`;
+export const TooltipBulletList = ({ children, className = '', ...props }) => (
+  <ul className={`ml-3.5 p-0 text-xs w-full mt-1 ${className}`} {...props}>
+    {children}
+  </ul>
+);
 
-// Clean Helper Functions - CSS Variables
+export const TooltipBulletItem = ({ children, className = '', ...props }) => (
+  <li className={`mb-0.5 pr-1 ${className}`} {...props}>
+    {children}
+  </li>
+);
+
+// Badge Component
+export const Badge = ({ children, color, className = '', ...props }) => {
+  const bgColor = color === '#059669' ? 'bg-green-600' : 
+                  color === '#dc2626' ? 'bg-red-600' : 
+                  color === '#d97706' ? 'bg-yellow-600' : 'bg-blue-600';
+  
+  return (
+    <span
+      className={`inline-block px-1 py-0.5 rounded-sm ${bgColor} text-white text-xs font-bold ml-1 ${className}`}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
+
+// Helper Functions
 export const getTestResultColor = (status) => {
-  return status && status.includes('PASS') ? 'var(--tooltip-positive)' : 'var(--tooltip-negative)';
+  return status && status.includes('PASS') ? '#059669' : '#dc2626';
 };
 
 export const formatMileage = (mileage) => {
@@ -359,7 +244,7 @@ export const calculateMileageRates = (currentDate, previousDate, currentMileage,
   };
 };
 
-// Clean Helper Hook - Minimal Approach
+// Tooltip Hook
 export const useTooltip = () => {
   const withTooltip = (text, tooltipText, options = {}) => {
     const { placement = 'top', underlineStyle = 'dotted' } = options;
@@ -380,7 +265,7 @@ export const useTooltip = () => {
   return { withTooltip };
 };
 
-// Clean Value Tooltip Component
+// Wrapper Components - Preserving Full API Compatibility
 export const ValueWithTooltip = ({ 
   children,
   tooltip,
@@ -414,7 +299,6 @@ export const ValueWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Clean Cell Tooltip Component
 export const CellWithTooltip = ({ 
   label, 
   tooltip, 
@@ -441,7 +325,6 @@ export const CellWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Clean Heading Tooltip Component
 export const HeadingWithTooltip = ({
   children,
   tooltip,
@@ -478,7 +361,6 @@ export const HeadingWithTooltip = ({
   </GovUKTooltip>
 );
 
-// Clean Complex Tooltip Content
 export const ComplexTooltipContent = ({ 
   title, 
   rows = [], 
@@ -532,7 +414,6 @@ export const ComplexTooltipContent = ({
   </div>
 );
 
-// Clean Enhanced Tooltip Component
 export const EnhancedTooltip = ({ 
   children, 
   content, 

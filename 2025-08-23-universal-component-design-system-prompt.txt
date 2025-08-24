@@ -97,7 +97,7 @@
    bg-white                    // Primary cards/containers
    bg-neutral-50              // Secondary areas, input fields
    bg-blue-50, bg-green-50    // Positive state backgrounds
-   bg-red-50, bg-yellow-50    // Warning/error state backgrounds
+   bg-red-50, bg-transparent    // Warning/error state backgrounds
 
    /* Text Colors */
    text-neutral-900           // Primary headings, important 
@@ -1370,7 +1370,7 @@
        251            <div className="mt-8 mb-12">
        252              <div className="flex items-center gap-4 
              mb-6">
-       253 -              <div className="w-12 h-12 bg-orange-50 
+       253 -              <div className="w-12 h-12 bg-transparent 
      rounded-full flex items-center justify-center">
            - rounded-full flex items-center justify-center">
        253 +              <div 
@@ -1414,7 +1414,7 @@
        277                  <div className="flex items-start 
              gap-4 mb-4">
        278                    <div className="w-10 h-10 
-             bg-orange-50 rounded-full flex items-center 
+             bg-transparent rounded-full flex items-center 
              justify-center flex-shrink-0">
        279                      <span className="text-sm 
              font-bold 
@@ -1852,7 +1852,7 @@
        427 -                <div className="flex items-center 
            - gap-4">
        428 -                  <div className="w-12 h-12 
-           - bg-orange-50 rounded-full flex items-center 
+           - bg-transparent rounded-full flex items-center 
            - justify-center">
        429 -                    <i className="ph 
            - ph-warning-circle text-xl text-orange-600"></i>

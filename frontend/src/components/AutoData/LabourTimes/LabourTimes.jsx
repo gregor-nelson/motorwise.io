@@ -336,33 +336,33 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
   });
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {processedItems.map((item) => {
         const hours = parseFloat(item.value) || 0;
         const maxHours = 8;
         const percentage = Math.min((hours / maxHours) * 100, 100);
         
         return (
-          <div key={item.id} className={`rounded-lg p-4 md:p-6 shadow-sm cursor-pointer ${
-            item.complexity === 'high' ? 'bg-red-50' :
-            item.complexity === 'medium' ? 'bg-yellow-50' :
-            'bg-green-50'
+          <div key={item.id} className={`bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer ${
+            item.complexity === 'high' ? 'border-l-4 border-red-500' :
+            item.complexity === 'medium' ? 'border-l-4 border-yellow-500' :
+            'border-l-4 border-green-500'
           }`}>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-start">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start flex-1">
                 <i className={`ph ${
                   item.complexity === 'high' ? 'ph-warning-circle text-red-600' :
                   item.complexity === 'medium' ? 'ph-info text-yellow-600' :
                   'ph-check-circle text-green-600'
-                } text-lg mr-3 mt-0.5 flex-shrink-0`}></i>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-neutral-900">
+                } text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0`}></i>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-neutral-900 mb-1">
                     {item.isMultiOperation ? (
                       <div className="space-y-1">
                         {item.operations.map((op, i) => (
                           <div 
                             key={`${item.id}-op-${i}`} 
-                            className={i === 0 ? 'font-semibold' : 'font-normal'}
+                            className={i === 0 ? 'font-semibold' : 'font-normal text-neutral-700'}
                           >
                             {op}
                           </div>
@@ -372,12 +372,18 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
                       item.operations[0]
                     )}
                   </div>
-                  <div className="text-xs text-neutral-600 mt-1">
-                    {item.complexity} complexity
+                  <div className="inline-flex items-center">
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      item.complexity === 'high' ? 'bg-red-100 text-red-700' :
+                      item.complexity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {item.complexity} complexity
+                    </span>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-end ml-4">
                 <div className={`text-2xl font-bold ${
                   item.complexity === 'high' ? 'text-red-600' :
                   item.complexity === 'medium' ? 'text-yellow-600' :
@@ -405,9 +411,9 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
                 style={{ width: `${percentage}%` }}
               />
             </div>
-            <div className="flex justify-between mt-2 text-xs text-neutral-500">
+            <div className="flex justify-between items-center mt-2 text-xs text-neutral-500">
               <span>0h</span>
-              <span>{maxHours}h</span>
+              <span>{maxHours}h max</span>
             </div>
           </div>
         );
@@ -430,9 +436,9 @@ const MatchWarning = ({ matchConfidence, vehicleIdentification }) => {
   if (matchConfidence === 'exact' || matchConfidence === 'none') return null;
   
   return (
-    <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
+    <div className="bg-transparent rounded-lg p-2 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
       <div className="flex items-start">
-        <i className="ph ph-warning-circle text-yellow-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+        <i className="ph ph-warning-circle text-yellow-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
         <div className="flex-1">
           <div className="text-sm font-medium text-neutral-900 mb-2">
             Vehicle Match Information
@@ -451,12 +457,12 @@ const MatchWarning = ({ matchConfidence, vehicleIdentification }) => {
  * Loading State Component - Pure Tailwind design
  */
 const LoadingState = ({ vehicleMake, vehicleModel }) => (
-  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-      <div className="flex items-center justify-center py-12">
+  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
+    <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
+      <div className="flex items-center justify-center py-8 sm:py-12">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4">
-            <div className="w-full h-full border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <div className="w-full h-full border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
           </div>
           <div className="text-lg font-medium text-neutral-900 mb-2">
             Loading repair times data
@@ -474,10 +480,10 @@ const LoadingState = ({ vehicleMake, vehicleModel }) => (
  * Error State Component - Pure Tailwind design
  */
 const ErrorState = ({ error, onRetry }) => (
-  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-    <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm">
+  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
+    <div className="bg-red-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
       <div className="flex items-start">
-        <i className="ph ph-x-circle text-red-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+        <i className="ph ph-x-circle text-red-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
         <div className="flex-1">
           <div className="text-sm font-medium text-neutral-900 mb-2">
             Error Loading Repair Times
@@ -487,7 +493,7 @@ const ErrorState = ({ error, onRetry }) => (
           </div>
           <button 
             onClick={onRetry}
-            className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg"
+            className="px-3 sm:px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg"
           >
             Try Again
           </button>
@@ -501,9 +507,9 @@ const ErrorState = ({ error, onRetry }) => (
  * Empty State Component - Pure Tailwind design
  */
 const EmptyState = ({ vehicleMake, vehicleModel }) => (
-  <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-    <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm">
-      <div className="flex items-center justify-center py-12">
+  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
+    <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
+      <div className="flex items-center justify-center py-8 sm:py-12">
         <div className="text-center">
           <i className="ph ph-info text-4xl text-neutral-400 mb-4"></i>
           <div className="text-lg font-medium text-neutral-900 mb-2">
@@ -876,10 +882,10 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
   const lastUpdated = "March 2025";
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-8">
+    <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
+      <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-2 sm:mb-8">
         {/* Header */}
-        <div className="mb-8 pb-6">
+        <div className="mb-6 sm:mb-4 sm:mb-8 pb-3 sm:pb-6">
           <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
             Repair Times for {displayMake} {displayModel}{yearRangeDisplay}
           </h2>
@@ -896,9 +902,9 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
         />
 
         {/* Important notice */}
-        <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
+        <div className="bg-blue-50 rounded-lg p-2 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
           <div className="flex items-start">
-            <i className="ph ph-info text-blue-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
+            <i className="ph ph-info text-blue-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
             <div className="flex-1">
               <div className="text-sm font-medium text-neutral-900 mb-2">
                 Important
@@ -912,31 +918,52 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
 
         {/* Vehicle summary */}
         {vehicleSummary && (
-          <div className="bg-neutral-50 rounded-lg p-4 md:p-6 shadow-sm mb-8">
-            <div className="flex items-start">
-              <i className="ph ph-chart-bar text-blue-600 text-lg mr-3 mt-0.5 flex-shrink-0"></i>
-              <div className="flex-1">
-                <div className="text-sm font-medium text-neutral-900 mb-4">
-                  Repair Overview
+          <div className="space-y-6 sm:space-y-12 mb-4 sm:mb-8 sm:mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-8">
+              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-start">
+                    <i className="ph ph-database text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900">Total Operations</div>
+                      <div className="text-xs text-neutral-600">Available repairs</div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <div className="text-2xl font-bold text-blue-600">{vehicleSummary.totalOperations}</div>
+                    <div className="text-xs text-blue-600">procedures</div>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">
-                      {vehicleSummary.totalOperations}
+              </div>
+
+              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-start">
+                    <i className="ph ph-clock text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900">Average Time</div>
+                      <div className="text-xs text-neutral-600">Per operation</div>
                     </div>
-                    <div className="text-xs text-neutral-600">Total Operations</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">
-                      {vehicleSummary.avgTime}
-                    </div>
-                    <div className="text-xs text-neutral-600">Average Time</div>
+                  <div className="flex flex-col items-end">
+                    <div className="text-2xl font-bold text-blue-600">{vehicleSummary.avgTime}</div>
+                    <div className="text-xs text-blue-600">hours</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-lg font-semibold text-neutral-900">
-                      {vehicleSummary.mostComplexSystem}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-start">
+                    <i className="ph ph-wrench text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
+                    <div>
+                      <div className="text-sm font-medium text-neutral-900">Most Common</div>
+                      <div className="text-xs text-neutral-600">System category</div>
                     </div>
-                    <div className="text-xs text-neutral-600">Most Common</div>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <div className="text-lg font-bold text-neutral-900">{vehicleSummary.mostComplexSystem}</div>
+                    <div className="text-xs text-blue-600">repairs</div>
                   </div>
                 </div>
               </div>
@@ -945,154 +972,194 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
         )}
 
         {/* Search and Filter Controls */}
-        <div className="bg-neutral-50 rounded-lg p-4 mb-8">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
+        <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
+          <div className="space-y-4">
+            <div>
+              <div className="text-sm font-medium text-neutral-900 mb-3">Search & Filter</div>
               <div className="relative">
-                <i className="ph ph-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"></i>
+                <i className="ph ph-magnifying-glass absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"></i>
                 <input
                   type="text"
                   placeholder="Search repair operations..."
                   value={searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                  className="w-full px-2 sm:px-3 py-3 pl-8 sm:pl-10 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
                 />
               </div>
             </div>
-            <div className="flex gap-2 flex-wrap">
-              {filterOptions.map((filter) => (
-                <button
-                  key={filter.id}
-                  onClick={() => handleComplexityFilter(filter.id)}
-                  className={`px-3 py-1 text-xs font-medium rounded-full ${
-                    complexityFilter === filter.id
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white text-blue-600'
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-              {(searchTerm || complexityFilter !== 'all') && (
-                <button
-                  onClick={clearAllFilters}
-                  className="px-3 py-1 text-xs font-medium bg-neutral-200 text-neutral-700 rounded-full"
-                >
-                  Clear
-                </button>
-              )}
+            <div>
+              <div className="text-xs text-neutral-600 mb-3">Filter by complexity</div>
+              <div className="flex gap-2 flex-wrap">
+                {filterOptions.map((filter) => (
+                  <button
+                    key={filter.id}
+                    onClick={() => handleComplexityFilter(filter.id)}
+                    className={`px-2 sm:px-3 py-2 text-xs font-medium rounded-full ${
+                      complexityFilter === filter.id
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white text-blue-600 '
+                    }`}
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+                {(searchTerm || complexityFilter !== 'all') && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="px-2 sm:px-3 py-2 text-xs font-medium bg-neutral-200 text-neutral-700 rounded-full "
+                  >
+                    <i className="ph ph-x mr-1"></i>Clear
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Sort controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8 p-4 bg-neutral-50 rounded-lg">
-          <span className="text-sm text-neutral-700 font-medium">Sort by:</span>
-          <div className="flex gap-2 flex-wrap">
-            <button 
-              onClick={() => handleSortChange('complexity')}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${
-                sortBy === 'complexity'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-blue-600'
-              }`}
-            >
-              Complexity
-            </button>
-            <button 
-              onClick={() => handleSortChange('time')}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${
-                sortBy === 'time'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-blue-600'
-              }`}
-            >
-              Time
-            </button>
-            <button 
-              onClick={() => handleSortChange('alphabetical')}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${
-                sortBy === 'alphabetical'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-blue-600'
-              }`}
-            >
-              A-Z
-            </button>
+        <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center">
+              <i className="ph ph-sort-ascending text-blue-600 text-lg mr-2"></i>
+              <span className="text-sm font-medium text-neutral-900">Sort by:</span>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              <button 
+                onClick={() => handleSortChange('complexity')}
+                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+                  sortBy === 'complexity'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-blue-600 '
+                }`}
+              >
+                <i className="ph ph-warning-diamond mr-1 sm:mr-2"></i>
+                <span className="hidden sm:inline">Complexity</span>
+                <span className="sm:hidden">Complex</span>
+              </button>
+              <button 
+                onClick={() => handleSortChange('time')}
+                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+                  sortBy === 'time'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-blue-600 '
+                }`}
+              >
+                <i className="ph ph-clock mr-1 sm:mr-2"></i>
+                Time
+              </button>
+              <button 
+                onClick={() => handleSortChange('alphabetical')}
+                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+                  sortBy === 'alphabetical'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-blue-600 '
+                }`}
+              >
+                <i className="ph ph-sort-alphabetical mr-1 sm:mr-2"></i>
+                A-Z
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="mb-8">
-          <div className="flex overflow-x-auto pb-2 mb-8">
-            <div className="flex gap-2 min-w-max">
-              {tabs.map((tab, tabIndex) => (
-                <button
-                  key={tabIndex}
-                  onClick={() => handleTabChange(tabIndex)}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${
-                    tabValue === tabIndex
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-neutral-100 text-neutral-700'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+        {/* Tab Navigation */}
+        <div className="mb-4 sm:mb-8">
+          <div className="flex justify-center mb-4 sm:mb-8">
+            <div className="inline-flex bg-neutral-100 rounded-lg p-0.5 sm:p-1 overflow-x-auto w-full max-w-full">
+              <div className="flex gap-0.5 sm:gap-1 min-w-max">
+                {tabs.map((tab, tabIndex) => (
+                  <button
+                    key={tabIndex}
+                    onClick={() => handleTabChange(tabIndex)}
+                    className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap ${
+                      tabValue === tabIndex
+                        ? 'bg-white text-blue-600 shadow-sm'
+                        : 'text-neutral-600 '
+                    }`}
+                  >
+                    <i className={`ph ${
+                      tabIndex === 0 ? 'ph-engine' :
+                      tabIndex === 1 ? 'ph-drop' :
+                      tabIndex === 2 ? 'ph-gear' :
+                      tabIndex === 3 ? 'ph-circle-dashed' :
+                      'ph-lightning'
+                    }`}></i>
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
           {tabs.map((tab, tabIndex) => (
             <div key={tabIndex} className={`${tabValue === tabIndex ? 'block' : 'hidden'}`}>
-              <div className="mb-8 pb-4">
-                <h3 className="text-lg font-medium text-neutral-900 mb-1">
+              <div className="text-center mb-6 sm:mb-8 lg:mb-12">
+                <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
                   {tab.label}
                 </h3>
-                <p className="text-xs text-neutral-600">
+                <p className="text-sm text-neutral-600 leading-relaxed">
                   Standard repair times for {tab.label.toLowerCase()} operations
                 </p>
               </div>
               
-              {tab.sections.map((section, sectionIndex) => {
-                const sectionId = `${tabIndex}-${sectionIndex}`;
-                const isExpanded = !!expandedSections[sectionId];
-                const itemCount = section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0;
-                
-                return (
-                  <div key={sectionId} className="bg-neutral-50 rounded-lg mb-4">
-                    <button
-                      onClick={() => toggleSection(sectionId)}
-                      className="w-full flex items-center justify-between p-4 text-left"
-                    >
-                      <div className="flex items-center">
-                        <i className="ph ph-wrench text-blue-600 text-lg mr-3"></i>
-                        <div>
-                          <div className="text-sm font-medium text-neutral-900">
-                            {section.title}
-                          </div>
-                          <div className="text-xs text-neutral-600">
-                            {itemCount} operations
+              <div className="space-y-3 sm:space-y-6">
+                {tab.sections.map((section, sectionIndex) => {
+                  const sectionId = `${tabIndex}-${sectionIndex}`;
+                  const isExpanded = !!expandedSections[sectionId];
+                  const itemCount = section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0;
+                  
+                  if (itemCount === 0) return null;
+                  
+                  return (
+                    <div key={sectionId} className="bg-white rounded-lg shadow-sm ">
+                      <button
+                        onClick={() => toggleSection(sectionId)}
+                        className="w-full flex items-center justify-between p-2 sm:p-4 md:p-6 text-left cursor-pointer"
+                      >
+                        <div className="flex items-start">
+                          <i className="ph ph-wrench text-blue-600 text-lg mr-2 sm:mr-3 mt-0.5"></i>
+                          <div>
+                            <div className="text-sm font-medium text-neutral-900 mb-1">
+                              {section.title}
+                            </div>
+                            <div className="text-xs text-neutral-600">
+                              {itemCount} available operations
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <i className={`ph ph-caret-down text-blue-600 transform ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
-                    </button>
-                    
-                    {isExpanded && section.content && (
-                      <div className="px-4 pb-4">
-                        {section.content}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                        <div className="flex items-center ml-2 sm:ml-4">
+                          <div className="text-xs text-blue-600 mr-2 sm:mr-3">
+                            {isExpanded ? 'Collapse' : 'Expand'}
+                          </div>
+                          <i className={`ph ph-caret-down text-blue-600 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
+                        </div>
+                      </button>
+                      
+                      {isExpanded && section.content && (
+                        <div className="px-2 sm:px-4 md:px-6 pb-2 sm:pb-4 md:pb-6 border-t border-neutral-200">
+                          <div className="pt-2 sm:pt-4 md:pt-6">
+                            {section.content}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
 
         {/* Footer note */}
-        <div className="text-xs text-neutral-500 text-center py-4 mt-12 border-t border-neutral-200">
-          Repair times sourced from industry standard databases. Last updated: {lastUpdated}
+        <div className="mt-8 sm:mt-16 mb-6 sm:mb-12">
+          <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
+            <div className="flex items-center justify-center">
+              <i className="ph ph-info text-neutral-500 mr-1 sm:mr-2"></i>
+              <div className="text-xs text-neutral-500 text-center">
+                Repair times sourced from industry standard databases. Last updated: {lastUpdated}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

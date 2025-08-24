@@ -254,7 +254,7 @@ const NavigationHeader = ({
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${result.type === 'section' ? 'bg-orange-50' : result.type === 'subsection' ? 'bg-blue-50' : 'bg-green-50'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${result.type === 'section' ? 'bg-transparent' : result.type === 'subsection' ? 'bg-blue-50' : 'bg-green-50'}`}>
                     <i className={`ph ph-${result.type === 'section' ? 'folder' : result.type === 'subsection' ? 'folder-open' : 'file-text'} text-sm ${getResultTypeColors(result.type)}`}></i>
                   </div>
                   <div>

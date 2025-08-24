@@ -275,7 +275,7 @@ const ContentView = ({
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-transparent rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-sm font-bold text-orange-600">{item.id.split('.')[2]}</span>
                 </div>
                 <div className="flex-1">

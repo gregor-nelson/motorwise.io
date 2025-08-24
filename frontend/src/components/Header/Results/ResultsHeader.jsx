@@ -576,7 +576,7 @@ const VehicleHeader = ({ registration }) => {
                   className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-neutral-100 group"
                 >
                   <div className="flex items-center">
-                    <div className="bg-orange-50 rounded-lg p-2 mr-3 group-hover:bg-orange-100 transition-colors duration-300">
+                    <div className="bg-transparent rounded-lg p-2 mr-3 group-hover:bg-orange-100 transition-colors duration-300">
                       <i className="ph ph-envelope text-lg text-orange-600"></i>
                     </div>
                     <div>

@@ -97,7 +97,7 @@ const Contact = () => {
 
             <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
               <div className="flex items-center mb-6">
-                <div className="bg-yellow-50 rounded-lg p-2 mr-4">
+                <div className="bg-transparent rounded-lg p-2 mr-4">
                   <i className="ph ph-heart text-xl text-yellow-600"></i>
                 </div>
                 <h2 className="text-xl font-semibold text-neutral-900">Feedback</h2>

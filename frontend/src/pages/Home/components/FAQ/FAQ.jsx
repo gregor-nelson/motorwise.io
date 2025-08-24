@@ -380,7 +380,7 @@ const HowToUseSection = () => {
         ))}
       </div>
       
-      <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm mt-12">
+      <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm mt-12">
         <div className="flex items-start">
           <i className="ph ph-universal-access text-lg text-yellow-600 mr-3 mt-0.5"></i>
           <div>
@@ -646,7 +646,7 @@ const FAQ = () => {
   const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || FAQSection;
 
   return (
-    <div className="space-y-12 mb-16">
+    <div id="help" className="space-y-12 mb-16">
       <section className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 text-center">
         <header className="mb-8">
           <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">

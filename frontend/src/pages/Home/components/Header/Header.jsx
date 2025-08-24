@@ -61,9 +61,9 @@ const Header = () => {
   }, [dropdownOpen]);
 
   const primaryNavigationItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Services', href: '/services' },
-    { label: 'Help', href: '/help' }
+    { label: 'Home', href: '/', type: 'link' },
+    { label: 'Services', href: 'services', type: 'scroll' },
+    { label: 'Help', href: 'help', type: 'scroll' }
   ];
 
   const additionalLinks = [
@@ -84,6 +84,16 @@ const Header = () => {
 
   const handleDropdownLinkClick = () => {
     setDropdownOpen(false);
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   return (
@@ -116,9 +126,18 @@ const Header = () => {
               <ul className="flex items-center gap-6 lg:gap-8 list-none m-0 p-0">
                 {primaryNavigationItems.map((item, index) => (
                   <li key={index} className="m-0 relative">
-                    <Link to={item.href} className="text-base font-medium text-neutral-600 hover:text-neutral-900 py-2 transition-colors duration-200 relative whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost">
-                      {item.label}
-                    </Link>
+                    {item.type === 'scroll' ? (
+                      <button
+                        onClick={() => scrollToSection(item.href)}
+                        className="text-base font-medium text-neutral-600 hover:text-neutral-900 py-2 transition-colors duration-200 relative whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost bg-transparent border-none cursor-pointer"
+                      >
+                        {item.label}
+                      </button>
+                    ) : (
+                      <Link to={item.href} className="text-base font-medium text-neutral-600 hover:text-neutral-900 py-2 transition-colors duration-200 relative whitespace-nowrap focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 font-jost">
+                        {item.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
                 
@@ -183,13 +202,25 @@ const Header = () => {
                 <ul className="list-none m-0 p-0 flex flex-col gap-2">
                   {primaryNavigationItems.map((item, index) => (
                     <li key={index} className="m-0">
-                      <Link 
-                        to={item.href}
-                        className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900 font-jost"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
+                      {item.type === 'scroll' ? (
+                        <button
+                          onClick={() => {
+                            scrollToSection(item.href);
+                            setMobileMenuOpen(false);
+                          }}
+                          className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900 font-jost w-full text-left bg-transparent border-none cursor-pointer"
+                        >
+                          {item.label}
+                        </button>
+                      ) : (
+                        <Link 
+                          to={item.href}
+                          className="text-lg font-medium text-neutral-700 hover:text-neutral-900 py-3 block transition-colors duration-200 min-h-[44px] flex items-center focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:text-neutral-900 font-jost"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

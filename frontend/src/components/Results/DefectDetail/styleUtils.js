@@ -18,7 +18,7 @@ export const getCategoryColors = (category) => {
     case 'major':
       return {
         text: 'text-orange-600', 
-        bg: 'bg-orange-50',
+        bg: 'bg-transparent',
         border: 'border-l-orange-600',
         badge: 'bg-orange-100 text-orange-700'
       };
@@ -53,7 +53,7 @@ export const getAlertColors = (type) => {
   switch (type) {
     case 'warning':
       return {
-        bg: 'bg-yellow-50',
+        bg: 'bg-transparent',
         border: 'border-l-yellow-600',
         text: 'text-yellow-800'
       };

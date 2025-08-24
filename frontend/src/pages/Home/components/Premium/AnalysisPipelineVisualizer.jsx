@@ -104,7 +104,7 @@ const SystemHealthMatrix = ({ systems = [], isVisible = false }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'good': return 'bg-green-500';
-      case 'warning': return 'bg-yellow-500';
+      case 'warning': return 'bg-transparent0';
       case 'critical': return 'bg-red-500';
       default: return 'bg-neutral-300';
     }

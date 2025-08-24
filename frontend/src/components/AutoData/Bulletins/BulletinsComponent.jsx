@@ -1,15 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 
-// Import shared components
-import {
-  SharedLoadingState,
-  SharedErrorState,
-  SharedEmptyState,
-  SharedMatchWarning,
-} from '../shared/CommonElements';
-
-// Import custom tooltip components
-import { HeadingWithTooltip } from '../../../styles/tooltip';
 
 // Import API client
 import bulletinsApi from '../api/BulletinsApiClient';
@@ -118,8 +108,8 @@ const getCategoryColorClasses = (category) => {
   const colors = {
     'Engine': 'text-blue-600 bg-blue-50',
     'Brakes': 'text-red-600 bg-red-50',
-    'Transmission': 'text-yellow-600 bg-yellow-50',
-    'Electrical': 'text-yellow-600 bg-yellow-50',
+    'Transmission': 'text-yellow-600 bg-transparent',
+    'Electrical': 'text-yellow-600 bg-transparent',
     'Suspension & Steering': 'text-green-600 bg-green-50',
     'Fuel System': 'text-blue-600 bg-blue-50',
     'Cooling System': 'text-green-600 bg-green-50',
@@ -142,7 +132,6 @@ const BulletinDetailModal = ({
   vehicleMake, 
   vehicleModel 
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     problems: true,
     causes: true,
@@ -151,7 +140,6 @@ const BulletinDetailModal = ({
   });
 
   useEffect(() => {
-    setIsVisible(true);
     document.body.style.overflow = 'hidden';
     
     const handleEscape = (e) => {
@@ -203,20 +191,16 @@ const BulletinDetailModal = ({
 
   return (
     <div 
-      className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-2 md:p-4 transition-all duration-500 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
+      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-2 md:p-4"
       onClick={handleOverlayClick}
     >
-      <div className={`bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative rounded-lg md:rounded-xl shadow-2xl transform transition-all duration-500 ${
-        isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-8'
-      }`}>
+      <div className="bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative rounded-lg md:rounded-xl shadow-2xl">
         
         {/* Enhanced Close Button */}
         <button 
           onClick={onClose} 
           aria-label="Close modal"
-          className="absolute top-4 right-4 md:top-6 md:right-6 bg-white w-12 h-12 flex items-center justify-center cursor-pointer text-xl text-neutral-600 hover:text-neutral-900 hover:bg-red-50 hover:text-red-600 rounded-full transition-all duration-300 z-10 shadow-lg hover:shadow-xl hover:scale-110"
+          className="absolute top-4 right-4 md:top-6 md:right-6 bg-white w-12 h-12 flex items-center justify-center cursor-pointer text-xl text-neutral-600 rounded-full z-10 shadow-lg"
         >
           <i className="ph ph-x"></i>
         </button>
@@ -226,20 +210,23 @@ const BulletinDetailModal = ({
           
           {/* Enhanced Header */}
           <div className="mb-6 md:mb-8 pr-12">
-            <HeadingWithTooltip 
-              tooltip="Technical bulletin with detailed information about vehicle issues and fixes"
-            >
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-neutral-900 leading-tight tracking-tight mb-4">
-                {bulletin.title}
-              </h1>
-            </HeadingWithTooltip>
+            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              {bulletin.title}
+            </h1>
             
-            <SharedMatchWarning 
-              matchConfidence={matchConfidence} 
-              metadata={metadata} 
-              vehicleMake={vehicleMake} 
-              vehicleModel={vehicleModel} 
-            />
+            {/* Match Confidence Warning */}
+            {matchConfidence === 'fuzzy' && (
+              <div className="bg-transparent rounded-lg p-4 shadow-sm mb-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <i className="ph ph-warning-circle text-yellow-600"></i>
+                  <span className="text-sm font-medium text-neutral-900">Partial Match</span>
+                </div>
+                <p className="text-xs text-neutral-700 leading-relaxed">
+                  Results may include bulletins from similar {vehicleMake} models. 
+                  {metadata?.matched_to && `Matched to: ${metadata.matched_to}`}
+                </p>
+              </div>
+            )}
             
             {/* Quick overview metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
@@ -247,7 +234,7 @@ const BulletinDetailModal = ({
                 <div className="text-lg font-bold text-blue-600">{bulletin.problems ? bulletin.problems.length : 0}</div>
                 <div className="text-xs text-neutral-600">Problems</div>
               </div>
-              <div className="bg-yellow-50 rounded-lg p-3 text-center">
+              <div className="bg-transparent rounded-lg p-3 text-center">
                 <div className="text-lg font-bold text-yellow-600">{bulletin.causes ? bulletin.causes.length : 0}</div>
                 <div className="text-xs text-neutral-600">Causes</div>
               </div>
@@ -264,7 +251,7 @@ const BulletinDetailModal = ({
 
           {/* Enhanced Affected Vehicles */}
           {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
-            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 mb-6">
+            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm mb-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-start">
                   <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mr-3">
@@ -297,7 +284,7 @@ const BulletinDetailModal = ({
           {/* Problems Section */}
           {bulletin.problems && bulletin.problems.length > 0 && (
             <div 
-              className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-8"
+              className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
               onClick={() => toggleSection('problems')}
             >
               <div className="flex items-center justify-between mb-3">
@@ -325,7 +312,7 @@ const BulletinDetailModal = ({
                 </div>
               )}
               
-              <div className={`text-center mt-3 text-red-600 transition-transform duration-300 ${
+              <div className={`text-center mt-3 text-red-600 ${
                 expandedSections.problems ? 'rotate-180' : 'rotate-0'
               }`}>
                 <i className="ph ph-caret-down"></i>
@@ -336,7 +323,7 @@ const BulletinDetailModal = ({
           {/* Causes Section */}
           {bulletin.causes && bulletin.causes.length > 0 && (
             <div 
-              className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-8"
+              className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
               onClick={() => toggleSection('causes')}
             >
               <div className="flex items-center justify-between mb-3">
@@ -364,7 +351,7 @@ const BulletinDetailModal = ({
                 </div>
               )}
               
-              <div className={`text-center mt-3 text-yellow-600 transition-transform duration-300 ${
+              <div className={`text-center mt-3 text-yellow-600 ${
                 expandedSections.causes ? 'rotate-180' : 'rotate-0'
               }`}>
                 <i className="ph ph-caret-down"></i>
@@ -375,7 +362,7 @@ const BulletinDetailModal = ({
           {/* Remedy Section */}
           {bulletin.remedy && (
             <div 
-              className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-8"
+              className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
               onClick={() => toggleSection('remedy')}
             >
               <div className="flex items-center justify-between mb-3">
@@ -441,7 +428,7 @@ const BulletinDetailModal = ({
                 </div>
               )}
               
-              <div className={`text-center mt-3 text-green-600 transition-transform duration-300 ${
+              <div className={`text-center mt-3 text-green-600 ${
                 expandedSections.remedy ? 'rotate-180' : 'rotate-0'
               }`}>
                 <i className="ph ph-caret-down"></i>
@@ -452,7 +439,7 @@ const BulletinDetailModal = ({
           {/* Notes Section */}
           {bulletin.notes && bulletin.notes.length > 0 && (
             <div 
-              className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer mb-8"
+              className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
               onClick={() => toggleSection('notes')}
             >
               <div className="flex items-center justify-between mb-3">
@@ -480,7 +467,7 @@ const BulletinDetailModal = ({
                 </div>
               )}
               
-              <div className={`text-center mt-3 text-blue-600 transition-transform duration-300 ${
+              <div className={`text-center mt-3 text-blue-600 ${
                 expandedSections.notes ? 'rotate-180' : 'rotate-0'
               }`}>
                 <i className="ph ph-caret-down"></i>
@@ -511,35 +498,10 @@ const BulletinDetailModal = ({
  * BulletinList Component - Renders bulletins with expandable cards following design system
  */
 const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCard }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const componentRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (componentRef.current) {
-      observer.observe(componentRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   if (!bulletins || bulletins.length === 0) return null;
 
   return (
-    <div 
-      ref={componentRef}
-      className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 transition-all duration-500 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
       {bulletins.map((bulletin, index) => {
         // Determine category for color coding
         let category = 'General';
@@ -559,19 +521,13 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
         return (
           <div 
             key={cardId}
-            className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
+            className="bg-white rounded-lg p-4 md:p-6 shadow-sm cursor-pointer group"
             onClick={() => onToggleCard(cardId)}
-            style={{ 
-              animationDelay: `${index * 100}ms`,
-              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-              opacity: isVisible ? 1 : 0,
-              transition: `all 500ms ease-out ${index * 100}ms`
-            }}
           >
             {/* Enhanced Card header with metrics */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-start flex-1">
-                <div className={`flex items-center justify-center w-10 h-10 ${colorClasses.split(' ')[1]} rounded-full mr-3 group-hover:scale-110 transition-all duration-300`}>
+                <div className={`flex items-center justify-center w-10 h-10 ${colorClasses.split(' ')[1]} rounded-full mr-3`}>
                   <i className={`${iconClass} text-lg ${colorClasses.split(' ')[0]}`}></i>
                 </div>
                 <div className="flex-1">
@@ -649,7 +605,7 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
 
             {/* Enhanced expandable content */}
             {isExpanded && (
-              <div className="pt-4 border-t-2 border-blue-100 space-y-4 transition-all duration-500 ease-out">
+              <div className="pt-4 border-t-2 border-blue-100 space-y-4">
                 
                 {/* All problems */}
                 {bulletin.problems && bulletin.problems.length > 1 && (
@@ -712,7 +668,7 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
                       e.stopPropagation();
                       onViewDetails(cardId);
                     }}
-                    className="w-full px-4 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 hover:scale-105 transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center space-x-2"
+                    className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer flex items-center justify-center space-x-2"
                   >
                     <i className="ph ph-eye text-base"></i>
                     <span>View Complete Analysis</span>
@@ -722,10 +678,10 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
             )}
 
             {/* Enhanced expand indicator */}
-            <div className={`text-center mt-4 transition-all duration-300 ${
+            <div className={`text-center mt-4 ${
               isExpanded ? 'text-blue-600' : 'text-neutral-400 group-hover:text-blue-600'
             }`}>
-              <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 group-hover:bg-blue-50 transition-all duration-300 ${
+              <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 ${
                 isExpanded ? 'rotate-180 bg-blue-50' : 'rotate-0'
               }`}>
                 <i className="ph ph-caret-down"></i>
@@ -937,13 +893,13 @@ const BulletinsComponent = ({
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm hover:shadow-lg transition-all duration-300">
-              <i className="ph ph-database text-3xl text-blue-600 animate-pulse"></i>
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
+              <i className="ph ph-database text-3xl text-blue-600"></i>
             </div>
             <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Loading Technical Bulletins</h3>
-            <p className="text-sm text-neutral-600 leading-relaxed">Analyzing bulletins for <span className="font-medium">{vehicleMake} {vehicleModel}</span></p>
+            <p className="text-xs text-neutral-600 leading-relaxed">Analyzing bulletins for <span className="font-medium">{vehicleMake} {vehicleModel}</span></p>
             <div className="mt-4 w-48 h-2 bg-neutral-200 rounded-full mx-auto overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full animate-pulse" style={{width: '60%'}}></div>
+              <div className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full" style={{width: '60%'}}></div>
             </div>
           </div>
         </div>
@@ -957,14 +913,14 @@ const BulletinsComponent = ({
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-red-50 rounded-full mb-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-red-50 rounded-full mb-6 shadow-sm">
               <i className="ph ph-warning-circle text-3xl text-red-600"></i>
             </div>
             <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Connection Issue</h3>
-            <p className="text-sm text-neutral-700 leading-relaxed mb-6 max-w-md mx-auto">{error}</p>
+            <p className="text-xs text-neutral-700 leading-relaxed mb-6 max-w-md mx-auto">{error}</p>
             <button 
               onClick={handleRetry}
-              className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm"
             >
               <i className="ph ph-arrow-clockwise mr-2"></i>
               Try Again
@@ -981,11 +937,11 @@ const BulletinsComponent = ({
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-full mb-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-full mb-6 shadow-sm">
               <i className="ph ph-check-circle text-3xl text-green-600"></i>
             </div>
             <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Issues Found</h3>
-            <p className="text-sm text-neutral-700 leading-relaxed max-w-lg mx-auto">
+            <p className="text-xs text-neutral-700 leading-relaxed max-w-lg mx-auto">
               Great news! No technical bulletins found for <span className="font-medium">{vehicleMake} {vehicleModel}</span>.
               <br className="hidden sm:block" />
               This suggests your vehicle has no known widespread technical issues.
@@ -1015,14 +971,10 @@ const BulletinsComponent = ({
         {/* Enhanced Header with Metrics */}
         <div className="space-y-8 mb-16">
           <div>
-            <HeadingWithTooltip 
-              tooltip="Technical bulletins for your vehicle, based on manufacturer data"
-            >
-              <h1 className="text-2xl md:text-3xl font-semibold text-neutral-900 leading-tight tracking-tight mb-4">
-                Technical Bulletins for {vehicleMake} {vehicleModel}
-              </h1>
-            </HeadingWithTooltip>
-            <p className="text-sm text-neutral-700 leading-relaxed mb-6">
+            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+              Technical Bulletins for {vehicleMake} {vehicleModel}
+            </h1>
+            <p className="text-xs text-neutral-700 leading-relaxed mb-6">
               {vehicleInfo.engine_info && `Engine: ${vehicleInfo.engine_info}. `}
               {vehicleYear && `Year: ${vehicleYear}. `}
               Comprehensive analysis of manufacturer-issued technical bulletins.
@@ -1030,8 +982,8 @@ const BulletinsComponent = ({
           </div>
           
           {/* Prominent Metrics Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
@@ -1044,7 +996,7 @@ const BulletinsComponent = ({
               </div>
             </div>
             
-            <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+            <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <i className="ph ph-wrench text-lg text-green-600 mr-3 mt-0.5"></i>
@@ -1059,7 +1011,7 @@ const BulletinsComponent = ({
               </div>
             </div>
             
-            <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 sm:col-span-2 lg:col-span-1">
+            <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <i className="ph ph-chart-pie text-lg text-yellow-600 mr-3 mt-0.5"></i>
@@ -1075,15 +1027,22 @@ const BulletinsComponent = ({
             </div>
           </div>
 
-          <SharedMatchWarning 
-            matchConfidence={matchConfidence} 
-            metadata={bulletins.metadata} 
-            vehicleMake={vehicleMake} 
-            vehicleModel={vehicleModel} 
-          />
+          {/* Match Confidence Warning */}
+          {matchConfidence === 'fuzzy' && (
+            <div className="bg-transparent rounded-lg p-4 shadow-sm">
+              <div className="flex items-center space-x-2 mb-2">
+                <i className="ph ph-warning-circle text-yellow-600"></i>
+                <span className="text-sm font-medium text-neutral-900">Partial Match</span>
+              </div>
+              <p className="text-xs text-neutral-700 leading-relaxed">
+                Results may include bulletins from similar {vehicleMake} models.
+                {bulletins.metadata?.matched_to && ` Matched to: ${bulletins.metadata.matched_to}`}
+              </p>
+            </div>
+          )}
 
           {error && (
-            <div className="bg-yellow-50 rounded-lg p-4 shadow-sm">
+            <div className="bg-transparent rounded-lg p-4 shadow-sm">
               <div className="flex items-center space-x-2">
                 <i className="ph ph-warning-circle text-yellow-600"></i>
                 <span className="text-sm font-medium text-neutral-900">Notice</span>
@@ -1103,13 +1062,13 @@ const BulletinsComponent = ({
                   placeholder="Search bulletins by problem, system, or keyword..."
                   value={searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full px-4 py-4 pl-12 pr-12 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm hover:shadow-md transition-all duration-300 placeholder-neutral-400"
+                  className="w-full px-4 py-4 pl-12 pr-12 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm placeholder-neutral-400"
                 />
-                <i className="ph ph-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 group-focus-within:text-blue-600 transition-colors duration-300"></i>
+                <i className="ph ph-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
                 {searchTerm && (
                   <button
                     onClick={handleClearFilters}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 hover:scale-110 transition-all duration-300"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 cursor-pointer"
                   >
                     <i className="ph ph-x"></i>
                   </button>
@@ -1117,7 +1076,7 @@ const BulletinsComponent = ({
               </div>
               {filteredBulletins.length > 0 && (
                 <div className="flex items-center justify-between mt-3">
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-xs text-neutral-600">
                     {searchTerm ? (
                       <><i className="ph ph-funnel text-blue-600 mr-2"></i>{filteredBulletins.length} results found</>
                     ) : (
@@ -1127,7 +1086,7 @@ const BulletinsComponent = ({
                   {searchTerm && (
                     <button 
                       onClick={handleClearFilters}
-                      className="text-xs text-blue-600 hover:text-blue-700 font-medium hover:scale-105 transition-all duration-300"
+                      className="text-xs text-blue-600 font-medium cursor-pointer"
                     >
                       Clear filters
                     </button>
@@ -1145,18 +1104,12 @@ const BulletinsComponent = ({
                       key={section.id}
                       onClick={() => handleSectionChange(section.id)}
                       className={`
-                        flex items-center space-x-2 px-3 md:px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap
+                        flex items-center space-x-2 px-3 md:px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap cursor-pointer
                         ${activeSection === section.id
                           ? 'bg-white text-blue-600 shadow-sm'
-                          : 'text-neutral-600 hover:text-neutral-900 hover:bg-white hover:shadow-sm'
+                          : 'text-neutral-600'
                         }
                       `}
-                      style={{ 
-                        animationDelay: `${index * 50}ms`,
-                        opacity: 1,
-                        transform: 'translateY(0)',
-                        transition: `all 300ms ease-out ${index * 50}ms`
-                      }}
                     >
                       <i className={`ph ${section.icon} text-base`}></i>
                       <span className="hidden sm:inline">{section.label}</span>
@@ -1199,7 +1152,7 @@ const BulletinsComponent = ({
                   <h3 className="text-lg font-medium text-neutral-900 mb-2">
                     {searchTerm ? 'No Results Found' : 'No Bulletins Available'}
                   </h3>
-                  <p className="text-sm text-neutral-600 mb-4 max-w-md mx-auto">
+                  <p className="text-xs text-neutral-600 mb-4 max-w-md mx-auto">
                     {searchTerm 
                       ? `No bulletins match your search "${searchTerm}". Try different keywords or browse other categories.`
                       : `No bulletins found in this category. This indicates no known issues for this system.`
@@ -1230,7 +1183,7 @@ const BulletinsComponent = ({
               <i className="ph ph-info text-2xl text-neutral-400"></i>
             </div>
             <h3 className="text-lg font-medium text-neutral-900 mb-2">Unable to Categorize</h3>
-            <p className="text-sm text-neutral-600 max-w-md mx-auto">
+            <p className="text-xs text-neutral-600 max-w-md mx-auto">
               The bulletins for this vehicle couldn't be automatically categorized. This may indicate unique or complex issues that require manual review.
             </p>
           </div>

@@ -4,7 +4,6 @@ import TechnicalSpecificationsPage from '../TechSpecs/TechnicalSpecificationsPag
 import VehicleRepairTimesComponent from '../LabourTimes/LabourTimes';
 import BulletinsComponent from '../Bulletins/BulletinsComponent';
 import VehicleAnalysisComponent from '../AI/VehicleAnalysisComponent';
-import { SectionContainer, SectionContent } from './DataTabsStyles';
 
 // Extract year from various possible date fields in vehicleData
 const extractManufactureYear = (vehicleData) => {
@@ -159,45 +158,83 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
     return null;
   }
 
+  // Define sections with metadata for navigation
+  const sections = [
+    {
+      id: 'analysis',
+      title: 'Vehicle Analysis',
+      icon: 'ph-brain',
+      component: (
+        <VehicleAnalysisComponent
+          registration={registration}
+          vehicleData={enhancedVehicleData}
+          onDataLoad={handleAnalysisDataLoad}
+        />
+      )
+    },
+    {
+      id: 'bulletins',
+      title: 'Technical Bulletins',
+      icon: 'ph-warning-circle',
+      component: (
+        <BulletinsComponent
+          vehicleData={enhancedVehicleData}
+          registration={registration}
+          onDataLoad={handleBulletinsDataLoad}
+        />
+      )
+    },
+    {
+      id: 'repair-times',
+      title: 'Repair Times',
+      icon: 'ph-wrench',
+      component: (
+        <VehicleRepairTimesComponent
+          registration={registration}
+          vehicleData={enhancedVehicleData}
+          onDataLoad={handleLabourTimesDataLoad}
+        />
+      )
+    },
+    {
+      id: 'tech-specs',
+      title: 'Technical Specifications',
+      icon: 'ph-database',
+      component: (
+        <TechnicalSpecificationsPage
+          registration={registration}
+          vehicleData={enhancedVehicleData}
+          onDataLoad={handleTechSpecsDataLoad}
+        />
+      )
+    }
+  ];
+
   return (
-    <SectionContainer>
-      {/* Vehicle Analysis Section */}
-        <SectionContent>
-          <VehicleAnalysisComponent
-            registration={registration}
-            vehicleData={enhancedVehicleData}
-            onDataLoad={handleAnalysisDataLoad}
-          />
-        </SectionContent>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      {/* Section Content - All sections visible */}
+      <div className="space-y-12 mb-16">
+        {sections.map((section, index) => (
+          <div key={section.id}>
+            {/* Section Header */}
+            <div className="mb-6">
+              <div className="flex items-center space-x-3 mb-2">
+                <i className={`ph ${section.icon} text-2xl text-blue-600`}></i>
+                <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">
+                  {section.title}
+                </h2>
+              </div>
+              <div className="w-12 h-1 bg-blue-600 rounded-full"></div>
+            </div>
 
-      {/* Technical Bulletins Section */}
-        <SectionContent>
-          <BulletinsComponent
-            vehicleData={enhancedVehicleData}
-            registration={registration}
-            onDataLoad={handleBulletinsDataLoad}
-          />
-        </SectionContent>
-
-      {/* Repair Times Section */}
-      
-         <SectionContent>
-          <VehicleRepairTimesComponent
-            registration={registration}
-            vehicleData={enhancedVehicleData}
-            onDataLoad={handleLabourTimesDataLoad}
-          />
-        </SectionContent> 
-
-      {/* Technical Specifications Section */}
-        <SectionContent>
-          <TechnicalSpecificationsPage
-            registration={registration}
-            vehicleData={enhancedVehicleData}
-            onDataLoad={handleTechSpecsDataLoad}
-          />
-        </SectionContent>
-    </SectionContainer>
+            {/* Section Component */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+              {section.component}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

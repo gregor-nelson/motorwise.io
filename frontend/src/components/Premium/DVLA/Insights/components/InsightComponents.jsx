@@ -176,7 +176,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
               <div 
                 className={`h-full rounded-full ${
                   ownershipScore > 70 ? 'bg-green-500' : 
-                  ownershipScore > 40 ? 'bg-yellow-500' : 'bg-red-500'
+                  ownershipScore > 40 ? 'bg-transparent' : 'bg-transparent'
                 }`}
                 style={{ width: `${ownershipScore}%` }}
               />
@@ -203,7 +203,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
         
         {/* Registration Gap Card */}
         {insights.regGapYears > 0 && (
-          <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
               <div className="text-sm font-medium text-neutral-900">Registration Gap</div>
               <i className="ph ph-calendar text-lg text-yellow-600"></i>
@@ -229,7 +229,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
             {environmentalInsights.floodRisk && (
               <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
                 environmentalInsights.floodRisk.riskLevel === 'Low' ? 'bg-green-50' :
-                environmentalInsights.floodRisk.riskLevel === 'Medium' ? 'bg-yellow-50' : 'bg-red-50'
+                environmentalInsights.floodRisk.riskLevel === 'Medium' ? 'bg-transparent' : 'bg-transparent'
               }`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-sm font-medium text-neutral-900">Flood Risk</div>
@@ -261,7 +261,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
             {environmentalInsights.airQuality && (
               <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
                 environmentalInsights.airQuality.qualityLevel === 'Good' ? 'bg-green-50' :
-                environmentalInsights.airQuality.qualityLevel === 'Moderate' ? 'bg-yellow-50' : 'bg-red-50'
+                environmentalInsights.airQuality.qualityLevel === 'Moderate' ? 'bg-transparent' : 'bg-transparent'
               }`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-sm font-medium text-neutral-900">Air Quality</div>
@@ -283,7 +283,7 @@ export const OwnershipPanelComponent = ({ insights }) => {
             {environmentalInsights.roadSaltUsage && (
               <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
                 environmentalInsights.roadSaltUsage.usageLevel === 'Light' ? 'bg-green-50' :
-                environmentalInsights.roadSaltUsage.usageLevel === 'Moderate' ? 'bg-yellow-50' : 'bg-red-50'
+                environmentalInsights.roadSaltUsage.usageLevel === 'Moderate' ? 'bg-transparent' : 'bg-transparent'
               }`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-sm font-medium text-neutral-900">Road Salt Exposure</div>
@@ -385,7 +385,7 @@ export const StatusPanelComponent = ({ insights }) => {
         {/* Driveability Status Card */}
         <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
           insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' 
-            ? 'bg-green-50' : 'bg-red-50'
+            ? 'bg-green-50' : 'bg-transparent'
         }`}>
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm font-medium text-neutral-900">Driveability Status</div>
@@ -413,7 +413,7 @@ export const StatusPanelComponent = ({ insights }) => {
         
         {/* Tax Status Card */}
         <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-          insights.isTaxExempt || insights.taxStatus === 'TAXED' ? 'bg-green-50' : 'bg-red-50'
+          insights.isTaxExempt || insights.taxStatus === 'TAXED' ? 'bg-green-50' : 'bg-transparent'
         }`}>
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm font-medium text-neutral-900">Tax Status</div>
@@ -454,8 +454,8 @@ export const StatusPanelComponent = ({ insights }) => {
             <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden mb-2">
               <div 
                 className={`h-full rounded-full ${
-                  insights.daysUntilMotExpiry < 0 ? 'bg-red-500' :
-                  insights.daysUntilMotExpiry < 30 ? 'bg-yellow-500' : 'bg-green-500'
+                  insights.daysUntilMotExpiry < 0 ? 'bg-transparent' :
+                  insights.daysUntilMotExpiry < 30 ? 'bg-transparent' : 'bg-green-500'
                 }`}
                 style={{ width: `${motPercentage}%` }}
               />
@@ -672,7 +672,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
         
         {/* ULEZ Compliance Card */}
         <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-          insights.isULEZCompliant ? 'bg-green-50' : 'bg-red-50'
+          insights.isULEZCompliant ? 'bg-green-50' : 'bg-transparent'
         }`}>
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm font-medium text-neutral-900">ULEZ Status</div>
@@ -698,7 +698,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
         
         {/* Scottish LEZ Card */}
         <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-          insights.isScottishLEZCompliant ? 'bg-green-50' : 'bg-red-50'
+          insights.isScottishLEZCompliant ? 'bg-green-50' : 'bg-transparent'
         }`}>
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm font-medium text-neutral-900">Scottish LEZ</div>
@@ -725,7 +725,7 @@ export const EmissionsPanelComponent = ({ insights }) => {
       
       {/* Clean Air Zone Impact */}
       <div className={`rounded-lg p-4 mb-6 ${
-        insights.cleanAirZoneImpact.includes("not compliant") ? 'bg-yellow-50' : 'bg-green-50'
+        insights.cleanAirZoneImpact.includes("not compliant") ? 'bg-transparent' : 'bg-green-50'
       }`}>
         <p className={`text-sm ${
           insights.cleanAirZoneImpact.includes("not compliant") ? 'text-yellow-700' : 'text-green-700'

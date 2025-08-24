@@ -28,7 +28,7 @@ const ErrorMessage = ({ message, variant = "info" }) => {
       case 'success':
         return 'bg-green-50 text-green-700';
       case 'warning':
-        return 'bg-yellow-50 text-yellow-700';
+        return 'bg-transparent text-yellow-700';
       case 'error':
         return 'bg-red-50 text-red-700';
       default:
@@ -317,7 +317,7 @@ const PremiumReportPage = () => {
   // Loading state
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="max-w-6xl mx-auto p-1 sm:p-4 md:p-6 lg:p-8">
         <div className="bg-white rounded-lg p-8 shadow-sm">
           <div className="flex flex-col items-center justify-center text-center min-h-[200px]">
             <div className="w-8 h-8 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
@@ -332,7 +332,7 @@ const PremiumReportPage = () => {
   // Error state
   if (error) {
     return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="max-w-6xl mx-auto p-1 sm:p-4 md:p-6 lg:p-8">
         <div className="bg-white rounded-lg shadow-sm">
           <ErrorMessage variant="error" message={`We are unable to retrieve your vehicle report at this time. ${error}`} />
           <div className="p-6 text-center border-t border-neutral-100">
@@ -348,10 +348,10 @@ const PremiumReportPage = () => {
   // Render report
   if (reportData) {
     return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="max-w-6xl mx-auto p-1 sm:p-4 md:p-6 lg:p-8">
         <div ref={reportContainerRef} className="space-y-12">
           {/* Report Header */}
-          <div className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
+          <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <div className="inline-flex items-center bg-neutral-900 text-white px-3 py-1.5 text-xs font-medium uppercase tracking-wider rounded-full">
                 <i className="ph ph-star text-sm mr-2"></i>
@@ -384,7 +384,7 @@ const PremiumReportPage = () => {
           </div>
             
           {/* DVLA Vehicle Data Section */}
-          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
             <div className="flex items-center mb-6">
               <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
               <div>
@@ -403,7 +403,7 @@ const PremiumReportPage = () => {
           </section>
 
           {/* Vehicle Insights Section */}
-          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
             <div className="flex items-center mb-6">
               <i className="ph ph-brain text-lg text-blue-600 mr-3 mt-0.5"></i>
               <div>
@@ -427,7 +427,7 @@ const PremiumReportPage = () => {
           </section>
             
           {/* Technical Specifications Section */}
-          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
             <div className="flex items-center mb-6">
               <i className="ph ph-gear text-lg text-blue-600 mr-3 mt-0.5"></i>
               <div>
@@ -451,7 +451,7 @@ const PremiumReportPage = () => {
           </section>
             
           {/* 3D Mileage History Section */}
-          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
                 <i className="ph ph-chart-line text-lg text-blue-600 mr-3 mt-0.5"></i>
@@ -482,7 +482,7 @@ const PremiumReportPage = () => {
           </section>
             
           {/* Mileage Insights Section */}
-          <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
             <div className="flex items-center mb-6">
               <i className="ph ph-detective text-lg text-blue-600 mr-3 mt-0.5"></i>
               <div>

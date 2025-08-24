@@ -159,12 +159,12 @@ const EnhancedCircularProgress = ({ value = 0, max = 100, size = 140, strokeWidt
 
   const getStatusTheme = (s) => {
     const themes = {
-      good: { color: '#059669', bgColor: 'bg-green-50', textColor: 'text-green-600', gradientFrom: '#10b981', gradientTo: '#059669' },
-      low: { color: '#059669', bgColor: 'bg-green-50', textColor: 'text-green-600', gradientFrom: '#10b981', gradientTo: '#059669' },
-      medium: { color: '#d97706', bgColor: 'bg-yellow-50', textColor: 'text-yellow-600', gradientFrom: '#f59e0b', gradientTo: '#d97706' },
-      warning: { color: '#d97706', bgColor: 'bg-yellow-50', textColor: 'text-yellow-600', gradientFrom: '#f59e0b', gradientTo: '#d97706' },
-      high: { color: '#dc2626', bgColor: 'bg-red-50', textColor: 'text-red-600', gradientFrom: '#ef4444', gradientTo: '#dc2626' },
-      critical: { color: '#dc2626', bgColor: 'bg-red-50', textColor: 'text-red-600', gradientFrom: '#ef4444', gradientTo: '#dc2626' }
+      good: { color: '#059669', bgColor: 'bg-transparent', textColor: 'text-green-600', gradientFrom: '#10b981', gradientTo: '#059669' },
+      low: { color: '#059669', bgColor: 'bg-transparent', textColor: 'text-green-600', gradientFrom: '#10b981', gradientTo: '#059669' },
+      medium: { color: '#d97706', bgColor: 'bg-transparent', textColor: 'text-yellow-600', gradientFrom: '#f59e0b', gradientTo: '#d97706' },
+      warning: { color: '#d97706', bgColor: 'bg-transparent', textColor: 'text-yellow-600', gradientFrom: '#f59e0b', gradientTo: '#d97706' },
+      high: { color: '#dc2626', bgColor: 'bg-transparent', textColor: 'text-red-600', gradientFrom: '#ef4444', gradientTo: '#dc2626' },
+      critical: { color: '#dc2626', bgColor: 'bg-transparent', textColor: 'text-red-600', gradientFrom: '#ef4444', gradientTo: '#dc2626' }
     };
     return themes[s] || themes.medium;
   };
@@ -269,19 +269,19 @@ const EnhancedCountdown = ({ days, label = 'MOT Status', icon = 'ph-calendar-che
   const getStatusTheme = (s) => {
     const themes = {
       good: { 
-        bgColor: 'bg-green-50', 
+        bgColor: 'bg-transparent', 
         textColor: 'text-green-600', 
         iconBg: 'bg-green-100',
         progressColor: 'bg-gradient-to-r from-green-500 to-green-600'
       },
       warning: { 
-        bgColor: 'bg-yellow-50', 
+        bgColor: 'bg-transparent', 
         textColor: 'text-yellow-600', 
         iconBg: 'bg-yellow-100',
         progressColor: 'bg-gradient-to-r from-yellow-500 to-yellow-600'
       },
       critical: { 
-        bgColor: 'bg-red-50', 
+        bgColor: 'bg-transparent', 
         textColor: 'text-red-600', 
         iconBg: 'bg-red-100',
         progressColor: 'bg-gradient-to-r from-red-500 to-red-600'
@@ -488,7 +488,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <section className="space-y-12 mb-16">
-          <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" role="alert">
+          <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" role="alert">
             <div className="flex items-center justify-between">
               <div className="flex items-start">
                 <i className="ph ph-warning-circle text-2xl text-red-600 mr-4 mt-1"></i>
@@ -516,7 +516,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <section className="space-y-12 mb-16">
-          <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" role="status">
+          <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300" role="status">
             <div className="flex items-center justify-between">
               <div className="flex items-start">
                 <i className="ph ph-info text-2xl text-yellow-600 mr-4 mt-1"></i>
@@ -642,10 +642,10 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
                 <div className="text-sm font-medium text-neutral-900 mb-3">Overall Assessment</div>
                 <div className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-300 ${
                   overallRisk === 'good' || overallRisk === 'low' 
-                    ? 'bg-green-50 text-green-600 hover:bg-green-100' 
+                    ? 'bg-transparent text-green-600 hover:bg-green-100' 
                     : overallRisk === 'critical' || overallRisk === 'high'
-                    ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                    : 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100'
+                    ? 'bg-transparent text-red-600 hover:bg-red-100'
+                    : 'bg-transparent text-yellow-600 hover:bg-yellow-100'
                 }`} aria-label={`Overall risk ${overallRisk}`}>
                   {overallRisk.charAt(0).toUpperCase() + overallRisk.slice(1)} Risk
                 </div>
@@ -674,13 +674,13 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
               {(criticalSystems > 0 || warningSystems > 0) && (
                 <div className="flex gap-2 flex-wrap">
                   {criticalSystems > 0 && (
-                    <span className="px-2 py-1 bg-red-50 text-red-600 text-xs font-medium rounded-full hover:bg-red-100 transition-colors duration-300">
+                    <span className="px-2 py-1 bg-transparent text-red-600 text-xs font-medium rounded-full hover:bg-red-100 transition-colors duration-300">
                       <i className="ph ph-warning-circle mr-1"></i>
                       {criticalSystems} critical
                     </span>
                   )}
                   {warningSystems > 0 && (
-                    <span className="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs font-medium rounded-full hover:bg-yellow-100 transition-colors duration-300">
+                    <span className="px-2 py-1 bg-transparent text-yellow-600 text-xs font-medium rounded-full hover:bg-yellow-100 transition-colors duration-300">
                       <i className="ph ph-warning mr-1"></i>
                       {warningSystems} warnings
                     </span>
@@ -695,7 +695,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-start">
-                  <div className="p-2 bg-green-50 rounded-lg mr-3">
+                  <div className="p-2 bg-transparent rounded-lg mr-3">
                     <i className="ph ph-clock text-lg text-green-600"></i>
                   </div>
                   <div>
@@ -708,7 +708,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
                 <div className="text-2xl font-bold text-green-600">{recentIssues}</div>
                 <div className="text-sm text-neutral-500">systems updated</div>
               </div>
-              <div className="text-xs text-neutral-500 bg-green-50 px-2 py-1 rounded-md hover:bg-green-100 transition-colors duration-300">
+              <div className="text-xs text-neutral-500 bg-transparent px-2 py-1 rounded-md hover:bg-green-100 transition-colors duration-300">
                 <i className="ph ph-clock mr-1"></i>
                 Systems with recent maintenance or issues
               </div>
@@ -768,12 +768,12 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
 
               const getSystemStatusTheme = (status) => {
                 const themes = {
-                  'good': { bg: 'bg-green-50', text: 'text-green-600', icon: 'text-green-600' },
-                  'low': { bg: 'bg-green-50', text: 'text-green-600', icon: 'text-green-600' },
-                  'warning': { bg: 'bg-yellow-50', text: 'text-yellow-600', icon: 'text-yellow-600' },
-                  'medium': { bg: 'bg-yellow-50', text: 'text-yellow-600', icon: 'text-yellow-600' },
-                  'critical': { bg: 'bg-red-50', text: 'text-red-600', icon: 'text-red-600' },
-                  'high': { bg: 'bg-red-50', text: 'text-red-600', icon: 'text-red-600' },
+                  'good': { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
+                  'low': { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
+                  'warning': { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
+                  'medium': { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
+                  'critical': { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
+                  'high': { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
                   'unknown': { bg: 'bg-neutral-50', text: 'text-neutral-600', icon: 'text-neutral-600' }
                 };
                 return themes[status] || themes.unknown;
@@ -814,12 +814,12 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
                       </span>
                     )}
                     {s.issueCount > 5 && (
-                      <span className="inline-flex items-center px-2 py-1 text-xs text-orange-600 bg-orange-50 rounded-full hover:bg-orange-100 transition-colors duration-300">
+                      <span className="inline-flex items-center px-2 py-1 text-xs text-orange-600 bg-transparent rounded-full hover:bg-orange-100 transition-colors duration-300">
                         <i className="ph ph-warning mr-1"></i>Multiple Issues
                       </span>
                     )}
                     {s.status === 'critical' && (
-                      <span className="inline-flex items-center px-2 py-1 text-xs text-red-600 bg-red-50 rounded-full hover:bg-red-100 transition-colors duration-300">
+                      <span className="inline-flex items-center px-2 py-1 text-xs text-red-600 bg-transparent rounded-full hover:bg-red-100 transition-colors duration-300">
                         <i className="ph ph-x-circle mr-1"></i>Critical
                       </span>
                     )}
@@ -873,7 +873,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
           <h2 className="text-lg font-medium text-neutral-900 mb-4">Assessment Factors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {analysisData.riskFactors?.length > 0 && (
-              <div className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+              <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <div className="p-2 bg-red-100 rounded-lg mr-3">
@@ -900,7 +900,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
               </div>
             )}
             {analysisData.positiveFactors?.length > 0 && (
-              <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+              <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <div className="p-2 bg-green-100 rounded-lg mr-3">
@@ -967,7 +967,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
               </div>
             )}
             {analysisData.patterns?.progressiveDeterioration?.length > 0 && (
-              <div className="bg-yellow-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+              <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-start">
                     <i className="ph ph-trend-down text-lg text-yellow-600 mr-3 mt-0.5"></i>
@@ -1046,21 +1046,21 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4">
-              <div className="text-center p-3 bg-red-50 rounded-lg">
+              <div className="text-center p-3 bg-transparent rounded-lg">
                 <div className="text-lg font-bold text-red-600 mb-1">
                   {analysisData.maintenanceInsights.slice(0, 2).length}
                 </div>
                 <div className="text-xs text-red-600 font-medium">High Priority</div>
                 <div className="text-xs text-neutral-500 mt-1">Immediate attention</div>
               </div>
-              <div className="text-center p-3 bg-yellow-50 rounded-lg">
+              <div className="text-center p-3 bg-transparent rounded-lg">
                 <div className="text-lg font-bold text-yellow-600 mb-1">
                   {Math.min(2, Math.max(0, analysisData.maintenanceInsights.length - 2))}
                 </div>
                 <div className="text-xs text-yellow-600 font-medium">Medium Priority</div>
                 <div className="text-xs text-neutral-500 mt-1">Plan ahead</div>
               </div>
-              <div className="text-center p-3 bg-green-50 rounded-lg">
+              <div className="text-center p-3 bg-transparent rounded-lg">
                 <div className="text-lg font-bold text-green-600 mb-1">
                   {Math.max(0, analysisData.maintenanceInsights.length - 4)}
                 </div>
@@ -1194,8 +1194,8 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
 
           {/* Risk Level */}
           <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-            overallRisk === 'high' || overallRisk === 'critical' ? 'bg-red-50' :
-            overallRisk === 'medium' || overallRisk === 'warning' ? 'bg-yellow-50' : 'bg-green-50'
+            overallRisk === 'high' || overallRisk === 'critical' ? 'bg-transparent' :
+            overallRisk === 'medium' || overallRisk === 'warning' ? 'bg-transparent' : 'bg-transparent'
           }`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
@@ -1231,7 +1231,7 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
           </div>
 
           {/* Action Required */}
-          <div className="bg-orange-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
                 <div className="p-2 bg-orange-100 rounded-lg mr-3">

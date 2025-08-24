@@ -244,3 +244,11 @@
 2025-08-24 12:40:20,071 - vehicle_analysis_api - INFO - Loaded 3 valid cache entries from disk
 2025-08-24 13:37:39,483 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0018s
 2025-08-24 14:31:47,249 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-24 18:27:35,761 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
+2025-08-24 22:10:48,718 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0011s
+2025-08-24 22:12:22,674 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0011s
+2025-08-24 22:16:30,534 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-24 22:19:09,438 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-24 22:19:18,759 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-08-24 22:21:27,063 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
+2025-08-24 22:24:46,374 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s

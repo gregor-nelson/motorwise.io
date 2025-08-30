@@ -6381,3 +6381,402 @@
 2025-08-24 12:40:19,596 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-08-24 12:40:19,598 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-08-24 12:40:19,598 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-25 08:47:49,481 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-25 08:47:49,500 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-25 08:47:49,516 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-25 08:47:49,533 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-25 08:47:49,553 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-25 08:47:49,572 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-25 08:47:49,572 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-25 08:47:49,589 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-25 08:47:49,589 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-25 08:47:49,607 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-25 08:47:49,607 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-25 08:47:49,609 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-25 08:47:49,609 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-25 08:49:39,096 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-25 08:49:39,097 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-08-25 08:49:39,098 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-08-25 08:49:39,106 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-25 08:49:39,106 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-25 08:49:39,106 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-25 08:49:39,106 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-25 08:49:39,106 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-25 08:49:39,107 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-25 08:49:39,111 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0187s
+2025-08-25 08:49:39,112 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0190s
+2025-08-25 09:29:19,584 - vehicle_data_api - INFO - Looking up repair times for MAZDA MX-5 (year: 2008)
+2025-08-25 09:29:19,585 - vehicle_data_api - INFO - Looking up repair times for: MAZDA MX-5 (year: 2008)
+2025-08-25 09:29:19,585 - vehicle_data_api - INFO - Direct year match found with key: mazda_mx-5_2008
+2025-08-25 09:29:19,591 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0090s
+2025-08-25 09:29:19,601 - vehicle_data_api - INFO - Looking up tech specs for MAZDA MX-5 (year: 2008, fuel: petrol)
+2025-08-25 09:29:19,601 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA MX-5 (year: 2008, fuel: petrol)
+2025-08-25 09:29:19,602 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA MX-5 (year: 2008, fuel: petrol)
+2025-08-25 09:29:19,602 - vehicle_data_api - INFO - Searching for: mazda mx-5, Year=2008, Fuel=petrol, Type=tech_specs
+2025-08-25 09:29:19,602 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:29:19,603 - vehicle_data_api - INFO - No good match found for MAZDA MX-5 (Year: 2008, Fuel: petrol)
+2025-08-25 09:29:19,603 - vehicle_data_api - WARNING - No tech specs match found for MAZDA MX-5 (year: 2008, fuel: petrol)
+2025-08-25 09:29:19,603 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA MX-5 (year: 2008) (fuel type: petrol)
+2025-08-25 09:29:19,604 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-08-25 09:40:12,309 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:40:12,310 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:40:12,310 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:40:12,311 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:40:12,311 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:40:12,311 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:40:12,312 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:40:12,312 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:40:12,313 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:40:12,313 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:40:12,313 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:40:12,314 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:40:12,314 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:40:12,314 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:40:12,314 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:40:12,315 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:40:12,315 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-25 09:40:12,316 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-25 09:53:24,606 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:53:24,607 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:53:24,607 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:53:24,607 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:53:24,607 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:53:24,608 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:53:24,608 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:53:24,608 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:53:24,609 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:53:24,609 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:53:24,610 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:53:24,610 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:53:24,610 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:53:24,611 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:53:24,611 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:53:24,611 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:53:24,612 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0110s
+2025-08-25 09:53:24,615 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0112s
+2025-08-25 09:54:24,362 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:54:24,363 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:54:24,363 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:54:24,363 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:54:24,364 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:54:24,364 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:54:24,364 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:54:24,364 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:54:24,364 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-08-25 09:54:24,369 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:54:24,370 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:54:24,370 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:54:24,370 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:54:24,370 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:54:24,370 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:54:24,370 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:54:24,371 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:54:24,371 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-08-25 09:55:22,029 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:22,029 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:22,030 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:22,030 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:55:22,030 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:22,030 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:55:22,031 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:22,031 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:22,033 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0055s
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:22,043 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:55:22,044 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:22,044 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:55:22,044 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0020s
+2025-08-25 09:55:46,561 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:46,561 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:46,562 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:46,562 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:55:46,562 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:46,563 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:55:46,563 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:46,564 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:46,564 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0031s
+2025-08-25 09:55:46,570 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:46,571 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:46,571 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:46,571 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:55:46,571 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:46,572 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:55:46,573 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:46,573 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:55:46,573 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-25 09:55:53,307 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:53,308 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:53,308 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:53,308 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:55:53,308 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:53,308 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:55:53,308 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:53,308 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:55:53,308 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0021s
+2025-08-25 09:55:53,313 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:53,313 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:53,314 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:53,314 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:55:53,314 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:55:53,314 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:55:53,315 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:55:53,315 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:55:53,316 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-08-25 09:57:24,493 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:24,493 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:24,494 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:24,494 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:57:24,494 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:57:24,495 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:57:24,495 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:24,496 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:24,500 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0092s
+2025-08-25 09:57:24,507 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:24,507 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:24,508 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:24,508 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:57:24,508 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:57:24,509 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:57:24,509 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:24,509 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:57:24,510 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0079s
+2025-08-25 09:57:36,193 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:36,193 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:36,193 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:36,193 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:57:36,194 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:57:36,194 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:57:36,194 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:36,194 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:57:36,195 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:57:36,196 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:57:36,196 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:57:36,196 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0304s
+2025-08-25 09:57:36,197 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0313s
+2025-08-25 09:58:14,782 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:14,782 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:14,782 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:14,783 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:58:14,783 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:58:14,783 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:58:14,783 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:14,784 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:14,785 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-25 09:58:14,793 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:14,794 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:14,794 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:14,794 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:58:14,794 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:58:14,795 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:58:14,795 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:14,795 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:58:14,796 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-08-25 09:58:53,127 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:53,127 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:53,128 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:53,128 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 09:58:53,128 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:58:53,129 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 09:58:53,129 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:53,129 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 09:58:53,130 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-08-25 09:58:53,138 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:53,138 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:53,139 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:53,139 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 09:58:53,139 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 09:58:53,140 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 09:58:53,140 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 09:58:53,140 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 09:58:53,141 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0059s
+2025-08-25 10:03:44,256 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:03:44,256 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:03:44,257 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:03:44,257 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:03:44,257 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:03:44,258 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:03:44,258 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:03:44,258 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:03:44,259 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:03:44,259 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:03:44,260 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:03:44,260 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:03:44,260 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:03:44,260 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:03:44,260 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:03:44,261 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:03:44,261 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0077s
+2025-08-25 10:03:44,262 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0076s
+2025-08-25 10:06:21,065 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:06:21,066 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:06:21,066 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:06:21,066 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:06:21,066 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:06:21,067 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:06:21,067 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:06:21,067 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:06:21,068 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:06:21,068 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:06:21,069 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:06:21,069 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:06:21,069 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:06:21,069 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:06:21,069 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:06:21,069 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:06:21,070 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0070s
+2025-08-25 10:06:21,070 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0057s
+2025-08-25 10:15:41,334 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:15:41,334 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:15:41,334 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:15:41,334 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:15:41,335 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:15:41,335 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:15:41,335 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:15:41,335 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:15:41,336 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:15:41,336 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0048s
+2025-08-25 10:15:41,337 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0039s
+2025-08-25 10:16:13,957 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:16:13,957 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:16:13,957 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:16:13,958 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:16:13,958 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:16:13,959 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:16:13,959 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:16:13,959 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:16:13,960 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0050s
+2025-08-25 10:16:13,968 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:16:13,970 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:16:13,970 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:16:13,970 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:16:13,970 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:16:13,970 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:16:13,970 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:16:13,970 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:16:13,971 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0030s
+2025-08-25 10:22:22,424 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:22,425 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:22,425 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:22,426 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:22:22,426 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:22:22,426 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:22:22,426 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:22,426 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:22:22,427 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-08-25 10:22:36,118 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:36,118 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:36,119 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:36,119 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:22:36,119 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:22:36,120 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:22:36,120 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:36,121 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:22:36,122 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0061s
+2025-08-25 10:22:49,082 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:49,083 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:49,084 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:49,084 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:22:49,084 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:22:49,085 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:22:49,085 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:22:49,085 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:22:49,086 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0060s
+2025-08-25 10:23:03,593 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:23:03,593 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:23:03,593 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:23:03,593 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:23:03,593 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:23:03,595 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:23:03,595 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:23:03,595 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:23:03,596 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0078s
+2025-08-25 10:24:40,442 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:24:40,444 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:24:40,444 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:24:40,444 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:24:40,444 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:24:40,444 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:24:40,444 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:24:40,445 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:24:40,446 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0054s
+2025-08-25 10:26:10,458 - vehicle_data_api - INFO - Looking up repair times for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:26:10,458 - vehicle_data_api - INFO - Looking up repair times for: TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:26:10,459 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:26:10,459 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=None, Type=repair_times
+2025-08-25 10:26:10,459 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:26:10,460 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: None)
+2025-08-25 10:26:10,460 - vehicle_data_api - WARNING - No repair time match found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:26:10,461 - vehicle_data_api - ERROR - HTTPException: No repair time data found for TRIUMPH SPITFIRE (year: 1973)
+2025-08-25 10:26:10,462 - vehicle_data_api - INFO - Looking up tech specs for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:26:10,463 - vehicle_data_api - INFO - Looking up tech specs for: TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:26:10,464 - vehicle_data_api - INFO - Attempting fuzzy matching for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:26:10,464 - vehicle_data_api - INFO - Searching for: triumph spitfire, Year=1973, Fuel=petrol, Type=tech_specs
+2025-08-25 10:26:10,464 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-08-25 10:26:10,464 - vehicle_data_api - INFO - No good match found for TRIUMPH SPITFIRE (Year: 1973, Fuel: petrol)
+2025-08-25 10:26:10,465 - vehicle_data_api - WARNING - No tech specs match found for TRIUMPH SPITFIRE (year: 1973, fuel: petrol)
+2025-08-25 10:26:10,465 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for TRIUMPH SPITFIRE (year: 1973) (fuel type: petrol)
+2025-08-25 10:26:10,465 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0090s
+2025-08-25 10:26:10,465 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0080s
+2025-08-25 10:46:59,841 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-25 10:46:59,872 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-25 10:46:59,896 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-25 10:46:59,920 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-25 10:46:59,965 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-25 10:47:00,001 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-25 10:47:00,002 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-25 10:47:00,046 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-25 10:47:00,047 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-25 10:47:00,078 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-25 10:47:00,079 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-25 10:47:00,081 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-25 10:47:00,082 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-30 09:08:50,433 - vehicle_data_api - INFO - Found 5 vehicle labour time data files
+2025-08-30 09:08:50,456 - vehicle_data_api - INFO - Loaded repair data for Ford Fiesta YYJE/1 ('17)
+2025-08-30 09:08:50,476 - vehicle_data_api - INFO - Loaded repair data for Honda CR-V R20A2/2 (07-12)
+2025-08-30 09:08:50,492 - vehicle_data_api - INFO - Loaded repair data for Land Rover Defender 244DT/2.4 (L316) (90-16)
+2025-08-30 09:08:50,507 - vehicle_data_api - INFO - Loaded repair data for Mazda MX-5 L8/1.8 (NC) (05-15)
+2025-08-30 09:08:50,525 - vehicle_data_api - INFO - Loaded repair data for MINI Clubman W16 D16 (9HZ)/1.6 (R55) (07-14)
+2025-08-30 09:08:50,527 - vehicle_data_api - INFO - Found 2 vehicle technical specification files
+2025-08-30 09:08:50,542 - vehicle_data_api - INFO - Detected fuel type for Honda CR-VR20A2/2: petrol
+2025-08-30 09:08:50,543 - vehicle_data_api - INFO - Loaded tech specs for Honda CR-VR20A2/2 07-12 (petrol)
+2025-08-30 09:08:50,559 - vehicle_data_api - INFO - Detected fuel type for Land Rover Defender244DT/2.4 2007: unknown
+2025-08-30 09:08:50,559 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
+2025-08-30 09:08:50,561 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
+2025-08-30 09:08:50,561 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-08-30 09:09:39,464 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-08-30 09:09:39,465 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-08-30 09:09:39,465 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-08-30 09:09:39,477 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-30 09:09:39,478 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-30 09:09:39,478 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-08-30 09:09:39,478 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-08-30 09:09:39,478 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-08-30 09:09:39,479 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-08-30 09:09:39,479 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-08-30 09:09:39,479 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-08-30 09:09:39,480 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-08-30 09:09:39,480 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-08-30 09:09:39,480 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-08-30 09:09:39,485 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0280s
+2025-08-30 09:09:39,489 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0293s

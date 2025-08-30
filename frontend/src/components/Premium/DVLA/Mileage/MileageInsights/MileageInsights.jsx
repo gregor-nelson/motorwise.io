@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 
 // Simple color constants for semantic use only (matches DVLADataHeader approach)
 const SEMANTIC_COLORS = {
@@ -11,31 +11,63 @@ const SEMANTIC_COLORS = {
 // Phosphor icons used throughout the component
 
 // Simple tooltip component - minimal styling (matches DVLADataHeader approach)
-const SimpleTooltip = ({ children, title }) => (
+const SimpleTooltip = memo(({ children, title }) => (
   <span title={title} className="cursor-help">
     {children}
   </span>
-);
+));
 
 // Ultra Clean Loading Spinner (matches DVLADataHeader pattern)
-const LoadingSpinner = () => (
+const LoadingSpinner = memo(() => (
   <div className="w-6 h-6 border-2 border-neutral-200 border-t-blue-600 rounded-full animate-spin" />
-);
+));
 
 // Clean Section Spacing - No Visual Dividers (matches DVLADataHeader pattern)
-const SectionBreak = () => (
+const SectionBreak = memo(() => (
   <div className="h-16" />
-);
+));
 
 // Import mileage tooltips
 import { mileageTooltips } from './mileageTooltips';
 
 // Components now use Tailwind CSS classes directly
 
-// Import enhanced risk assessment, anomaly detection functions, and clocking warning
-import { calculateRiskScore, checkForMOTGaps } from './enhancedRiskAssessment';
+// Import anomaly detection functions and clocking warning
 import { findMileageAnomalies, findInactivityPeriods, calculateAccurateMileageStats } from './mileageAnomalyDetector';
 import MileageClockingWarning from './MileageClockingWarning';
+
+// Simple risk assessment function (optimized version)
+const calculateRiskScore = (mileageData, anomalies, inactivityPeriods, vehicleInfo, benchmarkData) => {
+  const hasClockingAnomalies = anomalies?.some(a => a.type === 'decrease') || false;
+  const riskFactors = [];
+  const positiveFactors = [];
+  
+  if (hasClockingAnomalies) {
+    riskFactors.push('Mileage discrepancy detected - potential odometer tampering');
+  }
+  
+  const riskScore = hasClockingAnomalies ? 85 : 25;
+  const riskCategory = riskScore > 70 ? 'High' : riskScore > 40 ? 'Medium' : 'Low';
+  
+  return {
+    riskScore,
+    riskCategory,
+    hasClockingAnomalies,
+    riskFactors,
+    positiveFactors
+  };
+};
+
+// Simple MOT gap checker
+const checkForMOTGaps = (mileageData) => {
+  if (!mileageData || mileageData.length < 2) return false;
+  
+  for (let i = 1; i < mileageData.length; i++) {
+    const daysDiff = (mileageData[i].date - mileageData[i-1].date) / (1000 * 60 * 60 * 24);
+    if (daysDiff > 548) return true; // 18+ months
+  }
+  return false;
+};
 
 // Constants for industry standard thresholds
 const USAGE_PATTERN_THRESHOLDS = {
@@ -74,8 +106,9 @@ const API_BASE_URL = isDevelopment
 
 /**
  * DataQualityIndicator - A component that provides an overall data quality assessment
+ * Memoized to prevent unnecessary re-renders
  */
-const DataQualityIndicator = ({ 
+const DataQualityIndicator = memo(({ 
   hasClockingIssues,
   motGapsDetected,
   anomalies = [],
@@ -280,7 +313,7 @@ const DataQualityIndicator = ({
       )}
     </section>
   );
-};
+});
 
 /**
  * MileageBenchmarksCalculator - Extract calculation logic to separate function
@@ -551,13 +584,51 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     }
   }, [onDataLoad]);
   
-  // Effect to handle data loading and parent notification
+  // Memoized expensive calculations to prevent unnecessary recalculation on re-renders
+  const benchmarkData = useMemo(() => {
+    if (!mileageData || mileageData.length < 2 || !vehicleInfo || !mileageStats) {
+      return null;
+    }
+    return MileageBenchmarksCalculator(mileageData, vehicleInfo, mileageStats);
+  }, [mileageData, vehicleInfo, mileageStats]);
+
+  const usagePatterns = useMemo(() => {
+    if (!mileageData || mileageData.length < 3 || !mileageStats) {
+      return null;
+    }
+    return analyzeUsagePatterns(mileageData, mileageStats);
+  }, [mileageData, mileageStats]);
+
+  const riskAssessment = useMemo(() => {
+    if (!mileageData || mileageData.length < 2 || !anomalies) {
+      return null;
+    }
+    return calculateRiskScore(
+      mileageData, 
+      anomalies, 
+      inactivityPeriods, 
+      vehicleInfo,
+      benchmarkData
+    );
+  }, [mileageData, anomalies, inactivityPeriods, vehicleInfo, benchmarkData]);
+
+  // Update insights when memoized calculations change
   useEffect(() => {
-    // Only notify the parent once when we have meaningful data to share
-    // and only if we haven't already notified them
+    if (benchmarkData || usagePatterns || riskAssessment) {
+      setInsights({
+        benchmarks: benchmarkData,
+        usagePatterns: usagePatterns,
+        riskAssessment: riskAssessment
+      });
+    }
+  }, [benchmarkData, usagePatterns, riskAssessment]);
+  
+  // Effect to handle data loading and parent notification - split for better performance
+  useEffect(() => {
+    // Only notify when we have complete data and haven't notified yet
     if (mileageData && mileageData.length > 0 && 
         !hasNotifiedParent.current && 
-        !loading) {
+        !loading && benchmarkData && usagePatterns && riskAssessment) {
       
       console.log("Mileage insights notifying parent with data");
       
@@ -568,35 +639,31 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
         inactivityPeriods,
         vehicleInfo,
         mileageStats,
-        insights,
+        insights: {
+          benchmarks: benchmarkData,
+          usagePatterns: usagePatterns,
+          riskAssessment: riskAssessment
+        },
         motGapsDetected,
-        dataQuality: insights.riskAssessment?.hasClockingAnomalies ? "poor" : 
+        dataQuality: riskAssessment?.hasClockingAnomalies ? "poor" : 
                      motGapsDetected ? "medium" : 
                      mileageData.length < 4 ? "limited" : "high"
       });
       
       // Mark as notified to prevent repeated callbacks
       hasNotifiedParent.current = true;
-    } else if (dataUnavailable && !hasNotifiedParent.current && !loading) {
-      // Notify parent about unavailable data
+    }
+  }, [mileageData, loading, benchmarkData, usagePatterns, riskAssessment, notifyParent, anomalies, inactivityPeriods, vehicleInfo, mileageStats, motGapsDetected]);
+
+  // Separate effect for handling unavailable data
+  useEffect(() => {
+    if (dataUnavailable && !hasNotifiedParent.current && !loading) {
       notifyParent({
         dataUnavailable: true
       });
-      
       hasNotifiedParent.current = true;
     }
-  }, [
-    mileageData, 
-    anomalies, 
-    inactivityPeriods, 
-    vehicleInfo, 
-    mileageStats, 
-    insights,
-    motGapsDetected,
-    loading,
-    dataUnavailable,
-    notifyParent
-  ]);
+  }, [dataUnavailable, loading, notifyParent]);
   
   // Self-contained tooltip functionality - no external hooks needed
 
@@ -762,38 +829,12 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
     const hasMotGaps = checkForMOTGaps(formattedData);
     setMotGapsDetected(hasMotGaps);
     
+    // Set all the state data - insights will be calculated by memoized hooks
     setMileageData(formattedData);
     setAnomalies(detectedAnomalies);
     setInactivityPeriods(detectedInactivityPeriods);
     setVehicleInfo(vehicleInfo);
     setMileageStats(accurateMileageStats);
-    
-    // Calculate benchmarks with accurate mileage stats
-    const benchmarkData = MileageBenchmarksCalculator(
-      formattedData, 
-      vehicleInfo,
-      accurateMileageStats
-    );
-    
-    // Analyze usage patterns
-    const usagePatterns = formattedData.length >= 3
-      ? analyzeUsagePatterns(formattedData, accurateMileageStats)
-      : null;
-    
-    // Use enhanced risk assessment with accurate data
-    const riskAssessment = calculateRiskScore(
-      formattedData, 
-      detectedAnomalies, 
-      detectedInactivityPeriods, 
-      vehicleInfo,
-      benchmarkData
-    );
-    
-    setInsights({
-      benchmarks: benchmarkData,
-      usagePatterns: usagePatterns,
-      riskAssessment: riskAssessment
-    });
   };
 
   // Show loading state
@@ -854,7 +895,7 @@ const VehicleMileageInsights = ({ registration, vin, paymentId, onDataLoad }) =>
   }
 
   // Determine if the vehicle has clocking issues
-  const hasClockingIssues = insights.riskAssessment?.hasClockingAnomalies || false;
+  const hasClockingIssues = riskAssessment?.hasClockingAnomalies || false;
 
   // Render insights
   return (

@@ -435,6 +435,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const [techSpecsData, setTechSpecsData] = useState(null);
   const [loading, setLoading] = useState(initialLoading || true);
   const [error, setError] = useState(initialError);
+  const [errorType, setErrorType] = useState('service'); // 'service' or 'nodata'
   const [matchConfidence, setMatchConfidence] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedSections, setExpandedSections] = useState({});
@@ -507,6 +508,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       try {
         setLoading(true);
         setError(null);
+        setErrorType('service');
   
         const make = vehicleData.make;
         const model = vehicleData.model || vehicleData.vehicleModel;
@@ -567,7 +569,14 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
         if (currentRequestId !== requestIdRef.current) return;
         
         console.error("Error fetching technical specifications:", err);
-        setError(err.message || "Failed to load technical specifications");
+        // Determine error type based on status code
+        if (err.status === 404) {
+          setErrorType('nodata');
+          setError('No technical specifications data available for this vehicle');
+        } else {
+          setErrorType('service');
+          setError(err.message || "Failed to load technical specifications");
+        }
         setMatchConfidence('none');
         setTechSpecsData(null);
       } finally {
@@ -890,25 +899,57 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
 
   // Error state
   if (error) {
-    return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-          <div className="text-center py-8">
-            <div className="text-lg font-medium text-neutral-900 mb-2 flex items-center justify-center gap-2">
-              <i className="ph ph-warning text-red-600"></i>
-              Cannot retrieve technical specifications
+    if (errorType === 'nodata') {
+      return (
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="text-center py-8">
+              <div className="flex items-center justify-center mb-4">
+                <i className="ph ph-database text-4xl text-blue-600"></i>
+              </div>
+              <div className="text-lg font-medium text-neutral-900 mb-2">
+                No Data Available
+              </div>
+              <div className="text-sm text-neutral-700 mb-4 max-w-lg mx-auto">
+                We don't currently have technical specifications information for this {vehicleData?.make} {vehicleData?.model}. 
+                This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-xs text-neutral-500">
+                <i className="ph ph-info text-blue-600"></i>
+                <span>Data coverage varies by vehicle model and year</span>
+              </div>
             </div>
-            <div className="text-base text-red-600 mb-4">{error}</div>
-            <button 
-              onClick={handleRetry}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
-            >
-              Try Again
-            </button>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // Service error
+      return (
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+            <div className="text-center py-8">
+              <div className="flex items-center justify-center mb-4">
+                <i className="ph ph-clock text-4xl text-orange-600"></i>
+              </div>
+              <div className="text-lg font-medium text-neutral-900 mb-2">
+                Service Temporarily Unavailable
+              </div>
+              <div className="text-sm text-neutral-700 mb-4 max-w-md mx-auto">
+                We're currently unable to retrieve technical specifications for your {vehicleData?.make} {vehicleData?.model}. 
+                This may be due to temporary maintenance or high demand.
+              </div>
+              <button 
+                onClick={handleRetry}
+                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              >
+                <i className="ph ph-arrow-clockwise mr-2"></i>
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   // No data state
@@ -917,10 +958,17 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
           <div className="flex flex-col items-center justify-center min-h-48 gap-4 text-center">
-            <i className="ph ph-database text-4xl text-neutral-400"></i>
+            <i className="ph ph-database text-4xl text-blue-600"></i>
             <div>
-              <div className="text-lg font-medium text-neutral-900 mb-2">Technical specifications not available</div>
-              <div className="text-sm text-neutral-600">We do not have technical specifications for this vehicle. This may be because the vehicle is a recent model, a classic vehicle, or a specialist variant.</div>
+              <div className="text-lg font-medium text-neutral-900 mb-2">No Data Available</div>
+              <div className="text-sm text-neutral-700 mb-4">
+                We don't currently have technical specifications information for this vehicle. 
+                This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-xs text-neutral-500">
+                <i className="ph ph-info text-blue-600"></i>
+                <span>Data coverage varies by vehicle model and year</span>
+              </div>
             </div>
           </div>
         </div>

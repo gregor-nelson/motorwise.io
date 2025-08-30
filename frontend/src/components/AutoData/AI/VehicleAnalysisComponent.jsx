@@ -5,6 +5,7 @@ const API_BASE_URL =
     ? 'http://localhost:8007/api/v1'
     : '/api/v1';
 
+// Move static data outside component to prevent recreation
 const SYSTEM_CATEGORIES = {
   SUSPENSION: { displayName: 'Suspension & Dampers' },
   BRAKING: { displayName: 'Braking System' },
@@ -22,6 +23,40 @@ const SYSTEM_CATEGORIES = {
   BODYWORK: { displayName: 'Bodywork & Trim' },
   SAFETY: { displayName: 'Safety Systems' },
   OTHER: { displayName: 'Other Systems' }
+};
+
+// Mobile detection utility
+const isMobile = () => window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Static icons mapping - prevent recreation
+const SYSTEM_ICONS = {
+  'SUSPENSION': 'ph-car-profile',
+  'BRAKING': 'ph-brake-disc', 
+  'ENGINE': 'ph-engine',
+  'TRANSMISSION': 'ph-gear-six',
+  'ELECTRICAL': 'ph-lightning-slash',
+  'STRUCTURE': 'ph-warehouse',
+  'EXHAUST': 'ph-exhaust',
+  'TYRES': 'ph-tire',
+  'LIGHTING': 'ph-lightbulb',
+  'STEERING': 'ph-steering-wheel',
+  'FUEL': 'ph-gas-pump',
+  'COOLING': 'ph-thermometer-cold',
+  'HVAC': 'ph-wind',
+  'BODYWORK': 'ph-car-simple',
+  'SAFETY': 'ph-shield-check',
+  'OTHER': 'ph-wrench'
+};
+
+// Static themes - prevent recreation
+const STATUS_THEMES = {
+  good: { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
+  low: { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
+  warning: { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
+  medium: { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
+  critical: { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
+  high: { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
+  unknown: { bg: 'bg-neutral-50', text: 'text-neutral-600', icon: 'text-neutral-600' }
 };
 
 const extractValue = (text, key) => {
@@ -148,10 +183,12 @@ class VehicleAnalysisParser {
   }
 }
 
-const EnhancedCircularProgress = ({ value = 0, max = 100, size = 140, strokeWidth = 8, status = 'medium', unit = '/100', icon = 'ph-shield-check', label = 'Score' }) => {
+// Memoize progress component to prevent unnecessary re-renders
+const EnhancedCircularProgress = memo(({ value = 0, max = 100, size = 140, strokeWidth = 8, status = 'medium', unit = '/100', icon = 'ph-shield-check', label = 'Score' }) => {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const progressRef = useRef(null);
+  const mobile = useMemo(() => isMobile(), []);
   
   const finalValue = Math.max(0, Math.min(Number(value) || 0, max));
   const radius = (size - strokeWidth) / 2;
@@ -179,9 +216,14 @@ const EnhancedCircularProgress = ({ value = 0, max = 100, size = 140, strokeWidt
       ([entry]) => {
         if (entry.isIntersecting && !isVisible) {
           setIsVisible(true);
-          // Subtle number counting
-          const duration = 1000;
-          const steps = 30;
+          // Skip animation on mobile for performance
+          if (mobile) {
+            setAnimatedValue(finalValue);
+            return;
+          }
+          // Reduced animation steps for better performance
+          const duration = 800;
+          const steps = 20;
           const increment = finalValue / steps;
           let current = 0;
           
@@ -233,7 +275,7 @@ const EnhancedCircularProgress = ({ value = 0, max = 100, size = 140, strokeWidt
             cy={size/2}
             r={radius}
             fill="none"
-            stroke={`url(#gradient-${status})`}
+            stroke={mobile ? theme.color : `url(#gradient-${status})`}
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={strokeDasharray}
@@ -258,9 +300,10 @@ const EnhancedCircularProgress = ({ value = 0, max = 100, size = 140, strokeWidt
       </div>
     </div>
   );
-};
+});
 
-const EnhancedCountdown = ({ days, label = 'MOT Status', icon = 'ph-calendar-check' }) => {
+// Memoize countdown component
+const EnhancedCountdown = memo(({ days, label = 'MOT Status', icon = 'ph-calendar-check' }) => {
   if (typeof days !== 'number') return null;
   
   const status = days < 0 ? 'critical' : days <= 30 ? 'warning' : 'good';
@@ -323,7 +366,7 @@ const EnhancedCountdown = ({ days, label = 'MOT Status', icon = 'ph-calendar-che
       )}
     </div>
   );
-};
+});
 
 const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaining, onError }) => {
   const [loading, setLoading] = useState(true);
@@ -335,6 +378,24 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
   const componentRef = useRef(null);
   const sectionRefs = useRef({});
   const parser = useMemo(() => new VehicleAnalysisParser(), []);
+  const mobile = useMemo(() => isMobile(), []);
+  
+  // Cache expensive calculations
+  const derivedData = useMemo(() => {
+    if (!analysisData) return {};
+    return {
+      overallScore: analysisData.overallScore || 0,
+      overallRisk: analysisData.overallRisk || 'medium',
+      systemsAnalysed: analysisData.systemsAnalysed || 0,
+      systemsWithIssues: analysisData.systemsWithIssues || 0,
+      recentIssues: analysisData.recentIssues || 0,
+      criticalSystems: analysisData.criticalSystems || 0,
+      warningSystems: analysisData.warningSystems || 0,
+      cached: analysisData.cached || false,
+      timestamp: analysisData.timestamp,
+      vehicleInfo: analysisData.vehicleInfo || {}
+    };
+  }, [analysisData]);
 
   const fetchAnalysis = useCallback(async (isRetry = false) => {
     if (!registration) {
@@ -540,19 +601,19 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
     );
   }
 
-  // ---------------- Derived data with safe defaults ----------------
+  // Use cached derived data
   const {
-    overallScore = 0,
-    overallRisk = 'medium',
-    systemsAnalysed = 0,
-    systemsWithIssues = 0,
-    recentIssues = 0,
-    criticalSystems = 0,
-    warningSystems = 0,
-    cached = false,
+    overallScore,
+    overallRisk,
+    systemsAnalysed,
+    systemsWithIssues,
+    recentIssues,
+    criticalSystems,
+    warningSystems,
+    cached,
     timestamp,
-    vehicleInfo = {}
-  } = analysisData || {};
+    vehicleInfo
+  } = derivedData;
   
   // Format cache age for display
   const getCacheAge = () => {
@@ -583,6 +644,18 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
   // ---------------- UI ----------------
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      {/* Disable animations on mobile for performance */}
+      {mobile && (
+        <style>{`
+          @media (max-width: 768px) {
+            *, *::before, *::after {
+              animation-duration: 0.01ms !important;
+              animation-iteration-count: 1 !important;
+              transition-duration: 0.01ms !important;
+            }
+          }
+        `}</style>
+      )}
       {/* Header */}
       <div className="mb-16">
         <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
@@ -744,54 +817,20 @@ const VehicleAnalysis = ({ registration, vehicleData, onDataLoad, motDaysRemaini
             {analysisData.systems?.map((s, idx) => {
               const isOpen = !!expanded[idx];
               const hasExtra = s.findings.length > 2;
-              const getSystemIcon = (category) => {
-                const icons = {
-                  'SUSPENSION': 'ph-car-profile',
-                  'BRAKING': 'ph-brake-disc',
-                  'ENGINE': 'ph-engine',
-                  'TRANSMISSION': 'ph-gear-six',
-                  'ELECTRICAL': 'ph-lightning-slash',
-                  'STRUCTURE': 'ph-warehouse',
-                  'EXHAUST': 'ph-exhaust',
-                  'TYRES': 'ph-tire',
-                  'LIGHTING': 'ph-lightbulb',
-                  'STEERING': 'ph-steering-wheel',
-                  'FUEL': 'ph-gas-pump',
-                  'COOLING': 'ph-thermometer-cold',
-                  'HVAC': 'ph-wind',
-                  'BODYWORK': 'ph-car-simple',
-                  'SAFETY': 'ph-shield-check',
-                  'OTHER': 'ph-wrench'
-                };
-                return icons[category] || 'ph-wrench';
-              };
-
-              const getSystemStatusTheme = (status) => {
-                const themes = {
-                  'good': { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
-                  'low': { bg: 'bg-transparent', text: 'text-green-600', icon: 'text-green-600' },
-                  'warning': { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
-                  'medium': { bg: 'bg-transparent', text: 'text-yellow-600', icon: 'text-yellow-600' },
-                  'critical': { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
-                  'high': { bg: 'bg-transparent', text: 'text-red-600', icon: 'text-red-600' },
-                  'unknown': { bg: 'bg-neutral-50', text: 'text-neutral-600', icon: 'text-neutral-600' }
-                };
-                return themes[status] || themes.unknown;
-              };
-
-              const theme = getSystemStatusTheme(s.status);
+              const theme = STATUS_THEMES[s.status] || STATUS_THEMES.unknown;
+              const systemIcon = SYSTEM_ICONS[s.category] || 'ph-wrench';
               
               return (
                 <div
                   key={`${s.category}-${idx}`}
-                  className={`${theme.bg} rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer`}
+                  className={`${theme.bg} rounded-lg p-4 md:p-6 shadow-sm ${mobile ? '' : 'hover:shadow-lg hover:scale-[1.02] transition-all duration-300'} cursor-pointer`}
                   onClick={() => setExpanded(prev => ({ ...prev, [idx]: !prev[idx] }))}
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-start flex-1">
                       <div className={`p-2 ${theme.bg} rounded-lg mr-3`}>
-                        <i className={`${getSystemIcon(s.category)} text-lg ${theme.icon}`}></i>
+                        <i className={`${systemIcon} text-lg ${theme.icon}`}></i>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-medium text-neutral-900 mb-1">{s.name}</div>

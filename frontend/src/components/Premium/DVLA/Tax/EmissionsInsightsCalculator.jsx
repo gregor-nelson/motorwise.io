@@ -684,20 +684,30 @@ const EmissionsInsightsCalculator = (vehicleData) => {
     }
     // Handle Light Goods Vehicles and Vans - updated to April 2025 rates
     else if (vehicleCategory === "light goods vehicle" || (inferredTaxClass && inferredTaxClass.includes("goods") && (!revenueWeight || revenueWeight <= CONSTANTS.VEHICLE_WEIGHT.LGV_MAX))) {
-      // Get tax regime based on vehicle history - use improved helper function
-      const taxRegime = determineTaxRegime(sanitizedData);
-      
-      if (taxRegime === "pre-2001") { // Pre-2001 manufactured vehicles
-        const cc = parseInt(engineSize) || 0;
-        annualTaxCost = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£220" : "£360";
-        annualTaxCostDirectDebit = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£231 (12 monthly installments)" : "£378 (12 monthly installments)";
-        taxBand = "N/A (Pre-2001 Goods)";
-        taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
+      // Check for historic vehicle exemption first - goods vehicles can be exempt if not used commercially
+      if (isHistoricVehicle(sanitizedData, 'tax')) {
+        annualTaxCost = "£0 (Historic Vehicle - Exempt)";
+        annualTaxCostDirectDebit = "£0 (Historic Vehicle - Exempt)";
+        firstYearTaxCost = "£0 (Historic Vehicle - Exempt)";
+        taxBand = "Historic Vehicle";
+        taxNotes.push("Vehicle qualifies for historic vehicle tax exemption (40+ years old).");
+        taxNotes.push("To claim this exemption, the vehicle must be registered in the 'Historic Vehicle' tax class with the DVLA.");
+        hasSpecialExemption = true;
+      } else {
+        // Get tax regime based on vehicle history - use improved helper function
+        const taxRegime = determineTaxRegime(sanitizedData);
         
-        // Add note for imported or late-registered vintage vehicles
-        if (regYear && regYear >= 2001) {
-          taxNotes.push("Vehicle manufactured before 2001 but registered later - taxation based on manufacture date.");
-        }
+        if (taxRegime === "pre-2001") { // Pre-2001 manufactured vehicles
+          const cc = parseInt(engineSize) || 0;
+          annualTaxCost = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£220" : "£360";
+          annualTaxCostDirectDebit = cc <= CONSTANTS.TAX.ENGINE_SIZE_THRESHOLD ? "£231 (12 monthly installments)" : "£378 (12 monthly installments)";
+          taxBand = "N/A (Pre-2001 Goods)";
+          taxNotes.push(`Taxed as private/light goods vehicle (engine size: ${engineSize})`);
+          
+          // Add note for imported or late-registered vintage vehicles
+          if (regYear && regYear >= 2001) {
+            taxNotes.push("Vehicle manufactured before 2001 but registered later - taxation based on manufacture date.");
+          }
       } else if (regYear >= 2003 && regYear <= 2006 && effectiveEuroStatus === "Euro 4") {
         // Euro 4 Light Goods Vehicles registered between 1 March 2003 and 31 December 2006
         annualTaxCost = "£140";
@@ -710,11 +720,12 @@ const EmissionsInsightsCalculator = (vehicleData) => {
         annualTaxCostDirectDebit = "£147 (12 monthly installments)";
         taxBand = "N/A (Euro 5 Light Goods)";
         taxNotes.push("Taxed as Euro 5 compliant light goods vehicle (tax class 36)");
-      } else { // Standard Light Goods (tax class 39, post-2001)
-        annualTaxCost = "£345";
-        annualTaxCostDirectDebit = "£362.25 (12 monthly installments)";
-        taxBand = "N/A (Light Goods Vehicle)";
-        taxNotes.push("Taxed as a light goods vehicle (tax class 39)");
+        } else { // Standard Light Goods (tax class 39, post-2001)
+          annualTaxCost = "£345";
+          annualTaxCostDirectDebit = "£362.25 (12 monthly installments)";
+          taxBand = "N/A (Light Goods Vehicle)";
+          taxNotes.push("Taxed as a light goods vehicle (tax class 39)");
+        }
       }
     } else {
       // For passenger vehicles - use tax regime helper
@@ -1206,14 +1217,26 @@ const determineVehicleCategory = (vehicleData) => {
   };
   
   /**
-   * Checks if the wheelplan indicates a goods vehicle
+   * Checks if the wheelplan indicates a goods vehicle based on official DVLA descriptions
+   * "2 AXLE RIGID BODY" applies to ALL 4-wheeled cars, taxis & light commercials (NOT goods vehicles)
    */
   const isGoodsVehicleWheelplan = (wheelplan) => {
     if (!wheelplan) return false;
-    return wheelplan.includes('rigid') || 
-           wheelplan.includes('pickup') || 
-           wheelplan.includes('van') || 
-           wheelplan.includes('goods');
+    
+    const wheelplanUpper = wheelplan.toUpperCase();
+    
+    // Only classify as goods vehicle for heavy commercial descriptions:
+    return wheelplanUpper === '3 AXLE RIGID BODY' ||       // Heavy vehicles
+           wheelplanUpper === 'MULTI-AXLE RIGID' ||        // Heavy vehicles (4+ axle)
+           wheelplanUpper === '2-AXLE & ARTIC' ||          // Articulated trucks
+           wheelplanUpper === '3-AXLE & ARTIC' ||          // Articulated trucks
+           wheelplanUpper === 'MULTI-AXLE & ARTIC' ||      // Articulated trucks  
+           wheelplanUpper === 'CRAWLER';                   // Tracked vehicles
+    
+    // "2 AXLE RIGID BODY" = standard cars/taxis (NOT goods vehicles)
+    // "2 WHEELS" = motorcycle
+    // "3 WHEELS" = tricycle  
+    // "NON-STANDARD" = unknown
   };
   
   // ------------------------------------------------------------
@@ -1433,11 +1456,28 @@ const isHistoricVehicle = (vehicleData, purposeType = 'tax') => {
   const currentYear = new Date().getFullYear();
   const yearOfManufacture = vehicleData.yearOfManufacture ? parseInt(vehicleData.yearOfManufacture) : null;
   
-  if (!yearOfManufacture) return false;
+  // Comprehensive validation for yearOfManufacture
+  if (!yearOfManufacture || 
+      isNaN(yearOfManufacture) || 
+      yearOfManufacture < 1885 || // First car invented
+      yearOfManufacture > currentYear + 1) { // Allow 1 year future for new models
+    return false;
+  }
   
   // For tax purposes, vehicles 40+ years old are exempt (rolling from April 1st each year)
   if (purposeType === 'tax') {
-    const cutoffYear = currentYear - CONSTANTS.HISTORIC.TAX_EXEMPT_AGE;
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11
+    
+    // Historic vehicle exemption rolls over on April 1st each year
+    // If we're before April 1st, use previous year as baseline
+    let effectiveTaxYear = currentYear;
+    if (currentMonth < 4) { // Before April
+      effectiveTaxYear = currentYear - 1;
+    }
+    
+    const cutoffYear = effectiveTaxYear - CONSTANTS.HISTORIC.TAX_EXEMPT_AGE;
     
     // Check base historic status
     const isHistoric = yearOfManufacture <= cutoffYear;

@@ -252,3 +252,83 @@
 2025-08-24 22:19:18,759 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
 2025-08-24 22:21:27,063 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
 2025-08-24 22:24:46,374 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-24 22:34:12,775 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
+2025-08-25 08:47:49,549 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-25 08:47:49,601 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-25 08:47:49,835 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-25 08:47:49,836 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-25 09:29:19,586 - vehicle_analysis_api - INFO - Fetching MOT data for registration: SA58XMV
+2025-08-25 09:29:21,033 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/SA58XMV "HTTP/1.1 200 OK"
+2025-08-25 09:29:21,035 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA MX-5
+2025-08-25 09:29:22,008 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-25 09:29:22,009 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-25 09:29:22,015 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/MX-5 "HTTP/1.1 404 Not Found"
+2025-08-25 09:29:22,016 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA MX-5
+2025-08-25 09:29:22,017 - vehicle_analysis_api - INFO - Analyzing data for SA58XMV with Claude API
+2025-08-25 09:29:51,510 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-25 09:29:51,518 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/SA58XMV - 200 - 31.9321s
+2025-08-25 09:40:12,290 - vehicle_analysis_api - INFO - Fetching MOT data for registration: OCA479P
+2025-08-25 09:40:13,239 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/OCA479P "HTTP/1.1 200 OK"
+2025-08-25 09:40:13,240 - vehicle_analysis_api - INFO - Fetching bulletins for TRIUMPH SPITFIRE
+2025-08-25 09:40:14,108 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-08-25 09:40:14,110 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-08-25 09:40:14,117 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/TRIUMPH/SPITFIRE "HTTP/1.1 404 Not Found"
+2025-08-25 09:40:14,119 - vehicle_analysis_api - WARNING - No bulletins found for TRIUMPH SPITFIRE
+2025-08-25 09:40:14,119 - vehicle_analysis_api - INFO - Analyzing data for OCA479P with Claude API
+2025-08-25 09:40:23,319 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-25 09:40:23,324 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 11.0357s
+2025-08-25 09:54:24,350 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0000s
+2025-08-25 09:55:22,010 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0010s
+2025-08-25 09:55:52,992 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0012s
+2025-08-25 09:57:35,849 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0006s
+2025-08-25 09:58:14,767 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0010s
+2025-08-25 09:58:53,101 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0021s
+2025-08-25 10:03:43,944 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0012s
+2025-08-25 10:16:13,946 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0014s
+2025-08-25 10:26:10,144 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/OCA479P - 200 - 0.0010s
+2025-08-25 10:46:59,794 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-25 10:46:59,855 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-08-25 10:47:00,246 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-25 10:47:00,247 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-08-25 10:53:58,864 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-25 10:54:00,395 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-25 10:54:00,397 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-25 10:54:01,484 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-25 10:54:01,491 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-25 10:54:25,374 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-25 10:54:26,366 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-25 10:54:26,369 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-25 10:54:27,413 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-25 10:54:27,416 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-25 10:54:33,934 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-25 10:54:33,943 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 35.0792s
+2025-08-25 10:54:58,511 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-25 10:54:58,570 - vehicle_analysis_api - ERROR - Error writing cache file cache\analysis\CN09JEJ.json: [WinError 183] Cannot create a file when that file already exists: 'cache\\analysis\\CN09JEJ.tmp' -> 'cache\\analysis\\CN09JEJ.json'
+2025-08-25 10:54:58,573 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 33.1999s
+2025-08-25 10:56:24,277 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-25 11:00:04,005 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-25 11:05:58,037 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0030s
+2025-08-25 11:06:50,970 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-30 09:08:50,749 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-30 09:08:50,805 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-30 09:08:51,029 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-08-30 09:08:51,030 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-08-30 09:09:39,141 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-08-30 09:09:40,877 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-08-30 09:09:40,880 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-08-30 09:09:41,951 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-08-30 09:09:41,954 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-08-30 09:10:16,218 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-08-30 09:10:16,228 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 37.0885s
+2025-08-30 09:11:54,298 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
+2025-08-30 09:13:30,651 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0030s
+2025-08-30 09:13:36,493 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-08-30 09:25:35,365 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0025s
+2025-08-30 09:44:07,228 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0012s
+2025-08-30 09:44:37,721 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0015s
+2025-08-30 09:46:24,211 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-08-30 09:49:47,209 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-08-30 09:54:42,428 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0011s
+2025-08-30 09:58:59,550 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0012s
+2025-08-30 09:59:17,875 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
+2025-08-30 10:00:07,716 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s

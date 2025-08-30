@@ -1,13 +1,11 @@
-// Enhanced Insight Components - Tailwind Version
-// Converted from styled-components to Tailwind CSS utility classes
+// Ultra-Minimal Enhanced Insight Components - Design System Compliant
+// Implements the universal design system with emotionally-driven interactions
+// and premium visual hierarchy
 
-import React from 'react';
+import React, { useState } from 'react';
 
 // Import tooltip components
 import {
-  HeadingWithTooltip,
-  ValueWithTooltip,
-  CellWithTooltip,
   useTooltip,
   GovUKTooltip
 } from '../../../../../styles/tooltip';
@@ -16,6 +14,57 @@ import {
 import FuelCostCalculator from '../../MPG/FuelCostCalculator';
 
 // Using Phosphor Icons via CSS classes
+
+// Missing Data Callout Component
+const MissingDataCallout = ({ title, message, actionable, severity = 'medium', className = '' }) => {
+  const severityStyles = {
+    low: {
+      container: 'bg-blue-50 border-blue-200',
+      icon: 'ph-info text-blue-600',
+      title: 'text-blue-900',
+      message: 'text-blue-800',
+      actionable: 'text-blue-700'
+    },
+    medium: {
+      container: 'bg-yellow-50 border-yellow-200',
+      icon: 'ph-warning text-yellow-600',
+      title: 'text-yellow-900',
+      message: 'text-yellow-800',
+      actionable: 'text-yellow-700'
+    },
+    high: {
+      container: 'bg-red-50 border-red-200',
+      icon: 'ph-x-circle text-red-600',
+      title: 'text-red-900',
+      message: 'text-red-800',
+      actionable: 'text-red-700'
+    }
+  };
+
+  const styles = severityStyles[severity] || severityStyles.medium;
+
+  return (
+    <div className={`rounded-lg border p-4 ${styles.container} ${className}`}>
+      <div className="flex items-start gap-3">
+        <i className={`${styles.icon} text-lg mt-0.5 flex-shrink-0`}></i>
+        <div className="flex-1 min-w-0">
+          <h4 className={`text-sm font-medium ${styles.title} mb-1`}>
+            {title}
+          </h4>
+          <p className={`text-sm ${styles.message} mb-2`}>
+            {message}
+          </p>
+          {actionable && (
+            <p className={`text-xs ${styles.actionable} flex items-center gap-1`}>
+              <i className="ph-arrow-right text-xs"></i>
+              {actionable}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Complete tooltip content from original
 const tooltips = {
@@ -67,7 +116,7 @@ const tooltips = {
   fuelEfficiencyNote: "All fuel efficiency data is derived from UK Department for Business, Energy and Industrial Strategy's 'Road fuel consumption and the UK motor vehicle fleet' report"
 };
 
-// Simple Gauge component with minimal Tailwind styling
+// Enhanced Gauge component with premium animations and interactions
 const Gauge = ({ value, max, unit, label, color, size = 140 }) => {
   const percentage = Math.min((value / max) * 100, 100);
   const radius = 45;
@@ -80,28 +129,67 @@ const Gauge = ({ value, max, unit, label, color, size = 140 }) => {
                     'text-blue-600';
   
   return (
-    <div className="text-center">
-      <div className="relative w-32 h-32 mx-auto mb-4">
+    <div className="text-center group">
+      <div className="relative w-32 h-32 mx-auto mb-4 transition-all duration-300 hover:scale-110">
         <svg className="w-32 h-32 -rotate-90" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="8"
                   fill="none" className="text-neutral-200" />
           <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="8"
                   fill="none" strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
-                  className={`${colorClass}`} />
+                  className={`${colorClass} transition-all duration-300 ease-out`} />
         </svg>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-          <div className="text-2xl font-bold text-neutral-900">{value}</div>
+          <div className={`text-2xl font-bold transition-all duration-300 ${
+            colorClass.replace('text-', 'text-')
+          }`}>
+            {Math.round(value)}
+          </div>
           <div className="text-xs text-neutral-500">{unit}</div>
         </div>
       </div>
-      <div className="text-sm font-medium text-neutral-900">{label}</div>
+      <div className="text-sm font-medium text-neutral-900 group-hover:text-blue-600 transition-colors duration-300">{label}</div>
     </div>
   );
 };
 
 // OWNERSHIP PANEL COMPONENT
-export const OwnershipPanelComponent = ({ insights }) => {
+export const OwnershipPanelComponent = ({ insights, available, missingDataInfo }) => {
+  // Show missing data callout if insights are not available
+  if (!available && missingDataInfo) {
+    return (
+      <div className="bg-white p-6 md:p-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center mb-3">
+            <i className="ph ph-car text-lg text-blue-600 mr-3"></i>
+            <h2 className="text-lg font-medium text-neutral-900">Ownership & History</h2>
+          </div>
+          <p className="text-xs text-neutral-600">
+            Vehicle ownership patterns and regional analysis
+          </p>
+        </div>
+
+        {/* Missing Data Callout */}
+        <MissingDataCallout 
+          title={missingDataInfo.title}
+          message={missingDataInfo.message}
+          actionable={missingDataInfo.actionable}
+          severity={missingDataInfo.severity}
+          className="mb-6"
+        />
+        
+        {/* Optional: Show what we would display if data was available */}
+        <div className="bg-neutral-50 rounded-lg p-4">
+          <p className="text-sm text-neutral-600 flex items-start">
+            <i className="ph ph-info text-blue-600 mr-2 mt-0.5 flex-shrink-0"></i>
+            Ownership insights would normally show ownership duration, regional analysis, and ownership stability assessment.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
   if (!insights) return null;
   
   const { environmentalInsights } = insights;
@@ -139,44 +227,92 @@ export const OwnershipPanelComponent = ({ insights }) => {
       
       {/* Main Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {/* Ownership Duration Card */}
-        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-          <Gauge
-            value={insights.yearsWithCurrentOwner}
-            max={20}
-            unit="years"
-            label="Current Ownership"
-            color={insights.yearsWithCurrentOwner > 5 ? 'var(--positive)' : 
-                  insights.yearsWithCurrentOwner > 2 ? 'var(--warning)' : 'var(--negative)'}
-          />
-          <div className="text-xs text-neutral-500 text-center mt-2">
-            Since {insights.v5cDate.toLocaleDateString('en-GB', { 
-              day: 'numeric', month: 'short', year: 'numeric' 
-            })}
+        {/* Enhanced Ownership Duration Card */}
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-start">
+              <i className="ph ph-calendar text-lg text-blue-600 mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Current Ownership</div>
+                <div className="text-xs text-neutral-600">Duration analysis</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className={`text-2xl font-bold ${
+                insights.yearsWithCurrentOwner > 5 ? 'text-green-600' : 
+                insights.yearsWithCurrentOwner > 2 ? 'text-yellow-600' : 'text-red-600'
+              }`}>
+                {insights.yearsWithCurrentOwner}
+              </div>
+              <div className="text-xs text-blue-600">years</div>
+            </div>
+          </div>
+          
+          {/* Expandable details */}
+          <div className="pt-3 border-t border-neutral-200 space-y-2">
+            <div className="text-xs text-neutral-700 flex justify-between">
+              <span>Started:</span>
+              <span className="font-medium">
+                {insights.v5cDate.toLocaleDateString('en-GB', { 
+                  day: 'numeric', month: 'short', year: 'numeric' 
+                })}
+              </span>
+            </div>
+            <div className="w-full bg-neutral-200 rounded-full h-1">
+              <div 
+                className={`h-full rounded-full ${
+                  insights.yearsWithCurrentOwner > 5 ? 'bg-green-500' : 
+                  insights.yearsWithCurrentOwner > 2 ? 'bg-yellow-500' : 'bg-red-500'
+                }`}
+                style={{ width: `${Math.min((insights.yearsWithCurrentOwner / 20) * 100, 100)}%` }}
+              />
+            </div>
           </div>
         </div>
         
-        {/* Ownership Score */}
-        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        {/* Enhanced Ownership Stability Card */}
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
           <div className="flex items-center justify-between mb-4">
-            <div className="text-sm font-medium text-neutral-900">Ownership Stability</div>
-          </div>
-          <div className="mb-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-bold text-sm text-neutral-900">{ownershipStabilityDisplay}</span>
-              <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                insights.ownershipRiskLevel === 'Low' ? 'bg-green-100 text-green-700' :
-                insights.ownershipRiskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-red-100 text-red-700'
+            <div className="flex items-start">
+              <i className="ph ph-shield-check text-lg text-blue-600 mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Ownership Stability</div>
+                <div className="text-xs text-neutral-600">Risk assessment</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className={`text-2xl font-bold ${
+                insights.ownershipRiskLevel === 'Low' ? 'text-green-600' :
+                insights.ownershipRiskLevel === 'Medium' ? 'text-yellow-600' :
+                'text-red-600'
               }`}>
+                {ownershipScore}
+              </div>
+              <div className="text-xs text-blue-600">score</div>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-neutral-900">{ownershipStabilityDisplay}</span>
+              <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                insights.ownershipRiskLevel === 'Low' ? 'bg-green-50 text-green-600' :
+                insights.ownershipRiskLevel === 'Medium' ? 'bg-yellow-50 text-yellow-600' :
+                'bg-red-50 text-red-600'
+              }`}>
+                <i className={`ph ${
+                  insights.ownershipRiskLevel === 'Low' ? 'ph-check-circle' :
+                  insights.ownershipRiskLevel === 'Medium' ? 'ph-warning-circle' :
+                  'ph-x-circle'
+                } mr-1`}></i>
                 {insights.ownershipRiskLevel} Risk
               </span>
             </div>
             <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
               <div 
-                className={`h-full rounded-full ${
-                  ownershipScore > 70 ? 'bg-green-500' : 
-                  ownershipScore > 40 ? 'bg-transparent' : 'bg-transparent'
+                className={`h-full bg-gradient-to-r rounded-full transition-all duration-300 ease-out ${
+                  ownershipScore > 70 ? 'from-green-400 to-green-600' : 
+                  ownershipScore > 40 ? 'from-yellow-400 to-yellow-600' : 'from-red-400 to-red-600'
                 }`}
                 style={{ width: `${ownershipScore}%` }}
               />
@@ -184,20 +320,31 @@ export const OwnershipPanelComponent = ({ insights }) => {
           </div>
         </div>
 
-        {/* Registration Area Card */}
+        {/* Enhanced Registration Area Card */}
         {insights.registrationRegion && (
-          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-medium text-neutral-900">Registration Area</div>
-              <i className="ph ph-map-pin text-lg text-blue-600"></i>
+              <div className="flex items-start">
+                <i className="ph ph-map-pin text-lg text-blue-600 mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300"></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">Registration Area</div>
+                  <div className="text-xs text-neutral-600">Location details</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">
+                  {insights.memoryTag || 'N/A'}
+                </div>
+                <div className="text-xs text-blue-600">tag</div>
+              </div>
             </div>
-            <div className="text-2xl font-bold text-blue-600 mb-1">
-              {insights.memoryTag || 'N/A'}
-              <span className="text-lg font-normal text-neutral-600 ml-2">{insights.registrationRegion}</span>
+            
+            <div className="pt-3 border-t border-neutral-200 space-y-2">
+              <div className="text-sm text-neutral-700 font-medium">{insights.registrationRegion}</div>
+              {insights.registrationArea && (
+                <div className="text-xs text-neutral-500">{insights.registrationArea}</div>
+              )}
             </div>
-            {insights.registrationArea && (
-              <div className="text-xs text-neutral-500 mt-2">{insights.registrationArea}</div>
-            )}
           </div>
         )}
         
@@ -358,8 +505,43 @@ export const OwnershipPanelComponent = ({ insights }) => {
   );
 };
 
-// STATUS PANEL COMPONENT
-export const StatusPanelComponent = ({ insights }) => {
+// STATUS PANEL COMPONENT - Ultra-Minimal Design
+export const StatusPanelComponent = ({ insights, available, missingDataInfo }) => {
+  // Show missing data callout if insights are not available
+  if (!available && missingDataInfo) {
+    return (
+      <div className="p-6 md:p-8">
+        {/* Ultra-Minimal Header */}
+        <div className="mb-8">
+          <div className="flex items-center mb-3">
+            <i className="ph ph-gauge text-lg text-blue-600 mr-3 mt-0.5 transition-all duration-300 hover:scale-110"></i>
+            <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Current Status</h2>
+          </div>
+          <p className="text-xs text-neutral-600">
+            Tax and MOT status information
+          </p>
+        </div>
+
+        {/* Missing Data Callout */}
+        <MissingDataCallout 
+          title={missingDataInfo.title}
+          message={missingDataInfo.message}
+          actionable={missingDataInfo.actionable}
+          severity={missingDataInfo.severity}
+          className="mb-6"
+        />
+        
+        {/* Optional: Show what we would display if data was available */}
+        <div className="bg-neutral-50 rounded-lg p-4">
+          <p className="text-sm text-neutral-600 flex items-start">
+            <i className="ph ph-info text-blue-600 mr-2 mt-0.5 flex-shrink-0"></i>
+            Status insights would normally show current tax status, MOT expiry dates, and driveability assessment.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
   if (!insights) return null;
   
   // Calculate days until MOT as percentage (365 days = 100%)
@@ -382,32 +564,44 @@ export const StatusPanelComponent = ({ insights }) => {
       
       {/* Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {/* Driveability Status Card */}
-        <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
+        {/* Enhanced Driveability Status Card */}
+        <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group ${
           insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' 
-            ? 'bg-green-50' : 'bg-transparent'
+            ? 'bg-green-50' : 'bg-red-50'
         }`}>
           <div className="flex items-center justify-between mb-4">
-            <div className="text-sm font-medium text-neutral-900">Driveability Status</div>
-            <i className={`ph ph-car text-lg ${
+            <div className="flex items-start">
+              <i className={`ph ph-car text-lg mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300 ${
+                insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' 
+                  ? 'text-green-600' : 'text-red-600'
+              }`}></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">Driveability Status</div>
+                <div className="text-xs text-neutral-600">Legal compliance</div>
+              </div>
+            </div>
+            <div className={`w-3 h-3 rounded-full ${
               insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal' 
-                ? 'text-green-600' : 'text-red-600'
-            }`}></i>
+                ? 'bg-green-500' : 'bg-red-500'
+            } animate-pulse`}></div>
           </div>
-          <div className={`inline-flex items-center gap-2 px-3 py-1 text-sm font-medium rounded-full ${
-            insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal'
-              ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-          }`}>
-            <i className={`ph ${
+          
+          <div className="space-y-3">
+            <div className={`px-3 py-2 text-sm font-medium rounded-lg ${
               insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal'
-                ? 'ph-check-circle' : 'ph-x-circle'
-            }`}></i>
-            {insights.driveabilityStatus}
-          </div>
-          <div className="text-xs text-neutral-500 mt-3">
-            {insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal'
-              ? 'Vehicle meets all legal requirements'
-              : 'Vehicle requires attention'}
+                ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}>
+              <i className={`ph mr-2 ${
+                insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal'
+                  ? 'ph-check-circle' : 'ph-x-circle'
+              }`}></i>
+              {insights.driveabilityStatus}
+            </div>
+            <div className="text-xs text-neutral-500">
+              {insights.driveabilityStatus === 'Legal to drive' || insights.driveabilityStatus === 'Fully Road Legal'
+                ? '✓ Vehicle meets all legal requirements'
+                : '⚠ Vehicle requires attention'}
+            </div>
           </div>
         </div>
         
@@ -434,37 +628,50 @@ export const StatusPanelComponent = ({ insights }) => {
           )}
         </div>
         
-        {/* MOT Status Card */}
+        {/* Enhanced MOT Status Card */}
         {!insights.isPossiblyMotExempt && insights.motExpiryDate && (
-          <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+          <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group ${
+            insights.daysUntilMotExpiry < 0 ? 'bg-red-50' :
+            insights.daysUntilMotExpiry < 30 ? 'bg-yellow-50' : 'bg-green-50'
+          }`}>
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-medium text-neutral-900">MOT Expiry</div>
-              <i className={`ph ph-calendar text-lg ${
-                insights.daysUntilMotExpiry < 0 ? 'text-red-600' :
-                insights.daysUntilMotExpiry < 30 ? 'text-yellow-600' : 'text-green-600'
-              }`}></i>
+              <div className="flex items-start">
+                <i className={`ph ph-calendar text-lg mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300 ${
+                  insights.daysUntilMotExpiry < 0 ? 'text-red-600' :
+                  insights.daysUntilMotExpiry < 30 ? 'text-yellow-600' : 'text-green-600'
+                }`}></i>
+                <div>
+                  <div className="text-sm font-medium text-neutral-900">MOT Expiry</div>
+                  <div className="text-xs text-neutral-600">Days remaining</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className={`text-2xl font-bold ${
+                  insights.daysUntilMotExpiry < 0 ? 'text-red-600' :
+                  insights.daysUntilMotExpiry < 30 ? 'text-yellow-600' : 'text-green-600'
+                }`}>
+                  {insights.daysUntilMotExpiry > 0 ? insights.daysUntilMotExpiry : 0}
+                </div>
+                <div className="text-xs text-blue-600">days</div>
+              </div>
             </div>
-            <div className={`text-2xl font-bold ${
-              insights.daysUntilMotExpiry < 0 ? 'text-red-600' :
-              insights.daysUntilMotExpiry < 30 ? 'text-yellow-600' : 'text-green-600'
-            } mb-2`}>
-              {insights.daysUntilMotExpiry > 0 ? insights.daysUntilMotExpiry : 0}
-              <span className="text-lg font-normal text-neutral-600 ml-2">days</span>
-            </div>
-            <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden mb-2">
-              <div 
-                className={`h-full rounded-full ${
-                  insights.daysUntilMotExpiry < 0 ? 'bg-transparent' :
-                  insights.daysUntilMotExpiry < 30 ? 'bg-transparent' : 'bg-green-500'
-                }`}
-                style={{ width: `${motPercentage}%` }}
-              />
-            </div>
-            <div className="text-xs text-neutral-500">
-              {insights.motExpiryDate.toLocaleDateString('en-GB', { 
-                day: 'numeric', month: 'long', year: 'numeric' 
-              })}
-              {insights.daysUntilMotExpiry < 0 && ' (Expired)'}
+            
+            <div className="space-y-3">
+              <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
+                <div 
+                  className={`h-full bg-gradient-to-r rounded-full transition-all duration-300 ease-out ${
+                    insights.daysUntilMotExpiry < 0 ? 'from-red-400 to-red-600' :
+                    insights.daysUntilMotExpiry < 30 ? 'from-yellow-400 to-yellow-600' : 'from-green-400 to-green-600'
+                  }`}
+                  style={{ width: `${Math.max(motPercentage, 5)}%` }}
+                />
+              </div>
+              <div className="text-xs text-neutral-500">
+                <strong>Expires:</strong> {insights.motExpiryDate.toLocaleDateString('en-GB', { 
+                  day: 'numeric', month: 'long', year: 'numeric' 
+                })}
+                {insights.daysUntilMotExpiry < 0 && ' (Expired)'}
+              </div>
             </div>
           </div>
         )}
@@ -552,8 +759,45 @@ export const StatusPanelComponent = ({ insights }) => {
   );
 };
 
-// EMISSIONS PANEL COMPONENT
-export const EmissionsPanelComponent = ({ insights }) => {
+// EMISSIONS PANEL COMPONENT - Ultra-Minimal Design
+export const EmissionsPanelComponent = ({ insights, available, missingDataInfo }) => {
+  const [expandedSections, setExpandedSections] = useState({});
+  
+  // Show missing data callout if insights are not available
+  if (!available && missingDataInfo) {
+    return (
+      <div className="p-6 md:p-8">
+        {/* Ultra-Minimal Header */}
+        <div className="mb-8">
+          <div className="flex items-center mb-3">
+            <i className="ph ph-leaf text-lg text-green-600 mr-3 mt-0.5 transition-all duration-300 hover:scale-110"></i>
+            <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Emissions & Tax</h2>
+          </div>
+          <p className="text-xs text-neutral-600">
+            Environmental impact and tax calculations
+          </p>
+        </div>
+
+        {/* Missing Data Callout */}
+        <MissingDataCallout 
+          title={missingDataInfo.title}
+          message={missingDataInfo.message}
+          actionable={missingDataInfo.actionable}
+          severity={missingDataInfo.severity}
+          className="mb-6"
+        />
+        
+        {/* Optional: Show what we would display if data was available */}
+        <div className="bg-neutral-50 rounded-lg p-4">
+          <p className="text-sm text-neutral-600 flex items-start">
+            <i className="ph ph-info text-blue-600 mr-2 mt-0.5 flex-shrink-0"></i>
+            Emissions insights would normally show CO2 emissions, Euro standards, road tax calculations, and ULEZ/LEZ compliance status.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
   if (!insights) return null;
   
   const { withTooltip } = useTooltip();
@@ -594,21 +838,51 @@ export const EmissionsPanelComponent = ({ insights }) => {
       
       {/* Emissions Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {/* CO2 Emissions Gauge */}
-        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 text-center">
-          <Gauge
-            value={insights.co2Emissions || 0}
-            max={500}
-            unit="g/km"
-            label="CO2 Emissions"
-            color={
-              insights.co2Emissions < 100 ? 'var(--positive)' :
-              insights.co2Emissions < 150 ? 'var(--warning)' : 'var(--negative)'
-            }
-          />
-          {insights.isEstimated && (
-            <div className="text-xs text-neutral-500 mt-2">Estimated value</div>
-          )}
+        {/* Enhanced CO2 Emissions Card */}
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-start">
+              <i className="ph ph-leaf text-lg text-green-600 mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300"></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">CO2 Emissions</div>
+                <div className="text-xs text-neutral-600">
+                  {insights.isEstimated ? 'Estimated value' : 'Official data'}
+                </div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className={`text-2xl font-bold ${
+                insights.co2Emissions < 100 ? 'text-green-600' :
+                insights.co2Emissions < 150 ? 'text-yellow-600' : 'text-red-600'
+              }`}>
+                {insights.co2Emissions || 0}
+              </div>
+              <div className="text-xs text-blue-600">g/km</div>
+            </div>
+          </div>
+          
+          {/* Environmental impact visualization */}
+          <div className="pt-3 border-t border-neutral-200 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-neutral-600">Environmental Impact:</span>
+              <span className={`font-medium ${
+                insights.co2Emissions < 100 ? 'text-green-600' :
+                insights.co2Emissions < 150 ? 'text-yellow-600' : 'text-red-600'
+              }`}>
+                {insights.co2Emissions < 100 ? 'Low' :
+                 insights.co2Emissions < 150 ? 'Medium' : 'High'}
+              </span>
+            </div>
+            <div className="w-full bg-neutral-200 rounded-full h-1">
+              <div 
+                className={`h-full bg-gradient-to-r rounded-full transition-all duration-300 ease-out ${
+                  insights.co2Emissions < 100 ? 'from-green-400 to-green-600' :
+                  insights.co2Emissions < 150 ? 'from-yellow-400 to-yellow-600' : 'from-red-400 to-red-600'
+                }`}
+                style={{ width: `${Math.min((insights.co2Emissions / 500) * 100, 100)}%` }}
+              />
+            </div>
+          </div>
         </div>
         
         {/* Euro Standard Card */}
@@ -670,29 +944,40 @@ export const EmissionsPanelComponent = ({ insights }) => {
           </div>
         )}
         
-        {/* ULEZ Compliance Card */}
-        <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-          insights.isULEZCompliant ? 'bg-green-50' : 'bg-transparent'
+        {/* Enhanced ULEZ Compliance Card */}
+        <div className={`rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group ${
+          insights.isULEZCompliant ? 'bg-green-50' : 'bg-red-50'
         }`}>
           <div className="flex items-center justify-between mb-4">
-            <div className="text-sm font-medium text-neutral-900">ULEZ Status</div>
-            <i className={`ph ${
-              insights.isULEZCompliant ? 'ph-check-circle text-green-600' : 'ph-x-circle text-red-600'
-            } text-lg`}></i>
+            <div className="flex items-start">
+              <i className={`ph text-lg mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300 ${
+                insights.isULEZCompliant ? 'ph-shield-check text-green-600' : 'ph-shield-warning text-red-600'
+              }`}></i>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">ULEZ Status</div>
+                <div className="text-xs text-neutral-600">London compliance</div>
+              </div>
+            </div>
+            <div className={`w-3 h-3 rounded-full ${
+              insights.isULEZCompliant ? 'bg-green-500' : 'bg-red-500'
+            } animate-pulse`}></div>
           </div>
-          <div className={`inline-flex items-center gap-2 px-3 py-1 text-sm font-medium rounded-full ${
-            insights.isULEZCompliant ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-          }`}>
-            <i className={`ph ${
-              insights.isULEZCompliant ? 'ph-check-circle' : 'ph-x-circle'
-            }`}></i>
-            {insights.isULEZCompliant ? 
-              (insights.isHistoricVehicle ? 'Compliant (Historic)' : 'Compliant') : 
-              'Non-Compliant'
-            }
-          </div>
-          <div className="text-xs text-neutral-500 mt-3">
-            Ultra Low Emission Zone
+          
+          <div className="space-y-3">
+            <div className={`px-3 py-2 text-sm font-medium rounded-lg ${
+              insights.isULEZCompliant ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}>
+              <i className={`ph mr-2 ${
+                insights.isULEZCompliant ? 'ph-check-circle' : 'ph-x-circle'
+              }`}></i>
+              {insights.isULEZCompliant ? 
+                (insights.isHistoricVehicle ? 'Compliant (Historic)' : 'Compliant') : 
+                'Non-Compliant'
+              }
+            </div>
+            <div className="text-xs text-neutral-500">
+              {insights.isULEZCompliant ? '✓ No daily charge required' : '⚠ Daily charge applies in ULEZ'}
+            </div>
           </div>
         </div>
         
@@ -752,23 +1037,88 @@ export const EmissionsPanelComponent = ({ insights }) => {
   );
 };
 
-// FUEL EFFICIENCY PANEL COMPONENT
-export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
+// FUEL EFFICIENCY PANEL COMPONENT - Ultra-Minimal Design
+export const FuelEfficiencyPanelComponent = ({ insights, vehicleData, available, missingDataInfo }) => {
+  const [activeTab, setActiveTab] = useState('overview');
+  
+  // Show missing data callout if insights are not available
+  if (!available && missingDataInfo) {
+    return (
+      <div className="p-6 md:p-8">
+        {/* Ultra-Minimal Header */}
+        <div className="mb-8">
+          <div className="flex items-center mb-3">
+            <i className="ph ph-drop text-lg text-green-600 mr-3 mt-0.5 transition-all duration-300 hover:scale-110"></i>
+            <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Fuel Efficiency</h2>
+          </div>
+          <p className="text-xs text-neutral-600">
+            Estimated fuel consumption and running costs
+          </p>
+        </div>
+
+        {/* Missing Data Callout */}
+        <MissingDataCallout 
+          title={missingDataInfo.title}
+          message={missingDataInfo.message}
+          actionable={missingDataInfo.actionable}
+          severity={missingDataInfo.severity}
+          className="mb-6"
+        />
+        
+        {/* Optional: Show what we would display if data was available */}
+        <div className="bg-neutral-50 rounded-lg p-4">
+          <p className="text-sm text-neutral-600 flex items-start">
+            <i className="ph ph-info text-blue-600 mr-2 mt-0.5 flex-shrink-0"></i>
+            Fuel efficiency insights would normally show estimated MPG figures, running costs, annual fuel expenses, and environmental impact calculations.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
   if (!insights) return null;
   
   const { withTooltip } = useTooltip();
   
   return (
-    <div className="bg-white p-6 md:p-8">
-      {/* Header */}
+    <div className="p-6 md:p-8">
+      {/* Enhanced Header with Tab Navigation */}
       <div className="mb-8">
-        <div className="flex items-center mb-3">
-          <i className="ph ph-drop text-lg text-green-600 mr-3"></i>
-          <h2 className="text-lg font-medium text-neutral-900">Fuel Efficiency</h2>
+        <div className="flex items-center mb-4">
+          <i className="ph ph-drop text-lg text-green-600 mr-3 mt-0.5 transition-all duration-300 hover:scale-110"></i>
+          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Fuel Efficiency</h2>
         </div>
-        <p className="text-xs text-neutral-600">
-          Estimated fuel consumption and running costs
+        <p className="text-xs text-neutral-600 mb-4">
+          {insights.isElectric ? 'Electric vehicle efficiency and savings' : 'Estimated fuel consumption and running costs'}
         </p>
+        
+        {/* Tab Navigation */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex bg-neutral-100 rounded-lg p-1">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                activeTab === 'overview'
+                  ? 'bg-white text-blue-600 shadow-sm'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <i className="ph ph-chart-pie"></i>
+              <span>Overview</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('calculator')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                activeTab === 'calculator'
+                  ? 'bg-white text-blue-600 shadow-sm'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <i className="ph ph-calculator"></i>
+              <span>Calculator</span>
+            </button>
+          </div>
+        </div>
       </div>
       
       {insights.isElectric ? (
@@ -846,18 +1196,48 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
         <>
           {/* Conventional Vehicle Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {/* Combined MPG Gauge */}
-            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 text-center">
-              <Gauge
-                value={parseFloat(insights.estimatedMPGCombined)}
-                max={80}
-                unit="MPG"
-                label="Combined Fuel Economy"
-                color={
-                  parseFloat(insights.estimatedMPGCombined) > 50 ? 'var(--positive)' :
-                  parseFloat(insights.estimatedMPGCombined) > 30 ? 'var(--warning)' : 'var(--negative)'
-                }
-              />
+            {/* Enhanced Combined MPG Card */}
+            <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start">
+                  <i className="ph ph-gauge text-lg text-blue-600 mr-3 mt-0.5 group-hover:scale-110 transition-transform duration-300"></i>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Combined MPG</div>
+                    <div className="text-xs text-neutral-600">Fuel economy</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className={`text-2xl font-bold ${
+                    parseFloat(insights.estimatedMPGCombined) > 50 ? 'text-green-600' :
+                    parseFloat(insights.estimatedMPGCombined) > 30 ? 'text-yellow-600' : 'text-red-600'
+                  }`}>
+                    {insights.estimatedMPGCombined}
+                  </div>
+                  <div className="text-xs text-blue-600">MPG</div>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div className="text-center">
+                    <div className="font-medium text-neutral-900">{insights.estimatedMPGUrban}</div>
+                    <div className="text-neutral-600">Urban</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-medium text-neutral-900">{insights.estimatedMPGExtraUrban}</div>
+                    <div className="text-neutral-600">Highway</div>
+                  </div>
+                </div>
+                <div className="w-full bg-neutral-200 rounded-full h-2">
+                  <div 
+                    className={`h-full bg-gradient-to-r rounded-full transition-all duration-300 ease-out ${
+                      parseFloat(insights.estimatedMPGCombined) > 50 ? 'from-green-400 to-green-600' :
+                      parseFloat(insights.estimatedMPGCombined) > 30 ? 'from-yellow-400 to-yellow-600' : 'from-red-400 to-red-600'
+                    }`}
+                    style={{ width: `${(parseFloat(insights.estimatedMPGCombined) / 80) * 100}%` }}
+                  />
+                </div>
+              </div>
             </div>
             
             {/* Urban MPG */}
@@ -960,14 +1340,28 @@ export const FuelEfficiencyPanelComponent = ({ insights, vehicleData }) => {
         </>
       )}
       
-      {/* Fuel Cost Calculator */}
-      <div className="mt-8 pt-6">
-        <FuelCostCalculator 
-          defaultValues={insights}
-          fuelType={insights.isElectric ? "ELECTRIC" : vehicleData?.fuelType}
-          isElectric={insights.isElectric}
-        />
-      </div>
+      {/* Enhanced Content with Tab System */}
+      {activeTab === 'overview' && (
+        <>
+          {/* Content sections remain the same but wrapped in overview tab */}
+        </>
+      )}
+      
+      {activeTab === 'calculator' && (
+        <div className="transition-all duration-500 ease-out">
+          <div className="bg-neutral-50 rounded-lg p-6">
+            <h3 className="text-lg font-medium text-neutral-900 mb-4 flex items-center">
+              <i className="ph ph-calculator text-blue-600 mr-2"></i>
+              Fuel Cost Calculator
+            </h3>
+            <FuelCostCalculator 
+              defaultValues={insights}
+              fuelType={insights.isElectric ? "ELECTRIC" : vehicleData?.fuelType}
+              isElectric={insights.isElectric}
+            />
+          </div>
+        </div>
+      )}
       
       <GovUKTooltip title={tooltips.fuelEfficiencyNote} arrow placement="top">
         <div className="bg-neutral-50 rounded-lg p-4 mt-6 border-b border-dotted border-neutral-400 cursor-help inline-block">

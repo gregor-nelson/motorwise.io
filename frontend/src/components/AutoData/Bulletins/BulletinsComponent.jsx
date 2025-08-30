@@ -714,6 +714,7 @@ const BulletinsComponent = ({
   const [allBulletins, setAllBulletins] = useState(null);
   const [loading, setLoading] = useState(initialLoading || true);
   const [error, setError] = useState(initialError);
+  const [errorType, setErrorType] = useState('service'); // 'service' or 'nodata'
   const [selectedBulletin, setSelectedBulletin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedCards, setExpandedCards] = useState({});
@@ -780,6 +781,7 @@ const BulletinsComponent = ({
     
     setLoading(true);
     setError(null);
+    setErrorType('service');
     setSelectedBulletin(null);
     setSearchTerm('');
     setMatchConfidence('none');
@@ -827,7 +829,14 @@ const BulletinsComponent = ({
           return;
         }
         
-        setError(err.message || 'Failed to fetch bulletins');
+        // Determine error type based on status code
+        if (err.status === 404) {
+          setErrorType('nodata');
+          setError('No bulletin data available for this vehicle');
+        } else {
+          setErrorType('service');
+          setError(err.message || 'Failed to fetch bulletins');
+        }
         setLoading(false);
       }
     };
@@ -909,26 +918,55 @@ const BulletinsComponent = ({
 
   // Error state with no bulletins
   if (error && (!bulletins || !bulletins.bulletins || bulletins.bulletins.length === 0)) {
-    return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="flex items-center justify-center min-h-64">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-red-50 rounded-full mb-6 shadow-sm">
-              <i className="ph ph-warning-circle text-3xl text-red-600"></i>
+    // Different handling for no data vs service errors
+    if (errorType === 'nodata') {
+      return (
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="flex items-center justify-center min-h-64">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
+                <i className="ph ph-database text-3xl text-blue-600"></i>
+              </div>
+              <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Data Available</h3>
+              <p className="text-xs text-neutral-700 leading-relaxed max-w-lg mx-auto">
+                We don't currently have technical bulletin information for your {vehicleMake} {vehicleModel}.
+                <br className="hidden sm:block" />
+                This doesn't necessarily mean there are no bulletins - we may not have this vehicle in our database yet.
+              </p>
+              <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-neutral-500">
+                <i className="ph ph-info text-blue-600"></i>
+                <span>Data coverage varies by vehicle model and year</span>
+              </div>
             </div>
-            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Connection Issue</h3>
-            <p className="text-xs text-neutral-700 leading-relaxed mb-6 max-w-md mx-auto">{error}</p>
-            <button 
-              onClick={handleRetry}
-              className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm"
-            >
-              <i className="ph ph-arrow-clockwise mr-2"></i>
-              Try Again
-            </button>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // Service error
+      return (
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="flex items-center justify-center min-h-64">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-orange-50 rounded-full mb-6 shadow-sm">
+                <i className="ph ph-clock text-3xl text-orange-600"></i>
+              </div>
+              <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Service Temporarily Unavailable</h3>
+              <p className="text-xs text-neutral-700 leading-relaxed mb-6 max-w-md mx-auto">
+                We're currently unable to retrieve technical bulletins for your {vehicleMake} {vehicleModel}. 
+                This may be due to temporary maintenance or high demand.
+              </p>
+              <button 
+                onClick={handleRetry}
+                className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm"
+              >
+                <i className="ph ph-arrow-clockwise mr-2"></i>
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   // No data state
@@ -937,18 +975,18 @@ const BulletinsComponent = ({
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-full mb-6 shadow-sm">
-              <i className="ph ph-check-circle text-3xl text-green-600"></i>
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
+              <i className="ph ph-database text-3xl text-blue-600"></i>
             </div>
-            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Issues Found</h3>
+            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Data Available</h3>
             <p className="text-xs text-neutral-700 leading-relaxed max-w-lg mx-auto">
-              Great news! No technical bulletins found for <span className="font-medium">{vehicleMake} {vehicleModel}</span>.
+              We don't currently have technical bulletin information for your {vehicleMake} {vehicleModel}.
               <br className="hidden sm:block" />
-              This suggests your vehicle has no known widespread technical issues.
+              This doesn't necessarily mean there are no bulletins - we may not have this vehicle in our database yet.
             </p>
             <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-neutral-500">
-              <i className="ph ph-shield-check text-green-600"></i>
-              <span>Vehicle reliability confirmed</span>
+              <i className="ph ph-info text-blue-600"></i>
+              <span>Data coverage varies by vehicle model and year</span>
             </div>
           </div>
         </div>
@@ -1042,12 +1080,23 @@ const BulletinsComponent = ({
           )}
 
           {error && (
-            <div className="bg-transparent rounded-lg p-4 shadow-sm">
-              <div className="flex items-center space-x-2">
-                <i className="ph ph-warning-circle text-yellow-600"></i>
-                <span className="text-sm font-medium text-neutral-900">Notice</span>
+            <div className="bg-orange-50 rounded-lg p-4 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <i className="ph ph-warning-circle text-orange-600"></i>
+                  <span className="text-sm font-medium text-neutral-900">Display Issue</span>
+                </div>
+                <button 
+                  onClick={handleRetry}
+                  className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded cursor-pointer"
+                >
+                  <i className="ph ph-arrow-clockwise mr-1"></i>
+                  Refresh
+                </button>
               </div>
-              <p className="text-xs text-neutral-700 mt-2">{error}</p>
+              <p className="text-xs text-neutral-700">
+                Some bulletin data may not be displaying correctly. Please try refreshing to reload the information.
+              </p>
             </div>
           )}
         </div>

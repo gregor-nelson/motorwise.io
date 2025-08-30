@@ -528,6 +528,7 @@ const EmptyState = ({ vehicleMake, vehicleModel }) => (
 const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [errorType, setErrorType] = useState('service'); // 'service' or 'nodata'
   const [repairData, setRepairData] = useState(null);
   const [matchConfidence, setMatchConfidence] = useState('none');
   const [tabValue, setTabValue] = useState(0);
@@ -560,6 +561,7 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
   const handleRetry = useCallback(() => {
     setLoading(true);
     setError(null);
+    setErrorType('service');
     setTimeout(() => window.location.reload(), 500);
   }, []);
 
@@ -648,6 +650,7 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
       try {
         setLoading(true);
         setError(null);
+        setErrorType('service');
   
         const make = vehicleData.make;
         const model = vehicleData.model || vehicleData.vehicleModel;

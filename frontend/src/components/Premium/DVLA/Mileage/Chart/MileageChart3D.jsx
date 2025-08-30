@@ -290,11 +290,16 @@ const MileageChart3D = ({ motData, height = 600 }) => {
   const labelsRef = useRef([]);
   const cameraRef = useRef(null);
   const hoveredObjects = useRef([]);
+  const cachedRect = useRef(null);
+  const resizeObserver = useRef(null);
   
-  // Process mileage data (preserving enhanced data from transformMotData)
-  const chartData = useMemo(() => {
-    if (!motData || motData.length === 0) return [];
+  // Optimized single-pass data processing combining chartData, trendLineData, and combinedData
+  const { chartData, trendLineData, combinedData } = useMemo(() => {
+    if (!motData || motData.length === 0) {
+      return { chartData: [], trendLineData: [], combinedData: [] };
+    }
     
+    // Step 1: Initial data transformation and sorting
     const processedData = motData.map(test => {
       const dateParts = test.date.split(' ');
       const day = parseInt(dateParts[0], 10);
@@ -318,26 +323,45 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         mileage: mileageValue,
         mileageString: test.mileage,
         status: test.status,
-        // Preserve enhanced data from transformMotData
         hasAdvisories: test.hasAdvisories,
         advisoryCount: test.advisoryCount,
-        clockingRisk: test.clockingRisk, // This is the key addition!
+        clockingRisk: test.clockingRisk,
       };
     });
     
     processedData.sort((a, b) => a.date - b.date);
     
-    // Debug logging to verify clocking data
-    console.log('MileageChart3D: Processed data with clocking info:', 
-      processedData.filter(d => d.clockingRisk && d.clockingRisk.level !== 'LOW').map(d => ({
-        date: d.dateString,
-        level: d.clockingRisk.level,
-        evidence: d.clockingRisk.evidence
-      }))
-    );
+    // Debug logging (consider wrapping in development check for production)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('MileageChart3D: Processed data with clocking info:', 
+        processedData.filter(d => d.clockingRisk && d.clockingRisk.level !== 'LOW').map(d => ({
+          date: d.dateString,
+          level: d.clockingRisk.level,
+          evidence: d.clockingRisk.evidence
+        }))
+      );
+    }
     
-    // Enhanced data processing for multi-factor coloring
+    // Step 2: Calculate trend data parameters (before enhancing individual items)
+    const validMileageData = processedData.filter(item => item.mileage !== null);
+    let trendCalculation = null;
+    
+    if (validMileageData.length >= 2) {
+      const firstDate = validMileageData[0].date;
+      const lastDate = validMileageData[validMileageData.length - 1].date;
+      const totalDays = (lastDate - firstDate) / (1000 * 60 * 60 * 24);
+      const totalYears = totalDays / 365.25;
+      const firstMileage = validMileageData[0].mileage;
+      const lastMileage = validMileageData[validMileageData.length - 1].mileage;
+      const totalMileage = lastMileage - firstMileage;
+      const annualMileage = totalMileage / totalYears;
+      
+      trendCalculation = { firstDate, firstMileage, annualMileage };
+    }
+    
+    // Step 3: Single-pass enhancement with trend data calculation
     const enhancedData = processedData.map((item, index, array) => {
+      // Enhanced data calculations
       let inactivityPeriod = false;
       let negativeMileage = false;
       let consecutiveFailures = 0;
@@ -345,7 +369,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       let hasImproved = false;
       let testAge = 0;
       
-      // Calculate test age in years (for timeline fading)
+      // Calculate test age in years
       if (array.length > 0) {
         const newestTest = array[array.length - 1].date;
         testAge = (newestTest - item.date) / (1000 * 60 * 60 * 24 * 365.25);
@@ -356,21 +380,19 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         inactivityPeriod = monthsDiff > 12;
         isPostInactivity = monthsDiff > 12;
         
-        // Check for mileage anomalies
         if (item.mileage !== null && array[index - 1].mileage !== null) {
           negativeMileage = item.mileage < array[index - 1].mileage;
         }
         
-        // Check for improvement (previous fail, current pass)
         if (array[index - 1].status && array[index - 1].status.includes('FAIL') && 
             item.status && item.status.includes('PASS')) {
           hasImproved = true;
         }
       }
       
-      // Count consecutive failures (look backwards)
+      // Count consecutive failures
       if (item.status && item.status.includes('FAIL')) {
-        let failCount = 1; // Current failure
+        let failCount = 1;
         for (let i = index - 1; i >= 0; i--) {
           if (array[i].status && array[i].status.includes('FAIL')) {
             failCount++;
@@ -381,17 +403,27 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         consecutiveFailures = failCount;
       }
       
-      // Extract additional details from status (if available)
       const statusDetails = analyzeMotStatus(item.status, item.hasAdvisories);
       
-      // Debug advisory data flow
-      if (item.hasAdvisories) {
+      // Debug advisory data flow (development only)
+      if (process.env.NODE_ENV === 'development' && item.hasAdvisories) {
         console.log(`Advisory data for ${item.dateString}:`, {
           originalHasAdvisories: item.hasAdvisories,
           originalAdvisoryCount: item.advisoryCount,
           statusDetailsHasAdvisories: statusDetails.hasAdvisories,
           status: item.status
         });
+      }
+      
+      // Calculate trend values inline
+      let trendMileage = null;
+      let ukAverageMileage = null;
+      
+      if (trendCalculation) {
+        const { firstDate, firstMileage, annualMileage } = trendCalculation;
+        const yearsSinceFirst = ((item.date - firstDate) / (1000 * 60 * 60 * 24)) / 365.25;
+        trendMileage = firstMileage + (yearsSinceFirst * annualMileage);
+        ukAverageMileage = firstMileage + (yearsSinceFirst * 7500);
       }
       
       return {
@@ -402,55 +434,26 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         isPostInactivity,
         hasImproved,
         testAge,
+        trendMileage,
+        ukAverageMileage,
         ...statusDetails,
       };
     });
     
-    return enhancedData;
-  }, [motData]);
-
-  // Calculate trend line data
-  const trendLineData = useMemo(() => {
-    if (chartData.length < 2) return [];
-    
-    const validData = chartData.filter(item => item.mileage !== null);
-    if (validData.length < 2) return [];
-    
-    const firstDate = validData[0].date;
-    const lastDate = validData[validData.length - 1].date;
-    const totalDays = (lastDate - firstDate) / (1000 * 60 * 60 * 24);
-    const totalYears = totalDays / 365.25;
-    
-    const firstMileage = validData[0].mileage;
-    const lastMileage = validData[validData.length - 1].mileage;
-    const totalMileage = lastMileage - firstMileage;
-    
-    const annualMileage = totalMileage / totalYears;
-    
-    return chartData.map(item => ({
+    // Step 4: Create separate trend line data for compatibility
+    const trendData = trendCalculation ? enhancedData.map(item => ({
       date: item.date,
       dateString: item.dateString,
-      trendMileage: firstMileage + (((item.date - firstDate) / (1000 * 60 * 60 * 24)) / 365.25) * annualMileage,
-      ukAverageMileage: firstMileage + (((item.date - firstDate) / (1000 * 60 * 60 * 24)) / 365.25) * 7500,
-    }));
-  }, [chartData]);
-
-  // Combined data for the 3D chart
-  const combinedData = useMemo(() => {
-    if (chartData.length === 0) return [];
+      trendMileage: item.trendMileage,
+      ukAverageMileage: item.ukAverageMileage,
+    })) : [];
     
-    return chartData.map(item => {
-      const trendPoint = trendLineData.find(trend => 
-        trend.dateString === item.dateString
-      );
-      
-      return {
-        ...item,
-        trendMileage: trendPoint ? trendPoint.trendMileage : null,
-        ukAverageMileage: trendPoint ? trendPoint.ukAverageMileage : null,
-      };
-    });
-  }, [chartData, trendLineData]);
+    return {
+      chartData: enhancedData,
+      trendLineData: trendData,
+      combinedData: enhancedData // Combined data is now the same as enhanced chart data
+    };
+  }, [motData]);
 
   // Create HTML overlay labels system (adapted from reference)
   const createHTMLLabel = (text, worldPosition, color = CHART_COLORS.GRAY_600, size = '11px', isTooltip = false) => {
@@ -470,12 +473,15 @@ const MileageChart3D = ({ motData, height = 600 }) => {
 
   // Update HTML labels positions
   const updateHTMLLabels = () => {
-    if (!cameraRef.current || !rendererRef.current) return;
+    if (!cameraRef.current || !rendererRef.current || !rendererRef.current.domElement) return;
     
     const camera = cameraRef.current;
     const renderer = rendererRef.current;
     const canvas = renderer.domElement;
-    const rect = canvas.getBoundingClientRect();
+    if (!canvas || !canvas.getBoundingClientRect) return;
+    
+    // Use cached rect if available, fallback to getBoundingClientRect
+    const rect = cachedRect.current || canvas.getBoundingClientRect();
     
     labelsRef.current.forEach(label => {
       if (!label.element || !label.visible) return;
@@ -580,8 +586,9 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       return;
     }
     
-    // Scene setup
-    const scene = new THREE.Scene();
+    try {
+      // Scene setup
+      const scene = new THREE.Scene();
     scene.background = new THREE.Color(CHART_COLORS.WHITE);
     
     // Clock for animations
@@ -612,6 +619,32 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     mountRef.current.appendChild(renderer.domElement);
     
+    // Setup resize observer for cached rect performance optimization
+    let updateCachedRect;
+    updateCachedRect = () => {
+      if (renderer.domElement) {
+        cachedRect.current = renderer.domElement.getBoundingClientRect();
+      }
+    };
+    
+    // Initial rect cache
+    updateCachedRect();
+    
+    // Setup resize observer with error handling
+    if (typeof ResizeObserver !== 'undefined') {
+      try {
+        resizeObserver.current = new ResizeObserver(updateCachedRect);
+        resizeObserver.current.observe(renderer.domElement);
+      } catch (error) {
+        console.warn('ResizeObserver failed to initialize:', error);
+        // Fallback: update rect on window resize
+        window.addEventListener('resize', updateCachedRect);
+      }
+    } else {
+      // Fallback for older browsers
+      window.addEventListener('resize', updateCachedRect);
+    }
+    
     // Lighting setup
     const ambientLight = new THREE.AmbientLight(CHART_COLORS.WHITE, 0.6);
     scene.add(ambientLight);
@@ -636,12 +669,14 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     const chartHeight = 8;  
     const chartDepth = 2;   
     
-    console.log('3D Mileage Chart Data Range:', {
-      entries: validMileageData.length,
-      mileageRange: `${minMileage.toLocaleString()} - ${maxMileage.toLocaleString()}`,
-      years: validMileageData.length > 1 ? 
-        (validMileageData[validMileageData.length - 1].date.getFullYear() - validMileageData[0].date.getFullYear()) : 0
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('3D Mileage Chart Data Range:', {
+        entries: validMileageData.length,
+        mileageRange: `${minMileage.toLocaleString()} - ${maxMileage.toLocaleString()}`,
+        years: validMileageData.length > 1 ? 
+          (validMileageData[validMileageData.length - 1].date.getFullYear() - validMileageData[0].date.getFullYear()) : 0
+      });
+    }
     
     // Raycasting setup for tooltips
     const raycaster = new THREE.Raycaster();
@@ -850,8 +885,12 @@ const MileageChart3D = ({ motData, height = 600 }) => {
               padding-left: 8px;
               position: relative;
             `;
-            // Add bullet point
-            conditionDiv.innerHTML = `<span style="position: absolute; left: 0; color: #94a3b8;">•</span>${condition}`;
+            // Add bullet point safely
+            const bulletSpan = document.createElement('span');
+            bulletSpan.style.cssText = 'position: absolute; left: 0; color: #94a3b8;';
+            bulletSpan.textContent = '•';
+            conditionDiv.appendChild(bulletSpan);
+            conditionDiv.appendChild(document.createTextNode(condition));
             tooltipWrapper.appendChild(conditionDiv);
           });
         }
@@ -952,7 +991,12 @@ const MileageChart3D = ({ motData, height = 600 }) => {
                 padding-left: 8px;
                 position: relative;
               `;
-              evidenceDiv.innerHTML = `<span style="position: absolute; left: 0; color: #94a3b8;">•</span>${evidence}`;
+              // Add bullet point safely
+              const bulletSpan = document.createElement('span');
+              bulletSpan.style.cssText = 'position: absolute; left: 0; color: #94a3b8;';
+              bulletSpan.textContent = '•';
+              evidenceDiv.appendChild(bulletSpan);
+              evidenceDiv.appendChild(document.createTextNode(evidence));
               tooltipWrapper.appendChild(evidenceDiv);
             });
           }
@@ -1105,13 +1149,17 @@ const MileageChart3D = ({ motData, height = 600 }) => {
         
         // Add clocking risk warning symbols
         if (data.clockingRisk && data.clockingRisk.level !== 'LOW') {
-          console.log(`Creating warning symbol for ${data.dateString}: ${data.clockingRisk.level}`, data.clockingRisk);
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`Creating warning symbol for ${data.dateString}: ${data.clockingRisk.level}`, data.clockingRisk);
+          }
           const warningSymbol = createWarningSymbol(data.clockingRisk.level);
           if (warningSymbol) {
             warningSymbol.position.set(xPos, barHeight + 0.5, 0);
             warningSymbol.userData.originalY = barHeight + 0.5;
             scene.add(warningSymbol);
-            console.log(`Warning symbol created and added to scene for ${data.dateString}`);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`Warning symbol created and added to scene for ${data.dateString}`);
+            }
           }
         }
       });
@@ -1273,28 +1321,7 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     initializeLabelsContainer();
     createLabelElements();
     
-    // Console log camera position for debugging
-    let lastLogTime = 0;
-    const logCameraPosition = () => {
-      const now = Date.now();
-      if (now - lastLogTime > 2000) {
-        console.log('3D Mileage Chart Camera Position:', {
-          position: {
-            x: camera.position.x.toFixed(2),
-            y: camera.position.y.toFixed(2), 
-            z: camera.position.z.toFixed(2)
-          },
-          target: {
-            x: controls.target.x.toFixed(2),
-            y: controls.target.y.toFixed(2),
-            z: controls.target.z.toFixed(2)
-          }
-        });
-        lastLogTime = now;
-      }
-    };
-    
-    controls.addEventListener('change', logCameraPosition);
+    // Camera position logging removed for performance
     
     // Render loop
     const animate = () => {
@@ -1311,12 +1338,31 @@ const MileageChart3D = ({ motData, height = 600 }) => {
     const cleanup = () => {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
       }
       
-      renderer.domElement.removeEventListener('contextmenu', handleRightClick);
-      renderer.domElement.removeEventListener('click', handleLeftClick);
-      renderer.domElement.removeEventListener('dblclick', handleDoubleClick);
+      // Clean up resize observer and cached rect
+      if (resizeObserver.current) {
+        try {
+          resizeObserver.current.disconnect();
+        } catch (error) {
+          console.warn('Error disconnecting resize observer:', error);
+        }
+        resizeObserver.current = null;
+      }
       
+      // Remove window resize listener fallback
+      window.removeEventListener('resize', updateCachedRect);
+      cachedRect.current = null;
+      
+      // Remove event listeners safely
+      if (renderer && renderer.domElement) {
+        renderer.domElement.removeEventListener('contextmenu', handleRightClick);
+        renderer.domElement.removeEventListener('click', handleLeftClick);
+        renderer.domElement.removeEventListener('dblclick', handleDoubleClick);
+      }
+      
+      // Clean up HTML labels
       const labelsContainer = document.getElementById('mileage-3d-chart-labels');
       if (labelsContainer) {
         labelsContainer.remove();
@@ -1324,16 +1370,43 @@ const MileageChart3D = ({ motData, height = 600 }) => {
       labelsRef.current = [];
       hoveredObjects.current = [];
       
-      controls.dispose();
+      // Dispose controls safely
+      if (controls) {
+        controls.dispose();
+      }
       
-      if (mountRef.current && renderer.domElement) {
+      // Remove renderer from DOM safely
+      if (mountRef.current && renderer && renderer.domElement && mountRef.current.contains(renderer.domElement)) {
         mountRef.current.removeChild(renderer.domElement);
       }
       
-      renderer.dispose();
+      // Dispose renderer
+      if (renderer) {
+        renderer.dispose();
+      }
+      
+      // Clear refs
+      sceneRef.current = null;
+      rendererRef.current = null;
+      cameraRef.current = null;
     };
     
-    return cleanup;
+      return cleanup;
+      
+    } catch (error) {
+      console.error('Failed to initialize 3D Mileage Chart:', error);
+      
+      // Clean up any partial initialization
+      if (mountRef.current) {
+        const canvas = mountRef.current.querySelector('canvas');
+        if (canvas) {
+          canvas.remove();
+        }
+      }
+      
+      // Return empty cleanup function
+      return () => {};
+    }
   }, [hasValidMileageData, combinedData]);
 
   if (!motData || motData.length === 0) {

@@ -59,13 +59,24 @@ const StatusInsightsCalculator = (vehicleData) => {
   const hasValidMot = normalizedMotStatus === OFFICIAL_MOT_STATUSES.VALID;
   const motNotApplicable = normalizedMotStatus === OFFICIAL_MOT_STATUSES.NO_RESULT;
   
+  // Helper function to validate year of manufacture
+  const isValidManufactureYear = (year) => {
+    const currentYear = new Date().getFullYear();
+    const numYear = parseInt(year);
+    return !isNaN(numYear) && numYear >= 1885 && numYear <= currentYear + 1;
+  };
+
   // Vehicle may be exempt from MOT (check criteria based on gov.uk guidelines)
   const possiblyExemptFromMot = motNotApplicable && (
-    // Historic vehicles (manufactured before 1960)
-    (vehicleData.yearOfManufacture && vehicleData.yearOfManufacture < 1960) ||
+    // Historic vehicles (manufactured 40+ years ago - rolling exemption)
+    (vehicleData.yearOfManufacture && 
+     isValidManufactureYear(vehicleData.yearOfManufacture) &&
+     parseInt(vehicleData.yearOfManufacture) <= (new Date().getFullYear() - 40)) ||
     // Electric vehicles (specific rules apply)
     (vehicleData.fuelType && vehicleData.fuelType.toUpperCase().includes('ELECTRIC') && 
-     vehicleData.yearOfManufacture && vehicleData.yearOfManufacture > 2015)
+     vehicleData.yearOfManufacture && 
+     isValidManufactureYear(vehicleData.yearOfManufacture) &&
+     parseInt(vehicleData.yearOfManufacture) > 2015)
   );
   
   // Determine driveability status according to official DVLA rules

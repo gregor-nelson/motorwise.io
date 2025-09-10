@@ -1,0 +1,898 @@
+# Define rate limiting zones at http level
+limit_req_zone $binary_remote_addr zone=manual_api:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=vehicle_api:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=payment_api:10m rate=3r/s;
+limit_req_zone $binary_remote_addr zone=dvla_api:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=vehicle_data_api:10m rate=5r/s;  # New rate limit zone for Vehicle Data API
+limit_req_zone $binary_remote_addr zone=tsb_api:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=claude_api:10m rate=3r/s;
+
+# Define connection limit zone to prevent abuse
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+# Define upstream servers for all FastAPI backends
+upstream fastapi_backend {
+    server 127.0.0.1:8000;
+    keepalive 32;
+    keepalive_timeout 60s;
+    keepalive_requests 100;
+}
+
+upstream manual_api_backend {
+    server 127.0.0.1:8002;
+    keepalive 32;
+    keepalive_timeout 60s;
+    keepalive_requests 100;
+}
+
+upstream payment_api_backend {
+    server 127.0.0.1:8001;
+    keepalive 32;
+    keepalive_timeout 60s;
+    keepalive_requests 100;
+}
+
+upstream dvla_api_backend {
+    server 127.0.0.1:8004;
+    keepalive 32;
+    keepalive_timeout 60s;
+    keepalive_requests 100;
+}
+
+# New Vehicle Data API backend
+upstream vehicle_data_api_backend {
+    server 127.0.0.1:8005;
+    keepalive 32;
+    keepalive_timeout 60s;
+    keepalive_requests 100;
+}
+
+# Include TSB API upstream configuration
+include /etc/nginx/snippets/tsb-api-upstream.conf;
+
+# Include Claude API upstream configuration
+include /etc/nginx/snippets/claude-api-upstream.conf;
+
+# Buffer configuration for more robust handling of upstream responses
+proxy_buffer_size 128k;
+proxy_buffers 4 256k;
+proxy_busy_buffers_size 256k;
+
+server {
+    server_name motorwise.io www.motorwise.io;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    ssl_certificate /etc/letsencrypt/live/motorwise.io/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/motorwise.io/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # Root directory for frontend files
+    root /home/debian/Git/MotCheck-UK/frontend/dist;
+    index index.html;
+
+    # Global connection limits for robustness
+    limit_conn addr 100;
+    limit_conn_status 503;
+    limit_conn_log_level warn;
+
+    # Global timeouts for robustness
+    client_body_timeout 15s;
+    client_header_timeout 15s;
+    keepalive_timeout 65s;
+    send_timeout 60s;
+    
+    # Enhanced error handling
+    proxy_intercept_errors on;
+    error_page 500 502 503 504 /50x.html;
+    error_page 404 /404.html;
+
+    # Vehicle Data API endpoints
+    location /api/v1/vehicles/ {
+        proxy_pass http://vehicle_data_api_backend/api/v1/vehicles/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration for robustness
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+        proxy_pass_header X-Data-Type;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Technical specifications endpoint
+    location /api/v1/tech-specs/ {
+        proxy_pass http://vehicle_data_api_backend/api/v1/tech-specs/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+        proxy_pass_header X-Data-Type;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Combined vehicle data endpoint
+    location /api/v1/vehicle-data/ {
+        proxy_pass http://vehicle_data_api_backend/api/v1/vehicle-data/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+        proxy_pass_header X-Data-Type;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # POST lookup endpoints
+    location /api/v1/repair-times-lookup {
+        proxy_pass http://vehicle_data_api_backend/api/v1/repair-times-lookup;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    location /api/v1/tech-specs-lookup {
+        proxy_pass http://vehicle_data_api_backend/api/v1/tech-specs-lookup;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Cache clearing endpoint
+    location /api/v1/cache/clear {
+        proxy_pass http://vehicle_data_api_backend/api/v1/cache/clear;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_data_api burst=5 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 10s;
+        proxy_read_timeout 10s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_data_api_access.log;
+        error_log /var/log/nginx/vehicle_data_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Health check endpoint for Vehicle Data API
+    location /api/vehicle-data/health {
+        proxy_pass http://vehicle_data_api_backend/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Shorter timeouts for health checks
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+        
+        # No rate limiting for health checks
+        access_log /var/log/nginx/health_check.log;
+    }
+
+    # DVLA API endpoints
+    location /api/vehicle {
+        proxy_pass http://dvla_api_backend/api/vehicle;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=dvla_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/dvla_api_access.log;
+        error_log /var/log/nginx/dvla_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Alternative path for the same API (keeping both for flexibility)
+    location /api/dvla/vehicle {
+        proxy_pass http://dvla_api_backend/api/vehicle;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=dvla_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/dvla_api_access.log;
+        error_log /var/log/nginx/dvla_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Direct route for cache clearing
+    location /api/cache/clear {
+        proxy_pass http://dvla_api_backend/api/cache/clear;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=dvla_api burst=5 nodelay;
+        client_max_body_size 1M;
+
+        # Enable logging
+        access_log /var/log/nginx/dvla_api_access.log;
+        error_log /var/log/nginx/dvla_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Alternative path for cache clearing (keeping for consistency)
+    location /api/dvla/cache/clear {
+        proxy_pass http://dvla_api_backend/api/cache/clear;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=dvla_api burst=5 nodelay;
+        client_max_body_size 1M;
+
+        # Enable logging
+        access_log /var/log/nginx/dvla_api_access.log;
+        error_log /var/log/nginx/dvla_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    location /api/dvla/docs {
+        proxy_pass http://dvla_api_backend/docs;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        client_max_body_size 1M;
+
+        # Enable logging
+        access_log /var/log/nginx/dvla_api_access.log;
+        error_log /var/log/nginx/dvla_api_error.log warn;
+    }
+
+    # NEW BLOCK: Manual API with the correct path for frontend requests
+    location /manual-api/v1/ {
+        # Rewrite the path to match what the backend expects
+        rewrite ^/manual-api/v1/(.*) /api/v1/$1 break;
+
+        proxy_pass http://manual_api_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=manual_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/manual_api_access.log;
+        error_log /var/log/nginx/manual_api_error.log warn;
+
+        # Add CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Proxy payment API requests to the Stripe integration backend
+    location /api/payment/v1/ {
+        proxy_pass http://payment_api_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=payment_api burst=5 nodelay;
+        client_max_body_size 2M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;   # Payment APIs may need more time
+        proxy_read_timeout 60s;
+
+        # Enable logging
+        access_log /var/log/nginx/payment_api_access.log;
+        error_log /var/log/nginx/payment_api_error.log warn;
+
+        # Add CORS headers - updated to HTTPS
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Type' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Allow-Credentials' 'true' always;
+            add_header 'Access-Control-Expose-Headers' 'Content-Type' always;
+            add_header 'Access-Control-Max-Age' 600;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Proxy Manual API requests to the second FastAPI backend (KEEP FOR COMPATIBILITY)
+    location /api/v1/manual/ {
+        proxy_pass http://manual_api_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=manual_api burst=10 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/manual_api_access.log;
+        error_log /var/log/nginx/manual_api_error.log warn;
+
+        # Add CORS headers - updated to HTTPS
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Include Claude API configuration (must be before /api/v1/vehicle/ to match first)
+    include /etc/nginx/snippets/claude-api-motorwise.conf;
+
+    # Proxy main API requests to the first FastAPI backend
+    location /api/v1/vehicle/ {
+        proxy_pass http://fastapi_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        limit_req zone=vehicle_api burst=20 nodelay;
+        client_max_body_size 1M;
+
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Enable logging
+        access_log /var/log/nginx/vehicle_api_access.log;
+        error_log /var/log/nginx/vehicle_api_error.log warn;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+
+        # Add CORS headers - updated to HTTPS
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Include TSB API configuration
+    include /etc/nginx/snippets/tsb-api-motorwise.conf;
+
+    # Fallback for other API endpoints to the first FastAPI backend
+    location /api/ {
+        proxy_pass http://fastapi_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        # Security enhancements
+        client_max_body_size 1M;
+        
+        # Timeout configuration
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+
+        # Pass through cache headers from the backend
+        proxy_pass_header X-Cache;
+        proxy_pass_header Cache-Control;
+
+        # Add CORS headers - updated to HTTPS
+        add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+        # Handle preflight OPTIONS requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://motorwise.io' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Accept' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Add health check endpoints for all APIs
+    location /api/health {
+        proxy_pass http://fastapi_backend/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        
+        # Shorter timeouts for health checks
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+    }
+
+    location /api/manual/health {
+        proxy_pass http://manual_api_backend/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        
+        # Shorter timeouts for health checks
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+    }
+
+    location /api/payment/v1/health {
+        proxy_pass http://payment_api_backend/api/payment/v1/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        
+        # Shorter timeouts for health checks
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+    }
+
+    # Add health check endpoint for DVLA API
+    location /api/dvla/health {
+        proxy_pass http://dvla_api_backend/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        
+        # Shorter timeouts for health checks
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+    }
+
+    # Frontend static files
+    location / {
+        try_files $uri $uri/ /index.html;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options SAMEORIGIN;
+    }
+
+    # Cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2|woff|ttf)$ {
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+        access_log off;
+        
+        # Enable gzip compression for static assets
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_types text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml;
+    }
+
+    # Disable caching for index.html to ensure latest version is always served
+    location = /index.html {
+        add_header Cache-Control "no-store, no-cache, must-revalidate";
+        expires -1;
+    }
+
+    # Robust 50x error handling
+    location = /50x.html {
+        root /usr/share/nginx/html;
+        internal;
+    }
+
+    # Robust 404 error handling
+    location = /404.html {
+        root /usr/share/nginx/html;
+        internal;
+    }
+
+    # Enhanced security headers
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://js.stripe.com; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; frame-src https://js.stripe.com; worker-src 'self'" always;
+
+    
+    # Enable OCSP stapling
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver_timeout 5s;
+
+
+}
+
+server {
+    if ($host = www.motorwise.io) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    if ($host = motorwise.io) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    server_name motorwise.io www.motorwise.io;
+    return 404; # managed by Certbot
+}

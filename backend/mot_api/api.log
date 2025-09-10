@@ -6304,3 +6304,40 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-08-30 09:59:18,119 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0021s
 2025-08-30 10:00:07,097 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0011s
 2025-08-30 10:00:07,639 - mot_api - INFO - GET /api/v1/vehicle/registration/cn09jej - 200 - 0.0030s
+2025-09-10 14:41:38,171 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:41:43,914 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:41:49,631 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:41:55,344 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:01,137 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:06,886 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:12,638 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:18,344 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:24,168 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:29,855 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:35,623 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:41,372 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:47,119 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:52,869 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:42:58,616 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:04,355 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:10,135 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:15,831 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:21,586 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:27,361 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:33,114 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:38,864 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:44,612 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:50,356 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:43:56,158 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:01,990 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:07,812 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:13,462 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:19,212 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:25,019 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:30,737 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:36,508 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:42,257 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:47,996 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:53,781 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:44:59,481 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY
+2025-09-10 14:45:05,223 - mot_api - ERROR - Missing required environment variables: MOT_CLIENT_ID, MOT_CLIENT_SECRET, MOT_TENANT_ID, MOT_API_KEY

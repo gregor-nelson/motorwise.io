@@ -332,3 +332,40 @@
 2025-08-30 09:58:59,550 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0012s
 2025-08-30 09:59:17,875 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0013s
 2025-08-30 10:00:07,716 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-09-10 14:41:37,597 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:41:43,334 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:41:49,098 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:41:54,826 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:00,659 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:06,357 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:12,104 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:17,846 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:23,615 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:29,341 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:35,102 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:40,821 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:46,580 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:52,348 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:42:58,086 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:03,815 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:09,600 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:15,326 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:21,092 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:26,854 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:32,596 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:38,395 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:44,054 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:49,855 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:43:55,577 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:01,375 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:07,128 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:12,839 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:18,556 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:24,353 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:30,077 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:35,821 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:41,586 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:47,324 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:53,076 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:44:58,821 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-10 14:45:04,587 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL

@@ -1,0 +1,51 @@
+# Add this to your http block (usually in /etc/nginx/nginx.conf)
+# Rate limiting zones - ADD TO HTTP CONTEXT
+limit_req_zone $binary_remote_addr zone=tts_api:10m rate=10r/m;
+limit_req_zone $binary_remote_addr zone=tts_general:10m rate=30r/m;
+
+# Main server block
+server {
+    server_name glkn.xyz www.glkn.xyz;
+    root /var/www/html;
+    index main.html;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    # TTS Server Integration
+    include /etc/nginx/snippets/tts-server.conf;
+    include /etc/nginx/snippets/notes-server.conf;	    
+    include /etc/nginx/snippets/terminal-server.conf;	    
+    include /etc/nginx/snippets/music-server.conf;
+    include /etc/nginx/snippets/tides-server.conf;
+    include /etc/nginx/snippets/typer-server.conf;
+    include /etc/nginx/snippets/dashboard-server.conf;
+    include /etc/nginx/snippets/code-server.conf;
+
+
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/glkn.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/glkn.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+# HTTP redirect server block - FIXED: Added missing closing brace
+server {
+    listen 80;
+    server_name glkn.xyz www.glkn.xyz;
+    
+    if ($host = www.glkn.xyz) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+    
+    if ($host = glkn.xyz) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+    
+    return 404; # managed by Certbot
+} # <-- This closing brace was missing

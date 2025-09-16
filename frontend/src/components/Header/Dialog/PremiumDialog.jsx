@@ -1,32 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, CardElement, PaymentRequestButtonElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-// Custom hook for intersection observer animations
-const useScrollAnimation = (threshold = 0.3) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [threshold]);
-
-  return [ref, isVisible];
-};
 
 // Determine if we're in development or production
 export const isDevelopment = window.location.hostname === 'localhost' ||
@@ -181,6 +157,9 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   const [cardError, setCardError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  const [paymentRequest, setPaymentRequest] = useState(null);
+  const [canMakePayment, setCanMakePayment] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('card'); // 'card' or 'payment_request'
 
   // Update mobile state on resize
   React.useEffect(() => {
@@ -191,6 +170,95 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Setup Payment Request for Apple Pay/Google Pay
+  React.useEffect(() => {
+    // Only enable Payment Request API on HTTPS (required for Apple Pay/Google Pay)
+    const isHTTPS = window.location.protocol === 'https:' || window.location.hostname === 'localhost';
+    
+    if (stripe && isHTTPS) {
+      const pr = stripe.paymentRequest({
+        country: 'GB',
+        currency: 'gbp',
+        total: {
+          label: 'Premium Vehicle Report',
+          amount: 495, // £4.95 in pence
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+
+      // Check if payment request is available
+      pr.canMakePayment().then(result => {
+        if (result) {
+          setPaymentRequest(pr);
+          setCanMakePayment(true);
+        }
+      });
+
+      // Handle payment method event
+      pr.on('paymentmethod', async (ev) => {
+        try {
+          setLoading(true);
+          setProcessing(true);
+          setError(null);
+
+          // Generate the unique report URL
+          const reportUrl = `${window.location.origin}/premium-report/${registration}`;
+          
+          // Get email from payment request
+          const customerEmail = ev.payerEmail || email;
+
+          // Create payment intent
+          const response = await fetch(`${PAYMENT_API_BASE_URL}/create-payment-intent`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              registration,
+              amount: 495,
+              email: customerEmail,
+              receipt_email: customerEmail,
+              report_url: reportUrl
+            }),
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            mode: isDevelopment ? 'cors' : 'same-origin'
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to create payment intent');
+          }
+
+          const { clientSecret } = await response.json();
+
+          // Confirm payment
+          const confirmResult = await stripe.confirmCardPayment(
+            clientSecret,
+            { payment_method: ev.paymentMethod.id },
+            { handleActions: false }
+          );
+
+          if (confirmResult.error) {
+            ev.complete('fail');
+            setError(confirmResult.error.message);
+          } else {
+            ev.complete('success');
+            // Call onSuccess with the payment intent and email
+            onSuccess(confirmResult.paymentIntent, customerEmail);
+          }
+        } catch (err) {
+          console.error('Payment Request error:', err);
+          ev.complete('fail');
+          setError(err.message || 'Payment failed');
+        } finally {
+          setLoading(false);
+          setProcessing(false);
+        }
+      });
+    }
+  }, [stripe, registration, email, onSuccess]);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -282,7 +350,6 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
           card: elements.getElement(CardElement),
           billing_details: {
             email: email,
-            // Set country to UK but don't require specific address details
             address: {
               country: 'GB'
             }
@@ -354,6 +421,28 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
         <div className="text-lg font-medium text-neutral-900 mb-4">
           Payment Details
         </div>
+
+        {/* Apple Pay / Google Pay Button */}
+        {canMakePayment && paymentRequest && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-neutral-900">
+              Quick Payment
+            </label>
+            <div className="w-full">
+              <PaymentRequestButtonElement
+                options={{ paymentRequest }}
+                className="w-full"
+              />
+            </div>
+            
+            {/* Divider */}
+            <div className="flex items-center my-4">
+              <div className="flex-1 border-t border-neutral-200"></div>
+              <span className="px-3 text-xs text-neutral-500 bg-white">or pay with card</span>
+              <div className="flex-1 border-t border-neutral-200"></div>
+            </div>
+          </div>
+        )}
         
         <div className="space-y-2">
           <label htmlFor="card-element" className="text-sm font-medium text-neutral-900">
@@ -372,53 +461,25 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
             </div>
           )}
           
-          <div className={`
-            w-full px-3 py-2 text-sm rounded-lg bg-neutral-50 border-none
-            focus-within:ring-2 focus-within:ring-blue-500 shadow-sm
-            ${(error || cardError) ? 'ring-2 ring-red-500' : ''}
-            min-h-[44px] flex items-center
-          `}>
-            <CardElement
-              id="card-element"
-              onChange={handleCardChange}
-              options={{
-                style: {
-                  base: {
-                    fontSize: '14px',
-                    color: '#374151',
-                    fontFamily: 'Jost, -apple-system, BlinkMacSystemFont, sans-serif',
-                    fontWeight: '400',
-                    letterSpacing: '0.025em',
-                    '::placeholder': {
-                      color: '#9ca3af',
-                      fontWeight: '400',
-                    },
-                    iconColor: '#6b7280',
+          <CardElement
+            id="card-element"
+            onChange={handleCardChange}
+            options={{
+              hidePostalCode: false,
+              style: {
+                base: {
+                  fontSize: '14px',
+                  color: '#374151',
+                  '::placeholder': {
+                    color: '#9CA3AF',
                   },
-                  invalid: {
-                    color: '#ef4444',
-                    iconColor: '#ef4444',
-                  },
-                  complete: {
-                    color: '#10b981',
-                    iconColor: '#10b981',
-                  }
                 },
-                hidePostalCode: true,
-                fields: {
-                  number: {
-                    placeholder: '1234 1234 1234 1234'
-                  },
-                  expirationDate: {
-                    placeholder: 'MM/YY'
-                  },
-                  cvc: {
-                    placeholder: '123'
-                  }
-                }
-              }}
-            />
-          </div>
+                invalid: {
+                  color: '#EF4444',
+                },
+              },
+            }}
+          />
         </div>
         
         {/* Security Badge */}
@@ -430,10 +491,16 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
         {/* Payment Method Icons */}
         <div className="flex items-center justify-center space-x-4 py-2">
           <span className="text-xs text-neutral-600">We accept:</span>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 flex-wrap justify-center">
             <div className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs font-medium rounded">VISA</div>
             <div className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs font-medium rounded">MC</div>
             <div className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs font-medium rounded">AMEX</div>
+            {canMakePayment && (
+              <>
+                <div className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs font-medium rounded">Apple Pay</div>
+                <div className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs font-medium rounded">Google Pay</div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -488,10 +555,9 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   );
 };
 
-// Enhanced Premium Report Features with card-based design and animations
+// Enhanced Premium Report Features with card-based design
 const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  const [animationRef, isVisible] = useScrollAnimation(0.2);
   
   // Update mobile state on resize
   React.useEffect(() => {
@@ -536,23 +602,11 @@ const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
   const featuresToShow = showAll ? [...coreFeatures, ...additionalFeatures] : coreFeatures;
 
   return (
-    <div ref={animationRef} className="space-y-4">
+    <div className="space-y-4">
       {featuresToShow.map((feature, index) => (
         <div 
           key={index} 
-          className={`
-            bg-white rounded-lg p-4 shadow-sm hover:shadow-lg
-            transition-colors duration-200 cursor-pointer
-            transform
-            ${
-              isVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-4'
-            }
-          `}
-          style={{ 
-            transitionDelay: isVisible ? `${index * 100}ms` : '0ms'
-          }}
+          className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg transition-colors duration-200 cursor-pointer"
         >
           <div className="flex items-start space-x-3">
             <div className="flex-shrink-0">
@@ -599,13 +653,11 @@ const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
   );
 };
 
-// Enhanced MarketDash Payment Dialog Component with Two-Column Layout and Animations
+// Enhanced MarketDash Payment Dialog Component with Two-Column Layout
 export const PaymentDialog = ({ open, onClose, registration }) => {
   const navigate = useNavigate();
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  const [leftColumnRef, leftColumnVisible] = useScrollAnimation(0.2);
-  const [rightColumnRef, rightColumnVisible] = useScrollAnimation(0.2);
 
   // Update mobile state on resize
   React.useEffect(() => {
@@ -639,19 +691,9 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 min-h-[500px]">
         {/* LEFT COLUMN: Trust & Features */}
-        <div 
-          ref={leftColumnRef}
-          className={`
-            space-y-8 transform transition-colors duration-200 ease-out
-            ${leftColumnVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}
-          `}
-        >
+        <div className="space-y-8">
           {/* Trust Hero Section */}
-          <div className={`
-            bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg
-            transition-colors duration-200 cursor-pointer transform
-            ${leftColumnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `} style={{ transitionDelay: '200ms' }}>
+          <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-colors duration-200 cursor-pointer">
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
                 <i className="ph ph-shield-check text-2xl text-blue-600 mt-1 flex-shrink-0"></i>
@@ -668,10 +710,7 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
           </div>
           
           {/* Professional Positioning */}
-          <div className={`
-            text-center py-6 transform transition-colors duration-200 ease-out
-            ${leftColumnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `} style={{ transitionDelay: '300ms' }}>
+          <div className="text-center py-6">
             <div className="text-sm text-neutral-600 mb-2">
               {isMobile ? 'Professional Intelligence for' : 'Professional-Grade Intelligence for'}
             </div>
@@ -681,10 +720,7 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
           </div>
           
           {/* Features */}
-          <div className={`
-            transform transition-colors duration-200 ease-out
-            ${leftColumnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `} style={{ transitionDelay: '400ms' }}>
+          <div>
             <PremiumReportFeatures 
               showAll={showAllFeatures}
               onToggle={toggleFeatures}
@@ -693,34 +729,16 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
         </div>
 
         {/* RIGHT COLUMN: Action & Payment */}
-        <div 
-          ref={rightColumnRef}
-          className={`
-            space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8
-            transform transition-colors duration-200 ease-out
-            ${rightColumnVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
-          `}
-          style={{ transitionDelay: '200ms' }}
-        >
+        <div className="space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8">
           {/* Pricing Section */}
-          <div className={`
-            bg-neutral-50 rounded-lg p-6 text-center shadow-sm hover:shadow-lg
-            hover:scale-[1.02] transition-colors duration-200 cursor-pointer
-            transform ${rightColumnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `} style={{ transitionDelay: '400ms' }}>
+          <div className="bg-neutral-50 rounded-lg p-6 text-center shadow-sm hover:shadow-lg transition-colors duration-200 cursor-pointer">
             <div className="text-sm text-neutral-600 mb-2">One-time payment</div>
-            <div className={`
-              text-3xl font-bold text-neutral-900 mb-2 transition-all duration-500
-              ${rightColumnVisible ? 'scale-100' : 'scale-0'}
-            `} style={{ transitionDelay: '600ms' }}>£4.95</div>
+            <div className="text-3xl font-bold text-neutral-900 mb-2">£4.95</div>
             <div className="text-sm text-neutral-600">Instant access • No subscription</div>
           </div>
           
           {/* Payment Form */}
-          <div className={`
-            space-y-4 transform transition-all duration-500 ease-out
-            ${rightColumnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `} style={{ transitionDelay: '500ms' }}>
+          <div className="space-y-4">
             <Elements stripe={stripePromise}>
               <PaymentForm 
                 registration={registration}
@@ -795,7 +813,7 @@ export const FreeReportDialog = ({ open, onClose, registration, reportType = 'cl
         {/* LEFT COLUMN: Value & Trust */}
         <div className="space-y-6">
           {/* Hero Section */}
-          <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg">
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
                 <i className="ph ph-gift text-2xl text-green-600 mt-1"></i>
@@ -1013,7 +1031,7 @@ export const SampleReportButton = ({ onClick, className }) => {
       onClick={onClick}
       className={`
         px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg
-        hover:bg-blue-700 hover:scale-[1.02] transition-colors duration-200
+        hover:bg-blue-700 transition-colors duration-200
         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
         flex items-center justify-center space-x-2 mr-3
         ${className || ''}
@@ -1067,7 +1085,7 @@ export const SampleReportDialog = ({ open, onClose, onProceedToPayment }) => {
             onClick={handleProceedToPayment}
             className="
               px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white text-xs md:text-sm font-medium rounded-lg
-              hover:bg-blue-700 hover:scale-[1.02] transition-colors duration-200
+              hover:bg-blue-700 transition-colors duration-200
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
               flex-shrink-0 flex items-center space-x-2
             "
@@ -1097,7 +1115,7 @@ export const FullScreenSampleReportButton = ({ className, onProceedToPayment }) 
         onClick={handleOpen}
         className={`
           px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg
-          hover:bg-blue-700 hover:scale-[1.02] transition-colors duration-200
+          hover:bg-blue-700 transition-colors duration-200
           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
           flex items-center justify-center space-x-2
           ${className || ''}

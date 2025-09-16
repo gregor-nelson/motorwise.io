@@ -369,3 +369,15 @@
 2025-09-10 14:44:53,076 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
 2025-09-10 14:44:58,821 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
 2025-09-10 14:45:04,587 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-15 14:07:34,307 - vehicle_analysis_api - ERROR - Missing required environment variables: CLAUDE_API_KEY, MOT_API_URL, BULLETINS_API_URL
+2025-09-15 14:11:33,535 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-09-15 14:11:33,549 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-09-15 14:11:33,671 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-09-15 14:11:33,671 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-09-15 14:12:42,366 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-09-15 14:12:42,368 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-09-15 14:12:42,566 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-09-15 14:12:42,567 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-09-15 14:13:20,402 - vehicle_analysis_api - INFO - Application shutting down
+2025-09-15 20:41:38,918 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-09-15 20:41:38,919 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk

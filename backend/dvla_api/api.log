@@ -10662,3 +10662,21 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-09-10 14:44:52,075 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
 2025-09-10 14:44:57,837 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
 2025-09-10 14:45:03,609 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-09-15 14:07:31,768 - ves_api - ERROR - Missing required environment variables: DVLA_API_KEY
+2025-09-15 14:11:30,528 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-09-15 14:11:30,528 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-09-15 14:11:30,528 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-09-15 14:12:38,501 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-09-15 14:12:38,501 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-09-15 14:12:38,502 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-09-15 20:41:35,620 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-09-15 20:41:35,621 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-09-15 20:41:35,621 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']
+2025-09-15 20:46:05,530 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-09-15 20:46:06,710 - ves_api - INFO - Cache MISS for VRN: CN09JEJ. Fetching from DVLA API.
+2025-09-15 20:46:07,944 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-09-15 20:46:07,946 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-09-15 20:46:07,946 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52348 - Status: 200 - Process Time: 1.2380s
+2025-09-15 20:46:07,994 - httpx - INFO - HTTP Request: POST https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles "HTTP/1.1 200 OK"
+2025-09-15 20:46:07,996 - ves_api - INFO - Successfully fetched vehicle data from DVLA API for VRN: CN09JEJ
+2025-09-15 20:46:07,997 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:52329 - Status: 200 - Process Time: 2.4758s

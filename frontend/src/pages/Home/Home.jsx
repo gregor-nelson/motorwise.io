@@ -1,5 +1,5 @@
 // Import components
-import Header from './components/Header/Header';
+import Header from './components/Header/Header.jsx';
 import Hero from './components/Hero/Hero';
 import PremiumReportFeature from './components/Premium/Premium';
 import HelpSection  from './components/FAQ/FAQ';

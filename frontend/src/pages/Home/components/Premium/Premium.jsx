@@ -29,8 +29,8 @@ function ConfidenceMeter({ value = 86 }) {
   return (
     <div className="w-full max-w-md bg-neutral-50 rounded-lg shadow-sm p-4 mt-6">
       <div className="flex justify-between text-xs font-medium text-neutral-600 mb-2">
-        <span>Amateur Risk</span>
-        <span>Professional Confidence</span>
+        <span>Limited Information</span>
+        <span>Complete Analysis</span>
       </div>
       <div className="h-3 w-full bg-neutral-200 rounded-full overflow-hidden">
         <div
@@ -41,8 +41,8 @@ function ConfidenceMeter({ value = 86 }) {
         />
       </div>
       <div className="flex justify-between text-xs text-neutral-500 mt-2">
-        <span>High vulnerability</span>
-        <span className="font-medium text-green-600">{value}% protected</span>
+        <span>Basic MOT check only</span>
+        <span className="font-medium text-green-600">{value}% more insights</span>
       </div>
     </div>
   );
@@ -98,50 +98,50 @@ const PremiumVehicleReports = () => {
   const premiumFeatures = {
     protection: {
       identityVerification: {
-        label: "Expose Hidden Vehicle Secrets",
-        description: "Uncover what sellers desperately hope you'll never discover. Access the same classified DVLA intelligence that police use to catch criminals - revealing stolen vehicles, insurance write-offs, and illegal modifications before they destroy your investment",
-        outcome: "Sleep soundly knowing you'll never fall victim to a £20,000 nightmare that gets seized at your doorstep",
-        authority: "Government-grade intelligence • Used by law enforcement",
-        emotionalHook: "Smart buyers know what amateurs miss"
+        label: "Official DVLA Vehicle Check",
+        description: "Access real-time DVLA data to verify vehicle identity, check for outstanding finance, insurance write-off status, and confirm registration details match the vehicle you're viewing",
+        outcome: "Buy with confidence knowing the vehicle's official records are accurate and complete",
+        authority: "Official DVLA database • Government-verified data",
+        emotionalHook: "Verify before you buy"
       },
       fraudProtection: {
-        label: "Outsmart the £800M Mileage Fraud Epidemic", 
-        description: "While naive buyers lose thousands to odometer fraud every day, you'll wield the same forensic tools that insurance investigators use to expose the criminals stealing from unsuspecting families",
-        outcome: "Watch other buyers get fooled while you confidently walk away from ticking time bombs",
-        authority: "Forensic-grade fraud detection • Patent-pending algorithms",
-        emotionalHook: "Join the elite who refuse to be victims"
+        label: "Mileage Verification Analysis",
+        description: "Our analysis system tracks mileage progression across all MOT tests to identify potential odometer tampering, irregular patterns, or inconsistencies in the vehicle's recorded history",
+        outcome: "Spot mileage discrepancies that could indicate fraud or odometer rollback",
+        authority: "Historical MOT data analysis • Advanced pattern detection",
+        emotionalHook: "Trust the data, not just the seller"
       }
     },
     professionalAnalysis: {
       technicalIntelligence: {
-        label: "Think Like a Master Technician",
-        description: "Command the same insider knowledge that BMW, Mercedes, and Audi technicians guard jealously - secret service bulletins, hidden recalls, and manufacturer cover-ups that could save or cost you thousands",
-        outcome: "Negotiate like a seasoned dealer who knows every weakness and expensive surprise lurking ahead",
-        authority: "Professional-grade database • Trusted by 150,000+ elite mechanics",
-        emotionalHook: "Knowledge is power - and power is profit"
+        label: "Intelligent Technical Analysis",
+        description: "Our proprietary analysis engine examines your vehicle's complete MOT history and cross-references defects with manufacturer technical service information to identify known issues, common failures, and documented problems specific to your exact make and model",
+        outcome: "Understand potential repair costs and recurring issues before making your purchase decision",
+        authority: "Comprehensive technical database • 46,000+ vehicle models covered",
+        emotionalHook: "Know what you're buying before you commit"
       },
       usageInsights: {
-        label: "See Through the Seller's Lies",
-        description: "Piercing through polished stories with military-grade pattern recognition that exposes brutal commercial abuse, hidden taxi use, and punishing driving that sellers pray you'll never suspect",
-        outcome: "Become the buyer that sellers fear - the one who sees everything they're trying to hide",
-        authority: "Forensic analysis tech • Military-derived algorithms",
-        emotionalHook: "Elevate yourself above the deceived masses"
+        label: "Defect Pattern Recognition",
+        description: "Our analysis system identifies recurring defects, progressive deterioration patterns, and correlates MOT advisories with manufacturer service information to reveal the vehicle's true maintenance history and likely future issues",
+        outcome: "Anticipate upcoming maintenance needs and factor them into your buying decision",
+        authority: "Advanced pattern recognition • Historical defect tracking",
+        emotionalHook: "See the complete picture, not just today's condition"
       }
     },
     empowerment: {
       marketIntelligence: {
-        label: "Dominate Every Negotiation",
-        description: "Arm yourself with the devastating market intelligence that dealers use to crush amateur buyers - 40+ million vehicle records analyzed to reveal exactly when you're being robbed and when you've found hidden gold",
-        outcome: "Transform from prey into predator - watch sellers squirm as you expose their inflated prices with surgical precision",
-        authority: "Dealer-grade market analysis • 2M+ professional reports annually",
-        emotionalHook: "Turn the tables on those who profit from ignorance"
+        label: "Comprehensive Vehicle Report",
+        description: "Receive a detailed analysis combining MOT history, DVLA records, mileage progression, defect patterns, and technical service correlations - all the information you need to make an informed decision",
+        outcome: "Negotiate with confidence using documented evidence of the vehicle's condition and history",
+        authority: "Multi-source data integration • Comprehensive reporting",
+        emotionalHook: "Make decisions based on facts, not feelings"
       },
       confidenceScore: {
-        label: "Achieve Unstoppable Buying Confidence",
-        description: "Eliminate the crushing anxiety and second-guessing that paralyzes ordinary buyers - wield the same multi-layered risk assessment that fleet managers and automotive executives trust with million-pound decisions",
-        outcome: "Move with the unshakeable certainty of someone who has insider knowledge while others stumble in the dark",
-        authority: "Executive-grade decision framework • Trusted by industry leaders",
-        emotionalHook: "Confidence is the ultimate luxury"
+        label: "Vehicle Health Assessment",
+        description: "Our analysis engine provides an overall vehicle health score, identifies high-risk systems, highlights recurring issues, and delivers maintenance insights based on the complete analysis of MOT data and manufacturer technical information",
+        outcome: "Get a clear, objective assessment of whether this vehicle is a good purchase",
+        authority: "Intelligent decision support • System-by-system analysis",
+        emotionalHook: "Buy smart with data-driven insights"
       }
     }
   };
@@ -153,21 +153,22 @@ const PremiumVehicleReports = () => {
       <header className="mb-16">
         <div className="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium bg-blue-50 text-blue-600 rounded-full">
           <i className="ph ph-shield-check mr-2"></i>
-          Professional Intelligence
+          Advanced Vehicle Analysis
         </div>
         <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-4">
-          Become The Buyer Sellers Fear
+          Make Informed Decisions with Expert MOT Analysis
         </h1>
         <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl mb-4">
-          While amateur buyers stumble blindly into costly traps, you'll possess the same classified intelligence that 
-          government agencies and automotive professionals use to expose hidden dangers and seize unfair advantages.
+          Our premium report analyzes a vehicle's complete MOT history using our proprietary analysis engine
+          that cross-references defects with manufacturer technical data. Get detailed insights into known issues,
+          recurring defects, and potential problems specific to the exact make and model you're considering.
         </p>
-        <div className="inline-flex items-center px-4 py-2 text-xs font-medium bg-red-50 text-red-700 rounded-lg shadow-sm">
-          <i className="ph ph-warning-circle mr-2"></i>
-          £2.3B stolen from innocent buyers annually - don't be next
+        <div className="inline-flex items-center px-4 py-2 text-xs font-medium bg-blue-50 text-blue-700 rounded-lg shadow-sm">
+          <i className="ph ph-brain mr-2"></i>
+          Comprehensive analysis combining official MOT data with professional technical knowledge
         </div>
         <div className="mt-3 text-xs text-neutral-500">
-          Join the insider circle that profits while others lose
+          Know what you're buying before you commit
         </div>
 
         <ConfidenceMeter value={86} />
@@ -182,54 +183,21 @@ const PremiumVehicleReports = () => {
           <ReportPreviewShowcase />
         </div>
 
-        <div className="mt-6 p-4 bg-neutral-50 rounded-lg shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center space-x-2">
-              <i className="ph ph-calculator text-sm text-neutral-600"></i>
-              <span className="text-sm font-medium text-neutral-900">Smart Buyer Risk Assessment</span>
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg shadow-sm border border-blue-100">
+          <div className="flex items-start space-x-3 mb-3">
+            <i className="ph ph-info text-lg text-blue-600 mt-0.5"></i>
+            <div>
+              <span className="text-sm font-medium text-neutral-900 block mb-1">What's Included in the Premium Report</span>
+              <ul className="text-xs text-neutral-600 space-y-1 list-disc list-inside">
+                <li>Complete MOT history analysis with intelligent defect pattern recognition</li>
+                <li>Cross-reference with manufacturer technical service information</li>
+                <li>System-by-system health assessment and risk scoring</li>
+                <li>Identification of recurring issues and progressive deterioration</li>
+                <li>Maintenance insights and potential future repair costs</li>
+                <li>Overall vehicle confidence score based on comprehensive data analysis</li>
+              </ul>
             </div>
-            <button 
-              onClick={() => setShowRiskCalculator(!showRiskCalculator)}
-              className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
-            >
-              {showRiskCalculator ? 'Hide' : 'Calculate Your Risk'}
-            </button>
           </div>
-          
-          {showRiskCalculator && (
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs text-neutral-600 mb-1 block">Vehicle price you're considering:</label>
-                <input 
-                  type="text"
-                  value={vehiclePrice}
-                  onChange={(e) => {
-                    setVehiclePrice(e.target.value);
-                    setRiskScore(calculateRisk(e.target.value));
-                  }}
-                  placeholder="£15,000"
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
-                />
-              </div>
-              
-              {riskScore > 0 && (
-                <div className="p-3 bg-white rounded-lg shadow-sm">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-medium text-red-700">
-                      Without professional intelligence, your fraud risk is:
-                    </span>
-                    <span className="text-sm font-bold text-red-700">{riskScore}%</span>
-                  </div>
-                  <div className="text-xs text-red-600 mb-2">
-                    Potential loss: £{Math.round(parseInt(vehiclePrice.replace(/[£,]/g, '')) * (riskScore/100)).toLocaleString()}
-                  </div>
-                  <div className="text-xs text-green-700 font-medium">
-                    ✓ Our intelligence reduces this risk to &lt;5% - protecting your investment
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </header>
       <div className="space-y-8 mb-12">
@@ -384,16 +352,16 @@ const PremiumVehicleReports = () => {
               {expandedCards['technical-intelligence'] && (
                 <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
                   <div className="flex items-start space-x-2">
-                    <i className="ph ph-warning-circle text-yellow-600 mt-0.5 flex-shrink-0"></i>
-                    <span>DPF regeneration issues - potential expensive repair</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
                     <i className="ph ph-info text-blue-600 mt-0.5 flex-shrink-0"></i>
-                    <span>Brake fluid sensor recall completed in 2022</span>
+                    <span>Our database covers over 46,000 vehicle models</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <i className="ph ph-wrench text-green-600 mt-0.5 flex-shrink-0"></i>
-                    <span>Regular service intervals maintained professionally</span>
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Known manufacturer issues matched to your vehicle's defects</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-wrench text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Technical repair insights and diagnostic information</span>
                   </div>
                 </div>
               )}
@@ -446,16 +414,16 @@ const PremiumVehicleReports = () => {
               {expandedCards['usage-insights'] && (
                 <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
                   <div className="flex items-start space-x-2">
-                    <i className="ph ph-warning text-yellow-600 mt-0.5 flex-shrink-0"></i>
-                    <span>Multiple brake component failures suggest hard driving</span>
+                    <i className="ph ph-chart-line text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Our system identifies patterns across MOT history (recurring defects, progressive wear)</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <i className="ph ph-info text-blue-600 mt-0.5 flex-shrink-0"></i>
-                    <span>Consistent MOT intervals indicate responsible ownership</span>
+                    <i className="ph ph-magnifying-glass text-purple-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Cross-references defects with known manufacturer service issues</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
-                    <span>No evidence of commercial or taxi usage patterns</span>
+                    <i className="ph ph-warning-circle text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Highlights potential future maintenance needs based on history</span>
                   </div>
                 </div>
               )}
@@ -607,10 +575,10 @@ const PremiumVehicleReports = () => {
       <header className="mb-12">
         <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
           <i className="ph ph-database text-2xl mr-3 text-purple-600"></i>
-          Professional-Grade Data Sources
+          Our Data Sources
         </h1>
         <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl">
-          Official government databases and professional-grade intelligence systems
+          We combine official government data with professional automotive technical information using our proprietary analysis engine
         </p>
       </header>
 
@@ -657,33 +625,33 @@ const PremiumVehicleReports = () => {
               <i className="ph ph-wrench text-2xl text-purple-600"></i>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-purple-600">150K+</div>
-              <div className="text-xs text-purple-600">Garages</div>
+              <div className="text-2xl font-bold text-purple-600">46K+</div>
+              <div className="text-xs text-purple-600">Models</div>
             </div>
           </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">AutoData Pro</div>
-          <div className="text-xs text-neutral-600 mb-3">Technical service database</div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Technical Database</div>
+          <div className="text-xs text-neutral-600 mb-3">Manufacturer service information</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span className="text-xs text-purple-600">OEM trusted</span>
+            <span className="text-xs text-purple-600">Professional-grade</span>
           </div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
-              <i className="ph ph-detective text-2xl text-red-600"></i>
+              <i className="ph ph-brain text-2xl text-red-600"></i>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-red-600">AI</div>
-              <div className="text-xs text-red-600">Powered</div>
+              <div className="text-2xl font-bold text-red-600">Smart</div>
+              <div className="text-xs text-red-600">Analysis</div>
             </div>
           </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">Fraud Detection</div>
-          <div className="text-xs text-neutral-600 mb-3">Financial-grade algorithms</div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Analysis Engine</div>
+          <div className="text-xs text-neutral-600 mb-3">Advanced pattern recognition</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span className="text-xs text-red-600">Patent pending</span>
+            <span className="text-xs text-red-600">Proprietary system</span>
           </div>
         </div>
       </div>
@@ -693,10 +661,10 @@ const PremiumVehicleReports = () => {
       <header className="mb-12">
         <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
           <i className="ph ph-lightning text-2xl mr-3 text-yellow-600"></i>
-          Professional Intelligence Delivery
+          How You Receive Your Report
         </h1>
         <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl">
-          Multiple formats for every decision-making context
+          Fast, comprehensive analysis delivered in multiple formats
         </p>
       </header>
 
@@ -707,69 +675,69 @@ const PremiumVehicleReports = () => {
               <i className="ph ph-clock text-2xl text-green-600"></i>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-green-600">30s</div>
+              <div className="text-2xl font-bold text-green-600">&lt;60s</div>
               <div className="text-xs text-green-600">Analysis</div>
             </div>
           </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">Instant Analysis</div>
-          <div className="text-xs text-neutral-600 mb-3">Complete intelligence delivered fast</div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Fast Analysis</div>
+          <div className="text-xs text-neutral-600 mb-3">Complete vehicle history processed in under a minute</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-xs text-green-600">Real-time</span>
+            <span className="text-xs text-green-600">On-demand</span>
           </div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
-              <i className="ph ph-code text-2xl text-blue-600"></i>
+              <i className="ph ph-monitor text-2xl text-blue-600"></i>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-blue-600">API</div>
-              <div className="text-xs text-blue-600">Access</div>
+              <div className="text-2xl font-bold text-blue-600">Web</div>
+              <div className="text-xs text-blue-600">Report</div>
             </div>
           </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">Enterprise API</div>
-          <div className="text-xs text-neutral-600 mb-3">Direct system integration</div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Online Report</div>
+          <div className="text-xs text-neutral-600 mb-3">View detailed analysis in your browser</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <span className="text-xs text-blue-600">Dealer-grade</span>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
-              <i className="ph ph-file-pdf text-2xl text-red-600"></i>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-red-600">PDF</div>
-              <div className="text-xs text-red-600">Reports</div>
-            </div>
-          </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">Legal Documentation</div>
-          <div className="text-xs text-neutral-600 mb-3">Professional-grade reports</div>
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span className="text-xs text-red-600">Bank-compliant</span>
+            <span className="text-xs text-blue-600">Interactive</span>
           </div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-300">
-              <i className="ph ph-cube text-2xl text-purple-600"></i>
+              <i className="ph ph-chart-bar text-2xl text-purple-600"></i>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-purple-600">3D</div>
-              <div className="text-xs text-purple-600">Visual</div>
+              <div className="text-2xl font-bold text-purple-600">Visual</div>
+              <div className="text-xs text-purple-600">Data</div>
             </div>
           </div>
-          <div className="text-sm font-medium text-neutral-900 mb-2">Advanced Visualization</div>
-          <div className="text-xs text-neutral-600 mb-3">Interactive data insights</div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Charts & Graphs</div>
+          <div className="text-xs text-neutral-600 mb-3">Mileage trends and defect timelines</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span className="text-xs text-purple-600">Interactive</span>
+            <span className="text-xs text-purple-600">Easy to read</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
+              <i className="ph ph-file-text text-2xl text-red-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-red-600">Expert</div>
+              <div className="text-xs text-red-600">Summary</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Written Analysis</div>
+          <div className="text-xs text-neutral-600 mb-3">Detailed findings explained in plain English</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <span className="text-xs text-red-600">Comprehensive</span>
           </div>
         </div>
       </div>

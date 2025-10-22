@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../Home/components/Header/Header';
+import Header from '../Home/components/Header/Header.jsx';
 import Footer from '../Home/components/Footer/Footer';
 
 const Contact = () => {

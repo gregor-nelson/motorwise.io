@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 DevEnvironmentGUI.py
-A GUI application to start and monitor MotCheck-UK services using PyQt6.
+A GUI application to start and monitor motorwise.io services using PyQt6.
 With One Dark theme styling and enhanced terminal support.
 """
 
@@ -18,7 +18,7 @@ from PyQt6.QtCore import Qt, QProcess, pyqtSlot, QTimer
 from PyQt6.QtGui import QColor, QTextCursor, QFont, QTextCharFormat
 
 # Configuration
-BASE_DIR = os.path.expanduser("~/Downloads/Dev/MotCheck-UK")
+BASE_DIR = os.path.expanduser("~/Downloads/Dev/motorwise.io")
 BACKEND_DIR = os.path.join(BASE_DIR, "backend")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
@@ -693,7 +693,7 @@ class MainWindow(QMainWindow):
     
     def init_ui(self):
         """Initialize the UI components."""
-        self.setWindowTitle("MotCheck-UK Development Environment")
+        self.setWindowTitle("motorwise.io Development Environment")
         self.setGeometry(100, 100, 1200, 800)
         
         # Apply One Dark theme to the main window

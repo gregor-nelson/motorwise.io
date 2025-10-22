@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:animejs.com)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(dir \"C:\\Users\\gregor\\Downloads\\Dev\\motorwise.io\\frontend\\src\\pages\\Home\\components\\Header\")"
     ],
     "deny": [],
     "ask": []

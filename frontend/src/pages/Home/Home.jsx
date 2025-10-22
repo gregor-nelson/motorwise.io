@@ -9,15 +9,15 @@ function Home() {
   return (
     <>
       <Header />
-    
+      <main id="main-content" className="pt-16 md:pt-0 md:ml-[60px]">
         <Hero />
 
         <PremiumReportFeature />
 
         <HelpSection />
 
-      
-      <Footer />
+        <Footer />
+      </main>
     </>
   );
 }

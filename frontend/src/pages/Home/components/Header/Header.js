@@ -551,6 +551,7 @@ export class VanillaHeader {
     this.render();
     this.cacheDOMReferences();
     this.setupEventListeners();
+    this.updateDOM(); // Ensure initial state is synced with DOM
   }
 
   render() {
@@ -562,6 +563,29 @@ export class VanillaHeader {
         Skip to main content
       </a>
 
+      <header data-mobile-header class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-neutral-200 z-[60] flex items-center justify-between px-4">
+        <a
+          href="/"
+          data-nav-link="/"
+          class="flex flex-col justify-center transition-transform duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+          aria-label="motorwise - Vehicle intelligence platform - Home"
+        >
+          <h1 class="text-xl font-medium text-neutral-900 leading-tight tracking-tight m-0 font-jost">
+            motor<span class="text-blue-600 relative inline-block">w<span class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-80"></span></span>ise
+          </h1>
+          <p class="text-xs text-neutral-600 mt-1 font-jost">Clear data. Wise choices</p>
+        </a>
+
+        <button
+          data-mobile-hamburger
+          class="flex items-center justify-center w-10 h-10 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 text-neutral-700 hover:text-neutral-900"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        >
+          <i class="ph ph-list text-3xl"></i>
+        </button>
+      </header>
+
       <div
         data-backdrop
         class="fixed inset-0 bg-black transition-opacity duration-300 z-40 opacity-0 pointer-events-none"
@@ -570,7 +594,7 @@ export class VanillaHeader {
 
       <aside
         data-sidebar
-        class="fixed left-0 top-0 h-screen w-[60px] bg-white border-r border-neutral-200 z-50 flex flex-col items-center py-6 gap-6"
+        class="hidden md:flex fixed left-0 top-0 h-screen w-[60px] bg-white border-r border-neutral-200 z-50 flex-col items-center py-6 gap-6"
         aria-label="Main navigation"
       >
         <a
@@ -598,10 +622,10 @@ export class VanillaHeader {
 
       <div
         data-sidebar-panel
-        class="fixed left-[60px] top-0 h-screen w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -translate-x-full"
+        class="fixed left-0 md:left-[60px] top-16 md:top-0 max-h-[calc(100vh-4rem)] md:h-screen w-full md:w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto md:overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex md:flex-col"
         aria-hidden="true"
       >
-        <div class="px-6 py-6 border-b border-neutral-200 flex items-start justify-between">
+        <div class="hidden md:flex px-6 py-6 border-b border-neutral-200 items-start justify-between md:flex-shrink-0">
           <div>
             <h1 class="text-xl font-medium text-neutral-900 leading-tight tracking-tight m-0 font-jost">
               motor<span class="text-blue-600 relative inline-block">w<span class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-80"></span></span>ise
@@ -618,15 +642,16 @@ export class VanillaHeader {
           </button>
         </div>
 
-        <div class="px-6 py-6 flex flex-col gap-4" data-nav-cards>
-          ${NAV_ITEMS.map((item) => `
-            <a
-              href="${item.href}"
-              data-nav-card
-              data-href="${item.href}"
-              data-svg-key="${item.svgKey}"
-              class="relative w-full aspect-square rounded-xl overflow-hidden group cursor-pointer border-2 ${item.borderColor} transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 block ${item.bgColor}"
-            >
+        <div class="px-6 py-6 md:flex-1 md:overflow-y-auto md:[scrollbar-width:thin]" data-nav-cards>
+          <div class="flex md:flex-col gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x snap-mandatory md:snap-none [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 md:[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-neutral-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+            ${NAV_ITEMS.map((item) => `
+              <a
+                href="${item.href}"
+                data-nav-card
+                data-href="${item.href}"
+                data-svg-key="${item.svgKey}"
+                class="relative flex-shrink-0 md:flex-shrink w-64 md:w-full aspect-square rounded-xl overflow-hidden group cursor-pointer border-2 ${item.borderColor} transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 block ${item.bgColor} snap-center md:snap-align-none"
+              >
               <div class="absolute inset-0 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-300" data-svg-container="${item.svgKey}"></div>
               <div class="absolute bottom-4 left-4 z-10">
                 <span class="inline-block px-4 py-2 ${item.pillColor} ${item.textColor} text-xs font-semibold uppercase tracking-wider rounded-full font-jost shadow-sm">
@@ -636,9 +661,10 @@ export class VanillaHeader {
               <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
             </a>
           `).join('')}
+          </div>
         </div>
 
-        <div class="px-6 pb-6">
+        <div class="px-6 pb-6 md:flex-shrink-0">
           <button
             data-more-button
             class="w-full px-4 py-3 text-left flex items-center justify-between transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 hover:bg-neutral-50 rounded-lg"
@@ -676,17 +702,6 @@ export class VanillaHeader {
           </div>
         </div>
       </div>
-
-      <div class="fixed top-0 left-[60px] right-0 bg-neutral-50 py-3 z-30 border-b border-neutral-200">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 flex items-center gap-2 md:gap-3 flex-wrap md:flex-nowrap">
-          <strong class="inline-block text-xs font-semibold uppercase tracking-wider px-2 py-1 bg-blue-600 text-white flex-shrink-0 font-jost">BETA</strong>
-          <p class="text-xs text-neutral-600 m-0 leading-relaxed font-jost">
-            This is a new service – your{' '}
-            <a href="/contact" data-nav-link="/contact" class="text-blue-600 underline underline-offset-2 hover:text-neutral-900 hover:decoration-2 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:bg-neutral-50 focus-visible:no-underline">feedback</a>{' '}
-            will help us to improve it.
-          </p>
-        </div>
-      </div>
     `;
 
     this.container.innerHTML = html;
@@ -695,9 +710,11 @@ export class VanillaHeader {
   cacheDOMReferences() {
     this.refs = {
       backdrop: this.container.querySelector('[data-backdrop]'),
+      mobileHeader: this.container.querySelector('[data-mobile-header]'),
       sidebar: this.container.querySelector('[data-sidebar]'),
       panel: this.container.querySelector('[data-sidebar-panel]'),
       hamburger: this.container.querySelector('[data-hamburger]'),
+      mobileHamburger: this.container.querySelector('[data-mobile-hamburger]'),
       closeSidebar: this.container.querySelector('[data-close-sidebar]'),
       moreButton: this.container.querySelector('[data-more-button]'),
       moreContent: this.container.querySelector('[data-more-content]'),
@@ -711,6 +728,7 @@ export class VanillaHeader {
     const signal = this.abortController.signal;
 
     this.refs.hamburger?.addEventListener('click', () => this.toggleSidebar(), { signal });
+    this.refs.mobileHamburger?.addEventListener('click', () => this.toggleSidebar(), { signal });
     this.refs.closeSidebar?.addEventListener('click', () => this.closeSidebar(), { signal });
     this.refs.backdrop?.addEventListener('click', () => this.closeSidebar(), { signal });
     this.refs.moreButton?.addEventListener('click', () => this.toggleMore(), { signal });
@@ -721,6 +739,14 @@ export class VanillaHeader {
 
     document.addEventListener('click', (e) => this.handleClickOutside(e), { signal, passive: true });
     document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal, passive: false });
+    window.addEventListener('resize', () => this.handleResize(), { signal, passive: true });
+  }
+
+  handleResize() {
+    // Update transform on resize if sidebar is closed
+    if (!this.state.sidebarExpanded) {
+      this.updateDOM();
+    }
   }
 
   setState(updates) {
@@ -731,9 +757,11 @@ export class VanillaHeader {
   updateDOM() {
     requestAnimationFrame(() => {
       const { sidebarExpanded, moreExpanded } = this.state;
+      const isMobile = window.innerWidth < 768;
 
       if (sidebarExpanded) {
-        this.refs.panel?.classList.remove('-translate-x-full');
+        // Remove both transforms
+        this.refs.panel?.classList.remove('-translate-x-full', '-translate-y-full');
         this.refs.panel?.setAttribute('aria-hidden', 'false');
         this.refs.backdrop?.classList.remove('opacity-0', 'pointer-events-none');
         this.refs.backdrop?.classList.add('opacity-50');
@@ -741,6 +769,10 @@ export class VanillaHeader {
         this.refs.hamburger?.classList.remove('text-neutral-700');
         this.refs.hamburger?.setAttribute('aria-expanded', 'true');
         this.refs.hamburger?.setAttribute('aria-label', 'Close navigation menu');
+        this.refs.mobileHamburger?.classList.add('text-blue-600');
+        this.refs.mobileHamburger?.classList.remove('text-neutral-700');
+        this.refs.mobileHamburger?.setAttribute('aria-expanded', 'true');
+        this.refs.mobileHamburger?.setAttribute('aria-label', 'Close navigation menu');
         document.body.style.overflow = 'hidden';
 
         if (!this.animationsInitialized) {
@@ -748,7 +780,13 @@ export class VanillaHeader {
           this.animationsInitialized = true;
         }
       } else {
-        this.refs.panel?.classList.add('-translate-x-full');
+        // Add appropriate transform based on screen size
+        this.refs.panel?.classList.remove('-translate-x-full', '-translate-y-full');
+        if (isMobile) {
+          this.refs.panel?.classList.add('-translate-y-full');
+        } else {
+          this.refs.panel?.classList.add('-translate-x-full');
+        }
         this.refs.panel?.setAttribute('aria-hidden', 'true');
         this.refs.backdrop?.classList.add('opacity-0', 'pointer-events-none');
         this.refs.backdrop?.classList.remove('opacity-50');
@@ -756,6 +794,10 @@ export class VanillaHeader {
         this.refs.hamburger?.classList.add('text-neutral-700');
         this.refs.hamburger?.setAttribute('aria-expanded', 'false');
         this.refs.hamburger?.setAttribute('aria-label', 'Open navigation menu');
+        this.refs.mobileHamburger?.classList.remove('text-blue-600');
+        this.refs.mobileHamburger?.classList.add('text-neutral-700');
+        this.refs.mobileHamburger?.setAttribute('aria-expanded', 'false');
+        this.refs.mobileHamburger?.setAttribute('aria-label', 'Open navigation menu');
         document.body.style.overflow = 'unset';
       }
 
@@ -830,8 +872,9 @@ export class VanillaHeader {
 
     const clickedSidebar = this.refs.sidebar?.contains(e.target);
     const clickedPanel = this.refs.panel?.contains(e.target);
+    const clickedMobileHeader = this.refs.mobileHeader?.contains(e.target);
 
-    if (!clickedSidebar && !clickedPanel) {
+    if (!clickedSidebar && !clickedPanel && !clickedMobileHeader) {
       this.closeSidebar();
     }
   }

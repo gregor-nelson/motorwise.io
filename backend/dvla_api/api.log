@@ -10746,3 +10746,6 @@ fastapi.exceptions.HTTPException: 404: Vehicle not found
 2025-10-21 10:20:44,904 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63684 - Status: 200 - Process Time: 0.0050s
 2025-10-21 10:20:45,393 - ves_api - INFO - Cache HIT for VRN: CN09JEJ
 2025-10-21 10:20:45,393 - ves_api - INFO - Request: POST /api/vehicle from 127.0.0.1:63671 - Status: 200 - Process Time: 0.0030s
+2025-10-22 07:06:05,376 - ves_api - INFO - Starting server in PRODUCTION mode
+2025-10-22 07:06:05,377 - ves_api - INFO - Using API URL: https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles
+2025-10-22 07:06:05,377 - ves_api - INFO - Allowing CORS from origins: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://check-mot.co.uk', 'https://www.check-mot.co.uk']

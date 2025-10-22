@@ -438,3 +438,5 @@
 2025-10-21 10:20:41,353 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-10-21 10:20:41,366 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 37.6336s
 2025-10-21 10:20:44,902 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-10-22 07:06:07,340 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-22 07:06:07,365 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk

@@ -440,3 +440,5 @@
 2025-10-21 10:20:44,902 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
 2025-10-22 07:06:07,340 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-10-22 07:06:07,365 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk
+2025-10-22 07:06:07,661 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-22 07:06:07,663 - vehicle_analysis_api - INFO - Loaded 1 valid cache entries from disk

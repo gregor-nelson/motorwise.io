@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-
+import { animate, stagger } from 'animejs';
 
 // Import API client
 import bulletinsApi from '../api/BulletinsApiClient';
@@ -190,90 +190,98 @@ const BulletinDetailModal = ({
   };
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-2 md:p-4"
+    <div
+      className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md z-50 flex items-center justify-center p-2 md:p-4"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative rounded-lg md:rounded-xl shadow-2xl">
-        
+      <div className="bg-white w-full max-w-7xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative rounded-2xl shadow-2xl border border-neutral-200">
+
         {/* Enhanced Close Button */}
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-4 right-4 md:top-6 md:right-6 bg-white w-12 h-12 flex items-center justify-center cursor-pointer text-xl text-neutral-600 rounded-full z-10 shadow-lg"
+          className="absolute top-6 right-6 md:top-8 md:right-8 bg-white hover:bg-neutral-50 w-14 h-14 flex items-center justify-center cursor-pointer text-2xl text-neutral-600 hover:text-neutral-900 rounded-full z-10 shadow-2xl transition-all duration-300 hover:scale-110 border border-neutral-200"
         >
           <i className="ph ph-x"></i>
         </button>
         
         {/* Enhanced Modal Content */}
-        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-          
+        <div className="max-w-6xl mx-auto p-6 md:p-8 lg:p-12">
+
           {/* Enhanced Header */}
-          <div className="mb-6 md:mb-8 pr-12">
-            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          <div className="mb-12 pr-16">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight mb-6">
               {bulletin.title}
             </h1>
-            
+
             {/* Match Confidence Warning */}
             {matchConfidence === 'fuzzy' && (
-              <div className="bg-transparent rounded-lg p-4 shadow-sm mb-4">
-                <div className="flex items-center space-x-2 mb-2">
-                  <i className="ph ph-warning-circle text-yellow-600"></i>
-                  <span className="text-sm font-medium text-neutral-900">Partial Match</span>
+              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 shadow-lg border-l-4 border-yellow-400 mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
+                    <i className="ph ph-warning text-yellow-600"></i>
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-semibold text-neutral-900">Partial Match</span>
+                    </div>
+                    <p className="text-sm text-neutral-700 leading-relaxed">
+                      Results may include bulletins from similar {vehicleMake} models.
+                      {metadata?.matched_to && ` Matched to: ${metadata.matched_to}`}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xs text-neutral-700 leading-relaxed">
-                  Results may include bulletins from similar {vehicleMake} models. 
-                  {metadata?.matched_to && `Matched to: ${metadata.matched_to}`}
-                </p>
               </div>
             )}
-            
+
             {/* Quick overview metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
-              <div className="bg-blue-50 rounded-lg p-3 text-center">
-                <div className="text-lg font-bold text-blue-600">{bulletin.problems ? bulletin.problems.length : 0}</div>
-                <div className="text-xs text-neutral-600">Problems</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8">
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-4 text-center shadow-lg">
+                <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">{bulletin.problems ? bulletin.problems.length : 0}</div>
+                <div className="text-xs font-medium text-neutral-600">Problems</div>
               </div>
-              <div className="bg-transparent rounded-lg p-3 text-center">
-                <div className="text-lg font-bold text-yellow-600">{bulletin.causes ? bulletin.causes.length : 0}</div>
-                <div className="text-xs text-neutral-600">Causes</div>
+              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-4 text-center shadow-lg">
+                <div className="text-2xl md:text-3xl font-bold text-yellow-600 mb-1">{bulletin.causes ? bulletin.causes.length : 0}</div>
+                <div className="text-xs font-medium text-neutral-600">Causes</div>
               </div>
-              <div className="bg-green-50 rounded-lg p-3 text-center">
-                <div className="text-lg font-bold text-green-600">{bulletin.remedy ? '1' : '0'}</div>
-                <div className="text-xs text-neutral-600">Solutions</div>
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 text-center shadow-lg">
+                <div className="text-2xl md:text-3xl font-bold text-green-600 mb-1">{bulletin.remedy ? '1' : '0'}</div>
+                <div className="text-xs font-medium text-neutral-600">Solutions</div>
               </div>
-              <div className="bg-neutral-50 rounded-lg p-3 text-center">
-                <div className="text-lg font-bold text-neutral-600">{bulletin.affected_vehicles ? bulletin.affected_vehicles.length : 0}</div>
-                <div className="text-xs text-neutral-600">Models</div>
+              <div className="bg-gradient-to-br from-neutral-50 to-slate-50 rounded-xl p-4 text-center shadow-lg">
+                <div className="text-2xl md:text-3xl font-bold text-neutral-600 mb-1">{bulletin.affected_vehicles ? bulletin.affected_vehicles.length : 0}</div>
+                <div className="text-xs font-medium text-neutral-600">Models</div>
               </div>
             </div>
           </div>
 
           {/* Enhanced Affected Vehicles */}
           {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
-            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-start">
-                  <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mr-3">
-                    <i className="ph ph-car text-lg text-blue-600"></i>
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 md:p-8 shadow-2xl mb-12 border-l-4 border-blue-400">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-14 h-14 bg-blue-100 rounded-full shadow-md">
+                    <i className="ph ph-car text-2xl text-blue-600"></i>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Affected Vehicle Models</div>
-                    <div className="text-xs text-neutral-600">Compatible with {bulletin.affected_vehicles.length} model{bulletin.affected_vehicles.length !== 1 ? 's' : ''}</div>
+                    <div className="text-lg font-bold text-neutral-900 mb-1">Affected Vehicle Models</div>
+                    <div className="text-sm text-neutral-600">Compatible with {bulletin.affected_vehicles.length} model{bulletin.affected_vehicles.length !== 1 ? 's' : ''}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="text-2xl font-bold text-blue-600">{bulletin.affected_vehicles.length}</div>
-                  <div className="text-xs text-blue-600">Models</div>
+                <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl p-4 min-w-[80px] shadow-md">
+                  <div className="text-3xl font-bold text-blue-600">{bulletin.affected_vehicles.length}</div>
+                  <div className="text-xs text-neutral-600 font-medium">Models</div>
                 </div>
               </div>
-              
-              <div className="pt-3 border-t border-blue-200">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs text-neutral-700">
+
+              <div className="pt-6 border-t-2 border-blue-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {bulletin.affected_vehicles.map((vehicle, idx) => (
-                    <div key={idx} className="flex items-center space-x-2 bg-white rounded-md p-2">
-                      <i className="ph ph-car text-blue-600 flex-shrink-0"></i>
-                      <span className="truncate">{vehicle}</span>
+                    <div key={idx} className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-md">
+                      <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
+                        <i className="ph ph-car text-blue-600"></i>
+                      </div>
+                      <span className="text-sm text-neutral-700 font-medium truncate">{vehicle}</span>
                     </div>
                   ))}
                 </div>
@@ -283,21 +291,23 @@ const BulletinDetailModal = ({
 
           {/* Problems Section */}
           {bulletin.problems && bulletin.problems.length > 0 && (
-            <div 
-              className="bg-red-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
+            <div
+              className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-6 md:p-8 shadow-2xl cursor-pointer mb-12 border-l-4 border-red-400 hover:shadow-xl transition-shadow duration-300"
               onClick={() => toggleSection('problems')}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-start">
-                  <i className={`${getSectionIcon('problems')} text-lg ${getSectionColor('problems')} mr-3 mt-0.5`}></i>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-14 h-14 bg-red-100 rounded-full shadow-md">
+                    <i className={`${getSectionIcon('problems')} text-2xl ${getSectionColor('problems')}`}></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Problems Identified</div>
-                    <div className="text-xs text-neutral-600">{bulletin.problems.length} known issues</div>
+                    <div className="text-lg font-bold text-neutral-900 mb-1">Problems Identified</div>
+                    <div className="text-sm text-neutral-600">{bulletin.problems.length} known issues</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="text-2xl font-bold text-red-600">{bulletin.problems.length}</div>
-                  <div className="text-xs text-red-600">Issues</div>
+                <div className="flex flex-col items-center bg-gradient-to-br from-red-100 to-orange-100 rounded-xl p-4 min-w-[80px] shadow-md">
+                  <div className="text-3xl font-bold text-red-600">{bulletin.problems.length}</div>
+                  <div className="text-xs text-neutral-600 font-medium">Issues</div>
                 </div>
               </div>
               
@@ -322,21 +332,23 @@ const BulletinDetailModal = ({
 
           {/* Causes Section */}
           {bulletin.causes && bulletin.causes.length > 0 && (
-            <div 
-              className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
+            <div
+              className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 md:p-8 shadow-2xl cursor-pointer mb-12 border-l-4 border-yellow-400 hover:shadow-xl transition-shadow duration-300"
               onClick={() => toggleSection('causes')}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-start">
-                  <i className={`${getSectionIcon('causes')} text-lg ${getSectionColor('causes')} mr-3 mt-0.5`}></i>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-14 h-14 bg-yellow-100 rounded-full shadow-md">
+                    <i className={`${getSectionIcon('causes')} text-2xl ${getSectionColor('causes')}`}></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Root Causes</div>
-                    <div className="text-xs text-neutral-600">{bulletin.causes.length} identified causes</div>
+                    <div className="text-lg font-bold text-neutral-900 mb-1">Root Causes</div>
+                    <div className="text-sm text-neutral-600">{bulletin.causes.length} identified causes</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="text-2xl font-bold text-yellow-600">{bulletin.causes.length}</div>
-                  <div className="text-xs text-yellow-600">Causes</div>
+                <div className="flex flex-col items-center bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl p-4 min-w-[80px] shadow-md">
+                  <div className="text-3xl font-bold text-yellow-600">{bulletin.causes.length}</div>
+                  <div className="text-xs text-neutral-600 font-medium">Causes</div>
                 </div>
               </div>
               
@@ -361,26 +373,28 @@ const BulletinDetailModal = ({
 
           {/* Remedy Section */}
           {bulletin.remedy && (
-            <div 
-              className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
+            <div
+              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 md:p-8 shadow-2xl cursor-pointer mb-12 border-l-4 border-green-400 hover:shadow-xl transition-shadow duration-300"
               onClick={() => toggleSection('remedy')}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-start">
-                  <i className={`${getSectionIcon('remedy')} text-lg ${getSectionColor('remedy')} mr-3 mt-0.5`}></i>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-full shadow-md">
+                    <i className={`${getSectionIcon('remedy')} text-2xl ${getSectionColor('remedy')}`}></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Repair Solution</div>
-                    <div className="text-xs text-neutral-600">
+                    <div className="text-lg font-bold text-neutral-900 mb-1">Repair Solution</div>
+                    <div className="text-sm text-neutral-600">
                       {bulletin.remedy.parts ? `${bulletin.remedy.parts.length} parts` : 'Solution available'}
                       {bulletin.remedy.steps && ` • ${bulletin.remedy.steps.length} steps`}
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="text-lg font-bold text-green-600">
+                <div className="flex flex-col items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl p-4 min-w-[80px] shadow-md">
+                  <div className="text-3xl font-bold text-green-600">
                     <i className="ph ph-check-circle"></i>
                   </div>
-                  <div className="text-xs text-green-600">Solution</div>
+                  <div className="text-xs text-neutral-600 font-medium">Solution</div>
                 </div>
               </div>
               
@@ -438,21 +452,23 @@ const BulletinDetailModal = ({
 
           {/* Notes Section */}
           {bulletin.notes && bulletin.notes.length > 0 && (
-            <div 
-              className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm cursor-pointer mb-8"
+            <div
+              className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 md:p-8 shadow-2xl cursor-pointer mb-12 border-l-4 border-blue-400 hover:shadow-xl transition-shadow duration-300"
               onClick={() => toggleSection('notes')}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-start">
-                  <i className={`${getSectionIcon('notes')} text-lg ${getSectionColor('notes')} mr-3 mt-0.5`}></i>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-14 h-14 bg-blue-100 rounded-full shadow-md">
+                    <i className={`${getSectionIcon('notes')} text-2xl ${getSectionColor('notes')}`}></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Additional Notes</div>
-                    <div className="text-xs text-neutral-600">{bulletin.notes.length} important notes</div>
+                    <div className="text-lg font-bold text-neutral-900 mb-1">Additional Notes</div>
+                    <div className="text-sm text-neutral-600">{bulletin.notes.length} important notes</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="text-2xl font-bold text-blue-600">{bulletin.notes.length}</div>
-                  <div className="text-xs text-blue-600">Notes</div>
+                <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl p-4 min-w-[80px] shadow-md">
+                  <div className="text-3xl font-bold text-blue-600">{bulletin.notes.length}</div>
+                  <div className="text-xs text-neutral-600 font-medium">Notes</div>
                 </div>
               </div>
               
@@ -497,11 +513,11 @@ const BulletinDetailModal = ({
 /**
  * BulletinList Component - Renders bulletins with expandable cards following design system
  */
-const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCard }) => {
+const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCard, cardsRef }) => {
   if (!bulletins || bulletins.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+    <div ref={cardsRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
       {bulletins.map((bulletin, index) => {
         // Determine category for color coding
         let category = 'General';
@@ -519,50 +535,57 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
         const isExpanded = expandedCards[cardId];
         
         return (
-          <div 
+          <div
             key={cardId}
-            className="bg-white rounded-lg p-4 md:p-6 shadow-sm cursor-pointer group"
+            className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl cursor-pointer group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-neutral-100"
             onClick={() => onToggleCard(cardId)}
+            style={{ opacity: 0 }}
           >
             {/* Enhanced Card header with metrics */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-start flex-1">
-                <div className={`flex items-center justify-center w-10 h-10 ${colorClasses.split(' ')[1]} rounded-full mr-3`}>
-                  <i className={`${iconClass} text-lg ${colorClasses.split(' ')[0]}`}></i>
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-start flex-1 gap-4">
+                <div className={`flex items-center justify-center w-14 h-14 ${colorClasses.split(' ')[1]} rounded-full flex-shrink-0 shadow-md`}>
+                  <i className={`${iconClass} text-2xl ${colorClasses.split(' ')[0]}`}></i>
                 </div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-neutral-900 mb-1 leading-tight">{bulletin.title}</div>
-                  <div className="flex items-center space-x-2">
-                    <div className={`px-2 py-1 text-xs font-medium rounded-full ${colorClasses}`}>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base md:text-lg font-bold text-neutral-900 mb-3 leading-snug">{bulletin.title}</h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className={`px-3 py-1.5 text-xs font-semibold rounded-full ${colorClasses} shadow-sm`}>
                       {category}
                     </div>
                     {bulletin.remedy && (
-                      <div className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                        <i className="ph ph-check-circle mr-1"></i>Fix Available
+                      <div className="px-3 py-1.5 text-xs font-semibold bg-green-100 text-green-700 rounded-full shadow-sm flex items-center gap-1">
+                        <i className="ph ph-check-circle"></i>
+                        <span>Fix Available</span>
                       </div>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col items-end space-y-1">
-                <div className={`text-xl font-bold ${colorClasses.split(' ')[0]}`}>
+              <div className="flex flex-col items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-xl p-3 min-w-[60px] shadow-sm">
+                <div className={`text-2xl font-bold ${colorClasses.split(' ')[0]}`}>
                   {bulletin.problems ? bulletin.problems.length : 1}
                 </div>
-                <div className={`text-xs ${colorClasses.split(' ')[0]}`}>Issues</div>
+                <div className="text-xs text-neutral-600 font-medium">Issues</div>
               </div>
             </div>
 
             {/* Enhanced problem display */}
             {bulletin.problems && bulletin.problems.length > 0 && (
-              <div className="bg-neutral-50 rounded-lg p-3 mb-4">
-                <div className="flex items-start space-x-2 text-xs text-neutral-700 leading-relaxed">
-                  <i className="ph ph-warning-circle text-red-600 mt-0.5 flex-shrink-0"></i>
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 mb-6 border-l-4 border-red-400">
+                <div className="flex items-start gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 bg-red-100 rounded-full flex-shrink-0">
+                    <i className="ph ph-warning-circle text-red-600"></i>
+                  </div>
                   <div className="flex-1">
-                    <span className="font-medium text-neutral-900">Primary Issue: </span>
-                    {bulletin.problems[0]}
+                    <p className="text-xs font-semibold text-neutral-900 mb-1">Primary Issue</p>
+                    <p className="text-sm text-neutral-700 leading-relaxed">
+                      {bulletin.problems[0]}
+                    </p>
                     {bulletin.problems.length > 1 && (
-                      <div className="mt-1 text-blue-600 font-medium">
-                        +{bulletin.problems.length - 1} additional problems
+                      <div className="mt-2 inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
+                        <i className="ph ph-plus-circle"></i>
+                        <span>{bulletin.problems.length - 1} more issues</span>
                       </div>
                     )}
                   </div>
@@ -571,32 +594,38 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
             )}
 
             {/* Enhanced quick stats grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
               {bulletin.affected_vehicles && bulletin.affected_vehicles.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <i className="ph ph-car text-blue-600"></i>
+                <div className="flex items-center gap-3 bg-blue-50 rounded-xl p-3">
+                  <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                    <i className="ph ph-car text-blue-600 text-lg"></i>
+                  </div>
                   <div>
-                    <div className="text-xs font-medium text-neutral-900">{bulletin.affected_vehicles.length}</div>
+                    <div className="text-base font-bold text-neutral-900">{bulletin.affected_vehicles.length}</div>
                     <div className="text-xs text-neutral-600">Models</div>
                   </div>
                 </div>
               )}
-              
+
               {bulletin.remedy && bulletin.remedy.parts && bulletin.remedy.parts.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <i className="ph ph-wrench text-green-600"></i>
+                <div className="flex items-center gap-3 bg-green-50 rounded-xl p-3">
+                  <div className="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full">
+                    <i className="ph ph-wrench text-green-600 text-lg"></i>
+                  </div>
                   <div>
-                    <div className="text-xs font-medium text-neutral-900">{bulletin.remedy.parts.length}</div>
+                    <div className="text-base font-bold text-neutral-900">{bulletin.remedy.parts.length}</div>
                     <div className="text-xs text-neutral-600">Parts</div>
                   </div>
                 </div>
               )}
-              
+
               {bulletin.remedy && bulletin.remedy.steps && bulletin.remedy.steps.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <i className="ph ph-list-checks text-yellow-600"></i>
+                <div className="flex items-center gap-3 bg-yellow-50 rounded-xl p-3">
+                  <div className="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
+                    <i className="ph ph-list-checks text-yellow-600 text-lg"></i>
+                  </div>
                   <div>
-                    <div className="text-xs font-medium text-neutral-900">{bulletin.remedy.steps.length}</div>
+                    <div className="text-base font-bold text-neutral-900">{bulletin.remedy.steps.length}</div>
                     <div className="text-xs text-neutral-600">Steps</div>
                   </div>
                 </div>
@@ -662,29 +691,30 @@ const BulletinListView = ({ bulletins, onViewDetails, expandedCards, onToggleCar
                 )}
 
                 {/* Enhanced CTA button */}
-                <div className="pt-3 border-t border-neutral-100">
-                  <button 
+                <div className="pt-6 border-t-2 border-neutral-100">
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onViewDetails(cardId);
                     }}
-                    className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer flex items-center justify-center space-x-2"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-base font-semibold rounded-xl cursor-pointer flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
                   >
-                    <i className="ph ph-eye text-base"></i>
+                    <i className="ph ph-eye text-xl"></i>
                     <span>View Complete Analysis</span>
+                    <i className="ph ph-arrow-right text-xl"></i>
                   </button>
                 </div>
               </div>
             )}
 
             {/* Enhanced expand indicator */}
-            <div className={`text-center mt-4 ${
+            <div className={`text-center mt-6 transition-all duration-300 ${
               isExpanded ? 'text-blue-600' : 'text-neutral-400 group-hover:text-blue-600'
             }`}>
-              <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 ${
-                isExpanded ? 'rotate-180 bg-blue-50' : 'rotate-0'
+              <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 shadow-md ${
+                isExpanded ? 'rotate-180 bg-blue-100' : 'rotate-0 bg-neutral-100 group-hover:bg-blue-50'
               }`}>
-                <i className="ph ph-caret-down"></i>
+                <i className="ph ph-caret-down text-lg"></i>
               </div>
             </div>
           </div>
@@ -721,12 +751,78 @@ const BulletinsComponent = ({
   const [matchConfidence, setMatchConfidence] = useState('none');
   const abortControllerRef = useRef(null);
 
+  // Animation refs
+  const headerRef = useRef(null);
+  const metricsRef = useRef(null);
+  const searchRef = useRef(null);
+  const navRef = useRef(null);
+  const cardsContainerRef = useRef(null);
+
   // Set custom API base URL if provided
   useEffect(() => {
     if (apiBaseUrl !== '/api/v1') {
       bulletinsApi.baseUrl = apiBaseUrl;
     }
   }, [apiBaseUrl]);
+
+  // Animate components when they mount and data is loaded
+  useEffect(() => {
+    if (!loading && bulletins) {
+      // Animate header
+      if (headerRef.current) {
+        animate(headerRef.current, {
+          opacity: [0, 1],
+          translateY: [-20, 0],
+          duration: 600,
+          ease: 'outQuad'
+        });
+      }
+
+      // Animate metric cards with stagger
+      if (metricsRef.current?.children) {
+        animate(Array.from(metricsRef.current.children), {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 600,
+          ease: 'outQuad',
+          delay: stagger(100, { start: 200 })
+        });
+      }
+
+      // Animate search bar
+      if (searchRef.current) {
+        animate(searchRef.current, {
+          opacity: [0, 1],
+          translateY: [10, 0],
+          duration: 500,
+          ease: 'outQuad',
+          delay: 600
+        });
+      }
+
+      // Animate navigation
+      if (navRef.current) {
+        animate(navRef.current, {
+          opacity: [0, 1],
+          scale: [0.95, 1],
+          duration: 500,
+          ease: 'outQuad',
+          delay: 700
+        });
+      }
+
+      // Animate bulletin cards with stagger
+      if (cardsContainerRef.current?.children) {
+        animate(Array.from(cardsContainerRef.current.children), {
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 600,
+          ease: 'outQuad',
+          delay: stagger(80, { start: 800 })
+        });
+      }
+    }
+  }, [loading, bulletins]);
 
   // Determine vehicle properties based on either vehicleData object or individual props
   const vehicleMake = vehicleData?.make || make;
@@ -900,15 +996,17 @@ const BulletinsComponent = ({
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="flex items-center justify-center min-h-64">
+        <div className="flex items-center justify-center min-h-96">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
-              <i className="ph ph-database text-3xl text-blue-600"></i>
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-full mb-8 shadow-2xl animate-pulse">
+              <i className="ph ph-database text-4xl text-blue-600"></i>
             </div>
-            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Loading Technical Bulletins</h3>
-            <p className="text-xs text-neutral-600 leading-relaxed">Analyzing bulletins for <span className="font-medium">{vehicleMake} {vehicleModel}</span></p>
-            <div className="mt-4 w-48 h-2 bg-neutral-200 rounded-full mx-auto overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full" style={{width: '60%'}}></div>
+            <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">Loading Technical Bulletins</h3>
+            <p className="text-base text-neutral-700 leading-relaxed mb-6">
+              Analyzing bulletins for <span className="font-semibold text-blue-600">{vehicleMake} {vehicleModel}</span>
+            </p>
+            <div className="mt-6 w-64 h-3 bg-neutral-200 rounded-full mx-auto overflow-hidden shadow-inner">
+              <div className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-green-500 rounded-full animate-pulse" style={{width: '70%'}}></div>
             </div>
           </div>
         </div>
@@ -922,19 +1020,18 @@ const BulletinsComponent = ({
     if (errorType === 'nodata') {
       return (
         <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-          <div className="flex items-center justify-center min-h-64">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
-                <i className="ph ph-database text-3xl text-blue-600"></i>
+          <div className="flex items-center justify-center min-h-96">
+            <div className="text-center max-w-2xl">
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-full mb-8 shadow-2xl">
+                <i className="ph ph-database text-4xl text-blue-600"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Data Available</h3>
-              <p className="text-xs text-neutral-700 leading-relaxed max-w-lg mx-auto">
-                We don't currently have technical bulletin information for your {vehicleMake} {vehicleModel}.
-                <br className="hidden sm:block" />
+              <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">No Data Available</h3>
+              <p className="text-base text-neutral-700 leading-relaxed mb-8">
+                We don't currently have technical bulletin information for your <span className="font-semibold text-blue-600">{vehicleMake} {vehicleModel}</span>.
                 This doesn't necessarily mean there are no bulletins - we may not have this vehicle in our database yet.
               </p>
-              <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-neutral-500">
-                <i className="ph ph-info text-blue-600"></i>
+              <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 rounded-full text-sm text-neutral-700">
+                <i className="ph ph-info text-blue-600 text-xl"></i>
                 <span>Data coverage varies by vehicle model and year</span>
               </div>
             </div>
@@ -945,22 +1042,22 @@ const BulletinsComponent = ({
       // Service error
       return (
         <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-          <div className="flex items-center justify-center min-h-64">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-orange-50 rounded-full mb-6 shadow-sm">
-                <i className="ph ph-clock text-3xl text-orange-600"></i>
+          <div className="flex items-center justify-center min-h-96">
+            <div className="text-center max-w-2xl">
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-50 to-red-50 rounded-full mb-8 shadow-2xl">
+                <i className="ph ph-clock text-4xl text-orange-600"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">Service Temporarily Unavailable</h3>
-              <p className="text-xs text-neutral-700 leading-relaxed mb-6 max-w-md mx-auto">
-                We're currently unable to retrieve technical bulletins for your {vehicleMake} {vehicleModel}. 
+              <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">Service Temporarily Unavailable</h3>
+              <p className="text-base text-neutral-700 leading-relaxed mb-8">
+                We're currently unable to retrieve technical bulletins for your <span className="font-semibold text-orange-600">{vehicleMake} {vehicleModel}</span>.
                 This may be due to temporary maintenance or high demand.
               </p>
-              <button 
+              <button
                 onClick={handleRetry}
-                className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm"
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-base font-semibold rounded-xl cursor-pointer shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
               >
-                <i className="ph ph-arrow-clockwise mr-2"></i>
-                Try Again
+                <i className="ph ph-arrow-clockwise text-xl"></i>
+                <span>Try Again</span>
               </button>
             </div>
           </div>
@@ -973,19 +1070,18 @@ const BulletinsComponent = ({
   if (!bulletins || !bulletins.bulletins || bulletins.bulletins.length === 0) {
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="flex items-center justify-center min-h-64">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-6 shadow-sm">
-              <i className="ph ph-database text-3xl text-blue-600"></i>
+        <div className="flex items-center justify-center min-h-96">
+          <div className="text-center max-w-2xl">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-full mb-8 shadow-2xl">
+              <i className="ph ph-database text-4xl text-blue-600"></i>
             </div>
-            <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">No Data Available</h3>
-            <p className="text-xs text-neutral-700 leading-relaxed max-w-lg mx-auto">
-              We don't currently have technical bulletin information for your {vehicleMake} {vehicleModel}.
-              <br className="hidden sm:block" />
+            <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">No Data Available</h3>
+            <p className="text-base text-neutral-700 leading-relaxed mb-8">
+              We don't currently have technical bulletin information for your <span className="font-semibold text-blue-600">{vehicleMake} {vehicleModel}</span>.
               This doesn't necessarily mean there are no bulletins - we may not have this vehicle in our database yet.
             </p>
-            <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-neutral-500">
-              <i className="ph ph-info text-blue-600"></i>
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 rounded-full text-sm text-neutral-700">
+              <i className="ph ph-info text-blue-600 text-xl"></i>
               <span>Data coverage varies by vehicle model and year</span>
             </div>
           </div>
@@ -1008,57 +1104,63 @@ const BulletinsComponent = ({
         
         {/* Enhanced Header with Metrics */}
         <div className="space-y-8 mb-16">
-          <div>
-            <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
-              Technical Bulletins for {vehicleMake} {vehicleModel}
+          <div ref={headerRef} style={{ opacity: 0 }}>
+            <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 leading-tight mb-4">
+              Technical Bulletins for <span className="text-neutral-700">{vehicleMake} {vehicleModel}</span>
             </h1>
-            <p className="text-xs text-neutral-700 leading-relaxed mb-6">
+            <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
               {vehicleInfo.engine_info && `Engine: ${vehicleInfo.engine_info}. `}
               {vehicleYear && `Year: ${vehicleYear}. `}
               Comprehensive analysis of manufacturer-issued technical bulletins.
             </p>
           </div>
-          
+
           {/* Prominent Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-            <div className="bg-blue-50 rounded-lg p-4 md:p-6 shadow-sm">
+          <div ref={metricsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 shadow-2xl" style={{ opacity: 0 }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mr-4">
+                    <i className="ph ph-database text-2xl text-blue-600"></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Total Bulletins</div>
+                    <div className="text-sm font-semibold text-neutral-900">Total Bulletins</div>
                     <div className="text-xs text-neutral-600">Available issues</div>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-blue-600">{bulletins.bulletins.length}</div>
+                <div className="text-3xl font-bold text-blue-600">{bulletins.bulletins.length}</div>
               </div>
             </div>
-            
-            <div className="bg-green-50 rounded-lg p-4 md:p-6 shadow-sm">
+
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 shadow-2xl" style={{ opacity: 0 }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <i className="ph ph-wrench text-lg text-green-600 mr-3 mt-0.5"></i>
+                  <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mr-4">
+                    <i className="ph ph-wrench text-2xl text-green-600"></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Solutions</div>
+                    <div className="text-sm font-semibold text-neutral-900">Solutions</div>
                     <div className="text-xs text-neutral-600">Repair available</div>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-3xl font-bold text-green-600">
                   {bulletins.bulletins.filter(b => b.remedy).length}
                 </div>
               </div>
             </div>
-            
-            <div className="bg-transparent rounded-lg p-4 md:p-6 shadow-sm sm:col-span-2 lg:col-span-1">
+
+            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 shadow-2xl md:col-span-2 lg:col-span-1" style={{ opacity: 0 }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <i className="ph ph-chart-pie text-lg text-yellow-600 mr-3 mt-0.5"></i>
+                  <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full mr-4">
+                    <i className="ph ph-chart-pie text-2xl text-yellow-600"></i>
+                  </div>
                   <div>
-                    <div className="text-sm font-medium text-neutral-900">Categories</div>
+                    <div className="text-sm font-semibold text-neutral-900">Categories</div>
                     <div className="text-xs text-neutral-600">System types</div>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-yellow-600">
+                <div className="text-3xl font-bold text-yellow-600">
                   {sections ? sections.length - 1 : 0}
                 </div>
               </div>
@@ -1067,36 +1169,48 @@ const BulletinsComponent = ({
 
           {/* Match Confidence Warning */}
           {matchConfidence === 'fuzzy' && (
-            <div className="bg-transparent rounded-lg p-4 shadow-sm">
-              <div className="flex items-center space-x-2 mb-2">
-                <i className="ph ph-warning-circle text-yellow-600"></i>
-                <span className="text-sm font-medium text-neutral-900">Partial Match</span>
+            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 shadow-2xl border-l-4 border-yellow-400">
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
+                  <i className="ph ph-warning text-yellow-600"></i>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-sm font-semibold text-neutral-900">Partial Match</span>
+                  </div>
+                  <p className="text-sm text-neutral-700 leading-relaxed">
+                    Results may include bulletins from similar {vehicleMake} models.
+                    {bulletins.metadata?.matched_to && ` Matched to: ${bulletins.metadata.matched_to}`}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-neutral-700 leading-relaxed">
-                Results may include bulletins from similar {vehicleMake} models.
-                {bulletins.metadata?.matched_to && ` Matched to: ${bulletins.metadata.matched_to}`}
-              </p>
             </div>
           )}
 
           {error && (
-            <div className="bg-orange-50 rounded-lg p-4 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-2">
-                  <i className="ph ph-warning-circle text-orange-600"></i>
-                  <span className="text-sm font-medium text-neutral-900">Display Issue</span>
+            <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 shadow-2xl border-l-4 border-orange-400">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3 flex-1">
+                  <div className="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-full">
+                    <i className="ph ph-warning-circle text-orange-600"></i>
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-semibold text-neutral-900">Display Issue</span>
+                    </div>
+                    <p className="text-sm text-neutral-700">
+                      Some bulletin data may not be displaying correctly. Please try refreshing to reload the information.
+                    </p>
+                  </div>
                 </div>
-                <button 
+                <button
                   onClick={handleRetry}
-                  className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded cursor-pointer"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg cursor-pointer transition-colors whitespace-nowrap"
                 >
                   <i className="ph ph-arrow-clockwise mr-1"></i>
                   Refresh
                 </button>
               </div>
-              <p className="text-xs text-neutral-700">
-                Some bulletin data may not be displaying correctly. Please try refreshing to reload the information.
-              </p>
             </div>
           )}
         </div>
@@ -1104,20 +1218,20 @@ const BulletinsComponent = ({
         {hasSections ? (
           <>
             {/* Enhanced Search Bar */}
-            <div className="mb-8">
+            <div ref={searchRef} className="mb-12" style={{ opacity: 0 }}>
               <div className="relative group">
                 <input
                   type="text"
                   placeholder="Search bulletins by problem, system, or keyword..."
                   value={searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full px-4 py-4 pl-12 pr-12 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm placeholder-neutral-400"
+                  className="w-full px-6 py-5 pl-14 pr-14 text-base rounded-xl bg-white border-2 border-transparent focus:border-blue-500 focus:outline-none shadow-lg placeholder-neutral-400 text-neutral-900 transition-all duration-200"
                 />
-                <i className="ph ph-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                <i className="ph ph-magnifying-glass absolute left-5 top-1/2 transform -translate-y-1/2 text-xl text-neutral-400 group-focus-within:text-blue-600 transition-colors"></i>
                 {searchTerm && (
                   <button
                     onClick={handleClearFilters}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 cursor-pointer"
+                    className="absolute right-5 top-1/2 transform -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 cursor-pointer transition-colors"
                   >
                     <i className="ph ph-x"></i>
                   </button>
@@ -1145,28 +1259,28 @@ const BulletinsComponent = ({
             </div>
 
             {/* Enhanced Section Navigation */}
-            <div className="flex justify-center mb-8">
-              <div className="inline-flex bg-neutral-100 rounded-lg p-1 shadow-sm overflow-x-auto max-w-full">
-                <div className="flex space-x-1 px-1">
+            <div ref={navRef} className="flex justify-center mb-12" style={{ opacity: 0 }}>
+              <div className="inline-flex bg-white rounded-full p-2 shadow-2xl overflow-x-auto max-w-full border border-neutral-100">
+                <div className="flex space-x-2 px-2">
                   {sections.map((section, index) => (
                     <button
                       key={section.id}
                       onClick={() => handleSectionChange(section.id)}
                       className={`
-                        flex items-center space-x-2 px-3 md:px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap cursor-pointer
+                        flex items-center space-x-2 px-4 md:px-5 py-3 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer transition-all duration-200
                         ${activeSection === section.id
-                          ? 'bg-white text-blue-600 shadow-sm'
-                          : 'text-neutral-600'
+                          ? 'bg-blue-600 text-white shadow-md scale-105'
+                          : 'text-neutral-600 hover:bg-neutral-50'
                         }
                       `}
                     >
-                      <i className={`ph ${section.icon} text-base`}></i>
+                      <i className={`ph ${section.icon} text-lg`}></i>
                       <span className="hidden sm:inline">{section.label}</span>
                       <span className="sm:hidden text-xs">{section.label.substring(0, 3)}</span>
-                      <span className={`text-xs px-2 py-1 rounded-full font-bold ${
-                        activeSection === section.id 
-                          ? 'bg-blue-50 text-blue-600' 
-                          : 'bg-neutral-200 text-neutral-500'
+                      <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${
+                        activeSection === section.id
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-neutral-200 text-neutral-600'
                       }`}>
                         {section.count}
                       </span>
@@ -1179,13 +1293,13 @@ const BulletinsComponent = ({
             {/* Content Area */}
             <div>
               {/* Section Header */}
-              <div className="mb-8 pb-4 border-b-2 border-blue-600">
-                <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
-                  {sections.find(s => s.id === activeSection)?.label} 
+              <div className="mb-12 pb-6 border-b-2 border-blue-600">
+                <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">
+                  {sections.find(s => s.id === activeSection)?.label}
                   {activeSection !== 'overview' && ' Issues'}
                 </h2>
-                <p className="text-xs text-neutral-600">
-                  {activeSection === 'overview' 
+                <p className="text-base text-neutral-700 leading-relaxed">
+                  {activeSection === 'overview'
                     ? 'All technical bulletins for this vehicle organized by category'
                     : `Technical bulletins related to ${sections.find(s => s.id === activeSection)?.label.toLowerCase()} problems and solutions`
                   }
@@ -1217,11 +1331,12 @@ const BulletinsComponent = ({
                   )}
                 </div>
               ) : (
-                <BulletinListView 
+                <BulletinListView
                   bulletins={filteredBulletins}
                   onViewDetails={handleViewDetails}
                   expandedCards={expandedCards}
                   onToggleCard={handleToggleCard}
+                  cardsRef={cardsContainerRef}
                 />
               )}
             </div>
@@ -1239,16 +1354,21 @@ const BulletinsComponent = ({
         )}
 
         {/* Enhanced Footer */}
-        <div className="mt-16 pt-6 border-t-2 border-neutral-100">
-          <div className="bg-neutral-50 rounded-lg p-6 text-center">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <i className="ph ph-database text-blue-600"></i>
-              <span className="text-sm font-medium text-neutral-900">Data Source</span>
+        <div className="mt-20 pt-8 border-t-2 border-neutral-200">
+          <div className="bg-gradient-to-br from-neutral-50 to-slate-50 rounded-2xl p-8 text-center shadow-lg">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                <i className="ph ph-database text-blue-600 text-xl"></i>
+              </div>
+              <span className="text-lg font-bold text-neutral-900">Data Source</span>
             </div>
-            <p className="text-xs text-neutral-600 mb-2">
+            <p className="text-sm text-neutral-700 mb-4 leading-relaxed max-w-2xl mx-auto">
               Technical bulletins sourced from official manufacturer databases and service information systems.
             </p>
-            <div className="text-xs text-neutral-500">Last updated: March 2025</div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-full text-xs text-neutral-600 font-medium">
+              <i className="ph ph-clock text-neutral-500"></i>
+              <span>Last updated: March 2025</span>
+            </div>
           </div>
         </div>
       </div>

@@ -109,24 +109,24 @@ const DVLAVehicleDataComponent = ({ registration }) => {
       case 'valid':
       case 'taxed':
       case 'no action required':
-        return 'px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-green-100 text-green-700 text-xs rounded-full font-medium';
       case 'expired':
       case 'sorn':
       case 'untaxed':
-        return 'px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-red-100 text-red-700 text-xs rounded-full font-medium';
       case 'due soon':
       case 'advisory':
-        return 'px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-amber-100 text-amber-700 text-xs rounded-full font-medium';
       case 'exported':
-        return 'px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-blue-100 text-blue-700 text-xs rounded-full font-medium';
       case 'domestic':
-        return 'px-2 py-1 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
       case 'autonomous':
-        return 'px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-purple-100 text-purple-700 text-xs rounded-full font-medium';
       case 'manual':
-        return 'px-2 py-1 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
       default:
-        return 'px-2 py-1 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
+        return 'px-3 py-1.5 bg-neutral-100 text-neutral-700 text-xs rounded-full font-medium';
     }
   };
 
@@ -162,95 +162,148 @@ const DVLAVehicleDataComponent = ({ registration }) => {
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
       {/* Vehicle Information Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8">
-        <div className="flex items-center mb-6">
-          <i className="ph ph-car text-lg text-blue-600 mr-3"></i>
-          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Vehicle Information</h2>
+      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
+        <div className="relative flex items-center mb-6">
+          <div className="relative w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center transition-all duration-200">
+            <i className="ph ph-car text-2xl text-neutral-700 transition-colors duration-200"></i>
+          </div>
+          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Vehicle Information</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Make</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.make)}</div>
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Make</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.make)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Colour</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.colour)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Colour</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.colour)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Fuel Type</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.fuelType)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Fuel Type</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.fuelType)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Engine Size</div>
-            <div className="text-sm text-neutral-900">{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Engine Size</div>
+            <div className="text-base font-medium text-neutral-900">{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Date Registered</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.monthOfFirstRegistration)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Date Registered</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.monthOfFirstRegistration)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Manufacture Date</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.yearOfManufacture)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Manufacture Date</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.yearOfManufacture)}</div>
           </div>
         </div>
       </div>
 
       {/* Legal Status Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8">
-        <div className="flex items-center mb-6">
-          <i className="ph ph-shield-check text-lg text-blue-600 mr-3"></i>
-          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Legal Status</h2>
+      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
+        <div className="relative flex items-center mb-6">
+          <div className="relative w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center transition-all duration-200">
+            <i className="ph ph-shield-check text-2xl text-neutral-700 transition-colors duration-200"></i>
+          </div>
+          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Legal Status</h2>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Tax Status</div>
+
+        {/* Warning/Info Boxes */}
+        {(vehicleData.taxStatus?.toLowerCase() === 'untaxed' || vehicleData.taxStatus?.toLowerCase() === 'expired' ||
+          vehicleData.motStatus?.toLowerCase() === 'expired') && (
+          <div className="relative flex items-start gap-3 p-4 bg-red-50 rounded-xl mb-6">
+            <i className="ph ph-warning-circle text-red-600 text-xl mt-0.5"></i>
+            <div className="text-sm">
+              <p className="font-medium text-red-900 mb-1">Action Required</p>
+              <p className="text-red-700">
+                {vehicleData.taxStatus?.toLowerCase() === 'untaxed' || vehicleData.taxStatus?.toLowerCase() === 'expired'
+                  ? 'Vehicle tax has expired. ' : ''}
+                {vehicleData.motStatus?.toLowerCase() === 'expired'
+                  ? 'MOT has expired.' : ''}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {(vehicleData.taxStatus?.toLowerCase() === 'sorn') && (
+          <div className="relative flex items-start gap-3 p-4 bg-amber-50 rounded-xl mb-6">
+            <i className="ph ph-info text-amber-600 text-xl mt-0.5"></i>
+            <div className="text-sm">
+              <p className="font-medium text-amber-900 mb-1">SORN Status</p>
+              <p className="text-amber-700">This vehicle is registered as off the road (SORN).</p>
+            </div>
+          </div>
+        )}
+
+        {(vehicleData.taxStatus?.toLowerCase() === 'valid' || vehicleData.taxStatus?.toLowerCase() === 'taxed') &&
+         vehicleData.motStatus?.toLowerCase() === 'valid' && (
+          <div className="relative flex items-start gap-3 p-4 bg-green-50 rounded-xl mb-6">
+            <i className="ph ph-check-circle text-green-600 text-xl mt-0.5"></i>
+            <div className="text-sm">
+              <p className="font-medium text-green-900 mb-1">All Clear</p>
+              <p className="text-green-700">Vehicle tax and MOT are both valid.</p>
+            </div>
+          </div>
+        )}
+
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Tax Status</div>
             <span className={getStatusStyles(vehicleData.taxStatus)}>
               {formatData(vehicleData.taxStatus)}
             </span>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Tax Due Date</div>
-            <div className="text-sm text-neutral-900">{vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Tax Due Date</div>
+            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
+              <i className="ph ph-calendar text-blue-600"></i>
+              {vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">MOT Status</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">MOT Status</div>
             <span className={getStatusStyles(vehicleData.motStatus)}>
               {formatData(vehicleData.motStatus)}
             </span>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">MOT Expiry Date</div>
-            <div className="text-sm text-neutral-900">{vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">MOT Expiry Date</div>
+            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
+              <i className="ph ph-calendar text-blue-600"></i>
+              {vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Registration & Documentation Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8">
-        <div className="flex items-center mb-6">
-          <i className="ph ph-clipboard-text text-lg text-blue-600 mr-3"></i>
-          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Registration & Documentation</h2>
+      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
+        <div className="relative flex items-center mb-6">
+          <div className="relative w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center transition-all duration-200">
+            <i className="ph ph-clipboard-text text-2xl text-neutral-700 transition-colors duration-200"></i>
+          </div>
+          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Registration & Documentation</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Marked For Export</div>
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Marked For Export</div>
             <span className={getStatusStyles(vehicleData.markedForExport ? 'exported' : 'domestic')}>
               {vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}
             </span>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Last V5C Issued</div>
-            <div className="text-sm text-neutral-900">{vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Last V5C Issued</div>
+            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
+              <i className="ph ph-file-text text-purple-600"></i>
+              {vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">First DVLA Registration</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.monthOfFirstDvlaRegistration)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">First DVLA Registration</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.monthOfFirstDvlaRegistration)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Automated Vehicle</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Automated Vehicle</div>
             <span className={getStatusStyles(vehicleData.automatedVehicle ? 'autonomous' : 'manual')}>
               {vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}
             </span>
@@ -259,36 +312,44 @@ const DVLAVehicleDataComponent = ({ registration }) => {
       </div>
 
       {/* Environmental & Technical Data Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
-        <div className="flex items-center mb-6">
-          <i className="ph ph-leaf text-lg text-blue-600 mr-3"></i>
-          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">Environmental & Technical Data</h2>
+      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
+        <div className="relative flex items-center mb-6">
+          <div className="relative w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center transition-all duration-200">
+            <i className="ph ph-leaf text-2xl text-neutral-700 transition-colors duration-200"></i>
+          </div>
+          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Environmental & Technical Data</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">CO₂ Emissions</div>
-            <div className="text-sm text-neutral-900">{vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}</div>
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">CO₂ Emissions</div>
+            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
+              <i className="ph ph-cloud text-green-600"></i>
+              {vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Euro Status</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.euroStatus)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Euro Status</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.euroStatus)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Real Driving Emissions</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.realDrivingEmissions)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Real Driving Emissions</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.realDrivingEmissions)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Type Approval</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.typeApproval)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Type Approval</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.typeApproval)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Wheel Plan</div>
-            <div className="text-sm text-neutral-900">{formatData(vehicleData.wheelplan)}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Wheel Plan</div>
+            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.wheelplan)}</div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-600 mb-2">Revenue Weight</div>
-            <div className="text-sm text-neutral-900">{vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}</div>
+          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Revenue Weight</div>
+            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
+              <i className="ph ph-scales text-green-600"></i>
+              {vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}
+            </div>
           </div>
         </div>
       </div>

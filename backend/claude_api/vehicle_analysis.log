@@ -488,3 +488,19 @@
 2025-10-24 11:22:20,035 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
 2025-10-24 11:22:20,224 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-10-24 11:22:20,226 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 12:53:24,824 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 12:53:24,866 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 12:53:25,216 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 12:53:25,218 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 13:24:16,095 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-10-24 14:35:43,360 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0037s
+2025-10-24 14:56:37,609 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-10-24 15:01:46,468 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
+2025-10-24 15:02:26,101 - vehicle_analysis_api - INFO - GET /api/v1/mot/cn09jej/ai-analysis - 404 - 0.0020s
+2025-10-24 15:02:52,418 - vehicle_analysis_api - INFO - GET /api/v1/mot/cn09jej/ai-analysis - 404 - 0.0000s
+2025-10-24 15:03:42,219 - vehicle_analysis_api - INFO - GET /api/v1/mot/cn09jej/ai-analysis - 404 - 0.0010s
+2025-10-24 15:04:21,323 - vehicle_analysis_api - INFO - GET /api/v1/mot/cn09jej/ai-analysis - 404 - 0.0010s
+2025-10-24 15:05:01,106 - vehicle_analysis_api - INFO - GET /api/v1/mot/cn09jej/ai-analysis - 404 - 0.0000s
+2025-10-24 15:06:07,819 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/cn09jej - 200 - 0.0010s
+2025-10-24 17:31:11,851 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 17:31:11,895 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 
 // Sample analysis data (anonymized version of your actual JSON)
 const sampleAnalysis = {
@@ -94,12 +95,12 @@ const SystemCard = ({ system, isExpanded, onToggle, delay = 0 }) => {
   }, [delay]);
 
   return (
-    <div 
+    <div
       className={`
-        bg-white rounded-lg p-4 cursor-pointer transition-all duration-500 ease-out
-        hover:shadow-lg hover:scale-[1.02]
+        bg-white rounded-xl p-4 cursor-pointer transition-all duration-500 ease-out
+        hover:shadow-2xl hover:scale-[1.02]
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        ${isExpanded ? 'shadow-lg scale-[1.02]' : 'shadow-sm'}
+        ${isExpanded ? 'shadow-2xl scale-[1.02]' : 'shadow-xl'}
       `}
       onClick={onToggle}
     >
@@ -224,12 +225,39 @@ const ReportPreviewShowcase = () => {
   const [expandedSystems, setExpandedSystems] = useState({});
   const [isVisible, setIsVisible] = useState(false);
   const showcaseRef = useRef(null);
+  const decorativeRef = useRef(null);
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    // Animate decorative floating circles
+    if (decorativeRef.current?.children) {
+      animate(Array.from(decorativeRef.current.children), {
+        translateY: [-8, 8],
+        duration: 3000,
+        ease: 'inOutSine',
+        alternate: true,
+        loop: true,
+        delay: stagger(400)
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // Animate header elements when visible
+          if (headerRef.current) {
+            const elements = headerRef.current.querySelectorAll('[data-header-animate]');
+            animate(Array.from(elements), {
+              opacity: [0, 1],
+              translateY: [20, 0],
+              duration: 800,
+              ease: 'outQuad',
+              delay: stagger(100)
+            });
+          }
         }
       },
       { threshold: 0.2 }
@@ -249,6 +277,22 @@ const ReportPreviewShowcase = () => {
     }));
   };
 
+  // Animate systems when section changes to 'systems'
+  useEffect(() => {
+    if (activeSection === 'systems' && isVisible) {
+      const systemCards = document.querySelectorAll('[data-system-card]');
+      if (systemCards.length > 0) {
+        animate(Array.from(systemCards), {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 600,
+          ease: 'outQuad',
+          delay: stagger(100)
+        });
+      }
+    }
+  }, [activeSection, isVisible]);
+
   const sections = [
     { id: 'overview', label: 'Overview', icon: 'ph-chart-pie' },
     { id: 'systems', label: 'Systems', icon: 'ph-gear' },
@@ -257,39 +301,49 @@ const ReportPreviewShowcase = () => {
   ];
 
   return (
-    <div ref={showcaseRef} className="max-w-6xl mx-auto p-6">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-neutral-900 mb-3">
-          <i className="ph ph-file-text text-blue-600 mr-3"></i>
-          Professional Analysis Report
-        </h2>
-        <p className="text-neutral-600 max-w-2xl mx-auto">
-          See the depth of intelligence you receive - real analysis structure from actual vehicle data
-        </p>
+    <section ref={showcaseRef} className="relative bg-gradient-to-br from-cyan-50 to-blue-50 py-16 md:py-20 lg:py-24 overflow-hidden">
+      {/* Decorative floating circles */}
+      <div ref={decorativeRef} className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-20 right-10 w-3 h-3 bg-blue-300 rounded-full opacity-30"></div>
+        <div className="absolute top-32 right-32 w-2 h-2 bg-cyan-400 rounded-full opacity-25"></div>
+        <div className="absolute bottom-32 left-12 w-2.5 h-2.5 bg-blue-400 rounded-full opacity-35"></div>
+        <div className="absolute top-40 left-20 w-2 h-2 bg-cyan-300 rounded-full opacity-20"></div>
+        <div className="absolute bottom-40 right-16 w-3 h-3 bg-blue-200 rounded-full opacity-30"></div>
       </div>
 
-      {/* Section navigation */}
-      <div className="flex justify-center mb-8">
-        <div className="inline-flex bg-neutral-100 rounded-lg p-1">
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              className={`
-                flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300
-                ${activeSection === section.id 
-                  ? 'bg-white text-blue-600 shadow-sm' 
-                  : 'text-neutral-600 hover:text-neutral-900'
-                }
-              `}
-            >
-              <i className={`ph ${section.icon}`}></i>
-              <span>{section.label}</span>
-            </button>
-          ))}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div ref={headerRef} className="text-center mb-12">
+          <h2 data-header-animate className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
+            <i className="ph ph-file-text text-blue-600 mr-3"></i>
+            Professional Analysis Report
+          </h2>
+          <p data-header-animate className="text-base md:text-lg text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+            See the depth of intelligence you receive - real analysis structure from actual vehicle data
+          </p>
         </div>
-      </div>
+
+        {/* Section navigation */}
+        <div data-header-animate className="flex justify-center mb-12">
+          <div className="inline-flex bg-white rounded-xl shadow-lg p-1.5">
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`
+                  flex items-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300
+                  ${activeSection === section.id
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50'
+                  }
+                `}
+              >
+                <i className={`ph ${section.icon}`}></i>
+                <span>{section.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
       {/* Content sections */}
       <div className="min-h-96">
@@ -311,18 +365,18 @@ const ReportPreviewShowcase = () => {
 
               {/* Key metrics */}
               <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="bg-white rounded-xl p-4 shadow-2xl">
                   <div className="text-2xl font-bold text-neutral-900">{sampleAnalysis.systemsAnalysed}</div>
                   <div className="text-sm text-neutral-600">Systems Analysed</div>
                 </div>
-                <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="bg-white rounded-xl p-4 shadow-2xl">
                   <div className="text-2xl font-bold text-red-600">{sampleAnalysis.systemsWithIssues}</div>
                   <div className="text-sm text-neutral-600">Systems with Issues</div>
                 </div>
               </div>
 
               {/* Risk factors preview */}
-              <div className="bg-white rounded-lg p-4 shadow-sm">
+              <div className="bg-white rounded-xl p-4 shadow-2xl">
                 <h3 className="font-medium text-neutral-900 mb-3 text-sm">Key Risk Factors</h3>
                 <div className="space-y-2">
                   {sampleAnalysis.riskFactors.slice(0, 3).map((factor, index) => (
@@ -339,19 +393,16 @@ const ReportPreviewShowcase = () => {
 
         {/* Systems section */}
         {activeSection === 'systems' && (
-          <div className={`
-            grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4
-            transition-all duration-500 ease-out
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {sampleAnalysis.systems.map((system, index) => (
-              <SystemCard
-                key={index}
-                system={system}
-                isExpanded={expandedSystems[index]}
-                onToggle={() => toggleSystem(index)}
-                delay={index * 100}
-              />
+              <div key={index} data-system-card>
+                <SystemCard
+                  system={system}
+                  isExpanded={expandedSystems[index]}
+                  onToggle={() => toggleSystem(index)}
+                  delay={index * 100}
+                />
+              </div>
             ))}
           </div>
         )}
@@ -363,7 +414,7 @@ const ReportPreviewShowcase = () => {
             transition-all duration-500 ease-out
             ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
-            <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 shadow-2xl">
               <h3 className="flex items-center space-x-2 font-medium text-neutral-900 mb-4">
                 <i className="ph ph-arrows-clockwise text-orange-600"></i>
                 <span>Recurring Issues</span>
@@ -378,7 +429,7 @@ const ReportPreviewShowcase = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 shadow-2xl">
               <h3 className="flex items-center space-x-2 font-medium text-neutral-900 mb-4">
                 <i className="ph ph-link text-blue-600"></i>
                 <span>Technical Bulletin Correlations</span>
@@ -398,7 +449,7 @@ const ReportPreviewShowcase = () => {
         {/* Insights section */}
         {activeSection === 'insights' && (
           <div className={`
-            bg-white rounded-lg p-6 shadow-sm
+            bg-white rounded-2xl p-6 shadow-2xl
             transition-all duration-500 ease-out
             ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
@@ -418,13 +469,14 @@ const ReportPreviewShowcase = () => {
         )}
       </div>
 
-      {/* Footer note */}
-      <div className="mt-12 text-center">
-        <p className="text-xs text-neutral-500">
-          This is a sample of the comprehensive analysis you receive with every premium report
-        </p>
+        {/* Footer note */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-neutral-600">
+            This is a sample of the comprehensive analysis you receive with every premium report
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

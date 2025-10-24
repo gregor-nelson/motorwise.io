@@ -1,4 +1,5 @@
     import React, { useEffect, useRef, useState } from 'react';
+import { animate, stagger } from 'animejs';
 
 // Visualization Components
 const StoryIllustration = () => {
@@ -76,6 +77,17 @@ const MarketPriceChart = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // Animate chart elements with AnimeJS
+          if (chartRef.current) {
+            const animateElements = chartRef.current.querySelectorAll('[data-chart-animate]');
+            animate(Array.from(animateElements), {
+              opacity: [0, 1],
+              translateY: [10, 0],
+              duration: 600,
+              ease: 'outQuad',
+              delay: stagger(100)
+            });
+          }
         }
       },
       { threshold: 0.3 }
@@ -89,9 +101,9 @@ const MarketPriceChart = () => {
   }, []);
 
   return (
-    <div ref={chartRef} className="bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto">
+    <div ref={chartRef} className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-auto">
       {/* Info note */}
-      <div className="flex items-start gap-2 mb-4 p-3 bg-blue-50 rounded-lg">
+      <div data-chart-animate className="flex items-start gap-2 mb-4 p-3 bg-blue-50 rounded-lg">
         <i className="ph ph-info text-blue-600"></i>
         <div className="text-xs text-blue-900">
           <p className="font-medium">Note</p>
@@ -100,7 +112,7 @@ const MarketPriceChart = () => {
       </div>
 
       {/* Chart title */}
-      <h4 className="text-sm font-semibold text-neutral-900 mb-4">Market price history</h4>
+      <h4 data-chart-animate className="text-sm font-semibold text-neutral-900 mb-4">Market price history</h4>
 
       {/* Chart area */}
       <div className="relative h-48 mb-4">
@@ -210,6 +222,17 @@ const MileageChart = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // Animate chart elements with AnimeJS
+          if (chartRef.current) {
+            const animateElements = chartRef.current.querySelectorAll('[data-chart-animate]');
+            animate(Array.from(animateElements), {
+              opacity: [0, 1],
+              scale: [0.95, 1],
+              duration: 800,
+              ease: 'outQuad',
+              delay: stagger(100)
+            });
+          }
         }
       },
       { threshold: 0.3 }
@@ -223,9 +246,9 @@ const MileageChart = () => {
   }, []);
 
   return (
-    <div ref={chartRef} className="bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto relative">
+    <div ref={chartRef} className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-auto relative">
       {/* Warning tooltip */}
-      <div className="absolute -top-4 right-8 bg-yellow-50 border-2 border-yellow-400 rounded-lg shadow-lg p-3 max-w-xs z-10">
+      <div data-chart-animate className="absolute -top-4 right-8 bg-yellow-50 border-2 border-yellow-400 rounded-lg shadow-lg p-3 max-w-xs z-10">
         <div className="flex items-start gap-2">
           <i className="ph ph-warning text-yellow-600"></i>
           <div className="text-xs">
@@ -312,8 +335,39 @@ const MileageChart = () => {
 };
 
 const OwnershipTimeline = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const timelineRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Animate timeline elements with AnimeJS
+          if (timelineRef.current) {
+            const animateElements = timelineRef.current.querySelectorAll('[data-timeline-animate]');
+            animate(Array.from(animateElements), {
+              opacity: [0, 1],
+              translateX: [-20, 0],
+              duration: 600,
+              ease: 'outQuad',
+              delay: stagger(150)
+            });
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (timelineRef.current) {
+      observer.observe(timelineRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto">
+    <div ref={timelineRef} className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-auto">
       {/* Info note */}
       <div className="flex items-start gap-2 mb-6 p-3 bg-blue-50 rounded-lg">
         <i className="ph ph-info text-blue-600"></i>
@@ -334,7 +388,7 @@ const OwnershipTimeline = () => {
         {/* Owner markers */}
         <div className="relative flex justify-between items-start">
           {/* 1st owner */}
-          <div className="flex flex-col items-center w-1/3">
+          <div data-timeline-animate className="flex flex-col items-center w-1/3">
             <div className="bg-blue-500 text-white rounded-lg px-3 py-1 text-xs font-medium mb-4 shadow-md">
               1st owner
             </div>
@@ -350,7 +404,7 @@ const OwnershipTimeline = () => {
           </div>
 
           {/* 2nd owner */}
-          <div className="flex flex-col items-center w-1/3">
+          <div data-timeline-animate className="flex flex-col items-center w-1/3">
             <div className="bg-blue-500 text-white rounded-lg px-3 py-1 text-xs font-medium mb-4 shadow-md">
               2nd owner
             </div>
@@ -366,7 +420,7 @@ const OwnershipTimeline = () => {
           </div>
 
           {/* 3rd owner */}
-          <div className="flex flex-col items-center w-1/3">
+          <div data-timeline-animate className="flex flex-col items-center w-1/3">
             <div className="bg-blue-500 text-white rounded-lg px-3 py-1 text-xs font-medium mb-4 shadow-md">
               3rd owner
             </div>

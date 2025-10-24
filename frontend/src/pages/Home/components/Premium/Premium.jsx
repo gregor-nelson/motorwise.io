@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AnalysisPipelineVisualizer from './AnalysisPipelineVisualizer';
+import FeatureSections from './Featuresections';
+import TransitionBridge from './TransitionBridge';
 import ReportPreviewShowcase from './ReportPreviewShowcase';
 
-// Confidence Meter Component
+// Confidence Meter Component - Hero Design Pattern
 function ConfidenceMeter({ value = 86 }) {
   const barRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
   useEffect(() => {
     const el = barRef.current;
@@ -15,6 +18,10 @@ function ConfidenceMeter({ value = 86 }) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // Animate progress with delay
+          setTimeout(() => {
+            setCurrentProgress(value);
+          }, 300);
           observer.disconnect();
         }
       },
@@ -26,22 +33,133 @@ function ConfidenceMeter({ value = 86 }) {
   }, [value]);
 
   return (
-    <div className="w-full max-w-md bg-neutral-50 rounded-lg shadow-sm p-4 mt-6">
-      <div className="flex justify-between text-xs font-medium text-neutral-600 mb-2">
-        <span>Limited Information</span>
-        <span>Complete Analysis</span>
-      </div>
-      <div className="h-3 w-full bg-neutral-200 rounded-full overflow-hidden">
-        <div
-          ref={barRef}
-          className={`h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-full transition-all duration-[2000ms] ease-out ${
-            isVisible ? `w-[${value}%]` : 'w-0'
-          }`}
-        />
-      </div>
-      <div className="flex justify-between text-xs text-neutral-500 mt-2">
-        <span>Basic MOT check only</span>
-        <span className="font-medium text-green-600">{value}% more insights</span>
+    <div className="group w-full max-w-2xl mx-auto mt-12">
+      {/* Outer container with rotation and hover effect - Hero pattern */}
+      <div className="relative transform rotate-1 hover:rotate-0 transition-all duration-500">
+        {/* Decorative glow effect */}
+        <div className="absolute -inset-1 bg-gradient-to-br from-blue-200 to-green-200 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+
+        {/* Main card with pastel background and shadow-2xl */}
+        <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl shadow-2xl p-6 border-2 border-neutral-200 hover:border-blue-300 transition-all duration-300">
+          {/* Header with icon container - Hero/FAQ pattern */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                {/* Icon glow layer */}
+                <div className="absolute -inset-1 bg-gradient-to-br from-green-200 to-green-300 rounded-xl opacity-10 blur-sm group-hover:opacity-20 transition-opacity duration-300"></div>
+                {/* Icon container */}
+                <div className="relative w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-green-300 group-hover:scale-110 transition-all duration-300">
+                  <i className="ph ph-chart-line-up text-3xl text-neutral-700 group-hover:text-green-600 transition-colors duration-200"></i>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-base font-medium text-neutral-900 font-jost">Data Confidence Level</h3>
+                <p className="text-xs text-neutral-600">Premium vs Basic Analysis</p>
+              </div>
+            </div>
+
+            {/* Status badge - Hero pattern */}
+            <div className="px-3 py-1.5 rounded-full shadow-sm text-xs font-medium border-2 flex items-center gap-1.5 bg-green-100 text-green-700 border-green-300">
+              <i className="ph ph-check-circle text-sm"></i>
+              <span>{value}% Complete</span>
+            </div>
+          </div>
+
+          {/* Progress section - nested white card */}
+          <div ref={barRef} className="bg-white rounded-lg p-5 shadow-sm border border-neutral-200 mb-4">
+            <div className="flex justify-between items-center text-xs font-medium text-neutral-600 mb-3">
+              <div className="flex items-center gap-2">
+                <i className="ph ph-warning-circle text-red-500"></i>
+                <span>Limited Information</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <i className="ph ph-check-circle text-green-600"></i>
+                <span>Complete Analysis</span>
+              </div>
+            </div>
+
+            {/* Enhanced progress bar */}
+            <div className="w-full bg-neutral-200 rounded-full h-4 overflow-hidden border border-neutral-300 shadow-inner mb-3">
+              <div
+                className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-full transition-all duration-[2000ms] ease-out relative overflow-hidden"
+                style={{ width: `${currentProgress}%` }}
+              >
+                {/* Animated shine effect */}
+                {currentProgress > 0 && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
+                )}
+              </div>
+            </div>
+
+            {/* Progress indicator markers */}
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                <span className="text-xs text-neutral-500">0%</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                <span className="text-xs text-neutral-500">50%</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-xs text-neutral-500">100%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Comparison section - Hero alert pattern */}
+          <div className="grid grid-cols-2 gap-3">
+            {/* Basic Check */}
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-neutral-200">
+              <div className="flex items-center gap-2 mb-2">
+                <i className="ph ph-file-text text-neutral-500 text-sm"></i>
+                <span className="text-xs font-medium text-neutral-700">Basic MOT Check</span>
+              </div>
+              <ul className="space-y-1.5">
+                <li className="flex items-start gap-1.5 text-xs text-neutral-600">
+                  <i className="ph ph-check text-green-600 text-xs mt-0.5"></i>
+                  <span>MOT history</span>
+                </li>
+                <li className="flex items-start gap-1.5 text-xs text-neutral-400">
+                  <i className="ph ph-x text-neutral-400 text-xs mt-0.5"></i>
+                  <span>No defect analysis</span>
+                </li>
+                <li className="flex items-start gap-1.5 text-xs text-neutral-400">
+                  <i className="ph ph-x text-neutral-400 text-xs mt-0.5"></i>
+                  <span>No TSB matching</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Premium Analysis */}
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4 shadow-sm border-2 border-green-300">
+              <div className="flex items-center gap-2 mb-2">
+                <i className="ph ph-star text-green-600 text-sm"></i>
+                <span className="text-xs font-medium text-green-900">Premium Analysis</span>
+              </div>
+              <ul className="space-y-1.5">
+                <li className="flex items-start gap-1.5 text-xs text-green-700">
+                  <i className="ph ph-check-circle text-green-600 text-xs mt-0.5"></i>
+                  <span>Full MOT forensics</span>
+                </li>
+                <li className="flex items-start gap-1.5 text-xs text-green-700">
+                  <i className="ph ph-check-circle text-green-600 text-xs mt-0.5"></i>
+                  <span>Defect cross-reference</span>
+                </li>
+                <li className="flex items-start gap-1.5 text-xs text-green-700">
+                  <i className="ph ph-check-circle text-green-600 text-xs mt-0.5"></i>
+                  <span>Known issues database</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Decorative underline */}
+          <div className="flex justify-center mt-4">
+            <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-green-400 opacity-60 rounded-full"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -754,14 +872,16 @@ const PremiumVehicleReports = () => {
         </div>
       </section>
 
-      {/* Report Preview Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <ReportPreviewShowcase />
-        </div>
-      </section>
+      {/* Feature Sections - storytelling about data & capabilities */}
+      <FeatureSections />
 
-      {/* Feature Sections */}
+      {/* Transition Bridge - connecting narrative */}
+      <TransitionBridge />
+
+      {/* Report Preview Showcase - interactive demo of actual report UI */}
+      <ReportPreviewShowcase />
+
+      {/* Additional Feature Sections with visualizations */}
       {sections.map((section, index) => (
         <FeatureSection
           key={index}

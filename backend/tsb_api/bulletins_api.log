@@ -3606,3 +3606,18 @@
 2025-10-24 10:54:25,681 - bulletins_api - INFO - No good match found for MAZDA EUNOS
 2025-10-24 10:54:25,681 - bulletins_api - ERROR - HTTPException: No bulletins found for MAZDA EUNOS
 2025-10-24 10:54:25,682 - bulletins_api - WARNING - Request: GET /api/v1/bulletins/lookup/MAZDA/EUNOS from 127.0.0.1 - Status: 404 - Process Time: 0.0040s
+2025-10-24 11:18:39,428 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-10-24 11:18:39,432 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-10-24 11:18:39,447 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-10-24 11:18:39,448 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-10-24 11:18:39,448 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-10-24 11:21:46,867 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-10-24 11:21:46,869 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-10-24 11:21:46,870 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-10-24 11:21:46,870 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-10-24 11:21:46,870 - bulletins_api - INFO - API started successfully with 2 bulletin records
+2025-10-24 11:22:21,227 - bulletins_api - INFO - Found 2 bulletin JSON files
+2025-10-24 11:22:21,230 - bulletins_api - INFO - Loaded bulletins for Honda Civic (HON25013) - 38 bulletins
+2025-10-24 11:22:21,231 - bulletins_api - INFO - Loaded bulletins for Honda CR-V (HON24656) - 13 bulletins
+2025-10-24 11:22:21,231 - bulletins_api - INFO - Loaded 2 vehicle bulletin sets with 4 index entries
+2025-10-24 11:22:21,231 - bulletins_api - INFO - API started successfully with 2 bulletin records

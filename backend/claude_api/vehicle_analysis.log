@@ -476,3 +476,15 @@
 2025-10-24 10:54:25,685 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
 2025-10-24 10:55:08,077 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-10-24 10:55:08,094 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 44.1810s
+2025-10-24 11:18:38,596 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:18:38,644 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 11:18:39,365 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:18:39,368 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 11:21:40,939 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:21:40,940 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 11:21:41,089 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:21:41,091 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 11:22:20,034 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:22:20,035 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 11:22:20,224 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 11:22:20,226 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk

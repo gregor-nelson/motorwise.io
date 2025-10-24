@@ -6987,3 +6987,39 @@
 2025-10-24 08:01:27,755 - vehicle_data_api - INFO - Loaded tech specs for Land Rover Defender244DT/2.4 2007 L316 2007 (unknown)
 2025-10-24 08:01:27,757 - vehicle_data_api - INFO - Built index with 9 vehicles, including fuel type and base model information
 2025-10-24 08:01:27,757 - vehicle_data_api - INFO - API started successfully with 98 repair time records and 15 technical specification records
+2025-10-24 10:10:45,680 - vehicle_data_api - INFO - Looking up tech specs for HONDA CR-V (year: 2009, fuel: diesel)
+2025-10-24 10:10:45,681 - vehicle_data_api - INFO - Looking up tech specs for: HONDA CR-V (year: 2009, fuel: diesel)
+2025-10-24 10:10:45,682 - vehicle_data_api - INFO - Attempting fuzzy matching for HONDA CR-V (year: 2009, fuel: diesel)
+2025-10-24 10:10:45,682 - vehicle_data_api - INFO - Searching for: honda cr-v, Year=2009, Fuel=diesel, Type=tech_specs
+2025-10-24 10:10:45,682 - vehicle_data_api - INFO - Found 2 vehicles matching make 'honda'
+2025-10-24 10:10:45,684 - vehicle_data_api - INFO - Top 2 matching candidates:
+2025-10-24 10:10:45,685 - vehicle_data_api - INFO - #1: Honda CR-V (2007-2012) Fuel: petrol - Score: 1.00
+2025-10-24 10:10:45,686 - vehicle_data_api - INFO - #2: Honda CR-VR20A2/2 (None-present) Fuel: petrol - Score: 0.67
+2025-10-24 10:10:45,686 - vehicle_data_api - INFO - Lowered threshold to 0.35 due to excellent year match
+2025-10-24 10:10:45,686 - vehicle_data_api - INFO - Selected match: Honda CR-V (2007-2012) Fuel: petrol with score: 1.00
+2025-10-24 10:10:45,686 - vehicle_data_api - INFO - Fuzzy match found: Honda CR-V petrol
+2025-10-24 10:10:45,694 - vehicle_data_api - INFO - Looking up repair times for HONDA CR-V (year: 2009)
+2025-10-24 10:10:45,694 - vehicle_data_api - INFO - Looking up repair times for: HONDA CR-V (year: 2009)
+2025-10-24 10:10:45,695 - vehicle_data_api - INFO - Direct year match found with key: honda_cr-v_2009
+2025-10-24 10:10:45,704 - vehicle_data_api - INFO - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0390s
+2025-10-24 10:10:45,704 - vehicle_data_api - INFO - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 200 - Process Time: 0.0340s
+2025-10-24 10:54:23,927 - vehicle_data_api - INFO - Looking up repair times for MAZDA EUNOS (year: 1991)
+2025-10-24 10:54:23,929 - vehicle_data_api - INFO - Looking up repair times for: MAZDA EUNOS (year: 1991)
+2025-10-24 10:54:23,929 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991)
+2025-10-24 10:54:23,929 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=None, Type=repair_times
+2025-10-24 10:54:23,929 - vehicle_data_api - INFO - Found 2 vehicles matching make 'mazda'
+2025-10-24 10:54:23,930 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-10-24 10:54:23,931 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: None)
+2025-10-24 10:54:23,931 - vehicle_data_api - WARNING - No repair time match found for MAZDA EUNOS (year: 1991)
+2025-10-24 10:54:23,932 - vehicle_data_api - INFO - Similar repair time keys available: ['mazda_mx-5', 'mazda_mx', 'mazda_mx-5_2005', 'mazda_mx_2005', 'mazda_mx-5_2006', 'mazda_mx_2006', 'mazda_mx-5_2007', 'mazda_mx_2007', 'mazda_mx-5_2008', 'mazda_mx_2008', 'mazda_mx-5_2009', 'mazda_mx_2009', 'mazda_mx-5_2010', 'mazda_mx_2010', 'mazda_mx-5_2011', 'mazda_mx_2011', 'mazda_mx-5_2012', 'mazda_mx_2012', 'mazda_mx-5_2013', 'mazda_mx_2013', 'mazda_mx-5_2014', 'mazda_mx_2014', 'mazda_mx-5_2015', 'mazda_mx_2015']
+2025-10-24 10:54:23,932 - vehicle_data_api - ERROR - HTTPException: No repair time data found for MAZDA EUNOS (year: 1991)
+2025-10-24 10:54:23,934 - vehicle_data_api - INFO - Looking up tech specs for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-10-24 10:54:23,934 - vehicle_data_api - INFO - Looking up tech specs for: MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-10-24 10:54:23,934 - vehicle_data_api - INFO - Attempting fuzzy matching for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-10-24 10:54:23,935 - vehicle_data_api - INFO - Searching for: mazda eunos, Year=1991, Fuel=petrol, Type=tech_specs
+2025-10-24 10:54:23,935 - vehicle_data_api - INFO - No candidates with exact make match, trying fuzzy make matching
+2025-10-24 10:54:23,935 - vehicle_data_api - INFO - No good match found for MAZDA EUNOS (Year: 1991, Fuel: petrol)
+2025-10-24 10:54:23,935 - vehicle_data_api - WARNING - No tech specs match found for MAZDA EUNOS (year: 1991, fuel: petrol)
+2025-10-24 10:54:23,936 - vehicle_data_api - ERROR - HTTPException: No technical specifications found for MAZDA EUNOS (year: 1991) (fuel type: petrol)
+2025-10-24 10:54:23,936 - vehicle_data_api - WARNING - Request: POST /api/v1/repair-times-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0159s
+2025-10-24 10:54:23,937 - vehicle_data_api - WARNING - Request: POST /api/v1/tech-specs-lookup from 127.0.0.1 - Status: 404 - Process Time: 0.0150s

@@ -450,3 +450,29 @@
 2025-10-24 08:01:28,112 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
 2025-10-24 08:01:28,311 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-10-24 08:01:28,312 - vehicle_analysis_api - INFO - Loaded 0 valid cache entries from disk
+2025-10-24 10:10:45,344 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-10-24 10:10:46,903 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-10-24 10:10:46,906 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-10-24 10:10:47,764 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-10-24 10:10:47,766 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-10-24 10:11:03,535 - vehicle_analysis_api - INFO - Fetching MOT data for registration: CN09JEJ
+2025-10-24 10:11:04,401 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/CN09JEJ "HTTP/1.1 200 OK"
+2025-10-24 10:11:04,403 - vehicle_analysis_api - INFO - Fetching bulletins for HONDA CR-V
+2025-10-24 10:11:05,357 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 200 OK"
+2025-10-24 10:11:05,359 - vehicle_analysis_api - INFO - Analyzing data for CN09JEJ with Claude API
+2025-10-24 10:11:36,822 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-10-24 10:11:36,844 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 51.5052s
+2025-10-24 10:11:38,368 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-10-24 10:11:38,374 - vehicle_analysis_api - ERROR - Error writing cache file cache\analysis\CN09JEJ.json: [WinError 183] Cannot create a file when that file already exists: 'cache\\analysis\\CN09JEJ.tmp' -> 'cache\\analysis\\CN09JEJ.json'
+2025-10-24 10:11:38,375 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 34.8428s
+2025-10-24 10:38:02,519 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0010s
+2025-10-24 10:54:23,915 - vehicle_analysis_api - INFO - Fetching MOT data for registration: J531WAX
+2025-10-24 10:54:24,866 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v1/vehicle/registration/J531WAX "HTTP/1.1 200 OK"
+2025-10-24 10:54:24,868 - vehicle_analysis_api - INFO - Fetching bulletins for MAZDA EUNOS
+2025-10-24 10:54:25,675 - httpx - INFO - HTTP Request: POST http://localhost:8006/api/v1/bulletins/lookup "HTTP/1.1 404 Not Found"
+2025-10-24 10:54:25,677 - vehicle_analysis_api - INFO - No exact match found, trying GET endpoint
+2025-10-24 10:54:25,683 - httpx - INFO - HTTP Request: GET http://localhost:8006/api/v1/bulletins/lookup/MAZDA/EUNOS "HTTP/1.1 404 Not Found"
+2025-10-24 10:54:25,685 - vehicle_analysis_api - WARNING - No bulletins found for MAZDA EUNOS
+2025-10-24 10:54:25,685 - vehicle_analysis_api - INFO - Analyzing data for J531WAX with Claude API
+2025-10-24 10:55:08,077 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-10-24 10:55:08,094 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/J531WAX - 200 - 44.1810s

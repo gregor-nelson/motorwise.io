@@ -1,13 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <!-- Black background (matches UK gov style) -->
-  <rect width="32" height="32" fill="#0b0c0c"/>
-  <!-- Shield shape (symbol of authority and trust) -->
-  <path fill="#ffffff" d="M16 6c-4 0-8 4-8 8v10c0 2 2 4 8 4s8-2 8-4V14c0-4-4-8-8-8z"/>
-  <!-- Car silhouette inside shield -->
-  <path fill="#0b0c0c" d="M10 16h12v4H10zM11 14h10l1 2h-12z"/>
-  <!-- Wheels -->
-  <circle cx="12" cy="20" r="1.5" fill="#ffffff"/>
-  <circle cx="20" cy="20" r="1.5" fill="#ffffff"/>
-  <!-- Accent "M" for MOT (subtle red for authority) -->
-  <path fill="#d81a1a" d="M14 8h1l2 3h-2l-1-3zm3 0h1l1 3h-2z"/>
+  <!-- Clean white background -->
+  <rect width="32" height="32" fill="#ffffff" rx="6"/>
+
+  <!-- Gradient definition for underline -->
+  <defs>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgba(34,197,94,0);stop-opacity:0" />
+      <stop offset="50%" style="stop-color:rgb(34,197,94);stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:rgba(34,197,94,0);stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Stylized 'w' in blue using Jost-like styling -->
+  <text
+    x="16"
+    y="24"
+    font-family="'Jost', -apple-system, system-ui, sans-serif"
+    font-size="24"
+    font-weight="700"
+    fill="#3b82f6"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >w</text>
+
+  <!-- Green gradient underline -->
+  <rect
+    x="8"
+    y="26"
+    width="16"
+    height="2"
+    fill="url(#greenGradient)"
+    rx="1"
+  />
 </svg>

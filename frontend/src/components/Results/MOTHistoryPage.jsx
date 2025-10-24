@@ -161,100 +161,170 @@ const MOTHistoryPage = ({ registration, onLoadingComplete, onError }) => {
   }, []);
 
   // ENHANCED COMPLETE LOADING - Added animations to original logic
-  const completeLoading = useCallback((data, errorMsg = null) => {
-    if (errorMsg) {
-      setError(errorMsg);
-      setLoading(false);
-      if (onError) onError(errorMsg);
-      return;
-    }
-    
-    setMotData(data);
+  const completeLoading = useCallback((data = null, errorMessage = null) => {
     setLoading(false);
-    
-    setTimeout(() => {
-      setShowResults(true);
-      if (onLoadingComplete) onLoadingComplete();
-    }, 100);
-    
-    setTimeout(() => {
-      const defectState = {};
-      data.forEach((_, index) => {
-        defectState[index] = true;
-      });
-      setShowDefects(defectState);
-    }, 300);
+
+    if (errorMessage) {
+      setError(errorMessage);
+      if (onError) {
+        onError(errorMessage);
+      }
+    } else if (data !== null) {
+      setMotData(data);
+      setError(null);
+
+      // ANIMATION TRIGGERS - Added
+      setTimeout(() => setShowResults(true), 100);
+
+      if (data.length > 0) {
+        data.forEach((mot, index) => {
+          if (mot.defects || mot.advisories) {
+            setTimeout(() => {
+              setShowDefects(prev => ({
+                ...prev,
+                [index]: true
+              }));
+            }, 300 + (index * 100));
+          }
+        });
+      }
+
+      if (onLoadingComplete) {
+        onLoadingComplete();
+      }
+    }
   }, [onLoadingComplete, onError]);
 
-  // ORIGINAL FETCH LOGIC - Unchanged
+  // ORIGINAL FETCH LOGIC - Completely unchanged to preserve working behavior
   useEffect(() => {
-    if (!registration) {
-      completeLoading(null, 'No registration provided');
-      return;
-    }
+    const fetchMotData = async () => {
+      if (!registration) {
+        completeLoading([]);
+        return;
+      }
 
-    const formattedReg = formatRegistration(registration);
+      // Reset animation state
+      setShowResults(false);
+      setShowDefects({});
+      setSectionExpanded(true); // Reset to expanded when loading new data
+      closeDefectModal(); // Close modal when loading new data
 
-    if (motCache[formattedReg] && isCacheValid(motCache[formattedReg].timestamp)) {
-      console.log('Using cached MOT data for:', formattedReg);
-      completeLoading(motCache[formattedReg].data);
-      return;
-    }
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      abortControllerRef.current = new AbortController();
 
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
+      const cacheKey = `mot_${registration}`;
 
-    const fetchMotHistory = async () => {
+      setLoading(true);
+      setError(null);
+
+      const minLoadingTime = 500;
+      const startTime = Date.now();
+
       try {
-        setLoading(true);
-        setError(null);
-        
-        const response = await fetch(`${API_BASE_URL}/mot-history/${encodeURIComponent(registration)}`, {
-          signal: controller.signal,
-          headers: {
-            'Accept': 'application/json',
-          },
-        });
+        // Check cache first
+        const cachedData = motCache[cacheKey];
+        if (cachedData && isCacheValid(cachedData.timestamp)) {
+          console.log('Using cached data');
+          const elapsed = Date.now() - startTime;
+          const remainingTime = Math.max(0, minLoadingTime - elapsed);
 
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error('No MOT history found for this vehicle');
-          }
-          throw new Error(`Failed to fetch MOT history: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const transformedData = transformMotData(data);
-
-        if (transformedData.length === 0) {
-          throw new Error('No MOT test records available for this vehicle');
-        }
-
-        motCache[formattedReg] = {
-          data: transformedData,
-          timestamp: Date.now()
-        };
-
-        completeLoading(transformedData);
-
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          console.log('Fetch aborted');
+          setTimeout(() => {
+            completeLoading(cachedData.data);
+          }, remainingTime);
           return;
         }
-        console.error('Error fetching MOT history:', err);
-        completeLoading(null, err.message || 'Failed to load MOT history');
+
+        // Check localStorage as fallback
+        const storedData = localStorage.getItem(cacheKey);
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          if (isCacheValid(parsedData.timestamp)) {
+            console.log('Using localStorage data');
+            motCache[cacheKey] = parsedData;
+            const elapsed = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsed);
+
+            setTimeout(() => {
+              completeLoading(parsedData.data);
+            }, remainingTime);
+            return;
+          }
+        }
+
+        console.log('Fetching fresh data from API');
+
+        const response = await fetch(
+          `${API_BASE_URL}/vehicle/registration/${registration}`,
+          {
+            signal: abortControllerRef.current.signal,
+            headers: {
+              'Accept': 'application/json',
+              'Cache-Control': 'no-cache'
+            },
+            credentials: isDevelopment ? 'include' : 'same-origin',
+            mode: isDevelopment ? 'cors' : 'same-origin'
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.errorMessage ||
+            data.detail?.errorMessage ||
+            data.detail ||
+            `Failed to fetch MOT data (Status: ${response.status})`
+          );
+        }
+
+        const transformedData = transformMotData(data);
+
+        motCache[cacheKey] = {
+          data: transformedData,
+          timestamp: Date.now(),
+          rawData: data
+        };
+        localStorage.setItem(cacheKey, JSON.stringify({
+          data: transformedData,
+          timestamp: Date.now()
+        }));
+
+        const elapsed = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadingTime - elapsed);
+
+        setTimeout(() => {
+          completeLoading(transformedData);
+        }, remainingTime);
+
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('API error:', err);
+          const errorMessage = err.message || 'An error occurred while fetching MOT data';
+
+          const elapsed = Date.now() - startTime;
+          const remainingTime = Math.max(0, minLoadingTime - elapsed);
+
+          setTimeout(() => {
+            completeLoading(null, errorMessage);
+          }, remainingTime);
+        }
       }
     };
 
-    fetchMotHistory();
+    fetchMotData();
 
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
     };
-  }, [registration, transformMotData, isCacheValid, completeLoading]);
+  }, [registration, transformMotData, isCacheValid, completeLoading, closeDefectModal]);
+
+  if (!registration) {
+    return null;
+  }
 
   // LOADING STATE
   if (loading) {

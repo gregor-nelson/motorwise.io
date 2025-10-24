@@ -1,6 +1,8 @@
 /* ============================================
-   PURE VANILLA JS HEADER - ZERO REACT
-   Web Component Implementation
+   PROFESSIONAL HEADER - REFINED DESIGN
+   Old Layout + New Design Aesthetic
+   Desktop: Left Sidebar + Expandable Panel
+   Mobile: Top Header + Slide-down Panel
    ============================================ */
 
 import { animate, stagger } from 'animejs';
@@ -13,56 +15,56 @@ const NAV_ITEMS = [
   {
     label: 'Home',
     href: '/',
+    icon: 'ph-house',
+    iconClass: 'ph ph-house',
     bgColor: 'bg-blue-50',
-    pillColor: 'bg-blue-600',
-    textColor: 'text-white',
-    borderColor: 'border-blue-200 hover:border-blue-400',
-    svgKey: 'home'
+    iconBg: 'bg-blue-100',
+    hoverBg: 'hover:bg-blue-50'
   },
   {
     label: 'Premium Report',
     href: '/premium-report',
+    icon: 'ph-file-text',
+    iconClass: 'ph ph-file-text',
     bgColor: 'bg-purple-50',
-    pillColor: 'bg-purple-600',
-    textColor: 'text-white',
-    borderColor: 'border-purple-200 hover:border-purple-400',
-    svgKey: 'premiumReport'
+    iconBg: 'bg-purple-100',
+    hoverBg: 'hover:bg-purple-50'
   },
   {
     label: 'MOT History',
     href: '/mot-history',
+    icon: 'ph-clock-clockwise',
+    iconClass: 'ph ph-clock-clockwise',
     bgColor: 'bg-green-50',
-    pillColor: 'bg-green-600',
-    textColor: 'text-white',
-    borderColor: 'border-green-200 hover:border-green-400',
-    svgKey: 'motHistory'
+    iconBg: 'bg-green-100',
+    hoverBg: 'hover:bg-green-50'
   },
   {
-    label: 'FAQ',
-    href: '/faq',
+    label: 'Help & FAQ',
+    href: '/knowledge-center',
+    icon: 'ph-question',
+    iconClass: 'ph ph-question',
     bgColor: 'bg-amber-50',
-    pillColor: 'bg-amber-600',
-    textColor: 'text-white',
-    borderColor: 'border-amber-200 hover:border-amber-400',
-    svgKey: 'faq'
+    iconBg: 'bg-amber-100',
+    hoverBg: 'hover:bg-amber-50'
   },
   {
     label: 'Contact',
     href: '/contact',
+    icon: 'ph-envelope',
+    iconClass: 'ph ph-envelope',
     bgColor: 'bg-pink-50',
-    pillColor: 'bg-pink-600',
-    textColor: 'text-white',
-    borderColor: 'border-pink-200 hover:border-pink-400',
-    svgKey: 'contact'
+    iconBg: 'bg-pink-100',
+    hoverBg: 'hover:bg-pink-50'
   },
   {
     label: 'Knowledge Center',
     href: '/knowledge-center',
+    icon: 'ph-book-open',
+    iconClass: 'ph ph-book-open',
     bgColor: 'bg-cyan-50',
-    pillColor: 'bg-cyan-600',
-    textColor: 'text-white',
-    borderColor: 'border-cyan-200 hover:border-cyan-400',
-    svgKey: 'knowledgeCenter'
+    iconBg: 'bg-cyan-100',
+    hoverBg: 'hover:bg-cyan-50'
   }
 ];
 
@@ -75,499 +77,44 @@ const ADDITIONAL_LINKS = [
 ];
 
 /* ============================================
-   SVG TEMPLATES
+   HEADER TEMPLATE
    ============================================ */
 
-const SVG_TEMPLATES = {
-  home: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="home">
-      <defs>
-        <linearGradient id="homeRoof" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.6"/>
-        </linearGradient>
-        <linearGradient id="homeWall" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#2563eb" stop-opacity="0.3"/>
-        </linearGradient>
-      </defs>
-      <ellipse cx="100" cy="165" rx="55" ry="8" fill="#3b82f6" opacity="0.1"/>
-      <path data-ref="wall" d="M40 85 L160 85 L160 160 L40 160 Z" fill="url(#homeWall)" stroke="#3b82f6" stroke-width="2.5"/>
-      <path data-ref="roof" d="M100 35 L170 85 L30 85 Z" fill="url(#homeRoof)" stroke="#3b82f6" stroke-width="3" stroke-linejoin="round"/>
-      <rect x="125" y="50" width="15" height="25" fill="#3b82f6" opacity="0.5" stroke="#3b82f6" stroke-width="2"/>
-      <rect data-ref="door" x="85" y="115" width="30" height="45" rx="2" fill="#3b82f6" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
-      <circle cx="108" cy="137" r="2" fill="#3b82f6"/>
-      <g data-ref="window-left">
-        <rect x="52" y="100" width="22" height="22" rx="2" fill="#60a5fa" opacity="0.3" stroke="#3b82f6" stroke-width="2"/>
-        <line x1="63" y1="100" x2="63" y2="122" stroke="#3b82f6" stroke-width="1.5"/>
-        <line x1="52" y1="111" x2="74" y2="111" stroke="#3b82f6" stroke-width="1.5"/>
-      </g>
-      <g data-ref="window-right">
-        <rect x="126" y="100" width="22" height="22" rx="2" fill="#60a5fa" opacity="0.3" stroke="#3b82f6" stroke-width="2"/>
-        <line x1="137" y1="100" x2="137" y2="122" stroke="#3b82f6" stroke-width="1.5"/>
-        <line x1="126" y1="111" x2="148" y2="111" stroke="#3b82f6" stroke-width="1.5"/>
-      </g>
-    </svg>
-  `,
-
-  premiumReport: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="premium-report">
-      <defs>
-        <linearGradient id="reportPaper" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.3"/>
-        </linearGradient>
-        <linearGradient id="reportBadge" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.6"/>
-        </linearGradient>
-      </defs>
-      <rect x="65" y="45" width="80" height="120" rx="4" fill="#8b5cf6" opacity="0.05"/>
-      <rect x="62" y="42" width="80" height="120" rx="4" fill="#8b5cf6" opacity="0.08"/>
-      <rect data-ref="paper" x="58" y="38" width="80" height="120" rx="4" fill="url(#reportPaper)" stroke="#8b5cf6" stroke-width="2.5"/>
-      <path d="M138 38 L138 53 L123 38 Z" fill="#8b5cf6" opacity="0.15"/>
-      <g data-ref="badge">
-        <circle cx="100" cy="78" r="22" fill="url(#reportBadge)" stroke="#8b5cf6" stroke-width="2.5"/>
-        <circle cx="100" cy="78" r="18" fill="none" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
-      </g>
-      <path data-ref="check" d="M85 98 L95 108 L115 83" stroke="#8b5cf6" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="100" stroke-dashoffset="0"/>
-      <g data-ref="lines">
-        <line x1="68" y1="120" x2="132" y2="120" stroke="#8b5cf6" stroke-width="2.5" opacity="0.35" stroke-linecap="round"/>
-        <line x1="68" y1="132" x2="115" y2="132" stroke="#8b5cf6" stroke-width="2.5" opacity="0.35" stroke-linecap="round"/>
-        <line x1="68" y1="144" x2="125" y2="144" stroke="#8b5cf6" stroke-width="2.5" opacity="0.3" stroke-linecap="round"/>
-      </g>
-      <circle cx="118" cy="65" r="3" fill="#a78bfa" opacity="0.6"/>
-    </svg>
-  `,
-
-  motHistory: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="mot-history">
-      <defs>
-        <linearGradient id="clockFace" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#10b981" stop-opacity="0.3"/>
-        </linearGradient>
-        <radialGradient id="clockCenter">
-          <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#059669" stop-opacity="0.6"/>
-        </radialGradient>
-      </defs>
-      <circle cx="105" cy="105" r="62" fill="#10b981" opacity="0.08"/>
-      <circle data-ref="outer-ring" cx="100" cy="100" r="65" fill="none" stroke="#10b981" stroke-width="2" opacity="0.3"/>
-      <circle cx="100" cy="100" r="58" fill="url(#clockFace)" stroke="#10b981" stroke-width="3"/>
-      <circle cx="100" cy="100" r="50" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.2"/>
-      <g data-ref="ticks">
-        <circle cx="100" cy="48" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="132" cy="63" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="147" cy="95" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="132" cy="132" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="100" cy="152" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="68" cy="132" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="53" cy="100" r="4" fill="#10b981" opacity="0.5"/>
-        <circle cx="68" cy="68" r="4" fill="#10b981" opacity="0.5"/>
-      </g>
-      <circle cx="100" cy="100" r="6" fill="url(#clockCenter)" stroke="#10b981" stroke-width="1"/>
-      <line data-ref="hour-hand" x1="100" y1="100" x2="100" y2="70" stroke="#10b981" stroke-width="4" stroke-linecap="round" style="transform-origin: 100px 100px"/>
-      <line data-ref="minute-hand" x1="100" y1="100" x2="125" y2="100" stroke="#10b981" stroke-width="3" stroke-linecap="round" style="transform-origin: 100px 100px"/>
-      <path d="M85 75 Q90 70 95 75" stroke="#34d399" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
-    </svg>
-  `,
-
-  faq: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="faq">
-      <defs>
-        <linearGradient id="faqCircle" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.4"/>
-        </linearGradient>
-        <linearGradient id="questionMark" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#f59e0b" stop-opacity="1"/>
-        </linearGradient>
-      </defs>
-      <circle data-ref="outer-circle" cx="100" cy="100" r="65" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.2" style="transform-origin: 100px 100px"/>
-      <g data-ref="rings" style="transform-origin: 100px 100px">
-        <circle cx="100" cy="100" r="58" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.15" stroke-dasharray="5,5"/>
-      </g>
-      <circle cx="103" cy="103" r="52" fill="#f59e0b" opacity="0.08"/>
-      <circle cx="100" cy="100" r="52" fill="url(#faqCircle)" stroke="#f59e0b" stroke-width="3"/>
-      <circle cx="100" cy="100" r="44" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.2"/>
-      <g data-ref="question">
-        <path d="M85 82 Q85 70 95 68 Q105 66 110 70 Q115 74 115 82 Q115 88 110 92 Q105 96 100 96 L100 110"
-              stroke="url(#questionMark)"
-              stroke-width="4"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
-      </g>
-      <circle data-ref="dot" cx="100" cy="123" r="5" fill="#f59e0b" opacity="0.9"/>
-      <circle cx="130" cy="75" r="2.5" fill="#fbbf24" opacity="0.6"/>
-      <circle cx="70" cy="125" r="2" fill="#fbbf24" opacity="0.5"/>
-      <circle cx="125" cy="120" r="1.5" fill="#fbbf24" opacity="0.4"/>
-    </svg>
-  `,
-
-  contact: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="contact">
-      <defs>
-        <linearGradient id="envelope" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#f9a8d4" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#ec4899" stop-opacity="0.4"/>
-        </linearGradient>
-        <linearGradient id="envelopeFlap" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#ec4899" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="#db2777" stop-opacity="0.6"/>
-        </linearGradient>
-      </defs>
-      <g data-ref="envelope" style="transform-origin: 100px 100px">
-        <rect x="53" y="73" width="100" height="70" rx="6" fill="#ec4899" opacity="0.08"/>
-        <rect x="48" y="68" width="100" height="70" rx="6" fill="url(#envelope)" stroke="#ec4899" stroke-width="2.5"/>
-        <path d="M48 68 L98 108 L148 68" fill="#ec4899" opacity="0.15"/>
-        <g data-ref="lines">
-          <line x1="60" y1="95" x2="90" y2="95" stroke="#ec4899" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
-          <line x1="60" y1="105" x2="85" y2="105" stroke="#ec4899" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
-        </g>
-        <g data-ref="flap">
-          <path d="M48 68 L98 103 L148 68" fill="none" stroke="#ec4899" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M48 138 L78 108" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M148 138 L118 108" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round"/>
-        </g>
-        <g data-ref="heart" style="transform-origin: 125px 85px">
-          <path d="M125 88 L127 85 Q128 83 130 83 Q132 83 132 85 Q132 87 125 92 Q118 87 118 85 Q118 83 120 83 Q122 83 123 85 Z"
-                fill="#ec4899"
-                opacity="0.7"/>
-        </g>
-      </g>
-      <circle cx="155" cy="75" r="2" fill="#f9a8d4" opacity="0.5"/>
-      <circle cx="45" cy="130" r="2.5" fill="#f9a8d4" opacity="0.6"/>
-    </svg>
-  `,
-
-  knowledgeCenter: () => `
-    <svg viewBox="0 0 200 200" class="w-32 h-32" data-svg="knowledge-center">
-      <defs>
-        <linearGradient id="bookLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#0891b2" stop-opacity="0.4"/>
-        </linearGradient>
-        <linearGradient id="bookRight" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#0891b2" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.3"/>
-        </linearGradient>
-        <linearGradient id="bookmark" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.7"/>
-          <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.8"/>
-        </linearGradient>
-      </defs>
-      <ellipse cx="100" cy="155" rx="50" ry="6" fill="#06b6d4" opacity="0.1"/>
-      <rect x="98" y="52" width="4" height="98" fill="#06b6d4" opacity="0.15"/>
-      <g data-ref="left-page">
-        <path d="M55 55 Q55 50 60 50 L100 50 L100 150 L60 150 Q55 150 55 145 Z"
-              fill="url(#bookLeft)"
-              stroke="#06b6d4"
-              stroke-width="2.5"/>
-        <path d="M100 50 Q95 60 95 100 Q95 140 100 150" fill="#06b6d4" opacity="0.1" stroke="none"/>
-        <g data-ref="left-lines">
-          <line x1="68" y1="75" x2="92" y2="75" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="68" y1="88" x2="88" y2="88" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="68" y1="101" x2="92" y2="101" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="68" y1="114" x2="85" y2="114" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="68" y1="127" x2="90" y2="127" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-        </g>
-      </g>
-      <g data-ref="right-page">
-        <path d="M100 50 L140 50 Q145 50 145 55 L145 145 Q145 150 140 150 L100 150 Z"
-              fill="url(#bookRight)"
-              stroke="#06b6d4"
-              stroke-width="2.5"/>
-        <path d="M100 50 Q105 60 105 100 Q105 140 100 150" fill="#06b6d4" opacity="0.1" stroke="none"/>
-        <g data-ref="right-lines">
-          <line x1="108" y1="75" x2="132" y2="75" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="108" y1="88" x2="128" y2="88" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="108" y1="101" x2="132" y2="101" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="108" y1="114" x2="125" y2="114" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-          <line x1="108" y1="127" x2="130" y2="127" stroke="#06b6d4" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
-        </g>
-      </g>
-      <g data-ref="bookmark">
-        <path d="M115 50 L115 85 L120 80 L125 85 L125 50 Z"
-              fill="url(#bookmark)"
-              stroke="#06b6d4"
-              stroke-width="1.5"/>
-      </g>
-      <circle cx="70" cy="65" r="2" fill="#22d3ee" opacity="0.6"/>
-      <circle cx="130" cy="135" r="2.5" fill="#22d3ee" opacity="0.5"/>
-    </svg>
-  `
-};
-
-/* ============================================
-   ANIMATION CONFIGURATIONS
-   ============================================ */
-
-const ANIMATIONS = {
-  initHomeSVG: (svg) => {
-    const roof = svg.querySelector('[data-ref="roof"]');
-    const windowLeft = svg.querySelector('[data-ref="window-left"]');
-    const windowRight = svg.querySelector('[data-ref="window-right"]');
-
-    return [
-      animate(roof, {
-        translateY: [-2, 2],
-        duration: 3000,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate([windowLeft, windowRight], {
-        scale: [1, 1.05],
-        duration: 2000,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true,
-        delay: stagger(400)
-      })
-    ];
-  },
-
-  initPremiumReportSVG: (svg) => {
-    const badge = svg.querySelector('[data-ref="badge"]');
-    const check = svg.querySelector('[data-ref="check"]');
-    const paper = svg.querySelector('[data-ref="paper"]');
-
-    return [
-      animate(badge, {
-        rotate: [-3, 3],
-        duration: 2500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(check, {
-        strokeDashoffset: [0, 100],
-        duration: 1500,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true,
-        loopDelay: 2000
-      }),
-      animate(paper, {
-        translateY: [-1, 1],
-        duration: 3500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      })
-    ];
-  },
-
-  initMotHistorySVG: (svg) => {
-    const hourHand = svg.querySelector('[data-ref="hour-hand"]');
-    const minuteHand = svg.querySelector('[data-ref="minute-hand"]');
-    const outerRing = svg.querySelector('[data-ref="outer-ring"]');
-    const ticks = svg.querySelector('[data-ref="ticks"]');
-
-    return [
-      animate(hourHand, {
-        rotate: [0, 30],
-        duration: 8000,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(minuteHand, {
-        rotate: [0, 360],
-        duration: 12000,
-        easing: 'linear',
-        loop: true
-      }),
-      animate(outerRing, {
-        scale: [1, 1.05],
-        opacity: [0.3, 0.5],
-        duration: 2000,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(Array.from(ticks?.children || []), {
-        opacity: [0.4, 0.7],
-        duration: 1500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true,
-        delay: stagger(200)
-      })
-    ];
-  },
-
-  initFaqSVG: (svg) => {
-    const question = svg.querySelector('[data-ref="question"]');
-    const dot = svg.querySelector('[data-ref="dot"]');
-    const outerCircle = svg.querySelector('[data-ref="outer-circle"]');
-    const rings = svg.querySelector('[data-ref="rings"]');
-
-    return [
-      animate(question, {
-        translateY: [-3, 3],
-        duration: 1800,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(dot, {
-        scale: [1, 1.3],
-        opacity: [0.8, 1],
-        duration: 1000,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(outerCircle, {
-        scale: [1, 1.1],
-        opacity: [0.3, 0.1],
-        duration: 2500,
-        easing: 'easeOutQuad',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(rings, {
-        rotate: 360,
-        duration: 20000,
-        easing: 'linear',
-        loop: true
-      })
-    ];
-  },
-
-  initContactSVG: (svg) => {
-    const envelope = svg.querySelector('[data-ref="envelope"]');
-    const flap = svg.querySelector('[data-ref="flap"]');
-    const heart = svg.querySelector('[data-ref="heart"]');
-    const lines = svg.querySelector('[data-ref="lines"]');
-
-    return [
-      animate(envelope, {
-        rotate: [-2, 2],
-        duration: 3000,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(flap, {
-        translateY: [-2, 1],
-        duration: 2000,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(heart, {
-        scale: [1, 1.15],
-        duration: 1200,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(Array.from(lines?.children || []), {
-        translateX: [-5, 0],
-        opacity: [0.3, 0.6],
-        duration: 1500,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true,
-        delay: stagger(200)
-      })
-    ];
-  },
-
-  initKnowledgeCenterSVG: (svg) => {
-    const leftPage = svg.querySelector('[data-ref="left-page"]');
-    const rightPage = svg.querySelector('[data-ref="right-page"]');
-    const bookmark = svg.querySelector('[data-ref="bookmark"]');
-    const leftLines = svg.querySelector('[data-ref="left-lines"]');
-    const rightLines = svg.querySelector('[data-ref="right-lines"]');
-
-    return [
-      animate(leftPage, {
-        rotateY: [-2, 2],
-        duration: 3500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(rightPage, {
-        rotateY: [2, -2],
-        duration: 3500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(bookmark, {
-        translateX: [-1, 1],
-        duration: 2500,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      }),
-      animate(Array.from(leftLines?.children || []), {
-        opacity: [0.3, 0.6],
-        duration: 2000,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true,
-        delay: stagger(150)
-      }),
-      animate(Array.from(rightLines?.children || []), {
-        opacity: [0.3, 0.6],
-        duration: 2000,
-        easing: 'easeInOutQuad',
-        direction: 'alternate',
-        loop: true,
-        delay: stagger(150, { start: 300 })
-      })
-    ];
-  }
-};
-
-/* ============================================
-   VANILLA HEADER CLASS - ZERO REACT
-   ============================================ */
-
-export class VanillaHeader {
+class ProfessionalHeader {
   constructor(container) {
     this.container = container;
     this.state = {
       sidebarExpanded: false,
       moreExpanded: false
     };
-    this.animations = new Map();
-    this.animationsInitialized = false;
-    this.abortController = new AbortController();
     this.refs = {};
-
+    this.abortController = new AbortController();
+    this.animationsInitialized = false;
     this.init();
   }
 
   init() {
     this.render();
-    this.cacheDOMReferences();
-    this.setupEventListeners();
+    this.attachEventListeners();
     this.updateDOM(); // Ensure initial state is synced with DOM
   }
 
   render() {
-    const html = `
+    this.container.innerHTML = `
+      <!-- Skip to Content Link -->
       <a
         href="#main-content"
-        class="fixed -top-10 left-20 bg-blue-600 text-white px-4 py-2 text-sm font-medium z-[1001] transition-all duration-200 focus:top-4 focus:outline-2 focus:outline-white focus:outline-offset-2"
+        class="fixed -top-10 left-20 bg-blue-600 text-white px-4 py-2 text-sm font-medium z-[1001] transition-all duration-200 focus:top-4 focus:outline-2 focus:outline-white focus:outline-offset-2 rounded-lg"
       >
         Skip to main content
       </a>
 
-      <header data-mobile-header class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-neutral-200 z-[60] flex items-center justify-between px-4">
+      <!-- Mobile Header -->
+      <header class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-neutral-200 z-[60] flex items-center justify-between px-4" data-ref="mobile-header">
         <a
           href="/"
-          data-nav-link="/"
-          class="flex flex-col justify-center transition-transform duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+          data-nav-link
+          class="flex flex-col justify-center transition-transform duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 rounded"
           aria-label="motorwise - Vehicle intelligence platform - Home"
         >
           <h1 class="text-xl font-medium text-neutral-900 leading-tight tracking-tight m-0 font-jost">
@@ -577,30 +124,28 @@ export class VanillaHeader {
         </a>
 
         <button
-          data-mobile-hamburger
-          class="flex items-center justify-center w-10 h-10 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 text-neutral-700 hover:text-neutral-900"
+          data-ref="mobile-hamburger"
+          class="flex items-center justify-center w-10 h-10 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 text-neutral-700 hover:text-blue-600 rounded-lg"
           aria-expanded="false"
           aria-label="Open navigation menu"
+          aria-controls="sidebar-panel"
         >
           <i class="ph ph-list text-3xl"></i>
         </button>
       </header>
 
-      <div
-        data-backdrop
-        class="fixed inset-0 bg-black transition-opacity duration-300 z-40 opacity-0 pointer-events-none"
-        aria-hidden="true"
-      ></div>
-
+      <!-- Desktop Left Sidebar (60px wide) -->
       <aside
-        data-sidebar
-        class="hidden md:flex fixed left-0 top-0 h-screen w-[60px] bg-white border-r border-neutral-200 z-50 flex-col items-center py-6 gap-6"
+        class="hidden md:flex fixed left-0 top-0 bottom-0 w-[60px] h-screen bg-white border-r border-neutral-200 flex-col items-center py-6 gap-6"
         aria-label="Main navigation"
+        data-ref="sidebar"
+        style="z-index: 9999;"
       >
+        <!-- Logo -->
         <a
           href="/"
-          data-nav-link="/"
-          class="flex flex-col items-center justify-center w-10 h-10 transition-transform duration-200 hover:scale-110 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+          data-nav-link
+          class="flex flex-col items-center justify-center w-10 h-10 transition-transform duration-200 hover:scale-110 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 rounded"
           aria-label="motorwise - Vehicle intelligence platform - Home"
         >
           <span class="text-2xl font-bold text-neutral-900 leading-none font-jost"></span>
@@ -610,21 +155,35 @@ export class VanillaHeader {
           </span>
         </a>
 
+        <!-- Hamburger Button -->
         <button
-          data-hamburger
-          class="flex items-center justify-center w-10 h-10 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 text-neutral-700 hover:text-neutral-900"
+          data-ref="hamburger"
+          class="flex items-center justify-center w-10 h-10 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 text-neutral-700 hover:text-blue-600 rounded-lg"
           aria-expanded="false"
           aria-label="Open navigation menu"
+          aria-controls="sidebar-panel"
         >
           <i class="ph ph-list text-3xl"></i>
         </button>
       </aside>
 
+      <!-- Backdrop -->
       <div
-        data-sidebar-panel
-        class="fixed left-0 md:left-[60px] top-16 md:top-0 max-h-[calc(100vh-4rem)] md:h-screen w-full md:w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto md:overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex md:flex-col"
+        class="fixed inset-0 bg-black transition-opacity duration-300 z-40 opacity-0 pointer-events-none"
+        data-ref="backdrop"
         aria-hidden="true"
+      ></div>
+
+      <!-- Expandable Panel -->
+      <div
+        id="sidebar-panel"
+        class="fixed left-0 md:left-[60px] top-16 md:top-0 max-h-[calc(100vh-4rem)] md:h-screen w-full md:w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto [scrollbar-width:thin] md:flex md:flex-col"
+        data-ref="panel"
+        aria-hidden="true"
+        role="dialog"
+        aria-label="Navigation menu"
       >
+        <!-- Panel Header (Desktop Only) -->
         <div class="hidden md:flex px-6 py-6 border-b border-neutral-200 items-start justify-between md:flex-shrink-0">
           <div>
             <h1 class="text-xl font-medium text-neutral-900 leading-tight tracking-tight m-0 font-jost">
@@ -634,116 +193,103 @@ export class VanillaHeader {
           </div>
 
           <button
-            data-close-sidebar
-            class="flex items-center justify-center w-8 h-8 text-neutral-600 hover:text-neutral-900 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+            data-ref="close-button"
+            class="flex items-center justify-center w-8 h-8 text-neutral-600 hover:text-neutral-900 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 rounded-lg"
             aria-label="Close navigation menu"
           >
             <i class="ph ph-x text-2xl"></i>
           </button>
         </div>
 
-        <div class="px-6 py-6 md:flex-1 md:overflow-y-auto md:[scrollbar-width:thin]" data-nav-cards>
-          <div class="flex md:flex-col gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x snap-mandatory md:snap-none [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 md:[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-neutral-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
-            ${NAV_ITEMS.map((item) => `
+        <!-- Navigation Cards -->
+        <div class="px-6 py-6 md:flex-1 md:overflow-y-auto" data-ref="nav-cards">
+          <div class="grid grid-cols-2 gap-4">
+            ${NAV_ITEMS.map(item => `
               <a
                 href="${item.href}"
-                data-nav-card
-                data-href="${item.href}"
-                data-svg-key="${item.svgKey}"
-                class="relative flex-shrink-0 md:flex-shrink w-64 md:w-full aspect-square rounded-xl overflow-hidden group cursor-pointer border-2 ${item.borderColor} transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 block ${item.bgColor} snap-center md:snap-align-none"
+                data-nav-link
+                class="group relative flex flex-col items-center justify-center aspect-square rounded-xl ${item.bgColor} border-2 border-neutral-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 p-4"
               >
-              <div class="absolute inset-0 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-300" data-svg-container="${item.svgKey}"></div>
-              <div class="absolute bottom-4 left-4 z-10">
-                <span class="inline-block px-4 py-2 ${item.pillColor} ${item.textColor} text-xs font-semibold uppercase tracking-wider rounded-full font-jost shadow-sm">
-                  ${item.label}
-                </span>
-              </div>
-              <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
-            </a>
-          `).join('')}
+                <div class="flex items-center justify-center w-16 h-16 flex-shrink-0 rounded-xl ${item.iconBg} mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <i class="${item.iconClass} text-4xl text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
+                </div>
+                <span class="text-sm font-medium text-neutral-900 text-center leading-tight h-8 flex items-center justify-center">${item.label}</span>
+              </a>
+            `).join('')}
           </div>
         </div>
 
-        <div class="px-6 pb-6 md:flex-shrink-0">
+        <!-- Additional Links Section -->
+        <div class="px-6 pb-6 md:flex-shrink-0 border-t border-neutral-200">
           <button
-            data-more-button
+            data-ref="more-button"
             class="w-full px-4 py-3 text-left flex items-center justify-between transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 hover:bg-neutral-50 rounded-lg"
             aria-expanded="false"
             aria-label="More links"
           >
-            <span class="text-sm font-medium text-neutral-900 font-jost">More</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="transition-transform duration-200 rotate-0"
-              data-more-icon
-            >
-              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <span class="text-sm font-medium text-neutral-900 font-jost">More Information</span>
+            <i class="ph ph-caret-down text-lg transition-transform duration-200" data-ref="more-icon"></i>
           </button>
 
-          <div data-more-content class="transition-all duration-200 ease-out max-h-0 opacity-0 overflow-hidden">
-            <ul class="list-none m-0 p-0">
-              ${ADDITIONAL_LINKS.map((item) => `
-                <li class="m-0">
-                  <a
-                    href="${item.href}"
-                    data-nav-link="${item.href}"
-                    class="text-sm text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 px-4 py-3 block transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 rounded-lg font-jost"
-                  >
-                    ${item.label}
-                  </a>
-                </li>
+          <div data-ref="more-content" class="transition-all duration-300 ease-out max-h-0 opacity-0 overflow-hidden">
+            <div class="space-y-1 pt-2">
+              ${ADDITIONAL_LINKS.map(link => `
+                <a
+                  href="${link.href}"
+                  data-nav-link
+                  class="block px-4 py-2 text-sm text-neutral-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                >
+                  ${link.label}
+                </a>
               `).join('')}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
     `;
 
-    this.container.innerHTML = html;
-  }
-
-  cacheDOMReferences() {
+    // Store refs
     this.refs = {
-      backdrop: this.container.querySelector('[data-backdrop]'),
-      mobileHeader: this.container.querySelector('[data-mobile-header]'),
-      sidebar: this.container.querySelector('[data-sidebar]'),
-      panel: this.container.querySelector('[data-sidebar-panel]'),
-      hamburger: this.container.querySelector('[data-hamburger]'),
-      mobileHamburger: this.container.querySelector('[data-mobile-hamburger]'),
-      closeSidebar: this.container.querySelector('[data-close-sidebar]'),
-      moreButton: this.container.querySelector('[data-more-button]'),
-      moreContent: this.container.querySelector('[data-more-content]'),
-      moreIcon: this.container.querySelector('[data-more-icon]'),
-      navCards: this.container.querySelectorAll('[data-nav-card]'),
-      navLinks: this.container.querySelectorAll('[data-nav-link]')
+      hamburger: this.container.querySelector('[data-ref="hamburger"]'),
+      mobileHamburger: this.container.querySelector('[data-ref="mobile-hamburger"]'),
+      mobileHeader: this.container.querySelector('[data-ref="mobile-header"]'),
+      sidebar: this.container.querySelector('[data-ref="sidebar"]'),
+      backdrop: this.container.querySelector('[data-ref="backdrop"]'),
+      panel: this.container.querySelector('[data-ref="panel"]'),
+      navCards: this.container.querySelector('[data-ref="nav-cards"]'),
+      closeButton: this.container.querySelector('[data-ref="close-button"]'),
+      moreButton: this.container.querySelector('[data-ref="more-button"]'),
+      moreContent: this.container.querySelector('[data-ref="more-content"]'),
+      moreIcon: this.container.querySelector('[data-ref="more-icon"]')
     };
   }
 
-  setupEventListeners() {
-    const signal = this.abortController.signal;
+  attachEventListeners() {
+    const { signal } = this.abortController;
 
+    // Hamburger buttons
     this.refs.hamburger?.addEventListener('click', () => this.toggleSidebar(), { signal });
     this.refs.mobileHamburger?.addEventListener('click', () => this.toggleSidebar(), { signal });
-    this.refs.closeSidebar?.addEventListener('click', () => this.closeSidebar(), { signal });
+    this.refs.closeButton?.addEventListener('click', () => this.closeSidebar(), { signal });
+    
+    // Backdrop click
     this.refs.backdrop?.addEventListener('click', () => this.closeSidebar(), { signal });
+
+    // More button
     this.refs.moreButton?.addEventListener('click', () => this.toggleMore(), { signal });
 
-    this.refs.navLinks?.forEach(link => {
+    // Navigation links
+    this.container.querySelectorAll('[data-nav-link]').forEach(link => {
       link.addEventListener('click', (e) => this.handleNavClick(e), { signal });
     });
 
+    // Global event listeners
     document.addEventListener('click', (e) => this.handleClickOutside(e), { signal, passive: true });
     document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal, passive: false });
     window.addEventListener('resize', () => this.handleResize(), { signal, passive: true });
   }
 
   handleResize() {
-    // Update transform on resize if sidebar is closed
     if (!this.state.sidebarExpanded) {
       this.updateDOM();
     }
@@ -760,7 +306,7 @@ export class VanillaHeader {
       const isMobile = window.innerWidth < 768;
 
       if (sidebarExpanded) {
-        // Remove both transforms
+        // Open panel
         this.refs.panel?.classList.remove('-translate-x-full', '-translate-y-full');
         this.refs.panel?.setAttribute('aria-hidden', 'false');
         this.refs.backdrop?.classList.remove('opacity-0', 'pointer-events-none');
@@ -775,12 +321,13 @@ export class VanillaHeader {
         this.refs.mobileHamburger?.setAttribute('aria-label', 'Close navigation menu');
         document.body.style.overflow = 'hidden';
 
+        // Animate nav cards on open
         if (!this.animationsInitialized) {
-          this.initializeAnimations();
+          this.animateNavCards();
           this.animationsInitialized = true;
         }
       } else {
-        // Add appropriate transform based on screen size
+        // Close panel - add appropriate transform based on screen size
         this.refs.panel?.classList.remove('-translate-x-full', '-translate-y-full');
         if (isMobile) {
           this.refs.panel?.classList.add('-translate-y-full');
@@ -815,23 +362,18 @@ export class VanillaHeader {
     });
   }
 
-  initializeAnimations() {
-    NAV_ITEMS.forEach(item => {
-      const container = this.container.querySelector(`[data-svg-container="${item.svgKey}"]`);
-      if (!container) return;
-
-      container.innerHTML = SVG_TEMPLATES[item.svgKey]();
-      const svg = container.querySelector('svg');
-      if (!svg) return;
-
-      const animKey = `init${item.svgKey.charAt(0).toUpperCase() + item.svgKey.slice(1)}SVG`;
-      const animationFunc = ANIMATIONS[animKey];
-
-      if (animationFunc) {
-        const anims = animationFunc(svg);
-        this.animations.set(item.svgKey, anims);
-      }
-    });
+  animateNavCards() {
+    // Simple fade-in animation for nav cards when opened
+    const navCards = this.refs.navCards?.querySelectorAll('a[data-nav-link]');
+    if (navCards && navCards.length > 0) {
+      animate(Array.from(navCards), {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 400,
+        ease: 'outQuad',
+        delay: stagger(60)
+      });
+    }
   }
 
   toggleSidebar() {
@@ -911,16 +453,19 @@ export class VanillaHeader {
   }
 
   destroy() {
-    this.animations.forEach(anims => {
-      if (Array.isArray(anims)) {
-        anims.forEach(anim => anim?.pause && anim.pause());
-      }
-    });
-    this.animations.clear();
-
     this.abortController.abort();
     document.body.style.overflow = 'unset';
     this.refs = {};
     this.container.innerHTML = '';
   }
 }
+
+/* ============================================
+   INITIALIZATION
+   ============================================ */
+
+// Usage example:
+// const headerContainer = document.getElementById('header');
+// const header = new ProfessionalHeader(headerContainer);
+
+export default ProfessionalHeader;

@@ -1,0 +1,750 @@
+import React, { useState, useEffect, useRef } from 'react';
+import AnalysisPipelineVisualizer from './AnalysisPipelineVisualizer';
+import ReportPreviewShowcase from './ReportPreviewShowcase';
+// import PremiumBackground3D from './PremiumBackground3D';
+
+// Confidence Meter Component
+function ConfidenceMeter({ value = 86 }) {
+  const barRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [value]);
+
+  return (
+    <div className="w-full max-w-md bg-neutral-50 rounded-lg shadow-sm p-4 mt-6">
+      <div className="flex justify-between text-xs font-medium text-neutral-600 mb-2">
+        <span>Limited Information</span>
+        <span>Complete Analysis</span>
+      </div>
+      <div className="h-3 w-full bg-neutral-200 rounded-full overflow-hidden">
+        <div
+          ref={barRef}
+          className={`h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-full transition-all duration-[2000ms] ease-out ${
+            isVisible ? `w-[${value}%]` : 'w-0'
+          }`}
+        />
+      </div>
+      <div className="flex justify-between text-xs text-neutral-500 mt-2">
+        <span>Basic MOT check only</span>
+        <span className="font-medium text-green-600">{value}% more insights</span>
+      </div>
+    </div>
+  );
+}
+
+const PremiumVehicleReports = () => {
+  const [showRiskCalculator, setShowRiskCalculator] = useState(false);
+  const [riskScore, setRiskScore] = useState(0);
+  const [vehiclePrice, setVehiclePrice] = useState('');
+  const [expandedCards, setExpandedCards] = useState({});
+  const [activeSection, setActiveSection] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const componentRef = useRef(null);
+  
+  const calculateRisk = (price) => {
+    if (!price) return 0;
+    const numPrice = parseInt(price.replace(/[£,]/g, ''));
+    if (numPrice < 5000) return 15;
+    if (numPrice < 15000) return 35;
+    if (numPrice < 30000) return 55;
+    return 75;
+  };
+
+  const toggleCard = (cardId) => {
+    setExpandedCards(prev => ({
+      ...prev,
+      [cardId]: !prev[cardId]
+    }));
+  };
+
+  const toggleSection = (sectionId) => {
+    setActiveSection(prev => prev === sectionId ? null : sectionId);
+  };
+
+  // Intersection observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (componentRef.current) {
+      observer.observe(componentRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const premiumFeatures = {
+    protection: {
+      identityVerification: {
+        label: "Official DVLA Vehicle Check",
+        description: "Access real-time DVLA data to verify vehicle identity, check for outstanding finance, insurance write-off status, and confirm registration details match the vehicle you're viewing",
+        outcome: "Buy with confidence knowing the vehicle's official records are accurate and complete",
+        authority: "Official DVLA database • Government-verified data",
+        emotionalHook: "Verify before you buy"
+      },
+      fraudProtection: {
+        label: "Mileage Verification Analysis",
+        description: "Our analysis system tracks mileage progression across all MOT tests to identify potential odometer tampering, irregular patterns, or inconsistencies in the vehicle's recorded history",
+        outcome: "Spot mileage discrepancies that could indicate fraud or odometer rollback",
+        authority: "Historical MOT data analysis • Advanced pattern detection",
+        emotionalHook: "Trust the data, not just the seller"
+      }
+    },
+    professionalAnalysis: {
+      technicalIntelligence: {
+        label: "Intelligent Technical Analysis",
+        description: "Our proprietary analysis engine examines your vehicle's complete MOT history and cross-references defects with manufacturer technical service information to identify known issues, common failures, and documented problems specific to your exact make and model",
+        outcome: "Understand potential repair costs and recurring issues before making your purchase decision",
+        authority: "Comprehensive technical database • 46,000+ vehicle models covered",
+        emotionalHook: "Know what you're buying before you commit"
+      },
+      usageInsights: {
+        label: "Defect Pattern Recognition",
+        description: "Our analysis system identifies recurring defects, progressive deterioration patterns, and correlates MOT advisories with manufacturer service information to reveal the vehicle's true maintenance history and likely future issues",
+        outcome: "Anticipate upcoming maintenance needs and factor them into your buying decision",
+        authority: "Advanced pattern recognition • Historical defect tracking",
+        emotionalHook: "See the complete picture, not just today's condition"
+      }
+    },
+    empowerment: {
+      marketIntelligence: {
+        label: "Comprehensive Vehicle Report",
+        description: "Receive a detailed analysis combining MOT history, DVLA records, mileage progression, defect patterns, and technical service correlations - all the information you need to make an informed decision",
+        outcome: "Negotiate with confidence using documented evidence of the vehicle's condition and history",
+        authority: "Multi-source data integration • Comprehensive reporting",
+        emotionalHook: "Make decisions based on facts, not feelings"
+      },
+      confidenceScore: {
+        label: "Vehicle Health Assessment",
+        description: "Our analysis engine provides an overall vehicle health score, identifies high-risk systems, highlights recurring issues, and delivers maintenance insights based on the complete analysis of MOT data and manufacturer technical information",
+        outcome: "Get a clear, objective assessment of whether this vehicle is a good purchase",
+        authority: "Intelligent decision support • System-by-system analysis",
+        emotionalHook: "Buy smart with data-driven insights"
+      }
+    }
+  };
+
+  return (
+    <div id="services" ref={componentRef} className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 bg-white text-neutral-900 relative overflow-hidden min-h-screen">
+      {/* <PremiumBackground3D /> */}
+      <div className="relative z-10">
+      <header className="mb-16">
+        <div className="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium bg-blue-50 text-blue-600 rounded-full">
+          <i className="ph ph-shield-check mr-2"></i>
+          Advanced Vehicle Analysis
+        </div>
+        <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-4">
+          Make Informed Decisions with Expert MOT Analysis
+        </h1>
+        <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl mb-4">
+          Our premium report analyzes a vehicle's complete MOT history using our proprietary analysis engine
+          that cross-references defects with manufacturer technical data. Get detailed insights into known issues,
+          recurring defects, and potential problems specific to the exact make and model you're considering.
+        </p>
+        <div className="inline-flex items-center px-4 py-2 text-xs font-medium bg-blue-50 text-blue-700 rounded-lg shadow-sm">
+          <i className="ph ph-brain mr-2"></i>
+          Comprehensive analysis combining official MOT data with professional technical knowledge
+        </div>
+        <div className="mt-3 text-xs text-neutral-500">
+          Know what you're buying before you commit
+        </div>
+
+        <ConfidenceMeter value={86} />
+
+        {/* Analysis Pipeline Visualizer */}
+        <div className="mt-12 mb-12">
+          <AnalysisPipelineVisualizer />
+        </div>
+
+        {/* Report Preview Showcase */}
+        <div className="mt-16 mb-12">
+          <ReportPreviewShowcase />
+        </div>
+
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg shadow-sm border border-blue-100">
+          <div className="flex items-start space-x-3 mb-3">
+            <i className="ph ph-info text-lg text-blue-600 mt-0.5"></i>
+            <div>
+              <span className="text-sm font-medium text-neutral-900 block mb-1">What's Included in the Premium Report</span>
+              <ul className="text-xs text-neutral-600 space-y-1 list-disc list-inside">
+                <li>Complete MOT history analysis with intelligent defect pattern recognition</li>
+                <li>Cross-reference with manufacturer technical service information</li>
+                <li>System-by-system health assessment and risk scoring</li>
+                <li>Identification of recurring issues and progressive deterioration</li>
+                <li>Maintenance insights and potential future repair costs</li>
+                <li>Overall vehicle confidence score based on comprehensive data analysis</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div className="space-y-8 mb-12">
+        {/* Protection Layer - Dynamic Heights */}
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-blue-200"
+              onClick={() => toggleCard('identity-verification')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+                    <i className="ph ph-shield-check text-xl text-blue-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Government Intelligence</div>
+                    <div className="text-xs text-neutral-600">DVLA • Police • Border Control</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-blue-600">99.8%</div>
+                  <div className="text-xs text-blue-600">Accuracy</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-xs text-green-600 font-medium">Vehicle verified</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                  <span className="text-xs text-red-600 font-medium">Theft checked</span>
+                </div>
+              </div>
+
+              {expandedCards['identity-verification'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Real-time DVLA integration exposes write-offs and theft records</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Police database access reveals criminal vehicle history</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Identity verification prevents cloned vehicle fraud</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-blue-600 transition-transform duration-300 ${expandedCards['identity-verification'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-red-200"
+              onClick={() => toggleCard('fraud-protection')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
+                    <i className="ph ph-detective text-xl text-red-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Fraud Detection</div>
+                    <div className="text-xs text-neutral-600">AI • Pattern Recognition • Forensic</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-red-600">£800M</div>
+                  <div className="text-xs text-red-600">Annual fraud</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                  <span className="text-xs text-yellow-600 font-medium">Mileage verified</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-xs text-green-600 font-medium">History validated</span>
+                </div>
+              </div>
+
+              {expandedCards['fraud-protection'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Advanced algorithms detect mileage tampering patterns</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Cross-reference MOT history for inconsistencies</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Identify commercial use hiding as private sales</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-red-600 transition-transform duration-300 ${expandedCards['fraud-protection'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Professional Analysis Layer - Dynamic Heights */}
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-blue-200"
+              onClick={() => toggleCard('technical-intelligence')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+                    <i className="ph ph-wrench text-xl text-blue-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Technical Intelligence</div>
+                    <div className="text-xs text-neutral-600">Recalls • Bulletins • Service History</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-blue-600">150K+</div>
+                  <div className="text-xs text-blue-600">Garages</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-4 mb-4">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-green-600">4</div>
+                  <div className="text-xs text-green-600">Recalls</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-yellow-600">12</div>
+                  <div className="text-xs text-yellow-600">Bulletins</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600">8</div>
+                  <div className="text-xs text-blue-600">Issues</div>
+                </div>
+              </div>
+
+              {expandedCards['technical-intelligence'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-info text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Our database covers over 46,000 vehicle models</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Known manufacturer issues matched to your vehicle's defects</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-wrench text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Technical repair insights and diagnostic information</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-blue-600 transition-transform duration-300 ${expandedCards['technical-intelligence'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-purple-200"
+              onClick={() => toggleCard('usage-insights')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-300">
+                    <i className="ph ph-chart-line text-xl text-purple-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Usage Analysis</div>
+                    <div className="text-xs text-neutral-600">Behavior • Commercial • Abuse Detection</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-purple-600">67</div>
+                  <div className="text-xs text-purple-600">Risk Score</div>
+                </div>
+              </div>
+              
+              <div className="space-y-4 mb-4">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-green-600 font-medium">Private Use Likelihood</span>
+                    <span className="text-sm font-bold text-green-600">75%</span>
+                  </div>
+                  <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="w-3/4 h-full bg-green-500 rounded-full transition-all duration-1000 ease-out"></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-yellow-600 font-medium">Gentle Driving Score</span>
+                    <span className="text-sm font-bold text-yellow-600">52%</span>
+                  </div>
+                  <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="w-1/2 h-full bg-yellow-500 rounded-full transition-all duration-1000 ease-out"></div>
+                  </div>
+                </div>
+              </div>
+
+              {expandedCards['usage-insights'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-chart-line text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Our system identifies patterns across MOT history (recurring defects, progressive wear)</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-magnifying-glass text-purple-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Cross-references defects with known manufacturer service issues</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-warning-circle text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Highlights potential future maintenance needs based on history</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-purple-600 transition-transform duration-300 ${expandedCards['usage-insights'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-12"></div>
+
+      <header className="mb-16">
+        <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          <i className="ph ph-chart-bar text-2xl mr-3 text-green-600"></i>
+          Make Informed Decisions
+        </h1>
+        <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl">
+          Transform complex vehicle data into clear insights that reveal the true condition, 
+          value, and risk profile of any vehicle - giving you the knowledge to buy confidently or walk away strategically.
+        </p>
+      </header>
+
+      <div className="space-y-8 mb-12">
+        {/* Empowerment Layer - Dynamic Heights */}
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-green-200"
+              onClick={() => toggleCard('market-intelligence')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors duration-300">
+                    <i className="ph ph-chart-bar text-xl text-green-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Market Intelligence</div>
+                    <div className="text-xs text-neutral-600">Price Analysis • Market Position</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-green-600">£18.5K</div>
+                  <div className="text-xs text-green-600">Fair value</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <span className="text-xs text-red-600 font-medium">Above market</span>
+                  </div>
+                  <div className="text-lg font-bold text-red-600">+£2.3K</div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span className="text-xs text-blue-600 font-medium">Similar vehicles</span>
+                  </div>
+                  <div className="text-lg font-bold text-blue-600">247</div>
+                </div>
+              </div>
+
+              {expandedCards['market-intelligence'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-info text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Price analysis based on 40M+ vehicle transactions</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-warning text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Seller asking 14% above fair market value</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Good negotiation position with maintenance issues</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-green-600 transition-transform duration-300 ${expandedCards['market-intelligence'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+            <div 
+              className="p-6 bg-transparent rounded-lg shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group border border-neutral-100 hover:border-purple-200"
+              onClick={() => toggleCard('confidence-score')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-2 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-300">
+                    <i className="ph ph-brain text-xl text-purple-600"></i>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-neutral-900">Confidence Score</div>
+                    <div className="text-xs text-neutral-600">Risk Assessment • Decision Support</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-purple-600">86%</div>
+                  <div className="text-xs text-purple-600">Confidence</div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-xs text-purple-600 font-medium">Confidence Level</span>
+                  <span className="text-xs font-bold text-purple-600">High</span>
+                </div>
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className={`flex-1 h-2 rounded-full transition-all duration-1000 ease-out ${
+                      i < 4 ? 'bg-purple-500' : 'bg-neutral-200'
+                    }`}></div>
+                  ))}
+                </div>
+              </div>
+
+              {expandedCards['confidence-score'] && (
+                <div className="pt-3 mt-3 space-y-2 text-xs text-neutral-700">
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-check-circle text-green-600 mt-0.5 flex-shrink-0"></i>
+                    <span>No major red flags in vehicle history</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-info text-blue-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Maintenance issues are manageable and expected</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <i className="ph ph-warning text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                    <span>Price negotiation recommended due to known issues</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className={`text-center mt-3 text-purple-600 transition-transform duration-300 ${expandedCards['confidence-score'] ? 'rotate-180' : 'rotate-0'}`}>
+                <i className="ph ph-caret-down"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-12"></div>
+
+      <header className="mb-12">
+        <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          <i className="ph ph-database text-2xl mr-3 text-purple-600"></i>
+          Our Data Sources
+        </h1>
+        <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl">
+          We combine official government data with professional automotive technical information using our proprietary analysis engine
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+              <i className="ph ph-shield-check text-2xl text-blue-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-blue-600">100%</div>
+              <div className="text-xs text-blue-600">Verified</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">DVLA Official</div>
+          <div className="text-xs text-neutral-600 mb-3">Government database access</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span className="text-xs text-green-600">Real-time integration</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors duration-300">
+              <i className="ph ph-chart-pie text-2xl text-green-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-green-600">40M+</div>
+              <div className="text-xs text-green-600">MOT Records</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">MOT Intelligence</div>
+          <div className="text-xs text-neutral-600 mb-3">Forensic pattern analysis</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span className="text-xs text-green-600">20+ years data</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-300">
+              <i className="ph ph-wrench text-2xl text-purple-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-purple-600">46K+</div>
+              <div className="text-xs text-purple-600">Models</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Technical Database</div>
+          <div className="text-xs text-neutral-600 mb-3">Manufacturer service information</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <span className="text-xs text-purple-600">Professional-grade</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
+              <i className="ph ph-brain text-2xl text-red-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-red-600">Smart</div>
+              <div className="text-xs text-red-600">Analysis</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Analysis Engine</div>
+          <div className="text-xs text-neutral-600 mb-3">Advanced pattern recognition</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <span className="text-xs text-red-600">Proprietary system</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-12"></div>
+
+      <header className="mb-12">
+        <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
+          <i className="ph ph-lightning text-2xl mr-3 text-yellow-600"></i>
+          How You Receive Your Report
+        </h1>
+        <p className="text-sm text-neutral-600 leading-relaxed max-w-3xl">
+          Fast, comprehensive analysis delivered in multiple formats
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors duration-300">
+              <i className="ph ph-clock text-2xl text-green-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-green-600">&lt;60s</div>
+              <div className="text-xs text-green-600">Analysis</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Fast Analysis</div>
+          <div className="text-xs text-neutral-600 mb-3">Complete vehicle history processed in under a minute</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-xs text-green-600">On-demand</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+              <i className="ph ph-monitor text-2xl text-blue-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-blue-600">Web</div>
+              <div className="text-xs text-blue-600">Report</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Online Report</div>
+          <div className="text-xs text-neutral-600 mb-3">View detailed analysis in your browser</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <span className="text-xs text-blue-600">Interactive</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-300">
+              <i className="ph ph-chart-bar text-2xl text-purple-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-purple-600">Visual</div>
+              <div className="text-xs text-purple-600">Data</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Charts & Graphs</div>
+          <div className="text-xs text-neutral-600 mb-3">Mileage trends and defect timelines</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <span className="text-xs text-purple-600">Easy to read</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 ease-out cursor-pointer group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors duration-300">
+              <i className="ph ph-file-text text-2xl text-red-600"></i>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-red-600">Expert</div>
+              <div className="text-xs text-red-600">Summary</div>
+            </div>
+          </div>
+          <div className="text-sm font-medium text-neutral-900 mb-2">Written Analysis</div>
+          <div className="text-xs text-neutral-600 mb-3">Detailed findings explained in plain English</div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <span className="text-xs text-red-600">Comprehensive</span>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  );
+};
+
+export default PremiumVehicleReports;

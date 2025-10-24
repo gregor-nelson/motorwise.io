@@ -6,7 +6,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { VanillaHeader } from './Header.js';
+import ProfessionalHeader from './Header';
 
 export default function Header() {
   const containerRef = useRef(null);
@@ -16,7 +16,7 @@ export default function Header() {
   useEffect(() => {
     // Initialize vanilla JS header
     if (containerRef.current) {
-      headerInstance.current = new VanillaHeader(containerRef.current);
+      headerInstance.current = new ProfessionalHeader(containerRef.current);
     }
 
     // Listen for navigation events from vanilla JS
@@ -33,5 +33,5 @@ export default function Header() {
     };
   }, [navigate]);
 
-  return <div ref={containerRef}></div>;
+  return <div ref={containerRef} className="contents"></div>;
 }

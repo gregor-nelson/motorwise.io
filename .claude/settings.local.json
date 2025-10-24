@@ -1,10 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep:*)",
-      "Bash(dir \"C:\\Users\\gregor\\Downloads\\Dev\\motorwise.io\")",
-      "Bash(dir \"C:\\Users\\gregor\\Downloads\\Dev\\motorwise.io\\frontend\\src\\components\")",
-      "Bash(dir \"C:\\Users\\gregor\\Downloads\\Dev\\motorwise.io\\frontend\\src\\components\" /s /b)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cp:*)"
     ],
     "deny": [],
     "ask": []

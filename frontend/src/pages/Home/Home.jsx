@@ -2,7 +2,7 @@
 import Header from './components/Header/Header.jsx';
 import Hero from './components/Hero/Hero';
 import PremiumReportFeature from './components/Premium/Premium';
-import HelpSection  from './components/FAQ/FAQ';
+import HelpSection  from './components/FAQ/FAQPreview';
 import Footer from './components/Footer/Footer';
 
 function Home() {

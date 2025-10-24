@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PremiumReportPage from "./pages/Report/Premium";
 import Home from "./pages/Home/Home";
+import KnowledgeCenter from "./pages/KnowledgeCenter/KnowledgeCenter";
 import Cookies from "./pages/Legal/Cookies";
 import Contact from "./pages/Legal/Contact";
 import Terms from "./pages/Legal/Terms";
@@ -15,7 +16,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
         {/* Add the new dynamic route that includes the registration parameter */}
         <Route path="/premium-report/:registration" element={<PremiumReportPage />} />
-        
+
+        {/* Knowledge Center */}
+        <Route path="/knowledge-center" element={<KnowledgeCenter />} />
+
         {/* Legal pages */}
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/contact" element={<Contact />} />

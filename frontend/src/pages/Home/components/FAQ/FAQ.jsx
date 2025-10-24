@@ -433,7 +433,7 @@ const FAQSection = ({ initialExpandedId = null }) => {
           <div className="flex items-center space-x-3 mb-6">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-blue-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="relative w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-neutral-200 group-hover:border-blue-300">
+              <div className="relative w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent group-hover:border-blue-300">
                 <i className="ph ph-list-magnifying-glass text-2xl text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
               </div>
             </div>
@@ -708,11 +708,11 @@ const SupportSection = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="relative bg-white rounded-2xl p-8 shadow-sm border-2 border-neutral-200">
+          <div className="relative bg-white rounded-2xl p-8 shadow-sm border-2 border-transparent">
             <div className="flex items-center space-x-3 mb-8">
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-blue-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-neutral-200 group-hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
+                <div className="relative w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent group-hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
                   <i className="ph ph-envelope text-2xl text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
                 </div>
               </div>
@@ -815,11 +815,11 @@ const SupportSection = () => {
         </div>
 
         <aside className="space-y-6">
-          <div className="relative bg-white rounded-2xl p-6 shadow-sm border-2 border-neutral-200 group hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+          <div className="relative bg-white rounded-2xl p-6 shadow-sm border-2 border-transparent group hover:shadow-lg hover:border-blue-300 transition-all duration-300">
             <div className="flex items-center space-x-3 mb-4">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-blue-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-neutral-200 group-hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
+                <div className="relative w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent group-hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
                   <i className="ph ph-clock text-lg text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
                 </div>
               </div>
@@ -830,7 +830,7 @@ const SupportSection = () => {
             <div className="flex items-center space-x-3 mb-2 pt-4 border-t border-neutral-100">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-blue-300 rounded-xl opacity-5 blur-sm"></div>
-                <div className="relative w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-neutral-200">
+                <div className="relative w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent">
                   <i className="ph ph-envelope text-lg text-neutral-700"></i>
                 </div>
               </div>
@@ -839,13 +839,13 @@ const SupportSection = () => {
             <p className="text-sm text-neutral-700">support@vehiclecheck.gov.uk</p>
           </div>
 
-          <div className="relative bg-white rounded-2xl p-6 shadow-sm border-2 border-neutral-200 hover:border-green-300 group hover:shadow-lg transition-all duration-300">
+          <div className="relative bg-white rounded-2xl p-6 shadow-sm border-2 border-transparent hover:border-green-300 group hover:shadow-lg transition-all duration-300">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-green-200 to-green-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
 
             <div className="relative flex items-center space-x-3 mb-4">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-green-200 to-green-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center shadow-sm border-2 border-neutral-200 group-hover:border-green-300 group-hover:scale-110 transition-all duration-300">
+                <div className="relative w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center shadow-sm border-2 border-transparent group-hover:border-green-300 group-hover:scale-110 transition-all duration-300">
                   <i className="ph ph-activity text-lg text-neutral-700 group-hover:text-green-600 transition-colors duration-200"></i>
                 </div>
               </div>
@@ -913,11 +913,11 @@ const GlossarySection = () => {
         </div>
       </header>
 
-      <div className="relative bg-white rounded-2xl p-6 shadow-sm mb-12 max-w-4xl mx-auto border-2 border-neutral-200 group hover:shadow-lg hover:border-amber-300 transition-all duration-300">
+      <div className="relative bg-white rounded-2xl p-6 shadow-sm mb-12 max-w-4xl mx-auto border-2 border-transparent group hover:shadow-lg hover:border-amber-300 transition-all duration-300">
         <div className="flex items-center space-x-3 mb-5">
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-200 to-amber-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-            <div className="relative w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center shadow-sm border-2 border-neutral-200 group-hover:border-amber-300 group-hover:scale-110 transition-all duration-300">
+            <div className="relative w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center shadow-sm border-2 border-transparent group-hover:border-amber-300 group-hover:scale-110 transition-all duration-300">
               <i className="ph ph-list-dashes text-lg text-neutral-700 group-hover:text-amber-600 transition-colors duration-200"></i>
             </div>
           </div>
@@ -930,8 +930,8 @@ const GlossarySection = () => {
               href={availableLetters.has(letter) ? `#glossary-${letter}` : undefined}
               className={`relative w-10 h-10 flex items-center justify-center text-sm font-medium rounded-xl transition-all duration-200 ${
                 availableLetters.has(letter)
-                  ? 'bg-amber-50 text-neutral-700 hover:bg-amber-100 hover:text-amber-600 hover:scale-110 cursor-pointer shadow-sm hover:shadow-md border-2 border-neutral-200 hover:border-amber-300'
-                  : 'bg-neutral-50 text-neutral-400 cursor-not-allowed border-2 border-neutral-100'
+                  ? 'bg-amber-50 text-neutral-700 hover:bg-amber-100 hover:text-amber-600 hover:scale-110 cursor-pointer shadow-sm hover:shadow-md border-2 border-transparent hover:border-amber-300'
+                  : 'bg-neutral-50 text-neutral-400 cursor-not-allowed border-2 border-transparent'
               }`}
               aria-disabled={!availableLetters.has(letter)}
               tabIndex={availableLetters.has(letter) ? 0 : -1}
@@ -947,7 +947,7 @@ const GlossarySection = () => {
           <div
             key={letter}
             id={`glossary-${letter}`}
-            className="relative bg-white rounded-2xl p-8 shadow-sm border-2 border-neutral-200 group hover:shadow-lg hover:border-amber-300 transition-all duration-300"
+            className="relative bg-white rounded-2xl p-8 shadow-sm border-2 border-transparent group hover:shadow-lg hover:border-amber-300 transition-all duration-300"
           >
             {/* Subtle glow */}
             <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-200 to-amber-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
@@ -955,7 +955,7 @@ const GlossarySection = () => {
             <div className="relative flex items-center space-x-4 mb-6">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-200 to-amber-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative w-14 h-14 bg-amber-100 text-neutral-700 rounded-xl flex items-center justify-center text-xl font-bold shadow-sm border-2 border-neutral-200 group-hover:border-amber-300 group-hover:scale-110 group-hover:text-amber-600 transition-all duration-300">
+                <div className="relative w-14 h-14 bg-amber-100 text-neutral-700 rounded-xl flex items-center justify-center text-xl font-bold shadow-sm border-2 border-transparent group-hover:border-amber-300 group-hover:scale-110 group-hover:text-amber-600 transition-all duration-300">
                   {letter}
                 </div>
               </div>

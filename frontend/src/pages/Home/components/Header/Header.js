@@ -136,10 +136,9 @@ class ProfessionalHeader {
 
       <!-- Desktop Left Sidebar (60px wide) -->
       <aside
-        class="hidden md:flex fixed left-0 top-0 bottom-0 w-[60px] h-screen bg-white border-r border-neutral-200 flex-col items-center py-6 gap-6"
+        class="hidden md:flex fixed left-0 top-0 h-screen w-[60px] bg-white border-r border-neutral-200 z-50 flex-col items-center py-6 gap-6"
         aria-label="Main navigation"
         data-ref="sidebar"
-        style="z-index: 9999;"
       >
         <!-- Logo -->
         <a

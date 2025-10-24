@@ -12,11 +12,53 @@ const TAB_CONFIG = [
   { id: 'glossary', label: 'Glossary', icon: 'ph-book', color: 'amber' }
 ];
 
-// Category configuration
+// Category configuration with explicit Tailwind classes (purge-safe)
 const CATEGORY_CONFIG = {
-  'Using the service': { icon: 'ph-computer-tower', color: 'blue' },
-  'Premium services': { icon: 'ph-star', color: 'purple' },
-  'Trust and reliability': { icon: 'ph-seal-check', color: 'pink' }
+  'Using the service': {
+    icon: 'ph-computer-tower',
+    bgPastel: 'bg-blue-50',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-neutral-700',
+    iconHoverColor: 'group-hover:text-blue-600',
+    textColor: 'text-blue-600',
+    borderColor: 'border-blue-300',
+    borderNeutral: 'border-neutral-200',
+    hoverBorder: 'hover:border-blue-300',
+    glowColor: 'from-blue-200 to-blue-300',
+    underlineGradient: 'from-blue-400 to-transparent',
+    buttonBg: 'bg-amber-400',
+    buttonHover: 'hover:bg-amber-500'
+  },
+  'Premium services': {
+    icon: 'ph-star',
+    bgPastel: 'bg-purple-50',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-neutral-700',
+    iconHoverColor: 'group-hover:text-purple-600',
+    textColor: 'text-purple-600',
+    borderColor: 'border-purple-300',
+    borderNeutral: 'border-neutral-200',
+    hoverBorder: 'hover:border-purple-300',
+    glowColor: 'from-purple-200 to-purple-300',
+    underlineGradient: 'from-purple-400 to-transparent',
+    buttonBg: 'bg-amber-400',
+    buttonHover: 'hover:bg-amber-500'
+  },
+  'Trust and reliability': {
+    icon: 'ph-seal-check',
+    bgPastel: 'bg-pink-50',
+    iconBg: 'bg-pink-100',
+    iconColor: 'text-neutral-700',
+    iconHoverColor: 'group-hover:text-pink-600',
+    textColor: 'text-pink-600',
+    borderColor: 'border-pink-300',
+    borderNeutral: 'border-neutral-200',
+    hoverBorder: 'hover:border-pink-300',
+    glowColor: 'from-pink-200 to-pink-300',
+    underlineGradient: 'from-pink-400 to-transparent',
+    buttonBg: 'bg-amber-400',
+    buttonHover: 'hover:bg-amber-500'
+  }
 };
 
 // Select featured questions for home page preview
@@ -55,39 +97,58 @@ const FAQsPreview = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
-        {featuredItems.map(({ category, questions }) => (
-          <div key={category} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className={`w-12 h-12 rounded-full bg-${CATEGORY_CONFIG[category].color}-50 flex items-center justify-center`}>
-                <i className={`ph ${CATEGORY_CONFIG[category].icon} text-2xl text-${CATEGORY_CONFIG[category].color}-600`}></i>
-              </div>
-              <div>
-                <h3 className="text-base font-medium text-neutral-900 font-jost">{category}</h3>
+        {featuredItems.map(({ category, questions }) => {
+          const config = CATEGORY_CONFIG[category];
+          return (
+            <div key={category} className={`relative group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border-2 ${config.borderNeutral} ${config.hoverBorder} flex flex-col`}>
+              {/* Subtle glow effect */}
+              <div className={`absolute -inset-0.5 bg-gradient-to-r ${config.glowColor} rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300`}></div>
+
+              <div className="relative flex flex-col flex-1">
+                {/* Category header with refined icon design */}
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="relative">
+                    {/* Icon glow layer */}
+                    <div className={`absolute -inset-1 bg-gradient-to-r ${config.glowColor} rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300`}></div>
+                    {/* Icon container - square with larger size */}
+                    <div className={`relative w-14 h-14 rounded-xl ${config.iconBg} flex items-center justify-center shadow-sm border-2 border-transparent ${config.hoverBorder} group-hover:scale-110 transition-all duration-300`}>
+                      <i className={`ph ${config.icon} text-3xl ${config.iconColor} ${config.iconHoverColor} transition-colors duration-200`}></i>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-base font-medium text-neutral-900 font-jost mb-1.5">{category}</h3>
+                    {/* Decorative gradient underline */}
+                    <div className={`w-16 h-0.5 bg-gradient-to-r ${config.underlineGradient} opacity-60 rounded-full`}></div>
+                  </div>
+                </div>
+
+                {/* Questions list - grows to fill space */}
+                <ul className="space-y-3 mb-6 flex-1">
+                  {questions.map(question => (
+                    <li key={question.id}>
+                      <Link
+                        to={`/knowledge-center?category=${encodeURIComponent(category)}&question=${question.id}`}
+                        className="group/link flex items-start space-x-2 text-sm text-neutral-700 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        <i className="ph ph-arrow-right text-neutral-400 group-hover/link:text-blue-600 group-hover/link:translate-x-1 transition-all duration-200 mt-0.5 flex-shrink-0"></i>
+                        <span className="leading-relaxed">{question.question}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Show more button - pinned to bottom, left-aligned */}
+                <Link
+                  to="/knowledge-center"
+                  className={`inline-flex items-center space-x-2 px-6 py-3 ${config.buttonBg} ${config.buttonHover} text-neutral-900 text-sm font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-sm`}
+                >
+                  <span>Show more</span>
+                  <i className="ph ph-arrow-right text-sm"></i>
+                </Link>
               </div>
             </div>
-
-            <ul className="space-y-3 mb-6">
-              {questions.map(question => (
-                <li key={question.id}>
-                  <Link
-                    to={`/knowledge-center?category=${encodeURIComponent(category)}&question=${question.id}`}
-                    className="group flex items-start space-x-2 text-sm text-neutral-700 hover:text-blue-600 transition-colors duration-200"
-                  >
-                    <i className="ph ph-arrow-right text-neutral-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200 mt-0.5 flex-shrink-0"></i>
-                    <span className="leading-relaxed">{question.question}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              to="/knowledge-center"
-              className="block w-full px-4 py-2.5 bg-amber-400 hover:bg-amber-500 text-neutral-900 text-sm font-medium rounded-xl transition-all duration-200 hover:scale-105 text-center shadow-sm"
-            >
-              Show more
-            </Link>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

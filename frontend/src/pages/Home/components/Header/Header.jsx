@@ -363,8 +363,8 @@ export default function Header() {
         </div>
 
         {/* Navigation Cards */}
-        <div ref={navCardsRef} className="px-4 sm:px-6 py-6 md:flex-1 md:overflow-y-auto">
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div ref={navCardsRef} className="px-4 md:px-6 py-6 md:flex-1 md:overflow-y-auto">
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}

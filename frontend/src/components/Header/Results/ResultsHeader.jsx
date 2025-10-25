@@ -50,7 +50,7 @@ const getStatusClassName = (status) => {
   }
 };
 
-const VehicleHeader = ({ registration }) => {
+const VehicleHeader = ({ registration, onLoadingComplete, onError: onErrorCallback }) => {
   const [vehicleData, setVehicleData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -244,6 +244,9 @@ const VehicleHeader = ({ registration }) => {
       if (cachedData && isCacheValid(cachedData.timestamp)) {
         setVehicleData(cachedData.data);
         setLoading(false);
+        if (onLoadingComplete) {
+          onLoadingComplete();
+        }
         return;
       }
       
@@ -306,9 +309,15 @@ const VehicleHeader = ({ registration }) => {
           const message = err.message || 'An error occurred while fetching vehicle data';
           console.error('API error:', err);
           setError(message);
+          if (onErrorCallback) {
+            onErrorCallback(message);
+          }
         }
       } finally {
         setLoading(false);
+        if (onLoadingComplete) {
+          onLoadingComplete();
+        }
       }
     };
 
@@ -325,6 +334,9 @@ const VehicleHeader = ({ registration }) => {
             vehicleCache[cacheKey] = parsedData;
             setVehicleData(parsedData.data);
             setLoading(false);
+            if (onLoadingComplete) {
+              onLoadingComplete();
+            }
             return true;
           }
         }
@@ -404,307 +416,233 @@ const VehicleHeader = ({ registration }) => {
         
         {vehicleData && !loading && (
           <>
-            <div className="mb-12 md:mb-16">
-              <div className="font-mono text-2xl font-bold text-neutral-900 uppercase mb-4 tracking-tight leading-tight" data-test-id="vehicle-registration">
+            {/* Header Section */}
+            <div className="mb-8">
+              <div className="font-mono text-2xl font-bold text-gray-900 uppercase mb-2 tracking-tight" data-test-id="vehicle-registration">
                 {formatRegistration(vehicleData.registration)}
               </div>
-
-              <h1 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3" data-test-id="vehicle-make-model">
+              <h1 className="text-xl font-semibold text-gray-900" data-test-id="vehicle-make-model">
                 {vehicleData.makeModel}
               </h1>
             </div>
 
-            <div className="flex gap-4 my-8 flex-wrap md:flex-row flex-col">
-              <FullScreenSampleReportButton 
+            {/* Status Alert Boxes */}
+            {vehicleData.hasOutstandingRecall?.toLowerCase() === 'yes' && (
+              <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg mb-6 border border-red-200">
+                <i className="ph ph-warning-circle text-red-600 text-xl flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm">Outstanding Recall</h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    This vehicle has an outstanding safety recall. Contact the manufacturer for details.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {vehicleData.hasOutstandingRecall?.toLowerCase() === 'no' && (
+              <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg mb-6 border border-green-200">
+                <i className="ph ph-check-circle text-green-600 text-xl flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm">No Outstanding Recalls</h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    No safety recalls currently registered for this vehicle.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-4 mb-8 flex-wrap md:flex-row flex-col">
+              <FullScreenSampleReportButton
                 onProceedToPayment={handlePremiumButtonClick}
               />
-              
+
               <button
                 onClick={handlePremiumButtonClick}
                 data-test-id="premium-report-button"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
               >
-                {isEligibleForFreeReport(vehicleData) 
-                  ? "View Enhanced Vehicle Report" 
+                {isEligibleForFreeReport(vehicleData)
+                  ? "View Enhanced Vehicle Report"
                   : "Get Premium Vehicle Report - £4.95"}
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-neutral-200 hover:border-blue-300 group overflow-hidden" data-test-id="colour-fuel-date-details">
-                {/* Glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-200 to-cyan-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
+            {/* Vehicle Information Section */}
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 mb-6">
+                Vehicle identification and specifications
+              </h2>
 
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="relative">
-                      {/* Icon glow */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-cyan-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                      {/* Icon container */}
-                      <div className="relative w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
-                        <i className="ph ph-info text-3xl text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-neutral-900 mb-1">Vehicle Details</div>
-                      {/* Decorative gradient underline */}
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-transparent opacity-60 rounded-full"></div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-                      <div className="text-xs font-medium text-neutral-600">Colour</div>
-                      <div className="text-sm text-neutral-900 font-semibold" data-test-id="vehicle-colour">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-test-id="colour-fuel-date-details">
+                  {/* Colour */}
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-palette text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-0.5">Colour</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="vehicle-colour">
                         {vehicleData.colour}
-                      </div>
+                      </p>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-                      <div className="text-xs font-medium text-neutral-600">Fuel type</div>
-                      <div className="text-sm text-neutral-900 font-semibold" data-test-id="vehicle-fuel-type">
+                  </div>
+
+                  {/* Fuel Type */}
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-gas-pump text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-0.5">Fuel type</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="vehicle-fuel-type">
                         {vehicleData.fuelType}
-                      </div>
+                      </p>
                     </div>
-                    <div className="flex justify-between items-center py-2">
-                      <div className="text-xs font-medium text-neutral-600">Date registered</div>
-                      <div className="text-sm text-neutral-900 font-semibold" data-test-id="vehicle-date-registered">
+                  </div>
+
+                  {/* Date Registered */}
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-calendar text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-0.5">Date registered</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="vehicle-date-registered">
                         {vehicleData.dateRegistered}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Decorative blur accent */}
-                <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
-              </div>
-
-              <div className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-neutral-200 hover:border-purple-300 group overflow-hidden" data-test-id="additional-details">
-                {/* Glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-200 to-pink-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
-
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="relative">
-                      {/* Icon glow */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-200 to-pink-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                      {/* Icon container */}
-                      <div className="relative w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-purple-300 group-hover:scale-110 transition-all duration-300">
-                        <i className="ph ph-gear text-3xl text-neutral-700 group-hover:text-purple-600 transition-colors duration-200"></i>
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-neutral-900 mb-1">Technical Details</div>
-                      {/* Decorative gradient underline */}
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-purple-400 to-transparent opacity-60 rounded-full"></div>
+                      </p>
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-                      <div className="text-xs font-medium text-neutral-600">Engine size</div>
-                      <div className="text-sm text-neutral-900 font-semibold" data-test-id="vehicle-engine-size">
+                  {/* Engine Size */}
+                  <div className="flex items-start gap-3" data-test-id="additional-details">
+                    <i className="ph ph-engine text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-0.5">Engine size</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="vehicle-engine-size">
                         {vehicleData.engineSize}
-                      </div>
+                      </p>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-                      <div className="text-xs font-medium text-neutral-600">Manufacture date</div>
-                      <div className="text-sm text-neutral-900 font-semibold" data-test-id="vehicle-manufacture-date">
+                  </div>
+
+                  {/* Manufacture Date */}
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-calendar-check text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-0.5">Manufacture date</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="vehicle-manufacture-date">
                         {vehicleData.manufactureDate}
-                      </div>
+                      </p>
                     </div>
-                    <div className="flex justify-between items-center py-2">
-                      <div className="text-xs font-medium text-neutral-600">Outstanding recall</div>
-                      <div className="flex items-center" data-test-id="vehicle-recall-status">
-                        <span className={getStatusClassName(vehicleData.hasOutstandingRecall)}>
-                          <i className={`ph ${vehicleData.hasOutstandingRecall?.toLowerCase() === 'yes' ? 'ph-warning-circle' : 'ph-check-circle'} mr-1`}></i>
-                          {vehicleData.hasOutstandingRecall}
-                        </span>
-                      </div>
+                  </div>
+
+                  {/* Outstanding Recall */}
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-shield-warning text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-600 mb-1.5">Outstanding recall</p>
+                      <span
+                        className={`inline-flex items-center gap-1 ${
+                          vehicleData.hasOutstandingRecall?.toLowerCase() === 'yes'
+                            ? 'px-3 py-1.5 bg-red-100 text-red-700 text-xs rounded-full font-medium'
+                            : vehicleData.hasOutstandingRecall?.toLowerCase() === 'no'
+                            ? 'px-3 py-1.5 bg-green-100 text-green-700 text-xs rounded-full font-medium'
+                            : 'px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-full font-medium'
+                        }`}
+                        data-test-id="vehicle-recall-status"
+                      >
+                        {vehicleData.hasOutstandingRecall}
+                      </span>
                     </div>
                   </div>
                 </div>
-
-                {/* Decorative blur accent */}
-                <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
               </div>
             </div>
 
-            <div className="my-12 md:my-16">
-              <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-blue-200 hover:border-blue-400 group overflow-hidden">
-                {/* Glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-300 to-cyan-400 rounded-2xl opacity-0 group-hover:opacity-15 blur-xl transition-opacity duration-300"></div>
+            {/* MOT Status Section */}
+            <div className="mb-8 pt-6 border-t border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900 mb-6">
+                MOT status
+              </h2>
 
-                <div className="relative flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      {/* Icon glow */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-blue-300 to-cyan-400 rounded-xl opacity-10 blur-sm group-hover:opacity-20 transition-opacity duration-300"></div>
-                      {/* Icon container */}
-                      <div className="relative w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-blue-200 hover:border-blue-400 group-hover:scale-110 transition-all duration-300">
-                        <i className="ph ph-shield-check text-3xl text-blue-600 group-hover:text-blue-700 transition-colors duration-200"></i>
-                      </div>
-                    </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-3">
+                    <i className="ph ph-shield-check text-gray-400 text-xl flex-shrink-0 mt-1"></i>
                     <div>
-                      <div className="text-sm font-semibold text-neutral-900 mb-1">MOT Status</div>
-                      {/* Decorative gradient underline */}
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-transparent opacity-60 rounded-full mb-1"></div>
-                      <div className="text-xs text-neutral-600">Ministry of Transport test validity</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <div className="text-lg font-bold text-blue-600 group-hover:text-blue-700 transition-colors duration-200" data-test-id="mot-due-date">
-                      {vehicleData.motDueDate}
-                    </div>
-                    <div className="text-xs text-blue-600 font-medium" data-test-id="mot-expiry-text">
-                      Valid until
+                      <p className="text-sm text-gray-600 mb-0.5">MOT expiry date</p>
+                      <p className="text-base font-medium text-gray-900" data-test-id="mot-due-date">
+                        {vehicleData.motDueDate}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1" data-test-id="mot-expiry-text">
+                        Ministry of Transport test validity
+                      </p>
                     </div>
                   </div>
                 </div>
-
-                {/* Decorative blur accent */}
-                <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-15 blur-xl group-hover:opacity-25 transition-opacity duration-300"></div>
               </div>
             </div>
 
-            <div className="mt-8 md:mt-10 pt-6 border-t border-neutral-200">
+            {/* Next Actions Section */}
+            <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="mb-6">
-                <h2 className="text-lg font-medium text-neutral-900 mb-2">What would you like to do next?</h2>
-                <p className="text-sm text-neutral-600">Choose from the options below to continue</p>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">What would you like to do next?</h2>
+                <p className="text-sm text-gray-600">Choose from the options below to continue</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <a
                   href="/"
-                  className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-neutral-200 hover:border-blue-300 group overflow-hidden"
+                  className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200"
                 >
-                  {/* Glow effect */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-200 to-blue-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
-
-                  <div className="relative space-y-4">
-                    {/* Icon + Header */}
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        {/* Icon glow */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-blue-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                        {/* Icon container */}
-                        <div className="relative w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
-                          <i className="ph ph-magnifying-glass text-3xl text-neutral-700 group-hover:text-blue-600 transition-colors duration-200"></i>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold text-neutral-900 group-hover:text-blue-600 transition-colors duration-300 mb-1">Check another vehicle</div>
-                        {/* Decorative gradient underline */}
-                        <div className="w-12 h-0.5 bg-gradient-to-r from-blue-400 to-transparent opacity-60 rounded-full"></div>
-                      </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <i className="ph ph-magnifying-glass text-blue-600 text-xl flex-shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Check another vehicle</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">Search for a different vehicle registration and view its complete history</p>
                     </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-neutral-600 leading-relaxed">Search for a different vehicle registration and view its complete history</p>
                   </div>
-
-                  {/* Decorative blur accent */}
-                  <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
                 </a>
 
                 <a
                   href="https://www.gov.uk/mot-reminder"
-                  className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-neutral-200 hover:border-green-300 group overflow-hidden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 hover:border-green-300 hover:shadow-md transition-all duration-200"
                 >
-                  {/* Glow effect */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-green-200 to-green-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
-
-                  <div className="relative space-y-4">
-                    {/* Icon + Header */}
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        {/* Icon glow */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-green-200 to-green-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                        {/* Icon container */}
-                        <div className="relative w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-green-300 group-hover:scale-110 transition-all duration-300">
-                          <i className="ph ph-bell text-3xl text-neutral-700 group-hover:text-green-600 transition-colors duration-200"></i>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold text-neutral-900 group-hover:text-green-600 transition-colors duration-300 mb-1">Get an MOT reminder</div>
-                        {/* Decorative gradient underline */}
-                        <div className="w-12 h-0.5 bg-gradient-to-r from-green-400 to-transparent opacity-60 rounded-full"></div>
-                      </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <i className="ph ph-bell text-green-600 text-xl flex-shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Get an MOT reminder</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">Set up email or text reminders so you never miss your MOT date</p>
                     </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-neutral-600 leading-relaxed">Set up email or text reminders so you never miss your MOT date</p>
                   </div>
-
-                  {/* Decorative blur accent */}
-                  <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-green-400 to-green-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
                 </a>
 
                 <a
-                  href={`/enter-document-reference?registration=${vehicleData.registration}`}
+                  href={`https://www.check-mot.service.gov.uk/enter-document-reference?registration=${vehicleData.registration}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-test-id="download-certificates-link"
-                  className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-neutral-200 hover:border-purple-300 group overflow-hidden"
+                  className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all duration-200"
                 >
-                  {/* Glow effect */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-200 to-purple-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
-
-                  <div className="relative space-y-4">
-                    {/* Icon + Header */}
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        {/* Icon glow */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-purple-200 to-purple-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                        {/* Icon container */}
-                        <div className="relative w-16 h-16 rounded-xl bg-purple-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-purple-300 group-hover:scale-110 transition-all duration-300">
-                          <i className="ph ph-download text-3xl text-neutral-700 group-hover:text-purple-600 transition-colors duration-200"></i>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold text-neutral-900 group-hover:text-purple-600 transition-colors duration-300 mb-1">Download test certificates</div>
-                        {/* Decorative gradient underline */}
-                        <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-transparent opacity-60 rounded-full"></div>
-                      </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <i className="ph ph-download text-purple-600 text-xl flex-shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Download test certificates</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">Get official MOT certificates for your vehicle history records</p>
                     </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-neutral-600 leading-relaxed">Get official MOT certificates for your vehicle history records</p>
                   </div>
-
-                  {/* Decorative blur accent */}
-                  <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
                 </a>
 
                 <a
                   href="https://www.gov.uk/getting-an-mot/correcting-mot-certificate-mistakes"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-test-id="expiry-date-guidance"
-                  className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-neutral-200 hover:border-orange-300 group overflow-hidden"
+                  className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 hover:border-orange-300 hover:shadow-md transition-all duration-200"
                 >
-                  {/* Glow effect */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-200 to-orange-300 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-300"></div>
-
-                  <div className="relative space-y-4">
-                    {/* Icon + Header */}
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        {/* Icon glow */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-orange-200 to-orange-300 rounded-xl opacity-5 blur-sm group-hover:opacity-10 transition-opacity duration-300"></div>
-                        {/* Icon container */}
-                        <div className="relative w-16 h-16 rounded-xl bg-orange-100 flex items-center justify-center shadow-sm border-2 border-transparent hover:border-orange-300 group-hover:scale-110 transition-all duration-300">
-                          <i className="ph ph-envelope text-3xl text-neutral-700 group-hover:text-orange-600 transition-colors duration-200"></i>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold text-neutral-900 group-hover:text-orange-600 transition-colors duration-300 mb-1">Contact DVSA</div>
-                        {/* Decorative gradient underline */}
-                        <div className="w-12 h-0.5 bg-gradient-to-r from-orange-400 to-transparent opacity-60 rounded-full"></div>
-                      </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <i className="ph ph-envelope text-orange-600 text-xl flex-shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Contact DVSA</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">Report incorrect details or get help with MOT certificate issues</p>
                     </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-neutral-600 leading-relaxed">Report incorrect details or get help with MOT certificate issues</p>
                   </div>
-
-                  {/* Decorative blur accent */}
-                  <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
                 </a>
               </div>
             </div>

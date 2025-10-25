@@ -1043,7 +1043,7 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
                     <div className="space-y-6">
                       {tab.sections.map((section, sectionIndex) => {
                         const sectionId = `${tabIndex}-${sectionIndex}`;
-                        const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
+                        const isExpanded = expandedSections[sectionId] ?? (sectionIndex === 0);
 
                         return (
                           <div key={sectionId}>

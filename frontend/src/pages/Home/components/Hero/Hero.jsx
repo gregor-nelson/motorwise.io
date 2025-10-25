@@ -13,6 +13,11 @@ const Hero = () => {
   const [error, setError] = useState('');
   const [searchPerformed, setSearchPerformed] = useState(false);
 
+  // Coordinated loading state
+  const [vehicleHeaderLoaded, setVehicleHeaderLoaded] = useState(false);
+  const [motHistoryLoaded, setMotHistoryLoaded] = useState(false);
+  const [loadingError, setLoadingError] = useState(null);
+
   // Animation refs
   const decorativeRef = useRef(null);
   const checklistRef = useRef(null);
@@ -71,16 +76,20 @@ const Hero = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    
+
     const formattedValue = inputValue.trim().toUpperCase().replace(/\s+/g, '');
     const validationError = validateInput(formattedValue);
-    
+
     if (validationError) {
       setError(validationError);
       return;
     }
-    
+
     setError('');
+    // Reset loading states for new search
+    setVehicleHeaderLoaded(false);
+    setMotHistoryLoaded(false);
+    setLoadingError(null);
     setSearchedRegistration(formattedValue);
     setSearchPerformed(true);
   };
@@ -90,10 +99,29 @@ const Hero = () => {
     setSearchedRegistration('');
     setError('');
     setSearchPerformed(false);
+    setVehicleHeaderLoaded(false);
+    setMotHistoryLoaded(false);
+    setLoadingError(null);
+  };
+
+  // Callbacks for component loading completion
+  const handleVehicleHeaderLoadComplete = () => {
+    setVehicleHeaderLoaded(true);
+  };
+
+  const handleMotHistoryLoadComplete = () => {
+    setMotHistoryLoaded(true);
+  };
+
+  const handleLoadError = (errorMessage) => {
+    setLoadingError(errorMessage);
   };
 
   // If search has been performed, show results
   if (searchPerformed) {
+    const bothLoaded = vehicleHeaderLoaded && motHistoryLoaded;
+    const isLoading = !bothLoaded && !loadingError;
+
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
         <div className="space-y-12 mb-16">
@@ -104,9 +132,41 @@ const Hero = () => {
             <i className="ph ph-arrow-left text-sm text-blue-600"></i>
             Search another vehicle
           </button>
-          
-          <VehicleHeader registration={searchedRegistration} />
-          <MOTHistoryPage registration={searchedRegistration} />
+
+          {/* Unified Loading Spinner */}
+          {isLoading && (
+            <div className="flex justify-center items-center min-h-[400px]">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                <p className="text-sm text-gray-600">Loading vehicle information...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Components render in background, hidden until both loaded */}
+          <div className={`transition-opacity duration-500 ${bothLoaded ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+            <VehicleHeader
+              registration={searchedRegistration}
+              onLoadingComplete={handleVehicleHeaderLoadComplete}
+              onError={handleLoadError}
+            />
+            <MOTHistoryPage
+              registration={searchedRegistration}
+              onLoadingComplete={handleMotHistoryLoadComplete}
+              onError={handleLoadError}
+            />
+          </div>
+
+          {/* Error state */}
+          {loadingError && !isLoading && (
+            <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg border border-red-200">
+              <i className="ph ph-warning-circle text-red-600 text-xl flex-shrink-0 mt-0.5"></i>
+              <div>
+                <h3 className="font-semibold text-gray-900 text-sm mb-1">Unable to Load Vehicle Data</h3>
+                <p className="text-sm text-gray-600">{loadingError}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -261,7 +261,7 @@ export default function Header() {
       {/* Mobile Header */}
       <header
         ref={mobileHeaderRef}
-        className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-neutral-200 z-[60] flex items-center justify-between px-4"
+        className="md:hidden fixed top-0 left-0 right-0 w-full max-w-full h-16 bg-white border-b border-neutral-200 z-[60] flex items-center justify-between px-4 box-border overflow-x-hidden"
       >
         <a
           href="/"
@@ -292,7 +292,7 @@ export default function Header() {
       {/* Desktop Left Sidebar (60px wide) */}
       <aside
         ref={sidebarRef}
-        className="hidden md:flex fixed left-0 top-0 h-screen w-[60px] bg-white border-r border-neutral-200 z-50 flex-col items-center py-6 gap-6"
+        className="hidden md:flex fixed left-0 top-0 h-screen w-[60px] max-w-[60px] bg-white border-r border-neutral-200 z-50 flex-col items-center py-6 gap-6 box-border"
         aria-label="Main navigation"
       >
         {/* Logo */}
@@ -364,10 +364,10 @@ export default function Header() {
 
         {/* Navigation Cards */}
         <div ref={navCardsRef} className="px-4 md:px-6 py-6 md:flex-1 md:overflow-y-auto">
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
-            {NAV_ITEMS.map((item) => (
+          <div className="grid grid-cols-2 gap-3 md:gap-4 min-w-0">
+            {NAV_ITEMS.map((item, index) => (
               <a
-                key={item.href}
+                key={`${item.href}-${index}`}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
                 data-nav-link
@@ -407,9 +407,9 @@ export default function Header() {
             }`}
           >
             <div className="space-y-1 pt-2">
-              {ADDITIONAL_LINKS.map((link) => (
+              {ADDITIONAL_LINKS.map((link, index) => (
                 <a
-                  key={link.href}
+                  key={`${link.href}-${index}`}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   data-nav-link

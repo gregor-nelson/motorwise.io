@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Default.DESKTOP-8TCQEDR/Downloads/Dev/motorwise.io/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

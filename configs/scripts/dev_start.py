@@ -17,8 +17,9 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QProcess, pyqtSlot, QTimer
 from PyQt6.QtGui import QColor, QTextCursor, QFont, QTextCharFormat
 
-# Configuration
-BASE_DIR = os.path.expanduser("~/Downloads/Dev/motorwise.io")
+# Configuration - Use relative paths from script location
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
 BACKEND_DIR = os.path.join(BASE_DIR, "backend")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 

@@ -338,7 +338,7 @@ export default function Header() {
       <div
         id="sidebar-panel"
         ref={panelRef}
-        className={`fixed left-0 md:left-[60px] top-16 md:top-0 max-h-[calc(100vh-4rem)] md:h-screen w-full md:w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto overflow-x-hidden box-border [scrollbar-width:thin] md:flex md:flex-col ${getPanelTransformClass()}`}
+        className={`fixed left-0 md:left-[60px] top-16 md:top-0 max-h-[calc(100vh-4rem)] md:h-screen w-full max-w-full md:w-[320px] md:max-w-[320px] bg-white border-r border-neutral-200 z-40 transform transition-transform duration-300 ease-out overflow-y-auto overflow-x-hidden box-border [scrollbar-width:thin] md:flex md:flex-col ${getPanelTransformClass()}`}
         aria-hidden={!sidebarExpanded}
         role="dialog"
         aria-label="Navigation menu"
@@ -383,7 +383,7 @@ export default function Header() {
         </div>
 
         {/* Additional Links Section */}
-        <div className="px-6 pb-6 md:flex-shrink-0 border-t border-neutral-200">
+        <div className="px-4 md:px-6 pb-6 md:flex-shrink-0 border-t border-neutral-200">
           <button
             ref={moreButtonRef}
             onClick={toggleMore}

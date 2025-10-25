@@ -16,6 +16,17 @@ export const PAYMENT_API_BASE_URL = isDevelopment
 // Initialize Stripe with your publishable key
 export const stripePromise = loadStripe('pk_test_51R0JFMP4qnmsLm0yBZ8WKNQ6jNsYigLRELdUhSMIEf4qWlEaQeWU7EIyIHySGTaqeR5BFup1XDNMDOEqmhynmkTi00ndP8XolL');
 
+// Add global CSS for hiding scrollbars
+const styleSheet = document.createElement("style");
+styleSheet.textContent = `
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+`;
+if (!document.head.querySelector('style[data-scrollbar-hide]')) {
+  styleSheet.setAttribute('data-scrollbar-hide', 'true');
+  document.head.appendChild(styleSheet);
+}
 
 // Custom Modal Component with Tailwind
 const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm", headerIcon, fullScreen = false }) => {
@@ -100,22 +111,22 @@ const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm", headerIco
         `}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
+        {/* Header - mobile optimized */}
         <div className={`
           flex items-center justify-between flex-shrink-0
-          ${fullScreen ? 'p-4 md:p-6' : 'p-6 md:p-8'}
+          ${fullScreen ? 'p-4 md:p-6' : 'p-4 md:p-6 lg:p-8'}
         `}>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 md:space-x-3">
             {headerIcon && (
-              <div className="text-blue-600">
+              <div className="text-blue-600 text-lg md:text-xl">
                 {headerIcon}
               </div>
             )}
-            <h2 
+            <h2
               id="dialog-title"
               className={`
                 text-neutral-900 leading-tight tracking-tight
-                ${fullScreen ? 'text-lg md:text-xl font-medium' : 'text-2xl font-semibold'}
+                ${fullScreen ? 'text-lg md:text-xl font-medium' : 'text-lg md:text-xl lg:text-2xl font-semibold'}
               `}
             >
               {title}
@@ -124,21 +135,27 @@ const BaseDialog = ({ open, onClose, title, children, maxWidth = "sm", headerIco
           <button
             onClick={onClose}
             className="
-              p-2 text-neutral-400 hover:text-neutral-600
+              p-1.5 md:p-2 text-neutral-400 hover:text-neutral-600
               transition-colors duration-200 rounded-full
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+              flex-shrink-0
             "
             aria-label="Close dialog"
           >
-            <i className="ph ph-x text-lg"></i>
+            <i className="ph ph-x text-base md:text-lg"></i>
           </button>
         </div>
         
-        {/* Content */}
+        {/* Content - mobile optimized padding with hidden scrollbar */}
         <div className={`
           flex-1 overflow-hidden
-          ${fullScreen ? 'flex flex-col' : 'overflow-y-auto px-6 pb-6 md:px-8 md:pb-8'}
-        `}>
+          ${fullScreen ? 'flex flex-col' : 'overflow-y-auto px-4 pb-4 md:px-6 md:pb-6 lg:px-8 lg:pb-8'}
+          scrollbar-hide
+        `}
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}>
           {children}
         </div>
       </div>
@@ -589,235 +606,160 @@ const PaymentForm = ({ registration, onSuccess, onClose }) => {
   );
 };
 
-// Enhanced Premium Report Features with card-based design matching Hero/Pipeline
-const PremiumReportFeatures = ({ showAll = false, onToggle }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-
-  // Update mobile state on resize
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 767);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const coreFeatures = [
-    {
-      icon: 'ph-shield-check',
-      title: 'DVLA Identity Verification',
-      description: isMobile ? 'Official government records' : 'Official government records - police & agency access',
-      colorTheme: {
-        bgPastel: 'from-purple-50 to-purple-50',
-        iconBg: 'bg-purple-100',
-        iconColor: 'text-purple-600',
-        iconHover: 'group-hover:text-purple-700',
-        borderHover: 'hover:border-purple-300',
-        glowColor: 'from-purple-200 to-purple-300',
-        decorAccent: 'from-purple-400 to-purple-500'
-      }
-    },
-    {
-      icon: 'ph-detective',
-      title: 'Mileage Fraud Protection',
-      description: isMobile ? 'Forensic odometer detection' : 'Forensic-level odometer tampering detection',
-      colorTheme: {
-        bgPastel: 'from-cyan-50 to-cyan-50',
-        iconBg: 'bg-cyan-100',
-        iconColor: 'text-cyan-600',
-        iconHover: 'group-hover:text-cyan-700',
-        borderHover: 'hover:border-cyan-300',
-        glowColor: 'from-cyan-200 to-cyan-300',
-        decorAccent: 'from-cyan-400 to-cyan-500'
-      }
-    },
-    {
-      icon: 'ph-wrench',
-      title: 'Professional Repair Database',
-      description: isMobile ? 'BMW, Mercedes dealer data' : 'Technical data trusted by BMW, Mercedes dealerships',
-      colorTheme: {
-        bgPastel: 'from-blue-50 to-cyan-50',
-        iconBg: 'bg-blue-100',
-        iconColor: 'text-blue-600',
-        iconHover: 'group-hover:text-blue-700',
-        borderHover: 'hover:border-blue-300',
-        glowColor: 'from-blue-200 to-cyan-300',
-        decorAccent: 'from-blue-400 to-cyan-500'
-      }
-    }
-  ];
-
-  const additionalFeatures = [
-    {
-      icon: 'ph-chart-line-up',
-      title: 'Advanced Usage History',
-      description: isMobile ? '3D visualization & hidden patterns' : '3D visualization exposing hidden patterns traditional reports miss',
-      colorTheme: {
-        bgPastel: 'from-green-50 to-emerald-50',
-        iconBg: 'bg-green-100',
-        iconColor: 'text-green-600',
-        iconHover: 'group-hover:text-green-700',
-        borderHover: 'hover:border-green-300',
-        glowColor: 'from-green-200 to-emerald-300',
-        decorAccent: 'from-green-400 to-emerald-500'
-      }
-    },
-    {
-      icon: 'ph-database',
-      title: 'Market Intelligence & Risk Assessment',
-      description: isMobile ? '40+ million UK vehicle records' : 'Compare against 40+ million UK vehicle records for confident decisions',
-      colorTheme: {
-        bgPastel: 'from-amber-50 to-yellow-50',
-        iconBg: 'bg-amber-100',
-        iconColor: 'text-amber-600',
-        iconHover: 'group-hover:text-amber-700',
-        borderHover: 'hover:border-amber-300',
-        glowColor: 'from-amber-200 to-yellow-300',
-        decorAccent: 'from-amber-400 to-yellow-500'
-      }
-    },
-    {
-      icon: 'ph-file-text',
-      title: 'Complete Documentation Package',
-      description: isMobile ? 'Bank & insurance standards' : 'Professional-grade reports meeting bank and insurance standards',
-      colorTheme: {
-        bgPastel: 'from-indigo-50 to-blue-50',
-        iconBg: 'bg-indigo-100',
-        iconColor: 'text-indigo-600',
-        iconHover: 'group-hover:text-indigo-700',
-        borderHover: 'hover:border-indigo-300',
-        glowColor: 'from-indigo-200 to-blue-300',
-        decorAccent: 'from-indigo-400 to-blue-500'
-      }
-    }
-  ];
-
-  const featuresToShow = showAll ? [...coreFeatures, ...additionalFeatures] : coreFeatures;
-
-  // Rotation classes for playful effect
-  const rotationClasses = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1', '-rotate-1'];
-
+// Visual Report Preview - Stacked card mockup with minimalist design
+const VisualReportPreview = () => {
   return (
-    <div className="space-y-4">
-      {featuresToShow.map((feature, index) => {
-        const rotation = rotationClasses[index % rotationClasses.length];
-        const theme = feature.colorTheme;
+    <div className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center">
+      {/* Background decoration - subtle */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl"></div>
 
-        return (
-          <div
-            key={index}
-            className={`
-              group relative transform ${rotation} hover:rotate-0
-              transition-all duration-500 ease-out
-            `}
-          >
-            {/* Outer glow effect */}
-            <div className={`
-              absolute -inset-1 bg-gradient-to-br ${theme.glowColor} rounded-2xl
-              opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500
-            `}></div>
+      {/* Stacked Cards Container */}
+      <div className="relative w-full max-w-[280px] md:max-w-sm h-full flex items-center justify-center">
 
-            {/* Main card with pastel gradient background */}
-            <div className={`
-              relative bg-gradient-to-br ${theme.bgPastel} rounded-2xl p-5 shadow-2xl
-              border-2 border-neutral-200 ${theme.borderHover}
-              transition-all duration-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)]
-              overflow-hidden
-            `}>
-              {/* Content wrapper */}
-              <div className="relative flex items-start space-x-4">
-                {/* Icon container - enlarged and refined */}
-                <div className="flex-shrink-0 relative">
-                  {/* Icon glow layer */}
-                  <div className={`
-                    absolute -inset-1 bg-gradient-to-br ${theme.glowColor} rounded-xl
-                    opacity-10 blur-sm group-hover:opacity-20 transition-opacity duration-300
-                  `}></div>
-
-                  {/* Icon container - larger square with rounded corners */}
-                  <div className={`
-                    relative w-16 h-16 rounded-xl ${theme.iconBg}
-                    flex items-center justify-center shadow-sm
-                    border-2 border-transparent ${theme.borderHover}
-                    group-hover:scale-110 transition-all duration-300
-                  `}>
-                    <i className={`
-                      ph ${feature.icon} text-4xl
-                      ${theme.iconColor} ${theme.iconHover}
-                      transition-colors duration-200
-                    `}></i>
-                  </div>
-                </div>
-
-                {/* Text content */}
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-neutral-900 mb-1.5 leading-tight">
-                    {feature.title}
-                  </div>
-                  {/* Decorative gradient underline */}
-                  <div className={`w-12 h-0.5 bg-gradient-to-r ${theme.glowColor} opacity-60 rounded-full mb-2`}></div>
-                  <div className="text-xs text-neutral-600 leading-relaxed">
-                    {feature.description}
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative blur accent - bottom right */}
-              <div className={`
-                absolute -bottom-2 -right-2 w-16 h-16
-                bg-gradient-to-br ${theme.decorAccent} rounded-lg
-                opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300
-              `}></div>
+        {/* Card 3 - Back (Timeline) */}
+        <div className="
+          absolute
+          w-[90%] md:w-[85%]
+          bg-white
+          rounded-lg md:rounded-xl
+          shadow-lg
+          p-4 md:p-5
+          transform rotate-[-8deg] translate-y-[10px] md:translate-y-[15px]
+          border border-neutral-200
+        ">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
+              <i className="ph ph-warning text-sm text-neutral-900"></i>
+            </div>
+            <span className="text-xs md:text-sm font-semibold text-neutral-900">Timeline</span>
+          </div>
+          <div className="space-y-2 opacity-60">
+            <div className="flex items-center gap-2 text-xs">
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+              <span className="text-neutral-600">2008-07 🇩🇪 Germany</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+              <span className="text-neutral-600">2009-03 🇬🇧 United Kingdom</span>
             </div>
           </div>
-        );
-      })}
+        </div>
 
-      {onToggle && (
-        <button
-          type="button"
-          onClick={onToggle}
-          className="
-            w-full text-left px-4 py-3 text-blue-600 hover:text-blue-700
-            text-sm font-medium cursor-pointer transition-colors duration-200
-            hover:bg-blue-50 rounded-lg
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-          "
-        >
-          <div className="flex items-center justify-between">
-            <span>
-              {showAll
-                ? (isMobile ? '- Show less' : '- Show fewer features')
-                : (isMobile ? '+ Show 3 more' : '+ Show 3 more professional features')
-              }
-            </span>
-            <i className={`
-              ph ph-caret-down transition-transform duration-200
-              ${showAll ? 'rotate-180' : 'rotate-0'}
-            `}></i>
+        {/* Card 2 - Middle (Damage Report) */}
+        <div className="
+          absolute
+          w-[92%] md:w-[90%]
+          bg-white
+          rounded-lg md:rounded-xl
+          shadow-xl
+          p-4 md:p-5
+          transform rotate-[4deg] translate-y-[5px] md:translate-y-[8px]
+          border border-neutral-200
+        ">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
+              <i className="ph ph-warning text-sm text-neutral-900"></i>
+            </div>
+            <span className="text-xs md:text-sm font-semibold text-neutral-900">Damage Report</span>
           </div>
-        </button>
-      )}
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center opacity-70">
+              <i className="ph ph-car text-xl text-neutral-400"></i>
+            </div>
+            <div className="text-xs text-neutral-500 opacity-60">
+              <div>2009</div>
+              <div className="text-neutral-400">Unknown</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 1 - Front (Mileage Warning) */}
+        <div className="
+          absolute
+          w-full
+          bg-white
+          rounded-lg md:rounded-xl
+          shadow-2xl
+          p-4 md:p-6
+          transform rotate-[0deg]
+          border-2 border-blue-200
+          z-10
+        ">
+          {/* Warning Header */}
+          <div className="flex items-start gap-2 mb-4">
+            <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
+              <i className="ph ph-warning text-base md:text-lg text-neutral-900 font-bold"></i>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs md:text-sm font-semibold text-neutral-900 leading-tight">
+                This vehicle may have a fake mileage!
+              </p>
+            </div>
+          </div>
+
+          {/* Info Items */}
+          <div className="space-y-2 mb-4">
+            <div className="flex items-start gap-2 text-xs">
+              <i className="ph ph-info text-blue-500 flex-shrink-0 mt-0.5"></i>
+              <span className="text-neutral-600">The last known mileage is <strong className="text-neutral-900">137,000 mi</strong></span>
+            </div>
+            <div className="flex items-start gap-2 text-xs">
+              <i className="ph ph-info text-blue-500 flex-shrink-0 mt-0.5"></i>
+              <span className="text-neutral-600">3 mileage records found</span>
+            </div>
+          </div>
+
+          {/* Mini Mileage Graph */}
+          <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-3 md:p-4">
+            <div className="text-xs text-neutral-500 mb-2 flex items-center justify-between">
+              <span>Last known mileage</span>
+              <span className="font-semibold text-neutral-900">150k</span>
+            </div>
+
+            {/* Simple line graph representation */}
+            <div className="relative h-16 md:h-20">
+              <svg className="w-full h-full" viewBox="0 0 200 60" preserveAspectRatio="none">
+                {/* Grid line */}
+                <line x1="0" y1="30" x2="200" y2="30" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="2 2" />
+
+                {/* Mileage line with rollback */}
+                <polyline
+                  points="0,50 40,40 80,30 120,18 140,15 160,35 180,25 200,22"
+                  fill="none"
+                  stroke="#3b82f6"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+
+                {/* Rollback warning badge */}
+                <circle cx="160" cy="35" r="6" fill="#fbbf24" stroke="white" strokeWidth="2"/>
+              </svg>
+
+              {/* Rollback label */}
+              <div className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2">
+                <div className="bg-yellow-400 text-neutral-900 px-2 py-0.5 rounded-full text-xs font-semibold flex items-center gap-1 whitespace-nowrap">
+                  <i className="ph ph-warning-circle text-xs"></i>
+                  <span className="hidden md:inline">Rollback</span>
+                </div>
+              </div>
+            </div>
+
+            {/* X-axis labels */}
+            <div className="flex justify-between text-xs text-neutral-400 mt-2">
+              <span>2006-01</span>
+              <span>2010-01</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-// Enhanced MarketDash Payment Dialog Component with Two-Column Layout
+// Premium Payment Dialog - Visual-first, minimalist design
 export const PaymentDialog = ({ open, onClose, registration }) => {
   const navigate = useNavigate();
-  const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-
-  // Update mobile state on resize
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 767);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // Updated to include email parameter
   const handlePaymentSuccess = (paymentIntent, email) => {
@@ -828,10 +770,6 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
     navigate(`/premium-report/${registration}?paymentId=${paymentIntent.id}&email=${encodeURIComponent(email)}`);
   };
 
-  const toggleFeatures = () => {
-    setShowAllFeatures(!showAllFeatures);
-  };
-
   return (
     <BaseDialog
       open={open}
@@ -839,110 +777,75 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
       title="Premium Vehicle Report"
       maxWidth="md"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 min-h-[500px]">
-        {/* LEFT COLUMN: Trust & Features */}
-        <div className="space-y-8">
-          {/* Trust Hero Section */}
-          <div className="group relative transform hover:scale-[1.02] transition-all duration-500 ease-out">
-            {/* Outer glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-2xl opacity-0 group-hover:opacity-25 blur-xl transition-opacity duration-500"></div>
+      {/* Two-column layout on desktop, single column on mobile */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
 
-            {/* Main card */}
-            <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 md:p-8 shadow-2xl border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:shadow-[0_25px_60px_rgba(0,0,0,0.2)] overflow-hidden">
-              <div className="relative flex items-start space-x-5">
-                <div className="flex-shrink-0 relative">
-                  {/* Icon glow layer - enhanced */}
-                  <div className="absolute -inset-2 bg-gradient-to-br from-blue-300 to-cyan-400 rounded-xl opacity-15 blur-md group-hover:opacity-30 transition-opacity duration-300"></div>
-
-                  {/* Icon container - larger */}
-                  <div className="relative w-20 h-20 rounded-xl bg-blue-100 flex items-center justify-center shadow-md border-2 border-blue-200 hover:border-blue-400 group-hover:scale-110 transition-all duration-300">
-                    <i className="ph ph-shield-check text-5xl text-blue-600 group-hover:text-blue-700 transition-colors duration-200"></i>
-                  </div>
-                </div>
-
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-semibold text-neutral-900 mb-2 leading-tight tracking-tight">
-                    {isMobile ? 'Protecting from £2.3B Fraud' : 'Protecting from £2.3B UK Vehicle Fraud'}
-                  </h3>
-                  {/* Decorative gradient underline - enhanced */}
-                  <div className="w-20 h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-transparent opacity-60 rounded-full mb-3"></div>
-                  <p className="text-sm text-neutral-700 leading-relaxed">
-                    {isMobile ? 'BMW, Mercedes & government agency database' : 'Same comprehensive database used by BMW, Mercedes dealerships and government agencies'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Decorative blur accent - enhanced */}
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-15 blur-2xl group-hover:opacity-30 transition-opacity duration-300"></div>
-            </div>
-          </div>
-
-          {/* Professional Positioning */}
-          <div className="relative text-center py-6 px-4 bg-gradient-to-br from-neutral-50 to-blue-50 rounded-2xl shadow-lg border-2 border-neutral-200">
-            <div className="text-sm text-neutral-600 mb-2 font-medium">
-              {isMobile ? 'Professional Intelligence for' : 'Professional-Grade Intelligence for'}
-            </div>
-            <div className="text-2xl font-bold text-blue-600 tracking-wider font-mono">
-              {registration}
-            </div>
-            {/* Decorative gradient underline */}
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-60 rounded-full mx-auto mt-3"></div>
-          </div>
-          
-          {/* Features */}
+        {/* LEFT COLUMN: Visual Preview & Marketing */}
+        <div className="space-y-4 md:space-y-6">
+          {/* Visual Report Preview - Main focus */}
           <div>
-            <PremiumReportFeatures 
-              showAll={showAllFeatures}
-              onToggle={toggleFeatures}
-            />
+            <VisualReportPreview />
+          </div>
+
+          {/* Text callout */}
+          <div className="text-center lg:text-left space-y-2">
+            <h3 className="text-base md:text-lg font-semibold text-neutral-900">
+              Premium Report for <span className="text-blue-600 font-mono">{registration}</span>
+            </h3>
+            <p className="text-xs md:text-sm text-neutral-600">
+              Uncover mileage fraud, damage history, and critical data from 900+ sources
+            </p>
+          </div>
+
+          {/* Key benefits - desktop only */}
+          <div className="hidden lg:block space-y-2">
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>Instant digital delivery</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>900+ verified data sources</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>Lifetime report access</span>
+            </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Action & Payment */}
-        <div className="space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8">
-          {/* Pricing Section */}
-          <div className="group relative transform hover:scale-[1.02] transition-all duration-500 ease-out">
-            {/* Outer glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
-
-            {/* Main pricing card */}
-            <div className="relative bg-gradient-to-br from-neutral-50 to-blue-50 rounded-2xl p-8 text-center shadow-2xl border-2 border-neutral-200 hover:border-blue-300 transition-all duration-300 hover:shadow-[0_25px_60px_rgba(0,0,0,0.2)] overflow-hidden">
-              <div className="relative">
-                {/* Icon badge */}
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-blue-100 border-2 border-blue-200 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <i className="ph ph-currency-gbp text-3xl text-blue-600"></i>
+        {/* RIGHT COLUMN: Pricing & Payment */}
+        <div className="space-y-4 md:space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8">
+          {/* Pricing */}
+          <div className="
+            bg-gradient-to-br from-neutral-50 to-blue-50
+            rounded-lg md:rounded-xl
+            p-4 md:p-6
+            border border-neutral-200
+            text-center
+          ">
+            <div className="space-y-3">
+              <div>
+                <div className="text-3xl md:text-4xl font-bold text-blue-600">£4.95</div>
+                <div className="text-xs text-neutral-600 mt-1">One-time payment</div>
+              </div>
+              <div className="pt-3 border-t border-neutral-200 flex items-center justify-center gap-3 md:gap-4 text-xs text-neutral-600 flex-wrap">
+                <div className="flex items-center gap-1.5">
+                  <i className="ph ph-check-circle text-green-600"></i>
+                  <span>Instant access</span>
                 </div>
-
-                <div className="text-sm text-neutral-600 mb-3 font-medium">One-time payment</div>
-                <div className="text-5xl font-bold text-blue-600 mb-3 group-hover:scale-105 transition-transform duration-300">£4.95</div>
-
-                {/* Decorative gradient underline */}
-                <div className="w-20 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-60 rounded-full mx-auto mb-3"></div>
-
-                <div className="text-sm text-neutral-600 leading-relaxed">Instant access • No subscription</div>
-
-                {/* Value indicators */}
-                <div className="mt-4 pt-4 border-t border-neutral-200 flex items-center justify-center gap-4 text-xs text-neutral-600">
-                  <div className="flex items-center gap-1.5">
-                    <i className="ph ph-check-circle text-green-600"></i>
-                    <span>Lifetime access</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <i className="ph ph-check-circle text-green-600"></i>
-                    <span>Full report</span>
-                  </div>
+                <div className="flex items-center gap-1.5">
+                  <i className="ph ph-check-circle text-green-600"></i>
+                  <span>No subscription</span>
                 </div>
               </div>
-
-              {/* Decorative blur accent */}
-              <div className="absolute -bottom-3 -right-3 w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-10 blur-2xl group-hover:opacity-25 transition-opacity duration-300"></div>
             </div>
           </div>
-          
+
           {/* Payment Form */}
-          <div className="space-y-4">
+          <div>
             <Elements stripe={stripePromise}>
-              <PaymentForm 
+              <PaymentForm
                 registration={registration}
                 onSuccess={handlePaymentSuccess}
                 onClose={onClose}
@@ -955,21 +858,9 @@ export const PaymentDialog = ({ open, onClose, registration }) => {
   );
 }
 
-// Enhanced Free Report Dialog with MarketDash styling
+// Free Report Dialog - Visual design matching PaymentDialog
 export const FreeReportDialog = ({ open, onClose, registration, reportType = 'classic' }) => {
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  const [showDetails, setShowDetails] = useState(false);
-
-  // Update mobile state on resize
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 767);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const handleViewFreeReport = () => {
     onClose();
@@ -977,193 +868,79 @@ export const FreeReportDialog = ({ open, onClose, registration, reportType = 'cl
     navigate(`/premium-report/${registration}?paymentId=${paymentId}`);
   };
 
-  const dialogTitle = "Complimentary Vehicle Report";
-
-  const explanationText = reportType === 'modern'
-    ? "For vehicles registered from 2018 onwards, the comprehensive report is provided without charge as these vehicles have limited historical data available."
-    : "For vehicles registered before 1996, the comprehensive report is provided without charge as part of our commitment to vehicle transparency.";
-
-  const whyFreeReasons = [
-    {
-      icon: "ph-database",
-      title: reportType === 'modern' ? "Limited Historical Data" : "Heritage Vehicle Support",
-      description: reportType === 'modern' 
-        ? "Newer vehicles have fewer recorded events, making comprehensive analysis more straightforward"
-        : "Classic vehicles deserve the same level of transparency and verification as modern vehicles"
-    },
-    {
-      icon: "ph-shield-check",
-      title: "Same Professional Database",
-      description: "Access to identical government and industry databases used for premium reports"
-    },
-    {
-      icon: "ph-heart",
-      title: "Service Commitment",
-      description: "Supporting vehicle transparency across all age ranges and market segments"
-    }
-  ];
-
   return (
     <BaseDialog
       open={open}
       onClose={onClose}
-      title={dialogTitle}
+      title="Complimentary Vehicle Report"
       headerIcon={<i className="ph ph-gift text-green-600"></i>}
       maxWidth="md"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* LEFT COLUMN: Value & Trust */}
-        <div className="space-y-6">
-          {/* Hero Section */}
-          <div className="group relative transform hover:scale-[1.02] transition-all duration-500 ease-out">
-            {/* Outer glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-green-200 to-emerald-300 rounded-2xl opacity-0 group-hover:opacity-25 blur-xl transition-opacity duration-500"></div>
+      {/* Two-column layout on desktop, single column on mobile */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
 
-            {/* Main card */}
-            <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 md:p-8 shadow-2xl border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:shadow-[0_25px_60px_rgba(0,0,0,0.2)] overflow-hidden">
-              <div className="relative flex items-start space-x-5">
-                <div className="flex-shrink-0 relative">
-                  {/* Icon glow layer - enhanced */}
-                  <div className="absolute -inset-2 bg-gradient-to-br from-green-300 to-emerald-400 rounded-xl opacity-15 blur-md group-hover:opacity-30 transition-opacity duration-300"></div>
-
-                  {/* Icon container - larger */}
-                  <div className="relative w-20 h-20 rounded-xl bg-green-100 flex items-center justify-center shadow-md border-2 border-green-200 hover:border-green-400 group-hover:scale-110 transition-all duration-300">
-                    <i className="ph ph-gift text-5xl text-green-600 group-hover:text-green-700 transition-colors duration-200"></i>
-                  </div>
-                </div>
-
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-semibold text-neutral-900 mb-2 leading-tight tracking-tight">
-                    {isMobile ? 'Complimentary Access' : 'Complimentary Professional Access'}
-                  </h3>
-                  {/* Decorative gradient underline - enhanced */}
-                  <div className="w-20 h-1 bg-gradient-to-r from-green-500 via-emerald-500 to-transparent opacity-60 rounded-full mb-3"></div>
-                  <p className="text-sm text-neutral-700 leading-relaxed mb-3">
-                    The comprehensive report for <strong className="text-neutral-900 font-medium">{registration}</strong> is available at no cost.
-                  </p>
-                  <p className="text-xs text-neutral-600 leading-relaxed">
-                    {explanationText}
-                  </p>
-                </div>
-              </div>
-
-              {/* Decorative blur accent - enhanced */}
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg opacity-15 blur-2xl group-hover:opacity-30 transition-opacity duration-300"></div>
-            </div>
-          </div>
-          
-          {/* Why Free Section */}
+        {/* LEFT COLUMN: Visual Preview & Marketing */}
+        <div className="space-y-4 md:space-y-6">
+          {/* Visual Report Preview - Main focus */}
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-sm font-medium text-neutral-900">Why is this free?</h4>
-              <button
-                onClick={() => setShowDetails(!showDetails)}
-                className="text-xs text-blue-600 hover:text-blue-700 transition-colors duration-200 flex items-center space-x-1"
-              >
-                <span>{showDetails ? 'Show less' : 'Learn more'}</span>
-                <i className={`ph ph-caret-down transition-transform duration-200 ${
-                  showDetails ? 'rotate-180' : 'rotate-0'
-                }`}></i>
-              </button>
-            </div>
-            
-            {showDetails && (
-              <div className="space-y-3 mb-4">
-                {whyFreeReasons.map((reason, index) => (
-                  <div key={index} className="group relative transform hover:rotate-0 transition-all duration-500 ease-out">
-                    {/* Outer glow effect */}
-                    <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-2xl opacity-0 group-hover:opacity-15 blur-lg transition-opacity duration-500"></div>
-
-                    {/* Main card */}
-                    <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 shadow-md border-2 border-neutral-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg overflow-hidden">
-                      <div className="relative flex items-start space-x-3">
-                        <div className="flex-shrink-0 relative">
-                          {/* Icon glow */}
-                          <div className="absolute -inset-1 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-lg opacity-10 blur-sm group-hover:opacity-20 transition-opacity duration-300"></div>
-                          {/* Icon container */}
-                          <div className="relative w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center border-2 border-transparent hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
-                            <i className={`ph ${reason.icon} text-blue-600 text-2xl group-hover:text-blue-700 transition-colors duration-200`}></i>
-                          </div>
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-xs font-semibold text-neutral-900 mb-1">{reason.title}</div>
-                          <div className="w-8 h-0.5 bg-gradient-to-r from-blue-300 to-cyan-300 opacity-60 rounded-full mb-1.5"></div>
-                          <div className="text-xs text-neutral-600 leading-relaxed">{reason.description}</div>
-                        </div>
-                      </div>
-
-                      {/* Decorative blur accent */}
-                      <div className="absolute -bottom-1 -right-1 w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <VisualReportPreview />
           </div>
-          
-          {/* Trust Signal */}
-          <div className="group relative">
-            {/* Outer glow effect */}
-            <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-2xl opacity-0 group-hover:opacity-15 blur-lg transition-opacity duration-500"></div>
 
-            {/* Main card */}
-            <div className="relative bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 shadow-lg border-2 border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl overflow-hidden">
-              <div className="relative flex items-center space-x-4">
-                <div className="flex-shrink-0 relative">
-                  {/* Icon glow */}
-                  <div className="absolute -inset-1 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-xl opacity-10 blur-sm group-hover:opacity-20 transition-opacity duration-300"></div>
-                  {/* Icon container */}
-                  <div className="relative w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center border-2 border-transparent hover:border-blue-300 group-hover:scale-110 transition-all duration-300">
-                    <i className="ph ph-shield-check text-blue-600 text-3xl group-hover:text-blue-700 transition-colors duration-200"></i>
-                  </div>
-                </div>
-                <div className="text-xs text-neutral-700 flex-1 leading-relaxed">
-                  <strong className="font-semibold text-neutral-900">Professional Standards:</strong> Same database access and verification processes used for premium commercial reports
-                </div>
-              </div>
+          {/* Text callout */}
+          <div className="text-center lg:text-left space-y-2">
+            <h3 className="text-base md:text-lg font-semibold text-neutral-900">
+              Free Report for <span className="text-green-600 font-mono">{registration}</span>
+            </h3>
+            <p className="text-xs md:text-sm text-neutral-600">
+              This report is complimentary - same comprehensive data at no cost
+            </p>
+          </div>
 
-              {/* Decorative blur accent */}
-              <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300"></div>
+          {/* Key benefits - desktop only */}
+          <div className="hidden lg:block space-y-2">
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>No payment required</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>Full report access</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-neutral-700">
+              <i className="ph ph-check-circle text-green-600"></i>
+              <span>Same professional data</span>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Features & Action */}
-        <div className="space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8">
-          {/* Features */}
-          <div>
-            <div className="text-sm font-medium text-neutral-900 mb-4">
-              Report includes:
-            </div>
-            <PremiumReportFeatures />
-          </div>
-          
-          {/* Pricing Banner */}
-          <div className="group relative transform hover:scale-[1.02] transition-all duration-500 ease-out">
-            {/* Outer glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-green-200 to-emerald-300 rounded-2xl opacity-0 group-hover:opacity-25 blur-xl transition-opacity duration-500"></div>
-
-            {/* Main pricing card */}
-            <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 text-center shadow-2xl border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:shadow-[0_25px_60px_rgba(0,0,0,0.2)] overflow-hidden">
-              <div className="relative">
-                {/* Icon badge */}
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-green-100 border-2 border-green-200 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <i className="ph ph-gift text-3xl text-green-600"></i>
-                </div>
-
-                <div className="text-5xl font-bold text-green-600 mb-3 group-hover:scale-105 transition-transform duration-300">FREE</div>
-
-                {/* Decorative gradient underline */}
-                <div className="w-20 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-60 rounded-full mx-auto mb-3"></div>
-
-                <div className="text-sm text-neutral-600 font-medium leading-relaxed">No payment • No registration • Instant access</div>
+        {/* RIGHT COLUMN: Free Badge & Actions */}
+        <div className="space-y-4 md:space-y-6 lg:border-l lg:border-neutral-200 lg:pl-8">
+          {/* Free Badge */}
+          <div className="
+            bg-gradient-to-br from-green-50 to-emerald-50
+            rounded-lg md:rounded-xl
+            p-4 md:p-6
+            border border-green-200
+            text-center
+          ">
+            <div className="space-y-3">
+              <div>
+                <div className="text-3xl md:text-4xl font-bold text-green-600">FREE</div>
+                <div className="text-xs text-neutral-600 mt-1">No payment required</div>
               </div>
-
-              {/* Decorative blur accent */}
-              <div className="absolute -bottom-3 -right-3 w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg opacity-15 blur-2xl group-hover:opacity-30 transition-opacity duration-300"></div>
+              <div className="pt-3 border-t border-neutral-200 flex items-center justify-center gap-3 md:gap-4 text-xs text-neutral-600 flex-wrap">
+                <div className="flex items-center gap-1.5">
+                  <i className="ph ph-check-circle text-green-600"></i>
+                  <span>Instant access</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <i className="ph ph-check-circle text-green-600"></i>
+                  <span>Full report</span>
+                </div>
+              </div>
             </div>
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex flex-col space-y-3">
             <button
@@ -1179,7 +956,7 @@ export const FreeReportDialog = ({ open, onClose, registration, reportType = 'cl
               <i className="ph ph-arrow-right"></i>
               <span>View Report Now</span>
             </button>
-            
+
             <button
               type="button"
               onClick={onClose}

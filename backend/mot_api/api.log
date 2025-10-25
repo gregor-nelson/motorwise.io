@@ -6618,3 +6618,26 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2025-10-25 19:12:26,871 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
 2025-10-25 19:12:27,887 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.7335s
 2025-10-25 19:12:27,887 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:22:38,645 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:22:38,949 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-10-25 19:22:40,669 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.7201s
+2025-10-25 19:23:05,191 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:34:12,136 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:34:12,136 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:34:12,454 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-10-25 19:34:13,705 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.2505s
+2025-10-25 19:34:13,705 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 19:40:09,876 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-10-25 19:40:11,074 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.2015s
+2025-10-25 20:11:36,527 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 20:11:36,527 - mot_api - INFO - OPTIONS /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 20:11:36,845 - mot_api - INFO - Requesting new access token
+2025-10-25 20:11:37,609 - mot_api - INFO - Successfully obtained new access token
+2025-10-25 20:11:37,609 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-10-25 20:11:38,734 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.8882s
+2025-10-25 20:11:38,734 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 20:13:42,426 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s
+2025-10-25 20:16:40,260 - mot_api - INFO - Fetching vehicle data for registration: CN09JEJ
+2025-10-25 20:16:41,500 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 1.2405s
+2025-10-25 20:16:41,500 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0030s
+2025-10-25 20:16:41,504 - mot_api - INFO - GET /api/v1/vehicle/registration/CN09JEJ - 200 - 0.0000s

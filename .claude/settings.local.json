@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/c/Users/Default.DESKTOP-8TCQEDR/Pictures/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

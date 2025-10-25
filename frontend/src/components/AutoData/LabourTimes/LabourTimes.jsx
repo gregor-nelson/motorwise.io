@@ -3,6 +3,9 @@ import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from '
 // Import API client
 import repairTimesApi from '../api/RepairTimesApiClient';
 
+// Import custom tooltip components
+import { HeadingWithTooltip } from '../../../styles/tooltip';
+
 // Browser cache configuration
 const BROWSER_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 const BROWSER_CACHE_PREFIX = 'repair_times_';
@@ -286,24 +289,97 @@ const getOperationComplexity = (time) => {
 
 
 
-// Clean visual components with enhanced filtering and search
+// Table row component for individual operations
+const OperationRow = memo(({ item, isNested = false }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const hasMultipleOperations = item.isMultiOperation && item.operations.length > 1;
+
+  return (
+    <>
+      <div
+        className={`bg-white border-b border-neutral-200 transition-colors duration-200 ${
+          hasMultipleOperations ? 'hover:bg-neutral-50 cursor-pointer' : ''
+        } ${isNested ? 'bg-neutral-50' : ''}`}
+        onClick={() => hasMultipleOperations && setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center justify-between py-2.5 px-4">
+          {/* Operation Name Column */}
+          <div className="flex-1 flex items-center gap-2.5 min-w-0 pr-4">
+            <i className={`ph ${
+              item.complexity === 'high' ? 'ph-warning-circle text-red-600' :
+              item.complexity === 'medium' ? 'ph-info text-yellow-600' :
+              'ph-check-circle text-green-600'
+            } text-base flex-shrink-0`}></i>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium text-neutral-900">
+                {item.operations[0]}
+              </div>
+              {hasMultipleOperations && (
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="text-xs text-neutral-500">
+                    {item.operations.length} operations
+                  </span>
+                  <i className={`ph ph-caret-down text-neutral-400 text-xs transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180' : ''
+                  }`}></i>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Time Column */}
+          <div className="flex-shrink-0 text-right">
+            <div className={`text-lg font-bold ${
+              item.complexity === 'high' ? 'text-red-600' :
+              item.complexity === 'medium' ? 'text-yellow-600' :
+              'text-green-600'
+            }`}>
+              {formatValue(item.value)}
+            </div>
+            <div className="text-xs text-neutral-600">
+              {item.unit || 'hours'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Expanded sub-operations */}
+      {isExpanded && hasMultipleOperations && (
+        <div className="bg-neutral-50 border-b border-neutral-200">
+          <div className="py-2 px-4">
+            <div className="ml-7 space-y-1.5">
+              {item.operations.slice(1).map((operation, idx) => (
+                <div key={`sub-${idx}`} className="flex items-start gap-2 text-sm text-neutral-700">
+                  <i className="ph ph-dot text-neutral-400 mt-0.5 flex-shrink-0 text-xs"></i>
+                  <span>{operation}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+});
+
+// Clean visual components with enhanced filtering and search - Table Layout
 const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) => {
   if (!items || items.length === 0) return null;
-  
+
   const processedItems = [];
-  
+
   items.forEach((item, index) => {
     const operations = parseRepairOperations(item.label);
     if (!operations || operations.length === 0) return;
     const complexity = getOperationComplexity(item.value);
-    
+
     // Apply search filter
-    const matchesSearch = !searchTerm || 
+    const matchesSearch = !searchTerm ||
       operations.some(op => op.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     // Apply complexity filter
     const matchesComplexity = complexityFilter === 'all' || complexity === complexityFilter;
-    
+
     if (matchesSearch && matchesComplexity) {
       processedItems.push({
         id: `item-${index}`,
@@ -315,7 +391,7 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
       });
     }
   });
-  
+
   // Apply sorting
   processedItems.sort((a, b) => {
     if (sortBy === 'complexity') {
@@ -334,90 +410,35 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
     }
     return 0;
   });
-  
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {processedItems.map((item) => {
-        const hours = parseFloat(item.value) || 0;
-        const maxHours = 8;
-        const percentage = Math.min((hours / maxHours) * 100, 100);
-        
-        return (
-          <div key={item.id} className={`bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer ${
-            item.complexity === 'high' ? 'border-l-4 border-red-500' :
-            item.complexity === 'medium' ? 'border-l-4 border-yellow-500' :
-            'border-l-4 border-green-500'
-          }`}>
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-start flex-1">
-                <i className={`ph ${
-                  item.complexity === 'high' ? 'ph-warning-circle text-red-600' :
-                  item.complexity === 'medium' ? 'ph-info text-yellow-600' :
-                  'ph-check-circle text-green-600'
-                } text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0`}></i>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-neutral-900 mb-1">
-                    {item.isMultiOperation ? (
-                      <div className="space-y-1">
-                        {item.operations.map((op, i) => (
-                          <div 
-                            key={`${item.id}-op-${i}`} 
-                            className={i === 0 ? 'font-semibold' : 'font-normal text-neutral-700'}
-                          >
-                            {op}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      item.operations[0]
-                    )}
-                  </div>
-                  <div className="inline-flex items-center">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      item.complexity === 'high' ? 'bg-red-100 text-red-700' :
-                      item.complexity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {item.complexity} complexity
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col items-end ml-4">
-                <div className={`text-2xl font-bold ${
-                  item.complexity === 'high' ? 'text-red-600' :
-                  item.complexity === 'medium' ? 'text-yellow-600' :
-                  'text-green-600'
-                }`}>
-                  {formatValue(item.value)}
-                </div>
-                <div className={`text-xs ${
-                  item.complexity === 'high' ? 'text-red-600' :
-                  item.complexity === 'medium' ? 'text-yellow-600' :
-                  'text-green-600'
-                }`}>
-                  {item.unit || 'hours'}
-                </div>
-              </div>
-            </div>
-            
-            <div className="w-full bg-neutral-200 rounded-full h-2 overflow-hidden">
-              <div 
-                className={`h-full rounded-full ${
-                  item.complexity === 'high' ? 'bg-gradient-to-r from-red-500 to-red-600' :
-                  item.complexity === 'medium' ? 'bg-gradient-to-r from-yellow-500 to-yellow-600' :
-                  'bg-gradient-to-r from-green-500 to-green-600'
-                }`}
-                style={{ width: `${percentage}%` }}
-              />
-            </div>
-            <div className="flex justify-between items-center mt-2 text-xs text-neutral-500">
-              <span>0h</span>
-              <span>{maxHours}h max</span>
-            </div>
+    <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
+      {/* Table Header */}
+      <div className="bg-neutral-50 border-b border-neutral-200 py-2 px-4">
+        <div className="flex items-center justify-between">
+          <div className="flex-1 text-xs font-semibold text-neutral-600 uppercase tracking-wide">
+            Operation
           </div>
-        );
-      })}
+          <div className="flex-shrink-0 text-right text-xs font-semibold text-neutral-600 uppercase tracking-wide">
+            Time
+          </div>
+        </div>
+      </div>
+
+      {/* Table Body */}
+      <div>
+        {processedItems.map((item) => (
+          <OperationRow key={item.id} item={item} />
+        ))}
+      </div>
+
+      {/* Empty state within table */}
+      {processedItems.length === 0 && (
+        <div className="py-12 text-center">
+          <i className="ph ph-magnifying-glass text-neutral-300 text-3xl mb-3"></i>
+          <p className="text-sm text-neutral-500">No operations match your filters</p>
+        </div>
+      )}
     </div>
   );
 });
@@ -429,24 +450,22 @@ const CleanSpecTable = memo(({ items, searchTerm, complexityFilter, sortBy }) =>
 
 
 /**
- * MatchWarning Component - Pure Tailwind design
+ * MatchWarning Component
  */
 const MatchWarning = ({ matchConfidence, vehicleIdentification }) => {
-  
+
   if (matchConfidence === 'exact' || matchConfidence === 'none') return null;
-  
+
   return (
-    <div className="bg-transparent rounded-lg p-2 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
-      <div className="flex items-start">
-        <i className="ph ph-warning-circle text-yellow-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
-        <div className="flex-1">
-          <div className="text-sm font-medium text-neutral-900 mb-2">
-            Vehicle Match Information
-          </div>
-          <div className="text-xs text-neutral-700 leading-relaxed">
+    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mb-6">
+      <div className="flex items-start gap-3">
+        <i className="ph ph-warning text-yellow-600 text-lg flex-shrink-0"></i>
+        <div>
+          <p className="text-sm font-medium text-yellow-900 mb-1">Vehicle Match Information</p>
+          <p className="text-sm text-yellow-800">
             The repair times shown are for a similar {vehicleIdentification?.make} {vehicleIdentification?.model} model.
             Actual times may vary based on your specific vehicle configuration.
-          </div>
+          </p>
         </div>
       </div>
     </div>
@@ -454,49 +473,39 @@ const MatchWarning = ({ matchConfidence, vehicleIdentification }) => {
 };
 
 /**
- * Loading State Component - Pure Tailwind design
+ * Loading State Component
  */
 const LoadingState = ({ vehicleMake, vehicleModel }) => (
-  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
-    <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
-      <div className="flex items-center justify-center py-8 sm:py-12">
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4">
-            <div className="w-full h-full border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
-          </div>
-          <div className="text-lg font-medium text-neutral-900 mb-2">
-            Loading repair times data
-          </div>
-          <div className="text-xs text-neutral-600">
-            Please wait while we compile repair times for {vehicleMake} {vehicleModel}
-          </div>
-        </div>
+  <div className="min-h-screen bg-neutral-50">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+      <div className="flex flex-col items-center justify-center py-24">
+        <div className="w-12 h-12 border-3 border-neutral-300 border-t-neutral-900 rounded-full animate-spin mb-4"></div>
+        <p className="text-sm text-neutral-600">Loading repair times for {vehicleMake} {vehicleModel}...</p>
       </div>
     </div>
   </div>
 );
 
 /**
- * Error State Component - Pure Tailwind design
+ * Error State Component
  */
 const ErrorState = ({ error, onRetry }) => (
-  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
-    <div className="bg-red-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
-      <div className="flex items-start">
-        <i className="ph ph-x-circle text-red-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
-        <div className="flex-1">
-          <div className="text-sm font-medium text-neutral-900 mb-2">
-            Error Loading Repair Times
+  <div className="min-h-screen bg-neutral-50">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+      <div className="bg-white border border-red-200 rounded-lg p-6">
+        <div className="flex items-start gap-3">
+          <i className="ph ph-warning text-red-600 text-xl flex-shrink-0"></i>
+          <div>
+            <h3 className="text-base font-semibold text-neutral-900 mb-1">Unable to Load Repair Times</h3>
+            <p className="text-sm text-neutral-700 mb-4">{error || 'An unexpected error occurred while loading repair times data.'}</p>
+            <button
+              onClick={onRetry}
+              className="px-5 py-2.5 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-200"
+            >
+              <i className="ph ph-arrow-clockwise mr-2"></i>
+              Try Again
+            </button>
           </div>
-          <div className="text-xs text-neutral-700 leading-relaxed mb-4">
-            {error || 'An unexpected error occurred while loading repair times data.'}
-          </div>
-          <button 
-            onClick={onRetry}
-            className="px-3 sm:px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg"
-          >
-            Try Again
-          </button>
         </div>
       </div>
     </div>
@@ -504,19 +513,19 @@ const ErrorState = ({ error, onRetry }) => (
 );
 
 /**
- * Empty State Component - Pure Tailwind design
+ * Empty State Component
  */
 const EmptyState = ({ vehicleMake, vehicleModel }) => (
-  <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
-    <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
-      <div className="flex items-center justify-center py-8 sm:py-12">
-        <div className="text-center">
-          <i className="ph ph-info text-4xl text-neutral-400 mb-4"></i>
-          <div className="text-lg font-medium text-neutral-900 mb-2">
-            No repair times data available for {vehicleMake} {vehicleModel}
-          </div>
-          <div className="text-xs text-neutral-600">
-            This could be because the vehicle is too new, too old, or a rare model.
+  <div className="min-h-screen bg-neutral-50">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+      <div className="bg-white border border-neutral-200 rounded-lg p-6">
+        <div className="flex items-start gap-3">
+          <i className="ph ph-database text-neutral-400 text-xl flex-shrink-0"></i>
+          <div>
+            <h3 className="text-base font-semibold text-neutral-900 mb-1">No Data Available</h3>
+            <p className="text-sm text-neutral-700">
+              We don't currently have repair times information for {vehicleMake} {vehicleModel}. This could be because the vehicle is too new, too old, or a rare model.
+            </p>
           </div>
         </div>
       </div>
@@ -885,15 +894,19 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
   const lastUpdated = "March 2025";
 
   return (
-    <div className="max-w-6xl mx-auto p-0 sm:p-2 md:p-4 lg:p-6">
-      <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-2 sm:mb-8">
+    <div className="min-h-screen bg-neutral-50">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
         {/* Header */}
-        <div className="mb-6 sm:mb-4 sm:mb-8 pb-3 sm:pb-6">
-          <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
-            Repair Times for {displayMake} {displayModel}{yearRangeDisplay}
-          </h2>
-          <p className="text-sm text-neutral-600 leading-relaxed">
-            Professional repair time estimates to help you plan service work for your {displayMake} {displayModel}.
+        <div className="mb-16">
+          <HeadingWithTooltip
+            tooltip="Professional repair time estimates based on industry-standard data"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+              Repair Times
+            </h1>
+          </HeadingWithTooltip>
+          <p className="text-sm text-neutral-600">
+            {displayMake} {displayModel}{yearRangeDisplay} - Professional repair time estimates to help you plan service work
           </p>
         </div>
 
@@ -905,244 +918,216 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
         />
 
         {/* Important notice */}
-        <div className="bg-blue-50 rounded-lg p-2 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
-          <div className="flex items-start">
-            <i className="ph ph-info text-blue-600 text-lg mr-2 sm:mr-3 mt-0.5 flex-shrink-0"></i>
-            <div className="flex-1">
-              <div className="text-sm font-medium text-neutral-900 mb-2">
-                Important
-              </div>
-              <div className="text-xs text-neutral-700 leading-relaxed">
+        <div className="bg-blue-50 border border-blue-100 rounded-lg p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i className="ph ph-info text-white text-xs"></i>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-blue-900 mb-1">Important</p>
+              <p className="text-sm text-blue-800">
                 These repair times are industry estimates. Actual times may vary based on vehicle condition, workshop equipment, and technician experience. Always consult with a qualified professional.
-              </div>
+              </p>
             </div>
           </div>
         </div>
 
         {/* Vehicle summary */}
         {vehicleSummary && (
-          <div className="space-y-6 sm:space-y-12 mb-4 sm:mb-8 sm:mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-8">
-              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-start">
-                    <i className="ph ph-database text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
-                    <div>
-                      <div className="text-sm font-medium text-neutral-900">Total Operations</div>
-                      <div className="text-xs text-neutral-600">Available repairs</div>
-                    </div>
+          <div className="mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white border border-neutral-200 rounded-lg p-5 hover:border-neutral-300 transition-colors duration-200">
+                <div className="flex items-start gap-3 mb-4">
+                  <i className="ph ph-database text-blue-600 text-xl flex-shrink-0"></i>
+                  <div className="flex-1">
+                    <p className="text-xs text-neutral-600 font-medium uppercase tracking-wide mb-1">Total Operations</p>
+                    <p className="text-xs text-neutral-500">Available repairs</p>
                   </div>
-                  <div className="flex flex-col items-end">
-                    <div className="text-2xl font-bold text-blue-600">{vehicleSummary.totalOperations}</div>
-                    <div className="text-xs text-blue-600">procedures</div>
-                  </div>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <div className="text-2xl font-bold text-blue-600">{vehicleSummary.totalOperations}</div>
+                  <div className="text-sm text-neutral-600">procedures</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-start">
-                    <i className="ph ph-clock text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
-                    <div>
-                      <div className="text-sm font-medium text-neutral-900">Average Time</div>
-                      <div className="text-xs text-neutral-600">Per operation</div>
-                    </div>
+              <div className="bg-white border border-neutral-200 rounded-lg p-5 hover:border-neutral-300 transition-colors duration-200">
+                <div className="flex items-start gap-3 mb-4">
+                  <i className="ph ph-clock text-blue-600 text-xl flex-shrink-0"></i>
+                  <div className="flex-1">
+                    <p className="text-xs text-neutral-600 font-medium uppercase tracking-wide mb-1">Average Time</p>
+                    <p className="text-xs text-neutral-500">Per operation</p>
                   </div>
-                  <div className="flex flex-col items-end">
-                    <div className="text-2xl font-bold text-blue-600">{vehicleSummary.avgTime}</div>
-                    <div className="text-xs text-blue-600">hours</div>
-                  </div>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <div className="text-2xl font-bold text-blue-600">{vehicleSummary.avgTime}</div>
+                  <div className="text-sm text-neutral-600">hours</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-1 sm:p-4 md:p-6 shadow-sm  cursor-pointer">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-start">
-                    <i className="ph ph-wrench text-lg text-blue-600 mr-2 sm:mr-3 mt-0.5"></i>
-                    <div>
-                      <div className="text-sm font-medium text-neutral-900">Most Common</div>
-                      <div className="text-xs text-neutral-600">System category</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <div className="text-lg font-bold text-neutral-900">{vehicleSummary.mostComplexSystem}</div>
-                    <div className="text-xs text-blue-600">repairs</div>
+              <div className="bg-white border border-neutral-200 rounded-lg p-5 hover:border-neutral-300 transition-colors duration-200">
+                <div className="flex items-start gap-3 mb-4">
+                  <i className="ph ph-wrench text-blue-600 text-xl flex-shrink-0"></i>
+                  <div className="flex-1">
+                    <p className="text-xs text-neutral-600 font-medium uppercase tracking-wide mb-1">Most Common</p>
+                    <p className="text-xs text-neutral-500">System category</p>
                   </div>
                 </div>
+                <div className="text-base font-semibold text-neutral-900">{vehicleSummary.mostComplexSystem}</div>
               </div>
             </div>
           </div>
         )}
 
         {/* Search and Filter Controls */}
-        <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
-          <div className="space-y-4">
-            <div>
-              <div className="text-sm font-medium text-neutral-900 mb-3">Search & Filter</div>
-              <div className="relative">
-                <i className="ph ph-magnifying-glass absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"></i>
-                <input
-                  type="text"
-                  placeholder="Search repair operations..."
-                  value={searchTerm}
-                  onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full px-2 sm:px-3 py-3 pl-8 sm:pl-10 text-sm rounded-lg bg-white border-none focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
-                />
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="relative flex-1">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <i className="ph ph-magnifying-glass text-neutral-400 text-lg"></i>
               </div>
+              <input
+                type="text"
+                placeholder="Search repair operations..."
+                value={searchTerm}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="w-full pl-12 pr-4 py-3.5 text-sm bg-white border border-neutral-200 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-0 transition-colors duration-200"
+              />
             </div>
-            <div>
-              <div className="text-xs text-neutral-600 mb-3">Filter by complexity</div>
-              <div className="flex gap-2 flex-wrap">
-                {filterOptions.map((filter) => (
-                  <button
-                    key={filter.id}
-                    onClick={() => handleComplexityFilter(filter.id)}
-                    className={`px-2 sm:px-3 py-2 text-xs font-medium rounded-full ${
-                      complexityFilter === filter.id
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-white text-blue-600 '
-                    }`}
-                  >
-                    {filter.label}
-                  </button>
-                ))}
-                {(searchTerm || complexityFilter !== 'all') && (
-                  <button
-                    onClick={clearAllFilters}
-                    className="px-2 sm:px-3 py-2 text-xs font-medium bg-neutral-200 text-neutral-700 rounded-full "
-                  >
-                    <i className="ph ph-x mr-1"></i>Clear
-                  </button>
-                )}
-              </div>
-            </div>
+            {(searchTerm || complexityFilter !== 'all') && (
+              <button
+                onClick={clearAllFilters}
+                className="px-5 py-3.5 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-200"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-sm text-neutral-600">Filter by complexity:</span>
+            {filterOptions.map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => handleComplexityFilter(filter.id)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  complexityFilter === filter.id
+                    ? 'bg-neutral-900 text-white'
+                    : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Sort controls */}
-        <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm mb-4 sm:mb-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="flex items-center">
-              <i className="ph ph-sort-ascending text-blue-600 text-lg mr-2"></i>
-              <span className="text-sm font-medium text-neutral-900">Sort by:</span>
+        {/* Sort controls and Complexity Legend */}
+        <div className="mb-12 flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-sm text-neutral-600">Sort by:</span>
+            <button
+              onClick={() => handleSortChange('complexity')}
+              className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                sortBy === 'complexity'
+                  ? 'bg-neutral-900 text-white'
+                  : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
+              }`}
+            >
+              <i className="ph ph-warning-diamond mr-2"></i>
+              Complexity
+            </button>
+            <button
+              onClick={() => handleSortChange('time')}
+              className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                sortBy === 'time'
+                  ? 'bg-neutral-900 text-white'
+                  : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
+              }`}
+            >
+              <i className="ph ph-clock mr-2"></i>
+              Time
+            </button>
+            <button
+              onClick={() => handleSortChange('alphabetical')}
+              className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                sortBy === 'alphabetical'
+                  ? 'bg-neutral-900 text-white'
+                  : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
+              }`}
+            >
+              <i className="ph ph-sort-alphabetical mr-2"></i>
+              A-Z
+            </button>
+          </div>
+
+          {/* Complexity Legend */}
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-neutral-600">Complexity:</span>
+            <div className="flex items-center gap-1.5">
+              <i className="ph ph-check-circle text-green-600 text-base"></i>
+              <span className="text-neutral-700">Low</span>
             </div>
-            <div className="flex gap-2 flex-wrap">
-              <button 
-                onClick={() => handleSortChange('complexity')}
-                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
-                  sortBy === 'complexity'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-blue-600 '
-                }`}
-              >
-                <i className="ph ph-warning-diamond mr-1 sm:mr-2"></i>
-                <span className="hidden sm:inline">Complexity</span>
-                <span className="sm:hidden">Complex</span>
-              </button>
-              <button 
-                onClick={() => handleSortChange('time')}
-                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
-                  sortBy === 'time'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-blue-600 '
-                }`}
-              >
-                <i className="ph ph-clock mr-1 sm:mr-2"></i>
-                Time
-              </button>
-              <button 
-                onClick={() => handleSortChange('alphabetical')}
-                className={`flex items-center px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
-                  sortBy === 'alphabetical'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-blue-600 '
-                }`}
-              >
-                <i className="ph ph-sort-alphabetical mr-1 sm:mr-2"></i>
-                A-Z
-              </button>
+            <div className="flex items-center gap-1.5">
+              <i className="ph ph-info text-yellow-600 text-base"></i>
+              <span className="text-neutral-700">Medium</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <i className="ph ph-warning-circle text-red-600 text-base"></i>
+              <span className="text-neutral-700">High</span>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="mb-4 sm:mb-8">
-          <div className="flex justify-center mb-4 sm:mb-8">
-            <div className="inline-flex bg-neutral-100 rounded-lg p-0.5 sm:p-1 overflow-x-auto w-full max-w-full">
-              <div className="flex gap-0.5 sm:gap-1 min-w-max">
-                {tabs.map((tab, tabIndex) => (
-                  <button
-                    key={tabIndex}
-                    onClick={() => handleTabChange(tabIndex)}
-                    className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap ${
-                      tabValue === tabIndex
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-neutral-600 '
-                    }`}
-                  >
-                    <i className={`ph ${
-                      tabIndex === 0 ? 'ph-engine' :
-                      tabIndex === 1 ? 'ph-drop' :
-                      tabIndex === 2 ? 'ph-gear' :
-                      tabIndex === 3 ? 'ph-circle-dashed' :
-                      'ph-lightning'
-                    }`}></i>
-                    <span>{tab.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex bg-white rounded-lg p-1 border border-neutral-200 shadow-sm">
+            {tabs.map((tab, tabIndex) => (
+              <button
+                key={tabIndex}
+                onClick={() => handleTabChange(tabIndex)}
+                className={`px-6 py-2.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                  tabValue === tabIndex
+                    ? 'bg-neutral-900 text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50'
+                }`}
+              >
+                <span>{tab.label}</span>
+              </button>
+            ))}
           </div>
+        </div>
 
-          {tabs.map((tab, tabIndex) => (
-            <div key={tabIndex} className={`${tabValue === tabIndex ? 'block' : 'hidden'}`}>
-              <div className="text-center mb-6 sm:mb-8 lg:mb-12">
-                <h3 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight mb-3">
-                  {tab.label}
-                </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">
+        {tabs.map((tab, tabIndex) => (
+          <div key={`content-${tabIndex}`} className={tabValue === tabIndex ? 'block' : 'hidden'}>
+            <div className="mb-8">
+              <div className="mb-12">
+                <h2 className="text-lg font-semibold text-neutral-900 mb-1">{tab.label}</h2>
+                <p className="text-sm text-neutral-600">
                   Standard repair times for {tab.label.toLowerCase()} operations
                 </p>
               </div>
-              
-              <div className="space-y-3 sm:space-y-6">
+
+              <div className="space-y-6">
                 {tab.sections.map((section, sectionIndex) => {
                   const sectionId = `${tabIndex}-${sectionIndex}`;
-                  const isExpanded = !!expandedSections[sectionId];
+                  const isExpanded = expandedSections[sectionId] ?? (sectionIndex === 0);
                   const itemCount = section.content ? getItemCount(section.content, searchTerm, complexityFilter) : 0;
-                  
+
                   if (itemCount === 0) return null;
-                  
+
                   return (
-                    <div key={sectionId} className="bg-white rounded-lg shadow-sm ">
+                    <div key={sectionId}>
                       <button
                         onClick={() => toggleSection(sectionId)}
-                        className="w-full flex items-center justify-between p-2 sm:p-4 md:p-6 text-left cursor-pointer"
+                        className="w-full flex items-center justify-between bg-white border-b border-neutral-200 py-6 hover:bg-neutral-50 transition-colors duration-200"
                       >
-                        <div className="flex items-start">
-                          <i className="ph ph-wrench text-blue-600 text-lg mr-2 sm:mr-3 mt-0.5"></i>
-                          <div>
-                            <div className="text-sm font-medium text-neutral-900 mb-1">
-                              {section.title}
-                            </div>
-                            <div className="text-xs text-neutral-600">
-                              {itemCount} available operations
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center ml-2 sm:ml-4">
-                          <div className="text-xs text-blue-600 mr-2 sm:mr-3">
-                            {isExpanded ? 'Collapse' : 'Expand'}
-                          </div>
-                          <i className={`ph ph-caret-down text-blue-600 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}></i>
-                        </div>
+                        <span className="text-lg font-semibold text-neutral-900">{section.title}</span>
+                        <i className={`ph ph-caret-down text-neutral-400 text-lg transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}></i>
                       </button>
-                      
-                      {isExpanded && section.content && (
-                        <div className="px-2 sm:px-4 md:px-6 pb-2 sm:pb-4 md:pb-6 border-t border-neutral-200">
-                          <div className="pt-2 sm:pt-4 md:pt-6">
-                            {section.content}
-                          </div>
+
+                      {isExpanded && (
+                        <div className="py-6">
+                          {section.content}
                         </div>
                       )}
                     </div>
@@ -1150,18 +1135,14 @@ const VehicleRepairTimesComponent = ({ vehicleData, onDataLoad }) => {
                 })}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
 
         {/* Footer note */}
-        <div className="mt-8 sm:mt-16 mb-6 sm:mb-12">
-          <div className="bg-neutral-50 rounded-lg p-1 sm:p-4 md:p-6 shadow-sm">
-            <div className="flex items-center justify-center">
-              <i className="ph ph-info text-neutral-500 mr-1 sm:mr-2"></i>
-              <div className="text-xs text-neutral-500 text-center">
-                Repair times sourced from industry standard databases. Last updated: {lastUpdated}
-              </div>
-            </div>
+        <div className="mt-24 pt-8 border-t border-neutral-200">
+          <div className="flex items-center justify-center gap-2 text-xs text-neutral-500">
+            <i className="ph ph-database text-neutral-400 text-sm"></i>
+            <span>Repair times sourced from industry standard databases • Last updated: {lastUpdated}</span>
           </div>
         </div>
       </div>

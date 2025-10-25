@@ -385,13 +385,6 @@ const PremiumReportPage = () => {
             
           {/* DVLA Vehicle Data Section */}
           <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
-            <div className="flex items-center mb-6">
-              <i className="ph ph-database text-lg text-blue-600 mr-3 mt-0.5"></i>
-              <div>
-                <h2 className="text-lg font-medium text-neutral-900">Vehicle Overview</h2>
-                <div className="text-xs text-neutral-600">Official DVLA registration data</div>
-              </div>
-            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -404,13 +397,6 @@ const PremiumReportPage = () => {
 
           {/* Vehicle Insights Section */}
           <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
-            <div className="flex items-center mb-6">
-              <i className="ph ph-brain text-lg text-blue-600 mr-3 mt-0.5"></i>
-              <div>
-                <h2 className="text-lg font-medium text-neutral-900">Vehicle Insights</h2>
-                <div className="text-xs text-neutral-600">AI-powered analysis and recommendations</div>
-              </div>
-            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -428,13 +414,6 @@ const PremiumReportPage = () => {
             
           {/* Technical Specifications Section */}
           <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
-            <div className="flex items-center mb-6">
-              <i className="ph ph-gear text-lg text-blue-600 mr-3 mt-0.5"></i>
-              <div>
-                <h2 className="text-lg font-medium text-neutral-900">Technical Specifications</h2>
-                <div className="text-xs text-neutral-600">Detailed vehicle technical data</div>
-              </div>
-            </div>
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"
@@ -452,21 +431,7 @@ const PremiumReportPage = () => {
             
           {/* 3D Mileage History Section */}
           <section className="bg-white rounded-lg p-1 sm:p-4 md:p-6 lg:p-8 shadow-sm ">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center">
-                <i className="ph ph-chart-line text-lg text-blue-600 mr-3 mt-0.5"></i>
-                <div>
-                  <h2 className="text-lg font-medium text-neutral-900">3D Mileage History</h2>
-                  <div className="text-xs text-neutral-600">Interactive MOT mileage visualization</div>
-                </div>
-              </div>
-              {motData && motData.length > 0 && (
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-600">{motData.length}</div>
-                  <div className="text-xs text-blue-600">MOT Records</div>
-                </div>
-              )}
-            </div>
+        
             <ErrorBoundary fallback={
               <ErrorMessage 
                 variant="warning"

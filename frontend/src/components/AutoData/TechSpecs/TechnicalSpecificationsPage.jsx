@@ -30,21 +30,6 @@ const getSpecIcon = (type) => {
   return icons[type] || icons.default;
 };
 
-const getSpecColor = (type) => {
-  const colors = {
-    pressure: 'rgb(37 99 235)',
-    temperature: 'rgb(239 68 68)',
-    volume: 'rgb(34 197 94)',
-    torque: 'rgb(245 158 11)',
-    electrical: 'rgb(245 158 11)',
-    time: 'rgb(37 99 235)',
-    distance: 'rgb(37 99 235)',
-    speed: 'rgb(37 99 235)',
-    default: 'rgb(75 85 99)'
-  };
-  return colors[type] || colors.default;
-};
-
 const getCategoryIcon = (category) => {
   const icons = {
     'Engine Details': 'ph ph-engine',
@@ -68,14 +53,12 @@ const getCategoryIcon = (category) => {
   return icons[category] || 'ph ph-question';
 };
 
-const getCategoryColor = (category) => {
-  const colors = {
-    'Engine Details': 'rgb(37 99 235)',
-    'Service Information': 'rgb(34 197 94)',
-    'Torque Specifications': 'rgb(245 158 11)',
-    'Brakes & A/C': 'rgb(245 158 11)'
-  };
-  return colors[category] || 'rgb(75 85 99)';
+// Helper to convert to Title Case
+const toTitleCase = (str) => {
+  if (!str) return '';
+  return str.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 };
 
 // Gauge component
@@ -120,135 +103,40 @@ const Gauge = ({ value, max, unit, label, color }) => {
   );
 };
 
-// Visual spec renderer - Clean table format for all specs
+// Visual spec renderer - Grid card layout (CarVertical style)
 const renderVisualSpecs = (items, sectionTitle) => {
   if (!items || !Array.isArray(items) || items.length === 0) return null;
 
   return (
-    <div className="space-y-6">
-      {/* All Specs - Clean Table */}
-      {items.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-neutral-200">
-          {/* Table for desktop/tablet */}
-          <div className="hidden sm:block">
-            <table className="w-full">
-              <tbody>
-                {items.map((item, idx) => {
-                  const label = item.label || item.name || '';
-                  const value = item.value !== undefined ? item.value : '';
-                  const unit = item.unit || '';
-                  const specType = getSpecType(label, unit);
-                  const icon = getSpecIcon(specType);
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((item, idx) => {
+        const label = item.label || item.name || '';
+        const value = item.value !== undefined ? item.value : '';
+        const unit = item.unit || '';
+        const specType = getSpecType(label, unit);
+        const icon = getSpecIcon(specType);
 
-                  // Helper to convert to Title Case
-                  const toTitleCase = (str) => {
-                    if (!str) return '';
-                    return str.replace(/\w\S*/g, (txt) => {
-                      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                    });
-                  };
+        return (
+          <div
+            key={`spec-${idx}`}
+            data-spec-card
+            className="bg-white border border-neutral-200 rounded-lg p-5 hover:border-neutral-300 transition-colors duration-200"
+          >
+            {/* Icon + Label row */}
+            <div className="flex items-center gap-2 mb-3">
+              <i className={`${icon} text-neutral-400 text-lg`}></i>
+              <span className="text-xs text-neutral-600 font-medium uppercase tracking-wide">
+                {toTitleCase(label)}
+              </span>
+            </div>
 
-                  // Pastel color palette (clean FAQ-style colors)
-                  const colorPalette = [
-                    { bg: 'bg-blue-100', text: 'text-blue-700', hover: 'hover:bg-blue-50' },
-                    { bg: 'bg-emerald-100', text: 'text-emerald-700', hover: 'hover:bg-emerald-50' },
-                    { bg: 'bg-purple-100', text: 'text-purple-700', hover: 'hover:bg-purple-50' },
-                    { bg: 'bg-amber-100', text: 'text-amber-700', hover: 'hover:bg-amber-50' },
-                    { bg: 'bg-cyan-100', text: 'text-cyan-700', hover: 'hover:bg-cyan-50' },
-                    { bg: 'bg-rose-100', text: 'text-rose-700', hover: 'hover:bg-rose-50' },
-                    { bg: 'bg-indigo-100', text: 'text-indigo-700', hover: 'hover:bg-indigo-50' },
-                    { bg: 'bg-teal-100', text: 'text-teal-700', hover: 'hover:bg-teal-50' }
-                  ];
-
-                  const colorScheme = colorPalette[idx % colorPalette.length];
-
-                  return (
-                    <tr
-                      key={`spec-${idx}`}
-                      className={`border-b border-neutral-100 last:border-b-0 ${colorScheme.hover} transition-colors duration-200 ${
-                        idx % 2 === 0 ? 'bg-neutral-50/30' : 'bg-white'
-                      }`}
-                    >
-                      {/* Spec Name with Icon */}
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 ${colorScheme.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                            <i className={`${icon} text-base ${colorScheme.text}`}></i>
-                          </div>
-                          <span className="text-sm md:text-base font-medium text-neutral-700">{label}</span>
-                        </div>
-                      </td>
-
-                      {/* Value */}
-                      <td className="py-4 px-6 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <span className={`text-base md:text-lg font-bold ${colorScheme.text}`}>
-                            {value}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* Unit */}
-                      <td className="py-4 px-6 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          {unit && (
-                            <span className="text-xs md:text-sm text-neutral-600">{unit}</span>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {/* Value */}
+            <div className="text-base font-semibold text-neutral-900">
+              {value}{unit ? ` ${unit}` : ''}
+            </div>
           </div>
-
-          {/* Definition list for mobile */}
-          <div className="sm:hidden divide-y divide-neutral-200">
-            {items.map((item, idx) => {
-              const label = item.label || item.name || '';
-              const value = item.value !== undefined ? item.value : '';
-              const unit = item.unit || '';
-              const specType = getSpecType(label, unit);
-              const icon = getSpecIcon(specType);
-
-              // Pastel color palette (clean FAQ-style colors)
-              const colorPalette = [
-                { bg: 'bg-blue-100', text: 'text-blue-700', hover: 'hover:bg-blue-50' },
-                { bg: 'bg-emerald-100', text: 'text-emerald-700', hover: 'hover:bg-emerald-50' },
-                { bg: 'bg-purple-100', text: 'text-purple-700', hover: 'hover:bg-purple-50' },
-                { bg: 'bg-amber-100', text: 'text-amber-700', hover: 'hover:bg-amber-50' },
-                { bg: 'bg-cyan-100', text: 'text-cyan-700', hover: 'hover:bg-cyan-50' },
-                { bg: 'bg-rose-100', text: 'text-rose-700', hover: 'hover:bg-rose-50' },
-                { bg: 'bg-indigo-100', text: 'text-indigo-700', hover: 'hover:bg-indigo-50' },
-                { bg: 'bg-teal-100', text: 'text-teal-700', hover: 'hover:bg-teal-50' }
-              ];
-
-              const colorScheme = colorPalette[idx % colorPalette.length];
-
-              return (
-                <div
-                  key={`spec-mobile-${idx}`}
-                  className={`p-4 ${colorScheme.hover} transition-colors duration-200`}
-                >
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className={`w-8 h-8 ${colorScheme.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                      <i className={`${icon} text-base ${colorScheme.text}`}></i>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-neutral-700 mb-1">{label}</div>
-                      <div className="flex items-baseline gap-2">
-                        <span className={`text-base font-bold ${colorScheme.text}`}>{value}</span>
-                        {unit && <span className="text-xs text-neutral-600">{unit}</span>}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 };
@@ -439,21 +327,21 @@ const renderNotes = (notes) => {
   if (!notes || !Array.isArray(notes) || notes.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-2xl mb-8 border-l-4 border-blue-400">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-          <i className="ph ph-info text-blue-600 text-xl"></i>
+    <div className="bg-white border border-neutral-200 rounded-lg p-5 mb-6">
+      <div className="flex items-start gap-3">
+        <i className="ph ph-info text-neutral-400 text-lg flex-shrink-0"></i>
+        <div>
+          <p className="text-sm font-medium text-neutral-900 mb-3">Important Notes</p>
+          <ul className="space-y-2">
+            {notes.map((note, index) => (
+              <li key={`note-${index}`} className="flex items-start gap-2">
+                <i className="ph ph-check-circle text-neutral-400 mt-0.5 flex-shrink-0 text-sm"></i>
+                <span className="text-sm text-neutral-700">{note || ''}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <h3 className="text-lg font-semibold text-neutral-900">Important notes</h3>
       </div>
-      <ul className="space-y-3 pl-1">
-        {notes.map((note, index) => (
-          <li key={`note-${index}`} className="flex items-start gap-2">
-            <i className="ph ph-check-circle text-blue-600 mt-0.5 flex-shrink-0"></i>
-            <span className="text-sm text-neutral-700">{note || ''}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
@@ -712,27 +600,21 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
           <>
             {hasEngineOilOptions && (
               <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <i className="ph ph-drop text-lg text-green-600"></i>
-                  <h4 className="text-lg font-medium text-neutral-900">
-                    Engine Oil Options
-                  </h4>
-                </div>
+                <h4 className="text-sm font-medium text-neutral-900 mb-4">
+                  Engine Oil Options
+                </h4>
                 {renderVisualSpecs(engineOilOptions, "Lubricants & Capacities")}
               </div>
             )}
-            
+
             {hasLubricantSpecs && (
               <div>
                 {hasEngineOilOptions && (
-                  <div className="h-1 bg-neutral-200 my-8" />
+                  <div className="h-px bg-neutral-200 my-8" />
                 )}
-                <div className="flex items-center gap-2 mb-4">
-                  <i className="ph ph-flask text-lg text-blue-600"></i>
-                  <h4 className="text-lg font-medium text-neutral-900">
-                    Other Lubricants & Capacities
-                  </h4>
-                </div>
+                <h4 className="text-sm font-medium text-neutral-900 mb-4">
+                  Other Lubricants & Capacities
+                </h4>
                 {renderVisualSpecs(lubricantSpecs, "Lubricants & Capacities")}
               </div>
             )}
@@ -745,7 +627,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       tabsConfig.push({
         label: "Service Information",
         icon: getCategoryIcon("Service Information"),
-        color: getCategoryColor("Service Information"),
         sections: serviceSections
       });
     }
@@ -810,7 +691,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       tabsConfig.push({
         label: "Engine Details",
         icon: getCategoryIcon("Engine Details"),
-        color: getCategoryColor("Engine Details"),
         sections: engineSections
       });
     }
@@ -839,18 +719,15 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
                   </p>
                 ))}
               </div>
-              
+
               {hasTorqueSequence && (
-                <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-                  <div className="flex items-center gap-2 mb-4">
-                    <i className="ph ph-list-numbers text-lg text-blue-600"></i>
-                    <h4 className="text-lg font-medium text-neutral-900">
-                      Tightening Sequence
-                    </h4>
-                  </div>
-                  <ol className="list-decimal pl-6 m-0">
+                <div className="bg-white border border-neutral-200 rounded-lg p-5">
+                  <h4 className="text-sm font-medium text-neutral-900 mb-4">
+                    Tightening Sequence
+                  </h4>
+                  <ol className="list-decimal pl-6 m-0 space-y-2">
                     {headTorques.map((step, index) => (
-                      <li key={`step-${index}`} className="text-xs text-neutral-700 mb-2">
+                      <li key={`step-${index}`} className="text-sm text-neutral-700">
                         {step}
                       </li>
                     ))}
@@ -895,7 +772,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       tabsConfig.push({
         label: "Torque Specifications",
         icon: getCategoryIcon("Torque Specifications"),
-        color: getCategoryColor("Torque Specifications"),
         sections: torqueSections
       });
     }
@@ -929,7 +805,6 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
       tabsConfig.push({
         label: "Brakes & A/C",
         icon: getCategoryIcon("Brakes & A/C"),
-        color: getCategoryColor("Brakes & A/C"),
         sections: otherSections
       });
     }
@@ -960,17 +835,11 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   // Loading state
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="bg-blue-50 rounded-2xl p-8 md:p-12 shadow-2xl">
-          <div className="flex flex-col items-center justify-center min-h-64 gap-6">
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-              <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-purple-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
-            </div>
-            <div className="text-center max-w-md">
-              <div className="text-2xl font-bold text-neutral-900 mb-3">Loading vehicle specifications</div>
-              <div className="text-base text-neutral-700">We are retrieving the technical information for {vehicleData?.make} {vehicleData?.model}</div>
-            </div>
+      <div className="min-h-screen bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="w-12 h-12 border-3 border-neutral-300 border-t-neutral-900 rounded-full animate-spin mb-4"></div>
+            <p className="text-sm text-neutral-600">Loading technical specifications...</p>
           </div>
         </div>
       </div>
@@ -981,24 +850,18 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   if (error) {
     if (errorType === 'nodata') {
       return (
-        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-2xl">
-            <div className="text-center py-12">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-                  <i className="ph ph-database text-5xl text-blue-600"></i>
+        <div className="min-h-screen bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+            <div className="bg-white border border-neutral-200 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <i className="ph ph-database text-neutral-400 text-xl flex-shrink-0"></i>
+                <div>
+                  <h3 className="text-base font-semibold text-neutral-900 mb-1">No Data Available</h3>
+                  <p className="text-sm text-neutral-700">
+                    We don't currently have technical specifications information for this {vehicleData?.make} {vehicleData?.model}.
+                    This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
+                  </p>
                 </div>
-              </div>
-              <div className="text-2xl font-bold text-neutral-900 mb-4">
-                No Data Available
-              </div>
-              <div className="text-base text-neutral-700 mb-6 max-w-lg mx-auto leading-relaxed">
-                We don't currently have technical specifications information for this {vehicleData?.make} {vehicleData?.model}.
-                This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full">
-                <i className="ph ph-info text-blue-600"></i>
-                <span className="text-sm text-neutral-700">Data coverage varies by vehicle model and year</span>
               </div>
             </div>
           </div>
@@ -1007,28 +870,23 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
     } else {
       // Service error
       return (
-        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-2xl">
-            <div className="text-center py-12">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center">
-                  <i className="ph ph-clock text-5xl text-orange-600"></i>
+        <div className="min-h-screen bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+            <div className="bg-white border border-red-200 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <i className="ph ph-warning text-red-600 text-xl flex-shrink-0"></i>
+                <div>
+                  <h3 className="text-base font-semibold text-neutral-900 mb-1">Unable to Load Specifications</h3>
+                  <p className="text-sm text-neutral-700 mb-4">{error}</p>
+                  <button
+                    onClick={handleRetry}
+                    className="px-5 py-2.5 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-200"
+                  >
+                    <i className="ph ph-arrow-clockwise mr-2"></i>
+                    Try Again
+                  </button>
                 </div>
               </div>
-              <div className="text-2xl font-bold text-neutral-900 mb-4">
-                Service Temporarily Unavailable
-              </div>
-              <div className="text-base text-neutral-700 mb-8 max-w-md mx-auto leading-relaxed">
-                We're currently unable to retrieve technical specifications for your {vehicleData?.make} {vehicleData?.model}.
-                This may be due to temporary maintenance or high demand.
-              </div>
-              <button
-                onClick={handleRetry}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <i className="ph ph-arrow-clockwise"></i>
-                Try Again
-              </button>
             </div>
           </div>
         </div>
@@ -1039,21 +897,17 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   // No data state
   if (!techSpecsData) {
     return (
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-2xl">
-          <div className="flex flex-col items-center justify-center min-h-64 gap-6 text-center">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-              <i className="ph ph-database text-5xl text-blue-600"></i>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-neutral-900 mb-4">No Data Available</div>
-              <div className="text-base text-neutral-700 mb-6 max-w-lg mx-auto leading-relaxed">
-                We don't currently have technical specifications information for this vehicle.
-                This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full">
-                <i className="ph ph-info text-blue-600"></i>
-                <span className="text-sm text-neutral-700">Data coverage varies by vehicle model and year</span>
+      <div className="min-h-screen bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+          <div className="bg-white border border-neutral-200 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-database text-neutral-400 text-xl flex-shrink-0"></i>
+              <div>
+                <h3 className="text-base font-semibold text-neutral-900 mb-1">No Data Available</h3>
+                <p className="text-sm text-neutral-700">
+                  We don't currently have technical specifications information for this vehicle.
+                  This doesn't necessarily mean there are no specifications - we may not have this vehicle in our database yet.
+                </p>
               </div>
             </div>
           </div>
@@ -1075,206 +929,164 @@ const TechnicalSpecificationsPage = ({ vehicleData = null, loading: initialLoadi
   const lastUpdated = "March 2025";
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-      <div className="relative bg-blue-50 rounded-2xl p-8 md:p-10 lg:p-12 shadow-2xl overflow-hidden">
-        {/* Decorative floating elements */}
-        <div ref={decorativeRef} className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-10 right-10 w-3 h-3 bg-blue-200 rounded-full opacity-40"></div>
-          <div className="absolute top-20 right-32 w-2 h-2 bg-purple-200 rounded-full opacity-30"></div>
-          <div className="absolute bottom-20 left-12 w-2.5 h-2.5 bg-pink-200 rounded-full opacity-35"></div>
-          <div className="absolute top-32 left-20 w-2 h-2 bg-cyan-200 rounded-full opacity-25"></div>
+    <div className="min-h-screen bg-neutral-50">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+        <div ref={headerRef} className="mb-16">
+          <HeadingWithTooltip
+            tooltip="Technical specifications for your vehicle, based on manufacturer data"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+              Technical Specifications
+            </h1>
+          </HeadingWithTooltip>
+          <p className="text-sm text-neutral-600">
+            {displayMake} {displayModel} - Detailed technical information for servicing and maintenance
+          </p>
         </div>
 
-        <div className="relative z-10">
-          <div ref={headerRef} className="mb-12">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <i className="ph ph-wrench text-4xl text-white"></i>
-              </div>
+        {matchConfidence !== 'exact' && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mb-6">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-warning text-yellow-600 text-lg flex-shrink-0"></i>
               <div>
-                <HeadingWithTooltip
-                  tooltip="Technical specifications for your vehicle, based on manufacturer data"
-                >
-                  <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight tracking-tight mb-2">
-                    Technical Specifications
-                  </h1>
-                </HeadingWithTooltip>
-                <p className="text-base text-neutral-700">
-                  {displayMake} {displayModel} - Detailed technical information for servicing and maintenance
+                <p className="text-sm font-medium text-yellow-900 mb-1">Vehicle Match Information</p>
+                <p className="text-sm text-yellow-800">
+                  {matchConfidence === 'fuzzy' ?
+                    'These specifications are based on a similar vehicle variant. Please verify compatibility.' :
+                    'Unable to find exact specifications for this vehicle configuration.'
+                  }
                 </p>
               </div>
             </div>
           </div>
+        )}
 
-          {matchConfidence !== 'exact' && (
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-6 border-l-4 border-yellow-400">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <i className="ph ph-warning text-2xl text-yellow-600"></i>
-                </div>
-                <div>
-                  <div className="text-base font-semibold text-neutral-900 mb-2">Vehicle Match Information</div>
-                  <div className="text-sm text-neutral-700">
-                    {matchConfidence === 'fuzzy' ?
-                      'These specifications are based on a similar vehicle variant. Please verify compatibility.' :
-                      'Unable to find exact specifications for this vehicle configuration.'
-                    }
-                  </div>
-                </div>
-              </div>
+        <div className="bg-blue-50 border border-blue-100 rounded-lg p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i className="ph ph-info text-white text-xs"></i>
             </div>
-          )}
-
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-8 border-l-4 border-blue-400">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i className="ph ph-info text-2xl text-blue-600"></i>
-              </div>
-              <div>
-                <div className="text-base font-semibold text-neutral-900 mb-2">Important Notice</div>
-                <div className="text-sm text-neutral-700">
-                  These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
-                </div>
-              </div>
+            <div>
+              <p className="text-sm font-medium text-blue-900 mb-1">Summary</p>
+              <p className="text-sm text-blue-800">
+                Make sure the vehicle's specs and equipment match what the seller told you. These specifications are for reference only. Always consult the manufacturer's documentation for definitive technical information.
+              </p>
             </div>
           </div>
+        </div>
 
-          {displayFuelType && displayFuelType !== 'unknown' && (
+        {displayFuelType && displayFuelType !== 'unknown' && (
+          <div className="mb-10">
+            <div className="inline-flex items-center gap-2 bg-white border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-900 rounded-full">
+              <i className="ph ph-drop text-neutral-600 text-base"></i>
+              <span>{displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine</span>
+            </div>
+          </div>
+        )}
+
+        {hasTabs ? (
+          <>
             <div className="mb-10">
-              <div className="inline-flex items-center gap-2 bg-white text-blue-600 px-4 py-2 text-sm font-semibold rounded-full shadow-lg">
-                <i className="ph ph-drop text-lg"></i>
-                <span>{displayFuelType.charAt(0).toUpperCase() + displayFuelType.slice(1)} Engine</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="relative flex-1">
+                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                    <i className="ph ph-magnifying-glass text-neutral-400 text-lg"></i>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search specifications..."
+                    value={searchTerm}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3.5 text-sm bg-white border border-neutral-200 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-0 transition-colors duration-200"
+                  />
+                </div>
+                {searchTerm && (
+                  <button
+                    onClick={handleClearFilters}
+                    className="px-5 py-3.5 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-200"
+                  >
+                    Clear
+                  </button>
+                )}
               </div>
             </div>
-          )}
 
-          {hasTabs ? (
-            <>
-              <div className="mb-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="relative flex-1">
-                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                      <i className="ph ph-magnifying-glass text-neutral-400 text-lg"></i>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Search specifications..."
-                      value={searchTerm}
-                      onChange={(e) => handleSearchChange(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 text-sm rounded-xl bg-white border-2 border-transparent focus:border-blue-500 focus:outline-none shadow-lg transition-all duration-200"
-                    />
-                  </div>
-                  {searchTerm && (
-                    <button
-                      onClick={handleClearFilters}
-                      className="px-4 py-3 text-sm text-blue-600 hover:text-blue-700 font-semibold bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
+            <div className="flex justify-center mb-12">
+              <div className="inline-flex bg-white rounded-lg p-1 border border-neutral-200 shadow-sm">
+                {tabs.map((tab, tabIndex) => (
+                  <button
+                    key={tabIndex}
+                    onClick={() => handleTabChange(tabIndex)}
+                    className={`px-6 py-2.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                      tabValue === tabIndex
+                        ? 'bg-neutral-900 text-white'
+                        : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50'
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
               </div>
-
-              <div className="flex justify-center mb-12">
-                <div className="inline-flex bg-white rounded-2xl p-2 shadow-2xl">
-                  {tabs.map((tab, tabIndex) => (
-                    <button
-                      key={tabIndex}
-                      onClick={() => handleTabChange(tabIndex)}
-                      className={`
-                        flex items-center gap-3 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300
-                        ${tabValue === tabIndex
-                          ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                          : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50'
-                        }
-                      `}
-                    >
-                      <i className={`${getCategoryIcon(tab.label)} text-xl`}></i>
-                      <span>{tab.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+            </div>
 
             {tabs.map((tab, tabIndex) => {
-              // Define pastel background based on tab type
-              const tabPastels = {
-                'Engine Details': 'bg-cyan-50',
-                'Service Information': 'bg-green-50',
-                'Torque Specifications': 'bg-amber-50',
-                'Brakes & A/C': 'bg-purple-50'
-              };
-              const pastelClass = tabPastels[tab.label] || 'bg-neutral-50';
-
               return (
                 <div key={`content-${tabIndex}`} ref={tabValue === tabIndex ? tabContentRef : null} className={tabValue === tabIndex ? 'block' : 'hidden'}>
-                  <div className={`${pastelClass} rounded-2xl p-8 md:p-10 shadow-xl mb-8`}>
+                  <div className="mb-8">
                     <div className="mb-12">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                          <i className={`${getCategoryIcon(tab.label)} text-3xl text-blue-600`}></i>
-                        </div>
-                        <div>
-                          <h2 className="text-3xl font-bold text-neutral-900 leading-tight tracking-tight mb-2">{tab.label}</h2>
-                          <p className="text-base text-neutral-700">
-                            Technical specifications and measurements for {tab.label.toLowerCase()}
-                          </p>
-                        </div>
-                      </div>
+                      <h2 className="text-lg font-semibold text-neutral-900 mb-1">{tab.label}</h2>
+                      <p className="text-sm text-neutral-600">
+                        Technical specifications and measurements for {tab.label.toLowerCase()}
+                      </p>
                     </div>
-                
-                    {tab.sections.map((section, sectionIndex) => {
-                      const sectionId = `${tabIndex}-${sectionIndex}`;
-                      const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
 
-                      return (
-                        <div key={sectionId} className="mb-6">
-                          <button
-                            onClick={() => handleAccordionToggle(sectionId)}
-                            className={`w-full flex items-center justify-between bg-white rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ${isExpanded ? 'border-l-4 border-blue-500' : ''}`}
-                          >
-                            <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                                <i className={`${section.icon || 'ph-question'} text-2xl text-blue-600`}></i>
-                              </div>
+                    <div className="space-y-6">
+                      {tab.sections.map((section, sectionIndex) => {
+                        const sectionId = `${tabIndex}-${sectionIndex}`;
+                        const isExpanded = expandedSections[sectionId] ?? (section.priority === 'high' || sectionIndex === 0);
+
+                        return (
+                          <div key={sectionId}>
+                            <button
+                              onClick={() => handleAccordionToggle(sectionId)}
+                              className="w-full flex items-center justify-between bg-white border-b border-neutral-200 py-6 hover:bg-neutral-50 transition-colors duration-200"
+                            >
                               <span className="text-lg font-semibold text-neutral-900">{section.title}</span>
-                            </div>
-                            <div className={`w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center transition-all duration-300 ${isExpanded ? 'bg-blue-600' : ''}`}>
-                              <i className={`ph ph-caret-down text-xl transition-transform duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-blue-600'}`}></i>
-                            </div>
-                          </button>
+                              <i className={`ph ph-caret-down text-neutral-400 text-lg transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}></i>
+                            </button>
 
-                          {isExpanded && (
-                            <div className="mt-6">
-                              {section.content}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                            {isExpanded && (
+                              <div className="py-6">
+                                {section.content}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               );
             })}
-            </>
-          ) : (
-            <div className="bg-white rounded-2xl p-8 shadow-xl border-l-4 border-blue-400">
-              <div className="flex items-center gap-3">
-                <i className="ph ph-info text-blue-600 text-2xl"></i>
+          </>
+        ) : (
+          <div className="bg-white border border-neutral-200 rounded-lg p-5 mb-6">
+            <div className="flex items-start gap-3">
+              <i className="ph ph-info text-neutral-400 text-lg flex-shrink-0"></i>
+              <div>
+                <p className="text-sm font-medium text-neutral-900 mb-1">Limited Information</p>
                 <p className="text-sm text-neutral-700">
                   Limited specifications available for this vehicle. Try checking the manufacturer's website for more details.
                 </p>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          <div className="mt-16 pt-8 border-t-2 border-blue-200">
-            <div className="flex items-center justify-center gap-3 text-sm text-neutral-600">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                <i className="ph ph-database text-blue-600"></i>
-              </div>
-              <span>Technical specifications sourced from industry standard databases • Last updated: {lastUpdated}</span>
-            </div>
+        <div className="mt-24 pt-8 border-t border-neutral-200">
+          <div className="flex items-center justify-center gap-2 text-xs text-neutral-500">
+            <i className="ph ph-database text-neutral-400 text-sm"></i>
+            <span>Technical specifications sourced from industry databases • Last updated: {lastUpdated}</span>
           </div>
         </div>
       </div>

@@ -160,61 +160,36 @@ const DVLAVehicleDataComponent = ({ registration }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-      {/* Vehicle Information Section */}
-      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
-        <div className="relative flex items-center mb-6">
-          <div className="relative w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center transition-all duration-200">
-            <i className="ph ph-car text-2xl text-neutral-700 transition-colors duration-200"></i>
+    <div className="max-w-6xl mx-auto px-4">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        {/* Header Section */}
+        <div className="flex flex-col lg:flex-row items-start justify-between mb-8 gap-6">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">DVLA Vehicle Data</h1>
+            <p className="text-sm text-gray-600 mt-1">
+              Official DVLA records for this vehicle
+            </p>
           </div>
-          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Vehicle Information</h2>
-        </div>
-        
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Make</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.make)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Colour</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.colour)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Fuel Type</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.fuelType)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Engine Size</div>
-            <div className="text-base font-medium text-neutral-900">{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Date Registered</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.monthOfFirstRegistration)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Manufacture Date</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.yearOfManufacture)}</div>
-          </div>
-        </div>
-      </div>
 
-      {/* Legal Status Section */}
-      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
-        <div className="relative flex items-center mb-6">
-          <div className="relative w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center transition-all duration-200">
-            <i className="ph ph-shield-check text-2xl text-neutral-700 transition-colors duration-200"></i>
+          <div className="bg-blue-50 rounded-lg p-4 flex items-start gap-3 lg:min-w-[320px]">
+            <i className="ph ph-info text-blue-500 text-xl flex-shrink-0 mt-0.5"></i>
+            <div>
+              <h3 className="font-semibold text-gray-900 text-sm">Verification</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Verify this information matches the seller's claims and the V5C logbook.
+              </p>
+            </div>
           </div>
-          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Legal Status</h2>
         </div>
 
         {/* Warning/Info Boxes */}
         {(vehicleData.taxStatus?.toLowerCase() === 'untaxed' || vehicleData.taxStatus?.toLowerCase() === 'expired' ||
           vehicleData.motStatus?.toLowerCase() === 'expired') && (
-          <div className="relative flex items-start gap-3 p-4 bg-red-50 rounded-xl mb-6">
-            <i className="ph ph-warning-circle text-red-600 text-xl mt-0.5"></i>
-            <div className="text-sm">
-              <p className="font-medium text-red-900 mb-1">Action Required</p>
-              <p className="text-red-700">
+          <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg mb-6">
+            <i className="ph ph-warning-circle text-red-600 text-xl flex-shrink-0 mt-0.5"></i>
+            <div>
+              <h3 className="font-semibold text-gray-900 text-sm">Action Required</h3>
+              <p className="text-sm text-gray-600 mt-1">
                 {vehicleData.taxStatus?.toLowerCase() === 'untaxed' || vehicleData.taxStatus?.toLowerCase() === 'expired'
                   ? 'Vehicle tax has expired. ' : ''}
                 {vehicleData.motStatus?.toLowerCase() === 'expired'
@@ -225,130 +200,260 @@ const DVLAVehicleDataComponent = ({ registration }) => {
         )}
 
         {(vehicleData.taxStatus?.toLowerCase() === 'sorn') && (
-          <div className="relative flex items-start gap-3 p-4 bg-amber-50 rounded-xl mb-6">
-            <i className="ph ph-info text-amber-600 text-xl mt-0.5"></i>
-            <div className="text-sm">
-              <p className="font-medium text-amber-900 mb-1">SORN Status</p>
-              <p className="text-amber-700">This vehicle is registered as off the road (SORN).</p>
+          <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-lg mb-6">
+            <i className="ph ph-info text-amber-600 text-xl flex-shrink-0 mt-0.5"></i>
+            <div>
+              <h3 className="font-semibold text-gray-900 text-sm">SORN Status</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                This vehicle is registered as off the road (SORN).
+              </p>
             </div>
           </div>
         )}
 
         {(vehicleData.taxStatus?.toLowerCase() === 'valid' || vehicleData.taxStatus?.toLowerCase() === 'taxed') &&
          vehicleData.motStatus?.toLowerCase() === 'valid' && (
-          <div className="relative flex items-start gap-3 p-4 bg-green-50 rounded-xl mb-6">
-            <i className="ph ph-check-circle text-green-600 text-xl mt-0.5"></i>
-            <div className="text-sm">
-              <p className="font-medium text-green-900 mb-1">All Clear</p>
-              <p className="text-green-700">Vehicle tax and MOT are both valid.</p>
+          <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg mb-6">
+            <i className="ph ph-check-circle text-green-600 text-xl flex-shrink-0 mt-0.5"></i>
+            <div>
+              <h3 className="font-semibold text-gray-900 text-sm">All Clear</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Vehicle tax and MOT are both valid.
+              </p>
             </div>
           </div>
         )}
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Tax Status</div>
-            <span className={getStatusStyles(vehicleData.taxStatus)}>
-              {formatData(vehicleData.taxStatus)}
-            </span>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Tax Due Date</div>
-            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
-              <i className="ph ph-calendar text-blue-600"></i>
-              {vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}
-            </div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">MOT Status</div>
-            <span className={getStatusStyles(vehicleData.motStatus)}>
-              {formatData(vehicleData.motStatus)}
-            </span>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">MOT Expiry Date</div>
-            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
-              <i className="ph ph-calendar text-blue-600"></i>
-              {vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Vehicle Information Section */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            Vehicle identification and specifications
+          </h2>
 
-      {/* Registration & Documentation Section */}
-      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
-        <div className="relative flex items-center mb-6">
-          <div className="relative w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center transition-all duration-200">
-            <i className="ph ph-clipboard-text text-2xl text-neutral-700 transition-colors duration-200"></i>
-          </div>
-          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Registration & Documentation</h2>
-        </div>
-        
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Marked For Export</div>
-            <span className={getStatusStyles(vehicleData.markedForExport ? 'exported' : 'domestic')}>
-              {vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}
-            </span>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Last V5C Issued</div>
-            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
-              <i className="ph ph-file-text text-purple-600"></i>
-              {vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Make */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-car text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Make</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.make)}</p>
+              </div>
             </div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">First DVLA Registration</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.monthOfFirstDvlaRegistration)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Automated Vehicle</div>
-            <span className={getStatusStyles(vehicleData.automatedVehicle ? 'autonomous' : 'manual')}>
-              {vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* Environmental & Technical Data Section */}
-      <div className="group relative bg-white rounded-2xl p-6 md:p-8 mb-8">
-        <div className="relative flex items-center mb-6">
-          <div className="relative w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center transition-all duration-200">
-            <i className="ph ph-leaf text-2xl text-neutral-700 transition-colors duration-200"></i>
-          </div>
-          <h2 className="text-2xl font-medium text-neutral-900 leading-tight tracking-tight ml-4 font-jost">Environmental & Technical Data</h2>
-        </div>
-        
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">CO₂ Emissions</div>
-            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
-              <i className="ph ph-cloud text-green-600"></i>
-              {vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}
+            {/* Colour */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-palette text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Colour</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.colour)}</p>
+              </div>
+            </div>
+
+            {/* Fuel Type */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-gas-pump text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Fuel type</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.fuelType)}</p>
+              </div>
+            </div>
+
+            {/* Engine Size */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-engine text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Engine capacity</p>
+                <p className="text-base font-medium text-gray-900">{vehicleData.engineCapacity ? `${vehicleData.engineCapacity}cc` : 'Not available'}</p>
+              </div>
+            </div>
+
+            {/* Date Registered */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-calendar text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Date registered</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.monthOfFirstRegistration)}</p>
+              </div>
+            </div>
+
+            {/* Manufacture Date */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-calendar-check text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Year of manufacture</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.yearOfManufacture)}</p>
+              </div>
             </div>
           </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Euro Status</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.euroStatus)}</div>
+        </div>
+
+        {/* Legal Status Section */}
+        <div className="mb-8 pt-6 border-t border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            Legal status
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Tax Status */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-receipt text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-1.5">Tax status</p>
+                <span className={getStatusStyles(vehicleData.taxStatus)}>
+                  {formatData(vehicleData.taxStatus)}
+                </span>
+              </div>
+            </div>
+
+            {/* Tax Due Date */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-calendar-x text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Tax due date</p>
+                <p className="text-base font-medium text-gray-900">
+                  {vehicleData.taxDueDate ? formatDate(vehicleData.taxDueDate) : 'Not available'}
+                </p>
+              </div>
+            </div>
+
+            {/* MOT Status */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-shield-check text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-1.5">MOT status</p>
+                <span className={getStatusStyles(vehicleData.motStatus)}>
+                  {formatData(vehicleData.motStatus)}
+                </span>
+              </div>
+            </div>
+
+            {/* MOT Expiry Date */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-calendar-x text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">MOT expiry date</p>
+                <p className="text-base font-medium text-gray-900">
+                  {vehicleData.motExpiryDate ? formatDate(vehicleData.motExpiryDate) : 'Not available'}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Real Driving Emissions</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.realDrivingEmissions)}</div>
+        </div>
+
+        {/* Registration & Documentation Section */}
+        <div className="mb-8 pt-6 border-t border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            Registration and documentation
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Marked For Export */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-airplane-takeoff text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-1.5">Marked for export</p>
+                <span className={getStatusStyles(vehicleData.markedForExport ? 'exported' : 'domestic')}>
+                  {vehicleData.markedForExport !== undefined ? (vehicleData.markedForExport ? 'Yes' : 'No') : 'Not available'}
+                </span>
+              </div>
+            </div>
+
+            {/* Last V5C Issued */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-file-text text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Last V5C issued</p>
+                <p className="text-base font-medium text-gray-900">
+                  {vehicleData.dateOfLastV5CIssued ? formatDate(vehicleData.dateOfLastV5CIssued) : 'Not available'}
+                </p>
+              </div>
+            </div>
+
+            {/* First DVLA Registration */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-clipboard-text text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">First DVLA registration</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.monthOfFirstDvlaRegistration)}</p>
+              </div>
+            </div>
+
+            {/* Automated Vehicle */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-robot text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-1.5">Automated vehicle</p>
+                <span className={getStatusStyles(vehicleData.automatedVehicle ? 'autonomous' : 'manual')}>
+                  {vehicleData.automatedVehicle !== undefined ? (vehicleData.automatedVehicle ? 'Yes' : 'No') : 'Not available'}
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Type Approval</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.typeApproval)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Wheel Plan</div>
-            <div className="text-base font-medium text-neutral-900">{formatData(vehicleData.wheelplan)}</div>
-          </div>
-          <div className="p-4 rounded-xl bg-neutral-50 transition-all duration-200">
-            <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-2">Revenue Weight</div>
-            <div className="text-base font-medium text-neutral-900 flex items-center gap-2">
-              <i className="ph ph-scales text-green-600"></i>
-              {vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}
+        </div>
+
+        {/* Environmental & Technical Data Section */}
+        <div className="pt-6 border-t border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            Environmental and technical data
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* CO₂ Emissions */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-cloud text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">CO₂ emissions</p>
+                <p className="text-base font-medium text-gray-900">
+                  {vehicleData.co2Emissions ? `${vehicleData.co2Emissions}g/km` : 'Not available'}
+                </p>
+              </div>
+            </div>
+
+            {/* Euro Status */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-flag-banner text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Euro status</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.euroStatus)}</p>
+              </div>
+            </div>
+
+            {/* Real Driving Emissions */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-chart-line text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Real driving emissions</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.realDrivingEmissions)}</p>
+              </div>
+            </div>
+
+            {/* Type Approval */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-seal-check text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Type approval</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.typeApproval)}</p>
+              </div>
+            </div>
+
+            {/* Wheel Plan */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-circles-four text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Wheel plan</p>
+                <p className="text-base font-medium text-gray-900">{formatData(vehicleData.wheelplan)}</p>
+              </div>
+            </div>
+
+            {/* Revenue Weight */}
+            <div className="flex items-start gap-3">
+              <i className="ph ph-scales text-gray-400 text-xl flex-shrink-0 mt-1"></i>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-600 mb-0.5">Revenue weight</p>
+                <p className="text-base font-medium text-gray-900">
+                  {vehicleData.revenueWeight ? `${vehicleData.revenueWeight}kg` : 'Not available'}
+                </p>
+              </div>
             </div>
           </div>
         </div>

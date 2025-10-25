@@ -217,7 +217,7 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
         {sections.map((section, index) => (
           <div key={section.id}>
             {/* Section Header */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <div className="flex items-center space-x-3 mb-2">
                 <i className={`ph ${section.icon} text-2xl text-blue-600`}></i>
                 <h2 className="text-2xl font-semibold text-neutral-900 leading-tight tracking-tight">
@@ -225,7 +225,7 @@ const AutoDataSection = ({ vehicleData, loading, error, registration }) => {
                 </h2>
               </div>
               <div className="w-12 h-1 bg-blue-600 rounded-full"></div>
-            </div>
+            </div> */}
 
             {/* Section Component */}
             <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">

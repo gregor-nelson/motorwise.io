@@ -504,3 +504,15 @@
 2025-10-24 15:06:07,819 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/cn09jej - 200 - 0.0010s
 2025-10-24 17:31:11,851 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
 2025-10-24 17:31:11,895 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 17:31:12,151 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-24 17:31:12,153 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-24 18:21:13,896 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0026s
+2025-10-25 06:43:25,127 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-25 06:43:25,175 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-25 06:43:25,449 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-25 06:43:25,451 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-25 07:03:34,478 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-25 07:03:34,524 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-25 07:03:34,834 - vehicle_analysis_api - INFO - Initialized persistent cache at cache\analysis
+2025-10-25 07:03:34,836 - vehicle_analysis_api - INFO - Loaded 2 valid cache entries from disk
+2025-10-25 07:08:42,033 - vehicle_analysis_api - INFO - GET /api/v1/vehicle-analysis/CN09JEJ - 200 - 0.0020s
